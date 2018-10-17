@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>优惠券邀请码</title>
+    <link rel="stylesheet" href="__STATIC__/index/css/member.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/aui.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/invitation.css">
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="invitation">
+    <img src="__STATIC__/index/images/u116.png">
+    <div class="code_box">
+        <p class="invitation_code_text">您的邀请码</p>
+        <p class="invitation_code">{$number}</p>
+        <a href="javascript:alert('马上邀请');">
+            <img src="__STATIC__/index/images/u117.png">
+        </a>
+        <p class="money">￥<span>50</span></p>
+    </div>
+    <div class="rule_box">
+        <div class="title_img">
+            <img src="__STATIC__/index/images/u121.png">
+        </div>
+        <ul>
+            <li>
+                1、复制分享APP下载链接地址给好友
+                <div id="div" class="link_input">
+                    <input id="input" value="http://localhost/SiRing/public/register?d={$number}" readonly/>
+                    <button class="copy_link" onclick="copyUrl()">点击复制链接</button>
+                </div>
+            </li>
+            <li>
+                2、 好友下载注册时输入您的邀请码
+            </li>
+            <li>
+                3、 凡成功邀请2位好友注册（需填写邀请码），即可获得50元优惠券
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script src="__STATIC__/index/js/jquery.js"></script>
+<script>
+    function copyUrl() {
+        var Url=document.getElementById("input");
+        Url.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        alert("复制成功！");
+    }
+</script>
+
+</body>
+</html>

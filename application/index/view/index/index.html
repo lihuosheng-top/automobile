@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>首页</title>
+	<link rel="icon" type="image/x-icon" href="__STATIC__/index/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/index/css/aui.css" />
+	<style>
+		.aui-searchbar {
+			background: transparent;
+		}
+		.aui-bar-nav .aui-searchbar-input {
+			background-color: #eee;
+		}
+		.aui-bar-light .aui-searchbar-input {
+			background-color: #f5f5f5;
+		}
+
+		.bg-dark {
+			background: #333333 !important;
+		}
+		.aui-slide-node img {
+			width: 100%;
+			height: 100%;
+		}
+		.aui-grid .aui-row-img-wt i { width:38px; height:38px; display:inline-block; margin:0 auto}
+		.img_box2{
+			width: 160px;
+			height: 160px;
+			overflow: hidden;
+		}
+		.img_box2 img{
+			max-width: 100%;
+			height: auto;
+		}
+		.limit_title{
+			display: flex;
+			justify-content: space-between;
+		}
+		.time_box{
+			font-size: 10px;
+		}
+		.hour, .minutes, .second, .day{
+			display: inline-block;
+			padding: 2px 4px;
+			background-color: #f00;
+			border-radius: 3px;
+			color: #fff !important;
+			font-size: 10px;
+			font-weight: bold;
+			text-align: center;
+			line-height: 12px;
+		}
+		.day{
+			display: none;
+		}
+	</style>
+	<link rel="stylesheet" href="__STATIC__/index/css/aui-flex.css">
+	<link rel="stylesheet" href="__STATIC__/index/css/aui-slide.css">
+	<link rel="stylesheet" href="__STATIC__/index/css/style.css">
+</head>
+<body style="background:none">
+
+	<header class="aui-bar aui-bar-nav">
+		<div class="aui-title" style="left:0rem; right: 2rem;">
+			<div class="aui-searchbar" id="search">
+				<div class="aui-searchbar-input aui-border-radius">
+					<i class="aui-iconfont aui-icon-search"></i>
+					<input type="search" placeholder="7.4洗衣机超级购物日" id="search-input">
+					<div class="aui-searchbar-clear-btn">
+						<i class="aui-iconfont aui-icon-close"></i>
+					</div>
+				</div>
+				<div class="aui-searchbar-btn" tapmode>取消</div>
+			</div>
+		</div>
+		<a class="aui-pull-right aui-btn" href="{:url('index/chat/chat')}">
+			<span class="aui-iconfont aui-icon-comment" style="color:#000;"></span>
+		</a>
+	</header>	
+	<div id="aui-slide2">
+		<div class="aui-slide-wrap" >
+			<div class="aui-slide-node">
+				<div class="aui-grid">
+					<div class="aui-row aui-row-img-wt">
+						{volist name="goods_type" id="value"}
+						<div class="aui-col-xs-3">
+							<a href="{:url('index/Classify/index')}" class="tolist">
+								<i class="aui-iconfont "><img src="__TYPE__/{$value.type_images}"></i>
+								<div class="aui-grid-label">{$value.name}</div>
+							</a>
+						</div>
+						{/volist}
+					</div>
+					<div class="aui-row aui-row-img-wt">
+						{volist name="recommend" id="data"}
+						<div class="aui-col-xs-3">
+							<a href="{if !empty($data.goods_id)}{$data.goods_id}{else}{$data.url}{/if}" class="Goods">
+								<i class="aui-iconfont "><img src="__UPLOADS__/{$data.images}"></i>
+								<div class="aui-grid-label">{$data.explain}</div>
+							</a>
+						</div>
+						{/volist}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="time_limit">
+		{volist name="seckill" id="val"}
+		<div class="limit_inner">
+			<div class="img_box">
+				<a id="{$val.type_id}" class="secondk" href="{:url('index/Seckill/show')}">
+					<img src="__UPLOADS__/{$val.images}">
+				</a>
+			</div>
+			<p class="limit_title">
+				<span class="limit_time">{$val.keyword}</span>
+				<span class="time_box">
+					<span class="time_text">距离活动结束 </span><span class="day">0天</span>
+					<!-- <span class="hour">0</span>:<span class="minutes">0</span>:<span class="second">0</span> -->
+				</span>
+			</p>
+			<p class="limit_num"><i>促销</i>本活动限量<span>{$val.goods_num}</span>台</p>
+		</div>
+		{/volist}
+	<div style="height:10px; background:#efefef"></div>
+	<div class="aui-content">
+		<ul class="aui-list aui-media-list goodsdetail_ul_box">
+			<!-- <li class="aui-list-item">
+				<a href="{:url('index/Goods/index')}">
+					<div class="aui-media-list-item-inner">
+						<div class="aui-list-item-inner">
+							<div class="aui-list-item-text">
+								<div class="aui-list-item-title aui-font-size-18">李宁男鞋跑步鞋 新款网面轻质运动鞋透气舒适慢跑鞋 ARBL023 透气一体织网面 男42(265mm)</div>
+							</div>
+							<div class="aui-info aui-padded-b-0">
+								<div class="aui-info-item aui-font-size-12">
+									<span class="aui-margin-l-5">￥199.00</span>
+								</div>
+							</div>
+						</div>
+						<div class="aui-list-item-media">
+							<img src="__STATIC__/index/image/demo/pa1.jpg">
+						</div>
+					</div>
+				</a>
+			</li> -->
+		</ul>
+	</div>
+
+	<div class="aui-card-list-content-padded aui-border-b aui-border-t">
+		<div class="aui-bj1"><a href="#"></a></div>
+		<div class="aui-row aui-row-padded aui-zdy-text">
+			{volist name="goods" id="v"}
+			<div class="aui-col-xs-6">
+				<a href="javascript:;" id="{$v.id}" class="Href">
+					<div class="img_box2">
+						<img src="__UPLOADS__/{$v.goods_show_images}">
+					</div>
+					<p>{$v.goods_name}</p>
+					<span class="aui-margin-l-5">￥{$v.goods_bottom_money}</span>
+				</a>
+			</div>
+			{/volist}
+		</div>
+	</div>
+
+	<div style="height:48px"></div>
+	<div id="demo" style="display:none">1</div>
+		<footer class="aui-bar aui-bar-tab aui-bar-tab-cl aui-border-t" id="footer">
+			<a href="{:url('index/index/index')}" class="aui-bar-tab-item " tapmode>
+				<i class="aui-iconfont aui-icon-home"></i>
+				<div class="aui-bar-tab-label">首页</div>
+			</a>
+			<a class="aui-bar-tab-item" tapmode href="{:url('index/Classify/index')}">
+				<i class="aui-iconfont aui-icon-menu"></i>
+				<div class="aui-bar-tab-label">分类</div>
+			</a>
+			<a class="aui-bar-tab-item" tapmode href="{:url('index/Share/share_index')}">
+				<i class="aui-iconfont aui-icon-camera"></i>
+				<div class="aui-bar-tab-label">晒单</div>
+			</a>
+			<a class="aui-bar-tab-item" tapmode href="{:url('index/Shopping/index')}">
+				<i class="aui-iconfont aui-icon-cart"></i>
+				<div class="aui-bar-tab-label">购物车</div>
+			</a>
+			<a href="{:url('index/Member/index')}" class="aui-bar-tab-item" id="my" tapmode>
+				<i class="aui-iconfont aui-icon-my"></i>
+				<div class="aui-bar-tab-label">我的</div>
+			</a>
+		</footer>
+
+
+<script type="text/javascript" src="__STATIC__/index/js/index/api.js" ></script>
+<script type="text/javascript" src="__STATIC__/index/js/index/aui-tab.js" ></script>
+<script type="text/javascript" src="__STATIC__/index/js/index/aui-slide.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/lib/jquery/1.9.1/jquery.cookie.js"></script>
+
+<script>
+	$.ajax({
+		type:"POST",
+		url:"{:url('/')}",
+		data:{},
+		async:false,
+		timeout:5000,
+		dataType:"json",
+		success:function (data) {
+			console.log(data)
+		},
+		error:function () {
+			console.log("错误");
+		}
+	})
+</script>
+<script>
+	$(".Href").click(function () {
+		var goods_id = $(this)[0].id;
+		$.ajax({
+			type:"POST",
+			url:"{:url('index/Goods/goods_id')}",
+			data:{"goods_id":goods_id},
+			dataType:"json",
+			success:function (data) {
+				//console.log(data);
+				if(data.status == 1){
+				    location.href = "goods_detail";
+				}
+            },
+			error:function (data) {
+				console.log("错误");
+            }
+		});
+    })
+</script>
+<script>
+	$(".Goods").click(function () {
+	    console.log($(this))
+		var goods_id = $(this)[0].id;
+		$.ajax({
+			type:"POST",
+			url:"{:url('index/Goods/goods_id')}",
+			data:{"goods_id":goods_id},
+			dataType:"json",
+			success:function (data) {
+				//console.log(data);
+//				if(data.status == 1){
+//					location.href = "goods_detail";
+//				}
+			},
+			error:function (data) {
+				console.log("错误");
+			}
+		});
+	})
+</script>
+<script>
+	$.ajax({
+		type:"POST",
+		url:"{:url('index/Classify/show')}",
+		data:{
+			"id": 1
+		},
+		async:false,
+		timeout:5000,
+		dataType:"json",
+		success:function (data) {
+			// console.log(data)
+		},
+		error:function () {
+			console.log("错误");
+		}
+	})
+</script>
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+    }
+    var tab = new auiTab({
+        element:document.getElementById("footer")
+    },function(ret){
+        console.log(ret);
+        if(ret){
+            document.getElementById("demo").textContent = ret.index;
+        }
+    });
+</script>
+
+<!-- 秒杀 发送typeid -->
+<script>
+	$('.secondk').click(function(){
+		var id = $(this)[0].id;
+		$.ajax({
+			url: '{:url("index/Seckill/index")}',
+			type: 'POST',
+			dataType: 'JSON',
+			data: {
+				'type_id': id
+			},
+			success: function(data){
+				console.log(data)
+			},
+			error: function(){
+				console.log('error');
+			}
+		})
+	})
+</script>
+</body>
+</html>

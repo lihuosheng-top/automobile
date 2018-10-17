@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>待发货</title>
+    <link rel="stylesheet" href="__STATIC__/index/css/member.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/aui.css">
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+        .null_box img{
+            width: 128px;
+            height: 128px;
+        }
+    </style>
+</head>
+<body>
+    <div class="list_box">
+        <a href="{:url('index/Order/myorder')}" >全部</a>
+        <a href="{:url('index/Order/wait_pay')}">待付款</a>
+        <a href="{:url('index/Order/wait_deliver')}" class="active">待发货</a>
+        <a href="{:url('index/Order/take_deliver')}">待收货</a>
+        <a href="{:url('index/Order/evaluate')}" >待评价</a>
+    </div>
+    {if !empty($data)}
+    <div class="order_box">
+        <ul class="order_ul">
+            {volist name="data" id="vo"}
+            <li class="order_li clearfix">
+                <a  id="details_order_{$vo.id}" class="details_order">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-media" style="width:120px; height: 90px;">
+                            <img src="__UPLOADS__/{$vo.goods_img}">
+                        </div>
+                        <div class="aui-list-item-inner">
+                            <p class="status_p">{$vo.status}</p>
+                            <div class="aui-list-item-text">
+                                <div style="display: none">{$vo.id}</div>
+                                <div class="aui-list-item-title">{$vo.goods_name}</div>
+                            </div>
+                            <div><span class="aui-margin-l-5">￥{$vo.pay_money}</span></div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    {/if}
+    {if empty($data)}
+    <div class="null_box">
+        <img src="__STATIC__/index/image/icon/img14.png">
+        <p class="p1">您还没有相关的订单</p>
+        <p class="p2">可以去看看有哪些想买的</p>
+    </div>
+    {/if}
+
+    <script type="text/javascript" src="__STATIC__/index/js/jquery.js"></script>
+    <script>
+        (function(){
+            var status_len = $('.status_p').length;
+            var status_p = $('.status_p');
+            for(var i = 0; i < status_len; i++){
+                if(status_p[i].innerHTML == '2'){
+                    status_p[i].innerHTML = '买家已付款';
+                }
+            }
+        })()
+    </script>
+    <!--点进去订单详情-->
+    <script>
+        $(".details_order").click(function () {
+            var order_id = $(this)[0].id.split('_')[2];
+            $.ajax({
+                type:'POST',
+                url:'{:url("index/Order/ajax_id")}',
+                data:{
+                    'order_id':order_id
+                },
+                dataType: 'json',
+                success: function(data){
+                    console.log(data);
+                    window.location.href ="order_details";
+                },
+                error:function(data) {
+                    console.log("失败");
+                },
+            });
+        });
+    </script>
+</body>
+</html>

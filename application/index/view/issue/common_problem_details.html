@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>常见问题详情</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .wrapper{
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .wrapper p{
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .wrapper img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    
+</div>
+
+<script src="__STATIC__/index/js/jquery.js"></script>
+<script>
+    $.ajax({
+        url: '{:url("index/Issue/details")}',
+        type: 'POST',
+        dataType: 'JSON',
+        success: function(data){
+            console.log(data);
+            $('.wrapper').append(data.data[0].issue_detail);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+</script>
+</body>
+</html>

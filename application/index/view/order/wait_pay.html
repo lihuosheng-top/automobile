@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>待付款</title>
+    <link rel="stylesheet" href="__STATIC__/index/css/aui.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/member.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/cart2main.css">
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .null_box img{
+            width: 128px;
+            height: 128px;
+        }
+    </style>
+</head>
+<body>
+    <div class="list_box">
+        <a href="{:url('index/Order/myorder')}" >全部</a>
+        <a href="{:url('index/Order/wait_pay')}" class="active">待付款</a>
+        <a href="{:url('index/Order/wait_deliver')}">待发货</a>
+        <a href="{:url('index/Order/take_deliver')}">待收货</a>
+        <a href="{:url('index/Order/evaluate')}" >待评价</a>
+    </div>
+    {if !empty($data)}
+    <div class="order_box">
+        <ul class="order_ul">
+            {volist name="data" id="vo"}
+            <li class="order_li clearfix">
+                <a  id="details_order_{$vo.id}" class="details_order">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-media" style="width:120px; height: 90px;">
+                            <img src="__UPLOADS__/{$vo.goods_img}">
+                        </div>
+                        <div class="aui-list-item-inner">
+                            <p class="status_p">{$vo.status}</p>
+                            <div class="aui-list-item-text">
+                                <div style="display: none">{$vo.id}</div>
+                                <div class="aui-list-item-title">{$vo.goods_name}</div>
+                            </div>
+                            <div><span class="aui-margin-l-5">￥{$vo.pay_money}</span></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="javascript:;" id="payment_{$vo.id}" class="payment public_btn mg_left5 ">付款</a>
+                <a href="javascript:;" id="cancel_order_{$vo.id}" class="cancel_order public_btn cancel_order">取消订单</a>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    {/if}
+    {if empty($data)}
+    <div class="null_box">
+        <img src="__STATIC__/index/image/icon/img14.png">
+        <p class="p1">您还没有相关的订单</p>
+        <p class="p2">可以去看看有哪些想买的</p>
+    </div>
+    {/if}
+    <!-- 弹窗遮罩 -->
+    <div class="mask" style="position:absolute;"></div>
+    <!-- 支付弹窗 -->
+    <form name=alipayment action='{:url("index/Alipay/aliPay")}' method=post target="_blank">
+        <div id="body" class="fadeIn">
+            <div class="head">
+                <div class="head_close">×</div>
+                <div class="head_title">确认付款</div>
+            </div>
+            <div class="middle_box">
+                <div class="price_p">
+                    <span>￥</span>
+                    <input id="WIDtotal_amount" name="WIDtotal_amount">
+                </div>
+                <ul class="content">
+                    <li>
+                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no">
+                    </li>
+                    <li>
+                        订单名称: <input id="WIDsubject" name="WIDsubject">
+                    </li>
+                    <li>
+                        商品描述: <input id="WIDbody" name="WIDbody">
+                    </li>
+                </ul>
+            </div>
+            <button class="new-btn-login" type="submit" style="text-align:center;">立即付款</button>
+        </div>
+    </form>
+
+<script type="text/javascript" src="__STATIC__/index/js/jquery.js"></script>
+<script>
+    (function(){
+        var status_len = $('.status_p').length;
+        var status_p = $('.status_p');
+        for(var i = 0; i < status_len; i++){
+            if(status_p[i].innerHTML == '1'){
+                status_p[i].innerHTML = '等待买家付款';
+            }
+        }
+    })()
+
+    $('#payment').click(function(){
+        $('.fadeIn').animate({'bottom':'0'});
+        $('.mask').css('display', 'block');
+    })
+    $('.head_close').click(function(){
+        $('.fadeIn').animate({'bottom':'-100%'});
+        $('.mask').css('display', 'none');
+    })
+</script>
+
+<!--取消订单-->
+    <script>
+        $(".cancel_order").click(function () {
+            var order_id = $(this)[0].id.split('_')[2];
+            $.ajax({
+                type:'POST',
+                url:'{:url("index/Order/cancel_order")}',
+                data:{
+                    'order_id':order_id
+                },
+                dataType: 'json',
+                success: function(data){
+                    alert(data.msg);
+                    location.reload();
+                },
+                error:function(data) {
+                    alert(data.msg);
+                },
+            });
+        });
+    </script>
+
+<!--点进去订单详情-->
+    <script>
+        $(".details_order").click(function () {
+            var order_id = $(this)[0].id.split('_')[2];
+            alert(order_id);
+            $.ajax({
+                type:'POST',
+                url:'{:url("index/Order/ajax_id")}',
+                data:{
+                    'order_id':order_id
+                },
+                dataType: 'json',
+                success: function(data){
+                    console.log(data);
+                   window.location.href ="order_details";
+                },
+                error:function(data) {
+                    console.log("失败");
+                },
+            });
+        });
+    </script>
+
+    <!-- 付款 -->
+<script>
+        $('.payment').click(function(){
+            var id = $(this)[0].id.split('_')[1];
+            $.ajax({
+                url: "{:url('index/Order/read_order_to_pay')}",
+                type: 'POST',
+                async: false,
+                dataType: 'json',
+                data: {
+                    'id':id
+                },
+                success: function(data){
+                    console.log(data);
+                    $("#WIDout_trade_no").val(data.data.order_information_number);
+                    $("#WIDbody").val(data.data.goods_name);
+                    $("#WIDsubject").val(data.data.goods_name);
+                    $("#WIDtotal_amount").val(data.data.pay_money);
+                    $('.fadeIn').animate({'bottom':'0'});
+                    $('.mask').css('display','block');
+                },
+                error: function(data){
+                    console.log('失败');
+                }
+            })
+        })
+        // 取消付款 关闭按钮
+        $('.head_close').click(function(){
+            $('.fadeIn').animate({'bottom':'-100%'});
+            $('.mask').css('display','none');
+        })
+    </script>
+</body>
+</html>

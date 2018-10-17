@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>维修详情信息</title>
+    <link rel="stylesheet" href="__STATIC__/index/css/aui.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/repair/detail_info.css">
+    <style>
+        body, html{
+            margin: 0;
+            padding: 0;
+        }
+        p, div, a, button, input, form, textarea{
+            font-family: "微软雅黑", Arial, Helvetica, sans-serif !important;
+        }
+        .header_box, .header_box .bar-header{
+            background-color: #fff;
+        }
+        .header_box a{
+            padding-top:5px;
+            display:inline-block;
+            padding-left:10px;
+        }
+        .header_box a i{
+            font-weight:800;
+            color:#000;
+            font-size:20px;
+        }
+        .header_box .title{
+            width: 60%;
+        }
+    </style>
+</head>
+<body>
+<div class="header_box">
+    <div class="bar bar-header">
+        <a class="back" href="javascript:history.back(-1);"">
+            <i class="aui-iconfont aui-icon-left"></i>
+        </a>
+        <div id="title" class="h1 title">服务单详情</div>
+    </div>
+</div>
+<div class="wrapper">
+    {volist name="serve" id="value"}
+    <div class="title_bg">
+        <p class="repair_status">待审核</p>
+        <div class="status_bar">
+            <div class="status_bar_gray"></div>
+            <div class="true_div">
+                <span class="one" style="visibility: inherit;"></span>
+                <span class="two"></span>
+                <span class="three"></span>
+                <span class="four"></span>
+                <span class="five"></span>
+            </div>
+            <div class="bar_div"></div>
+        </div>
+        <div class="progress">
+            <span>提交申请</span>
+            <span>嘎嘎靓审核</span>
+            <span>嘎嘎靓收货</span>
+            <span>嘎嘎靓处理</span>
+            <span>完成</span>
+        </div>
+    </div>
+    <div class="float_inner">
+        <div class="count_down">
+            <p>
+                <span class="cont">您的服务单已申请成功，待售后审核中</span>
+                <!--<span class="time">08小时19分51秒</span>内为您-->
+                <!--<span class="status">审核</span>-->
+            </p>
+        </div>
+
+        <div class="comm_record">
+            <a href="javascript:;">
+                <p class="title">沟通记录</p>
+                <p class="user_desc">问题描述：<span>{$value.serve_describe}</span></p>
+            </a>
+        </div>
+        <div class="goods_info">
+            <p class="title">商品信息</p>
+            <div class="goods_info_box">
+                <div class="goods_img">
+                    <img src="{$value.goods_img}">
+                </div>
+                <div class="name_price">
+                    <p class="name_info">{$value.goods_name}</p>
+                    <p class="price">单价￥<span>{$value.order_money}</span> &nbsp;&nbsp;申请数量:<span class="num">{$value.order_num}</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="user_detail_info">
+            <div class="repair_info">
+                <div class="service_num">
+                    服务单号：<input type="text" id="input" value="{$value.serve_num}">
+                    <span class="copy" onclick="copyUrl()">复制</span>
+                </div>
+                <div class="apply_time">
+                    申请时间：<span>{$value.create_time|date='Y-m-d H:i',###}</span>
+                </div>
+                <div class="service_type">
+                    服务类型：<span>维修</span>
+                </div>
+                <div class="apply_reason">
+                    申请原因：<span>{$value.reason}</span>
+                </div>
+            </div>
+            <div class="addr_info">
+                <div class="return_goods">
+                    商品退回：<span>客户送货</span>
+                </div>
+                <div class="accept_addr">
+                    收货地址：<span>{$value.harvest_address}</span>
+                </div>
+            </div>
+            <div class="user_info">
+                <div class="user_name">
+                    联系人：&nbsp;&nbsp;&nbsp;<span>{$value.harvester}</span>
+                </div>
+                <div class="user_phone">
+                    联系电话：<span>{$value.harvest_phone_num}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="operation">
+        <input type="input" hidden id="status" value="{$value.status}">
+        <a href="javascript:cancel_pop();" id="qxsq">取消申请</a>
+        <a href="{:url('index/self_service/repair_desc_edit',['id'=>$value.id])}">修改申请</a>
+    </div>
+
+</div>
+<!-- 弹窗 遮罩 -->
+<div class="mask" id="mask"></div>
+<div class="pop" id="pop1">
+    <div class="cont">确定要取消本次售后申请吗?</div>
+    <div class="btn_div">
+        <a href="javascript:hide_pop(0);" class="cancel">取消</a>
+        <a href="{:url('index/self_service/repair_del',['id'=>$value.id])}" class="confirm">确定</a>
+    </div>
+</div>
+{/volist}
+
+<script src="__STATIC__/index/js/jquery.js"></script>
+<script>
+    function cancel_pop(){
+        $('#pop1').show();
+        $('#mask').show();
+    }
+    function hide_pop(status){
+        $('#pop1').hide();
+        $('#mask').hide();
+        // console.log(status);
+    }
+    // 判断状态值
+    var s = $('#status').val();
+    switch(s){
+        case '2':
+            $('.two').css('visibility', 'inherit');
+            $('.bar_div').addClass('sec');
+            $('.repair_status')[0].innerHTML = '审核通过';
+            $('.count_down').find('.cont')[0].innerHTML = '您的申请审核通过，等待收货中！';
+            break;
+        case '3':
+            $('.two').css('visibility', 'inherit');
+            $('.three').css('visibility', 'inherit');
+            $('.bar_div').addClass('third');
+            $('.repair_status')[0].innerHTML = '已收货';
+            $('.count_down').find('.cont')[0].innerHTML = '已收货，等待处理中！';
+            break;
+        case '4':
+            $('.two').css('visibility', 'inherit');
+            $('.three').css('visibility', 'inherit');
+            $('.four').css('visibility', 'inherit');
+            $('.bar_div').addClass('fourth');
+            $('.repair_status')[0].innerHTML = '已处理';
+            $('.count_down').find('.cont')[0].innerHTML = '您的申请已处理，等待完成！';
+            break;
+        case '5':
+            $('.two').css('visibility', 'inherit');
+            $('.three').css('visibility', 'inherit');
+            $('.four').css('visibility', 'inherit');
+            $('.five').css('visibility', 'inherit');
+            $('.bar_div').addClass('fifth');
+            $('.repair_status')[0].innerHTML = '已完成';
+            $('.count_down').find('.cont')[0].innerHTML = '您的申请已完成！';
+            break;
+    }
+
+    function copyUrl() {
+        var Url=document.getElementById("input");
+        Url.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        alert("复制成功！");
+    }
+</script>
+</body>
+</html>
