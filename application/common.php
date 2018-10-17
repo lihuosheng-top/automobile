@@ -16,130 +16,18 @@
  * Date: 2018/5/26
  * Time: 10:53
  */
-
-/**
- *阿里大鱼短信接口
- */
-use Aliyun\Core\Config;
-use Aliyun\Core\Profile\DefaultProfile;
-use Aliyun\Core\DefaultAcsClient;
-use Aliyun\Api\Sms\Request\V20170525\SendSmsRequest;
-
-/**
- **************李火生*******************
- * @param $object
- * @return mixed
- * 阿里大鱼短信接口
- **************************************
- */
-
-//阿里短信函数，$mobile为手机号码，$code为自定义随机数(注册)
-function sendMsg($mobile,$code){
-
-    //这里的路径EXTEND_PATH就是指tp5根目录下的extend目录，系统自带常量。alisms为我们复制api_sdk过来后更改的目录名称
-
-    include(EXTEND_PATH.'alisms/vendor/autoload.php');
-    Config::load();             //加载区域结点配置
-
-    $accessKeyId = 'LTAID1DEcOCLzwmv';  //阿里云短信获取的accessKeyId
-
-    $accessKeySecret = 'KGMpwJhSxw76U0BoYcoNWzuGJh1pJ4';    //阿里云短信获取的accessKeySecret
-
-    //这个个是审核过的模板内容中的变量赋值，记住数组中字符串code要和模板内容中的保持一致
-    //比如我们模板中的内容为：你的验证码为：${code}，该验证码5分钟内有效，请勿泄漏！
-    $templateParam = array("code"=>$code);           //模板变量替换
-    $signName = '嘎嘎靓科技'; //这个是短信签名，要审核通过
-    $templateCode = 'SMS_147480025';   //短信模板ID，记得要审核通过的
-    //短信API产品名（短信产品名固定，无需修改）
-    $product = "Dysmsapi";
-    //短信API产品域名（接口地址固定，无需修改）
-    $domain = "dysmsapi.aliyuncs.com";
-    //暂时不支持多Region（目前仅支持cn-hangzhou请勿修改）
-    $region = "cn-hangzhou";
-
-    // 初始化用户Profile实例
-    $profile = DefaultProfile::getProfile($region, $accessKeyId, $accessKeySecret);
-    // 增加服务结点
-    DefaultProfile::addEndpoint("cn-hangzhou", "cn-hangzhou", $product, $domain);
-    // 初始化AcsClient用于发起请求
-    $acsClient= new DefaultAcsClient($profile);
-
-    // 初始化SendSmsRequest实例用于设置发送短信的参数
-    $request = new SendSmsRequest();
-    // 必填，设置雉短信接收号码
-    $request->setPhoneNumbers($mobile);
-
-    // 必填，设置签名名称
-    $request->setSignName($signName);
-
-    // 必填，设置模板CODE
-    $request->setTemplateCode($templateCode);
-
-    // 可选，设置模板参数
-    if($templateParam) {
-        $request->setTemplateParam(json_encode($templateParam));
-    }
-    //发起访问请求
-    $acsResponse = $acsClient->getAcsResponse($request);
-
-    //返回请求结果
-    $result = json_decode(json_encode($acsResponse),true);
-    return $result;
-}
-
-
-//阿里鱼密码找回
-function sendMsgPassword($mobile,$password){
-
-    //这里的路径EXTEND_PATH就是指tp5根目录下的extend目录，系统自带常量。alisms为我们复制api_sdk过来后更改的目录名称
-    include(EXTEND_PATH.'alisms/vendor/autoload.php');
-    Config::load();             //加载区域结点配置
-
-    $accessKeyId = 'LTAID1DEcOCLzwmv';  //阿里云短信获取的accessKeyId
-
-    $accessKeySecret = 'KGMpwJhSxw76U0BoYcoNWzuGJh1pJ4';    //阿里云短信获取的accessKeySecret
-
-    //这个个是审核过的模板内容中的变量赋值，记住数组中字符串code要和模板内容中的保持一致
-    //比如我们模板中的内容为：你的验证码为：${code}，该验证码5分钟内有效，请勿泄漏！
-    $templateParam = array("password"=>$password);           //模板变量替换
-    $signName = '嘎嘎靓科技'; //这个是短信签名，要审核通过
-    $templateCode = 'SMS_147415726';   //短信模板ID，记得要审核通过的
-//      $templateCode = 'SMS_116781357';   //短信模板ID，记得要审核通过的
-    //短信API产品名（短信产品名固定，无需修改）
-    $product = "Dysmsapi";
-    //短信API产品域名（接口地址固定，无需修改）
-    $domain = "dysmsapi.aliyuncs.com";
-    //暂时不支持多Region（目前仅支持cn-hangzhou请勿修改）
-    $region = "cn-hangzhou";
-
-    // 初始化用户Profile实例
-    $profile = DefaultProfile::getProfile($region, $accessKeyId, $accessKeySecret);
-    // 增加服务结点
-    DefaultProfile::addEndpoint("cn-hangzhou", "cn-hangzhou", $product, $domain);
-    // 初始化AcsClient用于发起请求
-    $acsClient= new DefaultAcsClient($profile);
-
-    // 初始化SendSmsRequest实例用于设置发送短信的参数
-    $request = new SendSmsRequest();
-    // 必填，设置雉短信接收号码
-    $request->setPhoneNumbers($mobile);
-
-    // 必填，设置签名名称
-    $request->setSignName($signName);
-
-    // 必填，设置模板CODE
-    $request->setTemplateCode($templateCode);
-
-    // 可选，设置模板参数
-    if($templateParam) {
-        $request->setTemplateParam(json_encode($templateParam));
-    }
-    //发起访问请求
-    $acsResponse = $acsClient->getAcsResponse($request);
-
-    //返回请求结果
-    $result = json_decode(json_encode($acsResponse),true);
-    return $result;
+//手机验证码
+function phone($account= "",$password = '', $phone = "" ,$content = ""){
+    $url = "http://120.26.38.54:8000/interface/smssend.aspx";
+    $post_data = array ("account" => $account,"password" => $password,"mobile"=>$phone,"content"=>$content);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL,$url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+    $output = curl_exec($ch);
+    curl_close($ch);
+    return $output;
 }
 
 
@@ -553,81 +441,4 @@ function _tree_sorts($arr){
 }
 
 
-function new_images($arr,$dir_name){
-
-    $dir = (ROOT_PATH . 'public' . DS . 'uploads/'.$arr);
-
-    $jpg = strrchr($dir,".");
-
-    $image_name = uniqid().date("Ymd").$jpg;
-
-    $goods_url = str_replace("\\", "/", $dir);
-
-    $new_name = str_replace("\\", "/", $dir_name);
-
-    $name = strrchr($new_name,"/");
-
-    $numbers = substr($name,1)."/".$image_name;
-
-    $dir_bool = copy($goods_url,$new_name."/".$image_name);
-    if($dir_bool){
-        return $numbers;
-    }
-
-}
-
-
-function new_image($arr,$dir_name){
-
-    $dir = (ROOT_PATH . 'public' . DS . 'upload/'.$arr);
-
-    $jpg = strrchr($dir,".");
-
-    $image_name = uniqid().date("Ymd").$jpg;
-
-    $goods_url = str_replace("\\", "/", $dir);
-
-    $new_name = str_replace("\\", "/", $dir_name);
-
-    $name = strrchr($new_name,"/");
-
-    $numbers = substr($name,1)."/".$image_name;
-
-    $dir_bool = copy($goods_url,$new_name."/".$image_name);
-    if($dir_bool){
-        return $numbers;
-    }
-
-}
-
-
-function show_category($arr){
-    if(!empty($arr)){
-        foreach ($arr as $value){
-            echo '<ul>' ;
-                 echo '<li class="childLi">' ;
-                     echo  '<span class="parent_span">' ;
-                          echo  $value['name'] ;
-                          echo '<button id='.$value['id'].'>' . '+' . '</button>' ;
-                     echo  '</span>';
-                             if($value["sub"]) {
-                                 show_category($value["sub"]);
-                             }
-                 echo '</li>' ;
-            echo  '</ul>';
-        }
-    }
-}
-
-
-function showCategory($arr,$pid=0,$form=""){   //利用递归函数实现无限分类的效果
-    $form.="&nbsp&nbsp&nbsp";   //让下拉框出现无限分类的层次效果
-    foreach ($arr as $value){
-        if($value['pid']==$pid){   //出现顶级分类的效果
-            echo "<option value='{$value['id']}'>".$form.$value['cname']."</option>";  //通过id调用cname名称
-            showCategory($arr,$value['id'],$form);   //递归函数，自己调用自己
-
-        }
-    }
-}
 

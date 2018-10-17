@@ -46,7 +46,6 @@ class checkLogin extends Controller {
                     }
                 }
             }
-
             $menu_list = _tree_hTree(_tree_sort($menu_list,"sort_number"));
             config("menu_list",$menu_list);
             //halt(Config::get("menu_list"));

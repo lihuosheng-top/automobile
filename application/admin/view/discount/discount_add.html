@@ -1,87 +1,258 @@
-{extend name="layout"}
+{include file="template/_meta" /}
+<title></title>
+</head>
+
 {block name="css"}
 
-<!--自定义内容-->
-<style>
-    .wrapper label{
-        display: inline-block;
-        width: 200px !important;
-        text-align: right;
-        padding-right: 15px;
-        box-sizing: border-box;
-    }
-    .wrapper form label span{
-        display: inline-block;
-        text-align: center;
-    }
-    .wrapper form input.submit{
-        margin: 20px 0 0 110px;
-        width: 200px;
-        height: 30px;
-        border: 0;
-        background-color:rgb(0, 158, 250);
-        cursor: pointer;
-        color: #fff;
-        font-size: 16px;
-        line-height: 30px;
-        text-align: center;
-    }
-    .wrapper form input.submit:hover{
-        background-color:rgb(27, 169, 252);
-    }
-    input{
-        border: 1px solid #ccc;
-        padding: 3px;
-    }
+<style type="text/css">
+	body{
+		background: #fff;
+	}
+.layui-form	label{
+		width: 25%;
+		text-align: left;
+	}
+	.layui-input-block{
+		width: 70%;
+	}
+.layui-form .layui-input-block input{
+	width: 70%;
+}
+.layui-form-label span{
+	color: red;
+}
+.layui-form{
+	width: 80%;
+	margin: 0 auto;
+	padding-top: 40px;
+}
+.layui-form-select dl{
+	    min-width: 70% ;
+    left: 57px;
+}
 </style>
-
+<style type="text/css">
+			.tree {
+				min-height: 20px;
+				padding: 19px;
+				margin-bottom: 20px;
+				background-color: #fbfbfb;
+				border: 1px solid #999;
+				-webkit-border-radius: 4px;
+				-moz-border-radius: 4px;
+				border-radius: 4px;
+				-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+				-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+				box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05)
+			}
+			.tree  ul{
+				margin-left: 60px;
+			}
+			.tree li {
+				list-style-type: none;
+				margin: 0;
+				padding: 10px 5px 0 5px;
+				position: relative
+			}
+			
+			.tree li::before,
+			.tree li::after {
+				content: '';
+				left: -20px;
+				position: absolute;
+				right: auto
+			}
+			
+			.tree li::before {
+				border-left: 1px solid #999;
+				bottom: 50px;
+				height: 100%;
+				top: 0;
+				width: 1px
+			}
+			
+			.tree li::after {
+				border-top: 1px solid #999;
+				height: 20px;
+				top: 29px;
+				width: 25px
+			}
+			
+			.tree li span {
+				-moz-border-radius: 5px;
+				-webkit-border-radius: 5px;
+				border: 1px solid #999;
+				border-radius: 5px;
+				display: inline-block;
+				padding: 3px 8px;
+				text-decoration: none
+			}
+			
+			.tree li.parent_li>span {
+				cursor: pointer
+			}
+			
+			.tree>ul>li::before,
+			.tree>ul>li::after {
+				border: 0
+			}
+			
+			.tree li:last-child::before {
+				height: 30px
+			}
+			
+			.tree li.parent_li>span:hover,
+			.tree li.parent_li>span:hover+ul li span {
+				background: #eee;
+				border: 1px solid #94a0b4;
+				color: #000
+			}
+		</style>
 {/block}
-
-
+<body>
 {block name="content"}
-<div class="wrapper">
-    <form action="{:url('admin/Discount/save')}" method="post" enctype="multipart/form-data">
-        <label class="form-label col-xs-4 col-sm-3" id=""><span>优惠券名称</span></label>
-        <input type="text" name="discounts_name" value="" style="margin-bottom: 20px;"><br/>
-        <label class="form-label col-xs-4 col-sm-3">APP下载地址</label>
-        <input type="text" name="address" value="" style="margin-bottom: 20px;"><br/>
-        <label><span>有效日期</span></label>
+<form class="layui-form" action="{:url('admin/Discount/save')}" method="post" enctype="multipart/form-data">
+	 <div class="layui-form-item ">
+    <label class="layui-form-label">优惠劵种类一</label>
+    <div class="layui-input-block">
+     邀请码优惠券</div>
+  </div>
+  <div class="layui-form-item ">
+    <label class="layui-form-label"><span>*</span>APP下载地址</label>
+    <div class="layui-input-block">
+      <input type="text" name="address" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input">
+    </div>
+  </div>
+   <div class="layui-form-item">
+    <label class="layui-form-label"><span>*</span>发放数量</label>
+    <div class="layui-input-block">
+      <input type="text" name="discounts_number" lay-verify="title" autocomplete="off" placeholder="请输入部门" class="layui-input">
+    </div>
+  </div>
+     <div class="layui-form-item">
+    <label class="layui-form-label">有效期</label>
+    <div class="layui-input-block">
         <select name="over_time">
             <option value="day">1日</option>
             <option value="week">1周</option>
             <option value="month">1月</option>
             <option value="year">1年</option>
         </select>
-        <br/>
-        <label class=""><span>优惠金额</span></label>
-        <input type="text" name="discounts_money" style="margin-bottom: 20px;">
-        <br/>
-        <label class=""><span>优惠券有效图片</span></label>
-        <input type="file" name="discounts_valid_images" style="margin-bottom: 20px;">
-        <br/>
-        <label class=""><span>优惠券失效图片图片</span></label>
-        <input type="file" name="discounts_failure_images" style="margin-bottom: 20px;">
-        <br/>
-        <label class=""><span>领取限制</span></label>
-        <input type="text" name="restriction" style="margin-bottom: 20px;">
-        <br/>
-        <label class=""><span>商品最低售价使用金额</span></label>
-        <input type="text" name="bottom_money" style="margin-bottom: 20px;">
-        <br/>
-        <label><span>优惠券状态</span></label>
-        <select name="status">
-            <option value="1">未使用</option>
-            <option value="2">已使用</option>
-            <option value="3">已失效</option>
-        </select>
-        <br/>
-        <input type="submit" class="submit" value="提交">
-    </form>
+    </div>
+  </div>
+    <div class="layui-form-item">
+    <label class="layui-form-label"><span>*</span>优惠金额</label>
+    <div class="layui-input-block">
+      <input type="text" name="discounts_money" lay-verify="title" autocomplete="off" placeholder="请输入优惠金额" class="layui-input">
+    </div>
+  </div>
+        <div class="layui-upload">
+    	 <label class="layui-form-label">有效优惠劵图片</label>
+    	<div class="layui-input-block">
+		  <div class="img-box full">
+	<section class=" img-section">
+	
+		<div class="z_photo upimg-div clear" >
+				 <section class="z_file fl">
+					<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+					<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+				 </section>
+		 </div>
+	 </section>
 </div>
+<aside class="mask works-mask">
+	<div class="mask-content">
+		<p class="del-p ">您确定要删除作品图片吗？</p>
+		<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+	</div>
+</aside>
+
+</div>
+  </div>
+   </div>
+   <div class="layui-upload">
+    	 <label class="layui-form-label">失效优惠劵图片</label>
+    	<div class="layui-input-block">
+			 <div class="img-box full">
+				<section class=" img-section">
+					<div class="z_photo upimg-div clear" >
+							 <section class="z_file fl">
+								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+							 </section>
+					 </div>
+				 </section>
+			</div>
+			<aside class="mask works-mask">
+				<div class="mask-content">
+					<p class="del-p ">您确定要删除作品图片吗？</p>
+					<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+				</div>
+			</aside>
+
+</div>
+  </div>
+  
+    <div class="layui-form-item">
+    <label class="layui-form-label"><span>*</span>领取限制</label>
+    <div class="layui-input-block">
+      <input type="text" name="restriction" lay-verify="title" autocomplete="off" placeholder="请输入部门" class="layui-input">
+      <p style="color: #333;">0表示不限制</p>
+    </div>
+  </div>
+      <div class="layui-form-item">
+    <label class="layui-form-label"><span>*</span>商品最低售价使用金额：</label>
+    <div class="layui-input-block">
+      <input type="text" name="bottom_money" lay-verify="title" autocomplete="off" placeholder="请输入部门" class="layui-input">
+      <p style="color: #333;">0表示不限制</p>
+    </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">优惠券状态</label>
+          <div class="layui-input-block">
+              <select name="status">
+                  <option value="1">未使用</option>
+                  <option value="2">已使用</option>
+                  <option value="3">已失效</option>
+              </select>
+          </div>
+      </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block" style="width: 300px;">
+      <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+      <button class="layui-btn" lay-submit="" lay-filter="demo1">返回</button>
+    </div>
+  </div>
+</form>
+
+</script>
 
 {/block}
 
+<!--_footer 作为公共模版分离出去-->
+{include file="template/_footer" /}
+<!--/_footer 作为公共模版分离出去-->
 
+<!--请在下方写此页面业务相关的脚本-->
 {block name="bottom"}
+<script type="text/javascript">
+	
+		layui.config({
+	base : "js/"
+}).use(['form','layer','jquery','laypage'],function(){
+	var form = layui.form(),
+		layer = parent.layer === undefined ? layui.layer : parent.layer,
+		laypage = layui.laypage,
+		$ = layui.jquery;
+});
 
+	</script>
+		<script type="text/javascript">
+layui.use('form', function(){
+  var form = layui.form;
+
+  //各种基于事件的操作，下面会有进一步介绍
+});
 {/block}
+
+</body>
+</html>

@@ -5,15 +5,13 @@ use think\Controller;
 use think\Request;
 class Role extends Controller
 {
-    public $role_status = ['禁用','启用'];
     /**
      * [角色列表]
      * 陈绪
      */
-    public function index(){
+    public function index(Request $request){
         $role_lists = db("role")->select();
         foreach($role_lists as $key=>$value){
-            $role_lists[$key]["parse_status"] = $this->role_status[$value["status"]];
             if($value["pid"]){
                 $rs = db("role")->where("id",$value['pid'])->field("name")->find();
                 $role_lists[$key]["parent_depart_name"] = $rs["name"];
@@ -90,6 +88,34 @@ class Role extends Controller
         }
     }
 
+
+    /**
+     * 角色状态修改
+     * @param Request $request
+     */
+    public function status(Request $request){
+        if($request->isPost()) {
+            $status = $request->only(["status"])["status"];
+            if($status == 1) {
+                $id = $request->only(["id"])["id"];
+                $bool = db("role")->where("id", $id)->update(["status" => 0]);
+                if ($bool) {
+                    $this->redirect(url("admin/role/index"));
+                } else {
+                    $this->error("修改失败", url("admin/role/index"));
+                }
+            }
+            if($status == 0){
+                $id = $request->only(["id"])["id"];
+                $bool = db("role")->where("id", $id)->update(["status" => 1]);
+                if ($bool) {
+                    $this->redirect(url("admin/role/index"));
+                } else {
+                    $this->error("修改失败", url("admin/role/index"));
+                }
+            }
+        }
+    }
 
 
 }

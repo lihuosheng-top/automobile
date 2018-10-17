@@ -1,24 +1,22 @@
-<aside class="Hui-aside">
-	<div class="menu_dropdown bk_2">
+<div class="UCleft">
+	<input type="hidden" class="navlayout_parentMenu" value="HXY_FinanceCenter">
+	<div class="UCleft-fixed">
+		<p class="index_text">首页</p>
 		{volist name="menu_list" id="value"}
 		{if isset($value["sub"])}
-		<dl id="menu-admin">
-			<dt>{$value.name}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+		<dl class="">
+			<dt href="#">{$value.name}<font class="iconfont1"></font></dt>
 			<dd>
 				{volist name="$value.sub" id="val"}
-				<ul>
-					<li><a data-href="{:url($val['url'])}" data-title="{$val.name}" href="javascript:void(0)">{$val.name}</a></li>
-				</ul>
+				<p  class="" data-url="{:url($val['url'])}">{$val.name}</p>
 				{/volist}
 			</dd>
 		</dl>
 		{else}
-		<dl id="menu-system">
-			<dt><i class="Hui-iconfont">&#xe62d;</i>{$value.name}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+		<dl class="curr">
+			<dt href="#">{$value.name}<font class="iconfont1"></font></dt>
 		</dl>
 		{/if}
 		{/volist}
-
 	</div>
-</aside>
-<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
+</div>

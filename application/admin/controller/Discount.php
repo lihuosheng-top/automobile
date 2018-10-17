@@ -2,10 +2,9 @@
 /**
  * Created by PhpStorm.
  * User: admin
- * Date: 2018/8/13
- * Time: 14:46
+ * Date: 2018/9/26
+ * Time: 11:30
  */
-
 namespace app\admin\controller;
 use think\Controller;
 use think\Request;
@@ -55,6 +54,7 @@ class Discount extends Controller{
         $data["discounts_failure_images"] = str_replace("\\","/",$discounts_failure_images->getSaveName());
         $data['start_time'] = time();
         $data['over_time'] = strtotime("+1 $time");
+        $data["discounts_name"] = "邀请码优惠券";
         $bool = db("discounts")->insert($data);
         if($bool){
             $this->success("添加成功",url("admin/Discount/index"));
@@ -71,7 +71,7 @@ class Discount extends Controller{
      */
     public function edit($id){
         $discounts = db("discounts")->where("id",$id)->select();
-        return view("discounts_edit",["discounts"=>$discounts]);
+        return view("discount_edit",["discounts"=>$discounts]);
     }
 
 
@@ -90,6 +90,7 @@ class Discount extends Controller{
         $data["discounts_failure_images"] = str_replace("\\","/",$discounts_failure_images->getSaveName());
         $data['start_time'] = time();
         $data['over_time'] = strtotime("+1 $time");
+        $data["discounts_name"] = "邀请码优惠券";
         $bool = db("discounts")->where("id",$id)->update($data);
         if($bool){
             unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$discounts['discounts_valid_images']);

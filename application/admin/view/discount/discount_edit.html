@@ -1,0 +1,181 @@
+{include file="template/_meta" /}
+<title></title>
+</head>
+
+{block name="css"}
+
+<style type="text/css">
+	body{
+		background: #fff;
+	}
+.layui-form	label{
+		width: 26%;
+		text-align: left;
+	}
+	.layui-input-block{
+		width: 70%;
+	}
+.layui-form .layui-input-block input{
+	width: 97%;
+}
+.layui-form-label span{
+	color: red;
+}
+.layui-form{
+	width: 80%;
+	margin: 0 auto;
+	padding-top: 40px;
+}
+
+</style>
+{/block}
+<body>
+{block name="content"}
+<form class="layui-form" action="{:url('admin/Discount/updata')}" method="post" enctype="multipart/form-data">
+    {volist name="discounts" id="value"}
+    <div class="layui-form-item ">
+        <label class="layui-form-label">优惠劵种类一</label>
+        <div class="layui-input-block">
+            邀请码优惠券</div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label"><span>*</span>APP下载地址</label>
+        <div class="layui-input-block">
+        		
+            <input type="text" name="address" value="{$value.address}" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span>*</span>发放数量</label>
+        <div class="layui-input-block">
+            <input type="text" name="discounts_number" value="{$value.discounts_number}" lay-verify="title" autocomplete="off" placeholder="请输入部门" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">有效期</label>
+        <div class="layui-input-block">
+            <select name="over_time">
+                <option value="day">1日</option>
+                <option value="week">1周</option>
+                <option value="month">1月</option>
+                <option value="year">1年</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span>*</span>优惠金额</label>
+        <div class="layui-input-block">
+            <input type="text" name="discounts_money" value="{$value.discounts_money}" lay-verify="title" autocomplete="off" placeholder="请输入优惠金额" class="layui-input">
+        </div>
+    </div>
+       <div class="layui-upload">
+    	 <label class="layui-form-label">有效优惠劵图片</label>
+    	<div class="layui-input-block">
+		  <div class="img-box full">
+	<section class=" img-section">
+	
+		<div class="z_photo upimg-div clear" >
+				 <section class="z_file fl">
+					<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+					<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+				 </section>
+		 </div>
+	 </section>
+</div>
+<aside class="mask works-mask">
+	<div class="mask-content">
+		<p class="del-p ">您确定要删除作品图片吗？</p>
+		<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+	</div>
+</aside>
+
+</div>
+  </div>
+ 
+   <div class="layui-upload">
+    	 <label class="layui-form-label">失效优惠劵图片</label>
+    	<div class="layui-input-block">
+			 <div class="img-box full">
+				<section class=" img-section">
+					<div class="z_photo upimg-div clear" >
+							 <section class="z_file fl">
+								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+							 </section>
+					 </div>
+				 </section>
+			</div>
+			<aside class="mask works-mask">
+				<div class="mask-content">
+					<p class="del-p ">您确定要删除作品图片吗？</p>
+					<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+				</div>
+			</aside>
+
+</div>
+  </div>
+ 
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span>*</span>领取限制</label>
+        <div class="layui-input-block">
+            <input type="text" name="restriction" value="{$value.restriction}" lay-verify="title" autocomplete="off" placeholder="请输入部门" class="layui-input">
+            <p style="color: #333;">0表示不限制</p>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span>*</span>商品最低售价使用金额：</label>
+        <div class="layui-input-block">
+            <input type="text" name="bottom_money" value="{$value.bottom_money}" lay-verify="title" autocomplete="off" placeholder="请输入部门" class="layui-input">
+            <p style="color: #333;">0表示不限制</p>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">优惠券状态</label>
+            <div class="layui-input-block">
+                <select name="status">
+                    <option value="1">未使用</option>
+                    <option value="2">已使用</option>
+                    <option value="3">已失效</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="width: 300px;">
+                <input type="hidden" name="id" value="{$value.id}">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">返回</button>
+            </div>
+        </div>
+        {/volist}
+</form>
+
+</script>
+
+{/block}
+
+<!--_footer 作为公共模版分离出去-->
+{include file="template/_footer" /}
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+{block name="bottom"}
+<script type="text/javascript">
+		layui.config({
+	base : "js/"
+}).use(['form','layer','jquery','laypage'],function(){
+	var form = layui.form(),
+		layer = parent.layer === undefined ? layui.layer : parent.layer,
+		laypage = layui.laypage,
+		$ = layui.jquery;
+});
+
+	</script>
+		<script type="text/javascript">
+layui.use('form', function(){
+  var form = layui.form;
+
+  //各种基于事件的操作，下面会有进一步介绍
+});
+{/block}
+
+</body>
+</html>

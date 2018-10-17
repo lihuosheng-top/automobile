@@ -63,7 +63,7 @@ class Login extends Controller{
                 unset($userInfo->user_passwd);
                 Session("user_info", $userInfo);
                // $this->redirect(url("admin/index/index"));
-                $this->success("成功",url("admin/Index/index"));
+                $this->success("登录成功",url("admin/Index/index"));
             }
         }
     }

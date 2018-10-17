@@ -6,20 +6,18 @@ use think\Request;
 use think\Session;
 class Admin extends Controller
 {
-    public $account_status = ["禁用","启用"];
     /**
      * [管理员列表]
      * 陈绪
      */
-    public function index(){
+    public function index(Request $request){
         $account_list = db("admin")->order("id")->select();
         foreach ($account_list as $key=>$value){
             $account_list[$key]["role_name"] = db("role")->where("id",$value["role_id"])->value("name");
-            $account_list[$key]["status"] = isset($this->account_status[$value["status"]]) ? $this->account_status[$value["status"]] : '未知';
         }
         //halt($account_list);
         $roleList = getSelectList("role");
-        return view("index",["roleList"=>$roleList,"account_list"=>$account_list]);
+        return view("index",["account_list"=>$account_list,"roleList"=>$roleList]);
     }
 
     /**
@@ -43,9 +41,9 @@ class Admin extends Controller
         $boolData = model("Admin")->sSave($data);
 
         if($boolData){
-            $this->success("添加成功",url('admin/admin/index'));
-        } else {
-            $this->error("添加失败",url('admin/admin/index'));
+            $this->redirect(url("admin/admin/index"));
+        }else{
+            $this->redirect(url("admin/admin/add"));
         }
     }
 
@@ -56,9 +54,9 @@ class Admin extends Controller
     public function del($id){
         $bool = model("Admin")->where("id",$id)->delete();
         if($bool){
-            $this->success("添加成功",url('admin/admin/index'));
-        } else {
-            $this->error("添加失败",url('admin/admin/index'));
+            $this->redirect(url("admin/admin/index"));
+        }else{
+            $this->error(url("admin/admin/index"));
         }
     }
 
@@ -83,9 +81,55 @@ class Admin extends Controller
         $id = $request->only(['id'])['id'];
         $bool = db("Admin")->where('id', $id)->update($data);
         if ($bool){
-            $this->success("添加成功",url('admin/admin/index'));
-        } else {
-            $this->error("添加失败",url('admin/admin/index'));
+            $this->success("编辑成功",url("admin/admin/index"));
+        }else{
+            $this->error("编辑失败",url("admin/admin/edit"));
+        }
+    }
+
+
+
+    /**
+     * 管理员状态修改
+     * 陈绪
+     */
+    public function status(Request $request){
+        if($request->isPost()) {
+            $status = $request->only(["status"])["status"];
+            if($status == 1) {
+                $id = $request->only(["id"])["id"];
+                $bool = db("Admin")->where("id", $id)->update(["status" => 0]);
+                if ($bool) {
+                    $this->redirect(url("admin/admin/index"));
+                } else {
+                    $this->error("修改失败", url("admin/admin/index"));
+                }
+            }
+            if($status == 0){
+                $id = $request->only(["id"])["id"];
+                $bool = db("Admin")->where("id", $id)->update(["status" => 1]);
+                if ($bool) {
+                    $this->redirect(url("admin/admin/index"));
+                } else {
+                    $this->error("修改失败", url("admin/admin/index"));
+                }
+            }
+        }
+    }
+
+
+
+
+    /**
+     * 密码修改
+     * 陈绪
+     */
+    public function passwd(Request $request){
+        $id = $request->only(['id'])['id'];
+        $passwd = md5($request->only(["passwd"])["passwd"]);
+        $bool = db("Admin")->where("id",$id)->update(["passwd"=>$passwd]);
+        if($bool){
+            $this->success("修改成功，请重新登录", url("admin/Login/index"));
         }
     }
 

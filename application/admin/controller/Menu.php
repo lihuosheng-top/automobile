@@ -10,22 +10,18 @@ class Menu extends Controller
      * [节点显示]
      * 陈绪
      */
-    public function index(){
+    public function index(Request $request){
         $menu_lists = db("Menu")->order("sort_number")->paginate(10);
-        //$menu_list = genTree($menu_lists);
         $page = $menu_lists->render();
-        return view("index",["menu_list"=>$menu_lists,"page"=>$page]);
+        return view("index",["menu_lists"=>$menu_lists,"page"=>$page]);
     }
 
-    public function add($pid = 0){
-        $parent_cate = [];
+    public function add(Request $request,$pid = 0){
         $menu_list = [];
-        if($pid == 0){
+        if ($pid == 0) {
             $menu_list = getSelectList("menu");
-        }else{
-            $parent_cate = model("Menu")->where("id",$pid)->field()->select();
         }
-        return view("save",["menu_list"=>$menu_list,"parent_cate"=>$parent_cate]);
+        return view("save",["menu_list"=>$menu_list]);
     }
 
     /**

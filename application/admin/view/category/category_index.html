@@ -1,195 +1,188 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui2/css/amazeui2.1.spv3.min.css" />
+{include file="template/_meta" /}
+<title></title>
 </head>
+
+{block name="css"}
+
+<style type="text/css">
+	body {
+		background: #fff;
+	}
+		label{
+		text-align: left !important;
+	}
+	.layui-form-item{
+		width: 100%;
+  
+	}
+	.layui-form-label{
+		width: 26% !important;
+	}
+	.layui-input-inline{
+		width: 70% !important;
+	}
+</style>
+
+
+
+{/block}
 <body>
 
-<div class="conter-right-body">
-    <style>
-        *{
-            padding: 0;
-            margin: 0 !important;
-        }
-        .am-g{
-            padding: 30px 30px 0 30px;
-        }
-        .am-text-primary,.am-text-danger{
-            margin-right: 10px;
-        }
-        .noCats-box{
-            margin-left: 4em;
-            padding: 0.7em 0;
-            display: none;
-        }
-        .noCats-box section{
-            display: inline-block;
-            padding: 10px;
-            border: thin solid #ddd;
-            margin-right: 0.5em;
-            background: #ffffff;
-            cursor: pointer;
-        }
-        .admin-content #chooseCats{
-            max-height: 700px;
-        }
-        .pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}
-        .pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}
-        .pagination .active{background-color: #dd1a20;color: #fff;}
-        .pagination .disabled{color:#aaa;}
-        .dept_select{min-width: 200px;}
-        .am-text-truncate div{
-            vertical-align: middle;
-            display: inline-block;
-        }
-        ul{
-            list-style: none;
-        }
-        .childLi{
-            display: none;
-        }
-        .tree{
-            color: #000;
-        }
-        .tree button{
-            width: 15px;
-            height: 15px;
-            line-height: 11px;
-            text-align: center;
-            vertical-align: text-bottom;
-        }
-    </style>
+{block name="content"}
 
-    <!-- <div class="am-cf am-padding" onselectstart="return false">
-      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">分类管理</strong> / <small>共6条数据</small></div>
-    </div>
-    <hr> -->
+<div class="childrenBody">
+	<blockquote class="layui-elem-quote news_search">
+	<form class="layui-form" action="">
+		<div class="layui-form-item">
+			<div class="layui-inline">
+		<label class="layui-form-label">商品分类</label>
+		<div class="layui-input-inline">
+			<select name="interest" id="admin_status">
+				<option value="1" selected="">启用</option>
+				<option value="2">禁用</option>
+			</select>
+		</div>
+	</div>
+		<div class="layui-inline">
+		<label class="layui-form-label">商品状态</label>
+		<div class="layui-input-inline">
+			<select name="interest" id="admin_status">
+				<option value="1" selected="">启用</option>
+				<option value="2">禁用</option>
+			</select>
+		</div>
+	</div>
+	<div class="layui-inline">
+			<a class="layui-btn search_btn">搜索</a>
+		</div>
+	</div>
+	
+	</form>	
+		
+</blockquote>
+	<div class="layui-form-item">
+			<div class="layui-inline">
+			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
+		</div>
+		<div class="layui-inline">
+			<a class="layui-btn layui-btn-danger batchDel" href="{:url('admin/Category/add')}">添加</a>
+		</div>
+	     </div>
+	<div class="layui-form news_list">
+	  	<table class="layui-table">
+		    <colgroup>
+				<col width="3%">
+				<col width="9%">
+				<col width="9%">
+				<col width="9%">
+				<col width="9%">
+				<col width="9%">
+				<col width="15%">
+				<col>
+		    </colgroup>
+		    <thead>
+				<tr>
+					<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
+					<th >分类名称</th>
+					<th>上级分类</th>
+					<th>级别</th>
+					<th>排序</th>
+					<th>状态</th>
+					<th>操作</th>
+				</tr> 
+		    </thead>
+		    <tbody class="news_content">
+		    	<tr>
+		    		<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" ></td>
+					
+					<td align="left">admin</td>
+					<td>2</td>
+					<td>管理员</td>
+					<td>2018-09-26 09:47:52</td>
+					<td>
+						<input type="checkbox" class="Status" name="show" value="0" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="2"><div class="layui-unselect layui-form-switch" lay-skin="_switch"><em>否</em><i></i></div>
+						
+					</td>
+					<td>
+						<a class="layui-btn layui-btn-mini edit" href="/siring_ow/public/admin/admin_edit/id/2.html"><i class="iconfont icon-edit"></i> 编辑</a>
+						<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+					</td>
+				</tr>
+		    </tbody>
+		</table>
+	</div>
+	<div id="page"></div>
+	</div>
 
-    <div class="am-g">
-        <div class="am-fl am-cf">
-            <a href="{:url('admin/Category/add')}" type="button" class="am-btn am-btn-success blue-self">新建商品分组</a>
-        </div>
-        <!--    <select class="catList-yhc"></select>-->
-        <!-- <button style="margin-left: 1em" type="button" class="am-btn am-btn-primary choose-cats">
-            选择分类
-        </button> -->
-        <div class="noCats-box"></div>
-    </div>
+
+{/block}
+
+<!--_footer 作为公共模版分离出去-->
+{include file="template/_footer" /}
+<!--/_footer 作为公共模版分离出去-->
 
 
-    <div class="am-u-sm-12 pl0 pr0" style="min-height: 600px">
-        <table class="am-table am-table-hover table-main pro-table-self cats-table-self">
-            <thead>
-                <tr>
-                    <th class="table-check">
-                        <input type="checkbox" class="ccheckall">
-                        <a href="javascript:;" class="am-text-danger cdeleteall" style="margin-left:10px;color: #000"><span class="table-title">分类名称</span></a>
-                    </th>
-                    <th class="table-parent">id</th>
-                    <th class="table-parent">商品分类图标图片</th>
-                    <th class="table-parent">商品分类大图</th>
-                    <th class="table-status">状态</th>
-                    <th class="table-set">操作</th>
-                </tr>
-            </thead>
-            <tbody>
-            {volist name="category" id="value"}
-                <tr class="am-danger " data-id="118">
-                    <td class="table-check am-text-truncate width200">
-                        <input type="checkbox" class="ccheck">
-                        <div class="tree">
-                            <ul>
-                                <li>
-                                    <span class="parent_span">{$value.name}</span>
-                                    {$value.sub|show_category}
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>{$value.id}</td>
-                    <td><img width="60" class="product-thumb" src="__TYPE__/{$value.type_images}"></td>
-                    <td><img width="60" class="product-thumb" src="__TYPE__/{$value.type_show_images}"></td>
-                    <td><button data-status="{$value.status}" class="cstatus am-btn am-btn-xs am-btn-danger">已启用</button>
-                    <td>
-                        <a href="{:url('admin/Category/edit',['id'=>$value.id])}" target="_self" class="am-text-primary">编辑</a>
-                        <a href="{:url('admin/Category/del',['id'=>$value.id])}" class="am-text-danger cdelete" data-id="118">删除</a>
-                    </td>
-                </tr>
-            {/volist}
-            </tbody>
-        </table>
 
-    </div>
-    <div class="am-u-sm-12 pl0 pr0 pro-btngroup-self">
-        <!-- <div class="am-u-sm-12">
-                </div> -->
-    </div>
-    <div class="am-modal am-modal-no-btn" tabindex="-1" id="chooseCats">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">选择分类
-                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a>
-            </div>
-            <div class="am-modal-bd">
-                <div style="overflow: scroll;max-height: 40em">
-                    <select class="catList-yhc" style="display: none;"></select><div class="cly-open-btn" onselectstart="return false" style="display:inline-block;text-align:center;position:relative;z-index:999;margin-left:1em;"><p style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;display:none;color:black">选择分类</p><ul class="cly-ul" style="list-style-type:none;margin:0;padding:0;vertical-align:middle;border-radius:10px;background:#eee;padding-right:5px;" data-loop="0"><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="30" data-puid="0" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;color:white;background:#5eb95e;">女装</p><ul class="cly-ul" style="list-style-type:none;margin:0;padding:0;vertical-align:middle;border-radius:10px;background:#eee;padding-right:5px;" data-loop="1"><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="90" data-puid="30" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">上衣</p></li></ul></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="31" data-puid="0" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;color:white;background:#5eb95e;">男装</p><ul class="cly-ul" style="list-style-type:none;margin:0;padding:0;vertical-align:middle;border-radius:10px;background:#eee;padding-right:5px;" data-loop="1"><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="108" data-puid="31" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">男士上装</p></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="109" data-puid="31" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">男士下装</p></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="110" data-puid="31" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">男士外套</p></li></ul></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="32" data-puid="0" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">鞋靴</p></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="33" data-puid="0" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">箱包</p></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="93" data-puid="0" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;color:white;background:#5eb95e;">亚麻油</p><ul class="cly-ul" style="list-style-type:none;margin:0;padding:0;vertical-align:middle;border-radius:10px;background:#eee;padding-right:5px;" data-loop="1"><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="111" data-puid="93" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">麻油</p></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="112" data-puid="93" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">油脸</p></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="113" data-puid="93" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">亚麻油1</p></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="114" data-puid="93" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">亚麻油2</p></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="115" data-puid="93" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">亚麻油3</p></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="116" data-puid="93" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">亚麻油4</p></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="117" data-puid="93" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">亚麻油24</p></li></ul></li><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="118" data-puid="0" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;color:white;background:#5eb95e;">干果类</p><ul class="cly-ul" style="list-style-type:none;margin:0;padding:0;vertical-align:middle;border-radius:10px;background:#eee;padding-right:5px;" data-loop="1"><li class="cly-li" style="text-align:left;margin:6px 0;"><p class="cly-p" data-uid="189" data-puid="118" style="padding:0.6em 1.5em;display:inline-block;border:thin solid #ddd;background:white;min-width:4em;cursor:pointer;margin:0 6px;color:#777;">花生</p></li></ul></li></ul></div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--请在下方写此页面业务相关的脚本-->
+{block name="bottom"}
+<script type="text/javascript">
+		layui.config({
+	base : "js/"
+}).use(['form','layer','jquery','laypage'],function(){
+	var form = layui.form(),
+		layer = parent.layer === undefined ? layui.layer : parent.layer,
+		laypage = layui.laypage,
+		$ = layui.jquery;
+      var vals=$("input").data("id");
+	//是否展示
 
-</div>
+	//全选
+	form.on('checkbox(allChoose)', function(data){
+		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
+		child.each(function(index, item){
+			item.checked = data.elem.checked;
+		});
+		form.render('checkbox');
+	});
 
-<script type="text/javascript" src="__STATIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
-<script>
-    $('.tree').click(function(e){
-        var $this = e.target;
-        var clickTag = $($this)[0].tagName.toLowerCase();
-        var $innerHTML = $($this)[0].innerHTML;
-        if(clickTag == 'span'){
-            if($($this).siblings('ul')){
-                $($this).siblings('ul').children('li').toggleClass('childLi');
-            }
-        }else if(clickTag == 'button'){
-            if($(e.target)[0].innerHTML == '+'){
-                $(e.target)[0].innerHTML = '-';
-                // 点击按钮发送id
-                var id = $(e.target)[0].id;
-                $.ajax({
-                    url: '{:url("admin/Category/ajax_id")}',
-                    type: 'POST',
-                    dataType:"json",
-                    data:{
-                        "id":id
-                    },
-                    success: function(data){
-                        console.log(data);
-                        $($this).parents('tr').after('<tr class="am-danger " data-id="118">\
-                                            <td class="table-check am-text-truncate width200">\
-                                                <input type="checkbox" class="ccheck">\
-                                                '+data.data.name+'\
-                                            </td>\
-                                            <td>'+data.data.id+'</td>\
-                                            <td><img width="60" class="product-thumb" src="__TYPE__/'+data.data.type_images+'"></td>\
-                                            <td><img width="60" class="product-thumb" src="__TYPE__/'+data.data.type_show_images+'"></td>\
-                                            <td><button data-status="'+data.data.status+'" class="cstatus am-btn am-btn-xs am-btn-danger">已启用</button>\
-                                            <td>\
-                                                <a href="category_edit?id='+data.data.id+'" target="_self" class="am-text-primary">编辑</a>\
-                                                <a href="category_del?id='+data.data.id+'" class="am-text-danger cdelete" data-id="118">删除</a>\
-                                            </td>\
-                                        </tr>')
-                    },
-                    error:function() {
-                        console.log('错误');
-                    },
-                });
-            }else if($(e.target)[0].innerHTML == '-'){
-                $(e.target)[0].innerHTML = '+';
-                $($this).parents('tr').next().remove();
-            }
-        }
-    })
-</script>
+	//通过判断文章是否全部选中来确定全选按钮是否选中
+	form.on("checkbox(choose)",function(data){
+		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
+		var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
+		if(childChecked.length == child.length){
+			$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
+		}else{
+			$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
+		}
+		form.render('checkbox');
+	})
+
+	form.on('switch(isShow)', function(data){
+        var vals=data.value;
+		var id=$(this).data("id");
+		var status = $(".Status").value;
+
+       $.ajax({
+               type: "POST",
+                url: "{:url('')}",
+               data: {"id":id,"status":vals},
+               success: function(data){
+               	console.log("成功")
+			  },
+		      error:function (data) {
+				  console.log("错误")
+              }
+            });
+            
+         
+	})
+
+
+})
+
+	</script>
+
+{/block}
+
 </body>
 </html>

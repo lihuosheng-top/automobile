@@ -23,9 +23,7 @@ class Category extends Controller{
      */
     public function index(){
         $category = db("goods_type")->where("status","<>","0")->select();
-        $category_list = _tree_hTree(_tree_sort($category,"sort_number"));
-        //halt($category_list);
-        return view("category_index",["category"=>$category_list]);
+        return view("category_index",["category"=>$category]);
     }
 
     /**
@@ -52,16 +50,8 @@ class Category extends Controller{
     public function save(Request $request){
         if($request->isPost()){
             $data = $request->param();
-            $show_images = $request->file("type_images");
-            if(!empty($show_images)){
-                $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'type');
-                $data["type_images"] = str_replace("\\","/",$show_image->getSaveName());
-            }
-            $type_images = $request->file("type_show_images");
-            if(!empty($type_images)){
-                $type_image = $type_images->move(ROOT_PATH . 'public' . DS . 'type');
-                $data["type_show_images"] = str_replace("\\","/",$type_image->getSaveName());
-            }
+            $show_images = $request->file("type_images")->move(ROOT_PATH . 'public' . DS . 'type');
+            $data["type_images"] = str_replace("\\","/",$show_images->getSaveName());
             $bool = db("goods_type")->insert($data);
             if($bool){
                 $this->success("添加成功",url("admin/Category/index"));
@@ -70,24 +60,6 @@ class Category extends Controller{
             }
         }
     }
-
-
-
-
-    /**
-     * [商品分组显示]
-     * 陈绪
-     */
-    public function ajax_id(Request $request){
-
-        if($request->isPost()){
-            $type_id = $request->only(["id"])['id'];
-            $category = db("goods_type")->where("id",$type_id)->find();
-            return ajax_success("获取成功",$category);
-        }
-
-    }
-
 
 
     /**
@@ -112,20 +84,10 @@ class Category extends Controller{
      */
     public function updata(Request $request){
         if($request->isPost()) {
-            $id = $request->only(["id"])["id"];
             $data = $request->only(["name", "status", "sort_number", "pid"]);
-            $show_images = $request->file("type_images");
-            if(!empty($show_images)){
-                $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'type');
-                $data["type_images"] = str_replace("\\","/",$show_image->getSaveName());
-            }
-            $type_images = $request->file("type_show_images");
-            if(!empty($type_images)){
-                $type_image = $type_images->move(ROOT_PATH . 'public' . DS . 'type');
-                $data["type_show_images"] = str_replace("\\","/",$type_image->getSaveName());
-            }
-
-            $bool = db("goods_type")->where('id',$id)->update($data);
+            $show_images = $request->file("type_images")->move(ROOT_PATH . 'public' . DS . 'type');
+            $data["type_images"] = str_replace("\\", "/", $show_images->getSaveName());
+            $bool = db("goods_type")->where('id', $request->only(["id"])["id"])->update($data);
             if ($bool) {
                 $this->success("编辑成功", url("admin/Category/index"));
             } else {
@@ -133,7 +95,6 @@ class Category extends Controller{
             }
         }
     }
-
 
 
     /**
@@ -174,23 +135,15 @@ class Category extends Controller{
      * @return string|void
      */
     public function images(Request $request){
-        if($request->isPost()) {
-            $images = $request->only(['images'])['images'];
-            $type_images = db("goods_type")->where("type_images",$images)->find();
-            $show_images = db("goods_type")->where("type_show_images",$images)->find();
-
-            if (!empty($type_images)){
-                unlink(ROOT_PATH . 'public' . DS . 'type/' . $type_images['type_images']);
-                db("goods_type")->where("type_images",$images)->update(["type_images"=>null]);
-            }
-            if (!empty($show_images)) {
-                unlink(ROOT_PATH . 'public' . DS . 'type/' . $show_images['type_show_images']);
-                db("goods_type")->where("type_show_images", $images)->update(['type_show_images'=>null]);
-            }
-            return ajax_success("删除成功");
+        $id = $request->only(['id'])['id'];
+        $images = db("goods_type")->where("id",$id)->field("type_images")->find();
+        $bool = db("goods_type")->where("id",$id)->update(['type_images'=>null]);
+        unlink(ROOT_PATH . 'public' . DS . 'type/'.$images['type_images']);
+        if($bool){
+            return ajax_success("更新成功");
         }
-
     }
+
 
 }
 
