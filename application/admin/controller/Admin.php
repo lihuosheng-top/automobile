@@ -67,6 +67,7 @@ class Admin extends Controller
     public function edit($id){
         $admin = db("Admin")->where("id","$id")->select();
         $roleList = getSelectList("role");
+
         return view("edit",["admin"=>$admin,"roleList"=>$roleList]);
     }
 
@@ -76,7 +77,7 @@ class Admin extends Controller
      */
     public function updata(Request $request){
         $data = $request->param();
-        $data["passwd"] = password_hash($data["passwd"],PASSWORD_DEFAULT);
+        $data["passwd"] = md5($data["passwd"]);
         $data["stime"] = date("Y-m-d H:i:s");
         $id = $request->only(['id'])['id'];
         $bool = db("Admin")->where('id', $id)->update($data);
@@ -100,18 +101,18 @@ class Admin extends Controller
                 $id = $request->only(["id"])["id"];
                 $bool = db("Admin")->where("id", $id)->update(["status" => 0]);
                 if ($bool) {
-                    return ajax_success("更改成功");
+                    $this->redirect(url("admin/admin/index"));
                 } else {
-                    return ajax_error("修改失败");
+                    $this->error("修改失败", url("admin/admin/index"));
                 }
             }
             if($status == 1){
                 $id = $request->only(["id"])["id"];
                 $bool = db("Admin")->where("id", $id)->update(["status" => 1]);
                 if ($bool) {
-                    return ajax_success("修改成功");
+                    $this->redirect(url("admin/admin/index"));
                 } else {
-                    return ajax_error("修改失败");
+                    $this->error("修改失败", url("admin/admin/index"));
                 }
             }
         }

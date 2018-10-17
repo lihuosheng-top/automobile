@@ -96,7 +96,7 @@ class Role extends Controller
     public function status(Request $request){
         if($request->isPost()) {
             $status = $request->only(["status"])["status"];
-            if($status == 1) {
+            if($status == 0) {
                 $id = $request->only(["id"])["id"];
                 $bool = db("role")->where("id", $id)->update(["status" => 0]);
                 if ($bool) {
@@ -105,7 +105,7 @@ class Role extends Controller
                     $this->error("修改失败", url("admin/role/index"));
                 }
             }
-            if($status == 0){
+            if($status == 1){
                 $id = $request->only(["id"])["id"];
                 $bool = db("role")->where("id", $id)->update(["status" => 1]);
                 if ($bool) {

@@ -83,46 +83,45 @@
 <!--请在下方写此页面业务相关的脚本-->
 {block name="bottom"}
 <script type="text/javascript">
-		layui.config({
-	base : "js/"
-}).use(['form','layer','jquery','laypage'],function(){
-	var form = layui.form(),
-		layer = parent.layer === undefined ? layui.layer : parent.layer,
-		laypage = layui.laypage,
-		$ = layui.jquery;
-      var vals=$("input").data("id");
-	//是否展示
-
-	form.on('switch(isShow)', function(data){
-       if($(this).val()==0){
-	     	$(this).val(1);
-	     }
-		else{
-			$(this).val(0);
-		}
-        var vals=data.value;
-		var id=$(this).data("id");
-		var status = $(this).val();
-//	     console.log(status);
-       $.ajax({
-               type: "POST",
-               url: "{:url('admin/admin/status')}",
-               data: {"id":id,"status":status},
-               success: function(data){
-               	console.log("成功")
-			  },
-		      error:function (data) {
-				  console.log("错误")
-              }
+    layui.config({
+        base : "js/"
+    }).use(['form','layer','jquery','laypage'],function(){
+        var form = layui.form(),
+            layer = parent.layer === undefined ? layui.layer : parent.layer,
+            laypage = layui.laypage,
+            $ = layui.jquery;
+        var vals=$("input").data("id");
+        //是否展示
+        form.on('switch(isShow)', function(data){
+            if($(this).val()==0){
+                $(this).val(1);
+            }
+            else{
+                $(this).val(0);
+            }
+            var vals=data.value;
+            var id=$(this).data("id");
+            var status = $(this).val();
+            console.log(status);
+            $.ajax({
+                type: "POST",
+                url: "{:url('admin/admin/status')}",
+                data: {"id":id,"status":status},
+                success: function(data){
+                    console.log("成功")
+                },
+                error:function (data) {
+                    console.log("错误")
+                }
             });
-            
-         
-	})
 
 
-})
+        })
 
-	</script>
+
+    })
+
+</script>
 
 {/block}
 
