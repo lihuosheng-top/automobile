@@ -88,14 +88,20 @@
 
 //是否展示
 		form.on('switch(isShow)', function(data){
-			var vals=data.value;
-			var id=$(this).data("id");
-			var status = $(".Status").value;
-
+			if($(this).val()==0){
+	     	$(this).val(1);
+	     }
+		else{
+			$(this).val(0);
+		}
+        var vals=data.value;
+		var id=$(this).data("id");
+		var status = $(this).val();
+//	     console.log(status);
 			$.ajax({
 				type: "POST",
 				url: "{:url('admin/role/status')}",
-				data: {"id":id,"status":vals},
+				data: {"id":id,"status":status},
 				success: function(data){
 					console.log("成功")
 				},
