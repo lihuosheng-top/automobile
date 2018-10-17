@@ -36,7 +36,7 @@ class Admin extends Controller
      */
     public function save(Request $request){
         $data = $request->param();
-        $data["passwd"] = md5($data["passwd"]);
+        $data["passwd"] = password_hash($data["passwd"],PASSWORD_DEFAULT);
         $data["stime"] = date("Y-m-d H:i:s");
         $boolData = model("Admin")->sSave($data);
 
@@ -76,7 +76,7 @@ class Admin extends Controller
      */
     public function updata(Request $request){
         $data = $request->param();
-        $data["passwd"] = md5($data["passwd"]);
+        $data["passwd"] = password_hash($data["passwd"],PASSWORD_DEFAULT);
         $data["stime"] = date("Y-m-d H:i:s");
         $id = $request->only(['id'])['id'];
         $bool = db("Admin")->where('id', $id)->update($data);
@@ -96,22 +96,22 @@ class Admin extends Controller
     public function status(Request $request){
         if($request->isPost()) {
             $status = $request->only(["status"])["status"];
-            if($status == 1) {
+            if($status == 0) {
                 $id = $request->only(["id"])["id"];
                 $bool = db("Admin")->where("id", $id)->update(["status" => 0]);
                 if ($bool) {
-                    $this->redirect(url("admin/admin/index"));
+                    return ajax_success("更改成功");
                 } else {
-                    $this->error("修改失败", url("admin/admin/index"));
+                    return ajax_error("修改失败");
                 }
             }
-            if($status == 0){
+            if($status == 1){
                 $id = $request->only(["id"])["id"];
                 $bool = db("Admin")->where("id", $id)->update(["status" => 1]);
                 if ($bool) {
-                    $this->redirect(url("admin/admin/index"));
+                    return ajax_success("修改成功");
                 } else {
-                    $this->error("修改失败", url("admin/admin/index"));
+                    return ajax_error("修改失败");
                 }
             }
         }

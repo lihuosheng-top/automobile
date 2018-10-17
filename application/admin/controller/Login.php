@@ -55,18 +55,20 @@ class Login extends Controller{
             if (!$userInfo) {
                 $this->success("账户名不正确",url("admin/Login/index"));
             }
-            $user_passwd = md5($passwd);
-            if ($user_passwd != $userInfo[0]["passwd"]) {
-                $this->success("账户密码不正确",url("admin/Login/index"));
-            }else{
+            if (password_verify($passwd , $userInfo[0]["passwd"])) {
                 Session("user_id", $userInfo[0]["id"]);
                 unset($userInfo->user_passwd);
                 Session("user_info", $userInfo);
-               // $this->redirect(url("admin/index/index"));
+                // $this->redirect(url("admin/index/index"));
                 $this->success("登录成功",url("admin/Index/index"));
+            }else{
+                $this->success("账户密码不正确",url("admin/Login/index"));
+
             }
         }
     }
+
+
     /**
      * [退出]
      * 陈绪
