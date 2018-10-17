@@ -40,9 +40,11 @@ Route::group("",[
 
 
     /*注册页面*/
-    "register"=>"index/Register/index",
+    "register_index"=>"index/Register/index",
     "register_code"=>"index/Register/code",
-    "register_index"=>"index/Register/register",
+    "register_save"=>"index/Register/save",
+    "register_passwd"=>"index/Register/passwd",
+
 
 
 
