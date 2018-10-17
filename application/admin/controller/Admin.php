@@ -77,7 +77,7 @@ class Admin extends Controller
      */
     public function updata(Request $request){
         $data = $request->param();
-        $data["passwd"] = md5($data["passwd"]);
+        $data["passwd"] = password_hash($data["passwd"],PASSWORD_DEFAULT);
         $data["stime"] = date("Y-m-d H:i:s");
         $id = $request->only(['id'])['id'];
         $bool = db("Admin")->where('id', $id)->update($data);
