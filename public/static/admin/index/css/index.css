@@ -22,6 +22,7 @@
 	cursor:pointer;
 }
 .layui-form label{
+	font-size: 15px;
 	height: 38px;
 	line-height: 38px;
 	width: 21%;
@@ -179,7 +180,7 @@ a{
 }
 
 .UCleft dl dd p{
-	text-indent: 65px;
+	text-indent: 49px;
 	display: block;
 	line-height: 31px;
 	height: 31px;
