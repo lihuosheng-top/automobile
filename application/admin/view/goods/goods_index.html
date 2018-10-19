@@ -27,6 +27,9 @@
    padding-left: 50px;
    background: #FDFDFE;
 	}
+	select{
+		font-size: 15px;
+	}
 </style>
 
 {/block}
@@ -63,7 +66,7 @@
 		
 </blockquote>
 	<div class="layui-inline">
-			<a class="layui-btn layui-btn-danger batchDel" href="{:url('admin/Goods/add')}">添加</a>
+			<a class="layui-btn layui-btn-danger batchDel" href="{:url('admin/Goods/add')}">添加商品</a>
 		</div>
 	     
 	<div class="layui-form news_list">
@@ -84,15 +87,16 @@
 		    <thead>
 				<tr>
 					<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-					<th style="text-align:left;">商品名称</th>
-					<th>缩略图</th>
-					<th>商品编号</th>
-					<th>商品分类</th>
-					<th>终端版本</th>
-					<th>价格</th>
-					<th>状态</th>
-					<th>库存</th>
+					<th style="text-align:left;">商品编号</th>
+					<th>店铺名称</th>
+					<th>商品图片</th>
+					<th>商品名称</th>
+					<th>商品价格</th>
+					<th>是否上架</th>
+					<th>上架付费</th>
+					<th>排序</th>
 					<th>销量</th>
+					<th>上架年限</th>
 					<th>操作</th>
 				</tr> 
 		    </thead>
@@ -104,18 +108,17 @@
 					<td>张三</td>
 					<td>管理员</td>
 					<td>管理员</td>
-					<td>2018-09-26 09:47:52</td>
+					
 					<td>
                   <input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="2"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>是</em><i></i></div>
 						
 					</td>
+					<td>2018</td>
+					<td>2018</td>
 					<td>张三</td>
 					<td>管理员</td>
 					<td>
-						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}"><i class="iconfont icon-edit"></i> 添加评论</a>
-					     <a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}"><i class="iconfont icon-edit"></i> 复制</a>
-					
-					  	<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
+						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
 						<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 					
 					</td>
@@ -124,8 +127,9 @@
 		</table>
 	</div>
 	<div id="page">
-		<select name="" style="color: #C1A5A5; width: 100px;border-color: #E4E4E4;height: 30px;">
-		<option value="">批量导出</option>
+		
+		<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
+		<option value="">商家批量上架</option>
 		
 	</select>
 	<button type="button"  style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定 </button>
