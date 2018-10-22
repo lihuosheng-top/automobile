@@ -254,6 +254,13 @@ Route::group("admin",[
     "advertising_updata"=>"admin/Advertising/updata",
     "advertising_images"=>"admin/Advertising/images",
 
+
+    /*设置*/
+    "install_index"=>"admin/Install/index",
+    "recommend_index"=>"admin/Install/recommend",
+    "integral_index"=>"admin/Install/integral",
+    "putaway_index"=>"admin/Install/putaway"
+
 ]);
 
 Route::miss("public/miss");
