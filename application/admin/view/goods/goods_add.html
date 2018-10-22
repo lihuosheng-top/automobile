@@ -1,5 +1,4 @@
 {extend name="layout"} {block name="css"}
-<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/css/aaa.css"/>
 <style type="text/css">
 	body {
 		background: #fff;
@@ -19,9 +18,13 @@
 	}
 	
 	.layui-form {
-		width: 80%;
+		width: 98%;
 		margin: 0 auto;
 		padding-top: 40px;
+	}
+	
+	.layui-input-block {
+		min-height: 40px;
 	}
 	
 	.biaoji .layui-form-radioed span {
@@ -36,19 +39,7 @@
 	}
 </style>
 <style type="text/css">
-	.tree {
-		min-height: 20px;
-		padding: 19px;
-		margin-bottom: 20px;
-		background-color: #fbfbfb;
-		border: 1px solid #999;
-		-webkit-border-radius: 4px;
-		-moz-border-radius: 4px;
-		border-radius: 4px;
-		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-		-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05)
-	}
+	.tree { min-height: 20px; padding: 19px; margin-bottom: 20px; background-color: #fbfbfb; border: 1px solid #999; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05) }
 	
 	.tree ul {
 		margin-left: 60px;
@@ -113,6 +104,91 @@
 		border: 1px solid #94a0b4;
 		color: #000
 	}
+	
+	.title {
+		height: 50px;
+		background: #F2F2F2;
+		font-size: 20px;
+		line-height: 50px;
+		padding-left: 20px;
+		font-weight: bold;
+	}
+	
+	.layui-form-item {
+		padding-left: 20px;
+	}
+	
+	.add-content {
+		background: #F2F2F2;
+		width: 100%;
+	}
+	
+	.general-kuang {
+		border: solid 1px #E4E4E4;
+		width: 1000px;
+	}
+	
+	.btus {
+		background: #fff;
+		border: solid 1px #E4E4E4;
+		color: #0099FF;
+		width: 141px;
+		display: inline-block;
+		margin: 10px;
+	}
+	
+	#general-content .layui-form-item {
+		width: 100%;
+	}
+	
+	.sky-blue {
+		color: #0099FF;
+	}
+	
+	.bgwhite {
+		background: #fff;
+	}
+	
+	.noshow {
+		display: none;
+	}
+	
+	.special .layui-form-item {
+		width: 100%;
+	}
+	
+	.general .layui-form-item {
+		width: 100%;
+	}
+	
+	.special .layui-form-item label {
+		width: 10%;
+	}
+	
+	.general .layui-form-item label {
+		width: 10%;
+	}
+	
+	.operation-btus {
+		width: 60px;
+		height: 40px;
+		border-radius: 3px;
+		color: #fff;
+	}
+	
+	.btu-delet {
+		background: #FF0000;
+	}
+	
+	.btu-cancel {}
+	
+	.btu-add {
+		background: #0099FF;
+	}
+	
+	.num-content {
+		overflow: hidden;
+	}
 </style>
 
 {/block}
@@ -120,147 +196,252 @@
 <body>
 
 	{block name="content"}
+	<div class="open">
+
+	</div>
 	<form class="layui-form" action="">
-		<div class="layui-form-item ">
-			<label class="layui-form-label"><span>*</span>商品名称</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input">
-			</div>
+		<div class="basic-information title"> 基本信息
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>商品编号</label>
+		<div class="layui-form-item ">
+			<label class="layui-form-label"><span>*</span>商品名:</label>
 			<div class="layui-input-block">
 				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">分类</label>
+			<label class="layui-form-label">分享描述：</label>
 			<div class="layui-input-block">
-				<button class="layui-btn" type="button" id="select_class">选择分类</button>
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
-		<div class="tree"  style="display: none;">
-			<ul id="rootUL">
-
-				<li data-name="ZKCH" class="parent_li"><span title="关闭"><i class="icon-th"></i> aaaaa</span>
-					<ul>
-						<li data-name="GZZKCH" class="parent_li"><span title="关闭"><i class="icon-minus-sign"></i> bbbbbbb</span>
-							<ul>
-								<li data-name="GZZKCHTQFH" style="display: list-item;"><span><i class=""></i> 广州中科慈航天河区分行</span></li>
-							</ul>
-						</li>
-						<li data-name="BJZKCH" class="parent_li"><span title="关闭"><i class="icon-minus-sign"></i> 北京中科慈航</span>
-							<ul>
-								<li data-name="BJZKCHZCFH"><span><i class=""></i> 北京中科慈航中城区分行</span></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-				<li data-name="ZKKJ" class="parent_li"><span title="关闭"><i class="icon-th"></i> 中科科技</span>
-					<ul>
-						<li data-name="GZZKKJ" class="parent_li"><span title="关闭"><i class="icon-minus-sign"></i> 广州中科科技</span>
-							<ul>
-								<li data-name="GZTHZKKJ"><span><i class=""></i> 广州天河中科科技</span></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-
 		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>排序</label>
+			<label class="layui-form-label">商品主图</label>
 			<div class="layui-input-block">
-				<input type="number" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<div class="img-box full">
+					<section class=" img-section">
+						<div class="z_photo upimg-div clear">
+							<section class="z_file fl">
+								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+							</section>
+						</div>
+					</section>
+				</div>
+				<aside class="mask works-mask">
+					<div class="mask-content">
+						<p class="del-p ">您确定要删除作品图片吗？</p>
+						<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+					</div>
+				</aside>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">商品分组：</label>
+			<div class="layui-input-inline">
+				<select name="quiz1">
+					<option value="">请选择省</option>
+					<option value="浙江" selected="">浙江省</option>
+					<option value="你的工号">江西省</option>
+					<option value="你最喜欢的老师">福建省</option>
+				</select>
+			</div>
+			<div class="layui-input-inline">
+				<a href="{:url('admin/Category/add')}" style="line-height: 40px;">新建分类</a>
 			</div>
 		</div>
 		<div class="layui-form-item" class="biaoji">
-			<label class="layui-form-label"><span>*</span>标记</label>
+			<label class="layui-form-label"><span>*</span>商品标记：</label>
 			<div class="layui-input-block">
 				<input type="radio" name="yes" value="hot" title="hot" checked="" class="hot">
+				<input type="radio" name="yes" value="促销" title="促销" class="">
+				<input type="radio" name="yes" value="清仓" title="清仓" class="">
+				<input type="radio" name="yes" value="推荐" title="推荐" class="">
 			</div>
 		</div>
+		<div class="basic-information title">商品规格
+		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>商品原价</label>
+			<label class="layui-form-label">商品规格</label>
+			<div class="layui-input-block">
+				<input type="radio" name="guige" value="通用" title="通用" class="general-radio" lay-filter="guige">
+				<input type="radio" name="guige" value="专用" title="专用" class="special" lay-filter="guige">
+			</div>
+		</div>
+		<div>
+			<div class="layui-form-item general noshow">
+				<label class="layui-form-label"></label>
+				<div class="layui-input-block general-kuang">
+
+					<div id="general_content"></div>
+					<div class="add-content content" id="add_general_buts">
+						<button type="button" class="btus general_buts">添加规格项目</button>
+					</div>
+				</div>
+
+			</div>
+			<div class="layui-form-item special noshow">
+				<label class="layui-form-label"></label>
+				<div class="layui-input-block general-kuang">
+					<div class="layui-form-item">
+						<label class="layui-form-label">适用车型：</label>
+						<div class="layui-input-inline">
+							<select name="quiz1">
+								<option value="">请选择省</option>
+								<option value="浙江" selected="">浙江省</option>
+								<option value="你的工号">江西省</option>
+								<option value="你最喜欢的老师">福建省</option>
+							</select>
+						</div>
+						<div class="layui-input-inline">
+							<select name="quiz2">
+								<option value="">请选择市</option>
+								<option value="杭州">杭州</option>
+								<option value="宁波">宁波</option>
+								<option value="温州">温州</option>
+								<option value="温州">台州</option>
+								<option value="温州">绍兴</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">属性</label>
+						<div class="layui-input-inline">
+							<select name="quiz1">
+								<option value="">请选择省</option>
+								<option value="浙江" selected="">浙江省</option>
+								<option value="你的工号">江西省</option>
+								<option value="你最喜欢的老师">福建省</option>
+							</select>
+						</div>
+						<div class="layui-input-inline add-attribute " style="">
+							<button type="button" class="sky-blue bgwhite ">+添加属性</button>
+						</div>
+						<div class="layui-input-inline noshow add-attributes">
+							<input type="text" name="" id="" value="" />
+						</div>
+						<div class="layui-input-inline noshow add-attributes">
+							<button type="button" class="operation-btus btu-delet">删除</button>
+							<button type="button" class="operation-btus btu-cancel">取消</button>
+							<button type="button" class="operation-btus btu-add">添加</button>
+						</div>
+					</div>
+
+					<div id="special_content"></div>
+					<div class="add-content content" id="add_special_buts">
+						<button type="button" class="btus special_buts">添加规格项目</button>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span>*</span>规格：</label>
 			<div class="layui-input-block">
 				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>商品售价</label>
+			<label class="layui-form-label">商品编码：</label>
 			<div class="layui-input-block">
 				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>库存</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>终端版本</label>
-			<div class="layui-input-block">
-				<input type="checkbox" name="like[write]" title="pc" checked="">
-				<input type="checkbox" name="like[read]" title="APP苹果">
-				<input type="checkbox" name="like[game]" title="APP安卓">
-				<input type="checkbox" name="like[read]" title="公众号">
-				<input type="checkbox" name="like[game]" title="小程序">
-				<input type="checkbox" name="like[read]" title="H5">
 			</div>
 		</div>
 
-		 <div class="layui-upload">
-    	 <label class="layui-form-label">商品主图</label>
-    	<div class="layui-input-block">
-			 <div class="img-box full">
-				<section class=" img-section">
-					<div class="z_photo upimg-div clear" >
-							 <section class="z_file fl">
-								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
-							 </section>
-					 </div>
-				 </section>
-			</div>
-			<aside class="mask works-mask">
-				<div class="mask-content">
-					<p class="del-p ">您确定要删除作品图片吗？</p>
-					<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
-				</div>
-			</aside>
-</div> 
-</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>演示地址</label>
+			<label class="layui-form-label"><span>*</span> 价格：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">划线价：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> <span>*</span> 库存：：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">速度级别：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">载重指数：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">类别：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">花纹特点：</label>
 			<div class="layui-input-block">
 				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item layui-form-text">
-			<label class="layui-form-label"><span>*</span>商品详情</label>
+			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
 				<!--<textarea id="demo" style="display: none;"></textarea>-->
 				<!--<textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>-->
-				<div> <script id="editor" type="text/plain" style="width:800px;height:500px;"></script></div>
+				<div>
+					<script id="editor" type="text/plain" style="width:800px;height:500px;"></script>
+				</div>
 			</div>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>状态</label>
+		<div class="basic-information title"> 其他
+		</div>
+		<div class="layui-form-item" class="biaoji">
+			<label class="layui-form-label">上架年限：</label>
 			<div class="layui-input-block">
-				<input type="radio" name="sex" value="暂不上架" title="暂不上架" checked="">
-				<input type="radio" name="sex" value="立即上架" title="立即上架">
+				<input type="radio" name="yes" value="1年10元/单个商品" title="1年10元/单个商品" checked="" class="hot">
+				<input type="radio" name="yes" value="2年15元/单个商品" title="1年10元/单个商品" class="">
+				<input type="radio" name="yes" value="3年25元/单个商品" title="1年10元/单个商品" class="">
 			</div>
 		</div>
-
+		<div class="layui-form-item" pane="">
+			<label class="layui-form-label">限购：</label>
+			<div class="layui-input-inline">
+				<input type="checkbox" name="like1[write]" lay-skin="primary" title="限制每人可购买数量">
+				<!-- <input type="text" name="" id="" value="" />件 -->
+			</div>
+			<div class="layui-input-inline">
+				<!-- <input type="checkbox" name="like1[write]" lay-skin="primary" title="限制每人可购买数量"> -->
+				<input type="text" name="" id="" value="" style="margin-right: 10px;" />件
+			</div>
+		</div>
+		<div class="basic-information title"> 配送与安装服务
+		</div>
+		<div class="layui-form-item" class="biaoji">
+			<label class="layui-form-label"><span>*</span>商品标记：</label>
+			<div class="layui-input-block">
+				<input type="radio" name="yes" value="hot" title="到店自提" checked="" class="hot">
+				<input type="radio" name="yes" value="促销" title="到店安装" class="">
+				<input type="radio" name="yes" value="清仓" title="上门安装" class="">
+			</div>
+		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
-				<button class="layui-btn">返回</button>
+				<button class="layui-btn  layui-btn-primary">返回</button>
 			</div>
 		</div>
-	</form>
 
+	</form>
+	<select name="">
+		<option value=""></option>
+	</select>
 	{/block}
 
 	<!--_footer 作为公共模版分离出去-->
@@ -270,15 +451,76 @@
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
 	<script type="text/javascript">
-		$("#select_class").on("click", function() {   
+		var dhtml = "";
 
-				if($(".tree").css('display') === 'none'){
-		                $(".tree").show(); 
-				}
-		         else{
-		       	
-					$(".tree").hide();
-		         }
+		dhtml += '<div>' +
+			' 			<div class="layui-form-item">                                                                                 ' +
+			' 				<label class="layui-form-label">规格名</label>                                                               ' +
+			' 				<div class="layui-input-inline">                                                                          ' +
+			' 					<select name="quiz1">                                                                                 ' +
+			' 						<option value="">请选择省</option>                                                                    ' +
+			' 						<option value="浙江" selected="">浙江省</option>                                                       ' +
+			' 						<option value="你的工号">江西省</option>                                                                 ' +
+			' 						<option value="你最喜欢的老师">福建省</option>                                                              ' +
+			' 					</select>                                                                                             ' +
+			' 				</div>                                                                                                    '
+			//      +'                                                                                                                        '
+			+
+			' 				<div class="layui-input-inline add-name" style="">                                                        ' +
+			' 					<button type="button" class="sky-blue bgwhite">+添加规格名</button>                                        '
+			//      +'                                                                                                                        '
+			+
+			' 				</div>                                                                                                    ' +
+			' 				<div class="layui-input-inline noshow add-names" style="">                                                ' +
+			' 					<input type="text" name="" id="" value="" />   ' +
+
+			' 				</div>                                                                                                    ' +
+			' 				<div class="layui-input-inline noshow add-names" style="">                                                ' +
+			' 				<button type="button" class="operation-btus btu-delet">删除</button>                                                                     ' +
+			' 					<button type="button" class="operation-btus btu-cancel">取消</button>                                                                     ' +
+			' 					<button type="button" class="operation-btus btu-add">添加</button>                                                                    ' +
+			' 				</div>                                                                                                    ' +
+			' 			</div>                                                                                                        ' +
+			' 			<div class="layui-form-item">                                                                                 ' +
+			' 				<label class="layui-form-label">规格值：</label>                                                              ' +
+			' 			<div class="num-content">                                                                                 ' +
+			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 					<input type="text" name="" id="" value=""  placeholder="请输入规格（规格）" style="padding-left:10px;"/>                                                          ' +
+			' 				</div>                                                                                                    ' +
+			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 					<input type="text" name="" id="" value="" placeholder="请输入商品编码"  style="padding-left:10px;"/>                                                          ' +
+			' 				</div>                                                                                                    ' +
+			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 					<input type="text" name="" id="" value="" placeholder="请输入商品价格（必填）"  style="padding-left:10px;"/>                                                          ' +
+			' 				</div>                                                                                                    ' +
+			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 					<input type="text" name="" id="" value="" placeholder="请输入商品库存（必填）"  style="padding-left:10px;"/>                                                          ' +
+			' 				</div>                                                                                                    ' +
+			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 					<input type="text" name="" id="" value="" placeholder="请输入速度级别"  style="padding-left:10px;"/>                                                          ' +
+			' 				</div>                                                                                                    ' +
+			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 					<input type="text" name="" id="" value="" placeholder="请输入载重指数"  style="padding-left:10px;"/>                                                          ' +
+			' 				</div>                                                                                                    ' +
+			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 					<input type="text" name="" id="" value="" placeholder="请输入类别"  style="padding-left:10px;"/>                                                          ' +
+			' 				</div>                                                                                                    ' +
+			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 					<input type="text" name="" id="" value="" placeholder="请输入花纹"  style="padding-left:10px;"/>                                                          ' +
+			' 				</div>                                                                                                    ' +
+			' 				</div>                                                                                                    ' +
+			' 			</div>                                                                                                        ' +
+			'          </div>                                                                                                        ';
+	</script>
+	<script type="text/javascript">
+		$("#select_class").on("click", function() {
+
+			if($(".tree").css('display') === 'none') {
+				$(".tree").show();
+			} else {
+
+				$(".tree").hide();
+			}
 		});
 		$(function() {
 			$('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', '关闭');
@@ -294,6 +536,8 @@
 				e.stopPropagation();
 			});
 		});
+	</script>
+	<script type="text/javascript">
 		layui.config({
 			base: "js/"
 		}).use(['form', 'layer', 'jquery', 'laypage'], function() {
@@ -301,130 +545,76 @@
 				layer = parent.layer === undefined ? layui.layer : parent.layer,
 				laypage = layui.laypage,
 				$ = layui.jquery;
-		
 
+			// 点击添加页面
+			$(".add-sevice").click(function() {
+				layer.open({
+					type: 1,
+					skin: 'layui-layer-rim', //加上边框
+					area: ['420px', '240px'], //宽高
+					content: 'html内容'
+				});
+			})
+
+			// 商品规格变化
+			form.on('radio(guige)', function(data) {
+				var checkval = data.value;
+				if(checkval == "通用") {
+					$(".general").removeClass("noshow");
+					$(".special").addClass("noshow");
+				} else {
+					$(".special").removeClass("noshow");
+					$(".general ").addClass("noshow");
+				}
+
+			});
+			//      点击通用添加规格项目添加页面
+			$(".special_buts").click(function() {
+				$("#special_content").append(dhtml);
+				form.render('select');
+
+			});
+			//      点击专用添加规格项目添加页面
+			$(".general_buts").click(function() {
+				$("#general_content").append(dhtml);
+				form.render('select');
+
+			});
+
+			//	点击添加属性
+			$(".add-attribute").on('click', function() {
+
+				$(this).addClass("noshow");
+				$(this).siblings(".add-attributes").removeClass("noshow");
+			});
+			//	点击添加添加规格名
+			$("#general_content").on('click', ".add-name", function() {
+				$(this).addClass("noshow");
+				$(this).siblings(".add-names").removeClass("noshow");
+			});
+			$("#special_content").on('click', ".add-name", function() {
+				$(this).addClass("noshow");
+				$(this).siblings(".add-names").removeClass("noshow");
+			});
+			//	点击取消按钮
+			$("#general_content").on('click', ".btu-cancel", function() {
+				$(this).parent(".add-names").addClass("noshow");
+				$(this).parent().siblings(".add-names").addClass("noshow");
+				$(this).parent().siblings(".add-name").removeClass("noshow");
+			});
+			$("#special_content").on('click', ".add-name", function() {
+				$(this).addClass("noshow");
+				$(this).siblings(".add-names").removeClass("noshow");
+			});
+			// end商品规格变化
 		})
 	</script>
+
 	<script type="text/javascript">
-		layui.use('layedit', function(){
-		  var layedit = layui.layedit;
-		  layedit.build('demo'); //建立编辑器
-		});
-</script>
+		//实例化编辑器
+		//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+		var ue = UE.getEditor('editor');
 	</script>
-	<script type="text/javascript">
-
-    //实例化编辑器
-    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-    var ue = UE.getEditor('editor');
-
-
-//  function isFocus(e){
-//      alert(UE.getEditor('editor').isFocus());
-//      UE.dom.domUtils.preventDefault(e)
-//  }
-//  function setblur(e){
-//      UE.getEditor('editor').blur();
-//      UE.dom.domUtils.preventDefault(e)
-//  }
-//  function insertHtml() {
-//      var value = prompt('插入html代码', '');
-//      UE.getEditor('editor').execCommand('insertHtml', value)
-//  }
-//  function createEditor() {
-//      enableBtn();
-//      UE.getEditor('editor');
-//  }
-//  function getAllHtml() {
-//      alert(UE.getEditor('editor').getAllHtml())
-//  }
-//  function getContent() {
-//      var arr = [];
-//      arr.push("使用editor.getContent()方法可以获得编辑器的内容");
-//      arr.push("内容为：");
-//      arr.push(UE.getEditor('editor').getContent());
-//      alert(arr.join("\n"));
-//  }
-//  function getPlainTxt() {
-//      var arr = [];
-//      arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
-//      arr.push("内容为：");
-//      arr.push(UE.getEditor('editor').getPlainTxt());
-//      alert(arr.join('\n'))
-//  }
-//  function setContent(isAppendTo) {
-//      var arr = [];
-//      arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
-//      UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
-//      alert(arr.join("\n"));
-//  }
-//  function setDisabled() {
-//      UE.getEditor('editor').setDisabled('fullscreen');
-//      disableBtn("enable");
-//  }
-//
-//  function setEnabled() {
-//      UE.getEditor('editor').setEnabled();
-//      enableBtn();
-//  }
-//
-//  function getText() {
-//      //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
-//      var range = UE.getEditor('editor').selection.getRange();
-//      range.select();
-//      var txt = UE.getEditor('editor').selection.getText();
-//      alert(txt)
-//  }
-//
-//  function getContentTxt() {
-//      var arr = [];
-//      arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
-//      arr.push("编辑器的纯文本内容为：");
-//      arr.push(UE.getEditor('editor').getContentTxt());
-//      alert(arr.join("\n"));
-//  }
-//  function hasContent() {
-//      var arr = [];
-//      arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
-//      arr.push("判断结果为：");
-//      arr.push(UE.getEditor('editor').hasContents());
-//      alert(arr.join("\n"));
-//  }
-//  function setFocus() {
-//      UE.getEditor('editor').focus();
-//  }
-//  function deleteEditor() {
-//      disableBtn();
-//      UE.getEditor('editor').destroy();
-//  }
-//  function disableBtn(str) {
-//      var div = document.getElementById('btns');
-//      var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
-//      for (var i = 0, btn; btn = btns[i++];) {
-//          if (btn.id == str) {
-//              UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
-//          } else {
-//              btn.setAttribute("disabled", "true");
-//          }
-//      }
-//  }
-//  function enableBtn() {
-//      var div = document.getElementById('btns');
-//      var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
-//      for (var i = 0, btn; btn = btns[i++];) {
-//          UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
-//      }
-//  }
-//
-//  function getLocalData () {
-//      alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
-//  }
-//
-//  function clearLocalData () {
-//      UE.getEditor('editor').execCommand( "clearlocaldata" );
-//      alert("已清空草稿箱")
-//  }
-</script>
 
 	{/block}
 

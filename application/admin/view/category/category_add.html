@@ -5,31 +5,6 @@
 {block name="css"}
 <link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/css/aaa.css"/>
 <style type="text/css">
-	body {
-		background: #fff;
-	}
-
-	.layui-form label {
-		width: 15%;
-		text-align: left;
-	}
-
-	.layui-form .layui-input-block input {
-		width: 97%;
-	}
-
-	.layui-form-label span {
-		color: red;
-	}
-
-	.layui-form {
-		width: 80%;
-		margin: 0 auto;
-		padding-top: 40px;
-	}
-
-</style>
-<style type="text/css">
 			.tree {
 				min-height: 20px;
 				padding: 19px;
@@ -115,28 +90,11 @@
 
 	<form class="layui-form">
 		<div class="layui-form-item ">
-			<label class="layui-form-label"><span>*</span>分类名称</label>
+			<label class="layui-form-label"><span>*</span>商品分类名称</label>
 			<div class="layui-input-block">
-				<input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input">
+				<input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">分类</label>
-			<div class="layui-input-block">
-				<button class="layui-btn " type="button" id="select_class"> 选择分类</button>
-			</div>
-		</div>
-		<div class="tree well" style="display: none;">
-			{$goods_list|show_category}
-		</div>
-
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>排序</label>
-			<div class="layui-input-block">
-				<input type="number" name="sort_number" lay-verify="title" autocomplete="off" placeholder="请输入部门" class="layui-input">
-			</div>
-		</div>
-
 		<div class="layui-form-item">
 			<label class="layui-form-label">状态</label>
 			<div class="layui-input-block">
@@ -144,12 +102,55 @@
 				<input type="radio" name="sex" value="禁用" title="禁用">
 			</div>
 		</div>
-
 		<div class="layui-form-item">
+			<label class="layui-form-label">父级分类</label>
 			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+				<select name="role_id" id="admin_role" class="role_list">
+				
+				<option value="">1111</option>
+				<option value="">1111</option>
+			
+			</select>
 			</div>
 		</div>
+	
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span>*</span>排序</label>
+			<div class="layui-input-block">
+				<input type="number" name="sort_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">商品分类图标</label>
+			<div class="layui-input-block">
+				<div class="img-box full">
+					<section class=" img-section">
+						<div class="z_photo upimg-div clear">
+							<section class="z_file fl">
+								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp"
+								 multiple />
+							</section>
+						</div>
+					</section>
+				</div>
+				<aside class="mask works-mask">
+					<div class="mask-content">
+						<p class="del-p ">您确定要删除作品图片吗？</p>
+						<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+					</div>
+				</aside>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+		<div class="layui-input-block">
+			<input type="hidden" name="id" value="">
+			<button class="layui-btn" type="button" id="submits">保存</button>
+			<button type="button" class="layui-btn" onClick="javascript :history.back(-1);"> 返回</button>
+		</div>
+	</div>
 	</form>
 
 	{/block}
