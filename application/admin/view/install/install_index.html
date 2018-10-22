@@ -19,6 +19,9 @@
 		text-align: center;
 		padding: 5px;
 	}
+	.layui-form-item{
+		margin: 40px auto;
+	}
 </style>
 
  
@@ -27,7 +30,7 @@
 <body>
 
 {block name="content"}
-<h2>平台价格调整比例设置</h2>
+<h2 style="padding: 10px;">平台价格调整比例设置</h2>
 <h4>(零售商品)</h4>
 <form action="" method="post">
 	
@@ -68,9 +71,11 @@
 </div>
 <div class="layui-form-item">
 		<div class="layui-input-block">
-			<button class="layui-btn" type="submit" id="submits">保存</button>
-			<button type="button" class="layui-btn" onClick="javascript :history.back(-1);"> 返回</button>
+			
+				<button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);" > 返回</button>
+	<button class="layui-btn" type="submit" id="submits" style="margin-left: 190px;">保存</button>
 		</div>
+			
 	</div>
 </form>
 {/block}
