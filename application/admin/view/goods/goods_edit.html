@@ -1,118 +1,21 @@
 {extend name="layout"} {block name="css"}
-<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/css/aaa.css"/>
+
 <style type="text/css">
 	body {
 		background: #fff;
 	}
+	.all-me,.bts{
+	    width: 80%;
+    text-align: right;
+    margin-bottom: 30px;
+    margin-top: 33px;
+	}
+ button{
+ 	    border-radius: 10px;
+    width: 100px;
+ }
 	
-	.layui-form label {
-		width: 18%;
-		text-align: left;
-	}
-	
-	.layui-form .layui-input-block input {
-		width: 97%;
-	}
-	
-	.layui-form-label span {
-		color: red;
-	}
-	
-	.layui-form {
-		width: 80%;
-		margin: 0 auto;
-		padding-top: 40px;
-	}
-	
-	.biaoji .layui-form-radioed span {
-		color: #fff;
-		background: red;
-		width: 33px;
-		text-align: center;
-		height: 13px;
-		line-height: 13px;
-		font-size: 9px;
-		border-radius: 6px;
-	}
-</style>
-<style type="text/css">
-	.tree {
-		min-height: 20px;
-		padding: 19px;
-		margin-bottom: 20px;
-		background-color: #fbfbfb;
-		border: 1px solid #999;
-		-webkit-border-radius: 4px;
-		-moz-border-radius: 4px;
-		border-radius: 4px;
-		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-		-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05)
-	}
-	
-	.tree ul {
-		margin-left: 60px;
-	}
-	
-	.tree li {
-		list-style-type: none;
-		margin: 0;
-		padding: 10px 5px 0 5px;
-		position: relative
-	}
-	
-	.tree li::before,
-	.tree li::after {
-		content: '';
-		left: -20px;
-		position: absolute;
-		right: auto
-	}
-	
-	.tree li::before {
-		border-left: 1px solid #999;
-		bottom: 50px;
-		height: 100%;
-		top: 0;
-		width: 1px
-	}
-	
-	.tree li::after {
-		border-top: 1px solid #999;
-		height: 20px;
-		top: 29px;
-		width: 25px
-	}
-	
-	.tree li span {
-		-moz-border-radius: 5px;
-		-webkit-border-radius: 5px;
-		border: 1px solid #999;
-		border-radius: 5px;
-		display: inline-block;
-		padding: 3px 8px;
-		text-decoration: none
-	}
-	
-	.tree li.parent_li>span {
-		cursor: pointer
-	}
-	
-	.tree>ul>li::before,
-	.tree>ul>li::after {
-		border: 0
-	}
-	
-	.tree li:last-child::before {
-		height: 30px
-	}
-	
-	.tree li.parent_li>span:hover,
-	.tree li.parent_li>span:hover+ul li span {
-		background: #eee;
-		border: 1px solid #94a0b4;
-		color: #000
-	}
+
 </style>
 
 {/block}
@@ -120,148 +23,59 @@
 <body>
 
 	{block name="content"}
-	<form class="layui-form" action="">
-		<div class="layui-form-item ">
-			<label class="layui-form-label"><span>*</span>商品名称</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>商品编号</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">分类</label>
-			<div class="layui-input-block">
-				<button class="layui-btn" type="button" id="select_class">选择分类</button>
-			</div>
-		</div>
-		<div class="tree"  style="display: none;">
 
-			<ul id="rootUL">
+	<div class="childrenBody">
 
-				<li data-name="ZKCH" class="parent_li"><span title="关闭"><i class="icon-th"></i> 中科慈航</span>
-					<ul>
-						<li data-name="GZZKCH" class="parent_li"><span title="关闭"><i class="icon-minus-sign"></i> 广州中科慈航</span>
-							<ul>
-								<li data-name="GZZKCHTQFH" style="display: list-item;"><span><i class=""></i> 广州中科慈航天河区分行</span></li>
-							</ul>
-						</li>
-						<li data-name="BJZKCH" class="parent_li"><span title="关闭"><i class="icon-minus-sign"></i> 北京中科慈航</span>
-							<ul>
-								<li data-name="BJZKCHZCFH"><span><i class=""></i> 北京中科慈航中城区分行</span></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-				<li data-name="ZKKJ" class="parent_li"><span title="关闭"><i class="icon-th"></i> 中科科技</span>
-					<ul>
-						<li data-name="GZZKKJ" class="parent_li"><span title="关闭"><i class="icon-minus-sign"></i> 广州中科科技</span>
-							<ul>
-								<li data-name="GZTHZKKJ"><span><i class=""></i> 广州天河中科科技</span></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
 
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>排序</label>
-			<div class="layui-input-block">
-				<input type="number" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item" class="biaoji">
-			<label class="layui-form-label"><span>*</span>标记</label>
-			<div class="layui-input-block">
-				<input type="radio" name="yes" value="hot" title="hot" checked="" class="hot">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>商品原价</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>商品售价</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>库存</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>终端版本</label>
-			<div class="layui-input-block">
-				<input type="checkbox" name="like[write]" title="pc" checked="">
-				<input type="checkbox" name="like[read]" title="APP苹果">
-				<input type="checkbox" name="like[game]" title="APP安卓">
-				<input type="checkbox" name="like[read]" title="公众号">
-				<input type="checkbox" name="like[game]" title="小程序">
-				<input type="checkbox" name="like[read]" title="H5">
-			</div>
-		</div>
+		<div class="layui-form news_list">
+			<table class="layui-table">
+				<colgroup>
+				
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+				     <col width="20%">
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>商家名称</th>
+						<th>上架年限</th>
+						<th>单价（元）</th>
+						<th>共上架数量</th>
+						<th>小计</th>
+						
+					</tr>
+				</thead>
+				<tbody class="news_content">
+					<tr>
+						<td>2</td>
 
-		 <div class="layui-upload">
-    	 <label class="layui-form-label">商品主图</label>
-    	<div class="layui-input-block">
-			 <div class="img-box full">
-				<section class=" img-section">
-					<div class="z_photo upimg-div clear" >
-							 <section class="z_file fl">
-								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
-							 </section>
-					 </div>
-				 </section>
-			</div>
-			<aside class="mask works-mask">
-				<div class="mask-content">
-					<p class="del-p ">您确定要删除作品图片吗？</p>
-					<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
-				</div>
-			</aside>
-</div> 
+						<td>张三</td>
+						<td>2225</td>
+						<td>管理员</td>
+						<td>管理员</td>
+
+						
+					</tr>
+					<tr >
+						<td colspan="5" style="text-align: left;">
+						
+      <input type="checkbox" name="like1[write]" lay-skin="primary" title="我已阅读并同意" checked="">
+  
+
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+	</div>
+<div class="all-me" style="color: red;">应付金额：<span>￥2000.00</span></div>
+<div class="bts">
+	 <button class="layui-btn layui-btn-primary layui-btn-radius" >取消</button>
+	    <button class="layui-btn layui-btn-normal layui-btn-radius" >立即付款</button>
 </div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>演示地址</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item layui-form-text">
-			<label class="layui-form-label"><span>*</span>商品详情</label>
-			<div class="layui-input-block">
-				<div> <script id="editor" type="text/plain" style="width:800px;height:500px;"></script></div>
-			</div>
-				<!--<textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>-->
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>状态</label>
-			<div class="layui-input-block">
-				<input type="radio" name="sex" value="暂不上架" title="暂不上架" checked="">
-				<input type="radio" name="sex" value="立即上架" title="立即上架">
-			</div>
-		</div>
-
-		<div class="layui-form-item">
-			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
-				<button class="layui-btn">返回</button>
-			</div>
-		</div>
-	</form>
-
 	{/block}
 
 	<!--_footer 作为公共模版分离出去-->
@@ -271,31 +85,6 @@
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
 	<script type="text/javascript">
-		 var ue = UE.getEditor('editor');
-		$("#select_class").on("click", function() {   
-
-				if($(".tree").css('display') === 'none'){
-		                $(".tree").show(); 
-				}
-		         else{
-		       	
-					$(".tree").hide();
-		         }
-		});
-		$(function() {
-			$('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', '关闭');
-			$('.tree li.parent_li > span').on('click', function(e) {
-				var children = $(this).parent('li.parent_li').find(' > ul > li');
-				if(children.is(":visible")) {
-					children.hide('fast');
-					$(this).attr('title', '展开').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
-				} else {
-					children.show('fast');
-					$(this).attr('title', '关闭').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
-				}
-				e.stopPropagation();
-			});
-		});
 		layui.config({
 			base: "js/"
 		}).use(['form', 'layer', 'jquery', 'laypage'], function() {
@@ -304,6 +93,8 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 		
+
+			
 
 		})
 	</script>
