@@ -441,4 +441,21 @@ function _tree_sorts($arr){
 }
 
 
+function show_category($arr){
+    if(!empty($arr)){
+        foreach ($arr as $value){
+            echo '<ul id="rootUL">';
+                echo '<li data-name="ZKCH" class="parent_li" data-value='."{$value["id"]}".'><span title="关闭"><i class="icon-th icon-minus-sign">';
+                echo '</i>';
+                echo $value["name"];
+                echo '</span>' ;
+                    if($value["sub"]) {
+                        show_category($value["sub"]);
+                    }
+                echo "</li>";
+            echo '</ul>' ;
+        }
+    }
+}
+
 

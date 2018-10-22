@@ -8,26 +8,26 @@
 	body {
 		background: #fff;
 	}
-	
+
 	.layui-form label {
 		width: 15%;
 		text-align: left;
 	}
-	
+
 	.layui-form .layui-input-block input {
 		width: 97%;
 	}
-	
+
 	.layui-form-label span {
 		color: red;
 	}
-	
+
 	.layui-form {
 		width: 80%;
 		margin: 0 auto;
 		padding-top: 40px;
 	}
-	
+
 </style>
 <style type="text/css">
 			.tree {
@@ -52,7 +52,7 @@
 				padding: 10px 5px 0 5px;
 				position: relative
 			}
-			
+
 			.tree li::before,
 			.tree li::after {
 				content: '';
@@ -60,7 +60,7 @@
 				position: absolute;
 				right: auto
 			}
-			
+
 			.tree li::before {
 				border-left: 1px solid #999;
 				bottom: 50px;
@@ -68,14 +68,14 @@
 				top: 0;
 				width: 1px
 			}
-			
+
 			.tree li::after {
 				border-top: 1px solid #999;
 				height: 20px;
 				top: 29px;
 				width: 25px
 			}
-			
+
 			.tree li span {
 				-moz-border-radius: 5px;
 				-webkit-border-radius: 5px;
@@ -85,20 +85,20 @@
 				padding: 3px 8px;
 				text-decoration: none
 			}
-			
+
 			.tree li.parent_li>span {
 				cursor: pointer
 			}
-			
+
 			.tree>ul>li::before,
 			.tree>ul>li::after {
 				border: 0
 			}
-			
+
 			.tree li:last-child::before {
 				height: 30px
 			}
-			
+
 			.tree li.parent_li>span:hover,
 			.tree li.parent_li>span:hover+ul li span {
 				background: #eee;
@@ -113,7 +113,7 @@
 
 	{block name="content"}
 
-	<form class="layui-form" action="{:url('admin/Category/save')}" method="post">
+	<form class="layui-form">
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>分类名称</label>
 			<div class="layui-input-block">
@@ -127,33 +127,7 @@
 			</div>
 		</div>
 		<div class="tree well" style="display: none;">
-
-			<ul id="rootUL">
-
-				<li data-name="ZKCH" class="parent_li"><span title="关闭"><i class="icon-th icon-minus-sign"></i> 中科慈航</span>
-					<ul>
-						<li data-name="GZZKCH" class="parent_li" style="display: list-item;"><span title="关闭"><i class="icon-minus-sign"></i> 广州中科慈航</span>
-							<ul>
-								<li data-name="GZZKCHTQFH" style="display: list-item;"><span><i class=""></i> 广州中科慈航天河区分行</span></li>
-							</ul>
-						</li>
-						<li data-name="BJZKCH" class="parent_li" style="display: list-item;"><span title="关闭"><i class=""></i> 北京中科慈航</span>
-							<ul>
-								<li data-name="BJZKCHZCFH"><span><i class=""></i> 北京中科慈航中城区分行</span></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-				<li data-name="ZKKJ" class="parent_li"><span title="关闭"><i class="icon-th"></i> 中科科技</span>
-					<ul>
-						<li data-name="GZZKKJ" class="parent_li"><span title="关闭"><i class="icon-minus-sign"></i> 广州中科科技</span>
-							<ul>
-								<li data-name="GZTHZKKJ"><span><i class=""></i> 广州天河中科科技</span></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-			</ul>
+			{$goods_list|show_category}
 		</div>
 
 		<div class="layui-form-item">
@@ -186,19 +160,19 @@
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
-	
+
 	<script type="text/javascript">
 		$("#select_class").on("click", function() {   
 
 				if($(".tree").css('display') === 'none'){
-		                $(".tree").show(); 
+		                $(".tree").show();
 				}
 		         else{
-		       	
+
 					$(".tree").hide();
 		         }
 		});
-		
+
 		$(function() {
 			$('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', '关闭');
 			$('.tree li.parent_li > span').on('click', function(e) {
@@ -224,7 +198,7 @@
 
 		});
 
-		
+
 	</script>
 
 	{/block}
