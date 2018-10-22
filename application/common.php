@@ -398,8 +398,8 @@ function ajaxSuccess($msg = '操作成功',$url = '',$data = []){
     return response()->json($return);
 }
 
-function getSelectList($table , $pid = 0 ,&$result = [] , $spac = -2){
-    $spac += 2;
+function getSelectList($table , $pid = 0 ,&$result = [] , $spac = -4){
+    $spac += 4;
     $list = db($table)->where(["pid"=>$pid,"status"=>1])->field("pid,id,name")->select();     //传递条件数组
     $list = objectToArray($list);
     foreach($list as $value){
@@ -440,5 +440,22 @@ function _tree_sorts($arr){
     return $arr;
 }
 
+
+function show_category($arr){
+    if(!empty($arr)){
+        foreach ($arr as $value){
+            echo '<ul id="rootUL">';
+                echo '<li data-name="ZKCH" class="parent_li" data-value='."{$value["id"]}".'><span title="关闭"><i class="icon-th icon-minus-sign">';
+                echo '</i>';
+                echo $value["name"];
+                echo '</span>' ;
+                    if($value["sub"]) {
+                        show_category($value["sub"]);
+                    }
+                echo "</li>";
+            echo '</ul>' ;
+        }
+    }
+}
 
 

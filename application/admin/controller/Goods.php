@@ -343,4 +343,30 @@ class Goods extends Controller{
 
 
 
+
+    /**
+     * 商品付费详情
+     * 陈绪
+     */
+    public function pay(){
+
+        return view("goods_pay");
+
+    }
+
+
+
+
+    /**
+     * 商品确认付费
+     * 陈绪
+     */
+    public function affirm(){
+
+        return view("affirm_pay");
+
+    }
+
+
+
 }

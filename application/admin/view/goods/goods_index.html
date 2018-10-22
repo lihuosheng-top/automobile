@@ -217,7 +217,8 @@ form.on('switch(isShow)', function(data) {
 				layer.confirm('付费商品需付费后才能上架！', {
 					btn: ['确定付费', '取消付费！'] //按钮
 				}, function() {
-//                      
+                     window.location.href = "{:url('admin/Goods/pay')}";
+					 layer.close(layer.index);
 				}, function() {
 
 				});
