@@ -130,7 +130,7 @@
 	<div id="page">
 		
 		<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-		<option value="">删除</option>
+		<option value="">批量删除</option>
 		
 	</select>
 	<button type="button"  style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定 </button>
@@ -158,6 +158,26 @@
       var vals=$("input").data("id");
 	//是否展示
 
+	form.on('switch(isShow)', function(data){
+        var vals=data.value;
+		var id=$(this).data("id");
+		var status = $(".Status").value;
+
+       $.ajax({
+               type: "POST",
+               url: "{:url('')}",
+               data: {"id":id,"status":vals},
+               success: function(data){
+               	console.log("成功")
+			  },
+		      error:function (data) {
+				  console.log("错误")
+              }
+            });
+            
+         
+	})
+
 	//全选
 	form.on('checkbox(allChoose)', function(data){
 		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
@@ -177,26 +197,6 @@
 			$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
 		}
 		form.render('checkbox');
-	})
-
-	form.on('switch(isShow)', function(data){
-        var vals=data.value;
-		var id=$(this).data("id");
-		var status = $(".Status").value;
-
-       $.ajax({
-               type: "POST",
-               url: "{:url('')}",
-               data: {"id":id,"status":vals},
-               success: function(data){
-               	console.log("成功")
-			  },
-		      error:function (data) {
-				  console.log("错误")
-              }
-            });
-            
-         
 	})
 
 

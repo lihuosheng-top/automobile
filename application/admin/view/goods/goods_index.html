@@ -170,7 +170,27 @@
 				$ = layui.jquery;
 			var vals = $("input").data("id");
 			//是否展示
+form.on('switch(isShow)', function(data) {
+				var vals = data.value;
+				var id = $(this).data("id");
+				var status = $(".Status").value;
 
+				$.ajax({
+					type: "POST",
+					url: "{:url('')}",
+					data: {
+						"id": id,
+						"status": vals
+					},
+					success: function(data) {
+						console.log("成功")
+					},
+					error: function(data) {
+						console.log("错误")
+					}
+				});
+
+			});
 			//全选
 			form.on('checkbox(allChoose)', function(data) {
 				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
@@ -192,27 +212,7 @@
 				form.render('checkbox');
 			})
 
-			form.on('switch(isShow)', function(data) {
-				var vals = data.value;
-				var id = $(this).data("id");
-				var status = $(".Status").value;
-
-				$.ajax({
-					type: "POST",
-					url: "{:url('')}",
-					data: {
-						"id": id,
-						"status": vals
-					},
-					success: function(data) {
-						console.log("成功")
-					},
-					error: function(data) {
-						console.log("错误")
-					}
-				});
-
-			});
+			
 			$(".up-button").click(function() {
 				layer.confirm('付费商品需付费后才能上架！', {
 					btn: ['确定付费', '取消付费！'] //按钮
