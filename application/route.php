@@ -119,7 +119,7 @@ Route::group("admin",[
     "role_status"=>"admin/role/status",
 
 
-    /*商品管理*/
+    /*配件商品管理*/
     "goods_index"=>"admin/Goods/index",
     "goods_add"=>"admin/Goods/add",
     "goods_save"=>"admin/Goods/save",
@@ -130,7 +130,14 @@ Route::group("admin",[
     "images_dels"=>"admin/Goods/image",
     "goods_status"=>"admin/Goods/status",
     "goods_batches"=>"admin/Goods/batches",
-    "goods_putaway"=>"admin/Goods/putaway",
+    "goods_putaway"=>"admin/Goods/putaway",                                    //商品上架
+    "goods_pay"=>"admin/Goods/pay",                                            //商品付费详情
+    "affirm_pay"=>"admin/Goods/affirm",
+
+
+    /*服务商品管理*/
+    "serve_index"=>"admin/Serve/index",
+    "serve_add"=>"admin/Serve/add",
 
 
 
@@ -235,12 +242,6 @@ Route::group("admin",[
 
     /*客户中心*/
     "client_index"=>"admin/Client/index",
-
-
-    /*售后维修*/
-    "serve_index"=>"admin/Serve/index",
-    "serve_status"=>"admin/Serve/status",
-    "serve_reply"=>"admin/Serve/reply",
 
 
 

@@ -398,8 +398,8 @@ function ajaxSuccess($msg = '操作成功',$url = '',$data = []){
     return response()->json($return);
 }
 
-function getSelectList($table , $pid = 0 ,&$result = [] , $spac = -2){
-    $spac += 2;
+function getSelectList($table , $pid = 0 ,&$result = [] , $spac = -4){
+    $spac += 4;
     $list = db($table)->where(["pid"=>$pid,"status"=>1])->field("pid,id,name")->select();     //传递条件数组
     $list = objectToArray($list);
     foreach($list as $value){
