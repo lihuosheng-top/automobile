@@ -157,26 +157,29 @@
 		$ = layui.jquery;
       var vals=$("input").data("id");
 	//是否展示
-
-	form.on('switch(isShow)', function(data){
-        var vals=data.value;
-		var id=$(this).data("id");
-		var status = $(".Status").value;
-
-       $.ajax({
-               type: "POST",
-               url: "{:url('')}",
-               data: {"id":id,"status":vals},
-               success: function(data){
-               	console.log("成功")
-			  },
-		      error:function (data) {
-				  console.log("错误")
-              }
-            });
-            
-         
-	})
+            public function status(Request $request){
+                if($request->isPost()) {
+                    $status = $request->only(["status"])["status"];
+                    if($status == 0) {
+                        $id = $request->only(["id"])["id"];
+                        $bool = db("Admin")->where("id", $id)->update(["status" => 0]);
+                        if ($bool) {
+                            $this->redirect(url("admin/admin/index"));
+                        } else {
+                            $this->error("修改失败", url("admin/admin/index"));
+                        }
+                    }
+                    if($status == 1){
+                        $id = $request->only(["id"])["id"];
+                        $bool = db("Admin")->where("id", $id)->update(["status" => 1]);
+                        if ($bool) {
+                            $this->redirect(url("admin/admin/index"));
+                        } else {
+                            $this->error("修改失败", url("admin/admin/index"));
+                        }
+                    }
+                }
+            }
 
 	//全选
 	form.on('checkbox(allChoose)', function(data){

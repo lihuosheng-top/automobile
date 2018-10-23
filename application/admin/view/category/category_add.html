@@ -114,7 +114,7 @@
 
 	{block name="content"}
 
-	<form class="layui-form">
+	<form class="layui-form" action="{:url('admin/Category/save')}" method="post" enctype="multipart/form-data">
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品分类名称</label>
 			<div class="layui-input-block">
@@ -124,18 +124,25 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">状态</label>
 			<div class="layui-input-block">
-				<input type="radio" name="sex" value="启用" title="启用" checked="">
-				<input type="radio" name="sex" value="禁用" title="禁用">
+				<input type="radio" name="status" value="1" title="启用" checked="">
+				<input type="radio" name="status" value="0" title="禁用">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">父级分类</label>
 			<div class="layui-input-block">
-				<select name="role_id" id="admin_role" class="role_list">
-				
-				<option value="">1111</option>
-				<option value="">1111</option>
-			
+				{if !empty($goods_list)}
+				<select name="pid" id="admin_role" class="role_list">
+					<option value="0">顶级</option>
+					{volist name="goods_list" id="value"}
+					<option value="{$value.id}">{$value.name}</option>
+					{/volist}
+				</select><br/>
+				{else /}
+				<select name="pid" class="role_list">
+					<option value="0">顶级</option>
+				</select><br/>
+				{/if}
 			</select>
 			</div>
 		</div>
@@ -155,7 +162,7 @@
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp"
+								<input type="file" name="type_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp"
 								 multiple />
 							</section>
 						</div>
@@ -172,8 +179,7 @@
 
 		<div class="layui-form-item">
 		<div class="layui-input-block">
-			<input type="hidden" name="id" value="">
-			<button class="layui-btn" type="button" id="submits">保存</button>
+			<button class="layui-btn" type="submit" id="submits">保存</button>
 			<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
 		</div>
 	</div>

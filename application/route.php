@@ -150,6 +150,7 @@ Route::group("admin",[
     "category_updata"=>"admin/Category/updata",
     "category_ajax"=>"admin/Category/ajax_add",
     "category_images"=>"admin/Category/images",
+    "category_status"=>"admin/Category/status",
 
 
     /*会员管理*/
@@ -259,7 +260,18 @@ Route::group("admin",[
     "install_index"=>"admin/Install/index",
     "recommend_index"=>"admin/Install/recommend",
     "integral_index"=>"admin/Install/integral",
-    "putaway_index"=>"admin/Install/putaway"
+    "putaway_index"=>"admin/Install/putaway",
+
+
+    /*品牌*/
+    "brand_index"=>"admin/Brand/index",
+    "brand_add"=>"admin/Brand/add",
+    "brand_edit"=>"admin/Brand/edit",
+
+
+    /*店铺管理*/
+    "shop_index"=>"admin/Shop/index",
+    "shop_add"=>"admin/Shop/add",
 
 ]);
 
