@@ -437,11 +437,11 @@
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
-				<!--<textarea id="demo" style="display: none;"></textarea>-->
-				<!--<textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>-->
-				<div id="goods_text">
+				<textarea id="demo" style="display: none;"></textarea>
+				<!-- <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea> -->
+				<!-- <div id="goods_text">
 					<script id="editor" type="text/plain" style="width:800px;height:500px;"></script>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="basic-information title"> 其他
@@ -669,12 +669,13 @@
 	<script type="text/javascript">
 		layui.config({
 			base: "js/"
-		}).use(['form', 'layer', 'jquery', 'laypage'], function() {
+		}).use(['form', 'layer', 'jquery', 'laypage','layedit'], function() {
 			var form = layui.form(),
+			layedit = layui.layedit,
 				layer = parent.layer === undefined ? layui.layer : parent.layer,
 				laypage = layui.laypage,
 				$ = layui.jquery;
-
+layedit.build('demo');
 			// 点击添加页面
 			$(".add-sevice").click(function() {
 				layer.open({
