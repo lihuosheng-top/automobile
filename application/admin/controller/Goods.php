@@ -71,6 +71,8 @@ class Goods extends Controller{
     public function save(Request $request)
     {
         if ($request->isPost()) {
+            $data = $request->param();
+            halt($data);
             $goods_data = $request->only([
                 "goods_name",
                 "sort_number",
