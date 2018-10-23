@@ -266,7 +266,10 @@ Route::group("admin",[
     /*品牌*/
     "brand_index"=>"admin/Brand/index",
     "brand_add"=>"admin/Brand/add",
+    "brand_save"=>"admin/Brand/save",
     "brand_edit"=>"admin/Brand/edit",
+    "brand_updata"=>"admin/Brand/updata",
+    "brand_del"=>"admin/Brand/del",
 
 
     /*店铺管理*/

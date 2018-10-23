@@ -199,30 +199,30 @@
 	<div class="open">
 
 	</div>
-	<form class="layui-form" action="">
+	<form class="layui-form" action="{:url('admin/Goods/save')}" method="post" enctype="multipart/form-data">
 		<div class="basic-information title"> 基本信息
 		</div>
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品名:</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_name">
+				<input type="text" name="goods_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_name">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">分享描述：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_describe">
+				<input type="text" name="goods_describe" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_describe">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>商品主图</label>
+			<label class="layui-form-label"><span>*</span>商品显示图片</label>
 			<div class="layui-input-block">
 				<div class="img-box full">
 					<section class=" img-section">
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+								<input type="file" name="goods_show_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
 							</section>
 						</div>
 					</section>
@@ -243,7 +243,7 @@
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file"  id="files" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+								<input type="file"  id="files" name="goods_images[]" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
 							</section>
 						</div>
 					</section>
@@ -259,11 +259,10 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">商品分组：</label>
 			<div class="layui-input-inline">
-				<select name="quiz1" id="goods_type_id">
-					<option value="">请选择省</option>
-					<option value="浙江" selected="">浙江省</option>
-					<option value="你的工号">江西省</option>
-					<option value="你最喜欢的老师">福建省</option>
+				<select name="goods_type_id" id="goods_type_id">
+					{volist name="goods_list" id="value"}
+					<option value="{$value.id}">{$value.name}</option>
+					{/volist}
 				</select>
 			</div>
 			<div class="layui-input-inline">
@@ -273,20 +272,19 @@
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
 			<div class="layui-input-inline">
-				<select name="quiz1" id="goods_type_id">
-					<option value="">请选择省</option>
+				<select name="goods_brand">
 					<option value="浙江" selected="">浙江省</option>
 					<option value="你的工号">江西省</option>
 					<option value="你最喜欢的老师">福建省</option>
 				</select>	</div>
 				<div class="layui-input-inline">
-					<a href="{:url('admin/Category/add')}" style="line-height: 40px;">添加品牌</a>
+					<a href="{:url('admin/Brand/add')}" style="line-height: 40px;">添加品牌</a>
 				</div>
 		</div>
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品排序:</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="sort_number">
+				<input type="text" name="sort_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="sort_number">
 			</div>
 		</div>
 		<div class="layui-form-item" class="biaoji">
@@ -302,7 +300,7 @@
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">商品规格</label>
-			<div class="layui-input-block" id="">
+			<div class="layui-input-block">
 				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
 				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
 			</div>
@@ -437,11 +435,11 @@
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
-				<textarea id="demo" style="display: none;"></textarea>
+				<!--<textarea id="demo" style="display: none;"></textarea>-->
 				<!-- <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea> -->
-				<!-- <div id="goods_text">
+				 <div id="goods_text">
 					<script id="editor" type="text/plain" style="width:800px;height:500px;"></script>
-				</div> -->
+				</div>
 			</div>
 		</div>
 		<div class="basic-information title"> 其他
@@ -487,7 +485,7 @@
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button class="layui-btn submit_btn" lay-submit="" lay-filter="demo1" type="button">保存</button>
+				<button class="layui-btn submit_btn" lay-submit="" lay-filter="demo1" type="submit">保存</button>
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
 			</div>
 		</div>

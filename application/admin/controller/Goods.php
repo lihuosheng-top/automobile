@@ -59,8 +59,12 @@ class Goods extends Controller{
 
     }
 
-    public function add(){
-        return view("goods_add");
+    public function add($pid=0){
+        $goods_list = [];
+        if($pid == 0){
+            $goods_list = getSelectList("goods_type");
+        }
+        return view("goods_add",["goods_list"=>$goods_list]);
     }
 
     /**
