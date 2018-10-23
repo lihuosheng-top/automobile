@@ -205,24 +205,45 @@
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品名:</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_name">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">分享描述：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_describe">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">商品主图</label>
+			<label class="layui-form-label"><span>*</span>商品主图</label>
 			<div class="layui-input-block">
 				<div class="img-box full">
 					<section class=" img-section">
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+								<input type="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+							</section>
+						</div>
+					</section>
+				</div>
+				<aside class="mask works-mask">
+					<div class="mask-content">
+						<p class="del-p ">您确定要删除作品图片吗？</p>
+						<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+					</div>
+				</aside>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span>*</span>商品图片</label>
+			<div class="layui-input-block">
+				<div class="img-box full">
+					<section class=" img-section">
+						<div class="z_photo upimg-div clear">
+							<section class="z_file fl">
+								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+								<input type="file"  id="files" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
 							</section>
 						</div>
 					</section>
@@ -238,7 +259,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">商品分组：</label>
 			<div class="layui-input-inline">
-				<select name="quiz1">
+				<select name="quiz1" id="goods_type_id">
 					<option value="">请选择省</option>
 					<option value="浙江" selected="">浙江省</option>
 					<option value="你的工号">江西省</option>
@@ -249,22 +270,41 @@
 				<a href="{:url('admin/Category/add')}" style="line-height: 40px;">新建分类</a>
 			</div>
 		</div>
+		<div class="layui-form-item ">
+			<label class="layui-form-label"><span>*</span>商品品牌:</label>
+			<div class="layui-input-inline">
+				<select name="quiz1" id="goods_type_id">
+					<option value="">请选择省</option>
+					<option value="浙江" selected="">浙江省</option>
+					<option value="你的工号">江西省</option>
+					<option value="你最喜欢的老师">福建省</option>
+				</select>	</div>
+				<div class="layui-input-inline">
+					<a href="{:url('admin/Category/add')}" style="line-height: 40px;">添加品牌</a>
+				</div>
+		</div>
+		<div class="layui-form-item ">
+			<label class="layui-form-label"><span>*</span>商品排序:</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="sort_number">
+			</div>
+		</div>
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label"><span>*</span>商品标记：</label>
-			<div class="layui-input-block">
-				<input type="radio" name="yes" value="hot" title="hot" checked="" class="hot">
-				<input type="radio" name="yes" value="促销" title="促销" class="">
-				<input type="radio" name="yes" value="清仓" title="清仓" class="">
-				<input type="radio" name="yes" value="推荐" title="推荐" class="">
+			<div class="layui-input-block" id="goods_sign">
+				<input type="radio" name="goods_sign" value="hot" title="hot" checked="" class="hot">
+				<input type="radio" name="goods_sign" value="促销" title="促销" class="">
+				<input type="radio" name="goods_sign" value="清仓" title="清仓" class="">
+				<input type="radio" name="goods_sign" value="推荐" title="推荐" class="">
 			</div>
 		</div>
 		<div class="basic-information title">商品规格
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">商品规格</label>
-			<div class="layui-input-block">
-				<input type="radio" name="guige" value="通用" title="通用" class="general-radio" lay-filter="guige">
-				<input type="radio" name="guige" value="专用" title="专用" class="special" lay-filter="guige">
+			<div class="layui-input-block" id="">
+				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
+				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
 			</div>
 		</div>
 		<div>
@@ -338,102 +378,116 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label"><span>*</span>规格：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="standard">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">商品编码：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_number">
 			</div>
 		</div>
 
 		<div class="layui-form-item">
 			<label class="layui-form-label"><span>*</span> 价格：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_new_money">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">划线价：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_bottom_money">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span>*</span> 库存：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_repertory">
 			</div>
+				<div class="layui-input-block">
+			<input type="radio" name="goods_putaway" value="1年10元/单个商品" title="商品详情不显示剩余件数" checked="" class="hot">
+				</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">速度级别：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_speed">
 			</div>
+			
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">载重指数：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_weight">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">类别：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_category">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">花纹特点：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_trait">
 			</div>
 		</div>
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
-				<!--<textarea id="demo" style="display: none;"></textarea>-->
-				<!--<textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>-->
-				<div>
+				<textarea id="demo" style="display: none;"></textarea>
+				<!-- <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea> -->
+				<!-- <div id="goods_text">
 					<script id="editor" type="text/plain" style="width:800px;height:500px;"></script>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="basic-information title"> 其他
 		</div>
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label">上架年限：</label>
-			<div class="layui-input-block">
-				<input type="radio" name="yes" value="1年10元/单个商品" title="1年10元/单个商品" checked="" class="hot">
-				<input type="radio" name="yes" value="2年15元/单个商品" title="1年10元/单个商品" class="">
-				<input type="radio" name="yes" value="3年25元/单个商品" title="1年10元/单个商品" class="">
+			<div class="layui-input-block" id="">
+				<input type="radio" name="goods_putaway" value="1年10元/单个商品" title="1年10元/单个商品" checked="" class="hot">
+				<input type="radio" name="goods_putaway" value="2年15元/单个商品" title="2年15元/单个商品" class="">
+				<input type="radio" name="goods_putaway" value="3年25元/单个商品" title="3年25元/单个商品" class="">
 			</div>
 		</div>
 		<div class="layui-form-item" pane="">
 			<label class="layui-form-label">限购：</label>
 			<div class="layui-input-inline">
-				<input type="checkbox" name="like1[write]" lay-skin="primary" title="限制每人可购买数量">
+				<input type="checkbox" name="like1[write]" lay-skin="primary" title="限制每人可购买数量"  >
 				<!-- <input type="text" name="" id="" value="" />件 -->
 			</div>
 			<div class="layui-input-inline">
 				<!-- <input type="checkbox" name="like1[write]" lay-skin="primary" title="限制每人可购买数量"> -->
-				<input type="text" name="" id="" value="" style="margin-right: 10px;" />件
+				<input type="text" name="" id="" value="" style="margin-right: 10px;" id="goods_restriction" />件
+			</div>
+		</div>
+		<div class="layui-form-item" class="biaoji">
+			<label class="layui-form-label"><span>*</span>是否上架：</label>
+			<div class="layui-input-block" id="goods_sign">
+				<input type="radio" name="goods_status" value="hot" title="上架" checked="" class="hot">
+				<input type="radio" name="goods_status" value="促销" title="不上架" class="">
+		
 			</div>
 		</div>
 		<div class="basic-information title"> 配送与安装服务
 		</div>
+	
 		<div class="layui-form-item" class="biaoji">
-			<label class="layui-form-label"><span>*</span>商品标记：</label>
-			<div class="layui-input-block">
-				<input type="radio" name="yes" value="hot" title="到店自提" checked="" class="hot">
-				<input type="radio" name="yes" value="促销" title="到店安装" class="">
-				<input type="radio" name="yes" value="清仓" title="上门安装" class="">
+			<label class="layui-form-label">配送与安装服务：</label>
+			<div class="layui-input-block" id="">
+				<input type="checkbox" name="goods_delivery" value="到店自提" title="到店自提" checked="" class="hot">
+				<input type="checkbox" name="goods_delivery" value="上门安装" title="上门安装" class="">
+				<input type="checkbox" name="goods_delivery" value="送货上门" title="送货上门" class="">
+				<input type="checkbox" name="goods_delivery" value="送货上门" title="平台配送" class="">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+				<button class="layui-btn submit_btn" lay-submit="" lay-filter="demo1" type="button">保存</button>
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
 			</div>
 		</div>
@@ -448,6 +502,83 @@
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
+	<!-- <script type="text/javascript">
+		$(".submit_btn").click(function(){
+			var goods_name=$("#goods_name").val();
+			var goods_describe=$("#goods_describe").val();
+			var standard=$("#standard").val();
+			var goods_number=$("#goods_number").val();
+			var goods_new_money=$("#goods_new_money").val();
+			var goods_bottom_money=$("#goods_bottom_money").val();
+			var goods_repertory=$("#goods_repertory").val();
+			var goods_speed=$("#goods_speed").val();
+			var goods_weight=$("#goods_weight").val();
+			var goods_category=$("#goods_category").val();
+			var goods_restriction=$("#goods_restriction").val();
+			var goods_trait=$("#goods_trait").val();
+			   
+			var goods_type_id=$('#goods_type_id option:selected').text();
+			var goods_sign=$('input:radio[name="goods_sign"]:checked').val();
+			var goods_putaway=$('input:radio[name="goods_putaway"]:checked').val();
+			var goods_delivery=$('input:radio[name="goods_delivery"]:checked').val();
+			var sort_number=$("#sort_number").val();  
+			var goods_status=$('input:radio[name="goods_status"]:checked').val();
+			// 商品图片
+	     var mycars=new Array();
+			 var lenght=$('#file')[0].files.length;
+			
+			 for(var i = 0; i <lenght; i++){
+            mycars[i]= $('#file')[0].files[i];
+        }
+			var goods_show_images=mycars;
+			// 商品主图
+      var mycars_b=new Array();
+      var lenght=$('#files')[0].files.length;
+      
+      for(var i = 0; i <lenght; i++){
+      			mycars_b[i]= $('#files')[0].files[i];
+						}
+      var goods_images=mycars_b;
+			var goods_text=UE.getEditor('editor').getContent();
+			// 商品规格
+			var goods_standard=$('input:radio[name="goods_standard"]:checked').val();
+			var click_general_buts=0;
+			var universal_standard_name=new Array();  
+			var universal_standard_value=new Array();  
+			$(".general_buts").click(function(){
+				click_general_buts++;
+			});
+			 if(goods_standard=="通用"){
+				 var i=0;
+         var j=0;
+				 $(".universal_standard_name option:selected").each(function(){
+					 
+				    universal_standard_name[i]=$(this).text();
+						i++;
+				 });
+				 $(".list input").each(function(){
+				 	universal_standard_value[j]=$(this).val();
+				 	j++;
+				 });
+				 console.log(universal_standard_value);
+				 }
+				 else{
+					 
+				 }
+				 $.ajax({
+				 	type: "POST",
+				url : "{:url('admin/Goods/save')}",
+				 	data: {"goods_name":goods_name,"goods_describe":goods_describe,},
+				 	success: function(data){
+				 		console.log("成功")
+				 	},
+				 	error:function (data) {
+				 		console.log("错误")
+				 	}
+				 });
+		})
+		
+	</script> -->
 	<script type="text/javascript">
 		var dhtml = "";
 
@@ -455,7 +586,7 @@
 			' 			<div class="layui-form-item">                                                                                 ' +
 			' 				<label class="layui-form-label">规格名</label>                                                               ' +
 			' 				<div class="layui-input-inline">                                                                          ' +
-			' 					<select name="quiz1">                                                                                 ' +
+			' 					<select class="universal_standard_name">                                                                                 ' +
 			' 						<option value="">请选择省</option>                                                                    ' +
 			' 						<option value="浙江" selected="">浙江省</option>                                                       ' +
 			' 						<option value="你的工号">江西省</option>                                                                 ' +
@@ -482,28 +613,28 @@
 			' 			<div class="layui-form-item">                                                                                 ' +
 			' 				<label class="layui-form-label">规格值：</label>                                                              ' +
 			' 			<div class="num-content">                                                                                 ' +
-			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
 			' 					<input type="text" name="" id="" value=""  placeholder="请输入规格（规格）" style="padding-left:10px;"/>                                                          ' +
 			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
 			' 					<input type="text" name="" id="" value="" placeholder="请输入商品编码"  style="padding-left:10px;"/>                                                          ' +
 			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
 			' 					<input type="text" name="" id="" value="" placeholder="请输入商品价格（必填）"  style="padding-left:10px;"/>                                                          ' +
 			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
 			' 					<input type="text" name="" id="" value="" placeholder="请输入商品库存（必填）"  style="padding-left:10px;"/>                                                          ' +
 			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
 			' 					<input type="text" name="" id="" value="" placeholder="请输入速度级别"  style="padding-left:10px;"/>                                                          ' +
 			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
 			' 					<input type="text" name="" id="" value="" placeholder="请输入载重指数"  style="padding-left:10px;"/>                                                          ' +
 			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
 			' 					<input type="text" name="" id="" value="" placeholder="请输入类别"  style="padding-left:10px;"/>                                                          ' +
 			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline" style="padding-bottom:10px;margin-right: 25px;">                                                                          ' +
+			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
 			' 					<input type="text" name="" id="" value="" placeholder="请输入花纹"  style="padding-left:10px;"/>                                                          ' +
 			' 				</div>                                                                                                    ' +
 			' 				</div>                                                                                                    ' +
@@ -538,12 +669,13 @@
 	<script type="text/javascript">
 		layui.config({
 			base: "js/"
-		}).use(['form', 'layer', 'jquery', 'laypage'], function() {
+		}).use(['form', 'layer', 'jquery', 'laypage','layedit'], function() {
 			var form = layui.form(),
+			layedit = layui.layedit,
 				layer = parent.layer === undefined ? layui.layer : parent.layer,
 				laypage = layui.laypage,
 				$ = layui.jquery;
-
+layedit.build('demo');
 			// 点击添加页面
 			$(".add-sevice").click(function() {
 				layer.open({
