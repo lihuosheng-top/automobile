@@ -22,9 +22,11 @@ class Category extends Controller{
      * 陈绪
      */
     public function index(){
-        $category = db("goods_type")->where("status","<>","0")->select();
+        $category = db("goods_type")->where("status","<>","0")->paginate(5);
         return view("category_index",["category"=>$category]);
     }
+
+
 
     /**
      * [商品分类添加]
@@ -43,6 +45,7 @@ class Category extends Controller{
     }
 
 
+
     /**
      * [商品分组入库]
      * 陈绪
@@ -50,7 +53,9 @@ class Category extends Controller{
     public function save(Request $request){
         if($request->isPost()){
             $data = $request->param();
-            $show_images = $request->file("type_images")->move(ROOT_PATH . 'public' . DS . 'type');
+            unset($data["taglocation"]);
+            unset($data["tags"]);
+            $show_images = $request->file("type_images")->move(ROOT_PATH . 'public' . DS . 'uploads');
             $data["type_images"] = str_replace("\\","/",$show_images->getSaveName());
             $bool = db("goods_type")->insert($data);
             if($bool){
@@ -60,6 +65,7 @@ class Category extends Controller{
             }
         }
     }
+
 
 
     /**
@@ -85,7 +91,7 @@ class Category extends Controller{
     public function updata(Request $request){
         if($request->isPost()) {
             $data = $request->only(["name", "status", "sort_number", "pid"]);
-            $show_images = $request->file("type_images")->move(ROOT_PATH . 'public' . DS . 'type');
+            $show_images = $request->file("type_images")->move(ROOT_PATH . 'public' . DS . 'uploads');
             $data["type_images"] = str_replace("\\", "/", $show_images->getSaveName());
             $bool = db("goods_type")->where('id', $request->only(["id"])["id"])->update($data);
             if ($bool) {
@@ -138,11 +144,42 @@ class Category extends Controller{
         $id = $request->only(['id'])['id'];
         $images = db("goods_type")->where("id",$id)->field("type_images")->find();
         $bool = db("goods_type")->where("id",$id)->update(['type_images'=>null]);
-        unlink(ROOT_PATH . 'public' . DS . 'type/'.$images['type_images']);
+        unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$images['type_images']);
         if($bool){
             return ajax_success("更新成功");
         }
     }
+
+
+
+    /**
+     * 商品分组状态修改
+     * 陈绪
+     */
+    public function status(Request $request){
+        if($request->isPost()) {
+            $status = $request->only(["status"])["status"];
+            if($status == 0) {
+                $id = $request->only(["id"])["id"];
+                $bool = db("goods_type")->where("id", $id)->update(["status" => 0]);
+                if ($bool) {
+                    $this->redirect(url("admin/Category/index"));
+                } else {
+                    $this->error("修改失败", url("admin/Category/index"));
+                }
+            }
+            if($status == 1){
+                $id = $request->only(["id"])["id"];
+                $bool = db("goods_type")->where("id", $id)->update(["status" => 1]);
+                if ($bool) {
+                    $this->redirect(url("admin/Category/index"));
+                } else {
+                    $this->error("修改失败", url("admin/Category/index"));
+                }
+            }
+        }
+    }
+
 
 
 }

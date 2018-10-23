@@ -40,9 +40,9 @@ $(function(){
 		         $img.appendTo($section);
 		     var $p = $("<p class='img-name-p'>");
 		         $p.html(fileList[i].name).appendTo($section);
-		     var $input = $("<input id='taglocation' name='taglocation' value='' type='hidden'>");
+		     var $input = $("<input id='taglocation'  value='' type='hidden'>");
 		         $input.appendTo($section);
-		     var $input2 = $("<input id='tags' name='tags' value='' type='hidden'/>");
+		     var $input2 = $("<input id='tags' value='' type='hidden'/>");
 		         $input2.appendTo($section);
 		      
 		   }
