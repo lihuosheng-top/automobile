@@ -110,6 +110,31 @@ class Install extends Controller{
 
 
     /**
+     * 服务编辑
+     * 陈绪
+     */
+    public function service_edit(){
+
+        return view("service_edit");
+
+    }
+
+
+
+
+    /**
+     * 服务更新
+     * 陈绪
+     */
+    public function service_updata(){
+
+
+
+    }
+
+
+
+    /**
      * 服务删除
      * 陈绪
      */

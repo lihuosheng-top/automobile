@@ -271,6 +271,8 @@ Route::group("admin",[
     "service_index"=>"admin/Install/service_index",
     "service_add"=>"admin/Install/service_add",
     "service_save"=>"admin/Install/service_save",
+    "service_edit"=>"admin/Install/service_edit",
+    "service_updata"=>"admin/Install/service_updata",
     "service_del"=>"admin/Install/service_del",
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
