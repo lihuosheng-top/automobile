@@ -79,27 +79,16 @@
 
 		<div class="layui-form news_list">
 			<table class="layui-table">
-				<colgroup>
-					<col width="3%">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
-					<col>
-				</colgroup>
+			
 				<thead>
 					<tr>
 						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-						<th>门店名称</th>
-						<th>门店主图</th>
+						<th>店铺名称</th>
+						<th>门店负责人</th>
 						<th>门店地址</th>
 						<th>联系电话</th>
 						<th>店铺类型</th>
-						<th>店铺状态</th>
-						<th>上架付费</th>
-						<th>门店负责人</th>
+						<th>平台审核状态</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -107,20 +96,15 @@
 					<tr>
 						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
 						<td>2</td>
-						<td><img src="111" /></td>
 						<td>张三</td>
+						<td>管理员</td>
 						<td>管理员</td>
 						<td>2018</td>
 						<td>
 							<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
 							 checked="" data-id="2">
-							<div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>是</em><i></i></div>
-
 						</td>
 
-
-						<td>2018</td>
-						<td>张三</td>
 						<td>
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
 							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
@@ -134,7 +118,7 @@
 		<div id="page">
 
 			<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-				<option value="">商家批量上架</option>
+				<option value="">批量删除</option>
 
 			</select>
 			<button type="button" class="up-button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定

@@ -2,8 +2,9 @@
 
 {block name="css"}
 <style type="text/css">
+	
 	.layui-form label {
-		width: 15%;
+		width: 20%;
 		text-align: left;
 	}
 	
@@ -15,10 +16,11 @@
 		color: red;
 	}
 	
-	.layui-form {
-		width: 80%;
-		margin: 0 auto;
-		padding-top: 40px;
+.layui-form{
+		width: 90%;
+		margin: 10px auto;
+		border: #BCBCBC solid 1px;
+	
 	}
 	
 	body {
@@ -31,30 +33,46 @@
 	.err{
 		    border: red solid 1px;
 	}
-
+    .title{
+		height: 50px;
+		line-height: 50px;
+		background: #F2F2F2;
+		padding-left: 20px;
+	}
+	.layui-form-item{
+		padding-left: 20px;
+	}
 </style>
 
 {/block}
 <body>
+
 {block name="content"}
 <form class="layui-form" action="{:url('admin/admin/updata')}" method="post">
-	{volist name="admin" id="value"}
+	
+	<p class="title">店铺基本信息</p>
 	<div class="layui-form-item ">
 		<label class="layui-form-label"><span>*</span>店铺名称:</label>
 		<div class="layui-input-block">
-			<input type="text" name="account" value="{$value.account}" placeholder="" class="layui-input" id="account">
+			<input type="text" name="account" value="" placeholder="" class="layui-input" id="account">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label"><span>*</span>负责人姓名：</label>
 		<div class="layui-input-block">
-			<input type="text" name="department" value="{$value.department}" placeholder="" class="layui-input" id="department">
+			<input type="text" name="department" value="" placeholder="" class="layui-input" id="department">
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label"><span>*</span>负责人联系方式：</label>
+		<label class="layui-form-label"><span>*</span>手机号：</label>
 		<div class="layui-input-block">
-			<input type="text" name="name" value="{$value.name}" placeholder="" class="layui-input" id="name">
+			<input type="text" name="name" value="" placeholder="" class="layui-input" id="name">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>座机号：</label>
+		<div class="layui-input-block">
+			<input type="text" name="name" value="" placeholder="" class="layui-input" id="name">
 		</div>
 	</div>
 
@@ -82,53 +100,114 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label"><span>*</span>店铺所在地：</label>
 		<div class="layui-input-block">
-			<input type="password"  placeholder="" class="layui-input" id="repassword">
+			<input type="text"  placeholder="" class="layui-input" id="repassword">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>营业时间：</label>
+		<div class="layui-input-block">
+			<input type="text"  placeholder="" class="layui-input" id="repassword">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label"><span>*</span>服务范围：</label>
 		<div class="layui-input-block">
-			<input type="checkbox" name="phone" value="{$value.phone}" placeholder="" class="layui-input" >
+			 <input type="checkbox" name="like1[write]" lay-skin="primary" title="写作" checked="">
+      <input type="checkbox" name="like1[read]" lay-skin="primary" title="阅读">
+      <input type="checkbox" name="like1[game]" lay-skin="primary" title="游戏" >
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label"><span>*</span>邮箱</label>
+		<label class="layui-form-label"><span>*</span>店铺详细地址</label>
 		<div class="layui-input-block">
-			<input type="text" name="email" value="{$value.email}" placeholder="" class="layui-input" id="email">
+			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>邮件</label>
+		<div class="layui-input-block">
+			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>绑定微信</label>
+		<div class="layui-input-block">
+			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email">
 		</div>
 	</div>
 
 	<div class="layui-form-item">
-		<label class="layui-form-label"><span>*</span>角色</label>
-		<div class="layui-input-block" id="admin_role_id">
-			<select name="role_id" id="admin_role" class="role_list">
-				{volist name="roleList" id="val"}
-				<option value="{$val.id}">{$val.name}</option>
-				{/volist}
-			</select>
+		<label class="layui-form-label"><span>*</span>我要加盟为：</label>
+		<div class="layui-input-block">
+			   <select name="interest" lay-filter="aihao">
+        <option value=""></option>
+        <option value="0">写作</option>
+        <option value="1" selected="">阅读</option>
+        <option value="2">游戏</option>
+        <option value="3">音乐</option>
+        <option value="4">旅行</option>
+      </select>
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label"><span>*</span>状态</label>
+		<label class="layui-form-label"><span>*</span>店铺信息：</label>
 		<div class="layui-input-block">
-			<select name="status" id="admin_status">
-				<option value="1" selected="">启用</option>
-				<option value="2">禁用</option>
-			</select>
+			<textarea rows="10" cols="100">
+				
+			</textarea>
 		</div>
 	</div>
+	<p class="title">身份认证</p>
+		<div class="layui-form-item">
+				<label class="layui-form-label"><span>*</span>验证身份证：</label>
+				<div class="layui-input-inline">
+					<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+				</div>
+				<div class="layui-input-inline">
+					<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+				</div>
+			</div>
+			<div class="layui-form-item">
+					<label class="layui-form-label"><span>*</span>验证营业执照：</label>
+					<div class="layui-input-inline">
+						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+					</div>
+					<div class="layui-input-inline">
+						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+					</div>
+				</div>
+				<div class="layui-form-item">
+						<label class="layui-form-label"><span>*</span>验证真实地址：</label>
+						<div class="layui-input-block">
+							<input type="text" name="" id="" value="" />
+						</div>
+					</div>
+				<div class="layui-form-item">
+						<label class="layui-form-label"><span>*</span>验证实体店面：</label>
+						<div class="layui-input-inline">
+							<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+						</div>
+						<div class="layui-input-inline">
+							<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+						</div>
+						<div class="layui-input-inline" style="margin-left: 20%;">
+							<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+						</div>
+						<div class="layui-input-inline">
+						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+						</div>
+					</div>
 
 	<div class="layui-form-item">
 		<div class="layui-input-block">
-			<input type="hidden" name="id" value="{$value.id}">
-			<button class="layui-btn" type="button" id="submits">保存</button>
+			<input type="hidden" name="id" value="">
+			<button class="layui-btn" type="submit" id="submits">保存</button>
 			<button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
 		</div>
 	</div>
-	{/volist}
+	
 </form>
 {/block}
-
 <!--_footer 作为公共模版分离出去-->
 {include file="template/_footer" /}
 <!--/_footer 作为公共模版分离出去-->
