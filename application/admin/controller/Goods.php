@@ -67,6 +67,8 @@ class Goods extends Controller{
         return view("goods_add",["goods_list"=>$goods_list]);
     }
 
+
+
     /**
      * [商品添加]
      * 陈绪
@@ -75,8 +77,17 @@ class Goods extends Controller{
     public function save(Request $request)
     {
         if ($request->isPost()) {
-            $data = $request->param();
-            halt($data);
+            $data = $request->only(["goods_standard_value"])["goods_standard_value"];
+            $datas = [];
+            foreach ($data as $key=>$v){
+                $key+=1;
+                if($key == 8){
+                    echo 1;
+                    exit();
+                    $datas["goods_standard_value"][] = $v;
+                }
+            }
+            halt($datas);
             $goods_data = $request->only([
                 "goods_name",
                 "sort_number",
