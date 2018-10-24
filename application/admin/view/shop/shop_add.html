@@ -1,223 +1,302 @@
-{extend name="layout"} {block name="css"}
+{extend name="layout"}
 
+{block name="css"}
 <style type="text/css">
+	
+	.layui-form label {
+		width: 20%;
+		text-align: left;
+	}
+	
+	.layui-form .layui-input-block input {
+		width: 95%;
+	}
+	
+	.layui-form-label span {
+		color: red;
+	}
+	
+.layui-form{
+		width: 90%;
+		margin: 10px auto;
+		border: #BCBCBC solid 1px;
+	
+	}
+	
 	body {
 		background: #fff;
 	}
 	
-	label {
-		text-align: left !important;
+	.layui-anim-upbit {
+		width: 95% !important;
 	}
-	
-	.layui-form-item {
-		width: 100%;
-		margin-bottom: 0px;
-		margin-top: 0px;
+	.err{
+		    border: red solid 1px;
 	}
-	
-	.layui-form-label {
-		width: 26% !important;
-	}
-	
-	.layui-input-inline {
-		width: 70% !important;
-	}
-	
-	#page {
-		width: 96%;
+    .title{
 		height: 50px;
 		line-height: 50px;
-		border: solid 1px #E2E2E2;
-		padding-left: 50px;
-		background: #FDFDFE;
+		background: #F2F2F2;
+		padding-left: 20px;
 	}
-	
-	select {
-		font-size: 15px;
-	}
-	
-	button {
-		width: 60px;
-		height: 40px;
-		border-radius: 3px;
+	.layui-form-item{
+		padding-left: 20px;
 	}
 </style>
 
 {/block}
-
 <body>
 
-	{block name="content"}
+{block name="content"}
+<form class="layui-form" action="{:url('admin/admin/updata')}" method="post">
+	
+	<p class="title">店铺基本信息</p>
+	<div class="layui-form-item ">
+		<label class="layui-form-label"><span>*</span>店铺名称:</label>
+		<div class="layui-input-block">
+			<input type="text" name="account" value="" placeholder="" class="layui-input" id="account">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>负责人姓名：</label>
+		<div class="layui-input-block">
+			<input type="text" name="department" value="" placeholder="" class="layui-input" id="department">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>手机号：</label>
+		<div class="layui-input-block">
+			<input type="text" name="name" value="" placeholder="" class="layui-input" id="name">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>座机号：</label>
+		<div class="layui-input-block">
+			<input type="text" name="name" value="" placeholder="" class="layui-input" id="name">
+		</div>
+	</div>
 
-	<div class="childrenBody">
-		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="">
-				<div class="layui-form-item">
-					<div class="layui-inline">
-						<label class="layui-form-label">门店名称：</label>
-						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-
-						</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>店铺logo：</label>
+		<div class="layui-input-block">
+			<div class="img-box full">
+				<section class=" img-section">
+					<div class="z_photo upimg-div clear">
+						<section class="z_file fl">
+							<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+							<input type="file" name="goods_show_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+						</section>
 					</div>
-					<div class="layui-inline">
-											<label class="layui-form-label">门店负责人：</label>
-											<div class="layui-input-inline">
-												<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-					
-											</div>
-										</div>
-					<div class="layui-inline">
-						<a class="layui-btn search_btn">搜索</a>
+				</section>
+			</div>
+			<aside class="mask works-mask">
+				<div class="mask-content">
+					<p class="del-p ">您确定要删除作品图片吗？</p>
+					<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+				</div>
+			</aside>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>店铺所在地：</label>
+		<div class="layui-input-block">
+			<input type="text"  placeholder="" class="layui-input" id="repassword">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>营业时间：</label>
+		<div class="layui-input-block">
+			<input type="text"  placeholder="" class="layui-input" id="repassword">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>服务范围：</label>
+		<div class="layui-input-block">
+			 <input type="checkbox" name="like1[write]" lay-skin="primary" title="写作" checked="">
+      <input type="checkbox" name="like1[read]" lay-skin="primary" title="阅读">
+      <input type="checkbox" name="like1[game]" lay-skin="primary" title="游戏" >
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>店铺详细地址</label>
+		<div class="layui-input-block">
+			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>邮件</label>
+		<div class="layui-input-block">
+			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>绑定微信</label>
+		<div class="layui-input-block">
+			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email">
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>我要加盟为：</label>
+		<div class="layui-input-block">
+			   <select name="interest" lay-filter="aihao">
+        <option value=""></option>
+        <option value="0">写作</option>
+        <option value="1" selected="">阅读</option>
+        <option value="2">游戏</option>
+        <option value="3">音乐</option>
+        <option value="4">旅行</option>
+      </select>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><span>*</span>店铺信息：</label>
+		<div class="layui-input-block">
+			<textarea rows="10" cols="100">
+				
+			</textarea>
+		</div>
+	</div>
+	<p class="title">身份认证</p>
+		<div class="layui-form-item">
+				<label class="layui-form-label"><span>*</span>验证身份证：</label>
+				<div class="layui-input-inline">
+					<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+				</div>
+				<div class="layui-input-inline">
+					<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+				</div>
+			</div>
+			<div class="layui-form-item">
+					<label class="layui-form-label"><span>*</span>验证营业执照：</label>
+					<div class="layui-input-inline">
+						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+					</div>
+					<div class="layui-input-inline">
+						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
 					</div>
 				</div>
+				<div class="layui-form-item">
+						<label class="layui-form-label"><span>*</span>验证真实地址：</label>
+						<div class="layui-input-block">
+							<input type="text" name="" id="" value="" />
+						</div>
+					</div>
+				<div class="layui-form-item">
+						<label class="layui-form-label"><span>*</span>验证实体店面：</label>
+						<div class="layui-input-inline">
+							<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+						</div>
+						<div class="layui-input-inline">
+							<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+						</div>
+						<div class="layui-input-inline" style="margin-left: 20%;">
+							<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+						</div>
+						<div class="layui-input-inline">
+						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+						</div>
+					</div>
 
-			</form>
-
-		</blockquote>
-
-
-		<div class="layui-form news_list">
-			<table class="layui-table">
-				<colgroup>
-					<col width="3%">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
-					<col width="8%">
-					<col>
-				</colgroup>
-				<thead>
-					<tr>
-						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-						<th >门店名称</th>
-						<th>门店主图</th>
-						<th>门店地址</th>
-						<th>联系电话</th>
-						<th>店铺类型</th>
-						<th>店铺状态</th>
-						<th>上架付费</th>
-						<th>门店负责人</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody class="news_content">
-					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>2</td>
-						<td><img src="111" /></td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>2018</td>
-						<td>
-							<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="2">
-							<div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>是</em><i></i></div>
-
-						</td>
-						
-						
-						<td>2018</td>
-						<td>张三</td>
-						<td>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
-							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
-
-						</td>
-					</tr>
-				</tbody>
-			</table>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<input type="hidden" name="id" value="">
+			<button class="layui-btn" type="submit" id="submits">保存</button>
+			<button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
 		</div>
-		<div id="page">
-
-			<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-				<option value="">商家批量上架</option>
-
-			</select>
-			<button type="button" class="up-button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定 </button>
-		</div>
-
 	</div>
+	
+</form>
+{/block}
+<!--_footer 作为公共模版分离出去-->
+{include file="template/_footer" /}
+<!--/_footer 作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+{block name="bottom"}
+<script type="text/javascript">
+layui.config({
+		base: "js/"
+	}).use(['form', 'layer', 'jquery', 'laypage'], function() {
+		var form = layui.form(),
+			layer = parent.layer === undefined ? layui.layer : parent.layer,
+			laypage = layui.laypage,
+			$ = layui.jquery;
+		    form.render();
+	});
+	$("#submits").click(function(){
+		
+		checks();
+	});
+	
+	
+	function checks(){
 
-	</div>
-	{/block}
-
-	<!--_footer 作为公共模版分离出去-->
-	{include file="template/_footer" /}
-	<!--/_footer 作为公共模版分离出去-->
-
-	<!--请在下方写此页面业务相关的脚本-->
-	{block name="bottom"}
-	<script type="text/javascript">
-		layui.config({
-			base: "js/"
-		}).use(['form', 'layer', 'jquery', 'laypage'], function() {
-			var form = layui.form(),
-				layer = parent.layer === undefined ? layui.layer : parent.layer,
-				laypage = layui.laypage,
-				$ = layui.jquery;
-			var vals = $("input").data("id");
-			//是否展示
-form.on('switch(isShow)', function(data) {
-				var vals = data.value;
-				var id = $(this).data("id");
-				var status = $(".Status").value;
-
-				$.ajax({
-					type: "POST",
-					url: "{:url('')}",
-					data: {
-						"id": id,
-						"status": vals
-					},
-					success: function(data) {
-						console.log("成功")
-					},
-					error: function(data) {
-						console.log("错误")
-					}
-				});
-
-			});
-			//全选
-			form.on('checkbox(allChoose)', function(data) {
-				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
-				child.each(function(index, item) {
-					item.checked = data.elem.checked;
-				});
-				form.render('checkbox');
-			});
-
-			//通过判断文章是否全部选中来确定全选按钮是否选中
-			form.on("checkbox(choose)", function(data) {
-				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
-				var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
-				if(childChecked.length == child.length) {
-					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
-				} else {
-					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
-				}
-				form.render('checkbox');
-			})
-
+		if($("#account")[0].value==''){
+			$("#account").addClass("err");
+			return false; 
+		}
+		else{
+			$("#account").removeClass("err");
+//			return true;
+		}
+		if($("#department")[0].value==''){
+			$("#department").addClass("err");
+			return false;
+			 
+		}else{
+			$("#department").removeClass("err");
+//			return true;
+		}
+		if($("#name")[0].value==''){
+			$("#name").addClass("err");
+			return false;
+			 	 
+			 
+		}else{
+			$("#name").removeClass("err");
+//			return true;
+		}if($("#password")[0].value==''){
 			
-			$(".up-button").click(function() {
-				layer.confirm('付费商品需付费后才能上架！', {
-					btn: ['确定付费', '取消付费！'] //按钮
-				}, function() {
-                     window.location.href = "{:url('admin/Goods/pay')}";
-					 layer.close(layer.index);
-				}, function() {
-
-				});
-			});
-
-		})
+			$("#password").addClass("err");
+			return false;
+			 
+		}else{
+			$("#password").removeClass("err");
+//			return true;
+		}if($("#repassword")[0].value==''){
+			$("#repassword").addClass("err");
+			return false;
+			 
+		}else{
+			$("#repassword").removeClass("err");
+//			return true;
+		}if($("#phone")[0].value==''){
+			$("#phone").addClass("err");
+			return false;
+			 
+		}
+		else{
+			$("#phone").removeClass("err");
+//			return true;
+		}if($("#email")[0].value==''){
+			$("#email").addClass("err");
+			return false;
+			 
+		}
+		else{
+			$("#email").removeClass("err");
+//			return true;
+		}
+		if($("#repassword")[0].value!=$("#password")[0].value){
+			alert("两次密码不一致");
+			return false;
+		}
+     $("#submits").attr("type","submit");
+		
+	}
 	</script>
+{/block}
 
-	{/block}
 
 </body>
-
 </html>
