@@ -4,25 +4,25 @@
 	body {
 		background: #fff;
 	}
-	
+
 	label {
 		text-align: left !important;
 	}
-	
+
 	.layui-form-item {
 		width: 100%;
 		margin-bottom: 0px;
 		margin-top: 0px;
 	}
-	
+
 	.layui-form-label {
 		width: 26% !important;
 	}
-	
+
 	.layui-input-inline {
 		width: 70% !important;
 	}
-	
+
 	#page {
 		width: 96%;
 		height: 50px;
@@ -31,11 +31,11 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
-	
+
 	select {
 		font-size: 15px;
 	}
-	
+
 	button {
 		width: 60px;
 		height: 40px;
@@ -61,12 +61,12 @@
 						</div>
 					</div>
 					<div class="layui-inline">
-											<label class="layui-form-label">门店负责人：</label>
-											<div class="layui-input-inline">
-												<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-					
-											</div>
-										</div>
+						<label class="layui-form-label">负责人：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+
+						</div>
+					</div>
 					<div class="layui-inline">
 						<a class="layui-btn search_btn">搜索</a>
 					</div>
@@ -92,7 +92,7 @@
 				<thead>
 					<tr>
 						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-						<th >门店名称</th>
+						<th>门店名称</th>
 						<th>门店主图</th>
 						<th>门店地址</th>
 						<th>联系电话</th>
@@ -112,17 +112,19 @@
 						<td>管理员</td>
 						<td>2018</td>
 						<td>
-							<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="2">
+							<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
+							 checked="" data-id="2">
 							<div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>是</em><i></i></div>
 
 						</td>
-						
-						
+
+
 						<td>2018</td>
 						<td>张三</td>
 						<td>
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
-							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
+							 data-id="undefined"><i class="layui-icon"></i> 删除</a>
 
 						</td>
 					</tr>
@@ -135,7 +137,8 @@
 				<option value="">商家批量上架</option>
 
 			</select>
-			<button type="button" class="up-button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定 </button>
+			<button type="button" class="up-button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定
+			</button>
 		</div>
 
 	</div>
@@ -159,17 +162,22 @@
 				$ = layui.jquery;
 			var vals = $("input").data("id");
 			//是否展示
-form.on('switch(isShow)', function(data) {
+			form.on('switch(isShow)', function(data) {
+				if ($(this).val() == 0) {
+					$(this).val(1);
+				} else {
+					$(this).val(0);
+				}
 				var vals = data.value;
 				var id = $(this).data("id");
-				var status = $(".Status").value;
-
+				var status = $(this).val();
+				console.log(status);
 				$.ajax({
 					type: "POST",
-					url: "{:url('')}",
+					url: "{:url('admin/admin/status')}",
 					data: {
 						"id": id,
-						"status": vals
+						"status": status
 					},
 					success: function(data) {
 						console.log("成功")
@@ -179,7 +187,8 @@ form.on('switch(isShow)', function(data) {
 					}
 				});
 
-			});
+
+			})
 			//全选
 			form.on('checkbox(allChoose)', function(data) {
 				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
@@ -193,7 +202,7 @@ form.on('switch(isShow)', function(data) {
 			form.on("checkbox(choose)", function(data) {
 				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
 				var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
-				if(childChecked.length == child.length) {
+				if (childChecked.length == child.length) {
 					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
 				} else {
 					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
@@ -201,13 +210,13 @@ form.on('switch(isShow)', function(data) {
 				form.render('checkbox');
 			})
 
-			
+
 			$(".up-button").click(function() {
 				layer.confirm('付费商品需付费后才能上架！', {
 					btn: ['确定付费', '取消付费！'] //按钮
 				}, function() {
-                     window.location.href = "{:url('admin/Goods/pay')}";
-					 layer.close(layer.index);
+					window.location.href = "{:url('admin/Goods/pay')}";
+					layer.close(layer.index);
 				}, function() {
 
 				});
