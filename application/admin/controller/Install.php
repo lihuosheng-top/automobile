@@ -90,7 +90,7 @@ class Install extends Controller{
      */
     public function service_add(){
 
-        return view("service_index");
+        return view("service_add");
 
     }
 
