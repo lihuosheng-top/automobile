@@ -267,6 +267,16 @@ Route::group("admin",[
     "recommend_index"=>"admin/Install/recommend",
     "integral_index"=>"admin/Install/integral",
     "putaway_index"=>"admin/Install/putaway",
+    "recharge_index"=>"admin/Install/recharge",
+    "service_index"=>"admin/Install/service_index",
+    "service_add"=>"admin/Install/service_add",
+    "service_save"=>"admin/Install/service_save",
+    "service_del"=>"admin/Install/service_del",
+    "message_index"=>"admin/Install/message_index",
+    "message_del"=>"admin/Install/message_del",
+    "message_save"=>"admin/Install/message_save",
+
+
 
 
     /*品牌*/
