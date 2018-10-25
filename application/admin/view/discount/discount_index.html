@@ -8,37 +8,34 @@
 	body {
 		background: #fff;
 	}
-form{
-	width: 50%;
-	margin: 100px auto;
-}
-.btus{
-	width: 100%;
-	margin: 50px auto;
-}
-.btus button{
-	width: 160px;
-	height: 40px;
-	border-radius: 3px;
-}
-.return{
-	background: #F2F2F2;
-  color: #666666;
-	
-}
-.submit_btn{
-	margin-left: 30px;
-	color: #fff;
-	background: #32ADFF;
-}
-.title{
-	display: inline-block;
-	width: 118px;
-	text-align: left;
-}
-form div{
-	margin-top: 20px;
-}
+
+	label {
+		text-align: left !important;
+	}
+
+	.layui-form-item {
+		width: 100%;
+		margin-bottom: 0;
+		margin-top: 0;
+
+	}
+
+	.layui-form-label {
+		width: 26% !important;
+	}
+
+	.layui-input-inline {
+		width: 70% !important;
+	}
+
+	#page {
+		width: 96%;
+		height: 50px;
+		line-height: 50px;
+		border: solid 1px #E2E2E2;
+		padding-left: 50px;
+		background: #FDFDFE;
+	}
 </style>
 
 
@@ -47,53 +44,101 @@ form div{
 <body>
 
 	{block name="content"}
-<form action="" method="">
-	<div >
-		<span class="title">秒杀订单超过：</span>
-		<span style="display: inline-block;height: 40px; line-height: 40px; border-color:#E4E4E4;">
-			<input type="text" name="" id="" value="" />
-		</span>
-		<span style="text-align: center; margin-left: -5px; display: inline-block; width: 40px;height: 40px; line-height: 40px;background: #F2F2F2; border: solid 2px #E4E4E4;">分</span>
-		<span>未付款，订单自动关闭</span>
-	</div>
-	<div >
-		<span class="title">正常订单超过：</span>
-		<span style="display: inline-block;height: 40px; line-height: 40px; border-color:#E4E4E4;">
-			<input type="text" name="" id="" value="" />
-		</span>
-		<span style="text-align: center; margin-left: -5px; display: inline-block; width: 40px;height: 40px; line-height: 40px;background: #F2F2F2; border: solid 2px #E4E4E4;">分</span>
-		<span>未付款，订单自动关闭</span>
-	</div>
-	<div >
-		<span class="title">发货超过：</span>
-		<span style="display: inline-block;height: 40px; line-height: 40px; border-color:#E4E4E4;">
-			<input type="text" name="" id="" value="" />
-		</span>
-		<span style="text-align: center; margin-left: -5px; display: inline-block; width: 40px;height: 40px; line-height: 40px;background: #F2F2F2; border: solid 2px #E4E4E4;">分</span>
-		<span>未收货，订单自动完成</span>
-	</div>
-	<div >
-		<span class="title">订单完成超过：</span>
-		<span style="display: inline-block;height: 40px; line-height: 40px; border-color:#E4E4E4;">
-			<input type="text" name="" id="" value="" />
-		</span>
-		<span style="text-align: center; margin-left: -5px; display: inline-block; width: 40px;height: 40px; line-height: 40px;background: #F2F2F2; border: solid 2px #E4E4E4;">分</span>
-		<span>自动结束交易，不能申请售后</span>
-	</div>
-	<div >
-		<span class="title">订单完成超过：</span>
-		<span style="display: inline-block;height: 40px; line-height: 40px; border-color:#E4E4E4;">
-			<input type="text" name="" id="" value="" />
-		</span>
-		<span style="text-align: center; margin-left: -5px; display: inline-block; width: 40px;height: 40px; line-height: 40px;background: #F2F2F2; border: solid 2px #E4E4E4;">分</span>
-		<span>自动五星好评</span>
-	</div>
-	<div class="btus">
-		<button type="button" class="return">取消</button>
-		<button type="button" class="submit_btn">确定</button>
+
+	<div class="childrenBody">
+		<blockquote class="layui-elem-quote news_search">
+			<form class="layui-form" action="">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">用户账号：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">用户昵称</label>
+						<div class="layui-input-inline">
+							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+
+						</div>
+					</div>
+					<div class="layui-inline" style="width: 36%;">
+											<label class="layui-form-label" style="width: 14% !important; ">时间</label>
+											<div class="layui-input-inline" style="width: 80% !important; margin-top: 8px;">
+												<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""  style="width: 100px; font-size: 13px;">
+												</span>--
+												<span class="time"><input type="text" class=" text datetimepicker" readonly="readonly" id="endTime" value=""  style="width: 100px; font-size: 13px;"></span>
+					
+											</div>
+										</div>
+					<div class="layui-inline">
+						<a class="layui-btn search_btn">搜索</a>
+					</div>
+				</div>
+
+			</form>
+
+		</blockquote>
+		<div class="layui-form news_list">
+			<table class="layui-table">
+				<colgroup>
+					<col width="3%">
+
+				</colgroup>
+				<thead>
+					<tr>
+						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
+						<th>用户ID(邀请码)</th>
+						<th>用户账号</th>
+						<th>用户昵称</th>
+						<th>头像</th>
+						<th>配件商/零配件商</th>
+						<th>收货地址</th>
+						<th>注册时间</th>
+						<th>账户状态</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody class="news_content">
+					<tr>
+						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
+						<td>admin</td>
+						<td>admin</td>
+						<td>2</td>
+						<td><img src="111"></td>
+						<td>2018-09-26</td>
+						<td>2018-09-26 </td>
+						<td>2018-09-26 </td>
+						<td>
+							<input type="checkbox" class="Status" name="show" value="0" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
+							 data-id="2">
+							<div class="layui-unselect layui-form-switch" lay-skin="_switch"><em>否</em><i></i></div>
+
+						</td>
+						<td>
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/discount/add')}"><i class="iconfont icon-edit"></i> 编辑</a>
+
+							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
+							 data-id="undefined"><i class="layui-icon"></i> 删除</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="page">
+
+			<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
+				<option value="">批量删除</option>
+
+			</select>
+			<button type="button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定
+			</button>
+		</div>
+
 	</div>
 
-</form>
+
 	{/block}
 
 	<!--_footer 作为公共模版分离出去-->
@@ -113,7 +158,57 @@ form div{
 				laypage = layui.laypage,
 				$ = layui.jquery;
 			var vals = $("input").data("id");
-		
+			//是否展示
+
+			//全选
+			form.on('checkbox(allChoose)', function(data) {
+				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
+				child.each(function(index, item) {
+					item.checked = data.elem.checked;
+				});
+				form.render('checkbox');
+			});
+
+			//通过判断文章是否全部选中来确定全选按钮是否选中
+			form.on("checkbox(choose)", function(data) {
+				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
+				var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
+				if (childChecked.length == child.length) {
+					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
+				} else {
+					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
+				}
+				form.render('checkbox');
+			})
+
+			//是否展示
+			form.on('switch(isShow)', function(data) {
+				if ($(this).val() == 0) {
+					$(this).val(1);
+				} else {
+					$(this).val(0);
+				}
+				var vals = data.value;
+				var id = $(this).data("id");
+				var status = $(this).val();
+				console.log(status);
+				$.ajax({
+					type: "POST",
+					url: "{:url('admin/admin/status')}",
+					data: {
+						"id": id,
+						"status": status
+					},
+					success: function(data) {
+						console.log("成功")
+					},
+					error: function(data) {
+						console.log("错误")
+					}
+				});
+
+
+			})
 
 
 		})
