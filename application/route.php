@@ -153,8 +153,21 @@ Route::group("admin",[
     "category_status"=>"admin/Category/status",
 
 
-    /*会员管理*/
-    
+
+    /*会员管理 ：TODO*/
+    "user_index"=>"admin/User/index", //会员概况
+    "user_edit"=>"admin/User/edit",     //会员编辑
+    "user_grade"=>"admin/User/grade",  //会员等级
+    /*充值和提现*/
+    "recharge_list"=>"admin/Recharge/index", //充值和提现首页
+    "recharge_edit"=>"admin/Recharge/edit",   //充值和提现编辑
+    /*资金管理*/
+    "capital_index"=>"admin/Capital/index",  //资金管理界面
+    /*积分中心*/
+    "integral_center"=>"admin/Integral/index", //积分中心
+    "integral_detail"=>"admin/Integral/detail", //积分详情
+
+
 
 
 
@@ -178,7 +191,7 @@ Route::group("admin",[
 
 
 
-    /*订单管理*/
+    /*订单管理：TODO*/
     "order_index"=>"admin/Order/index", //订单列表
     "order_edit"=>"admin/Order/edit", //*********订单设置
 
@@ -191,6 +204,9 @@ Route::group("admin",[
 
     "order_invoice"=>"admin/Order/invoice", //发票列表
     "order_invoice_edit"=>"admin/Order/invoice_edit", //****发票信息
+
+
+
 
 
 
