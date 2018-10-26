@@ -14,6 +14,17 @@
 			text-align: center;
 			margin-top: 10px;
 		}
+		.text{
+				top: 2px;
+			width: 344px;
+			margin: 20px auto;
+			position: relative;
+		}
+		.layui-icon{
+			position: absolute;
+			right: 0;
+			top: -9px;
+		}
 	</style>
 
 {/block}
@@ -22,7 +33,7 @@
 {block name="content"}
        <h4 style="padding: 10px;">充值设置：</h4>
 	   <div class="content">
-	   <div style=" ">充<input type="text" name="" id="" value="" style="width: 100px;"/>元送<input type="text" name="" id="" value="" style="width: 100px;"/>元</div>
+	   <div style=" " class="text">充<input type="text" name="" id="" value="" style="width: 100px;"/>元送<input type="text" name="" id="" value="" style="width: 100px;"/>元</div>
 	   </div>
 	   <div class="bts" style="text-align: center;margin-top: 20px;">
 	   <button type="button" class="add-bts" style="background: #FFF; width: 100px; color: #0099FF; border:solid 1px #0099FF;border-radius:4px ;">+添加</button>
@@ -46,8 +57,13 @@
 <script type="text/javascript">
 		 	$(".add-bts").click(function(){
 				var dhtml="";
-				dhtml+='<div style=" ">充<input type="text" name="" id="" value="" style="width: 100px;"/>元送<input type="text" name="" id="" value="" style="width: 100px;"/>元</div></div>';
+				dhtml+='<div style=" " class="text">充<input type="text" name="" id="" value="" style="width: 100px;"/>元送<input type="text" name="" id="" value="" style="width: 100px;"/>元 <i class="layui-icon remove-img">&#x1007;</i></div></div>';
 				$(".content").append(dhtml);
+				$(".content ").on('click','.layui-icon',function(){
+					// console.log(this)
+					var remove=$(this).parent();
+					remove.remove();
+				});
 			});
 		 </script>
 {/block}
