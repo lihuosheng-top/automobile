@@ -153,6 +153,7 @@ Route::group("admin",[
     "category_status"=>"admin/Category/status",
 
 
+
     /*会员管理 ：TODO*/
     "user_index"=>"admin/User/index", //会员概况
     "user_edit"=>"admin/User/edit",     //会员编辑
@@ -180,7 +181,6 @@ Route::group("admin",[
     "platform_business_edit"=>"admin/platform_advertisement/platform_business_edit",
 
     /*配件商广告，服务商广告，平台广告结束*/
-
 
 
 
