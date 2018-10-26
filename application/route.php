@@ -166,7 +166,20 @@ Route::group("admin",[
     "integral_center"=>"admin/Integral/index", //积分中心
     "integral_detail"=>"admin/Integral/detail", //积分详情
 
+    /*配件商广告，服务商广告，平台广告开始*/
+    "Accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising",
+    "Accessories_business_add"=>"admin/Advertisement/accessories_business_add",
+    "Accessories_business_edit"=>"admin/Advertisement/accessories_business_edit",
 
+    "Service_business_advertising"=>"admin/service_advertisement/Service_business_advertising",
+    "Service_business_add"=>"admin/service_advertisement/Service_business_add",
+    "Service_business_edit"=>"admin/service_advertisement/Service_business_edit",
+
+    "platform_business_index"=>"admin/platform_advertisement/platform_business_index",
+    "platform_business_add"=>"admin/platform_advertisement/platform_business_add",
+    "platform_business_edit"=>"admin/platform_advertisement/platform_business_edit",
+
+    /*配件商广告，服务商广告，平台广告结束*/
 
 
 
