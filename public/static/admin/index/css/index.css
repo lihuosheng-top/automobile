@@ -29,9 +29,10 @@
 	padding: 0;
 }
 .layui-form-item{
-	width: 50%;
+	width: 60%;
 	margin-bottom: 27px;
 	margin-top: 20px;
+	margin: 20px auto;
 }
 .layui-form-select .layui-edge{
 	right: 33px;
