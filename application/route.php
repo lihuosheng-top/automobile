@@ -204,7 +204,7 @@ Route::group("admin",[
 
 
 
-    /*订单管理：TODO*/
+    /*订单管理：TODO:配件商订单开始*/
     "order_index"=>"admin/Order/index", //订单列表
     "order_edit"=>"admin/Order/edit", //*********订单设置
 
@@ -217,6 +217,25 @@ Route::group("admin",[
 
     "order_invoice"=>"admin/Order/invoice", //发票列表
     "order_invoice_edit"=>"admin/Order/invoice_edit", //****发票信息
+    /*订单管理：TODO:配件商订单结束*/
+
+    /*订单管理：TODO:平台商订单开始*/
+    "platform_order_service_index"=>"admin/Order/platform_order_service_index", //平台商服务商订单列表
+    "platform_order_parts_index"=>"admin/Order/platform_order_parts_index", //平台商配件商订单列表
+    "platform_after_sale"=>"admin/Order/platform_after_sale", //平台商售后服务
+    "platform_invoice_index"=>"admin/Order/platform_invoice_index", //平台商发票列表
+    "platform_invoice_details"=>"admin/Order/platform_invoice_details", //平台商发票详情
+    "platform_order_evaluate"=>"admin/Order/platform_order_evaluate", //平台商订单评价
+    "platform_order_evaluate_edit"=>"admin/Order/platform_order_evaluate_edit", //平台商订单评价编辑
+    "platform_order_set_up"=>"admin/Order/platform_order_set_up", //平台商订单设置
+    /*订单管理：TODO:平台订单结束*/
+
+    
+    /*订单管理：TODO:服务商商订单开始*/
+    'service_order_index'=>"admin/Order/service_order_index", //服务商界面服务商订单列表
+    "service_order_evaluate"=>"admin/Order/service_order_evaluate", //服务商界面订单评价
+    "service_order_evaluate_edit"=>"admin/Order/service_order_evaluate_edit", //服务商界面订单评价
+    /*订单管理：TODO:服务商订单结束*/
 
 
 
