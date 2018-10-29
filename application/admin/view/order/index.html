@@ -251,23 +251,23 @@
 					<ul class="clear">
 						<li>
 							<span>订单状态：</span>
-							<span>取消订单</span>
+							<span >{{status}}</span>
 						</li>
 						<li>
 							<span>支付方式：</span>
-							<span>取消订单</span>
+							<span>{{payment}}</span>
 						</li>
 						<li>
 							<span>商品金额：</span>
-							<span>取消订单</span>
+							<span>{{amount}}</span>
 						</li>
 						<li>
 							<span>积分抵扣：</span>
-							<span>取消订单</span>
+							<span>{{points_Deduction}}</span>
 						</li>
 						<li>
 							<span>实付金额：</span>
-							<span>取消订单</span>
+							<span>{{real_Pay}}</span>
 						</li>
 					</ul>
 					<div class="cancel">
@@ -622,6 +622,19 @@
 		$(".btu-sumit").click(function(){
 			$(".tanchuang").addClass("noshow");
 		});
+	</script>
+	<script type="text/javascript">
+		new Vue({
+			el: '.list-a',
+			data: {
+				status: '取消订单',
+				payment:'1111',
+				amount:'2222',
+				points_Deduction:'3333',
+				real_Pay:'4444',
+				
+			}
+		})
 	</script>
 	{/block}
 
