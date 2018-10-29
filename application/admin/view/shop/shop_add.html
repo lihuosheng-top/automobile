@@ -53,6 +53,9 @@
     right: 0;
     top: 0;
 	}
+	.form-group .layui-form-select{
+		display: none;
+	}
 </style>
 
 {/block}
@@ -114,8 +117,30 @@
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">店铺所在地：</label>
+		<div class="form-inline">
+			<!-- <input type="text"  placeholder="" class="layui-input" id="repassword"> -->
+			<div data-toggle="distpicker">
+				<div class="form-group">
+					<label class="sr-only" for="province2">Province</label>
+					<select class="form-control" id="province2" data-province="---- 选择省 ----"></select>
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for="city2">City</label>
+					<select class="form-control" id="city2" data-city="---- 选择市 ----"></select>
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for="district2">District</label>
+					<select class="form-control" id="district2" data-district="---- 选择区 ----"></select>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<div class="layui-form-item">
+		<label class="layui-form-label">店铺详细地址</label>
 		<div class="layui-input-block">
-			<input type="text"  placeholder="" class="layui-input" id="repassword">
+			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -132,12 +157,7 @@
       <input type="checkbox" name="like1[game]" lay-skin="primary" title="游戏" >
 		</div>
 	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">店铺详细地址</label>
-		<div class="layui-input-block">
-			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email">
-		</div>
-	</div>
+
 	<div class="layui-form-item">
 		<label class="layui-form-label">邮件</label>
 		<div class="layui-input-block">
@@ -167,7 +187,7 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">店铺信息：</label>
 		<div class="layui-input-block">
-			<textarea rows="10" cols="100">
+			<textarea rows="10" cols="60">
 				
 			</textarea>
 		</div>
@@ -225,6 +245,7 @@
 {/block}
 <!--_footer 作为公共模版分离出去-->
 {include file="template/_footer" /}
+
 <!--/_footer 作为公共模版分离出去-->
 <!--请在下方写此页面业务相关的脚本-->
 {block name="bottom"}

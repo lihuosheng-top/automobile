@@ -414,3 +414,104 @@ a{
 	background: #fff;
 	padding-bottom: 30px;
 }
+/* 按钮颜色 */
+/* 待付款 */
+.obligation{
+	background: #FF0000;
+}
+/* 已付款 */
+.payment-has-been{
+	background: #FF9900;
+}
+/* 代发货 */
+.no-seed-goods{
+	background: #FF0099;
+}
+/* 已发货 */
+.send-the-goods{
+	background: #33CC00;
+}
+/* 待收货 */
+.for-the-goods{
+	background: #CC00FF;
+} 
+/* 已发货 */
+.have-the-goods{
+	background: #0099FF;
+}
+/* 已完成 */
+.completeting{
+	background: #0000CC;
+}
+/* 已关闭 */
+.closed-btu{
+	background: #333333;
+}
+/* 取消订单 */
+.cancel-btu{
+	background: #990000;
+}
+/* 服务商列表按钮 */
+/* 待付款 */
+.obligation{
+	background: #FF0000;
+	}
+	
+/* 待服务 */
+.service{
+	background: #0099FF;
+	}
+/* 已完成 */
+.completing{
+	background: #0000CC;
+}
+/* 取消订单 */
+.cancel-btu{
+	background: #990000;
+}
+/* 售后 */
+
+/* 待处理 */
+.processed{
+	background: #FF0000;
+}
+/* 已拒绝 */
+.refuse{
+	background: #FF9900;
+}
+/* 已通过 */
+.pass-btu{
+	background: #006600;
+}
+/* 已退款 */
+.refund-btu{
+	background: #CCCC00;
+}
+/* 待发货 */
+.shipmenting-btu{
+	background: #FF0099;
+}
+/* 已发货 */
+.shipmented-btu{
+	background: #33CC00;
+}
+/* 待收货 */
+.gooding-btu{
+	background: #CC00FF;
+}
+/* 已收货 */
+.gooded-btu{
+	background: #0099FF;
+}
+/* 已完成 */
+.finish-btu{
+	background: #0000CC;
+}
+/* 已关闭 */
+.close-btu{
+	background: #333333;
+}
+/* 取消订单 */
+.cancel-btu{
+	background: #990000
+}

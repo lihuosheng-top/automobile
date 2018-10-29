@@ -57,8 +57,7 @@
 
 	.tanchuang-content {
 		width: 800px;
-		min-height: 500px;
-		height: auto;
+		height: 500px;
 		background: #fff;
 		z-index: 10000;
 		position: fixed;
@@ -262,6 +261,7 @@
 <body>
 
 	{block name="content"}
+	<!-- 弹窗 -->
 	<div class="tanchuang noshow">
 		<div class="tanchuang-content ">
 			<div class="title-a clear">
@@ -302,41 +302,33 @@
 					<div class="cancel">
 						<span>取消原因:</span>
 						<span>商品无货</span>
-						<div class="edit" style="margin-top: 10px;">
-							<span>问题描述:</span>
-							<span>商品无货</span>
-						</div>
-						<div class="img" style="margin-left: 26px;margin-top: 10px;">
-							<span style="display: inline-block; width: 68px;"><img src="__STATIC__/admin/common/img/a11.png" alt="" width="100%"></span>
-						</div>
 					</div>
-					
 				    <div class="reply">
 						<span>官方回复</span>
-						<span><input type="text" name="" id="" value="" placeholder="请输入处理备注" style="width: 400px; height: 30px;"/></span>
+						<span><input type="text" name=""  disabled="disabled"  id="" value="" placeholder="请输入处理备注" style="width: 400px; height: 30px;"/></span>
 						<div class="reply-content">
 							<span>0180811 15：27：23</span>
 							<span>官方备注已用户要求高可顺非邮寄</span>
 						</div>
 					</div>
-					<div class="opation clear" style="margin-bottom: 20px;">
+					<div class="opation clear">
 						<div class="select-operation">
 							<span>选择状态</span>
-							<select >
+							<select disabled="disabled">
 								<option value ="">请选择</option>
 								<option value ="">已关闭</option>
 							</select>
 						</div>
 						<div class="select-operation">
 							<span>退款方式</span>
-							<select>
+							<select disabled="disabled">
 								<option value ="">请选择</option>
 								<option value ="">已关闭</option>
 							</select>
 						</div>
 						<div class="select-operation">
 							<span>退款金额</span>
-							<input type="text" name="" id="" value="" />
+							<input type="text" name="" id="" value="" disabled="disabled"   / >
 						</div>
 						<button type="button" class="btu-sumit">确定</button>
 					</div>
@@ -405,39 +397,56 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-		<form class="layui-form" action="">
-						<div class="layui-form-item">
-							<div class="layui-inline">
-								<label class="layui-form-label">输入搜索</label>
-								<div class="layui-input-inline">
-									<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-		
-								</div>
-							</div>
-							<div class="layui-inline">
-								<label class="layui-form-label">收货人</label>
-								<div class="layui-input-inline">
-									<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-		
-								</div>
-							</div>
-							
-							<div class="layui-inline" style="width: 36%;">
-								<label class="layui-form-label" style="width: 14% !important; ">申请时间</label>
-								<div class="layui-input-inline" style="width: 80% !important; margin-top: 8px;">
-									<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""
-										 style="width: 100px; font-size: 13px;">
-									</span>
-								
-								</div>
-							</div>
-		
-							<div class="layui-inline">
-								<a class="layui-btn search_btn">搜索</a>
-							</div>
+			<form class="layui-form" action="">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">订单编号</label>
+						<div class="layui-input-inline">
+							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+
 						</div>
-		
-					</form>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">商品名称</label>
+						<div class="layui-input-inline">
+							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">用户账号</label>
+						<div class="layui-input-inline">
+							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">订单状态</label>
+						<div class="layui-input-inline">
+							<select name="interest" id="admin_status">
+								<option value="1" selected="">启用</option>
+								<option value="2">禁用</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline" style="width: 36%;">
+						<label class="layui-form-label" style="width: 14% !important; ">时间</label>
+						<div class="layui-input-inline" style="width: 80% !important; margin-top: 8px;">
+							<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""
+								 style="width: 100px; font-size: 13px;">
+							</span>--
+							<span class="time"><input type="text" class=" text datetimepicker" readonly="readonly" id="endTime" value=""
+								 style="width: 100px; font-size: 13px;"></span>
+
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<a class="layui-btn search_btn">搜索</a>
+					</div>
+				</div>
+
+			</form>
 
 		</blockquote>
 		<div class="layui-form news_list">
@@ -451,13 +460,14 @@
 					<tr>
 						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 						<th>订单编号</th>
-						<th>申请时间</th>
+						<th>商品图片</th>
+						<th>商品名称</th>
+						<th>订单数量</th>
+						<th>订单金额</th>
 						<th>用户账号</th>
-						<th>退款金额</th>
-						<th>联系人</th>
-						<th>申请原因</th>
-						<th>联系电话</th>
-						<th>处理时间</th>
+						<th>联系方式</th>
+						<th>下单时间</th>
+						<th>配送地址</th>
 						<th>订单状态</th>
 					</tr>
 				</thead>
@@ -470,6 +480,7 @@
 						<td>管理员</td>
 						<td>管理员</td>
 						<td>张三</td>
+						<td>管理员</td>
 						<td>管理员</td>
 						<td>管理员</td>
 						<td>
