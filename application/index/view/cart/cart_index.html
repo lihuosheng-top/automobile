@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/cart/cart_index.css">
+    <title>购物车</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="head">
+            <p>购物车</p>
+        </div>
+        <div class="cart_null">
+            <i class="icon_cert"></i>
+            <a href="javascript:;">去首页</a>
+        </div>
+        <div class="like_title">
+            <p><i class="spr icon_like"></i>你可能还喜欢</p>
+        </div>
+        <!-- footer 样式分离到common.css -->
+        <div class="footer">
+            <ul>
+                <li class="home">
+                    <a href="{:url('index/index/index')}">
+                        <i class="spr icon_home"></i>
+                        <span class="text_home">首页</span>
+                    </a>
+                </li>
+                <li class="classify">
+                    <a href="classify_index">
+                        <i class="spr icon_classify"></i>
+                        <span class="text_classify">分类</span>
+                    </a>
+                </li>
+                <li class="cart">
+                    <a href="cart_index">
+                        <i class="spr icon_cart"></i>
+                        <span class="text_cart active">购物车</span>
+                    </a>
+                </li>
+                <li class="my">
+                    <a href="my_index">
+                        <i class="spr icon_my"></i>
+                        <span class="text_my">我的</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

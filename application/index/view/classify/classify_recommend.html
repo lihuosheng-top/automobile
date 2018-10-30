@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/classify/classify_recommend.css">
+    <title>特惠配件</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <a href="classify_index" class="spr back"></a>
+            <p class="header_title">特惠配件</p>
+        </div>
+        <div class="advertise">
+            <img src="__STATIC__/index/image/08.png">
+        </div>
+        <div class="tab">
+            <ul>
+                <li>
+                    <a href="javascript:;">综合排名</a>
+                </li>
+                <li>
+                    <a href="javascript:;">适配轮胎</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="filter_a">筛选</a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <ul class="clearfix">
+                <li>
+                    <div class="img_div">
+                        <img src="__STATIC__/index/image/02.png">
+                    </div>
+                    <div class="goods_name">
+                        <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
+                    </div>
+                    <div class="goods_price">
+                        <span class="price">￥875</span>
+                        <span class="pay_num">1500人购买</span>
+                        <i class="spr icon_cart"></i>
+                    </div>
+                </li>
+                <li class="mgr0">
+                    <div class="img_div">
+                        <img src="__STATIC__/index/image/02.png">
+                    </div>
+                    <div class="goods_name">
+                        <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
+                    </div>
+                    <div class="goods_price">
+                        <span class="price">￥875</span>
+                        <span class="pay_num">1500人购买</span>
+                        <i class="spr icon_cart"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 遮罩 -->
+    <div class="mask"></div>
+    <!-- 筛选弹窗 -->
+    <div class="filter_pop">
+        <div class="top_ct">
+            <div class="price_section">
+                <p class="pop_title">价格区间(元)</p>
+                <div class="section_input clearfix">
+                    <input type="text" placeholder="最低" class="minimum_price">—
+                    <input type="text" placeholder="最高" class="highest_price">
+                </div>
+            </div>
+            <div class="brand">
+                <p class="pop_title">品牌<i class="spr shrink"></i></p>
+                <ul class="brand_ul">
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/index/image/04.jpg">
+                        <p class="brand_name">米其林轮胎</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="size">
+                <p class="pop_title">尺寸</p>
+                <ul class="size_ul">
+                    <li>13寸</li>
+                    <li>14寸</li>
+                    <li>15寸</li>
+                    <li>16寸</li>
+                    <li>17寸</li>
+                    <li>18寸</li>
+                    <li>19寸</li>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom_btn clearfix">
+            <a href="javascript:;" class="reset">重置</a>
+            <a href="javascript:;" class="confirm">确定</a>
+        </div>
+    </div>
+    <script src="__STATIC__/index/plugin/js/jquery.js"></script>
+    <script>
+        $('.mask').click(function(){
+            $(this).hide();
+            $('.filter_pop').hide();
+            $('html').css('overflow-y', 'auto');
+        })
+        $('.filter_a').click(function(){
+            $('.mask').show();
+            $('.filter_pop').show();
+            $('html').css('overflow-y','hidden');
+        })
+    </script>
+</body>
+</html>
