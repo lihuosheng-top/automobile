@@ -1,6 +1,155 @@
-
-
-
+.clear{
+	overflow: hidden;
+	clear: both;
+}
 .footer .icon_my{
     background-position: -1.5rem -1.8rem;
+}
+/* 个人信息 */
+.information{
+	padding-top: 0.6rem;
+	color: #fff;
+	width: 100%;
+	height: 3.8rem;
+	background: #514EFB;
+}
+.myphoto{
+	background: url(../../image/my.png) no-repeat;
+	background-size: 4.8rem 3.6rem;
+}
+.information .tou{
+	margin: 0 auto;
+	width: 1.3rem;
+	height: 1.3rem;
+	background-position: -2.8rem 4.89px;
+	overflow: hidden;
+}
+.information-content{
+	width: 4.8rem;
+	margin: 0.2rem auto;
+	clear: both;
+}
+.information-content div{
+	width: 50%;
+	float: left;
+}
+.install-ico{
+	display: inline-block;
+	width: 0.8rem;
+	height: 1rem;
+	background-position: -1.9rem 4.89px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.news-ico{
+	top: 0;
+	right: 0;
+	display: inline-block;
+	width: 0.8rem;
+	height: 1rem;
+	background-position: -4.1rem 4.89px;
+	position: absolute;
+}
+/* 推广模块 */
+.extension{
+	width: 80%;
+	margin: 0.2rem auto;
+}
+.extension span{
+	display: inline-block;
+	width: 32%;
+	font-size: 16px;
+	margin-top: 0.2rem;
+	font-weight: 600;
+	color: #333;
+}
+.jiange{
+	width: 100%;
+	height: 8px;
+	background: #F4F5F6;
+}
+/* 订单模块 */
+.order-list{
+	padding-bottom: 0.4rem;
+}
+.order-title{
+width: 90%;
+margin: 0.3rem auto;
+}
+.order-title span{
+	float: left;
+	font-size: 16px;
+	font-weight: bold;
+}
+.return{
+	display: inline-block;
+	float: right;
+	width: 0.5rem;
+	height: 0.6rem;
+	background-position: -3.28rem -1.8rem;
+}
+.order-list ul li{
+	text-align: center;
+	width: 25%;
+	float: left;
+}
+.order-list ul li i{
+	display: inline-block;
+	width: 1rem;
+	height: 0.85rem;
+}
+.goods{
+	background-position: -1rem 0rem;
+}
+.evaluate{
+	background-position: 0rem -51px;
+}
+.return-goods{
+	background-position: -1rem -40px;
+}
+.payment{
+	background-position: 0 0;
+}
+.order-list ul li p{
+	color: #333;
+}
+.list{
+	padding-left: 0.2rem;
+	padding-right: 0.2rem;
+	margin-top: 0.1rem;
+	/* width: 96%; */
+}
+.list ul li{
+	padding-bottom: 0.2rem;
+	padding-top: 0.1rem;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	font-weight: bold;
+	border-bottom: 1px solid #F4F5F6;
+}
+.list ul li .list-icon{
+	display: inline-block;
+	width: 0.4rem;
+	height: 0.6rem;
+	vertical-align: -9px;
+	margin-right: 0.2rem;
+}
+.address{
+	background-position: -0.25rem -1.93rem;
+}
+.collection{
+	background-position: -0.85rem -1.93rem;
+}
+.interests{
+	background-position: -1.4rem -1.93rem;
+}
+.cars{
+	background-position: -1.85rem -1.93rem;
+}
+.about{
+	background-position: -2.45rem -1.93rem;
+}
+.advertise{
+	background-position: -2.9rem -1.93rem;
 }
