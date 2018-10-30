@@ -21,6 +21,9 @@
 .UCleft-fixed dl dd p{
 	cursor:pointer;
 }
+.layui-form-select{
+	font-size: 14px;
+}
 .layui-form label{
 	font-size: 15px;
 	height: 38px;
@@ -514,4 +517,8 @@ a{
 /* 取消订单 */
 .cancel-btu{
 	background: #990000
+}
+.datetimepicker{
+	height: 28px;
+	border:solid #E6E6E6 1px;
 }
