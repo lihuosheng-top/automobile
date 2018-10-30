@@ -22,7 +22,8 @@ class Login extends Controller{
         return view("login");
     }
 
-    /**
+
+	/**
      * [验证码]
      * @author 陈绪
      */
@@ -36,6 +37,7 @@ class Login extends Controller{
         ]);
         return $captcha->entry();
     }
+
 
     /**
      * [登录检测并取出对应的角色]
@@ -51,9 +53,9 @@ class Login extends Controller{
         if ($request->isPost()){
             $username = $request->only("account")["account"];
             $passwd = $request->only("passwd")["passwd"];
-            $userInfo = db("admin")->where("account",$username)->select();
+            $userInfo = db("admin")->where("account",$username)->where("status","<>",0)->select();
             if (!$userInfo) {
-                $this->success("账户名不正确",url("admin/Login/index"));
+                $this->success("账户名不正确或管理员以被停用",url("admin/Login/index"));
             }
             if (password_verify($passwd , $userInfo[0]["passwd"])) {
                 Session("user_id", $userInfo[0]["id"]);

@@ -159,22 +159,34 @@ Route::group("admin",[
     "category_status"=>"admin/Category/status",
 
 
-    /*会员管理*/
+
+    /*会员管理 ：TODO*/
     "user_index"=>"admin/User/index", //会员概况
-    "user_search"=>"admin/User/search", //会员搜索
-    "user_add"=>"admin/User/add",     //会员增加
-    "user_save"=>"admin/User/save",     //会员增加(逻辑处理)
     "user_edit"=>"admin/User/edit",     //会员编辑
-    "user_edits"=>"admin/User/edits",     //会员编辑
-    "user_update"=>"admin/User/update",     //会员编辑更新
-    "user_del"=>"admin/User/del",     //会员删除
-    "user_dels"=>"admin/User/dels",     //会员批量删除
-    "user_status"=>"admin/User/status",     //会员软删除禁用
-    "user_statu"=>"admin/User/statu",     //会员软删除启用
-    "user_show"=>"admin/User/show",     //会员查看
-    "user_shows"=>"admin/User/shows",     //会员查看
-    "getRegion"=>"admin/User/getRegion",     //三级地区
-    "pass_edit"=>"admin/User/pass_edit",     //会员密码编辑
+    "user_grade"=>"admin/User/grade",  //会员等级
+    /*充值和提现*/
+    "recharge_list"=>"admin/Recharge/index", //充值和提现首页
+    "recharge_edit"=>"admin/Recharge/edit",   //充值和提现编辑
+    /*资金管理*/
+    "capital_index"=>"admin/Capital/index",  //资金管理界面
+    /*积分中心*/
+    "integral_center"=>"admin/Integral/index", //积分中心
+    "integral_detail"=>"admin/Integral/detail", //积分详情
+
+    /*配件商广告，服务商广告，平台广告开始*/
+    "Accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising",
+    "Accessories_business_add"=>"admin/Advertisement/accessories_business_add",
+    "Accessories_business_edit"=>"admin/Advertisement/accessories_business_edit",
+
+    "Service_business_advertising"=>"admin/service_advertisement/Service_business_advertising",
+    "Service_business_add"=>"admin/service_advertisement/Service_business_add",
+    "Service_business_edit"=>"admin/service_advertisement/Service_business_edit",
+
+    "platform_business_index"=>"admin/platform_advertisement/platform_business_index",
+    "platform_business_add"=>"admin/platform_advertisement/platform_business_add",
+    "platform_business_edit"=>"admin/platform_advertisement/platform_business_edit",
+
+    /*配件商广告，服务商广告，平台广告结束*/
 
 
 
@@ -198,14 +210,42 @@ Route::group("admin",[
 
 
 
-    /*订单管理*/
-    "order_index"=>"admin/Order/index",
-    "order_search"=>"admin/Order/search",//模糊查询
-    "batch_delivery"=>"admin/Order/batch_delivery",//批量发货
-    "pending_payment"=>"admin/Order/pending_payment",//代发货
-    'order_refuse'=>"admin/Order/refuse", //商家取消买家订单
-    "express_number"=>"admin/Order/express_number",//商家手动填写快递单号
-    "order_deliver"=>"admin/Order/order_deliver", //已发货点击弹出的快递信息
+    /*订单管理：TODO:配件商订单开始*/
+    "order_index"=>"admin/Order/index", //订单列表
+    "order_edit"=>"admin/Order/edit", //*********订单设置
+
+    "order_evaluate"=>"admin/Order/evaluate",   //订单评价
+    "order_evaluate_details"=>"admin/Order/evaluate_details", //******订单评价详情
+
+    "order_after_sale"=>"admin/Order/after_sale", //订单维修售后
+    "order_after_sale_wait_handle"=>"admin/Order/after_sale_wait_handle", //****订单维修售后待处理
+    "order_after_sale_wait_deliver"=>"admin/Order/after_sale_wait_deliver", //****订单维修售后待发货
+
+    "order_invoice"=>"admin/Order/invoice", //发票列表
+    "order_invoice_edit"=>"admin/Order/invoice_edit", //****发票信息
+    /*订单管理：TODO:配件商订单结束*/
+
+    /*订单管理：TODO:平台商订单开始*/
+    "platform_order_service_index"=>"admin/Order/platform_order_service_index", //平台商服务商订单列表
+    "platform_order_parts_index"=>"admin/Order/platform_order_parts_index", //平台商配件商订单列表
+    "platform_after_sale"=>"admin/Order/platform_after_sale", //平台商售后服务
+    "platform_invoice_index"=>"admin/Order/platform_invoice_index", //平台商发票列表
+    "platform_invoice_details"=>"admin/Order/platform_invoice_details", //平台商发票详情
+    "platform_order_evaluate"=>"admin/Order/platform_order_evaluate", //平台商订单评价
+    "platform_order_evaluate_edit"=>"admin/Order/platform_order_evaluate_edit", //平台商订单评价编辑
+    "platform_order_set_up"=>"admin/Order/platform_order_set_up", //平台商订单设置
+    /*订单管理：TODO:平台订单结束*/
+
+    
+    /*订单管理：TODO:服务商商订单开始*/
+    'service_order_index'=>"admin/Order/service_order_index", //服务商界面服务商订单列表
+    "service_order_evaluate"=>"admin/Order/service_order_evaluate", //服务商界面订单评价
+    "service_order_evaluate_edit"=>"admin/Order/service_order_evaluate_edit", //服务商界面订单评价
+    /*订单管理：TODO:服务商订单结束*/
+
+
+
+
 
 
 
@@ -267,6 +307,18 @@ Route::group("admin",[
     "recommend_index"=>"admin/Install/recommend",
     "integral_index"=>"admin/Install/integral",
     "putaway_index"=>"admin/Install/putaway",
+    "recharge_index"=>"admin/Install/recharge",
+    "service_index"=>"admin/Install/service_index",
+    "service_add"=>"admin/Install/service_add",
+    "service_save"=>"admin/Install/service_save",
+    "service_edit"=>"admin/Install/service_edit",
+    "service_updata"=>"admin/Install/service_updata",
+    "service_del"=>"admin/Install/service_del",
+    "message_index"=>"admin/Install/message_index",
+    "message_del"=>"admin/Install/message_del",
+    "message_save"=>"admin/Install/message_save",
+
+
 
 
     /*品牌*/
