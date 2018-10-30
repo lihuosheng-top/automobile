@@ -65,8 +65,14 @@ Route::group("",[
     /*安全中心*/
     "center_index"=>"index/Center/index",
 
-
-
+    // 分类
+    "classify_index"=>"index/Classify/classify_index",
+    "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
+    // 购物车
+    "cart_index"=>"index/Cart/cart_index",
+    // 我的
+    "my_index"=>"index/My/my_index",
+    
 ]);
 
 /**
