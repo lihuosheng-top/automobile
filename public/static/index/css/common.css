@@ -14,6 +14,7 @@ html, body {
 .spr{background: url(../image/spr.png) no-repeat;background-size: 8rem 6rem;}
 .bgw{background-color: #fff;}
 .mgr0{margin-right: 0 !important;}
+.br0{border-right: 0 !important;}
 
 .footer{
     position: fixed;

@@ -31,7 +31,8 @@ html{
     align-items: center;
     width: 100%;
     height: 5.5rem;
-    margin-top: 1.88rem;
+    padding-top: 1.88rem;
+    background-color: #fff;
 }
 .cart_null .icon_cert{
     display: inline-block;
@@ -88,6 +89,7 @@ html{
     width: 3.6rem;
     height: 5.6rem;
     margin-right: .08rem;
+    background-color: #fff;
 }
 .like_cont_ul li .img_div{
     width: 100%;
@@ -131,7 +133,33 @@ html{
 }
 .exist{
     width: 100%;
+    padding-top: .88rem;
 }
+.goods_wrap{
+    width: 100%;
+    padding: 0 .32rem;
+    margin-bottom: .1rem;
+    box-sizing: border-box;
+}
+.goods_wrap .shop_nae_wrap{
+    width: 100%;
+    height: .65rem;
+}
+.circle{
+    display: inline-block;
+    width: .32rem;
+    height: .32rem;
+    background-position: -7.6rem -2.1rem;
+    vertical-align: text-bottom;
+}
+.goods_wrap .icon_shop{
+    display: inline-block;
+    width: .3rem;
+    height: .29rem;
+    background-position: -5.6rem -1rem;
+    vertical-align: text-top;
+}
+
 
 
 .footer .icon_cart{

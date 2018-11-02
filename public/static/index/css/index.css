@@ -118,19 +118,18 @@
 }
 .classify_service ul li{
     flex-basis: 25%;
-    height: 1.3rem;
+    height: 1.2rem;
 }
 .classify_service ul a{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
     height: 100%;
 }
 .classify_service li i{
     display: inline-block;
-    width: .84rem;
-    height: .8rem;
 }
 .classify_service li span{
     font-size: .24rem;
@@ -138,39 +137,58 @@
 }
 .classify_service li .order{
     background-position: -2.3rem 0;
+    width: .84rem;
+    height: .8rem;
 }
 .classify_service li .parts{
     background-position: -3.25rem 0;
+    width: .81rem;
+    height: .8rem;
 }
 .classify_service li .daily{
     background-position: -4.2rem 0;
+    width: .8rem;
+    height: .73rem;
 }
 .classify_service li .agency{
     background-position: -5.1rem 0;
+    width: .77rem;
+    height: .77rem;
 }
 .classify_service li .lease{
     background-position: -6rem 0;
+    width: .88rem;
+    height: .54rem;
 }
 .classify_service li .mortgage{
     background-position: -7rem 0;
+    width: .72rem;
+    height: .61rem;
 }
 .classify_service li .insurance{
     background-position: 0 -1rem;
     width: .87rem;
+    height: .59rem;
 }
 .classify_service li .designated_driving{
     background-position: -1rem -1rem;
     width: .63rem;
+    height: .63rem;
 }
 .classify_service li .used_car{
     background-position: -1.8rem -1rem;
+    width: .81rem;
+    height: .63rem;
 }
 .classify_service li .assess{
     background-position: -2.8rem -1rem;
     width: .58rem;
+    height: .69rem;
 }
 .classify_service li .more{
     background-position: -3.5rem -1rem;
+    width: .63rem;
+    height: .62rem;
 }
 .banner{
     width: 100%;
