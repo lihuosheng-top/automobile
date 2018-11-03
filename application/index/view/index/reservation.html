@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/index/reservation.css">
+    <!-- 高德地图 -->
+    <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
+    <title>预约服务</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="head">
+            <a href="{:url('index/index/index')}" class="spr back"></a>
+            <p class="headtitle">预约服务</p>
+            <a href="javascript:;" class="spr icon_share"></a>
+        </div>
+        <!-- 高德地图 -->
+        <div class="map_container" id="map_container"></div>
+        <div class="shop_list">
+            <div class="shop_box">
+                <div class="addr_info_box">
+                    <p class="shop_name_p">得朋宝马汽车销售维修中123456</p>
+                    <div class="comment_box">
+                        <i class="spr icon_star"></i>
+                        <p class="statistic_member">汽车维修<span class="member_num">2000</span></p>
+                    </div>
+                    <p class="distance_addr_box">
+                        <span class="distance_span">500米</span>
+                        <span class="addr_span">新闻路111</span>
+                    </p>
+                </div>
+                <div class="service_type">
+                    <p class="service_price">$50</p>
+                    <p class="service_text">标准洗车</p>
+                </div>
+                <div class="order_box">
+                    <a href="javascript:;">
+                        <i class="spr icon_order"></i>
+                        <p class="order_text">预约</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    
+    <!-- 高德地图 -->
+    <script>
+        // 实例化 地图对象
+        var map = new AMap.Map('map_container', {
+            zoom: 11, //级别
+            center: [114.07, 22.62],//中心点坐标
+            viewMode:'3D'//使用3D视图
+        });
+        
+        // 添加标记点
+        var marker1 = new AMap.Marker({
+            position:[114.04818, 22.54156],//位置
+            title: '中电信息大厦'
+        })
+        var marker2 = new AMap.Marker({
+            position:[114.02755, 22.60820],//位置
+            title: '深圳北站'
+        })
+        var markerList = [marker1, marker2];
+        map.add(markerList);//添加到地图
+        
+        // //创建信息窗体
+        // var infoWindow = new AMap.InfoWindow({ 
+        //     isCustom: true,  //使用自定义窗体
+        //     content:'<div>深圳北站</div>', //信息窗体的内容可以是任意html片段
+        //     offset: new AMap.Pixel(16, -45)
+        // });
+        // var onMarkerClick  =  function(e) {
+        //     infoWindow.open(map, e.target.getPosition());//打开信息窗体
+        //     //e.target就是被点击的Marker
+        // }
+        // marker2.on('click',onMarkerClick);//绑定click事件
+
+        map.plugin('AMap.Geolocation', function() {
+            var geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,// 是否使用高精度定位，默认：true
+                timeout: 10000,// 设置定位超时时间，默认：无穷大
+                buttonOffset: new AMap.Pixel(10, 20),// 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
+                zoomToAccuracy: true,//  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                buttonPosition: 'RB'//  定位按钮的排放位置,  RB表示右下
+            })
+
+            geolocation.getCurrentPosition()
+            AMap.event.addListener(geolocation, 'complete', onComplete)
+            AMap.event.addListener(geolocation, 'error', onError)
+
+            function onComplete (data) {
+                // data是具体的定位信息
+            }
+
+            function onError (data) {
+                // 定位出错
+            }
+        })
+    </script>
+</body>
+</html>

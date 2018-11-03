@@ -19,6 +19,7 @@ use think\Route;
 Route::group("",[
     /*首页*/
     "/$"=>"index/index/index",
+    "reservation"=>"index/index/reservation",//预约服务 首页
 
 
     /*商品列表*/

@@ -70,20 +70,20 @@
     background-color: #f2f2f2;
     padding: 0 .2rem;
     box-sizing: border-box;
-    /* overflow-y: auto; */
+    overflow-y: auto;
 }
 .classify_cont .cont_one_ul{
     width: 100%;
-    height:100%;
+    /* height:100%; */
 }
 .classify_cont .recommend ul{
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     overflow: auto;
 }
 .classify_cont .cont_one_ul>li{
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
 }
 .classify_cont .recommend li{
     position: relative;
@@ -121,7 +121,7 @@
 }
 .classify_cont ul .first_li{
     margin-bottom: .3rem;
-    display: none;
+    /* display: none; */
 }
 .classify_cont .first_li>p{
     width: 100%;
