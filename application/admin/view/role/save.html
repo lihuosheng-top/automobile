@@ -91,6 +91,7 @@
 		border-right: solid 2px #E4E4E4;
 		border-left: solid 2px #E4E4E4;
 	}
+
 </style>
 {/block}
 
@@ -135,8 +136,8 @@
 			<label class="layui-form-label">权限设置</label>
 		</div>
 		<div class="quanxian">
+		<div class="tables">
 
-			{volist name="menu_lists" id="value"}
 			<div class="list">
 				<p class="title">
 					<input type="checkbox" value="{$value.id}" data-id="12" lay-skin="primary" title="{$value.name}" name="menu_role_id[]" lay-filter="allChoose"
@@ -165,6 +166,7 @@
 				</div>
 			</div>
 			{/volist}
+		</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
@@ -216,10 +218,16 @@
 					'ul li input[type="checkbox"]:not([name="show"])');
 				var childChecked = $(data.elem).parents('.list').children('.ultable').find(
 					'ul li input[type="checkbox"]:not([name="show"]):checked')
+					console.log(childChecked.length);
+					console.log(child.length)
 				if (childChecked.length == child.length) {
 					$(data.elem).parents('.list').children('.title').find(' input.allChoose').get(0).checked = true;
-				} else {
+				}
+				 else if(childChecked.length==0){
 					$(data.elem).parents('.list').children('.title').find(' input.allChoose').get(0).checked = false;
+				}
+				else {
+					$(data.elem).parents('.list').children('.title').find(' input.allChoose').get(0).checked = true;
 				}
 				form.render('checkbox');
 			})
@@ -231,8 +239,11 @@
 					'ul li input[type="checkbox"]:not([name="show"]):checked')
 				if (childChecked.length == child.length-1) {
 					$(data.elem).parents('li').find(' input.aaa').get(0).checked = true;
-				} else {
+				} else if(childChecked.length==0){
 					$(data.elem).parents('li').find(' input.aaa').get(0).checked = false;
+				}
+				else {
+					$(data.elem).parents('li').find(' input.aaa').get(0).checked = true;
 				}
 						form.render('checkbox');
 					})
