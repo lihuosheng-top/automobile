@@ -33,5 +33,14 @@ class Serve extends Controller{
         return view("serve_add");
 
     }
+	  /**
+	     * 服务商品查看详情
+	     * 陈绪
+	     */
+	    public function look(){
+	
+	        return view("serve_look");
+	
+	    }
 
 }

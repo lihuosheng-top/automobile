@@ -354,6 +354,15 @@ class Goods extends Controller{
         return view("affirm_pay");
 
     }
+ /**
+     * 商品查看
+     * 陈绪
+     */
+    public function look(){
+
+        return view("good_look");
+
+    }
 
 
 

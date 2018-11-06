@@ -304,8 +304,7 @@
 					'ul li input[type="checkbox"]:not([name="show"])');
 				var childChecked = $(data.elem).parents('.list').children('.ultable').find(
 					'ul li input[type="checkbox"]:not([name="show"]):checked')
-					console.log(childChecked.length);
-					console.log(child.length)
+			
 				if (childChecked.length == child.length) {
 					$(data.elem).parents('.list').children('.title').find(' input.allChoose').get(0).checked = true;
 				}
