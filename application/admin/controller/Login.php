@@ -25,6 +25,22 @@ class Login extends Controller{
 
 
     /**
+     * [验证码]
+     * @author 陈绪
+     */
+    public function captchas(){
+        $captcha = new Captcha([
+            'imageW'=>100,
+            'imageH'=>48,
+            'fontSize'=>18,
+            'useNoise'=>false,
+            'length'=>3,
+        ]);
+        return $captcha->entry();
+    }
+
+
+    /**
      * [登录检测并取出对应的角色]
      * @author 陈绪
      * @param Request $request
