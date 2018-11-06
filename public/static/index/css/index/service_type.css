@@ -1,0 +1,108 @@
+.wrapper{
+    width: 100%;
+}
+.head{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+    margin-bottom: .5rem;
+}
+.head .back{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    width: .25rem;
+    height: .43rem;
+    margin-top: -.22rem;
+    background-position: -.5rem -.5rem;
+}
+.head .headtitle{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    text-align: center;
+    font-size: .36rem;
+    color: #333;
+}
+.head .icon_share{
+    position: absolute;
+    right: .2rem;
+    top: 50%;
+    width: .34rem;
+    height: .34rem;
+    margin-top: -.17rem;
+    background-position: -2.15rem -2.5rem;
+}
+.title{
+    width: 3.86rem;
+    border-bottom: 2px solid #f2f2f2;
+    padding: 0 .2rem;
+    box-sizing: border-box;
+    font-size: .36rem;
+    color: #504cfb;
+    margin: 0 auto;
+    font-weight: bold;
+    font-style: italic;
+    margin-bottom: 1.1rem;
+}
+.vehicle_cleaning{
+    display: inline-block;
+    width: 1.28rem;
+    height: 1.28rem;
+    background-position: -1.2rem -2.95rem;
+}
+.maintain{
+    display: inline-block;
+    width: 1.19rem;
+    height: 1.01rem;
+    background-position: -2.65rem -2.95rem;
+}
+.designated_driving{
+    display: inline-block;
+    width: 1.21rem;
+    height: 1.23rem;
+    background-position: -4rem -2.7rem;
+}
+.repair{
+    display: inline-block;
+    width: 1.11rem;
+    height: .95rem;
+    background-position: -5.35rem -2.7rem;
+}
+.insurance{
+    display: inline-block;
+    width: 1.38rem;
+    height: .95rem;
+    background-position: -6.6rem -2.8rem;
+}
+.agency{
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    background-position: 0 -4.4rem;
+}
+.service_ul{
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 0 auto;
+}
+.service_ul li{
+    flex-basis: 50%;
+    margin-bottom: 1.5rem;
+}
+.service_ul li a{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.service_ul p{
+    font-size: .3rem;
+    color: #333;
+}

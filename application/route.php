@@ -19,7 +19,9 @@ use think\Route;
 Route::group("",[
     /*首页*/
     "/$"=>"index/index/index",
+    "service_type"=>"index/index/service_type",//选择服务类型
     "reservation"=>"index/index/reservation",//预约服务 首页
+    "reservation_detail"=>"index/index/reservation_detail",//预约服务 详情
 
 
     /*商品列表*/
