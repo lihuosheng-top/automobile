@@ -89,7 +89,6 @@
 						<th>联系电话</th>
 						<th>店铺类型</th>
 						<th>是否付费上架</th>
-
 						<th>平台审核状态</th>
 						<th>操作</th>
 					</tr>
@@ -107,12 +106,11 @@
 							checked="" data-id="2">
 						</td>
 						<td>
-							<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="Show"
-							 checked="" data-id="2">
+							通过
 						</td>
 
 						<td>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Shop/add')}"><i class="iconfont icon-edit"></i> 编辑</a>
 							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
 							 data-id="undefined"><i class="layui-icon"></i> 删除</a>
 
@@ -179,34 +177,7 @@
 
 
 			})
-			//是否平台审核状态展示
-						form.on('switch(Show)', function(data) {
-							if ($(this).val() == 0) {
-								$(this).val(1);
-							} else {
-								$(this).val(0);
-							}
-							var vals = data.value;
-							var id = $(this).data("id");
-							var status = $(this).val();
-							console.log(status);
-							$.ajax({
-								type: "POST",
-								url: "{:url('admin/admin/status')}",
-								data: {
-									"id": id,
-									"status": status
-								},
-								success: function(data) {
-									console.log("成功")
-								},
-								error: function(data) {
-									console.log("错误")
-								}
-							});
 			
-			
-						})
 			//全选
 			form.on('checkbox(allChoose)', function(data) {
 				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');

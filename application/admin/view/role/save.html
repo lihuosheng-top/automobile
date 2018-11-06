@@ -74,7 +74,7 @@
 	}
 
 	.list-three ul li {
-		justify-content: center;
+		text-align: center;
 		flex: 1;
 	}
 
@@ -82,6 +82,8 @@
 		float: left;
 	}
 	.ultable>ul>li{
+		display: block;
+		overflow: hidden;
 		padding-bottom: 10px;
 	}
 	.tables{
@@ -89,6 +91,7 @@
 		border-right: solid 2px #E4E4E4;
 		border-left: solid 2px #E4E4E4;
 	}
+
 </style>
 {/block}
 
@@ -133,127 +136,36 @@
 			<label class="layui-form-label">权限设置</label>
 		</div>
 		<div class="quanxian">
-			<!-- 	{volist name="menu_lists" id="value"}
-		<div class="list">
-			
-			<p class="title">
-				<input type="checkbox" value="{$value.id}" data-id="12" lay-skin="primary" title="{$value.name}" name="menu_role_id[]" lay-filter="allChoose" class="allChoose">
-				<span>
-			</span>
-			</p>
-			<div class="ultable">
-			{if isset($value["sub"])}
-			<ul>
-				{volist name="value['sub']" id="val"}
-				<li>
-					<input type="checkbox" value="{$val.id}" data-id="12" lay-skin="primary" title="{$val.name}" name="menu_role_id[]" lay-filter="choose">
-					<div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>发布商品</span><i class="layui-icon"></i></div>
-				</li>
-				{/volist}
-			</ul>
-			{/if}
-		</div>
-		</div>
-	
-		{/volist} -->
 		<div class="tables">
-			
-		
-			<div class="list">
 
+			<div class="list">
 				<p class="title">
-					<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="allChoose"
+					<input type="checkbox" value="{$value.id}" data-id="12" lay-skin="primary" title="{$value.name}" name="menu_role_id[]" lay-filter="allChoose"
 					 class="allChoose">
 					<span>
 					</span>
 				</p>
 				<div class="ultable">
 					<ul>
+						{volist name="$value.sub" id="val"}
 						<li>
-							<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="choose"
+							<input type="checkbox" value="{$val.id}" data-id="12" lay-skin="primary" title="{$val.name}" name="menu_role_id[]" lay-filter="choose"
 							 class="aaa">
 							<div class="list-three">
 								<ul>
+									{volist name="$val.sub" id="v"}
 									<li>
-										<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
+										<input type="checkbox" value="$v.id" data-id="12" lay-skin="primary" title="{$v.name}" name="menu_role_id[]" lay-filter="three-choose">
 									</li>
-									<li>
-										<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-									</li>
-									<li>
-										<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-									</li>
+									{/volist}
 								</ul>
 							</div>
 						</li>
-						<li>
-							<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="choose"
-							class="aaa">
-							<div class="list-three">
-								<ul>
-									<li>
-										<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-									</li>
-									<li>
-										<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-									</li>
-									<li>
-										<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-									</li>
-								</ul>
-							</div>
-						</li>
+						{/volist}
 					</ul>
 				</div>
 			</div>
-			<div class="list">
-			
-							<p class="title">
-								<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="allChoose"
-								 class="allChoose">
-								<span>
-								</span>
-							</p>
-							<div class="ultable">
-								<ul>
-									<li>
-										<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="choose"
-										 class="aaa">
-										<div class="list-three">
-											<ul>
-												<li>
-													<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-												</li>
-												<li>
-													<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-												</li>
-												<li>
-													<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-												</li>
-											</ul>
-										</div>
-									</li>
-									<li>
-										<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="choose"
-										class="aaa">
-										<div class="list-three">
-											<ul>
-												<li>
-													<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-												</li>
-												<li>
-													<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-												</li>
-												<li>
-													<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-												</li>
-											</ul>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-
+			{/volist}
 		</div>
 		</div>
 		<div class="layui-form-item">
@@ -306,10 +218,16 @@
 					'ul li input[type="checkbox"]:not([name="show"])');
 				var childChecked = $(data.elem).parents('.list').children('.ultable').find(
 					'ul li input[type="checkbox"]:not([name="show"]):checked')
+					console.log(childChecked.length);
+					console.log(child.length)
 				if (childChecked.length == child.length) {
 					$(data.elem).parents('.list').children('.title').find(' input.allChoose').get(0).checked = true;
-				} else {
+				}
+				 else if(childChecked.length==0){
 					$(data.elem).parents('.list').children('.title').find(' input.allChoose').get(0).checked = false;
+				}
+				else {
+					$(data.elem).parents('.list').children('.title').find(' input.allChoose').get(0).checked = true;
 				}
 				form.render('checkbox');
 			})
@@ -321,8 +239,11 @@
 					'ul li input[type="checkbox"]:not([name="show"]):checked')
 				if (childChecked.length == child.length-1) {
 					$(data.elem).parents('li').find(' input.aaa').get(0).checked = true;
-				} else {
+				} else if(childChecked.length==0){
 					$(data.elem).parents('li').find(' input.aaa').get(0).checked = false;
+				}
+				else {
+					$(data.elem).parents('li').find(' input.aaa').get(0).checked = true;
 				}
 						form.render('checkbox');
 					})

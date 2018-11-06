@@ -78,6 +78,7 @@ class Goods extends Controller{
     {
         if ($request->isPost()) {
             $goods_data = $request->param();
+            halt($goods_data);
             $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
             $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
             $goods_data["goods_standard_name"] = $goods_standard_name;
