@@ -52,6 +52,7 @@ function loadImage(obj){
     }
 }
 $('.img_box').on('tap', function(e){
+    e.cancelBubble = true;
     if(!$(e.targeet).hasClass('.img_box')){
         $('.show_img').hide();
     }
