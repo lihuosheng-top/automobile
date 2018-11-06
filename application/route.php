@@ -143,11 +143,13 @@ Route::group("admin",[
     "goods_putaway"=>"admin/Goods/putaway",                                    //商品上架
     "goods_pay"=>"admin/Goods/pay",                                            //商品付费详情
     "affirm_pay"=>"admin/Goods/affirm",
+	"goods_look"=>"admin/Goods/look",      
 
 
     /*服务商品管理*/
     "serve_index"=>"admin/Serve/index",
     "serve_add"=>"admin/Serve/add",
+	"serve_look"=>"admin/Serve/look",
 
 
 
