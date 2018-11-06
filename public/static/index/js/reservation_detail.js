@@ -37,6 +37,7 @@ var proportion = $(window).height() / $(window).width();
 function loadImage(obj){
     $('.show_img').show();// 显示容器
     $('.img_box').empty();
+    $('html').css('overflow', 'hidden');
     var oImg = new Image();// 实例化img
         oImg.src =  obj.src;//  给新建img 赋值src
     oImg.onload = function(){//图片加载完显示
@@ -50,8 +51,11 @@ function loadImage(obj){
         }
     }
 }
-$('.img_box').on('tap', function(){
-    $('.show_img').hide();
+$('.img_box').on('tap', function(e){
+    if(!$(e.targeet).hasClass('.img_box')){
+        $('.show_img').hide();
+    }
+    $('html').css('overflow', 'auto');
 }).on('swipeLeft', function(){//用户左划
     index++;
     if(index > curr_img_len - 1){//如果index大于总长度 显示最后一张
