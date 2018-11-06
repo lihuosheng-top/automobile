@@ -513,7 +513,19 @@ html{
     background:#000;
     z-index: 9;
 }
-.show_img img{
+.show_img .img_box{
+    width: 100%;
+    height: 100%;
+}
+.show_img .img_num{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: .32rem;
+    color: #aaa;
+}
+.img_box img{
     position: absolute;
     left:50%;
     top:50%;
