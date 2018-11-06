@@ -112,7 +112,7 @@
 }
 .filter_pop{
     display: none;
-    position: absolute;
+    position: fixed;
     top: .88rem;
     right: 0;
     width: 65%;
