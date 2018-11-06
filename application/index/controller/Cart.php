@@ -7,6 +7,6 @@ class Cart extends Controller
 {
     public function Cart_index()
     {
-        return view("Cart_index");
+        return view("cart_index");
     }
 }
