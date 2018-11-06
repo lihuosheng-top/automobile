@@ -92,6 +92,7 @@ aside a:visited{color: rgb(65,65,65);}*/
 
 /*上传图片插件的样式*/
 .img-box{
+	padding-left: 3%;
 	margin-top: 40px;
 }
 .img-box .up-p{
@@ -102,7 +103,7 @@ aside a:visited{color: rgb(65,65,65);}*/
 .z_photo{
 	padding: 18px;
 	border:2px dashed #E7E6E6;
-	width: 60%;
+	width: 44%;
 	/*padding: 18px;*/
 }
 .z_photo .z_file{

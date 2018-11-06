@@ -14,6 +14,17 @@
 			text-align: center;
 			margin-top: 10px;
 		}
+		.text{
+				top: 2px;
+			width: 344px;
+			margin: 20px auto;
+			position: relative;
+		}
+		.layui-icon{
+			position: absolute;
+			right: 0;
+			top: -9px;
+		}
 	</style>
 
 {/block}
@@ -22,8 +33,8 @@
 {block name="content"}
        <h4 style="padding: 10px;">推荐奖励积分设置：</h4>
 	   <div class="content">
-	   <div style="    padding-left: 272px;">成功推荐<input type="text" name="" id="" value="" />位好友奖励<input type="text" name="" id="" value="" />积分<span style="color:#CCCFDA;">（A推荐B,  B注册后,A可以得到一定的积分）</span></div>
-	   <div >成功推荐<input type="text" name="" id="" value="" />位好友奖励<input type="text" name="" id="" value="" />积分</div>
+	   <div style="    padding-left: 272px;" >成功推荐<input type="text" name="" id="" value="" />位好友奖励<input type="text" name="" id="" value="" />积分<span style="color:#CCCFDA;">（A推荐B,  B注册后,A可以得到一定的积分）</span></div>
+	   <div class="text">成功推荐<input type="text" name="" id="" value="" />位好友奖励<input type="text" name="" id="" value="" />积分</div>
 	   </div>
 	   <div class="bts" style="text-align: center;margin-top: 20px;">
 	   <button type="button" class="add-bts" style="background: #FFF; width: 100px; color: #0099FF; border:solid 1px #0099FF;border-radius:4px ;">+添加</button>
@@ -47,8 +58,13 @@
 <script type="text/javascript">
 		 	$(".add-bts").click(function(){
 				var dhtml="";
-				dhtml+='<div >成功推荐<input type="text" name="" id="" value="" />位好友奖励<input type="text" name="" id="" value="" />积分</div>';
+				dhtml+='<div  class="text">成功推荐<input type="text" name="" id="" value="" />位好友奖励<input type="text" name="" id="" value="" />积分<i class="layui-icon remove-img">&#x1007;</i></div>';
 				$(".content").append(dhtml);
+				$(".content ").on('click','.layui-icon',function(){
+					// console.log(this)
+					var remove=$(this).parent();
+					remove.remove();
+				});
 			});
 		 </script>
 {/block}

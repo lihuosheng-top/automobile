@@ -11,6 +11,12 @@ namespace app\admin\controller;
 use think\Controller;
 
 class Order extends Controller{
+
+
+    /***
+     * TODO：配件商订单开始
+     */
+
     /**
      **************李火生*******************
      * @return \think\response\View
@@ -103,10 +109,141 @@ class Order extends Controller{
     }
 
 
+    /**
+     * TODO:配件商订单结束
+     */
 
 
 
 
+    /**
+     * TODO:平台商订单开始
+     */
+    /**
+     **************李火生*******************
+     * @return \think\response\View
+     * 平台商服务商订单列表
+     **************************************
+     */
+    public function platform_order_service_index(){
+        return view('platform_order_service_index');
+    }
+
+    /**
+     **************李火生*******************
+     * @return \think\response\View
+     * 平台商配件商订单列表
+     **************************************
+     */
+    public function platform_order_parts_index(){
+        return view('platform_order_parts_index');
+    }
+
+    /**
+     **************李火生*******************
+     * @return \think\response\View
+     * 平台商售后服务
+     **************************************
+     *
+     */
+    public function platform_after_sale(){
+        return view('platform_after_sale');
+    }
+
+    /**
+     **************李火生*******************
+     * @return \think\response\View
+     * 平台商发票列表
+     **************************************
+     */
+    public function platform_invoice_index(){
+        return view('platform_invoice_index');
+    }
+
+    /**
+     **************李火生*******************
+     * @return \think\response\View
+     * 平台商发票详情
+     **************************************
+     */
+    public function platform_invoice_details(){
+        return view('platform_invoice_details');
+    }
+
+    /**
+     **************李火生*******************
+     * @return \think\response\View
+     * 平台商订单评价
+     **************************************
+     */
+    public function platform_order_evaluate(){
+        return view('platform_order_evaluate');
+    }
+
+    /**
+     **************李火生*******************
+     * @return \think\response\View
+     * 平台商订单评价编辑
+     **************************************
+     */
+    public function platform_order_evaluate_edit(){
+        return view('platform_order_evaluate_edit');
+    }
+
+    /**
+     **************李火生*******************
+     * @return \think\response\View
+     * 平台商订单设置
+     **************************************
+     */
+    public function platform_order_set_up(){
+        return view('platform_order_set_up');
+    }
+
+
+
+    /**
+     * TODO:平台商订结束
+     */
+
+
+
+    /**
+     * TODO:服务商订单开始
+     */
+    /**
+     **************李火生*******************
+     * @return \think\response\View
+     * 服务商界面服务商订单列表
+     **************************************
+     */
+    public function service_order_index(){
+        return view('service_order_index');
+    }
+
+    /**
+     **************李火生*******************
+     * @return \think\response\View
+     * 服务商界面订单评价
+     **************************************
+     */
+    public function service_order_evaluate(){
+        return view('service_order_evaluate');
+    }
+
+    /**
+     **************李火生*******************
+     * @return \think\response\View
+     * 服务商界面订单评价
+     **************************************
+     */
+    public function service_order_evaluate_edit(){
+        return view('service_order_evaluate_edit');
+    }
+
+    /**
+     * TODO:服务商订结束
+     */
 
 
 }
