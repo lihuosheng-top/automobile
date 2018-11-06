@@ -28,4 +28,10 @@ class Index extends Controller
     {
         return view("reservation_detail");
     }
+
+    // 填写预约信息
+    public function Reservation_info()
+    {
+        return view("reservation_info");
+    }
 }
