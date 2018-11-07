@@ -1,8 +1,7 @@
 {include file="template/_meta" /}
 
 <link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/zhexian/index.css"/>
-<script type="text/javascript" src="__STATIC__/admin/common/zhexian/frappe-charts.min.js"></script>
-<script type="text/javascript" src="__STATIC__/admin/common/zhexian/index.js"></script>
+
 {block name="css"}
 <style type="text/css">
 	body {
@@ -210,14 +209,70 @@
 	</ul>
 </div>
 <div class="partd">
-
+<div id="container" style="width:80%; height: 400px; margin: 0 auto"></div>
 </div>
 {/block}
 
 <!--_footer 作为公共模版分离出去-->
 {include file="template/_footer" /}
 <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="__STATIC__/admin/common/zhexian/highcharts.js"></script>
+<script language="JavaScript">
+$(document).ready(function() {
+   var title = {
+      text: '城市平均气温'   
+   };
+   var subtitle = {
+      text: 'Source: runoob.com'
+   };
+   var xAxis = {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+   };
+   var yAxis = {
+      title: {
+         text: 'Temperature (\xB0C)'
+      },
+      plotLines: [{
+         value: 0,
+         width: 1,
+         color: '#808080'
+      }]
+   };   
 
+   var tooltip = {
+      valueSuffix: '\xB0C'
+   }
+
+   var legend = {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'middle',
+      borderWidth: 0
+   };
+
+   var series =  [
+      {
+         name: 'Tokyo',
+         data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+            26.5, 23.3, 18.3, 13.9, 9.6]
+      }, 
+    
+   ];
+
+   var json = {};
+
+   json.title = title;
+   json.subtitle = subtitle;
+   json.xAxis = xAxis;
+   json.yAxis = yAxis;
+   json.tooltip = tooltip;
+   json.legend = legend;
+   json.series = series;
+
+   $('#container').highcharts(json);
+});
+</script>
 
 
 <!--请在下方写此页面业务相关的脚本-->
