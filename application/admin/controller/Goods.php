@@ -67,8 +67,6 @@ class Goods extends Controller{
         return view("goods_add",["goods_list"=>$goods_list]);
     }
 
-
-
     /**
      * [商品添加]
      * 陈绪
@@ -86,6 +84,7 @@ class Goods extends Controller{
             $goods_data["goods_delivery"] = $goods_delivery;
             //图片添加
             $show_images = $request->file("goods_show_images");
+
             if(!empty($show_images)) {
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
