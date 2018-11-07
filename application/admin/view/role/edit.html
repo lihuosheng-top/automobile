@@ -126,9 +126,11 @@
 			<label class="layui-form-label">上一级名称</label>
 			<div class="layui-input-block">
 				{if empty($role_name)}
-				无
+				<select name="pid" lay-filter="aihao" class="firstlist">
+					<option value="0" selected="">无</option>
+				</select>
 				{else}
-				<select name="pid" lay-filter="aihao" class="firstlist" id="role_pid">
+				<select name="pid" lay-filter="aihao" class="firstlist">
 					{volist name="role_name" id="values"}
 					<option value="{$values.id}" selected="">{$values.name}</option>
 					{/volist}
@@ -139,154 +141,45 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">权限设置</label>
 		</div>
-		<!-- <div class="quanxian">
-			{volist name="menu_lists" id="val"}
-			<div class="list">
-				<p class="title"><input type="checkbox" value="{$val.id}" data-id="12" lay-skin="primary" title="{$val.name}" name="menu_role_id[]" lay-filter="allChoose" class="allChoose">
-				<span>
-			</span></p>
-			<div class="ultable">
-				{if isset($val["sub"])}
-				<ul>
-					{volist name="val['sub']" id="v"}
-					<li>
-						<input type="checkbox" value="{$v.id}" data-id="12" lay-skin="primary" title="{$v.name}" name="menu_role_id[]" lay-filter="choose">
-						<div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>发布商品</span><i class="layui-icon"></i></div>
-					</li>
-					{/volist}
-				</ul>
-				{/if}
-			</div>
-			</div>
-			
-			{/volist}
-		</div> -->
 		<div class="quanxian">
-					<!-- 	{volist name="menu_lists" id="value"}
+			<div class="tables">
+				{volist name="menu_lists" id="values"}
 				<div class="list">
-					
 					<p class="title">
-						<input type="checkbox" value="{$value.id}" data-id="12" lay-skin="primary" title="{$value.name}" name="menu_role_id[]" lay-filter="allChoose" class="allChoose">
+						<input type="checkbox" value="{$values.id}" data-id="12" lay-skin="primary" title="{$values.name}" name="menu_role_id[]" lay-filter="allChoose"
+							   class="allChoose">
 						<span>
 					</span>
 					</p>
 					<div class="ultable">
-					{if isset($value["sub"])}
-					<ul>
-						{volist name="value['sub']" id="val"}
-						<li>
-							<input type="checkbox" value="{$val.id}" data-id="12" lay-skin="primary" title="{$val.name}" name="menu_role_id[]" lay-filter="choose">
-							<div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>发布商品</span><i class="layui-icon"></i></div>
-						</li>
-						{/volist}
-					</ul>
-					{/if}
-				</div>
-				</div>
-			
-				{/volist} -->
-				<div class="tables">
-					<div class="list">
-						<p class="title">
-							<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="allChoose"
-							 class="allChoose">
-							<span>
-							</span>
-						</p>
-						<div class="ultable">
-							<ul>
-								<li>
-									<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="choose"
-									 class="aaa">
-									<div class="list-three">
-										<ul>
-											<li>
-												<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-											</li>
-											<li>
-												<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-											</li>
-											<li>
-												<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-											</li>
-										</ul>
-									</div>
-								</li>
-								<li>
-									<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="choose"
-									class="aaa">
-									<div class="list-three">
-										<ul>
-											<li>
-												<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-											</li>
-											<li>
-												<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-											</li>
-											<li>
-												<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-											</li>
-										</ul>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="list">
-					
-									<p class="title">
-										<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="allChoose"
-										 class="allChoose">
-										<span>
-										</span>
-									</p>
-									<div class="ultable">
-										<ul>
-											<li>
-												<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="choose"
-												 class="aaa">
-												<div class="list-three">
-													<ul>
-														<li>
-															<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-														</li>
-														<li>
-															<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-														</li>
-														<li>
-															<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-														</li>
-													</ul>
-												</div>
-											</li>
-											<li>
-												<input type="checkbox" value="" data-id="12" lay-skin="primary" title="商品" name="menu_role_id[]" lay-filter="choose"
-												class="aaa">
-												<div class="list-three">
-													<ul>
-														<li>
-															<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-														</li>
-														<li>
-															<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-														</li>
-														<li>
-															<input type="checkbox" value="" data-id="12" lay-skin="primary" title="编辑" name="menu_role_id[]" lay-filter="three-choose">
-														</li>
-													</ul>
-												</div>
-											</li>
-										</ul>
-									</div>
+						<ul>
+							{volist name="$values.sub" id="val"}
+							<li>
+								<input type="checkbox" value="{$val.id}" data-id="12" lay-skin="primary" title="{$val.name}" name="menu_role_id[]" lay-filter="choose"
+									   class="aaa">
+								<div class="list-three">
+									<ul>
+										{if !empty($val.sub)}
+										{volist name="$val.sub" id="v"}
+										<li>
+											<input type="checkbox" value="{$v.id}" data-id="12" lay-skin="primary" title="{$v.name}" name="menu_role_id[]" lay-filter="three-choose">
+										</li>
+										{/volist}
+										{/if}
+									</ul>
 								</div>
-		
+							</li>
+							{/volist}
+						</ul>
+					</div>
 				</div>
-				</div>
-
+				{/volist}
+			</div>
+		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<input type="hidden" name="id" value="{$value.id}">
-				<button class="layui-btn" type="button" id="submits">保存</button>
+				<button class="layui-btn" type="submit" id="submits">保存</button>
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
 			</div>
 		</div>
