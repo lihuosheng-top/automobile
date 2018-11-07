@@ -7,20 +7,24 @@
 		background: #fff;
 	}
 		label{
+			width: 26% !important;
 		text-align: left !important;
 	}
+	.layui-input-inline {
+    width: 70% !important;
+}
 	.layui-form-item{
 		width: 100%;
 		    margin-bottom: 0px;
          margin-top: 0px;
   
 	}
-	.layui-form-label{
-		width: 26% !important;
+/* 	.layui-form-label{
+		width: 30% !important;
 	}
 	.layui-input-inline{
-		width: 70% !important;
-	}
+		width: 66% !important;
+	} */
 	#page{
 		width: 96%;
     height: 50px;
@@ -73,32 +77,24 @@
 		
 </blockquote>
 	<div class="layui-inline">
-			<a class="layui-btn layui-btn-danger batchDel" href="{:url('admin/discount/add')}">添加</a>
+			<a class="layui-btn layui-btn-danger batchDel" href="{:url('admin/serve/add')}">添加</a>
 		</div>
 	     
 	<div class="layui-form news_list">
 	  	<table class="layui-table">
 		    <colgroup>
 				<col width="3%">
-				<col width="12%">
-				<col width="12%">
-				<col width="12%">
-				<col width="12%">
-				<col width="12%">
-				<col width="12%">
-				<col >
+			
 		    </colgroup>
 		    <thead>
 				<tr>
 					<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-					<th style="text-align:left;">商品编号</th>
-					<th>商品名称</th>
+					<th >店铺名称</th>
+					
 					<th>服务类型</th>
 					<th>适用车型</th>
 					<th>价格</th>
 					<th>是否上架</th>
-					
-					<th>上架年限</th>
 					<th>操作</th>
 				</tr> 
 		    </thead>
@@ -106,8 +102,6 @@
 		    	<tr>
 					<td ><input type="checkbox" sname="" lay-skin="primary"  lay-filter="choose" ></td>
 					<td>2</td>
-				
-					<td>张三</td>
 					<td>管理员</td>
 					<td>管理员</td>
 					
@@ -117,9 +111,9 @@
                   <input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="2"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>是</em><i></i></div>
 						
 					</td>
-					<td>2018</td>
 					<td>
-						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
+						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/serve/look')}"><i class="iconfont icon-edit"></i> 查看详情</a>
+						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/serve/add')}"><i class="iconfont icon-edit"></i> 编辑</a>
 						<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 					
 					</td>
@@ -157,30 +151,30 @@
 		$ = layui.jquery;
       var vals=$("input").data("id");
 	//是否展示
-            public function status(Request $request){
-                if($request->isPost()) {
-                    $status = $request->only(["status"])["status"];
-                    if($status == 0) {
-                        $id = $request->only(["id"])["id"];
-                        $bool = db("Admin")->where("id", $id)->update(["status" => 0]);
-                        if ($bool) {
-                            $this->redirect(url("admin/admin/index"));
-                        } else {
-                            $this->error("修改失败", url("admin/admin/index"));
-                        }
-                    }
-                    if($status == 1){
-                        $id = $request->only(["id"])["id"];
-                        $bool = db("Admin")->where("id", $id)->update(["status" => 1]);
-                        if ($bool) {
-                            $this->redirect(url("admin/admin/index"));
-                        } else {
-                            $this->error("修改失败", url("admin/admin/index"));
-                        }
-                    }
-                }
-            }
-
+//             public function status(Request $request){
+//                 if($request->isPost()) {
+//                     $status = $request->only(["status"])["status"];
+//                     if($status == 0) {
+//                         $id = $request->only(["id"])["id"];
+//                         $bool = db("Admin")->where("id", $id)->update(["status" => 0]);
+//                         if ($bool) {
+//                             $this->redirect(url("admin/admin/index"));
+//                         } else {
+//                             $this->error("修改失败", url("admin/admin/index"));
+//                         }
+//                     }
+//                     if($status == 1){
+//                         $id = $request->only(["id"])["id"];
+//                         $bool = db("Admin")->where("id", $id)->update(["status" => 1]);
+//                         if ($bool) {
+//                             $this->redirect(url("admin/admin/index"));
+//                         } else {
+//                             $this->error("修改失败", url("admin/admin/index"));
+//                         }
+//                     }
+//                 }
+//             }
+// 
 	//全选
 	form.on('checkbox(allChoose)', function(data){
 		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');

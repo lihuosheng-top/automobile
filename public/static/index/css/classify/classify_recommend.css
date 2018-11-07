@@ -1,0 +1,233 @@
+.wrapper{
+    width: 100%;
+}
+.header{
+    position: fixed;
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+    z-index: 9999;
+}
+.header .back{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    width: .25rem;
+    height: .43rem;
+    margin-top: -.22rem;
+    background-position: -.5rem -.5rem;
+}
+.header .header_title{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    text-align: center;
+    font-size: .36rem;
+    color: #333;
+}
+.advertise{
+    width: 100%;
+    height: 9.29rem;
+    padding-top: .88rem;
+}
+.advertise img{
+    width: 100%;
+    height: 100%;
+}
+.tab{
+    width: 100%;
+    height: .88rem;
+    margin-bottom: .2rem;
+}
+.tab ul{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.tab li a{
+    font-size: .3rem;
+    color: #333;
+}
+.container{
+    width: 100%;
+    padding: 0 .1rem;
+    box-sizing: border-box;
+}
+.container li{
+    float: left;
+    width: 3.6rem;
+    height: 5.6rem;
+    margin-right: .08rem;
+}
+.container li .img_div{
+    width: 100%;
+    height: 3.95rem;
+}
+.container .img_div img{
+    width: 100%;
+    height: 100%;
+}
+.container .goods_name{
+    width: 100%;
+}
+.container .goods_name p{
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: .24rem;
+    color: #333;
+    padding: 0 .16rem;
+    box-sizing: border-box;
+}
+.container .goods_price{
+    padding-right: .3rem;
+}
+.container .goods_price .price{
+    font-size: .3rem;
+    color: #f00;
+}
+.container .goods_price .pay_num{
+    font-size: .2rem;
+    color: #999;
+}
+.container .goods_price .icon_cart{
+    float: right;
+    width: .34rem;
+    height: .34rem;
+    background-position: -1rem -.5rem;
+}
+.mask{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .6);
+}
+.filter_pop{
+    display: none;
+    position: fixed;
+    top: .88rem;
+    right: 0;
+    width: 65%;
+    height: 94vh;
+    background-color: #fff;
+}
+.filter_pop .top_ct{
+    width: 100%;
+    height: 90%;
+    overflow-y: scroll; 
+}
+.filter_pop .bottom_btn{
+    width: 100%;
+    height: 10%;
+}
+.filter_pop .bottom_btn .reset,
+.filter_pop .bottom_btn .confirm{
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    font-size: .36rem;
+    line-height: 1.3rem;
+    box-sizing: border-box;
+}
+.filter_pop .bottom_btn .reset{
+    float: left;
+    border-top: 1px solid #ccc;
+    color: #333;
+}
+.filter_pop .bottom_btn .confirm{
+    float: right;
+    background-color: #f00;
+    border-top: 1px solid #f00;
+    color: #fff;
+}
+
+.top_ct .pop_title{
+    position: relative;
+    margin: .3rem 0;
+}
+.price_section{
+    padding: 0 .2rem;
+    height: 2rem;
+    border-bottom: 1px solid #ccc;
+}
+.section_input input{
+    width: 1.6rem;
+    height: .7rem;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+.section_input .minimum_price{
+    margin-right: .2rem;
+}
+.section_input .highest_price{
+    margin-left: .2rem;
+}
+.brand{
+    padding: 0 .2rem;
+    border-bottom: 1px solid #ccc;
+}
+.brand .shrink{
+    position: absolute;
+    top: 50%;
+    right: .3rem;
+    width: .25rem;
+    height: .43rem;
+    margin-top: -.18rem;
+    background-position: -.5rem -.5rem;
+    transform: rotate(-90deg);
+    transition: all 2s;
+}
+.brand .brand_ul{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.brand .brand_ul li{
+    flex-basis: 48%;
+    text-align: center;
+    font-size: 0;
+    margin-bottom: .1rem;
+}
+.brand_ul li img{
+    width: 2rem;
+    height: .8rem;
+    border: 1px solid #999;
+}
+.brand_ul .brand_name{
+    display: inline-block;
+    font-size: .24rem;
+    width: 2rem;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.size{
+    padding: 0 .2rem;
+}
+.size_ul{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.size_ul li{
+    width: 1.2rem; 
+    height: .5rem;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: .5rem;
+    font-size: .24rem;
+    color: #678;
+    margin-bottom: .2rem;
+}

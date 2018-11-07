@@ -76,6 +76,7 @@ class Goods extends Controller{
     {
         if ($request->isPost()) {
             $goods_data = $request->param();
+            halt($goods_data);
             $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
             $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
             $goods_data["goods_standard_name"] = $goods_standard_name;
@@ -350,6 +351,15 @@ class Goods extends Controller{
     public function affirm(){
 
         return view("affirm_pay");
+
+    }
+ /**
+     * 商品查看
+     * 陈绪
+     */
+    public function look(){
+
+        return view("good_look");
 
     }
 

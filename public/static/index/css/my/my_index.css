@@ -1,0 +1,259 @@
+﻿
+html{
+    background-color: #f4f5f6;
+}
+.user_box{
+    position: relative;
+    width: 100%;
+    height: 4.2rem;
+    background: url(../../image/my_bg.png) no-repeat;
+    background-size: 100%;
+    margin-bottom: 1.2rem;
+}
+.head_icon{
+    width: 100%;
+    height: .88rem;
+    background-color: #504cfb;
+    margin-bottom: .25rem;
+}
+.head_icon .set{
+    float: right;
+    width: .39rem;
+    height: .36rem;
+    background-position: -6rem -1rem;
+    margin: .26rem .26rem 0 0;
+}
+.head_icon .message{
+    float: right;
+    width: .42rem;
+    height: .36rem;
+    background-position: -.9rem 0;
+    margin: .26rem .26rem 0 0;
+}
+.user_info{
+    width: 100%;
+    height: 2rem;
+    display: flex;
+}
+.user_headimg{
+    float: left;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    margin-left: .34rem;
+    margin-right: .2rem;
+}
+.user_headimg img{
+    width: 100%;
+    height: 100%;
+}
+.user_info_text{
+    float: left;
+    color: #fff;
+    flex: 1;
+}
+.user_info_text .user_name{
+    font-size: .30rem;
+}
+.user_info_text .invitation_code{
+    font-size: .24rem;
+}
+.user_info_text .jf_hy_qb{
+    font-size: .24rem;
+}
+.user_info_text .jf_hy_qb i{
+    font-style: normal;
+}
+.user_info_text .jf_hy_qb span{
+    border-right: 1px solid #fff;
+    padding-right: .1rem;
+}
+.sponsor{
+    position: absolute;
+    left: 50%;
+    bottom: -.84rem;
+    width: 7.2rem;
+    height: 1.8rem;
+    margin-left: -3.6rem;
+    background-color: #fff;
+    border-radius: .08rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+}
+.sponsor ul{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.sponsor a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.sponsor .icon_spread{
+    display: inline-block;
+    width: .6rem;
+    height: .52rem;
+    background-position: -5rem -1.8rem;
+}
+.sponsor .icon_league{
+    display: inline-block;
+    width: .64rem;
+    height: .60rem;
+    background-position: -5.7rem -1.8rem;
+}
+.sponsor .icon_consume{
+    display: inline-block;
+    width: .52rem;
+    height: .6rem;
+    background-position: -6.5rem -1.8rem;
+}
+.sponsor a i{
+    margin-bottom: .1rem;
+}
+.sponsor a span{
+    font-size: .3rem;
+    color: #666666;
+}
+.order_div{
+    width: 100%;
+    height: 2.3rem;
+    margin-bottom: .1rem;
+    background-color: #fff;
+}
+.order_div .my_order{
+    width: 100%;
+    height: .8rem;
+    padding: 0 .2rem;
+    box-sizing: border-box;
+}
+.order_div .my_order a{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: .8rem;
+}
+.order_div .my_order span{
+    font-size: .3rem;
+    color: #333;
+}
+.icon_detail{
+    display: inline-block;
+    width: .16rem;
+    height: .28rem;
+    background-position: -7.3rem -1.8rem;
+}
+.order_step{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 1.5rem;
+}
+.order_step a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.order_step .wait_pay .icon_wait_pay{
+    display: inline-block;
+    width: .66rem;
+    height: .55rem;
+    background-position: -2rem -1.8rem;
+}
+.order_step .wait_deliver .icon_wait_deliver{
+    display: inline-block;
+    width: .6rem;
+    height: .57rem;
+    background-position: -2.8rem -1.8rem;
+}
+.order_step .wait_evaluation .icon_wait_evaluation{
+    display: inline-block;
+    width: .52rem;
+    height: .58rem;
+    background-position: -3.5rem -1.8rem;
+}
+.order_step .reject .icon_reject{
+    display: inline-block;
+    width: .59rem;
+    height: .59rem;
+    background-position: -4.2rem -1.8rem;
+}
+.order_step .order_step_text{
+    font-size: .22rem;
+    color: #666;
+}
+.function_list{
+    width: 100%;
+    padding: 0 .2rem;
+    box-sizing: border-box;
+    background-color: #fff;
+    margin-bottom: 1.1rem;
+}
+.function_list li{
+    width: 100%;
+    height: .8rem;
+    border-bottom: 1px solid #f4f5f6;
+}
+.function_list li a{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+.function_list li span{
+    font-size: .22rem;
+    color: #333;
+}
+.function_list li .spr{
+    display: inline-block;
+    margin-right: .1rem;
+    vertical-align: text-bottom;
+}
+.function_list li .icon_addr{
+    width: .29rem;
+    height: .31rem;
+    background-position: -6.5rem -.7rem;
+}
+.function_list li .icon_collect{
+    width: .34rem;
+    height: .34rem;
+    background-position: -6.9rem -.7rem;
+}
+.function_list li .icon_rights{
+    width: .34rem;
+    height: .26rem;
+    background-position: -7.3rem -.7rem;
+}
+.function_list li .icon_mycar{
+    width: .34rem;
+    height: .26rem;
+    background-position: -6.5rem -1.2rem;
+}
+.function_list li .icon_about{
+    width: .29rem;
+    height: .29rem;
+    background-position: -6.9rem -1.2rem;
+}
+.function_list li .icon_feedback{
+    width: .31rem;
+    height: .31rem;
+    background-position: -7.3rem -1.2rem;
+}
+
+
+
+
+
+
+
+.footer .icon_my{
+    background-position: -1.5rem -1.8rem;
+}

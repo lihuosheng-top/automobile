@@ -9,7 +9,7 @@
 	}
 	
 	.layui-form .layui-input-block input {
-		width: 95%;
+		width: 92%;
 	}
 	
 	.layui-form-label span {
@@ -56,6 +56,9 @@
 	.form-group .layui-form-select{
 		display: none;
 	}
+	.layui-btn{
+		width: 100px;
+	}
 </style>
 
 {/block}
@@ -68,25 +71,25 @@
 	<div class="layui-form-item ">
 		<label class="layui-form-label">店铺名称:</label>
 		<div class="layui-input-block">
-			<input type="text" name="account" value="" placeholder="" class="layui-input" id="account">
+			<input type="text" name="account" value="" placeholder="" class="layui-input" id="account" disabled="disabled">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">负责人姓名：</label>
 		<div class="layui-input-block">
-			<input type="text" name="department" value="" placeholder="" class="layui-input" id="department">
+			<input type="text" name="department" value="" placeholder="" class="layui-input" id="department" disabled="disabled">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">手机号：</label>
 		<div class="layui-input-block">
-			<input type="text" name="name" value="" placeholder="" class="layui-input" id="name">
+			<input type="text" name="name" value="" placeholder="" class="layui-input" id="name" disabled="disabled">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">座机号：</label>
 		<div class="layui-input-block">
-			<input type="text" name="name" value="" placeholder="" class="layui-input" id="name">
+			<input type="text" name="name" value="" placeholder="" class="layui-input" id="name" disabled="disabled">
 		</div>
 	</div>
 
@@ -95,24 +98,9 @@
 		<div class="layui-input-block">
 			<!-- 数据库展现图片 -->
 			<div class="imgcontent">
-				<span class="img"><img src="__STATIC__/admin/common/img/a11.png"  width="100%"><i class="layui-icon remove-img">&#x1007;</i></span>
+				<span class="img"><img src="__STATIC__/admin/common/img/a11.png"  width="100%"></span>
 			</div>
-			<div class="img-box full">
-				<section class=" img-section">
-					<div class="z_photo upimg-div clear">
-						<section class="z_file fl">
-							<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-							<input type="file" name="goods_show_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
-						</section>
-					</div>
-				</section>
-			</div>
-			<aside class="mask works-mask">
-				<div class="mask-content">
-					<p class="del-p ">您确定要删除作品图片吗？</p>
-					<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
-				</div>
-			</aside>
+			
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -122,15 +110,15 @@
 			<div data-toggle="distpicker">
 				<div class="form-group">
 					<label class="sr-only" for="province2">Province</label>
-					<select class="form-control" id="province2" data-province="---- 选择省 ----"></select>
+					<select class="form-control" id="province2" data-province="---- 选择省 ----" disabled="disabled"></select>
 				</div>
 				<div class="form-group">
 					<label class="sr-only" for="city2">City</label>
-					<select class="form-control" id="city2" data-city="---- 选择市 ----"></select>
+					<select class="form-control" id="city2" data-city="---- 选择市 ----" disabled="disabled"></select>
 				</div>
 				<div class="form-group">
 					<label class="sr-only" for="district2">District</label>
-					<select class="form-control" id="district2" data-district="---- 选择区 ----"></select>
+					<select class="form-control" id="district2" data-district="---- 选择区 ----" disabled="disabled"></select>
 				</div>
 			</div>
 		</div>
@@ -140,41 +128,39 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">店铺详细地址</label>
 		<div class="layui-input-block">
-			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email">
+			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email" disabled="disabled">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">营业时间：</label>
 		<div class="layui-input-block">
-			<input type="text"  placeholder="" class="layui-input" id="repassword">
+			<input type="text"  placeholder="" class="layui-input" id="repassword" disabled="disabled">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">服务范围：</label>
 		<div class="layui-input-block">
-			 <input type="checkbox" name="like1[write]" lay-skin="primary" title="写作" checked="">
-      <input type="checkbox" name="like1[read]" lay-skin="primary" title="阅读">
-      <input type="checkbox" name="like1[game]" lay-skin="primary" title="游戏" >
+			 <input type="checkbox" name="like1[write]" lay-skin="primary" title="写作" checked="" disabled="disabled">
 		</div>
 	</div>
 
 	<div class="layui-form-item">
 		<label class="layui-form-label">邮件</label>
 		<div class="layui-input-block">
-			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email">
+			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email" disabled="disabled">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">绑定微信</label>
 		<div class="layui-input-block">
-			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email">
+			<input type="text" name="email" value="" placeholder="" class="layui-input" id="email" disabled="disabled">
 		</div>
 	</div>
 
 	<div class="layui-form-item">
 		<label class="layui-form-label">我要加盟为：</label>
 		<div class="layui-input-block">
-			   <select name="interest" lay-filter="aihao">
+			   <select name="interest" lay-filter="aihao" disabled="disabled">
         <option value=""></option>
         <option value="0">写作</option>
         <option value="1" selected="">阅读</option>
@@ -187,7 +173,7 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">店铺信息：</label>
 		<div class="layui-input-block">
-			<textarea rows="10" cols="60">
+			<textarea rows="10" cols="60" disabled="disabled">
 				
 			</textarea>
 		</div>
@@ -214,30 +200,53 @@
 				<div class="layui-form-item">
 						<label class="layui-form-label">验证真实地址：</label>
 						<div class="layui-input-block">
-							<input type="text" name="" id="" value="" />
+							<input type="text" name="department" value="" placeholder="" class="layui-input"  disabled="disabled">
 						</div>
 					</div>
 				<div class="layui-form-item">
 						<label class="layui-form-label">验证实体店面：</label>
 						<div class="layui-input-inline">
-							<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+							<img src="__STATIC__/admin/common/img/a11.png" width="100%"  style="margin-bottom: 10px;">
 						</div>
 						<div class="layui-input-inline">
-							<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+							<img src="__STATIC__/admin/common/img/a11.png" width="100%" style="margin-bottom: 10px;">
 						</div>
 						<div class="layui-input-inline" style="margin-left: 20%;">
-							<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+							<img src="__STATIC__/admin/common/img/a11.png" width="100%" style="margin-bottom: 10px;">
 						</div>
 						<div class="layui-input-inline">
-						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+						<img src="__STATIC__/admin/common/img/a11.png" width="100%" style="margin-bottom: 10px;">
 						</div>
 					</div>
+					<p class="title">身份认证</p>
+					<div class="layui-form-item">
+						<label class="layui-form-label">是否付费上架：</label>
+						<div class="layui-input-block">
+							<input type="radio" name="sex" title="付费上架" checked="">
+							<input type="radio" name="sex"  title="不付费上架">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">当前可操作：</label>
+						<div class="layui-input-block">
+							<input type="radio" name="aaa" value="通过" title=" 通过" checked="">
+							<input type="radio" name="aaa"  value="拒绝" title="拒绝">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">操作员备注：：</label>
+						<div class="layui-input-block">
+							<textarea rows="10" cols="60" ></textarea>
+						</div>
+					</div>
+     
 
 	<div class="layui-form-item">
 		<div class="layui-input-block">
 			<input type="hidden" name="id" value="">
-			<button class="layui-btn" type="submit" id="submits">保存</button>
 			<button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
+			<button class="layui-btn" type="submit" id="submits">保存</button>
+			
 		</div>
 	</div>
 	

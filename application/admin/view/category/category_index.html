@@ -46,7 +46,7 @@
 	<div class="layui-form-item">
 		
 		<div class="layui-inline">
-			<a class="layui-btn layui-btn-danger batchDel" href="{:url('admin/Category/add')}">添加</a>
+			<a class="layui-btn layui-btn-danger batchDel" href="{:url('admin/Category/add')}">添加分类</a>
 		</div>
 	     </div>
 			 </blockquote>
@@ -54,13 +54,6 @@
 	  	<table class="layui-table">
 		    <colgroup>
 				<col width="3%">
-				<col width="9%">
-				<col width="15%">
-				<col width="9%">
-				<col width="9%">
-				<col width="9%">
-				<col width="15%">
-				<col>
 		    </colgroup>
 		    <thead>
 				<tr>
@@ -78,7 +71,7 @@
 		    	<tr>
 		    		<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" ></td>
 					<td align="left">{$value.name}</td>
-					<td><img src="__UPLOADS__/{$value.type_images}" ></td>
+					<td style="width: 100px;"><img src="__UPLOADS__/{$value.type_images}" width="100%"></td>
 					<td>{$value.pid}</td>
 					<td>{$value.sort_number}</td>
 					<td>

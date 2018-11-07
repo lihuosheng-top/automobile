@@ -19,6 +19,10 @@ use think\Route;
 Route::group("",[
     /*首页*/
     "/$"=>"index/index/index",
+    "service_type"=>"index/index/service_type",//选择服务类型
+    "reservation"=>"index/index/reservation",//预约服务 首页
+    "reservation_detail"=>"index/index/reservation_detail",//预约服务 详情
+    "reservation_info"=>"index/index/reservation_info",//预约服务 详情
 
 
     /*商品列表*/
@@ -65,8 +69,14 @@ Route::group("",[
     /*安全中心*/
     "center_index"=>"index/Center/index",
 
-
-
+    // 分类
+    "classify_index"=>"index/Classify/classify_index",
+    "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
+    // 购物车
+    "cart_index"=>"index/Cart/cart_index",
+    // 我的
+    "my_index"=>"index/My/my_index",
+    
 ]);
 
 /**
@@ -133,11 +143,13 @@ Route::group("admin",[
     "goods_putaway"=>"admin/Goods/putaway",                                    //商品上架
     "goods_pay"=>"admin/Goods/pay",                                            //商品付费详情
     "affirm_pay"=>"admin/Goods/affirm",
+	"goods_look"=>"admin/Goods/look",      
 
 
     /*服务商品管理*/
     "serve_index"=>"admin/Serve/index",
     "serve_add"=>"admin/Serve/add",
+	"serve_look"=>"admin/Serve/look",
 
 
 
