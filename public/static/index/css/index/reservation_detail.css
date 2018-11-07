@@ -9,7 +9,7 @@ html{
     width: 100%;
     height: .88rem;
     background-color: transparent;
-    z-index: 999;
+    z-index: 3;
 }
 .head .back{
     position: absolute;
@@ -20,11 +20,11 @@ html{
     margin-top: -.22rem;
     background-position: -.5rem -.5rem;
 }
-.shop_bg{
+.swiper-container{
     width: 100%;
     height: 4.1rem;
 }
-.shop_bg img{
+.swiper-container img{
     width: 100%;
     height: 100%;
 }
@@ -50,6 +50,7 @@ html{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 2;
 }
 .shop_info_box .icon_order{
     display: inline-block;
@@ -201,12 +202,12 @@ html{
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 .wrapper .comment_box .comment_img_ul .comment_img_li{
     width: 1.36rem;
     height: 1.36rem;
     overflow: hidden;
+    margin-right: .1rem;
 }
 .wrapper .comment_box .comment_img_li img{
     width: 100%;
@@ -500,3 +501,33 @@ html{
     color: #666666;
 }
 /* 全部评论弹窗 end */
+
+/* 图片展示 */
+.show_img{
+    position: fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100vh;
+    display:none;
+    background:#000;
+    z-index: 9;
+}
+.show_img .img_box{
+    width: 100%;
+    height: 100%;
+}
+.show_img .img_num{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: .32rem;
+    color: #aaa;
+}
+.img_box img{
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+}

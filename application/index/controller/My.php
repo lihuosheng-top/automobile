@@ -7,6 +7,6 @@ class My extends Controller
 {
     public function My_index()
     {
-        return view("My_index");
+        return view("my_index");
     }
 }

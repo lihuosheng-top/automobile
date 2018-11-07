@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -11,6 +11,14 @@
     <link rel="stylesheet" href="__STATIC__/index/css/plugin/swiper-4.3.5.min.css">
     <!-- 高德地图 -->
     <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
+    <style>
+        body {
+            padding-top: constant(safe-area-inset-top);
+            padding-left: constant(safe-area-inset-left);
+            padding-right: constant(safe-area-inset-right);
+            padding-bottom: constant(safe-area-inset-bottom);
+        }
+    </style>
     <title>首页</title>
 </head>
 <body>
@@ -249,7 +257,7 @@
             </ul>
         </div>
         <!-- footer 样式分离到common.css -->
-        <div class="footer">
+        <div class="footer padding-bottom">
             <ul>
                 <li class="home">
                     <a href="{:url('index/index/index')}">

@@ -7,20 +7,36 @@
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/plugin/swiper-4.3.5.min.css">
     <link rel="stylesheet" href="__STATIC__/index/css/index/reservation_detail.css">
-    <!-- 高德地图 -->
-    <title>预约详情</title>
+    <title>店铺详情</title>
 </head>
 <body>
     <div class="wrapper">
         <div class="head">
             <a href="javascript:history.back(-1);" class="spr back"></a>
         </div>
-        <div class="shop_bg">
+        <!-- <div class="shop_bg">
             <img src="__STATIC__/index/image/my_bg2.jpg">
+        </div> -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="__STATIC__/index/image/my_bg2.jpg">
+                </div>
+                <div class="swiper-slide">
+                    <img src="__STATIC__/index/image/my_bg2.jpg">
+                </div>
+                <div class="swiper-slide">
+                    <img src="__STATIC__/index/image/my_bg2.jpg">
+
+                </div>
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
         </div>
         <div class="shop_info_box">
-            <a href="javascript:;" class="order_confirm">
+            <a href="reservation_info" class="order_confirm">
                 <i class="spr icon_order"></i>
                 <span>确定预约</span>
             </a>
@@ -57,13 +73,13 @@
                                 <img src="__STATIC__/index/image/img1.jpg">
                             </li>
                             <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
+                                <img src="__STATIC__/index/image/08.png">
                             </li>
                             <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
+                                <img src="__STATIC__/index/image/10.png">
                             </li>
                             <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
+                                <img src="__STATIC__/index/image/my_bg2.jpg">
                             </li>
                         </ul>
                         <div class="reply_box">
@@ -106,12 +122,6 @@
                             <li class="comment_img_li">
                                 <img src="__STATIC__/index/image/img1.jpg">
                             </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
                         </ul>
                         <div class="reply_box">
                             <i class="triangle"></i>
@@ -147,9 +157,6 @@
                             <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>
                         </a>
                         <ul class="comment_img_ul">
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
                             <li class="comment_img_li">
                                 <img src="__STATIC__/index/image/img1.jpg">
                             </li>
@@ -251,8 +258,16 @@
             </ul>
         </div>
     </div>
-    <!-- <script src="__STATIC__/index/js/plugin/jquery.js"></script> -->
+    <!-- 放大图片 容器 -->
+    <div class="show_img">
+        <span class="img_num">1/4</span>
+        <div class="img_box"></div>
+    </div>
+
     <script src="__STATIC__/index/js/plugin/zepto.js"></script>
+    <script src="__STATIC__/index/js/plugin/touch.js"></script>
+    <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
+    <script src="__STATIC__/index/js/reservation_detail.js"></script>
     <!-- 全部评价插入（暂时） -->
     <script>
         var str = '';
@@ -306,24 +321,21 @@
                     </li>'
         }
         $('.pop .comment_ul').append(str);
-        // 显示 隐藏 评价弹窗 
-        function showPop(){
-            // $('.pop').show();
-            $('.pop').css('transform', 'translateX(0)');
-            $('html').css('overflow', 'hidden');
-        }
-        function hidePop(){
-            // $('.pop').hide();
-            $('.pop').css('transform', 'translateX(100%)');
-            $('html').css('overflow', 'auto');
-        }
-        $('html').bind('touchmove', function(e){
-            if($(this).scrollTop() > 0){
-                $('.wrapper .head').css('background', 'rgba(255, 255, 255, .5)');
-            }else{
-                $('.wrapper .head').css('background', 'transparent');
-            }
-        })
+    </script>
+    <!-- swiper初始化 -->
+    <script>        
+        var mySwiper = new Swiper ('.swiper-container', {
+            direction: 'horizontal', // 垂直切换选项
+            loop: true, // 循环模式选项
+            autoplay: {
+                delay: 2000,
+                disableOnInteraction: false,//用户操作swiper后，不禁止autoplay
+            },
+            // 如果需要分页器
+            pagination: {
+                el: '.swiper-pagination',
+            },
+        })        
     </script>
 </body>
 </html>
