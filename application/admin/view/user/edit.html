@@ -28,68 +28,66 @@
 
 	</div>
 	<form class="layui-form" action="">
-	
+	{volist name="user_data" id="user_val"}
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 会员名称：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_val.user_name}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">真实姓名：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_val.real_name}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">手机：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_val.phone_num}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">会员等级：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_val.user_grade|show_user_grade}">
 			</div>
 		</div>
 <div class="layui-form-item">
 			<label class="layui-form-label">会员头像：</label>
 			<div class="layui-input-block">
-			<img src="" >
+			<img src="__USERIMG__/{$user_val.user_img}" >
 			</div>
 		</div>
 	
 	<div class="layui-form-item">
 		<label class="layui-form-label">性别：</label>
 		<div class="layui-input-block">
-		<p>男</p>
+		<p>{$user_val.sex}</p>
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">性别：</label>
+		<label class="layui-form-label">角色：</label>
 		<div class="layui-input-block">
-		<p>男</p>
+		<p>{$user_val.type|show_user_type}</p>
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">收货地址1：</label>
 		<div class="layui-input-block">
-			<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_val.harvester_real_address}">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">申请时间：</label>
 		<div class="layui-input-block">
-		<p>男</p>
+		<p>{$user_val.create_time|date="Y-m-d H:i:s",###}</p>
 		</div>
 	</div>
+		{/volist}
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-				
-				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit" >保存</button>
-			   
+				<button type="button" class="layui-btn" onClick="javascript :history.back(-1);"> 返回</button>
 			</div>
 		</div>
 

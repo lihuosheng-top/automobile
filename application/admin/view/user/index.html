@@ -5,6 +5,9 @@
 {block name="css"}
 
 <style type="text/css">
+	img{
+		width: 100%;
+	}
 	body {
 		background: #fff;
 	}
@@ -35,6 +38,9 @@
 		border: solid 1px #E2E2E2;
 		padding-left: 50px;
 		background: #FDFDFE;
+	}
+	.img_show{
+		width: 150px;
 	}
 </style>
 
@@ -100,40 +106,49 @@
 						<th>操作</th>
 					</tr>
 				</thead>
+				{if !empty($user_data)}
 				<tbody class="news_content">
+				{volist name="user_data" id="user_val"}
 					<tr>
 						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>admin</td>
-						<td>admin</td>
-						<td>2</td>
-						<td><img src="111"></td>
-						<td>2018-09-26</td>
-						<td>2018-09-26 </td>
-						<td>2018-09-26 </td>
+						<td>{$user_val.id}</td>
+						<td>{$user_val.phone_num}</td>
+						<td>{$user_val.user_name}</td>
+						<td><div class="img_show"><img src="__USERIMG__/{$user_val.user_img}"></div></td>
+						<td>{$user_val.type|show_user_type}</td>
+						<td>{$user_val.harvester_real_address} </td>
+						<td>{$user_val.create_time|date='Y-m-d H:i:s',###} </td>
 						<td>
-							<input type="checkbox" class="Status" name="show" value="0" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
-							 data-id="2">
-							<div class="layui-unselect layui-form-switch" lay-skin="_switch"><em>否</em><i></i></div>
-
+							{if $user_val.status==0}
+							<input type="checkbox" class="Status" name="show" value="{$user_val.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
+							 data-id="{$user_val.id}">
+							{/if}
+							{if $user_val.status==1}
+							<input type="checkbox" class="Status" name="show" value="{$user_val.status}"  checked="" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
+								   data-id="{$user_val.id}">
+							{/if}
 						</td>
 						<td>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/user/edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
-
-							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/user/edit',['id'=>$user_val.id])} "><i class="iconfont icon-edit"></i> 编辑</a>
+							<a href="{:url('admin/user/del',['id'=>$user_val.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
 							 data-id="undefined"><i class="layui-icon"></i> 删除</a>
 						</td>
 					</tr>
+				{/volist}
 				</tbody>
+				{$user_data->render()}
+				{/if}
 			</table>
 		</div>
 		<div id="page">
 
 			<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
 				<option value="">批量删除</option>
-
 			</select>
 			<button type="button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定
 			</button>
+
+
 		</div>
 
 	</div>
@@ -194,7 +209,7 @@
 				console.log(status);
 				$.ajax({
 					type: "POST",
-					url: "{:url('admin/admin/status')}",
+					url: "{:url('admin/user/status')}",
 					data: {
 						"id": id,
 						"status": status

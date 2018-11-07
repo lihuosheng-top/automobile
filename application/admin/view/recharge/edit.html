@@ -32,46 +32,56 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 会员名称：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_name}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">金额：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$recharge_data.operation_amount}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">支付方式：</label>
 			<div class="layui-input-block">
-			 <select name="modules" lay-verify="required" lay-search="">
-          <option value="">直接选择或搜索选择</option>
-          <option value="1">layer</option>
-          <option value="2">form</option>
-          <option value="3">layim</option>
-          <option value="4">element</option>
-         
+			 <select name="modules" lay-verify="required" lay-search="" >
+				 {if $recharge_data.pay_type_content=="微信"}
+          <option value="{$recharge_data.pay_type_content}">{$recharge_data.pay_type_content}</option>
+          <option value="支付宝">支付宝</option>
+				 {/if}
+				 {if $recharge_data.pay_type_content=="支付宝"}
+				 <option value="{$recharge_data.pay_type_content}">{$recharge_data.pay_type_content}</option>
+				 <option value="微信">微信</option>
+				 {/if}
+
         </select></div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">类型：</label>
 			<div class="layui-input-block">
-			  <input type="radio" name="sex" value="男" title="男" checked="">
-      <input type="radio" name="sex" value="女" title="女"></div>
+				{if $recharge_data.operation_type==1}
+			  <input type="radio" name="sex" value="{$recharge_data.operation_type}" title="充值" checked="" >
+      			<input type="radio" name="sex" value="2" title="提现"></div>
+				{/if}
+			{if $recharge_data.operation_type==2}
+			<input type="radio" name="sex" value="1" title="充值"  >
+			<input type="radio" name="sex" value="{$recharge_data.operation_type}" title="提现" checked=""></div>
+		{/if}
+
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">会员描述：</label>
 			<div class="layui-input-block">
-	<textarea rows="10" cols="50">
-		
+	<textarea rows="10" cols="50"  >
+{$recharge_data.recharge_describe}
 	</textarea>
 		</div>
 		</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">会员描述：</label>
+				<label class="layui-form-label">到款状态：</label>
 				<div class="layui-input-block">
 <p>
-	已到款
+	{$recharge_data.money_status|show_recharge_status}
 </p>
 			</div>
 			</div>
