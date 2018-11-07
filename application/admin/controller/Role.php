@@ -77,7 +77,8 @@ class Role extends Controller
      * [角色修改]
      * 陈绪
      */
-    public function updata(Request $request,$id){
+    public function updata(Request $request){
+        $id = $request->only(["id"])["id"];
         $data = $request->only(["name","pid","status","desc"]);
         $data["menu_role_id"] = empty($request->only(["menu_role_id"])["menu_role_id"]) ? '' : implode(',', $request->only(["menu_role_id"])["menu_role_id"]);
         $boolData = db("role")->where("id",$id)->update($data);
