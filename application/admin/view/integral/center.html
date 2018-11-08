@@ -36,6 +36,9 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
+	.pagination {
+		float: right;
+	}
 </style>
 
 
@@ -116,10 +119,24 @@
 				{/volist}
 				{/if}
 			</table>
+				<div id="page">
+							<div class="opation" style="width: 200px; float: left;">
+								<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
+									<option check="">请选择</option>
+									<option>批量删除</option>
+								</select>
+							</div>
+							<div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
+								<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
+								</button>
+							</div>
+							{if !empty($integral_data)}
+							{$integral_data->render()}
+							{/if}
+			
+						</div>
 		</div>
-		<div id="page">
-
-		</div>
+	
 
 	</div>
 
@@ -161,6 +178,31 @@
 											// 确认按钮回调函数
 											  }
 });
+							});
+							
+							
+							//点击操作确认按钮
+							var data_id=[];
+							$("#opration_btu").click(function(){
+								var child= $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+								for(var i=0;i<child.length;i++){
+										data_id.push($(child[i])[0].dataset.id);
+								}
+								$.ajax({
+									type: "POST",
+									url: "{:url('aaaa')}",
+									data: {
+										"id": data_id,
+									},
+									success: function(data) {
+										console.log("成功")
+										data_id.splice(0,data_id.length); 
+									},
+									error: function(data) {
+										console.log("错误")
+									}
+								});
+								
 							});
 			
 			//全选
