@@ -24,7 +24,6 @@ class Order extends Controller{
      **************************************
      */
     public function index(){
-
        return view('index');
     }
 
@@ -117,7 +116,7 @@ class Order extends Controller{
 
 
     /**
-     * TODO:平台商订单开始
+     * TODO:平台订单开始
      */
     /**
      **************李火生*******************

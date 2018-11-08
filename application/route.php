@@ -87,7 +87,8 @@ Route::group("",[
 Route::group("admin",[
     /*首页*/
     "/$"=>"admin/index/index",
-
+   /* 后台首页 */
+    "home_index"=>"admin/Home/index",
 
     /*登录页面*/
     "index"=>"admin/Login/index",
@@ -171,14 +172,24 @@ Route::group("admin",[
     "user_index"=>"admin/User/index", //会员概况
     "user_edit"=>"admin/User/edit",     //会员编辑
     "user_grade"=>"admin/User/grade",  //会员等级
+    "user_static"=>"admin/User/status", //会员页面的账户状态修改
+    "user_del"=>"admin/User/del", //会员删除
+    "user_dels"=>"admin/User/dels", //会员批量删除
+    "user_search"=>"admin/User/search", //会员搜索
     /*充值和提现*/
     "recharge_list"=>"admin/Recharge/index", //充值和提现首页
     "recharge_edit"=>"admin/Recharge/edit",   //充值和提现编辑
+    "recharge_del"=>"admin/Recharge/del",   //充值和提现删除
+    "recharge_dels"=>"admin/Recharge/dels",   //充值和提现批量删除
+    "recharge_search"=>"admin/Recharge/search",   //充值和提现搜索功能
+
     /*资金管理*/
     "capital_index"=>"admin/Capital/index",  //资金管理界面
     /*积分中心*/
     "integral_center"=>"admin/Integral/index", //积分中心
     "integral_detail"=>"admin/Integral/detail", //积分详情
+    "integral_add"=>"admin/Integral/add", //积分添加
+    "integral_del"=>"admin/Integral/del", //积分删除
 
     /*配件商广告，服务商广告，平台广告开始*/
     "Accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising",

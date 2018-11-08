@@ -54,19 +54,19 @@
 					<div class="layui-inline">
 						<label class="layui-form-label">用户名称：</label>
 						<div class="layui-input-inline">
-						8447466
+							{$user_data.user_name}
 						</div>
 					</div>
 				<div class="layui-inline">
 					<label class="layui-form-label">总积分：</label>
 					<div class="layui-input-inline">
-					500
+						{$user_data.user_integral_wallet}
 					</div>
 				</div>
 				<div class="layui-inline">
 					<label class="layui-form-label">已消费积分：</label>
 					<div class="layui-input-inline">
-					500
+					{$user_data.user_integral_wallet_consumed}
 					</div>
 				</div>
 				
@@ -79,15 +79,12 @@
 			<table class="layui-table">
 						<colgroup>
 							<col width="3%">
-		
 						</colgroup>
 						<thead>
 							<tr>
 								<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-		
 								<th>用户账号</th>
 								<th>积分</th>
-		
 								<th>剩余积分</th>
 								<th>类型</th>
 								<th>时间</th>
@@ -96,24 +93,31 @@
 							</tr>
 						</thead>
 						<tbody class="news_content">
+						{if !empty($integral_data)}
+						{volist name="integral_data" id="vo"}
 							<tr>
-								<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-								<td>admin</td>
-								<td>admin</td>
-								<td>2</td>
-								<td>111</td>
-								<td>2018-09-26</td>
-								<td>2018-09-26 </td>
-													<td>
-								<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
+								<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$vo.integral_id}"></td>
+								<td>{$vo.phone_num}</td>
+								<td>{$vo.integral_operation|show_integral_operation}</td>
+								<td>{$vo.integral_balance}</td>
+								<td>{$vo.integral_type|show_integral_type}</td>
+								<td>{$vo.operation_time|date="Y-m-d H:i:s",###}</td>
+								<td>{$vo.integral_remarks} </td>
+								<td>
+								<a href="{:url('admin/integral/del',['id'=>$vo.integral_id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
 									 data-id="undefined"><i class="layui-icon"></i> 删除</a>
 								</td>
 							</tr>
+						{/volist}
+
+						{/if}
 						</tbody>
 					</table>
 				</div>
 		<div id="page">
-
+			{if !empty($integral_data)}
+			{$integral_data->render()}
+			{/if}
 		</div>
 
 	</div>
