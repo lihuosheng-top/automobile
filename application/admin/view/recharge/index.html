@@ -105,7 +105,7 @@
 				<tbody class="news_content">
 				{volist name="reg_data" id ="vo"}
 				<tr>
-					<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
+					<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$vo.id}"></td>
 					<td>{$vo.tname}</td>
 					<td>{$vo.operation_time|date="Y-m-d H:i:s",###}</td>
 					<td>{$vo.operation_type|show_recharge_type}</td>

@@ -470,11 +470,12 @@ function show_user_type($data){
         echo '配件商';
     }else if($data==2){
         echo '服务商';
+    }else if($data==3) {
+        echo '车主';
     }else{
         echo '其他';
     }
 }
-
 /**
  **************李火生*******************
  * @param Request $request
@@ -519,6 +520,40 @@ function show_recharge_status($data){
         echo '未到账';
     }else{
         echo '其他';
+    }
+}
+
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:积分操作状态（1为获取，-1为消费）
+ **************************************
+ * @param $data
+ */
+function show_integral_type($data){
+    if($data==-1){
+        echo '消费';
+    }else if($data==1){
+        echo '获得';
+    }else{
+        echo '其他';
+    }
+}
+
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:积分操作(大于0则为+，小于0则为-，等于0不变)
+ **************************************
+ * @param $data
+ */
+function show_integral_operation($data){
+    if($data>0){
+        echo '+'.$data;
+    }else if($data<0){
+        echo '-'.$data;
+    }else{
+        echo '0';
     }
 }
 

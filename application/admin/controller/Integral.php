@@ -9,6 +9,7 @@
 namespace  app\admin\controller;
 
 use think\Controller;
+use think\Db;
 
 class Integral extends Controller{
     /**
@@ -18,7 +19,12 @@ class Integral extends Controller{
      **************************************
      */
     public function index(){
-        return view('center');
+        $integral_data =Db::table('tb_integral')
+            ->field("tb_integral.*,tb_user.user_name tname")
+            ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
+            ->order('tb_integral.operation_time','desc')
+            ->paginate(3);
+        return view('center',['integral_data'=>$integral_data]);
     }
 
     /**

@@ -110,7 +110,7 @@
 				<tbody class="news_content">
 				{volist name="user_data" id="user_val"}
 					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
+						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$user_val.id}"></td>
 						<td>{$user_val.id}</td>
 						<td>{$user_val.phone_num}</td>
 						<td>{$user_val.user_name}</td>
