@@ -56,15 +56,16 @@
 
 						</div>
 					</div>
-				<div class="layui-inline">
-					<label class="layui-form-label">支付方式：</label>
-					<div class="layui-input-inline">
-						<select name="interest" id="admin_status">
-							<option value="1" selected="">启用</option>
-							<option value="2">禁用</option>
-						</select>
-					</div>
+			<div class="layui-inline" style="width: 36%;">
+				<label class="layui-form-label" style="width: 14% !important; ">时间</label>
+				<div class="layui-input-inline" style="width: 80% !important; ">
+					<span class="time"><input name="timemin" type="text" class="text datetimepicker" readonly="readonly" id="beginTime"
+						value="" style="width: 120px; font-size: 13px; height: 33px;" placeholder="请输入开始时间">
+					</span>--
+					<span class="time"><input name="timemax" type="text" class=" text datetimepicker" readonly="readonly" id="endTime"
+						value="" style="width: 120px; font-size: 13px; height: 33px;" placeholder="请输入结束时间"></span>
 				</div>
+			</div>
 					
 					<div class="layui-inline">
 						<a class="layui-btn search_btn">搜索</a>

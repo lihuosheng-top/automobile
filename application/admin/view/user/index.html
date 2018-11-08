@@ -64,7 +64,7 @@
 					<div class="layui-inline">
 						<label class="layui-form-label">用户账号：</label>
 						<div class="layui-input-inline">
-							<input type="text" name="keywords" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input"
+							<input type="text" name="search_key" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input"
 							 id="zhanghu">
 
 						</div>
@@ -72,7 +72,7 @@
 					<div class="layui-inline">
 						<label class="layui-form-label">用户昵称</label>
 						<div class="layui-input-inline">
-							<input type="text" name="keywords" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input"
+							<input type="text" name="search_keys" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input"
 							 id="nichwng">
 
 						</div>
@@ -80,16 +80,15 @@
 					<div class="layui-inline" style="width: 36%;">
 						<label class="layui-form-label" style="width: 14% !important; ">时间</label>
 						<div class="layui-input-inline" style="width: 80% !important; ">
-							<span class="time"><input name="timemin" type="text" class="text datetimepicker" readonly="readonly" id="beginTime"
-								 value="" style="width: 100px; font-size: 13px; height: 33px;" placeholder="请输入开始时间">
+							<span class="time"><input name="date_min" type="text" class="text datetimepicker" readonly="readonly" id="beginTime"
+								 value="" style="width: 130px; font-size: 13px; height: 33px;" placeholder="请输入开始时间">
 							</span>--
-							<span class="time"><input name="timemax" type="text" class=" text datetimepicker" readonly="readonly" id="endTime"
-								 value="" style="width: 100px; font-size: 13px; height: 33px;" placeholder="请输入结束时间"></span>
-
+							<span class="time"><input name="date_max" type="text" class=" text datetimepicker" readonly="readonly" id="endTime"
+								 value="" style="width: 130px; font-size: 13px; height: 33px;" placeholder="请输入结束时间"></span>
 						</div>
 					</div>
 					<div class="layui-inline">
-						<a class="layui-btn search_btn" id="seach">搜索</a>
+						<button class="layui-btn search_btn" id="seach" type="submit">搜索</button>
 					</div>
 				</div>
 
