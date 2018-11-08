@@ -100,11 +100,11 @@
 								<td>{$vo.phone_num}</td>
 								<td>{$vo.integral_operation|show_integral_operation}</td>
 								<td>{$vo.integral_balance}</td>
-								<td>{$vo.itegral_type|show_integral_type}</td>
+								<td>{$vo.integral_type|show_integral_type}</td>
 								<td>{$vo.operation_time|date="Y-m-d H:i:s",###}</td>
 								<td>{$vo.integral_remarks} </td>
 								<td>
-								<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
+								<a href="{:url('admin/integral/del',['id'=>$vo.integral_id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
 									 data-id="undefined"><i class="layui-icon"></i> 删除</a>
 								</td>
 							</tr>
@@ -115,7 +115,9 @@
 					</table>
 				</div>
 		<div id="page">
-
+			{if !empty($integral_data)}
+			{$integral_data->render()}
+			{/if}
 		</div>
 
 	</div>

@@ -499,7 +499,7 @@ function show_user_grade($data){
 function show_recharge_type($data){
     if($data==1){
         echo '充值';
-    }else if($data==2){
+    }else if($data==-1){
         echo '提现';
     }else{
         echo '其他';

@@ -20,13 +20,16 @@ class Capital extends Controller{
      **************************************
      */
     public function index(){
-        $user_list = Db::name("user")->select();
+        $user_list = Db::name("user") ->select();
         foreach ($user_list as $key=>$val){
-            $user_list[$key]['all_add'] =Db::name('recharge_reflect')->where('operation_type',"2")->where('user_id',$val['id'])->sum("operation_amount");
-            $user_list[$key]['all_del'] =Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$val['id'])->sum("operation_amount");
+            /*提现*/
+            $all_del =Db::name('recharge_reflect')->where('operation_type',"-1")->where('user_id',$val['id'])->sum("operation_amount");
+            $user_list[$key]['all_reflect']=round($all_del,2);
+            /*充值*/
+            $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$val['id'])->sum("operation_amount");
+            $user_list[$key]['all_recharge'] =round($all_add,2);
         }
-        dump($user_list);
-        return view('index');
+        return view('index',['user_list'=>$user_list]);
     }
 
 
