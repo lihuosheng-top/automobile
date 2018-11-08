@@ -82,7 +82,20 @@
 	.red{
 		color: red;
 	}
+	.select{
+		overflow: hidden;
+		line-height: 40px;
+	}
+	.select ul{
+		float: right;
+		overflow: hidden;
+	}
 
+     .select ul li{
+		 margin-right: 20px;
+		 float: left;
+	 }
+	
 	
 </style>
 
@@ -90,6 +103,7 @@
 
 
 {block name="content"}
+<div class="layui-form">
 <div class="parta">
 	<ul>
 		<li class="list">
@@ -209,7 +223,23 @@
 	</ul>
 </div>
 <div class="partd">
+	<div class="select">
+		<ul>
+			<li>
+				选择时间:
+				<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""style="width: 100px; font-size: 13px;">
+				</span>~~
+				<span class="time"><input type="text" class=" text datetimepicker" readonly="readonly" id="endTime" value=""
+				 style="width: 100px; font-size: 13px;">
+				 </span>
+				
+									
+			</li>
+		</ul>
+	</div>
+	div.
 <div id="container" style="width:80%; height: 400px; margin: 0 auto"></div>
+</div>
 </div>
 {/block}
 
@@ -220,14 +250,17 @@
 <script language="JavaScript">
 $(document).ready(function() {
    var title = {
-      text: '城市平均气温'   
+      text: '本月订单统计'   
    };
    var subtitle = {
       text: 'Source: runoob.com'
    };
    var xAxis = {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      categories: ['07-01周六', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日',
+         '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日','07-01周六', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日',
+         '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日','07-01周六', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日',
+         '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日','07-01周六', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日',
+         '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日', '07-02周日']
    };
    var yAxis = {
       title: {
@@ -255,6 +288,10 @@ $(document).ready(function() {
       {
          name: 'Tokyo',
          data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+            26.5, 23.3, 18.3, 13.9, 9.6,7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+            26.5, 23.3, 18.3, 13.9, 9.6,7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+            26.5, 23.3, 18.3, 13.9, 9.6,7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+            26.5, 23.3, 18.3, 13.9, 9.6,7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
             26.5, 23.3, 18.3, 13.9, 9.6]
       }, 
     
