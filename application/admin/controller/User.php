@@ -136,8 +136,8 @@ class User extends Controller{
                         'query' => request()->param(),
                     ]);
             }
-            if(!empty($data)){
-                return view('order_index',['user_data'=>$user_data]);
+            if(!empty($user_data)){
+                return view('index',['user_data'=>$user_data]);
             }
         }
     }

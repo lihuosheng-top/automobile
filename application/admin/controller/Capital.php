@@ -10,6 +10,7 @@
 namespace  app\admin\controller;
 
 use think\Controller;
+use think\Db;
 
 class Capital extends Controller{
     /**
@@ -19,6 +20,12 @@ class Capital extends Controller{
      **************************************
      */
     public function index(){
+        $user_list = Db::name("user")->select();
+        foreach ($user_list as $key=>$val){
+            $user_list[$key]['all_add'] =Db::name('recharge_reflect')->where('operation_type',"2")->where('user_id',$val['id'])->sum("operation_amount");
+            $user_list[$key]['all_del'] =Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$val['id'])->sum("operation_amount");
+        }
+        dump($user_list);
         return view('index');
     }
 
