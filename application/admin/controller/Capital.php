@@ -20,6 +20,7 @@ class Capital extends Controller{
      **************************************
      */
     public function index(){
+        $user_list=Db::name('user')->paginate();
         $user_list = Db::name("user") ->select();
         foreach ($user_list as $key=>$val){
             /*提现*/
