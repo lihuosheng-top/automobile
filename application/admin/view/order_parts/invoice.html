@@ -5,9 +5,6 @@
 {block name="css"}
 
 <style type="text/css">
-	img{
-		width: 100%;
-	}
 	body {
 		background: #fff;
 	}
@@ -39,11 +36,12 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
-	.img_show{
-		width: 150px;
+
+	.time {
+		width: 110px;
+		display: inline-block;
 	}
 </style>
-
 
 
 {/block}
@@ -56,30 +54,32 @@
 			<form class="layui-form" action="">
 				<div class="layui-form-item">
 					<div class="layui-inline">
-						<label class="layui-form-label">用户账号：</label>
+						<label class="layui-form-label">订单号</label>
 						<div class="layui-input-inline">
 							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
+
+
+
 					<div class="layui-inline">
-						<label class="layui-form-label">用户昵称</label>
+						<label class="layui-form-label">会员账号</label>
 						<div class="layui-input-inline">
 							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
 					<div class="layui-inline" style="width: 36%;">
-											<label class="layui-form-label" style="width: 14% !important; ">时间</label>
-											<div class="layui-input-inline" style="width: 80% !important; margin-top: 8px;">
-												<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""  style="width: 100px; font-size: 13px;">
-												</span>--
-												<span class="time"><input type="text" class=" text datetimepicker" readonly="readonly" id="endTime" value=""  style="width: 100px; font-size: 13px;"></span>
-					
-											</div>
-										</div>
+						<label class="layui-form-label" style="width: 20% !important; ">下单时间：</label>
+						<div class="layui-input-inline" style="width: 75% !important; margin-top: 8px;">
+							<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""
+								 style="width: 100px; font-size: 13px;">
+							</span>
+						</div>
+					</div>
 					<div class="layui-inline">
-						<a class="layui-btn search_btn">搜索</a>
+						<a class="layui-btn search_btn">查询</a>
 					</div>
 				</div>
 
@@ -90,65 +90,54 @@
 			<table class="layui-table">
 				<colgroup>
 					<col width="3%">
-
+					<col width="9%">
+					<col width="15%">
+					<col width="9%">
+					<col width="9%">
+					<col width="9%">
+					<col width="15%">
+					<col>
 				</colgroup>
 				<thead>
 					<tr>
 						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-						<th>用户ID(邀请码)</th>
-						<th>用户账号</th>
-						<th>用户昵称</th>
-						<th>头像</th>
-						<th>配件商/零配件商</th>
-						<th>收货地址</th>
-						<th>注册时间</th>
-						<th>账户状态</th>
+						<th>订单号</th>
+						<th>会员名称</th>
+						<th>下单时间</th>
+						<th>发票类型</th>
+						<th>发票状态</th>
+						<th>发票金额</th>
 						<th>操作</th>
 					</tr>
 				</thead>
-				{if !empty($user_data)}
 				<tbody class="news_content">
-				{volist name="user_data" id="user_val"}
 					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$user_val.id}"></td>
-						<td>{$user_val.id}</td>
-						<td>{$user_val.phone_num}</td>
-						<td>{$user_val.user_name}</td>
-						<td><div class="img_show"><img src="__USERIMG__/{$user_val.user_img}"></div></td>
-						<td>{$user_val.type|show_user_type}</td>
-						<td>{$user_val.harvester_real_address} </td>
-						<td>{$user_val.create_time|date='Y-m-d H:i:s',###} </td>
+						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
+						<td>2</td>
+						<td>张三</td>
+						<td>管理员</td>
+						<td>管理员</td>
+						<td>是</td>
+					<td>是</td>
 						<td>
-							{if $user_val.status==0}
-							<input type="checkbox" class="Status" name="show" value="{$user_val.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
-							 data-id="{$user_val.id}">
-							{/if}
-							{if $user_val.status==1}
-							<input type="checkbox" class="Status" name="show" value="{$user_val.status}"  checked="" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
-								   data-id="{$user_val.id}">
-							{/if}
-						</td>
-						<td>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/user/edit',['id'=>$user_val.id])} "><i class="iconfont icon-edit"></i> 编辑</a>
-							<a href="{:url('admin/user/del',['id'=>$user_val.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Order/invoice_edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
+							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
 							 data-id="undefined"><i class="layui-icon"></i> 删除</a>
+
 						</td>
 					</tr>
-				{/volist}
 				</tbody>
-				{$user_data->render()}
-				{/if}
 			</table>
 		</div>
+
 		<div id="page">
 
 			<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
 				<option value="">批量删除</option>
+
 			</select>
 			<button type="button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定
 			</button>
-
-
 		</div>
 
 	</div>
@@ -209,7 +198,7 @@
 				console.log(status);
 				$.ajax({
 					type: "POST",
-					url: "{:url('admin/user/status')}",
+					url: "{:url('admin/admin/status')}",
 					data: {
 						"id": id,
 						"status": status
@@ -227,6 +216,88 @@
 
 
 		})
+	</script>
+	<script type="text/javascript">
+		//时间
+		if ($(".datetimepickers").length > 0) {
+			$('.datetimepickers').datetimepicker({
+				timepicker: false,
+				scrollMonth: false
+			})
+		}
+
+		if ($(".datetimepickers2").length > 0) {
+			var datenow = new Date();
+			datenow = datenow.getFullYear() + "/" + (datenow.getMonth() + 1) + "/" + (datenow.getDate());
+			$('.datetimepickers2').datetimepicker({
+				timepicker: false,
+				maxDate: datenow,
+				scrollMonth: false
+			})
+		}
+		if ($(".datetimepicker").length > 0) {
+			var datenow = new Date();
+			datenow = datenow.getFullYear() + "/" + (datenow.getMonth() + 1) + "/" + (datenow.getDate());
+			var date = $("#beginTime").val();
+			var date1 = $("#endTime").val();
+			//时间控件
+			$('#beginTime').datetimepicker({
+				timepicker: false,
+				maxDate: datenow,
+				scrollMonth: false,
+				onClose: function(ct, $i) {
+					$('#endTime').datetimepicker({
+						minDate: $('#beginTime').val(),
+						maxDate: datenow,
+					});
+				}
+			});
+
+			$('#endTime').datetimepicker({
+				timepicker: false,
+				maxDate: datenow,
+				scrollMonth: false,
+				onClose: function(ct, $i) {
+					$('#beginTime').datetimepicker({
+						maxDate: $('#endTime').val(),
+					});
+				}
+			});
+		}
+		//清空时间
+		$(".handle_main span .cleartime").click(function() {
+			$(this).prev("input").val("")
+		})
+		//时间插件封装
+		function datetimepicker(beginTime, endTime) {
+			var datenow = new Date();
+			datenow = datenow.getFullYear() + "/" + (datenow.getMonth() + 1) + "/" + (datenow.getDate());
+			var date = $(beginTime).val();
+			var date1 = $(endTime).val();
+			//时间控件
+			$(beginTime).datetimepicker({
+				timepicker: false,
+				maxDate: datenow,
+				scrollMonth: false,
+				onClose: function(ct, $i) {
+					$(endTime).datetimepicker({
+						minDate: $(beginTime).val(),
+						maxDate: datenow,
+					});
+				}
+			});
+
+			$(endTime).datetimepicker({
+				timepicker: false,
+				maxDate: datenow,
+				scrollMonth: false,
+				onClose: function(ct, $i) {
+					$(beginTime).datetimepicker({
+						maxDate: $(endTime).val(),
+					});
+				}
+			});
+		}
 	</script>
 
 	{/block}

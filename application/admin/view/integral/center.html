@@ -85,10 +85,8 @@
 				<thead>
 					<tr>
 						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-
 						<th>用户账号</th>
 						<th>积分</th>
-
 						<th>剩余积分</th>
 						<th>类型</th>
 						<th>时间</th>
@@ -96,22 +94,27 @@
 						<th>操作</th>
 					</tr>
 				</thead>
+				{if !empty($integral_data)}
+				{volist name="integral_data" id="vo"}
 				<tbody class="news_content">
-					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>admin</td>
-						<td>admin</td>
-						<td>2</td>
-						<td>111</td>
-						<td>2018-09-26</td>
-						<td>2018-09-26 </td>
-						<td>
-							<a class="layui-btn layui-btn-mini integral" >赠送积分</a>
 
-							<a href="{:url('admin/integral/detail')}" class="layui-btn layui-btn-danger layui-btn-mini " data-id="undefined">详情</a>
+					<tr>
+						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$vo.integral_id}"></td>
+						<td>{$vo.tname}</td>
+						<td>{$vo.integral_operation|show_integral_operation}</td>
+						<td>{$vo.integral_balance}</td>
+						<td>{$vo.itegral_type|show_integral_type}</td>
+						<td>{$vo.operation_time|date="Y-m-d H:i:s",###}</td>
+						<td>{$vo.integral_remarks} </td>
+						<td>
+							<a class="layui-btn layui-btn-mini integral"  >赠送积分</a>
+							<a href="{:url('admin/integral/detail',['id'=>$vo.integral_id])}" class="layui-btn layui-btn-danger layui-btn-mini " data-id="undefined">详情</a>
 						</td>
 					</tr>
+
 				</tbody>
+				{/volist}
+				{/if}
 			</table>
 		</div>
 		<div id="page">

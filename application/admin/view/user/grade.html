@@ -46,20 +46,21 @@ body{
 					<th>会员等级</th>
 					<th>等级图片</th>
 				</tr>
+				{if !empty($user_grade_data)}
+				{volist name="user_grade_data" id="grade_val"}
 				<tr>
-					<td>普通会员</td>
-					<td>E</td>
-					<td></td>
+					<td>{$grade_val.user_grade_name}</td>
+					<td>{$grade_val.user_grade_content}</td>
+					<td><img src="__USERIMG__/{$grade_val.user_grade_img}" alt=""></td>
 				</tr>
+				{/volist}
+				{/if}
 			</table>
 		</div>
 	{/block}
-
 	<!--_footer 作为公共模版分离出去-->
 	{include file="template/_footer" /}
 	<!--/_footer 作为公共模版分离出去-->
-
-
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
