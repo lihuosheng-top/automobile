@@ -551,7 +551,7 @@ function show_integral_operation($data){
     if($data>0){
         echo '+'.$data;
     }else if($data<0){
-        echo '-'.$data;
+        echo $data;
     }else{
         echo '0';
     }

@@ -10,6 +10,7 @@ namespace  app\admin\controller;
 
 use think\Controller;
 use think\Db;
+use think\Request;
 
 class Integral extends Controller{
     /**
@@ -20,7 +21,7 @@ class Integral extends Controller{
      */
     public function index(){
         $integral_data =Db::table('tb_integral')
-            ->field("tb_integral.*,tb_user.user_name tname")
+            ->field("tb_integral.*,tb_user.phone_num phone_num")
             ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
             ->order('tb_integral.operation_time','desc')
             ->paginate(3);
@@ -30,11 +31,22 @@ class Integral extends Controller{
     /**
      **************李火生*******************
      * @return \think\response\View
-     * 积分详情
+     * 积分详情(User_id)
      **************************************
      */
-    public function detail(){
-        return view('detail');
+    public function detail($id){
+        $user_data =Db::name('user')->field('user_name,user_integral_wallet,user_integral_wallet_consumed')->where('id',$id)->find();
+        $integral_data =Db::table('tb_integral')
+            ->field("tb_integral.*,tb_user.phone_num phone_num,tb_user.user_name user_name,tb_user.user_integral_wallet user_integral_wallet")
+            ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
+            ->where('tb_integral.user_id',$id)
+            ->order('tb_integral.operation_time','desc')
+            ->select();
+        return view('detail',['integral_data'=>$integral_data,'user_data'=>$user_data]);
+    }
+
+    public function add(Request $request){
+        $add_integral=$request->only(['integral'])['integral'];
     }
 
 
