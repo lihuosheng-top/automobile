@@ -117,6 +117,7 @@
 
 			<div class="dom" style="padding-top: 23px;">
 				<div class="layui-form-item">
+					<input type="hidden" value="" class="integral_id">
 					<label class="layui-form-label" style="text-align: right !important;">赠送积分：</label>
 					<div class="layui-input-black">
 						<input type="text" id="jifen" />
@@ -192,7 +193,7 @@
 						<td>{$vo.phone_num}</td>
 						<td>{$vo.integral_operation|show_integral_operation}</td>
 						<td>{$vo.integral_balance}</td>
-						<td>{$vo.itegral_type|show_integral_type}</td>
+						<td>{$vo.integral_type|show_integral_type}</td>
 						<td>{$vo.operation_time|date="Y-m-d H:i:s",###}</td>
 						<td>{$vo.integral_remarks} </td>
 						<td>
@@ -257,7 +258,7 @@
 								}
 								$.ajax({
 									type: "POST",
-									url: "{:url('aaaa')}",
+									url: "{:url('aaa')}",
 									data: {
 										"id": data_id,
 									},
@@ -301,6 +302,8 @@
 				$("#note").val("");
 				$(".names").html($(this).data("name"));   
 				$(".tanchuang").removeClass("noshow");
+                var data_id=$(this).data("id");
+                $(".integral_id").val(data_id);
 			});
 			$(".close").on('click', function() {
 				$("#jifen").val("");
@@ -320,12 +323,14 @@
 				$(".tanchuang").addClass("noshow");
 				var jifen=$("#jifen").val();
 				var note=$("#note").val();
+               	var integral_id=$(".integral_id").val();
 				$.ajax({
 					type: "POST",
-					url: "{:url('aaaa')}",
+					url: "{:url('admin/integral/add')}",
 					data: {
-						"jifen": jifen,
-						"note": note,
+						"integral": jifen,
+						"integral_remarks": note,
+						"integral_id":integral_id
 					},
 					success: function(data) {
 						console.log("成功")
