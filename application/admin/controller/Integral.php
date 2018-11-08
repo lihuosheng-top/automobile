@@ -46,7 +46,10 @@ class Integral extends Controller{
     }
 
     public function add(Request $request){
+        $integral_id =$request->only(['integral_id'])['integral_id'];
         $add_integral=$request->only(['integral'])['integral'];
+        $integral_remarks =$request->only(['integral_remarks'])['integral_remarks'];
+
     }
 
 
