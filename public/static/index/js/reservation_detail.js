@@ -9,7 +9,7 @@ function hidePop(){
     $('html').css('overflow', 'auto');
 }
 // 往下滑 头部添加背景
-$('html').bind('touchmove', function(e){
+$('html').bind('touchmove', function(){
     if($(this).scrollTop() > 0){
         $('.wrapper .head').css('background', 'rgba(255, 255, 255, .5)');
     }else{
@@ -24,12 +24,14 @@ $('.comment_classify_box').on('tap', 'li', function(){
 
 // 图片展示 start
 var index, curr_container, curr_img_len;
-$('.wrapper .comment_img_ul').on('tap', '.comment_img_li', function(e){
-    index = $(this).index();// 当前被点击的索引值
-    curr_container = e.liveFired;//被点击li的父级
-    curr_img_len = $(curr_container).children().length;//被点击容器中li的length
-    $('.show_img .img_num').html(index+1+'/'+curr_img_len);//显示图片数量
-    loadImage(e.target);//执行 传参
+$(function(){
+    $('.comment_img_ul').on('tap', '.comment_img_li', function(e){
+        index = $(this).index();// 当前被点击的索引值
+        curr_container = e.liveFired;//被点击li的父级
+        curr_img_len = $(curr_container).children().length;//被点击容器中li的length
+        $('.show_img .img_num').html(index+1+'/'+curr_img_len);//显示图片数量
+        loadImage(e.target);//执行 传参
+    })
 })
 // 屏幕比例
 var proportion = $(window).height() / $(window).width();
@@ -56,7 +58,10 @@ $('.img_box').on('tap', function(e){
     if(!$(e.targeet).hasClass('.img_box')){
         $('.show_img').hide();
     }
-    $('html').css('overflow', 'auto');
+    if($('.pop').css('transform') != 'translateX(0px)'){
+        $('html').css('overflow', 'auto');
+    }
+
 }).on('swipeLeft', function(){//用户左划
     index++;
     if(index > curr_img_len - 1){//如果index大于总长度 显示最后一张

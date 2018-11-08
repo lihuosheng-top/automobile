@@ -1,3 +1,6 @@
+html{
+    background-color: #fafbfc;
+}
 .wrapper{
     width: 100%;
 }
@@ -5,6 +8,7 @@
     position: relative;
     width: 100%;
     height: .88rem;
+    margin-bottom: .3rem;
 }
 .wrapper .head .back{
     position: absolute;
@@ -23,3 +27,323 @@
     font-size: .36rem;
     color: #333;
 }
+.car_info_box{
+    width: 7.12rem;
+    height: 3.5rem;
+    background: url(../../image/my_bg3.png) no-repeat;
+    background-size: 100%;
+    margin: 0 auto .3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.car_info_box img{
+    width: 1.01rem;
+    height: .92rem;
+    margin-bottom: .35rem;
+}
+.car_info_box p{
+    font-size: .3rem;
+    color: #fefefe;
+}
+.client_info_box{
+    width: 7.12rem;
+    height: 2.06rem;
+    margin: 0 auto .25rem;
+    background-color: #fff;
+    border-radius: .1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.client_info_box p{
+    font-size: .26rem;
+    color: #333;
+    margin-left: .78rem;
+}
+.client_info_box .client_name{
+    margin-bottom: .32rem;
+}
+.shop_info_box{
+    width: 7.12rem;
+    height: 2.62rem;
+    margin: 0 auto;
+    border-radius: .1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.shop_info_box p{
+    font-size: .24rem;
+    color: #333;
+}
+.shop_info_box div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: .78rem;
+    padding-right: .64rem;
+}
+.shop_info_box .shop_name_box{
+    margin-bottom: .6rem;
+}
+.shop_info_box .call{
+    display: inline-block;
+    width: .27rem;
+    height: .28rem;
+    background-position: -3.75rem -2.5rem;
+}
+.shop_info_box .icon_more{
+    display: inline-block;
+    width: .16rem;
+    height: .28rem;
+    background-position: -7.3rem -1.8rem;
+    vertical-align: text-bottom;
+    margin-left: .1rem;
+}
+.shop_info_box .time_span{
+    font-size: .24rem;
+    color: #504cfb;
+}
+.btn_wrap{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    display: flex;
+    justify-content: space-between;
+}
+.btn_wrap .totalprice{
+    flex: 1;
+    font-size: .3rem;
+    color: #333;
+    line-height: 1rem;
+    padding-left: .8rem;
+}
+.btn_wrap .totalprice .txt{
+    color: #fd0000;
+    font-size: .36rem;
+}
+.btn_wrap .btn_buy{
+    width: 2.9rem;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    background-color: #504cfb;
+}
+.btn_wrap .btn_buy .txt{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    font-size: .3rem;
+    color: #fff;
+}
+/* 预约弹窗开始 */
+/* [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。 */
+[v-cloak]{
+    display:none;
+}
+.time_pop{
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+}
+.time_pop .head_bar{
+    position: relative;
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+    border-bottom: #ddd;
+}
+.time_pop .head_bar h2{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    text-align: center;
+    font-size: .3rem;
+    color: #333;
+}
+.time_pop .head_bar .pop_back{
+    position: absolute;
+    top: 50%;
+    left: .2rem;
+    width: .25rem;
+    height: .43rem;
+    background-position: -.5rem -.5rem;
+    transform: translateY(-50%);
+}
+.time_pop .head_bar .close{
+    position: absolute;
+    top: 50%;
+    right: .3rem;
+    width: .32rem;
+    height: .32rem;
+    background-position: -2.5rem -4.4rem;
+    transform: translateY(-50%);
+}
+.time_pop .ser_time_sel{
+    width: 100%;
+    background-color: #fff;
+}
+.time_pop .ser_time_sel .date_wrap{
+    width: 100%;
+    height: 1rem;
+    background-color: #f7f7f7;
+    display: flex;
+    margin-bottom: .2rem;
+    border-bottom: 1px solid #ddd;
+}
+.time_pop .date_picker{
+    height: 1rem;
+    flex: 1;
+    -webkit-box-flex: 1;
+    overflow-x: auto;
+    overflow-y: visible;
+}
+.time_pop .date_picker::-webkit-scrollbar{
+    height:0;
+}
+.time_pop .btnwrap{
+    white-space: nowrap;
+}
+.time_pop .btnwrap>button{
+    position: relative;
+    height: 1rem;
+    width: 1.5rem;
+    border: 0;
+    background-color: #f7f7f7;
+    font-size: .32rem;
+    color: #333;
+    outline: 0;
+}
+.time_pop .btnwrap>button.current{
+    color: #504cfb;
+}
+.time_pop .btnwrap>button.current::after{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    content: '';
+    width: 65%;
+    display: block;
+    height: 2px;
+    background: #504cfb;
+}
+.time_pop .btnwrap>button span{
+    display: block;
+    font-size: .24rem;
+    color: #999;
+}
+.time_pop .btnwrap>button.current span{
+    color: #504cfb;
+}
+.time_pop .calendar{
+    height: 1rem;
+    flex-basis: 20%;
+    border: 0;
+    background-color: #f7f7f7;
+    border-left: 1px solid #e6e6e6;
+    outline: none;
+}
+.time_pop .calendar img{
+    display: block;
+    margin: 0 auto;
+    width: .35rem;
+    height: .36rem;
+}
+.time_pop .calendar span{
+    font-size: .24rem;
+    color: #333;
+}
+.time_pop .hours_wrap{
+    margin: 0 .15rem;
+}
+.time_pop .hours_wrap button{
+    flex-basis: 23%;
+    height: .8rem;
+    background-color: #fff;
+    border: 1px solid #504cfb;
+    margin: 0 .14rem .1rem 0;
+    padding: 0;
+    color: #666;
+    outline: none;
+}
+.time_pop .hours_wrap button.overdue{
+    border: 1px solid #ddd;
+    pointer-events: none;
+    color: #ccc;
+}
+.time_pop .hours_wrap button.chosed{
+    background: url(../../image/chose.png) no-repeat right bottom;
+}
+.time_pop .nowM>div{
+    display: flex;
+    flex-wrap: wrap;
+} 
+.weekdays{
+    width: 100%;
+    height: 1rem;
+    background-color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+}
+.weekdays div{
+    flex: 1;
+    line-height: 1rem;
+    text-align: center;
+}
+.days_wrap .month{
+    width: 100%;
+    height: .8rem;
+    line-height: .8rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+.days_wrap .days .day{
+    float: left;
+    width: 14%;
+    height: .6rem;
+    line-height: .6rem;
+    text-align: center;
+}
+.days_wrap .day a{
+    display: inline-block;
+    width: 80%;
+    height: 100%;
+    font-size: .24rem;
+    color: #333;
+}
+.days_wrap .days .active a{
+    background-color: #504cfb;
+    color: #fff;
+}
+.days_wrap .days .currentday a{
+    color: #f00 !important;
+}
+.submit_btn{
+    margin-top: 1rem;
+    text-align: center;
+}
+.submit_btn .submit{
+    width: 90%;
+    height: .8rem;
+    line-height: .6rem;
+    color: #fff;
+    background-color: #504cfb;
+    border-radius: .1rem;
+    border: 0;
+}
+
+
+/* 预约弹窗结束 */
