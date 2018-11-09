@@ -19,9 +19,11 @@
 		margin-top: 0;
 
 	}
-.layui-form-item{
+
+	.layui-form-item {
 		max-width: 100% !important;
 	}
+
 	.layui-form-label {
 		width: 26% !important;
 	}
@@ -38,72 +40,80 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
+
 	.pagination {
 		float: right;
 	}
+
 	/* 弹窗 */
-		.tanchuang {
-			width: 100%;
-			min-height: 800px;
-			background: RGBA(0, 0, 0, 0.3);
-			position: fixed;
-			z-index: 9999;
-		}
-	
-		.tanchuang-content {
-			width: 410px;
-			height: 300px;
-			background: #fff;
-			z-index: 10000;
-			position: fixed;
-			top: 25%;
-			left: 34%;
-			margin: 0 auto;
-		}
-	
-		.close {
-			width: 30px;
-		}
-	
-		.clear {
-			clear: both;
-		}
-	
-		.title-a {
-			background: RGB(247, 247, 247);
-		}
-	
-		.content-title {
-			padding-top: 10px;
-			padding-left: 20px;
-			float: left;
-			width: 50%;
-			height: 40px;
-	
-		}
-		.noshow{
-			display: none;
-		}
-		.btu{
-			width: 100px;
-			height: 30px;
-			border-radius: 10px;
-			color: #fff;
-		}
-		.btus_submit{
-			background: #007AFF;
-		}
-		.btus_close{
-			background: #B2B2B2 !important;
-		}
-		.buttons{
-			    width: 206px;
-    margin: 20px auto;
-		}
-		.input{
-			text-align: center;
-			padding: 10px;
-		}
+	.tanchuang {
+		width: 100%;
+		min-height: 800px;
+		background: RGBA(0, 0, 0, 0.3);
+		position: fixed;
+		z-index: 9999;
+	}
+
+	.tanchuang-content {
+		width: 410px;
+		height: 300px;
+		background: #fff;
+		z-index: 10000;
+		position: fixed;
+		top: 25%;
+		left: 34%;
+		margin: 0 auto;
+	}
+
+	.close {
+		width: 30px;
+	}
+
+	.clear {
+		clear: both;
+	}
+
+	.title-a {
+		background: RGB(247, 247, 247);
+	}
+
+	.content-title {
+		padding-top: 10px;
+		padding-left: 20px;
+		float: left;
+		width: 50%;
+		height: 40px;
+
+	}
+
+	.noshow {
+		display: none;
+	}
+
+	.btu {
+		width: 100px;
+		height: 30px;
+		border-radius: 10px;
+		color: #fff;
+	}
+
+	.btus_submit {
+		background: #007AFF;
+	}
+
+	.btus_close {
+		background: #B2B2B2 !important;
+	}
+
+	.buttons {
+		width: 206px;
+		margin: 20px auto;
+	}
+
+	.input {
+		text-align: center;
+		padding: 10px;
+	}
 </style>
 
 
@@ -125,11 +135,11 @@
 			<div class="dom" style="padding-top: 23px;">
 				<div class="input">
 					<input type="hidden" value="" class="integral_id">
-				    赠送积分：
-						<input type="text" id="jifen" />
-					</div>
+					赠送积分：
+					<input type="text" id="jifen" />
+				</div>
 				<div class="input">备注信息：
-						<input type="text"  id="note" />
+					<input type="text" id="note" />
 				</div>
 				<div class="buttons">
 					<button type="button" class="btus_submit btu">确认</button>
@@ -153,8 +163,8 @@
 						<label class="layui-form-label">类型：</label>
 						<div class="layui-input-inline">
 							<select name="interest" id="admin_status">
-								<option value="1" selected="">启用</option>
-								<option value="2">禁用</option>
+								<option value="1" selected="">获得</option>
+								<option value="2">消费</option>
 							</select>
 						</div>
 					</div>
@@ -168,7 +178,7 @@
 
 		</blockquote>
 		<div class="layui-form news_list">
-			
+
 			<table class="layui-table">
 				<colgroup>
 					<col width="3%">
@@ -200,7 +210,8 @@
 						<td>{$vo.integral_remarks} </td>
 						<td>
 							<a class="layui-btn layui-btn-mini integral" data-id="{$vo.integral_id}" data-name="{$vo.phone_num}">赠送积分</a>
-							<a href="{:url('admin/integral/detail',['id'=>$vo.user_id])}" class="layui-btn layui-btn-danger layui-btn-mini " data-id="undefined">详情</a>
+							<a href="{:url('admin/integral/detail',['id'=>$vo.user_id])}" class="layui-btn layui-btn-danger layui-btn-mini "
+							 data-id="undefined">详情</a>
 						</td>
 					</tr>
 
@@ -208,24 +219,24 @@
 				{/volist}
 				{/if}
 			</table>
-				<div id="page">
-							<div class="opation" style="width: 200px; float: left;">
-								<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-									<option check="">请选择</option>
-									<option>批量删除</option>
-								</select>
-							</div>
-							<div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
-								<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
-								</button>
-							</div>
-							{if !empty($integral_data)}
-							{$integral_data->render()}
-							{/if}
-			
-						</div>
+			<div id="page">
+				<div class="opation" style="width: 200px; float: left;">
+					<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
+						<option check="" value="0">请选择</option>
+						<option value="1">批量删除</option>
+					</select>
+				</div>
+				<div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
+					<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
+					</button>
+				</div>
+				{if !empty($integral_data)}
+				{$integral_data->render()}
+				{/if}
+
+			</div>
 		</div>
-	
+
 
 	</div>
 
@@ -249,32 +260,62 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 			var vals = $("input").data("id");
-		
-				
-							//点击操作确认按钮
-							var data_id=[];
-							$("#opration_btu").click(function(){
-								var child= $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
-								for(var i=0;i<child.length;i++){
-										data_id.push($(child[i])[0].dataset.id);
-								}
-								$.ajax({
-									type: "POST",
-									url: "{:url('aaa')}",
-									data: {
-										"id": data_id,
-									},
-									success: function(data) {
-										console.log("成功")
-										data_id.splice(0,data_id.length); 
-									},
-									error: function(data) {
-										console.log("错误")
-									}
-								});
-								
+
+
+			//点击操作确认按钮
+			var data_id = [];
+			$("#opration_btu").click(function() {
+				var opration_val = $(".opation select option:selected").val();
+
+				// 点击请选择选项
+				if (opration_val == 0) {
+					layer.alert('请选择操作', {
+						skin: 'layui-layer-molv' //样式类名
+							,
+						closeBtn: 0
+					});
+				}
+				// 点击删除按钮
+				else if (opration_val == 1) {
+					var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+					for (var i = 0; i < child.length; i++) {
+						data_id.push($(child[i])[0].dataset.id);
+					}
+					$.ajax({
+						type: "POST",
+						url: "{:url('aa')}",
+						data: {
+							"id": data_id,
+						},
+						success: function(data) {
+							console.log("成功");
+							console.log(data);
+							var data = $.parseJSON(data);
+							layer.alert(data.info, {
+								skin: 'layui-layer-molv' //样式类名
+									,
+								closeBtn: 0
 							});
-			
+							location.reload();
+							data_id.splice(0, data_id.length);
+						},
+						error: function(data) {
+							var data = $.parseJSON(data);
+							layer.alert(data.info, {
+								skin: 'layui-layer-molv' //样式类名
+									,
+								closeBtn: 0
+							});
+							console.log(data);
+							console.log("错误")
+						}
+					});
+				}
+
+
+			});
+
+
 			//全选
 			form.on('checkbox(allChoose)', function(data) {
 				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
@@ -299,61 +340,63 @@
 		})
 	</script>
 	<script type="text/javascript">
-			$(".integral").on('click', function() {
-				$("#jifen").val("");
-				$("#note").val("");
-				$(".names").html($(this).data("name"));   
-				$(".tanchuang").removeClass("noshow");
-                var data_id=$(this).data("id");
-                $(".integral_id").val(data_id);
-			});
-			$(".close").on('click', function() {
-				$("#jifen").val("");
-				$("#note").val("");
-				
-				$(".tanchuang").addClass("noshow");
-			});
-			$(".btus_close").on('click', function() {
-				$("#jifen").val("");
-				$("#note").val("");
-				$(".tanchuang").addClass("noshow");
-			});
-			
-			// 弹窗选项卡切换
+		$(".integral").on('click', function() {
+			$("#jifen").val("");
+			$("#note").val("");
+			$(".names").html($(this).data("name"));
+			$(".tanchuang").removeClass("noshow");
+			var data_id = $(this).data("id");
+			$(".integral_id").val(data_id);
+		});
+		$(".close").on('click', function() {
+			$("#jifen").val("");
+			$("#note").val("");
 
-			$(".btus_submit").click(function(){
-				$(".tanchuang").addClass("noshow");
-				var jifen=$("#jifen").val();
-				var note=$("#note").val();
-               	var integral_id=$(".integral_id").val();
-				$.ajax({
-					type: "POST",
-					url: "{:url('admin/integral/add')}",
-					data: {
-						"integral": jifen,
-						"integral_remarks": note,
-						"integral_id":integral_id
-					},
-					success: function(data) {
-						var data=$.parseJSON(data);
+			$(".tanchuang").addClass("noshow");
+		});
+		$(".btus_close").on('click', function() {
+			$("#jifen").val("");
+			$("#note").val("");
+			$(".tanchuang").addClass("noshow");
+		});
+
+		// 弹窗选项卡切换
+
+		$(".btus_submit").click(function() {
+			$(".tanchuang").addClass("noshow");
+			var jifen = $("#jifen").val();
+			var note = $("#note").val();
+			var integral_id = $(".integral_id").val();
+			$.ajax({
+				type: "POST",
+				url: "{:url('admin/integral/add')}",
+				data: {
+					"integral": jifen,
+					"integral_remarks": note,
+					"integral_id": integral_id
+				},
+				success: function(data) {
+					var data = $.parseJSON(data);
 					layer.alert(data.info, {
-						  skin: 'layui-layer-molv' //样式类名
-						  ,closeBtn: 0
-						});
-						$("#jifen").val("");
-						$("#note").val("");
-					},
-					error: function(data) {
-					
-						layer.alert(data.info, {
-							skin: 'layui-layer-molv' //样式类名
-							,closeBtn: 0
-							});
-						
-					}
-				}); 
+						skin: 'layui-layer-molv' //样式类名
+							,
+						closeBtn: 0
+					});
+					$("#jifen").val("");
+					$("#note").val("");
+				},
+				error: function(data) {
+
+					layer.alert(data.info, {
+						skin: 'layui-layer-molv' //样式类名
+							,
+						closeBtn: 0
+					});
+
+				}
 			});
-		</script>
+		});
+	</script>
 
 	{/block}
 
