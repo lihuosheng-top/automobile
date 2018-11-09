@@ -12,6 +12,9 @@
 	label {
 		text-align: left !important;
 	}
+	.layui-form-item{
+		max-width: 100% !important;
+	}
 
 	.layui-form-item {
 		width: 100%;
@@ -50,31 +53,31 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="">
+			<form class="layui-form" action="{:url('admin/Recharge/search')}">
 				<div class="layui-form-item">
 					<div class="layui-inline">
 						<label class="layui-form-label">用户名称：</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-
+							<input type="text" name="search_key" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 						</div>
 					</div>
 					<div class="layui-inline">
 						<label class="layui-form-label">支付方式：</label>
 						<div class="layui-input-inline">
-							<select name="interest" id="admin_status">
-								<option value="1" selected="">支付宝</option>
-								<option value="2">微信</option>
+							<select name="pay_type_content" id="admin_status">
+								<option value="" selected="">请选择</option>
+								<option value="支付宝" >支付宝</option>
+								<option value="微信">微信</option>
 							</select>
 						</div>
 					</div>
 					<div class="layui-inline">
 											<label class="layui-form-label">类型：</label>
 											<div class="layui-input-inline">
-												<select name="interest" id="admin_status">
-													<option value="1" selected="">充值</option>
-													<option value="2">提现</option>
-													<option value="3">其他</option>
+												<select name="operation_type" id="admin_status">
+													<option value="" selected="">请选择</option>
+													<option value="1" >充值</option>
+													<option value="-1">提现</option>
 												</select>
 											</div>
 										</div>
@@ -131,8 +134,8 @@
 			<div id="page">
 				<div class="opation" style="width: 200px; float: left;">
 					<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-						<option check="">请选择</option>
-						<option>批量删除</option>
+						<option check="" value="0">请选择</option>
+						<option value="1"> 批量删除</option>
 					</select>
 				</div>	
 				<div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
@@ -168,29 +171,62 @@
 				$ = layui.jquery;
 			var vals = $("input").data("id");
 		//点击操作确认按钮
-		var data_id=[];
-		$("#opration_btu").click(function(){
-			var child= $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
-			for(var i=0;i<child.length;i++){
-					data_id.push($(child[i])[0].dataset.id);
-			}
-			$.ajax({
-				type: "POST",
-				url: "{:url('aaaa')}",
-				data: {
-					"id": data_id,
-				},
-				success: function(data) {
-					console.log("成功")
-					data_id.splice(0,data_id.length); 
-				},
-				error: function(data) {
-					console.log("错误")
-				}
-			});
-			
-		});
-
+								var data_id = [];
+								$("#opration_btu").click(function() {
+									var opration_val=$(".opation select option:selected").val();
+									
+									// 点击请选择选项
+									if(opration_val==0){
+										layer.alert('请选择操作', {
+											skin: 'layui-layer-molv' //样式类名
+											,closeBtn: 0
+											});
+									}
+									// 点击删除按钮
+									else if(opration_val==1){
+										layer.confirm('你确认要删除吗？', {
+												btn: ['确认','取消'] //按钮
+											}, function(){
+												var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+																for (var i = 0; i < child.length; i++) {
+																	data_id.push($(child[i])[0].dataset.id);
+																}
+																$.ajax({
+																	type: "POST",
+																	url: "{:url('admin/Recharge/dels')}",
+																	data: {
+																		"id": data_id,
+																	},
+																	success: function(data) {
+																		console.log("成功");
+																		console.log(data);
+																		var data=$.parseJSON(data);
+																		layer.alert(data.info, {
+																			skin: 'layui-layer-molv' //样式类名
+																			,closeBtn: 0
+																			});
+																		location.reload();
+																		data_id.splice(0, data_id.length);
+																	},
+																	error: function(data) {
+																		var data=$.parseJSON(data);
+																		layer.alert(data.info, {
+																			skin: 'layui-layer-molv' //样式类名
+																			,closeBtn: 0
+																			});
+																						console.log(data);
+																		console.log("错误");
+																		data_id.splice(0, data_id.length);
+																	}
+																});
+												
+											});
+										
+									}
+									
+					
+								});
+		
 			//全选
 			form.on('checkbox(allChoose)', function(data) {
 				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
