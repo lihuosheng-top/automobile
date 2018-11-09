@@ -40,6 +40,9 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
+	.pagination {
+		float: right;
+	}
 </style>
 
 
@@ -119,9 +122,7 @@
 				</tbody>
 			</table>
 			<div id="page">
-				{if !empty($user_list)}
-				{$user_list->render()}
-				{/if}
+
 				<div class="opation" style="width: 200px; float: left;">
 					<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
 						<option check="" value="0">请选择</option>
@@ -132,7 +133,9 @@
 					<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
 					</button>
 				</div>
-
+				{if !empty($user_list)}
+				{$user_list->render()}
+				{/if}
 
 			</div>
 		</div>

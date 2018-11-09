@@ -117,7 +117,11 @@ class User extends Controller{
         $keywords =input('search_key');
         $keyword =input('search_keys');
         $timemin  =strtotime(input('date_min'));
-        $timemax  =strtotime(input('date_max'));
+        /*添加一天（23：59：59）*/
+        $time_max_data =strtotime(input('date_max'));
+        $t=date('Y-m-d H:i:s',$time_max_data+1*24*60*60);
+        $timemax  =strtotime($t);
+
         if(empty($keywords)){
             $keywords=$keyword;
             if(empty($keywords)){

@@ -55,7 +55,10 @@ class Capital extends Controller{
     public function search(){
         $keywords =input('search_key');
         $timemin  =strtotime(input('date_min'));
-        $timemax  =strtotime(input('date_max'));
+        /*添加一天（23：59：59）*/
+        $time_max_data =strtotime(input('date_max'));
+        $t=date('Y-m-d H:i:s',$time_max_data+1*24*60*60);
+        $timemax  =strtotime($t);
         if(empty($keywords)){
                 if((!empty($timemin))&&(empty($timemax))){
                     $time_condition  = "create_time>{$timemin}";
@@ -74,7 +77,7 @@ class Capital extends Controller{
                     $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
 //                        'var_page' => 'page',
-                        'path'     => url('admin/Capital/search'),//这里根据需要修改url
+                        'path'     => url('admin/Capital/index'),//这里根据需要修改url
                         'query'    =>  request()->param(),
 //                        'fragment' => '',
                     ]);
@@ -96,8 +99,9 @@ class Capital extends Controller{
                     $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                         'var_page' => 'page',
-                        'path'     => url('admin/Capital/index'),//这里根据需要修改url
-                        'query'    => [],
+                        'path'     => url('admin/Capital/search'),//这里根据需要修改url
+//                        'query'    => [],
+                        'query'    =>  request()->param(),
                         'fragment' => '',
                     ]);
                     $user_list->appends($_GET);
@@ -119,8 +123,9 @@ class Capital extends Controller{
                     $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                         'var_page' => 'page',
-                        'path'     => url('admin/Capital/index'),//这里根据需要修改url
-                        'query'    => [],
+                        'path'     => url('admin/Capital/search'),//这里根据需要修改url
+//                        'query'    => [],
+                        'query'    =>  request()->param(),
                         'fragment' => '',
                     ]);
                     $user_list->appends($_GET);
@@ -141,8 +146,9 @@ class Capital extends Controller{
                     $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                         'var_page' => 'page',
-                        'path'     => url('admin/Capital/index'),//这里根据需要修改url
-                        'query'    => [],
+                        'path'     => url('admin/Capital/search'),//这里根据需要修改url
+//                        'query'    => [],
+                        'query'    =>  request()->param(),
                         'fragment' => '',
                     ]);
                     $user_list->appends($_GET);
@@ -169,8 +175,9 @@ class Capital extends Controller{
                 $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                 $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                     'var_page' => 'page',
-                    'path'     => url('admin/Capital/index'),//这里根据需要修改url
-                    'query'    => [],
+                    'path'     => url('admin/Capital/search'),//这里根据需要修改url
+//                    'query'    => [],
+                    'query'    =>  request()->param(),
                     'fragment' => '',
                 ]);
                 $user_list->appends($_GET);
@@ -190,8 +197,9 @@ class Capital extends Controller{
                 $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                 $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                     'var_page' => 'page',
-                    'path'     => url('admin/Capital/index'),//这里根据需要修改url
-                    'query'    => [],
+                    'path'     => url('admin/Capital/search'),//这里根据需要修改url
+//                    'query'    => [],
+                    'query'    =>  request()->param(),
                     'fragment' => '',
                 ]);
                 $user_list->appends($_GET);
