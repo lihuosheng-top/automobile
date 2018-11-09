@@ -56,8 +56,9 @@
 			background: #fff;
 			z-index: 10000;
 			position: fixed;
-			top: 20%;
-			left: 20%;
+			top: 25%;
+			left: 34%;
+			margin: 0 auto;
 		}
 	
 		.close {
@@ -96,8 +97,12 @@
 			background: #B2B2B2 !important;
 		}
 		.buttons{
-			    width: 261px;
-    margin: 0 auto;
+			    width: 206px;
+    margin: 20px auto;
+		}
+		.input{
+			text-align: center;
+			padding: 10px;
 		}
 </style>
 
@@ -118,18 +123,13 @@
 			<!-- 里面的内容 -->
 
 			<div class="dom" style="padding-top: 23px;">
-				<div class="layui-form-item">
+				<div class="input">
 					<input type="hidden" value="" class="integral_id">
-					<label class="layui-form-label" style="text-align: right !important;">赠送积分：</label>
-					<div class="layui-input-black">
+				    赠送积分：
 						<input type="text" id="jifen" />
 					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label" style="text-align: right !important;">备注信息：</label>
-					<div class="layui-input-black">
+				<div class="input">备注信息：
 						<input type="text"  id="note" />
-					</div>
 				</div>
 				<div class="buttons">
 					<button type="button" class="btus_submit btu">确认</button>
@@ -335,13 +335,20 @@
 						"integral_id":integral_id
 					},
 					success: function(data) {
-						console.log("成功")
+						var data=$.parseJSON(data);
+					layer.alert(data.info, {
+						  skin: 'layui-layer-molv' //样式类名
+						  ,closeBtn: 0
+						});
 						$("#jifen").val("");
 						$("#note").val("");
 					},
 					error: function(data) {
-						console.log("错误")
-						
+					
+						layer.alert(data.info, {
+							skin: 'layui-layer-molv' //样式类名
+							,closeBtn: 0
+							});
 						
 					}
 				}); 
