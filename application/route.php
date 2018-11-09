@@ -185,6 +185,7 @@ Route::group("admin",[
 
     /*资金管理*/
     "capital_index"=>"admin/Capital/index",  //资金管理界面
+    "capital_search"=>"admin/Capital/search",  //资金管理搜索功能
     /*积分中心*/
     "integral_center"=>"admin/Integral/index", //积分中心
     "integral_detail"=>"admin/Integral/detail", //积分详情

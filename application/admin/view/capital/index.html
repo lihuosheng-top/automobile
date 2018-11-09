@@ -51,22 +51,22 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="">
+			<form class="layui-form" action="{:url('admin/Capital/search')}">
 				<div class="layui-form-item">
 					<div class="layui-inline">
 						<label class="layui-form-label">会员账号：</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+							<input type="text" name="search_key" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
 					<div class="layui-inline" style="width: 36%;">
 						<label class="layui-form-label" style="width: 14% !important; ">时间</label>
 						<div class="layui-input-inline" style="width: 80% !important; ">
-							<span class="time"><input name="timemin" type="text" class="text datetimepicker" readonly="readonly" id="beginTime"
+							<span class="time"><input name="date_min" type="text" class="text datetimepicker" readonly="readonly" id="beginTime"
 								 value="" style="width: 120px; font-size: 13px; height: 33px;" placeholder="请输入开始时间">
 							</span>--
-							<span class="time"><input name="timemax" type="text" class=" text datetimepicker" readonly="readonly" id="endTime"
+							<span class="time"><input name="date_max" type="text" class=" text datetimepicker" readonly="readonly" id="endTime"
 								 value="" style="width: 120px; font-size: 13px; height: 33px;" placeholder="请输入结束时间"></span>
 						</div>
 					</div>
@@ -119,6 +119,9 @@
 				</tbody>
 			</table>
 			<div id="page">
+				{if !empty($user_list)}
+				{$user_list->render()}
+				{/if}
 				<div class="opation" style="width: 200px; float: left;">
 					<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
 						<option check="" value="0">请选择</option>
