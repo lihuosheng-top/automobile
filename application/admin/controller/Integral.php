@@ -113,5 +113,34 @@ class Integral extends Controller{
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:批量删除
+     **************************************
+     * @param Request $request
+     */
+    public function dels(Request $request){
+        if($request->isPost()){
+            $id =$_POST['id'];
+            if(is_array($id)){
+                $where ='id in('.implode(',',$id).')';
+            }else{
+                $where ='id='.$id;
+            }
+            $list =  Db::name('integral')->where($where)->delete();
+            if($list!==false)
+            {
+                return ajax_success('成功删除!',['status'=>1]);
+            }else{
+                return ajax_error('删除失败',['status'=>0]);
+            }
+        }
+    }
+
+
+
+
+
 
 }

@@ -189,7 +189,8 @@ Route::group("admin",[
     "integral_center"=>"admin/Integral/index", //积分中心
     "integral_detail"=>"admin/Integral/detail", //积分详情
     "integral_add"=>"admin/Integral/add", //积分添加
-    "integral_del"=>"admin/Integral/del", //积分删除
+    "integral_del"=>"admin/Integral/del", //积分列表删除
+    "integral_dels"=>"admin/Integral/dels", //积分列表批量删除
 
     /*配件商广告，服务商广告，平台广告开始*/
     "Accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising",
