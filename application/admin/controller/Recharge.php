@@ -82,25 +82,104 @@ class Recharge extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:搜索(有问题)
+     * Notes:搜索
      **************************************
      * @return \think\response\View
      */
     public function search(){
         $keywords =input('search_key');
+        //支付方式
+        $pay_type_content =input('pay_type_content');
+        //类型(提现-1充值1)
+        $operation_type =input('operation_type');
         if(!empty($keywords)){
-            $condition = "  `tb_user.user_name` like '%{$keywords}%' ";
-            $reg_data= Db::table("tb_recharge_reflect")
-                ->field("tb_recharge_reflect.*,tb_user.user_name tname")
-                ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
-                ->where($condition)
-                ->order('tb_recharge_reflect.operation_time','desc')
-                ->paginate(3 ,false, [
+            if((!empty($pay_type_content))&&(!empty($operation_type))){
+                $condition = "  `user_name` like '%{$keywords}%' ";
+                $reg_data= Db::table("tb_recharge_reflect")
+                    ->field("tb_recharge_reflect.*,tb_user.user_name tname")
+                    ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
+                    ->where($condition)
+                    ->where('tb_recharge_reflect.operation_type', $operation_type)
+                    ->where('tb_recharge_reflect.pay_type_content',$pay_type_content)
+                    ->order('tb_recharge_reflect.operation_time','desc')
+                    ->paginate(3 ,false, [
+                        'query' => request()->param(),
+                    ]);
+            }else if((empty($pay_type_content))&&(empty($operation_type))){
+                $condition = "  `user_name` like '%{$keywords}%' ";
+                $reg_data= Db::table("tb_recharge_reflect")
+                    ->field("tb_recharge_reflect.*,tb_user.user_name tname")
+                    ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
+                    ->where($condition)
+                    ->order('tb_recharge_reflect.operation_time','desc')
+                    ->paginate(3 ,false, [
+                        'query' => request()->param(),
+                    ]);
+            }else if((!empty($pay_type_content))&&(empty($operation_type))) {
+                $condition = "  `user_name` like '%{$keywords}%' ";
+                $reg_data= Db::table("tb_recharge_reflect")
+                    ->field("tb_recharge_reflect.*,tb_user.user_name tname")
+                    ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
+                    ->where($condition)
+                    ->where('tb_recharge_reflect.pay_type_content',$pay_type_content)
+                    ->order('tb_recharge_reflect.operation_time','desc')
+                    ->paginate(3 ,false, [
+                        'query' => request()->param(),
+                    ]);
+            }else{
+                $condition = "  `user_name` like '%{$keywords}%' ";
+                $reg_data= Db::table("tb_recharge_reflect")
+                    ->field("tb_recharge_reflect.*,tb_user.user_name tname")
+                    ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
+                    ->where($condition)
+                    ->where('tb_recharge_reflect.operation_type', $operation_type)
+                    ->order('tb_recharge_reflect.operation_time','desc')
+                    ->paginate(3 ,false, [
                         'query' => request()->param(),
                     ]);
             }
+
+            }
+            if(empty($keywords)){
+                if((!empty($pay_type_content))&&(!empty($operation_type))){
+                    $reg_data= Db::table("tb_recharge_reflect")
+                        ->field("tb_recharge_reflect.*,tb_user.user_name tname")
+                        ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
+                        ->where('tb_recharge_reflect.operation_type', $operation_type)
+                        ->where('tb_recharge_reflect.pay_type_content',$pay_type_content)
+                        ->order('tb_recharge_reflect.operation_time','desc')
+                        ->paginate(3 ,false, [
+                            'query' => request()->param(),
+                        ]);
+                }else if((empty($pay_type_content))&&(empty($operation_type))){
+                    $reg_data =Db::table("tb_recharge_reflect")
+                        ->field("tb_recharge_reflect.*,tb_user.user_name tname")
+                        ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
+                        ->order('tb_recharge_reflect.operation_time','desc')
+                        ->paginate(3);
+                }else if((!empty($pay_type_content))&&(empty($operation_type))) {
+                    $reg_data= Db::table("tb_recharge_reflect")
+                        ->field("tb_recharge_reflect.*,tb_user.user_name tname")
+                        ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
+                        ->where('tb_recharge_reflect.pay_type_content',$pay_type_content)
+                        ->order('tb_recharge_reflect.operation_time','desc')
+                        ->paginate(3 ,false, [
+                            'query' => request()->param(),
+                        ]);
+                }else{
+                    $reg_data= Db::table("tb_recharge_reflect")
+                        ->field("tb_recharge_reflect.*,tb_user.user_name tname")
+                        ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
+                        ->where('tb_recharge_reflect.operation_type', $operation_type)
+                        ->order('tb_recharge_reflect.operation_time','desc')
+                        ->paginate(3 ,false, [
+                            'query' => request()->param(),
+                        ]);
+                }
+
+            }
             if(!empty($reg_data)){
-                return view('order_index',['reg_data'=>$reg_data]);
+                return view('index',['reg_data'=>$reg_data]);
             }
         }
 

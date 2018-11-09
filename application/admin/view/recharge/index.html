@@ -53,31 +53,31 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="">
+			<form class="layui-form" action="{:url('admin/Recharge/search')}">
 				<div class="layui-form-item">
 					<div class="layui-inline">
 						<label class="layui-form-label">用户名称：</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-
+							<input type="text" name="search_key" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 						</div>
 					</div>
 					<div class="layui-inline">
 						<label class="layui-form-label">支付方式：</label>
 						<div class="layui-input-inline">
-							<select name="interest" id="admin_status">
-								<option value="1" selected="">支付宝</option>
-								<option value="2">微信</option>
+							<select name="pay_type_content" id="admin_status">
+								<option value="" selected="">请选择</option>
+								<option value="支付宝" >支付宝</option>
+								<option value="微信">微信</option>
 							</select>
 						</div>
 					</div>
 					<div class="layui-inline">
 											<label class="layui-form-label">类型：</label>
 											<div class="layui-input-inline">
-												<select name="interest" id="admin_status">
-													<option value="1" selected="">充值</option>
-													<option value="2">提现</option>
-													<option value="3">其他</option>
+												<select name="operation_type" id="admin_status">
+													<option value="" selected="">请选择</option>
+													<option value="1" >充值</option>
+													<option value="-1">提现</option>
 												</select>
 											</div>
 										</div>
