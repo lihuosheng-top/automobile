@@ -150,21 +150,22 @@
 	</div>
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="">
+			<form class="layui-form" action="{:url('admin/Integral/search')}">
 				<div class="layui-form-item">
 					<div class="layui-inline">
 						<label class="layui-form-label">会员账号：</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+							<input type="text" name="phone_num" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
 					<div class="layui-inline">
 						<label class="layui-form-label">类型：</label>
 						<div class="layui-input-inline">
-							<select name="interest" id="admin_status">
-								<option value="1" selected="">获得</option>
-								<option value="2">消费</option>
+							<select name="integral_type" id="admin_status">
+								<option value="" selected="">所有</option>
+								<option value="1" >获得</option>
+								<option value="-1">消费</option>
 							</select>
 						</div>
 					</div>
@@ -287,14 +288,12 @@
 						}
 						$.ajax({
 							type: "POST",
-							url: "{:url('aa')}",
+							url: "{:url('admin/integral/dels')}",
 							data: {
 								"id": data_id,
 							},
 							success: function(data) {
-								console.log("成功");
-								console.log(data);
-								var data = $.parseJSON(data);
+								 var data = $.parseJSON(data);
 								layer.alert(data.info, {
 									skin: 'layui-layer-molv' //样式类名
 										,
@@ -310,6 +309,7 @@
 										,
 									closeBtn: 0
 								});
+                                data_id.splice(0, data_id.length);
 								console.log(data);
 								console.log("错误")
 							}

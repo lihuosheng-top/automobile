@@ -24,7 +24,9 @@ class Integral extends Controller{
             ->field("tb_integral.*,tb_user.phone_num phone_num")
             ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
             ->order('tb_integral.operation_time','desc')
-            ->paginate(3);
+            ->paginate(3 ,false, [
+                'query' => request()->param(),
+            ]);
         return view('center',['integral_data'=>$integral_data]);
     }
 
@@ -124,9 +126,9 @@ class Integral extends Controller{
         if($request->isPost()){
             $id =$_POST['id'];
             if(is_array($id)){
-                $where ='id in('.implode(',',$id).')';
+                $where ='integral_id in('.implode(',',$id).')';
             }else{
-                $where ='id='.$id;
+                $where ='integral_id='.$id;
             }
             $list =  Db::name('integral')->where($where)->delete();
             if($list!==false)
@@ -138,6 +140,66 @@ class Integral extends Controller{
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:积分中心搜索功能
+     **************************************
+     * @return \think\response\View
+     */
+    public function search(){
+        $keywords =input('phone_num');
+        //类型(提现-1充值1)
+        $integral_type =input('integral_type');
+        if(!empty($keywords)){
+            if(!empty($integral_type)){
+                $condition = "  `phone_num` like '%{$keywords}%' ";
+                $integral_data =Db::table('tb_integral')
+                    ->field("tb_integral.*,tb_user.phone_num phone_num")
+                    ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
+                    ->where($condition)
+                    ->where('tb_integral.integral_type',$integral_type)
+                    ->order('tb_integral.operation_time','desc')
+                    ->paginate(3 ,false, [
+                        'query' => request()->param(),
+                    ]);
+            }else{
+                $condition = "  `phone_num` like '%{$keywords}%' ";
+                $integral_data =Db::table('tb_integral')
+                    ->field("tb_integral.*,tb_user.phone_num phone_num")
+                    ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
+                    ->where($condition)
+                    ->order('tb_integral.operation_time','desc')
+                    ->paginate(3 ,false, [
+                        'query' => request()->param(),
+                    ]);
+            }
+
+        }
+        if(empty($keywords)){
+            if(!empty($integral_type)){
+                $integral_data =Db::table('tb_integral')
+                    ->field("tb_integral.*,tb_user.phone_num phone_num")
+                    ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
+                    ->where('tb_integral.integral_type',$integral_type)
+                    ->order('tb_integral.operation_time','desc')
+                    ->paginate(3 ,false, [
+                        'query' => request()->param(),
+                    ]);
+            }else{
+                $integral_data =Db::table('tb_integral')
+                    ->field("tb_integral.*,tb_user.phone_num phone_num")
+                    ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
+                    ->order('tb_integral.operation_time','desc')
+                    ->paginate(3 ,false, [
+                        'query' => request()->param(),
+                    ]);
+            }
+        }
+        if(!empty($integral_data)){
+            return view('center',['integral_data'=>$integral_data]);
+        }
+    }
 
 
 
