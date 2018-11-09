@@ -210,15 +210,18 @@
 				}
 				$.ajax({
 					type: "POST",
-					url: "{:url('aaaa')}",
+					url: "{:url('admin/User/dels')}",
 					data: {
 						"id": data_id,
 					},
 					success: function(data) {
-						console.log("成功")
+						console.log("成功");
+						console.log(data);
+						location.reload();
 						data_id.splice(0, data_id.length);
 					},
 					error: function(data) {
+                        console.log(data);
 						console.log("错误")
 					}
 				});

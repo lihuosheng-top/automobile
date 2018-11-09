@@ -115,8 +115,46 @@ class User extends Controller{
      */
     public function search(){
         $keywords =input('search_key');
+        $keyword =input('search_keys');
         $timemin  =strtotime(input('date_min'));
         $timemax  =strtotime(input('date_max'));
+        if(empty($keywords)){
+            $keywords=$keyword;
+            if(empty($keywords)){
+                if((!empty($timemin))&&(empty($timemax))){
+                    $time_condition  = "create_time>{$timemin}";
+                $user_data=Db::name("user")
+                    ->where($time_condition)
+                    ->order('create_time','desc')
+                    ->paginate(3 ,false, [
+                        'query' => request()->param(),
+                    ]);
+                }else if((empty($timemin))&&(!empty($timemax))){
+                    $time_condition  = "create_time< {$timemax}";
+                    $user_data=Db::name("user")
+                        ->where($time_condition)
+                        ->order('create_time','desc')
+                        ->paginate(3 ,false, [
+                            'query' => request()->param(),
+                        ]);
+                }else if((!empty($timemin))&&(!empty($timemax))){
+                    $time_condition  = "create_time>{$timemin} and create_time< {$timemax}";
+                    $user_data=Db::name("user")
+                        ->where($time_condition)
+                        ->order('create_time','desc')
+                        ->paginate(3 ,false, [
+                            'query' => request()->param(),
+                        ]);
+                }else {
+                    $user_data=Db::name("user")
+                        ->order('create_time','desc')
+                        ->paginate(3 ,false, [
+                            'query' => request()->param(),
+                        ]);
+                }
+
+            }
+        }
         if(!empty($keywords)){
             $condition = " `phone_num` like '%{$keywords}%' or `user_name` like '%{$keywords}%' ";
             if((!empty($timemin))&&(!empty($timemax))){
@@ -136,9 +174,10 @@ class User extends Controller{
                         'query' => request()->param(),
                     ]);
             }
-            if(!empty($user_data)){
-                return view('index',['user_data'=>$user_data]);
-            }
+
+        }
+        if(!empty($user_data)){
+            return view('index',['user_data'=>$user_data]);
         }
     }
 
