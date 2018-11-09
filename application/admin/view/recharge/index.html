@@ -184,37 +184,43 @@
 									}
 									// 点击删除按钮
 									else if(opration_val==1){
-										var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
-														for (var i = 0; i < child.length; i++) {
-															data_id.push($(child[i])[0].dataset.id);
-														}
-														$.ajax({
-															type: "POST",
-															url: "{:url('admin/Recharge/dels')}",
-															data: {
-																"id": data_id,
-															},
-															success: function(data) {
-																console.log("成功");
-																console.log(data);
-																var data=$.parseJSON(data);
-																layer.alert(data.info, {
-																	skin: 'layui-layer-molv' //样式类名
-																	,closeBtn: 0
-																	});
-																location.reload();
-																data_id.splice(0, data_id.length);
-															},
-															error: function(data) {
-																var data=$.parseJSON(data);
-																layer.alert(data.info, {
-																	skin: 'layui-layer-molv' //样式类名
-																	,closeBtn: 0
-																	});
-										                     console.log(data);
-																console.log("错误")
-															}
-														});
+										layer.confirm('你确认要删除吗？', {
+												btn: ['确认','取消'] //按钮
+											}, function(){
+												var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+																for (var i = 0; i < child.length; i++) {
+																	data_id.push($(child[i])[0].dataset.id);
+																}
+																$.ajax({
+																	type: "POST",
+																	url: "{:url('admin/Recharge/dels')}",
+																	data: {
+																		"id": data_id,
+																	},
+																	success: function(data) {
+																		console.log("成功");
+																		console.log(data);
+																		var data=$.parseJSON(data);
+																		layer.alert(data.info, {
+																			skin: 'layui-layer-molv' //样式类名
+																			,closeBtn: 0
+																			});
+																		location.reload();
+																		data_id.splice(0, data_id.length);
+																	},
+																	error: function(data) {
+																		var data=$.parseJSON(data);
+																		layer.alert(data.info, {
+																			skin: 'layui-layer-molv' //样式类名
+																			,closeBtn: 0
+																			});
+																						console.log(data);
+																		console.log("错误")
+																	}
+																});
+												
+											});
+										
 									}
 									
 					
