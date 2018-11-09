@@ -143,7 +143,7 @@
 							 lay-text="是|否" lay-filter="isShow" data-id="{$user_val.id}">
 							{/if}
 						</td>
-						<td>
+						<td width="124px">
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/user/edit',['id'=>$user_val.id])} "><i class="iconfont icon-edit"></i>
 								查看详情</a>
 							<a href="{:url('admin/user/del',['id'=>$user_val.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
