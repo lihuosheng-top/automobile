@@ -16,4 +16,16 @@ class Classify extends Controller
     {
         return view("classify_recommend");
     }
+
+    // 商品分类列表
+    public function Goods_list()
+    {
+        return view("goods_list");
+    }
+
+    // 商品详情
+    public function Goods_detail()
+    {
+        return view("goods_detail");
+    }
 }

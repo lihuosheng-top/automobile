@@ -236,10 +236,6 @@ html{
     font-size: .22rem;
     color: #f00;
 }
-.goods_wrap .goods_desc_right .calculator_num{
-    display: flex;
-    justify-content: space-around;
-}
 .goods_wrap .calculator_num{
     width: 1.45rem;
     height: .3rem;
