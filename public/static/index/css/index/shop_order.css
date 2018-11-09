@@ -1,0 +1,192 @@
+html{
+    background-color: #f7f7f7;
+}
+.wrapper{
+    width: 100%;
+}
+.head{
+    position: relative;
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: .3rem;
+}
+.head .icon_back{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    width: .25rem;
+    height: .43rem;
+    transform: translateY(-50%);
+    background-position: -.5rem -.5rem;
+}
+.head h3{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    font-size: .3rem;
+    font-weight: normal;
+    text-align: center;
+}
+.order_info_wrap{
+    width: 96%;
+    background-color: #fff;
+    margin: 0 auto .1rem;;
+    border-radius: .1rem;
+    border: 1px solid #f0f0f0;
+    box-sizing: border-box;
+    color: #333;
+    padding: .4rem 0;
+    font-size: .28rem;
+}
+.order_info_wrap div,
+.shop_info_wrap div{
+    margin-left: .3rem;
+    margin-bottom: .3rem;
+}
+.order_info_wrap .user_wrap span{
+    margin-left: .3rem;
+}
+.order_info_wrap .plate_num,
+.order_info_wrap .car_ver{
+    color: #999;
+}
+.shop_info_wrap{
+    width: 96%;
+    background-color: #fff;
+    margin: 0 auto .1rem;
+    border-radius: .1rem;
+    border: 1px solid #f0f0f0;
+    box-sizing: border-box;
+    color: #333;
+    font-size: .28rem;
+    padding: .4rem 0;
+}
+.service_price{
+    width: 96%;
+    background-color: #fff;
+    margin: 0 auto;
+    border-radius: .1rem;
+    border: 1px solid #f0f0f0;
+    box-sizing: border-box;
+    color: #333;
+    font-size: .28rem;
+    padding: .4rem 0;
+}
+.service_price .discount{
+    margin: .1rem .3rem;
+    height: .8rem;
+    line-height: .8rem;
+    border-bottom: 1px solid #eee;
+}
+.service_price .service_name{
+    margin: .1rem .3rem;
+    border-bottom: 1px solid #eee;
+    height: 1.8rem;
+}
+.service_price .service_name>div{
+    height: 1rem;
+    line-height: 1rem;
+}
+.service_price .service_name img{
+    width: 1rem;
+    height: 1rem;
+    float: left;
+}
+.service_price .service_name span{
+    flex: left;
+}
+.service_price .price{
+    float: right;
+}
+.service_price .icon_more{
+    float: right;
+    width: .16rem;
+    height: .28rem;
+    transform: translateY(100%);
+    background-position: -7.3rem -1.8rem;
+    margin-left: .3rem;
+}
+.service_price .acount_num{
+    float: right;
+}
+.footbar{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    display: flex;
+    justify-content: space-between;
+}
+.footbar .totalprice{
+    flex: 1;
+    font-size: .3rem;
+    color: #333;
+    line-height: 1rem;
+    padding-left: .8rem;
+}
+.footbar .totalprice .txt{
+    color: #fd0000;
+    font-size: .36rem;
+}
+.footbar .btn_buy{
+    width: 2.9rem;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    background-color: #504cfb;
+}
+.footbar .btn_buy .txt{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    font-size: .3rem;
+    color: #fff;
+}
+
+.discount_wrap{
+    width: 94%;
+    margin: 0 auto;
+}
+.discount_wrap .default{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #e7e8e9;
+    border-radius: .1rem;
+    padding: .2rem;
+    margin-bottom: .2rem;
+    text-align: center;
+    background-color: #fff;
+}
+.discount_wrap .default .dont{
+    flex: 1;
+    text-align: left;
+}
+.discount_wrap .dis{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #e7e8e9;
+    border-radius: .1rem;
+    padding: .2rem;
+    margin-bottom: .2rem;
+    text-align: center;
+    font-size: 0;
+    color: #f00;
+    background-color: #fff;
+}
+.discount_wrap .dis p{
+    font-size: .42rem;
+}
+.discount_wrap .dis span{
+    font-size: .24rem;
+}
+
+
+
+

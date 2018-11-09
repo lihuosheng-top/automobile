@@ -23,6 +23,7 @@ Route::group("",[
     "reservation"=>"index/index/reservation",//预约服务 首页
     "reservation_detail"=>"index/index/reservation_detail",//预约服务 详情
     "reservation_info"=>"index/index/reservation_info",//预约服务 详情
+    "shop_order"=>"index/index/shop_order",//预约服务 详情
 
 
     /*商品列表*/
