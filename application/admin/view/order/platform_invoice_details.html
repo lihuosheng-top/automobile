@@ -9,7 +9,8 @@
 		width: 17%;
 		text-align: left;
 	}
-	.layui-form{
+	
+	.layui-form {
 		width: 90%;
 		margin: 0 auto;
 	}
@@ -17,10 +18,10 @@
 	.layui-form .layui-input-block input {
 		width: 97%;
 	}
-	.blue{
+	
+	.blue {
 		color: #4F99FF;
 	}
-
 </style>
 
 {/block}
@@ -32,7 +33,7 @@
 
 	</div>
 	<form class="layui-form" action="">
-	
+
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 会员名称：</label>
 			<div class="layui-input-block">
@@ -57,11 +58,11 @@
 				<p>优质米其林轮胎</p>
 			</div>
 		</div>
-		
+
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 发票抬头：</label>
 			<div class="layui-input-block">
-			<textarea rows="10" cols="80">
+				<textarea rows="10" cols="80">
 				
 			</textarea>
 			</div>
@@ -81,9 +82,9 @@
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-				
-				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit" >确认</button>
-			   
+
+				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit">确认</button>
+
 			</div>
 		</div>
 
@@ -97,7 +98,7 @@
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
-	
+
 	<script type="text/javascript">
 		layui.config({
 			base: "js/"
@@ -107,11 +108,8 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 
-			
 		})
 	</script>
-
-	
 
 	{/block}
 
