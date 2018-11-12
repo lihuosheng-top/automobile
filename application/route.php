@@ -365,6 +365,8 @@ Route::group("admin",[
     "brand_edit"=>"admin/Brand/edit",
     "brand_updata"=>"admin/Brand/updata",
     "brand_del"=>"admin/Brand/del",
+    "brand_status"=>"admin/Brand/status",
+    "brand_images"=>"admin/Brand/images",
 
 
 

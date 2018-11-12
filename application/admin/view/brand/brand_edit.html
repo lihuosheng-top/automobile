@@ -56,28 +56,28 @@
 	<div class="open">
 
 	</div>
-	<form class="layui-form" action="">
-	
+	<form class="layui-form" action="{:url('admin/Brand/updata')}" method="post" enctype="multipart/form-data">
+		{volist name="brand_data" id="value"}
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span style="color: red;">*</span>品牌名称：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="brand_name" value="{$value.brand_name}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">品牌地址：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="brand_url" value="{$value.brand_url}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
-<div class="layui-form-item">
+	<div class="layui-form-item">
 			<label class="layui-form-label">品牌LOGO：</label>
 			<!-- 数据库展现图片 -->
 			<div class="layui-input-block">
 			<div class="imgcontent">
 				<span class="img">
-					<img src="__STATIC__/admin/common/img/a11.png"  width="100%">
-					<i class="remove-img"><img  src="__STATIC__/admin/common/img/a7.png" ></i>
+					<img src="__UPLOADS__/{$value.brand_images}"  width="100%">
+					<i class="remove-img" data-id="{$value.id}"><img src="__STATIC__/admin/common/img/a7.png" ></i>
 				</span>
 			</div>
 			</div>
@@ -87,7 +87,7 @@
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+								<input type="file" name="brand_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
 							</section>
 						</div>
 					</section>
@@ -104,33 +104,30 @@
 		<div class="layui-form-item">
 					<label class="layui-form-label">品牌描述：</label>
 					<div class="layui-input-block">
-						<textarea rows="10" cols="100">
-							
-						</textarea>
+						<textarea rows="10" cols="100" name="brand_describe">{$value.brand_describe}</textarea>
 						</div>
 				</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">排序：</label>
 		<div class="layui-input-block">
-			<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			<input type="text" name="sort_number" value="{$value.sort_number}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">是否显示：</label>
 		<div class="layui-input-block">
-			<input type="radio" name="sex" value="启用" title="是" checked="">
-			<input type="radio" name="sex" value="禁用" title="否">
+			<input type="radio" name="brand_status" value="1" title="是" checked="">
+			<input type="radio" name="brand_status" value="0" title="否">
 		</div>
 	</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
+				<input type="hidden" name="id" value="{$value.id}">
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-				
 				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit" >保存</button>
-			   
 			</div>
 		</div>
-
+	{/volist}
 	</form>
 	
 	{/block}
@@ -156,20 +153,20 @@
 			// 图片删除
 			$(".remove-img").click(function(){
 				var remove=$(this).parent();
-			    
+			    var id = $(this).data("id");
+			    console.log(id);
 				   $.ajax({
-									type:"POST",
-									url:"{:url('')}",
-									data:{},
-									dataType:"json",
-									success:function (data) {
-								     remove.remove();
-		
-															},
-									error:function (data) {
-									console.log("错误");
-															}
-									});
+						type:"POST",
+						url:"{:url('admin/Brand/images')}",
+						data:{"id":id},
+						dataType:"json",
+						success:function (data) {
+						 remove.remove();
+						},
+						error:function (data) {
+						console.log("错误");
+						}
+				   });
 			});
 	</script>
 

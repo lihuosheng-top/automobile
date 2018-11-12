@@ -26,7 +26,7 @@ class Brand extends Controller{
 
 
     /**
-     * 商品添加
+     * 商品品牌添加
      * 陈绪
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
      */
@@ -39,7 +39,7 @@ class Brand extends Controller{
 
 
     /**
-     * 商品入库
+     * 商品品牌入库
      * 陈绪
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
      */
@@ -62,25 +62,39 @@ class Brand extends Controller{
 
 
     /**
-     * 商品编辑
+     * 商品品牌编辑
      * 陈绪
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
      */
-    public function edit(){
+    public function edit($id){
 
-        return view("brand_edit");
+        $brand_data = db("brand")->where("id",$id)->select();
+        return view("brand_edit",["brand_data"=>$brand_data]);
 
     }
 
 
 
     /**
-     * 商品更新
+     * 商品品牌更新
      * 陈绪
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
      */
-    public function updata(){
+    public function updata(Request $request){
 
+        $id = $request->only(["id"])["id"];
+        $brand_data = $request->param();
+        $brand_images = $request->file("brand_images");
+        if(!empty($brand_images)){
+            $brand_image = $brand_images->move(ROOT_PATH . 'public' . DS . 'uploads');
+            $brand_data["brand_images"] = str_replace("\\", "/", $brand_image->getSaveName());
+        }
+        $bool = db("brand")->where("id",$id)->update($brand_data);
+        if($bool){
+            $this->success("编辑成功",url("admin/Brand/index"));
+        }else{
+            $this->success("编辑失败",url("admin/Brand/index"));
+        }
 
     }
 
@@ -88,13 +102,72 @@ class Brand extends Controller{
 
 
     /**
-     * 商品删除
+     * 商品品牌删除
      * 陈绪
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
      */
-    public function del(){
+    public function del($id){
+
+        $bool = db("brand")->where("id",$id)->delete();
+        if($bool){
+            $this->success("删除成功",url("admin/Brand/index"));
+        }else{
+            $this->success("删除失败",url("admin/Brand/index"));
+        }
+
+    }
 
 
+
+
+    /**
+     * 商品品牌状态修改
+     * 陈绪
+     */
+    public function status(Request $request){
+        if($request->isPost()) {
+            $status = $request->only(["status"])["status"];
+            if($status == 0) {
+                $id = $request->only(["id"])["id"];
+                $bool = db("brand")->where("id", $id)->update(["brand_status" => 0]);
+                if ($bool) {
+                    $this->redirect(url("admin/admin/index"));
+                } else {
+                    $this->error("修改失败", url("admin/admin/index"));
+                }
+            }
+            if($status == 1){
+                $id = $request->only(["id"])["id"];
+                $bool = db("brand")->where("id", $id)->update(["brand_status" => 1]);
+                if ($bool) {
+                    $this->redirect(url("admin/admin/index"));
+                } else {
+                    $this->error("修改失败", url("admin/admin/index"));
+                }
+            }
+        }
+    }
+
+
+
+
+
+    /**
+     * [图片删除]
+     * 陈绪
+     */
+    public function images(Request $request){
+        if($request->isPost()){
+            $id = $request->only(['id'])['id'];
+            $brand_images = db("brand")->where("id",$id)->find();
+            $image_bool = db("brand")->where("id",$id)->update(["brand_images"=>null]);
+            if($image_bool){
+                unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$brand_images['brand_images']);
+                return ajax_success("删除成功");
+            }else{
+                return ajax_error("删除失败");
+            }
+        }
     }
 
 }
