@@ -558,8 +558,4 @@ function show_integral_operation($data){
 }
 
 
-/**
- * 点击
- */
-
 

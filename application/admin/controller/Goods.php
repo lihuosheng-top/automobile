@@ -119,11 +119,12 @@ class Goods extends Controller{
      * [商品修改]
      * 陈绪
      */
-    public function edit(Request $r,$id){
+    public function edit(Request $request,$id){
         $goods = db("goods")->where("id",$id)->select();
-        $goods_type = db("goods_type")->where("id",$goods[0]["goods_type_id"])->field("name,id")->select();
-        $goods_images = db("goods_images")->where("goods_id",$id)->select();
-        return view("goods_edit",["goods"=>$goods,"goods_type"=>$goods_type,"goods_images"=>$goods_images]);
+        foreach ($goods as $value){
+            
+        }
+        return view("goods_edit");
     }
 
 

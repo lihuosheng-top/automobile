@@ -132,7 +132,8 @@
 	<div class="open">
 
 	</div>
-	<form class="layui-form" action="{:url('admin/Goods/save')}" method="post" enctype="multipart/form-data">
+	<form class="layui-form" action="{:url('admin/Goods/updata')}" method="post" enctype="multipart/form-data">
+		{volist name=""}
 		<div class="basic-information title"> 基本信息
 		</div>
 		<div class="layui-form-item ">
@@ -368,7 +369,7 @@
 				<!-- <textarea id="demo" style="display: none;"></textarea> -->
 				<!-- <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea> -->
 				 <div id="goods_text">
-					<script id="editor" type="text/plain" name="goods_text" style="width:800px;height:500px;"></script>
+					<script id="editor" type="text/plain" name="goods_text" value="" style="width:800px;height:500px;"></script>
 				</div>
 			</div>
 		</div>
