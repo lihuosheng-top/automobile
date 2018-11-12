@@ -46,6 +46,7 @@ class checkLogin extends Controller {
             }
 
 
+            //权限检测
             $arr_data = Request::instance()->routeInfo();
             if(!empty($arr_data["rule"][1])){
                 $controller = $arr_data['rule'][0];

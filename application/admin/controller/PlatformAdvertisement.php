@@ -15,12 +15,31 @@ class  PlatformAdvertisement extends  Controller{
     public function platform_business_index(){
         return view('platform_business_index');
     }
+
+
+
     public function platform_business_add(){
         return view('platform_business_add');
     }
+
+
+
+
     public function platform_business_edit(){
         return view('platform_business_edit');
     }
 
+
+
+
+    /**
+     * 平台广告删除
+     * 陈绪
+     */
+    public function del(){
+
+
+
+    }
 
 }
