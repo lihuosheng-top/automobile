@@ -243,8 +243,6 @@ Route::group("admin",[
     "order_evaluate_details"=>"admin/Order/evaluate_details", //******订单评价详情
 
     "order_after_sale"=>"admin/Order/after_sale", //订单维修售后
-    "order_after_sale_wait_handle"=>"admin/Order/after_sale_wait_handle", //****订单维修售后待处理
-    "order_after_sale_wait_deliver"=>"admin/Order/after_sale_wait_deliver", //****订单维修售后待发货
 
     "order_invoice"=>"admin/Order/invoice", //发票列表
     "order_invoice_edit"=>"admin/Order/invoice_edit", //****发票信息
