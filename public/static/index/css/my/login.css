@@ -1,0 +1,255 @@
+.wrapper{
+    width: 100%;
+}
+.head{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: .88rem;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+}
+.head h3,
+.reg-head h3{
+    width: 100%;
+    height: 100%;
+    line-height: .88rem;
+    text-align: center;
+    font-size: .36rem;
+    color: #333;
+}
+.head .icon-back,
+.reg-head .reg-back{
+    position: absolute;
+    top: 50%;
+    left: .2rem;
+    margin-top: -.22rem;
+    width: .25rem;
+    height: .43rem;
+    background-position: -.5rem -.5rem;
+}
+.head .register,
+.reg-head .login{
+    position: absolute;
+    right: .3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: .3rem;
+    color: #0099ff;
+}
+.logo-wrap{
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 1.5rem auto 1.2rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.logo-wrap img{
+    width: 100%;
+    height: 100%;
+}
+.inputbox{
+    width: 90%;
+    margin: 0 auto;
+}
+.inputbox .phone-num,
+.inputbox .password{
+    width: 100%;
+    height: 1rem;
+    outline: none;
+    border-bottom: 1px solid #ccc;
+    font-size: .3rem;
+    margin-bottom: .2rem;
+}
+.inputbox .remember{
+    width: 100%;
+    height: .5rem;
+    line-height: .5rem;
+    margin-bottom: .8rem;
+}
+.inputbox .remember-label{
+    color: #333;
+    font-size: .24rem;
+}
+.inputbox .forget-psw{
+    float: right;
+    color: #0099ff;
+    font-size: .24rem;
+}
+.inputbox .login-btn{
+    width: 100%;
+    height: .8rem;
+    border-radius: .4rem;
+    border: 0;
+    outline: none;
+    background-color: #0099ff;
+    font-size: .3rem;
+    color: #fff;
+    text-align: center;
+    line-height: .8rem;
+}
+.third-part{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 2rem;
+    border-top: 1px solid #ccc;
+    text-align: center
+}
+.third-part .third-txt{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: .24rem;
+    color: #999;
+    background-color: #fff;
+    padding: 0 .3rem;
+}
+.third-part .wechat,
+.third-part .QQ,
+.third-part .weibo{
+    display: inline-block;
+    width: .64rem;
+    height: .64rem;
+    margin: .5rem .3rem 0;
+}
+.third-part .wechat{
+    background-position: -2.5rem -4.2rem;
+}
+.third-part .QQ{
+    background-position: -3.4rem -4.2rem;
+}
+.third-part .weibo{
+    background-position: -4.3rem -4.2rem;
+}
+
+.find-password{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    z-index: 2;
+}
+.find-psw-head{
+    position: relative;
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+.find-psw-head .find-back{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    margin-top: -.22rem;
+    width: .25rem;
+    height: .43rem;
+    background-position: -.5rem -.5rem;
+}
+.find-psw-head .find-psw-txt{
+    width: 100%;
+    height: 100%;
+    line-height: .88rem;
+    font-size: .36rem;
+    color: #333;
+    text-align: center;
+}
+.find-inputbox{
+    width: 90%;
+    margin: 1.5rem auto 0;
+}
+.find-inputbox .find-phone-num,
+.find-inputbox .message-code,
+.find-inputbox .find-psw,
+.find-inputbox .find-repeat-psw{
+    width: 100%;
+    height: 1rem;
+    outline: none;
+    border-bottom: 1px solid #eee;
+    font-size: .3rem;
+}
+.find-inputbox .find-repeat-psw{
+    margin-bottom: .5rem;
+}
+.find-inputbox .identifying-code{
+    position: relative;
+}
+.find-inputbox .send-code,
+.reg-inputbox .send-code{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    outline: 0;
+    border: 0;
+    background-color: transparent;
+    color: #0099ff;
+    font-size: .24rem;
+    height: .5rem;
+    margin-top: -.25rem;
+    border-left: 1px solid #ddd;
+}
+.find-password .find-confirm,
+.register-pop .reg-confirm{
+    display: block;
+    width: 90%;
+    height: .8rem;
+    line-height: .8rem;
+    color: #fff;
+    text-align: center;
+    font-size: .24rem;
+    outline: 0;
+    background-color: #0099ff;;
+    border-radius: .4rem;
+    border: 0;
+    margin: 0 auto;
+}
+.register-pop{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    z-index: 2;
+}
+.register-pop .reg-head{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: .88rem;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+}
+.reg-inputbox,
+.agree{
+    width: 90%;
+    margin: 0 auto;
+}
+.reg-inputbox input{
+    width: 100%;
+    height: 1rem;
+    outline: none;
+    border-bottom: 1px solid #ccc;
+    font-size: .3rem;
+    margin-bottom: .2rem;
+}
+.reg-inputbox .identifying-code{
+    position: relative;
+}
+.agree{
+    margin-bottom: .4rem;
+}
+.agree .agree-label span{
+    color: #0099ff;
+}
