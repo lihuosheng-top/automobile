@@ -73,6 +73,10 @@ Route::group("",[
     // 分类
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
+    "goods_list"=>"index/Classify/goods_list",//商品列表
+    "goods_detail"=>"index/Classify/goods_detail",//商品详情
+
+
     // 购物车
     "cart_index"=>"index/Cart/cart_index",
     // 我的
@@ -239,8 +243,6 @@ Route::group("admin",[
     "order_evaluate_details"=>"admin/Order/evaluate_details", //******订单评价详情
 
     "order_after_sale"=>"admin/Order/after_sale", //订单维修售后
-    "order_after_sale_wait_handle"=>"admin/Order/after_sale_wait_handle", //****订单维修售后待处理
-    "order_after_sale_wait_deliver"=>"admin/Order/after_sale_wait_deliver", //****订单维修售后待发货
 
     "order_invoice"=>"admin/Order/invoice", //发票列表
     "order_invoice_edit"=>"admin/Order/invoice_edit", //****发票信息
