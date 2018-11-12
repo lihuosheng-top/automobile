@@ -641,7 +641,7 @@ layedit.build('demo');
 				var text=$(this).parent().siblings(".add-names").children("input").val();
 					$.ajax({
 						type: "POST",
-				   	url : "{:url('admin/Goods/save')}",
+				   		url : "{:url('admin/Goods/name')}",
 						data: {"goods_name":text},
 						success: function(data){
 							console.log("data")

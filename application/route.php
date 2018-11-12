@@ -152,6 +152,7 @@ Route::group("admin",[
     "goods_pay"=>"admin/Goods/pay",                                            //商品付费详情
     "affirm_pay"=>"admin/Goods/affirm",
 	"goods_look"=>"admin/Goods/look",
+    "goods_name"=>"admin/Goods/name",                                       //商品规格名添加
 
 
 

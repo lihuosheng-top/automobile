@@ -122,7 +122,7 @@ class Goods extends Controller{
     public function edit(Request $request,$id){
         $goods = db("goods")->where("id",$id)->select();
         foreach ($goods as $value){
-            
+
         }
         return view("goods_edit");
     }
@@ -355,13 +355,39 @@ class Goods extends Controller{
         return view("affirm_pay");
 
     }
- /**
+
+
+
+
+    /**
      * 商品查看
      * 陈绪
      */
     public function look(){
 
         return view("good_look");
+
+    }
+
+
+
+    /**
+     * 通用商品规格名添加
+     * 陈绪
+     */
+    public function name(Request $request){
+
+        if($request->isPost()){
+            $standard_name = $request->only(["goods_name"])["goods_name"];
+            $goods_name_bool = db("standard_name")->insert(["standard_name"=>$standard_name]);
+            if($goods_name_bool){
+                return ajax_success("成功",$standard_name);
+            }else{
+                return ajax_error("失败",$standard_name);
+            }
+
+
+        }
 
     }
 
