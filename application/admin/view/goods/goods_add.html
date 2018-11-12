@@ -45,12 +45,12 @@
 		padding-left: 20px;
 		font-weight: bold;
 	}
-	
-	.layui-form-item {
-		padding-left: 20px;
-		margin: 10px;
-	}
-	
+.special ,
+.general,
+.special .layui-form-item,
+.general .layui-form-item{
+	min-width: 100%;
+}
 	.add-content {
 		background: #F2F2F2;
 		width: 100%;
@@ -59,6 +59,7 @@
 	.general-kuang {
 		border: solid 1px #E4E4E4;
 		width: 1000px;
+		padding-left: 10px;
 	}
 	
 	.btus {
@@ -191,7 +192,7 @@
 			</div>
 		</div>
 		<p style="margin-left: 17%;color:#999999 ; ">建议尺寸：750*480像素，你可以拖拽图片调整顺序，最多上传10张</p>
-		<div class="layui-form-item">
+		<div class="layui-form-item" style="min-width: 62% !important;">
 			<label class="layui-form-label">商品分组：</label>
 			<div class="layui-input-inline">
 				<select name="goods_type_id" id="goods_type_id">
@@ -200,11 +201,11 @@
 					{/volist}
 				</select>
 			</div>
-			<div class="layui-input-inline">
+			<div class="layui-input-inline" >
 				<a href="{:url('admin/Category/add')}" style="line-height: 40px;">新建分类</a>
 			</div>
 		</div>
-		<div class="layui-form-item ">
+		<div class="layui-form-item " style="min-width: 62% !important;">
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
 			<div class="layui-input-inline">
 				<select name="goods_brand_id">
