@@ -512,12 +512,9 @@
 		dhtml += '<div>' +
 			' 			<div class="layui-form-item">                                                                                 ' +
 			' 				<label class="layui-form-label">规格名</label>                                                               ' +
-			' 				<div class="layui-input-inline">                                                                          ' +
+			' 				<div class="layui-input-inline guige_name">                                                                          ' +
 			' 					<select class="universal_standard_name" name="goods_standard_name[]">                                                                                 ' +
-			' 						<option value="请选择省">请选择省</option>                                                                    ' +
-			' 						<option value="浙江" selected="">浙江省</option>                                                       ' +
-			' 						<option value="你的工号">江西省</option>                                                                 ' +
-			' 						<option value="你最喜欢的老师">福建省</option>                                                              ' +
+			' 						<option value="0">请选择</option>                                                                    ' +
 			' 					</select>                                                                                             ' +
 			' 				</div>                                                                                                    '
 			//      +'                                                                                                                        '
@@ -568,31 +565,7 @@
 			' 			</div>                                                                                                        ' +
 			'          </div>                                                                                                        ';
 	</script>
-	<script type="text/javascript">
-		$("#select_class").on("click", function() {
 
-			if($(".tree").css('display') === 'none') {
-				$(".tree").show();
-			} else {
-
-				$(".tree").hide();
-			}
-		});
-		$(function() {
-			$('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', '关闭');
-			$('.tree li.parent_li > span').on('click', function(e) {
-				var children = $(this).parent('li.parent_li').find(' > ul > li');
-				if(children.is(":visible")) {
-					children.hide('fast');
-					$(this).attr('title', '展开').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
-				} else {
-					children.show('fast');
-					$(this).attr('title', '关闭').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
-				}
-				e.stopPropagation();
-			});
-		});
-	</script>
 	<script type="text/javascript">
 		layui.config({
 			base: "js/"
@@ -663,6 +636,23 @@ layedit.build('demo');
 				$(this).addClass("noshow");
 				$(this).siblings(".add-names").removeClass("noshow");
 			});
+			// 点击添加按钮
+			$("#general_content").on('click', ".btu-add", function() {
+				var text=$(this).parent().siblings(".add-names").children("input").val();
+					$.ajax({
+						type: "POST",
+				   	url : "{:url('admin/Goods/save')}",
+						data: {"goods_name":text},
+						success: function(data){
+							console.log("data")
+						},
+						error:function (data) {
+							console.log("data")
+						}
+					});
+				
+			});
+		
 			// end商品规格变化
 		})
 	</script>
