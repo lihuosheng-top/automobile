@@ -74,7 +74,6 @@ Route::group("",[
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
     "goods_list"=>"index/Classify/goods_list",//商品列表
-    "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
 
     // 购物车
@@ -125,6 +124,7 @@ Route::group("admin",[
     "menu_status"=>"admin/menu/status",
 
 
+
     /*角色列表*/
     "role_index"=>"admin/role/index",
     "role_add"=>"admin/role/add",
@@ -133,6 +133,7 @@ Route::group("admin",[
     "role_edit"=>"admin/role/edit",
     "role_updata"=>"admin/role/updata",
     "role_status"=>"admin/role/status",
+
 
 
     /*配件商品管理*/
@@ -150,6 +151,7 @@ Route::group("admin",[
     "goods_pay"=>"admin/Goods/pay",                                            //商品付费详情
     "affirm_pay"=>"admin/Goods/affirm",
 	"goods_look"=>"admin/Goods/look",
+
 
 
 
@@ -355,13 +357,15 @@ Route::group("admin",[
 
 
 
-    /*品牌*/
+    /*商品品牌*/
     "brand_index"=>"admin/Brand/index",
     "brand_add"=>"admin/Brand/add",
     "brand_save"=>"admin/Brand/save",
     "brand_edit"=>"admin/Brand/edit",
     "brand_updata"=>"admin/Brand/updata",
     "brand_del"=>"admin/Brand/del",
+
+
 
 
     /*店铺管理*/
