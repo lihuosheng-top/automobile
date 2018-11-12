@@ -79,7 +79,7 @@ class Login extends Controller{
     public function logout(){
         Session::delete("user_id");
         Session::delete("user_info");
-        $this->redirect("admin/Login/index");
+        $this->redirect("index/Login/index");
     }
 
 

@@ -150,7 +150,8 @@ Route::group("admin",[
     "goods_putaway"=>"admin/Goods/putaway",                                    //商品上架
     "goods_pay"=>"admin/Goods/pay",                                            //商品付费详情
     "affirm_pay"=>"admin/Goods/affirm",
-	"goods_look"=>"admin/Goods/look",      
+	"goods_look"=>"admin/Goods/look",
+
 
 
     /*服务商品管理*/
@@ -199,20 +200,30 @@ Route::group("admin",[
     "integral_dels"=>"admin/Integral/dels", //积分列表批量删除
     "integral_search"=>"admin/Integral/search", //积分列表搜索功能
 
-    /*配件商广告，服务商广告，平台广告开始*/
-    "Accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising",
-    "Accessories_business_add"=>"admin/Advertisement/accessories_business_add",
-    "Accessories_business_edit"=>"admin/Advertisement/accessories_business_edit",
 
-    "Service_business_advertising"=>"admin/service_advertisement/Service_business_advertising",
-    "Service_business_add"=>"admin/service_advertisement/Service_business_add",
-    "Service_business_edit"=>"admin/service_advertisement/Service_business_edit",
 
+    /*配件商广告*/
+    "accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising",
+    "accessories_business_add"=>"admin/Advertisement/accessories_business_add",
+    "accessories_business_edit"=>"admin/Advertisement/accessories_business_edit",
+    "accessories_business_del"=>"admin/Advertisement/del",
+
+
+
+    /*服务商广告*/
+    "service_business_advertising"=>"admin/service_advertisement/service_business_advertising",
+    "service_business_add"=>"admin/service_advertisement/service_business_add",
+    "service_business_edit"=>"admin/service_advertisement/service_business_edit",
+    "service_business_del"=>"admin/service_advertisement/del",
+
+
+
+    /*平台广告*/
     "platform_business_index"=>"admin/platform_advertisement/platform_business_index",
     "platform_business_add"=>"admin/platform_advertisement/platform_business_add",
     "platform_business_edit"=>"admin/platform_advertisement/platform_business_edit",
+    "platform_business_del"=>"admin/platform_advertisement/del",
 
-    /*配件商广告，服务商广告，平台广告结束*/
 
 
 

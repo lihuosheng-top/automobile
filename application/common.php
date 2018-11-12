@@ -376,9 +376,9 @@ function exportData($title , $content , $filename = 'data'){
     header('Pragma: no-cache');
     header('Expires: 0');
 
-    echo iconv('utf-8', 'gbk', implode("\t", $title)), "\n";
+    echo iconv('utf-8', 'gbk', implode(",", $title)), "\n";
     foreach ($content as $value) {
-        echo iconv('utf-8', 'gbk', implode("\t", $value)), "\n";
+        echo iconv('utf-8', 'gbk', implode(",", $value)), "\n";
     }
     exit();
 }
