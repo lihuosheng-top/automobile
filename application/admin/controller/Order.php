@@ -9,7 +9,7 @@
 namespace app\admin\controller;
 
 use think\Controller;
-
+use think\Db;
 class Order extends Controller{
 
 
@@ -24,6 +24,14 @@ class Order extends Controller{
      **************************************
      */
     public function index(){
+        $order_parts_data =Db::table('tb_order_part')
+            ->field("tb_order_part.*,tb_user.phone_num phone_num,tb_goods.name gname,tb_goods.show_images gimg")
+            ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
+            ->order('tb_integral.operation_time','desc')
+            ->paginate(3 ,false, [
+                'query' => request()->param(),
+            ]);
+
        return view('index');
     }
 
