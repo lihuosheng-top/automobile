@@ -1,0 +1,136 @@
+html{
+    background-color: #f7f7f7;
+}
+.wrapper{
+    width: 100%;
+}
+.head{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+}
+.head .back{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    width: .25rem;
+    height: .43rem;
+    margin-top: -.22rem;
+    background-position: -.5rem -.5rem;
+}
+.head input{
+    width: 80%;
+    height: .6rem;
+    border-radius: .3rem;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding-left: .6rem;
+    box-sizing: border-box;
+    outline: none;
+}
+.head .icon_share{
+    position: absolute;
+    right: .2rem;
+    top: 50%;
+    width: .34rem;
+    height: .34rem;
+    margin-top: -.17rem;
+    background-position: -2.15rem -2.5rem;
+}
+.head .icon_search{
+    position: absolute;
+    top: 50%;
+    left: .95rem;
+    width: .33rem;
+    height: .32rem;
+    background-position: 0 0;
+    margin-top: -.16rem;
+}
+.filter_box{
+    display: flex;
+    align-items: center;
+    height: .7rem;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: .1rem;
+}
+.filter_box button{
+    flex: 1;
+    -webkit-box-flex: 1;
+    text-align: center;
+    background-color: #fff;
+    border: 0;
+    height: 100%;
+    position: relative;
+    outline: none;
+}
+.filter_box button.current{
+    color: #504cfb;
+}
+.filter_box button.current::after{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    content: '';
+    width: 45%;
+    display: block;
+    height: 2px;
+    background: #504cfb;
+}
+
+.list_cont{
+    width: 100%;
+    padding: 0 .1rem;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+.list_cont li{
+    float: left;
+    width: 3.6rem;
+    height: 5.6rem;
+    margin-right: .08rem;
+    background-color: #fff;
+}
+.list_cont li .img_div{
+    width: 100%;
+    height: 3.95rem;
+}
+.list_cont .img_div img{
+    width: 100%;
+    height: 100%;
+}
+.list_cont .goods_name{
+    width: 100%;
+}
+.list_cont .goods_name p{
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: .24rem;
+    color: #333;
+    padding: 0 .16rem;
+    box-sizing: border-box;
+}
+.list_cont .goods_price{
+    padding-right: .3rem;
+}
+.list_cont .goods_price .price{
+    font-size: .3rem;
+    color: #f00;
+}
+.list_cont .goods_price .pay_num{
+    font-size: .2rem;
+    color: #999;
+}
+.list_cont .goods_price .icon_cart{
+    float: right;
+    width: .34rem;
+    height: .34rem;
+    background-position: -1rem -.5rem;
+}

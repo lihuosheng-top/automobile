@@ -5,12 +5,19 @@
 {block name="css"}
 
 <style type="text/css">
+	img {
+		width: 100%;
+	}
+
 	body {
 		background: #fff;
 	}
 
 	label {
 		text-align: left !important;
+	}
+	.layui-form-item{
+		max-width: 100% !important;
 	}
 
 	.layui-form-item {
@@ -36,6 +43,14 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
+
+	.img_show {
+		width: 150px;
+	}
+
+	.pagination {
+		float: right;
+	}
 </style>
 
 
@@ -47,33 +62,36 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="">
+			<form class="layui-form" action="{:url('admin/User/search')}">
 				<div class="layui-form-item">
 					<div class="layui-inline">
 						<label class="layui-form-label">用户账号：</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+							<input type="text" name="search_key" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input"
+							 id="zhanghu">
 
 						</div>
 					</div>
 					<div class="layui-inline">
 						<label class="layui-form-label">用户昵称</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+							<input type="text" name="search_keys" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input"
+							 id="nichwng">
 
 						</div>
 					</div>
 					<div class="layui-inline" style="width: 36%;">
-											<label class="layui-form-label" style="width: 14% !important; ">时间</label>
-											<div class="layui-input-inline" style="width: 80% !important; margin-top: 8px;">
-												<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""  style="width: 100px; font-size: 13px;">
-												</span>--
-												<span class="time"><input type="text" class=" text datetimepicker" readonly="readonly" id="endTime" value=""  style="width: 100px; font-size: 13px;"></span>
-					
-											</div>
-										</div>
+						<label class="layui-form-label" style="width: 14% !important; ">时间</label>
+						<div class="layui-input-inline" style="width: 80% !important; ">
+							<span class="time"><input name="date_min" type="text" class="text datetimepicker" readonly="readonly" id="beginTime"
+								 value="" style="width: 130px; font-size: 13px; height: 33px;" placeholder="请输入开始时间">
+							</span>--
+							<span class="time"><input name="date_max" type="text" class=" text datetimepicker" readonly="readonly" id="endTime"
+								 value="" style="width: 130px; font-size: 13px; height: 33px;" placeholder="请输入结束时间"></span>
+						</div>
+					</div>
 					<div class="layui-inline">
-						<a class="layui-btn search_btn">搜索</a>
+						<button class="layui-btn search_btn" id="seach" type="submit">搜索</button>
 					</div>
 				</div>
 
@@ -81,6 +99,7 @@
 
 		</blockquote>
 		<div class="layui-form news_list">
+
 			<table class="layui-table">
 				<colgroup>
 					<col width="3%">
@@ -100,41 +119,65 @@
 						<th>操作</th>
 					</tr>
 				</thead>
+				{if !empty($user_data)}
 				<tbody class="news_content">
+					{volist name="user_data" id="user_val"}
 					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>admin</td>
-						<td>admin</td>
-						<td>2</td>
-						<td><img src="111"></td>
-						<td>2018-09-26</td>
-						<td>2018-09-26 </td>
-						<td>2018-09-26 </td>
+						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$user_val.id}" class="check"></td>
+						<td>{$user_val.id}</td>
+						<td>{$user_val.phone_num}</td>
+						<td>{$user_val.user_name}</td>
 						<td>
-							<input type="checkbox" class="Status" name="show" value="0" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
-							 data-id="2">
-							<div class="layui-unselect layui-form-switch" lay-skin="_switch"><em>否</em><i></i></div>
-
+							<div class="img_show"><img src="__USERIMG__/{$user_val.user_img}"></div>
 						</td>
+						<td>{$user_val.type|show_user_type}</td>
+						<td>{$user_val.harvester_real_address} </td>
+						<td>{$user_val.create_time|date='Y-m-d H:i:s',###} </td>
 						<td>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/user/edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
-
-							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
+							{if $user_val.status==0}
+							<input type="checkbox" class="Status" name="show" value="{$user_val.status}" lay-skin="switch" lay-text="是|否"
+							 lay-filter="isShow" data-id="{$user_val.id}">
+							{/if}
+							{if $user_val.status==1}
+							<input type="checkbox" class="Status" name="show" value="{$user_val.status}" checked="" lay-skin="switch"
+							 lay-text="是|否" lay-filter="isShow" data-id="{$user_val.id}">
+							{/if}
+						</td>
+						<td width="124px">
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/user/edit',['id'=>$user_val.id])} "><i class="iconfont icon-edit"></i>
+								查看详情</a>
+							<a href="{:url('admin/user/del',['id'=>$user_val.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
 							 data-id="undefined"><i class="layui-icon"></i> 删除</a>
 						</td>
 					</tr>
+					{/volist}
 				</tbody>
+				{/if}
+
+
 			</table>
-		</div>
-		<div id="page">
 
-			<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-				<option value="">批量删除</option>
+			<div id="page">
+				<div class="opation" style="width: 200px; float: left;">
+					<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
+						<option check="" value="0">请选择</option>
+						<option value="1">批量删除</option>
+					</select>
+				</div>
+				<div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
+					<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
+					</button>
+				</div>
+				{if !empty($user_data)}
+				{$user_data->render()}
+				{/if}
 
-			</select>
-			<button type="button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定
-			</button>
+			</div>
+
 		</div>
+
+
+
 
 	</div>
 
@@ -158,8 +201,62 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 			var vals = $("input").data("id");
-			//是否展示
+			//点击操作确认按钮
+			var data_id = [];
+			$("#opration_btu").click(function() {
+				var opration_val=$(".opation select option:selected").val();
+				if(opration_val==0){
+					layer.alert('请选择操作', {
+						skin: 'layui-layer-molv' //样式类名
+						,closeBtn: 0
+						});
+				}
+				else if(opration_val==1){
+				layer.confirm('你确认要删除吗？', {
+					  btn: ['确认','取消'] //按钮
+					}, function(){
+						var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+										for (var i = 0; i < child.length; i++) {
+											data_id.push($(child[i])[0].dataset.id);
+										}
+										$.ajax({
+											type: "POST",
+											url: "{:url('admin/User/dels')}",
+											data: {
+												"id": data_id,
+											},
+											success: function(data) {
+												console.log("成功");
+												console.log(data);
+												var data=$.parseJSON(data);
+												layer.alert(data.info, {
+													skin: 'layui-layer-molv' //样式类名
+													,closeBtn: 0
+													});
+												location.reload();
+												data_id.splice(0, data_id.length);
+											},
+											error: function(data) {
+												var data=$.parseJSON(data);
+												layer.alert(data.info, {
+													skin: 'layui-layer-molv' //样式类名
+													,closeBtn: 0
+													});
+											console.log(data);
+												console.log("错误");
+												data_id.splice(0, data_id.length);
+											}
+										});
+					});
+						
+					
+				}
+				
 
+			});
+
+
+			// console.log(data_id);
 			//全选
 			form.on('checkbox(allChoose)', function(data) {
 				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
@@ -194,7 +291,7 @@
 				console.log(status);
 				$.ajax({
 					type: "POST",
-					url: "{:url('admin/admin/status')}",
+					url: "{:url('admin/user/status')}",
 					data: {
 						"id": id,
 						"status": status

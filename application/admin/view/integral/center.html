@@ -20,6 +20,10 @@
 
 	}
 
+	.layui-form-item {
+		max-width: 100% !important;
+	}
+
 	.layui-form-label {
 		width: 26% !important;
 	}
@@ -36,6 +40,80 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
+
+	.pagination {
+		float: right;
+	}
+
+	/* 弹窗 */
+	.tanchuang {
+		width: 100%;
+		min-height: 800px;
+		background: RGBA(0, 0, 0, 0.3);
+		position: fixed;
+		z-index: 9999;
+	}
+
+	.tanchuang-content {
+		width: 410px;
+		height: 300px;
+		background: #fff;
+		z-index: 10000;
+		position: fixed;
+		top: 25%;
+		left: 34%;
+		margin: 0 auto;
+	}
+
+	.close {
+		width: 30px;
+	}
+
+	.clear {
+		clear: both;
+	}
+
+	.title-a {
+		background: RGB(247, 247, 247);
+	}
+
+	.content-title {
+		padding-top: 10px;
+		padding-left: 20px;
+		float: left;
+		width: 50%;
+		height: 40px;
+
+	}
+
+	.noshow {
+		display: none;
+	}
+
+	.btu {
+		width: 100px;
+		height: 30px;
+		border-radius: 10px;
+		color: #fff;
+	}
+
+	.btus_submit {
+		background: #007AFF;
+	}
+
+	.btus_close {
+		background: #B2B2B2 !important;
+	}
+
+	.buttons {
+		width: 206px;
+		margin: 20px auto;
+	}
+
+	.input {
+		text-align: center;
+		padding: 10px;
+	}
 </style>
 
 
@@ -45,30 +123,55 @@
 
 	{block name="content"}
 
+	<!-- 弹窗 -->
+	<div class="tanchuang noshow">
+		<div class="tanchuang-content ">
+			<div class="title-a clear">
+				<div class="content-title">给<span class="names"></span>赠送积分</div>
+				<div class="close"><img src="__STATIC__/admin/common/img/a7.png"></div>
+			</div>
+			<!-- 里面的内容 -->
 
+			<div class="dom" style="padding-top: 23px;">
+				<div class="input">
+					<input type="hidden" value="" class="integral_id">
+					赠送积分：
+					<input type="text" id="jifen" />
+				</div>
+				<div class="input">备注信息：
+					<input type="text" id="note" />
+				</div>
+				<div class="buttons">
+					<button type="button" class="btus_submit btu">确认</button>
+					<button type="button" class=" btu btus_close">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="">
+			<form class="layui-form" action="{:url('admin/Integral/search')}">
 				<div class="layui-form-item">
 					<div class="layui-inline">
 						<label class="layui-form-label">会员账号：</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+							<input type="text" name="phone_num" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
 					<div class="layui-inline">
 						<label class="layui-form-label">类型：</label>
 						<div class="layui-input-inline">
-							<select name="interest" id="admin_status">
-								<option value="1" selected="">启用</option>
-								<option value="2">禁用</option>
+							<select name="integral_type" id="admin_status">
+								<option value="" selected="">所有</option>
+								<option value="1" >获得</option>
+								<option value="-1">消费</option>
 							</select>
 						</div>
 					</div>
 
 					<div class="layui-inline">
-						<a class="layui-btn search_btn">搜索</a>
+						<button class="layui-btn search_btn" type="submit">搜索</button>
 					</div>
 				</div>
 
@@ -76,7 +179,7 @@
 
 		</blockquote>
 		<div class="layui-form news_list">
-			
+
 			<table class="layui-table">
 				<colgroup>
 					<col width="3%">
@@ -85,10 +188,8 @@
 				<thead>
 					<tr>
 						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-
 						<th>用户账号</th>
 						<th>积分</th>
-
 						<th>剩余积分</th>
 						<th>类型</th>
 						<th>时间</th>
@@ -96,27 +197,47 @@
 						<th>操作</th>
 					</tr>
 				</thead>
+				{if !empty($integral_data)}
+				{volist name="integral_data" id="vo"}
 				<tbody class="news_content">
-					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>admin</td>
-						<td>admin</td>
-						<td>2</td>
-						<td>111</td>
-						<td>2018-09-26</td>
-						<td>2018-09-26 </td>
-						<td>
-							<a class="layui-btn layui-btn-mini integral" >赠送积分</a>
 
-							<a href="{:url('admin/integral/detail')}" class="layui-btn layui-btn-danger layui-btn-mini " data-id="undefined">详情</a>
+					<tr>
+						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$vo.integral_id}"></td>
+						<td>{$vo.phone_num}</td>
+						<td>{$vo.integral_operation|show_integral_operation}</td>
+						<td>{$vo.integral_balance}</td>
+						<td>{$vo.integral_type|show_integral_type}</td>
+						<td>{$vo.operation_time|date="Y-m-d H:i:s",###}</td>
+						<td>{$vo.integral_remarks} </td>
+						<td>
+							<a class="layui-btn layui-btn-mini integral" data-id="{$vo.integral_id}" data-name="{$vo.phone_num}">赠送积分</a>
+							<a href="{:url('admin/integral/detail',['id'=>$vo.user_id])}" class="layui-btn layui-btn-danger layui-btn-mini "
+							 data-id="undefined">详情</a>
 						</td>
 					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div id="page">
 
+				</tbody>
+				{/volist}
+				{/if}
+			</table>
+			<div id="page">
+				<div class="opation" style="width: 200px; float: left;">
+					<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
+						<option check="" value="0">请选择</option>
+						<option value="1">批量删除</option>
+					</select>
+				</div>
+				<div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
+					<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
+					</button>
+				</div>
+				{if !empty($integral_data)}
+				{$integral_data->render()}
+				{/if}
+
+			</div>
 		</div>
+
 
 	</div>
 
@@ -140,26 +261,68 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 			var vals = $("input").data("id");
-		
-				$(".integral").on("click", function() {
-					var dhtml="";
-					dhtml+='<div class="layui-form-item " style="width: 90%;"><label class="layui-form-label">赠送积分:</label><div class="layui-input-block"><input type="text" name="goods_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" ></div></div>'
-					+'<div class="layui-form-item " style="width: 90%;"><label class="layui-form-label">备注信息:</label><div class="layui-input-block"><input type="text" name="goods_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" ></div></div>'
-					var title="给8447466赠送积分"
-				                  layer.open({
-									      title:title, 
-										  type: 1,
-										  skin: 'layui-layer-rim', //加上边框
-										  area: ['420px', '300px'], //宽高
-										  btn: ['确认', '取消',],
-										  btnAlign: 'c',
-										  content: dhtml,
-										  yes: function(index, layero){
-											// 确认按钮回调函数
-											  }
-});
-							});
-			
+
+
+			//点击操作确认按钮
+			var data_id = [];
+			$("#opration_btu").click(function() {
+				var opration_val = $(".opation select option:selected").val();
+
+				// 点击请选择选项
+				if (opration_val == 0) {
+					layer.alert('请选择操作', {
+						skin: 'layui-layer-molv' //样式类名
+							,
+						closeBtn: 0
+					});
+				}
+				// 点击删除按钮
+				else if (opration_val == 1) {
+					//询问框
+					layer.confirm('你确认要删除吗？', {
+					  btn: ['确认','取消'] //按钮
+					}, function(){
+						var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+						for (var i = 0; i < child.length; i++) {
+							data_id.push($(child[i])[0].dataset.id);
+						}
+						$.ajax({
+							type: "POST",
+							url: "{:url('admin/integral/dels')}",
+							data: {
+								"id": data_id,
+							},
+							success: function(data) {
+								 var data = $.parseJSON(data);
+								layer.alert(data.info, {
+									skin: 'layui-layer-molv' //样式类名
+										,
+									closeBtn: 0
+								});
+								location.reload();
+								data_id.splice(0, data_id.length);
+							},
+							error: function(data) {
+								var data = $.parseJSON(data);
+								layer.alert(data.info, {
+									skin: 'layui-layer-molv' //样式类名
+										,
+									closeBtn: 0
+								});
+                                data_id.splice(0, data_id.length);
+								console.log(data);
+								console.log("错误")
+							}
+						});
+						
+					});
+					
+				}
+
+
+			});
+
+
 			//全选
 			form.on('checkbox(allChoose)', function(data) {
 				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
@@ -182,6 +345,64 @@
 			})
 
 		})
+	</script>
+	<script type="text/javascript">
+		$(".integral").on('click', function() {
+			$("#jifen").val("");
+			$("#note").val("");
+			$(".names").html($(this).data("name"));
+			$(".tanchuang").removeClass("noshow");
+			var data_id = $(this).data("id");
+			$(".integral_id").val(data_id);
+		});
+		$(".close").on('click', function() {
+			$("#jifen").val("");
+			$("#note").val("");
+
+			$(".tanchuang").addClass("noshow");
+		});
+		$(".btus_close").on('click', function() {
+			$("#jifen").val("");
+			$("#note").val("");
+			$(".tanchuang").addClass("noshow");
+		});
+
+		// 弹窗选项卡切换
+
+		$(".btus_submit").click(function() {
+			$(".tanchuang").addClass("noshow");
+			var jifen = $("#jifen").val();
+			var note = $("#note").val();
+			var integral_id = $(".integral_id").val();
+			$.ajax({
+				type: "POST",
+				url: "{:url('admin/integral/add')}",
+				data: {
+					"integral": jifen,
+					"integral_remarks": note,
+					"integral_id": integral_id
+				},
+				success: function(data) {
+					var data = $.parseJSON(data);
+					layer.alert(data.info, {
+						skin: 'layui-layer-molv' //样式类名
+							,
+						closeBtn: 0
+					});
+					$("#jifen").val("");
+					$("#note").val("");
+				},
+				error: function(data) {
+
+					layer.alert(data.info, {
+						skin: 'layui-layer-molv' //样式类名
+							,
+						closeBtn: 0
+					});
+
+				}
+			});
+		});
 	</script>
 
 	{/block}

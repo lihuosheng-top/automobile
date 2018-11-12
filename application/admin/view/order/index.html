@@ -8,26 +8,33 @@
 	body {
 		background: #fff;
 	}
-
+	
 	label {
 		text-align: left !important;
 	}
-
+	
 	.layui-form-item {
 		width: 100%;
 		margin-bottom: 0;
 		margin-top: 0;
-
 	}
-
+	
+	.layui-form-item {
+		max-width: 100% !important;
+	}
+	
+	.layui-form-item {
+		max-width: 100% !important;
+	}
+	
 	.layui-form-label {
 		width: 26% !important;
 	}
-
+	
 	.layui-input-inline {
 		width: 70% !important;
 	}
-
+	
 	#page {
 		width: 96%;
 		height: 50px;
@@ -36,17 +43,17 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
-
+	
 	.time {
 		width: 110px;
 		display: inline-block;
 	}
-
+	
 	.noshow {
 		display: none;
 	}
-
 	/* 弹窗 */
+	
 	.tanchuang {
 		width: 100%;
 		min-height: 800px;
@@ -54,7 +61,7 @@
 		position: fixed;
 		z-index: 9999;
 	}
-
+	
 	.tanchuang-content {
 		width: 800px;
 		height: 500px;
@@ -64,41 +71,40 @@
 		top: 20%;
 		left: 20%;
 	}
-
+	
 	.close {
 		width: 30px;
 	}
-
+	
 	.clear {
 		clear: both;
 	}
-
+	
 	.title-a {
 		background: RGB(247, 247, 247);
 	}
-
+	
 	.content-title {
 		padding-top: 10px;
 		padding-left: 20px;
 		float: left;
 		width: 50%;
 		height: 40px;
-
 	}
-
 	/* 弹窗内容样式 */
+	
 	.list-a ul li {
 		float: left;
 		margin-left: 26px;
 		font-size: 12px;
 	}
-
+	
 	.dom>ul {
 		margin-top: 10px;
 		margin-bottom: 0px;
 		margin-left: 50px;
 	}
-
+	
 	.dom>ul>li {
 		float: left;
 		width: 100px;
@@ -108,13 +114,13 @@
 		height: 40px;
 		line-height: 40px;
 	}
-
+	
 	.list {
 		padding-top: 20px;
 		margin-left: 50px;
 		border-top: RGB(242, 242, 242) solid 1px;
 	}
-
+	
 	.cancel {
 		border-bottom: solid 1px RGB(242, 242, 242);
 		margin-left: 26px;
@@ -122,113 +128,125 @@
 		margin-top: 18px;
 		font-size: 12px;
 	}
-	.reply{
+	
+	.reply {
 		margin: 15px;
 	}
-	.reply-content{
-		    margin-top: 11px;
-			min-height: 175px;
-    max-height: 175px;
-    overflow-y: scroll;
+	
+	.reply-content {
+		margin-top: 11px;
+		min-height: 175px;
+		max-height: 175px;
+		overflow-y: scroll;
 	}
-	.opation>div{
+	
+	.opation>div {
 		float: left;
 		margin-left: 26px;
 		margin-top: 10px;
 	}
-	.btu-sumit{
-	float: right;
-    color: #fff;
-    background: #0099FF;
-    border-radius: 10px;
-    width: 100px;
-    height: 40px;
-    margin-right: 24px;
+	
+	.btu-sumit {
+		float: right;
+		color: #fff;
+		background: #0099FF;
+		border-radius: 10px;
+		width: 100px;
+		height: 40px;
+		margin-right: 24px;
 	}
-	.active{
+	
+	.active {
 		background: #F2F2F2;
 	}
 	/* 物流线 */
-
-/* flow start */
-.flowSwrap {
-	position: relative;
-	margin: 0 auto;
-	width:720px;
-	/*background-color: rgba(0,0,0,.3);*/
-}
-
-.flowCell {
-	overflow: hidden;
-}
-.cell-left {
-    width: 190px;
-    padding-right: 28px;
-    text-align: right;
-    display: table-cell; 
-    vertical-align:middle;
-    /*background-color: goldenrod;*/
-}
-.cell-right {
-    padding-left: 28px;
-    text-align: left;
-    display: table-cell; 
-    vertical-align:middle;
-    /*background-color:green;*/
-}
-.cell-center {
-    height:60px;
-    width: 20px;
-    display: table-cell; 
-    vertical-align:middle;
-    /*background-color: azure;*/
-}
-.cell-left .t1 {
-	font-size: 10px;
-}
-.cell-left .t2 {
-	font-size: 10px;
-}
-
-.cell-right .t1_start {
-	font-size: 10px;
-}
-.cell-right .t1 {
-	font-size: 10px;
-}
-.cell-right .t2 {
-	font-size: 10px;
-}
-
-.flow-line {
-	position: absolute;
-	width: 3px;
-	background-color: #aaaaaa;
-	/*top:10px;
+	/* flow start */
+	
+	.flowSwrap {
+		position: relative;
+		margin: 0 auto;
+		width: 720px;
+		/*background-color: rgba(0,0,0,.3);*/
+	}
+	
+	.flowCell {
+		overflow: hidden;
+	}
+	
+	.cell-left {
+		width: 190px;
+		padding-right: 28px;
+		text-align: right;
+		display: table-cell;
+		vertical-align: middle;
+		/*background-color: goldenrod;*/
+	}
+	
+	.cell-right {
+		padding-left: 28px;
+		text-align: left;
+		display: table-cell;
+		vertical-align: middle;
+		/*background-color:green;*/
+	}
+	
+	.cell-center {
+		height: 60px;
+		width: 20px;
+		display: table-cell;
+		vertical-align: middle;
+		/*background-color: azure;*/
+	}
+	
+	.cell-left .t1 {
+		font-size: 10px;
+	}
+	
+	.cell-left .t2 {
+		font-size: 10px;
+	}
+	
+	.cell-right .t1_start {
+		font-size: 10px;
+	}
+	
+	.cell-right .t1 {
+		font-size: 10px;
+	}
+	
+	.cell-right .t2 {
+		font-size: 10px;
+	}
+	
+	.flow-line {
+		position: absolute;
+		width: 3px;
+		background-color: #aaaaaa;
+		/*top:10px;
 	left:210px;*/
-	z-index: -1;
-}
-
-
-.firstImg {
-	height:20px;
-	width:20px;
-}
-.childrenBody button{
-	width: 100px;
-	height: 30px;
-	color: #fff;
-	border-radius:10px ;
-}
-
-/*  flow  end */
-
-
+		z-index: -1;
+	}
+	
+	.firstImg {
+		height: 20px;
+		width: 20px;
+	}
+	
+	tbody button {
+		width: 100px;
+		height: 30px;
+		color: #fff;
+		border-radius: 10px;
+	}
+	/*  flow  end */
+	
+	.pagination {
+		float: right;
+	}
 </style>
 
-
-
 {/block}
+
 <body>
 
 	{block name="content"}
@@ -244,14 +262,14 @@
 			<div class="dom">
 				<ul class="clear card">
 					<li class="active" data-id="list-a">订单处理</li>
-					<li data-id = "list-b">物流跟踪</li>
+					<li data-id="list-b">物流跟踪</li>
 				</ul>
-				
-			 	<div class="list-a list">
+
+				<div class="list-a list">
 					<ul class="clear">
 						<li>
 							<span>订单状态：</span>
-							<span >{{status}}</span>
+							<span>{{status}}</span>
 						</li>
 						<li>
 							<span>支付方式：</span>
@@ -274,7 +292,7 @@
 						<span>取消原因:</span>
 						<span>商品无货</span>
 					</div>
-				    <div class="reply">
+					<div class="reply">
 						<span>官方回复</span>
 						<span><input type="text" name="" id="" value="" placeholder="请输入处理备注" style="width: 400px; height: 30px;"/></span>
 						<div class="reply-content">
@@ -286,15 +304,15 @@
 						<div class="select-operation">
 							<span>选择状态</span>
 							<select>
-								<option value ="">请选择</option>
-								<option value ="">已关闭</option>
+								<option value="">请选择</option>
+								<option value="">已关闭</option>
 							</select>
 						</div>
 						<div class="select-operation">
 							<span>退款方式</span>
 							<select>
-								<option value ="">请选择</option>
-								<option value ="">已关闭</option>
+								<option value="">请选择</option>
+								<option value="">已关闭</option>
 							</select>
 						</div>
 						<div class="select-operation">
@@ -304,64 +322,64 @@
 						<button type="button" class="btu-sumit">确定</button>
 					</div>
 				</div>
-			   <div class="list-b list noshow">
-				   <div class="flowSwrap">
-			<!--流程线-->
-			<div class="flow-line" style="left: 226.5px; height:340px;"></div>
-			<!--流程区域 start-->
-			<div class="flowCell">
-				<div class="cell-left fc-orange">
-					<p class="t1">20:00</p>
-					<p class="t2">2018-01-01</p>
+				<div class="list-b list noshow">
+					<div class="flowSwrap">
+						<!--流程线-->
+						<div class="flow-line" style="left: 226.5px; height:340px;"></div>
+						<!--流程区域 start-->
+						<div class="flowCell">
+							<div class="cell-left fc-orange">
+								<p class="t1">20:00</p>
+								<p class="t2">2018-01-01</p>
+							</div>
+							<div class="cell-center  fc-orange">
+								<img id="startImg" src="__STATIC__/admin/common/img/f1.png">
+							</div>
+							<div class="cell-right  fc-orange">
+								<p class="t1_start">订单已竣工</p>
+							</div>
+						</div>
+						<div class="flowCell">
+							<div class="cell-left  fc-grey">
+								<p class="t1">20:00</p>
+								<p class="t2">2018-01-01</p>
+							</div>
+							<div class="cell-center  fc-grey">
+								<img src="__STATIC__/admin/common/img/f2.png">
+							</div>
+							<div class="cell-right  fc-grey">
+								<p class="t1">施工小哥已接单，请等待</p>
+								<p class="t2">小哥电话：18612123233</p>
+							</div>
+						</div>
+						<div class="flowCell">
+							<div class="cell-left  fc-grey">
+								<p class="t1">20:00</p>
+								<p class="t2">2018-01-01</p>
+							</div>
+							<div class="cell-center  fc-grey">
+								<img src="__STATIC__/admin/common/img/f2.png">
+							</div>
+							<div class="cell-right  fc-grey">
+								<p class="t1">施工小哥已接单，请等待</p>
+								<p class="t2">小哥电话：18612123233</p>
+							</div>
+						</div>
+						<div class="flowCell">
+							<div class="cell-left fc-grey">
+								<p class="t1">20:00</p>
+								<p class="t2">2018-01-01</p>
+							</div>
+							<div class="cell-center  fc-grey">
+								<img id="endImg" src="__STATIC__/admin/common/img/f2.png">
+							</div>
+							<div class="cell-right  fc-grey">
+								<p class="t1">订单已提交</p>
+							</div>
+						</div>
+						<!--流程区域 end-->
+					</div>
 				</div>
-				<div class="cell-center  fc-orange">
-					<img id="startImg" src="__STATIC__/admin/common/img/f1.png">
-				</div>
-				<div class="cell-right  fc-orange">
-					<p class="t1_start">订单已竣工</p>
-				</div>
-			</div>
-			<div class="flowCell">
-				<div class="cell-left  fc-grey">
-					<p class="t1">20:00</p>
-					<p class="t2">2018-01-01</p>
-				</div>
-				<div class="cell-center  fc-grey">
-					<img src="__STATIC__/admin/common/img/f2.png">
-				</div>
-				<div class="cell-right  fc-grey">
-					<p class="t1">施工小哥已接单，请等待</p>
-					<p class="t2">小哥电话：18612123233</p>
-				</div>
-			</div>
-			<div class="flowCell">
-				<div class="cell-left  fc-grey">
-					<p class="t1">20:00</p>
-					<p class="t2">2018-01-01</p>
-				</div>
-				<div class="cell-center  fc-grey">
-					<img src="__STATIC__/admin/common/img/f2.png">
-				</div>
-				<div class="cell-right  fc-grey">
-					<p class="t1">施工小哥已接单，请等待</p>
-					<p class="t2">小哥电话：18612123233</p>
-				</div>
-			</div>
-			<div class="flowCell">
-				<div class="cell-left fc-grey">
-					<p class="t1">20:00</p>
-					<p class="t2">2018-01-01</p>
-				</div>
-				<div class="cell-center  fc-grey">
-					<img id="endImg" src="__STATIC__/admin/common/img/f2.png">
-				</div>
-				<div class="cell-right  fc-grey">
-					<p class="t1">订单已提交</p>
-				</div>
-			</div>
-			<!--流程区域 end-->
-		</div>
-			   </div>
 			</div>
 		</div>
 	</div>
@@ -395,8 +413,14 @@
 						<label class="layui-form-label">订单状态</label>
 						<div class="layui-input-inline">
 							<select name="interest" id="admin_status">
-								<option value="1" selected="">启用</option>
-								<option value="2">禁用</option>
+
+								<option value="1" selected="">全部</option>
+								<option value="2">待发货</option>
+								<option value="3">待付款</option>
+								<option value="4">已发货</option>
+								<option value="5">已完成</option>
+								<option value="6">已关闭</option>
+
 							</select>
 						</div>
 					</div>
@@ -410,10 +434,11 @@
 								 style="width: 100px; font-size: 13px;"></span>
 
 						</div>
+
 					</div>
 
 					<div class="layui-inline">
-						<a class="layui-btn search_btn">搜索</a>
+						<button class="layui-btn search_btn" type="submit">搜索</button>
 					</div>
 				</div>
 
@@ -446,7 +471,7 @@
 					<tr>
 						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
 						<td>2</td>
-						<td><img src="111" /></td>
+						<td style="width: 40px; height: 40px;"><img src="111" /></td>
 						<td>张三</td>
 						<td>管理员</td>
 						<td>管理员</td>
@@ -460,27 +485,27 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-
-		<div id="page">
-
-			<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-				<option value="">批量删除</option>
-			</select>
-			<button type="button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定
-			</button>
+			<div id="page">
+				<div class="opations" style="width: 200px; float: left;">
+					<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
+						<option check="" value="0">请选择</option>
+						<option value="1">批量删除</option>
+					</select>
+				</div>
+				<div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
+					<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
+					</button>
+				</div>
+			</div>
 		</div>
 
 	</div>
-
 
 	{/block}
 
 	<!--_footer 作为公共模版分离出去-->
 	{include file="template/_footer" /}
 	<!--/_footer 作为公共模版分离出去-->
-
-
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
@@ -494,7 +519,60 @@
 				$ = layui.jquery;
 			var vals = $("input").data("id");
 			//是否展示
+			//点击操作确认按钮
+			var data_id = [];
+			$("#opration_btu").click(function() {
+				var opration_val = $(".opations select option:selected").val();
+				console.log(opration_val);
+				if(opration_val == 0) {
+					layer.alert('请选择操作', {
+						skin: 'layui-layer-molv' //样式类名
+							,
+						closeBtn: 0
+					});
+				} else if(opration_val == 1) {
+					layer.confirm('你确认要删除吗？', {
+						btn: ['确认', '取消'] //按钮
+					}, function() {
+						var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+						for(var i = 0; i < child.length; i++) {
+							data_id.push($(child[i])[0].dataset.id);
+						}
+						$.ajax({
+							type: "POST",
+							url: "{:url('aaaa')}",
+							data: {
+								"id": data_id,
+							},
+							success: function(data) {
+								console.log("成功");
+								console.log(data);
+								var data = $.parseJSON(data);
+								layer.alert(data.info, {
+									skin: 'layui-layer-molv' //样式类名
+										,
+									closeBtn: 0
+								});
+								location.reload();
+								data_id.splice(0, data_id.length);
+							},
+							error: function(data) {
+								var data = $.parseJSON(data);
+								layer.alert(data.info, {
+									skin: 'layui-layer-molv' //样式类名
+										,
+									closeBtn: 0
+								});
+								console.log(data);
+								console.log("错误");
+								data_id.splice(0, data_id.length);
+							}
+						});
+					});
 
+				}
+
+			});
 			//全选
 			form.on('checkbox(allChoose)', function(data) {
 				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
@@ -508,7 +586,7 @@
 			form.on("checkbox(choose)", function(data) {
 				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
 				var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
-				if (childChecked.length == child.length) {
+				if(childChecked.length == child.length) {
 					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
 				} else {
 					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
@@ -516,21 +594,18 @@
 				form.render('checkbox');
 			})
 
-
-
-
 		})
 	</script>
 	<script type="text/javascript">
 		//时间
-		if ($(".datetimepickers").length > 0) {
+		if($(".datetimepickers").length > 0) {
 			$('.datetimepickers').datetimepicker({
 				timepicker: false,
 				scrollMonth: false
 			})
 		}
 
-		if ($(".datetimepickers2").length > 0) {
+		if($(".datetimepickers2").length > 0) {
 			var datenow = new Date();
 			datenow = datenow.getFullYear() + "/" + (datenow.getMonth() + 1) + "/" + (datenow.getDate());
 			$('.datetimepickers2').datetimepicker({
@@ -539,7 +614,7 @@
 				scrollMonth: false
 			})
 		}
-		if ($(".datetimepicker").length > 0) {
+		if($(".datetimepicker").length > 0) {
 			var datenow = new Date();
 			datenow = datenow.getFullYear() + "/" + (datenow.getMonth() + 1) + "/" + (datenow.getDate());
 			var date = $("#beginTime").val();
@@ -611,15 +686,15 @@
 			$(".tanchuang").addClass("noshow");
 		});
 		// 弹窗选项卡切换
-		$(".card").on('click','li',function(){
+		$(".card").on('click', 'li', function() {
 			$(this).addClass("active");
 			$(this).siblings().removeClass("active");
-			var dait_id=$(this).data("id");
-			$("."+dait_id).removeClass("noshow");
-			$("."+dait_id).siblings("div").addClass("noshow");
+			var dait_id = $(this).data("id");
+			$("." + dait_id).removeClass("noshow");
+			$("." + dait_id).siblings("div").addClass("noshow");
 
 		});
-		$(".btu-sumit").click(function(){
+		$(".btu-sumit").click(function() {
 			$(".tanchuang").addClass("noshow");
 		});
 	</script>
@@ -628,15 +703,16 @@
 			el: '.list-a',
 			data: {
 				status: '取消订单',
-				payment:'1111',
-				amount:'2222',
-				points_Deduction:'3333',
-				real_Pay:'4444',
-				
+				payment: '1111',
+				amount: '2222',
+				points_Deduction: '3333',
+				real_Pay: '4444',
+
 			}
 		})
 	</script>
 	{/block}
 
 </body>
+
 </html>

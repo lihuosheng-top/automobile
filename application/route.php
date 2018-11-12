@@ -23,6 +23,7 @@ Route::group("",[
     "reservation"=>"index/index/reservation",//预约服务 首页
     "reservation_detail"=>"index/index/reservation_detail",//预约服务 详情
     "reservation_info"=>"index/index/reservation_info",//预约服务 详情
+    "shop_order"=>"index/index/shop_order",//预约服务 详情
 
 
     /*商品列表*/
@@ -72,6 +73,10 @@ Route::group("",[
     // 分类
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
+    "goods_list"=>"index/Classify/goods_list",//商品列表
+    "goods_detail"=>"index/Classify/goods_detail",//商品详情
+
+
     // 购物车
     "cart_index"=>"index/Cart/cart_index",
     // 我的
@@ -86,7 +91,8 @@ Route::group("",[
 Route::group("admin",[
     /*首页*/
     "/$"=>"admin/index/index",
-
+   /* 后台首页 */
+    "home_index"=>"admin/Home/index",
 
     /*登录页面*/
     "index"=>"admin/Login/index",
@@ -171,14 +177,27 @@ Route::group("admin",[
     "user_index"=>"admin/User/index", //会员概况
     "user_edit"=>"admin/User/edit",     //会员编辑
     "user_grade"=>"admin/User/grade",  //会员等级
+    "user_static"=>"admin/User/status", //会员页面的账户状态修改
+    "user_del"=>"admin/User/del", //会员删除
+    "user_dels"=>"admin/User/dels", //会员批量删除
+    "user_search"=>"admin/User/search", //会员搜索
     /*充值和提现*/
     "recharge_list"=>"admin/Recharge/index", //充值和提现首页
     "recharge_edit"=>"admin/Recharge/edit",   //充值和提现编辑
+    "recharge_del"=>"admin/Recharge/del",   //充值和提现删除
+    "recharge_dels"=>"admin/Recharge/dels",   //充值和提现批量删除
+    "recharge_search"=>"admin/Recharge/search",   //充值和提现搜索功能
+
     /*资金管理*/
     "capital_index"=>"admin/Capital/index",  //资金管理界面
+    "capital_search"=>"admin/Capital/search",  //资金管理搜索功能
     /*积分中心*/
     "integral_center"=>"admin/Integral/index", //积分中心
     "integral_detail"=>"admin/Integral/detail", //积分详情
+    "integral_add"=>"admin/Integral/add", //积分添加
+    "integral_del"=>"admin/Integral/del", //积分列表删除
+    "integral_dels"=>"admin/Integral/dels", //积分列表批量删除
+    "integral_search"=>"admin/Integral/search", //积分列表搜索功能
 
 
 
@@ -235,8 +254,6 @@ Route::group("admin",[
     "order_evaluate_details"=>"admin/Order/evaluate_details", //******订单评价详情
 
     "order_after_sale"=>"admin/Order/after_sale", //订单维修售后
-    "order_after_sale_wait_handle"=>"admin/Order/after_sale_wait_handle", //****订单维修售后待处理
-    "order_after_sale_wait_deliver"=>"admin/Order/after_sale_wait_deliver", //****订单维修售后待发货
 
     "order_invoice"=>"admin/Order/invoice", //发票列表
     "order_invoice_edit"=>"admin/Order/invoice_edit", //****发票信息

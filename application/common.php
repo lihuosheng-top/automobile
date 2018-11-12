@@ -458,6 +458,104 @@ function show_category($arr){
     }
 }
 
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:判断是后台用户配件商还是服务商（1为配件商，2为服务商）
+ **************************************
+ * @param $data
+ */
+function show_user_type($data){
+    if($data==1){
+        echo '配件商';
+    }else if($data==2){
+        echo '服务商';
+    }else if($data==3) {
+        echo '车主';
+    }else{
+        echo '其他';
+    }
+}
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:判断后台会员等级是E还是其他（1为E级）
+ **************************************
+ * @param $data
+ */
+function show_user_grade($data){
+    $res =\think\Db::name('user_grade')->field('user_grade_content')->where('user_grade_types',$data)->find();
+    $grade_content=$res['user_grade_content'];
+    echo $grade_content;
+}
+
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:后台充值提现（类型）
+ **************************************
+ * @param $data
+ */
+function show_recharge_type($data){
+    if($data==1){
+        echo '充值';
+    }else if($data==-1){
+        echo '提现';
+    }else{
+        echo '其他';
+    }
+}
+
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:后台充值提现到款状态设置
+ **************************************
+ * @param $data
+ */
+function show_recharge_status($data){
+    if($data==1){
+        echo '已到账';
+    }else if($data==2){
+        echo '未到账';
+    }else{
+        echo '其他';
+    }
+}
+
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:积分操作状态（1为获取，-1为消费）
+ **************************************
+ * @param $data
+ */
+function show_integral_type($data){
+    if($data==-1){
+        echo '消费';
+    }else if($data==1){
+        echo '获得';
+    }else{
+        echo '其他';
+    }
+}
+
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:积分操作(大于0则为+，小于0则为-，等于0不变)
+ **************************************
+ * @param $data
+ */
+function show_integral_operation($data){
+    if($data>0){
+        echo '+'.$data;
+    }else if($data<0){
+        echo $data;
+    }else{
+        echo '0';
+    }
+}
 
 
 /**

@@ -34,4 +34,9 @@ class Index extends Controller
     {
         return view("reservation_info");
     }
+    // 提交订单 --店铺洗车
+    public function Shop_order()
+    {
+        return view("shop_order");
+    }
 }
