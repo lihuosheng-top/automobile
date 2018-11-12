@@ -108,8 +108,12 @@ class Brand extends Controller{
      */
     public function del($id){
 
+        $brand_images = db("brand")->where("id",$id)->find();
         $bool = db("brand")->where("id",$id)->delete();
         if($bool){
+            if(!empty($brand_images)){
+                unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$brand_images['brand_images']);
+            }
             $this->success("删除成功",url("admin/Brand/index"));
         }else{
             $this->success("删除失败",url("admin/Brand/index"));

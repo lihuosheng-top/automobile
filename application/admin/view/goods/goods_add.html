@@ -207,10 +207,10 @@
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
 			<div class="layui-input-inline">
-				<select name="goods_brand">
-					<option value="浙江" selected="">浙江省</option>
-					<option value="你的工号">江西省</option>
-					<option value="你最喜欢的老师">福建省</option>
+				<select name="goods_brand_id">
+					{volist name="brand" id="val"}
+					<option value="{$val.id}" selected="">{$val.brand_name}</option>
+					{/volist}
 				</select>	</div>
 				<div class="layui-input-inline">
 					<a href="{:url('admin/Brand/add')}" style="line-height: 40px;">添加品牌</a>

@@ -61,10 +61,11 @@ class Goods extends Controller{
 
     public function add($pid=0){
         $goods_list = [];
+        $brand = db("brand")->where("brand_status",1)->select();
         if($pid == 0){
             $goods_list = getSelectList("goods_type");
         }
-        return view("goods_add",["goods_list"=>$goods_list]);
+        return view("goods_add",["goods_list"=>$goods_list,"brand"=>$brand]);
     }
 
     /**
@@ -98,7 +99,7 @@ class Goods extends Controller{
                 $file = request()->file('goods_images');
                 if(!empty($file)) {
                     foreach ($file as $key => $value) {
-                        $info = $value->move(ROOT_PATH . 'public' . DS . 'upload');
+                        $info = $value->move(ROOT_PATH . 'public' . DS . 'uploads');
                         $goods_url = str_replace("\\", "/", $info->getSaveName());
                         $goods_images[] = ["goods_images" => $goods_url, "goods_id" => $goodsid];
                     }
@@ -268,6 +269,7 @@ class Goods extends Controller{
         }
 
     }
+
 
 
     /**
