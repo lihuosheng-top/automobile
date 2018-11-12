@@ -76,10 +76,10 @@ class Capital extends Controller{
                     $listRow = 3;//每页3行记录
                     $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
-//                        'var_page' => 'page',
-                        'path'     => url('admin/Capital/index'),//这里根据需要修改url
+                        'var_page' => 'page',
+                        'path'     => url('admin/Capital/search'),//这里根据需要修改url
                         'query'    =>  request()->param(),
-//                        'fragment' => '',
+                        'fragment' => '',
                     ]);
                     $user_list->appends($_GET);
                 }else if((empty($timemin))&&(!empty($timemax))){
@@ -100,7 +100,6 @@ class Capital extends Controller{
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                         'var_page' => 'page',
                         'path'     => url('admin/Capital/search'),//这里根据需要修改url
-//                        'query'    => [],
                         'query'    =>  request()->param(),
                         'fragment' => '',
                     ]);
@@ -124,7 +123,6 @@ class Capital extends Controller{
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                         'var_page' => 'page',
                         'path'     => url('admin/Capital/search'),//这里根据需要修改url
-//                        'query'    => [],
                         'query'    =>  request()->param(),
                         'fragment' => '',
                     ]);
@@ -147,7 +145,6 @@ class Capital extends Controller{
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                         'var_page' => 'page',
                         'path'     => url('admin/Capital/search'),//这里根据需要修改url
-//                        'query'    => [],
                         'query'    =>  request()->param(),
                         'fragment' => '',
                     ]);
@@ -176,7 +173,6 @@ class Capital extends Controller{
                 $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                     'var_page' => 'page',
                     'path'     => url('admin/Capital/search'),//这里根据需要修改url
-//                    'query'    => [],
                     'query'    =>  request()->param(),
                     'fragment' => '',
                 ]);
@@ -198,7 +194,6 @@ class Capital extends Controller{
                 $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                     'var_page' => 'page',
                     'path'     => url('admin/Capital/search'),//这里根据需要修改url
-//                    'query'    => [],
                     'query'    =>  request()->param(),
                     'fragment' => '',
                 ]);
