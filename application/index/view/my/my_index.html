@@ -21,7 +21,12 @@
                 <div class="user_headimg">
                     <img src="__STATIC__/index/image/icon6.png">
                 </div>
-                <div class="user_info_text">
+                <!-- 未登录显示 -->
+                <a href="login" class="please_login">
+                    立即登录&gt;
+                </a>
+                <!-- 登陆后显示 -->
+                <div class="user_info_text" style="display:none;">
                     <p class="user_name">叶问</p>
                     <p class="invitation_code">邀请码: <span>649874</span></p>
                     <p class="jf_hy_qb">
@@ -160,5 +165,9 @@
             </ul>
         </div>
     </div>
+    <script src="__STATIC__/index/js/plugin/vue.js"></script>
+    <script>
+        
+    </script>
 </body>
 </html>

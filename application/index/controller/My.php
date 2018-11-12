@@ -9,4 +9,9 @@ class My extends Controller
     {
         return view("my_index");
     }
+    // 登录
+    public function Login()
+    {
+        return view("login");
+    }
 }

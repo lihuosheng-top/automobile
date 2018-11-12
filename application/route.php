@@ -80,6 +80,7 @@ Route::group("",[
     "cart_index"=>"index/Cart/cart_index",
     // 我的
     "my_index"=>"index/My/my_index",
+    "login"=>"index/My/login",//登录
     
 ]);
 
