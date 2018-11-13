@@ -37,6 +37,7 @@ Route::group("",[
 
     /*登录页面*/
     "login_index"=>"index/Login/index",
+    'Dolog'=>"index/Login/Dolog",
     /*退出登录*/
     "logout"=>"index/Login/logout",
     /*验证码*/
