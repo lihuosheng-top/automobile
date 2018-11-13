@@ -400,6 +400,27 @@ class Goods extends Controller{
                 return ajax_error("失败",$standard_name);
             }
 
+        }
+
+    }
+
+
+
+
+
+    /**
+     * 通用商品规格名显示
+     * 陈绪
+     */
+    public function standard_name(Request $request){
+
+        if($request->isPost()){
+            $goods_name = db("standard_name")->order("id desc")->select();
+            if($goods_name){
+                return ajax_success("获取成功",$goods_name);
+            }else{
+                return ajax_error("失败");
+            }
 
         }
 
