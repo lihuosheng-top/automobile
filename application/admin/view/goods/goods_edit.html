@@ -5,7 +5,7 @@
 	}
 	
 	.layui-form label {
-		width: 17%;
+		width: 14%;
 		text-align: left;
 	}
 	
@@ -23,7 +23,9 @@
 	.layui-input-block {
 		min-height: 40px;
 	}
-	
+.layui-form-item{
+		width: 54%;
+	}
 	.biaoji .layui-form-radioed span {
 		color: #fff;
 		background: red;
@@ -49,6 +51,7 @@
 .general,
 .special .layui-form-item,
 .general .layui-form-item{
+
 	min-width: 100%;
 }
 	.add-content {
@@ -366,7 +369,9 @@
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
-				<div id="goods_text">
+				<!-- <textarea id="demo" style="display: none;"></textarea> -->
+				<!-- <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea> -->
+				 <div id="goods_text">
 					<script id="editor" type="text/plain" name="goods_text" style="width:800px;height:500px;"></script>
 				</div>
 			</div>
@@ -383,11 +388,13 @@
 		</div>
 		<div class="layui-form-item" pane="">
 			<label class="layui-form-label">限购：</label>
+				<div class="layui-input-block">
 			<div class="layui-input-inline">
 				<input type="checkbox" lay-skin="primary" title="限制每人可购买数量"  >
 			</div>
 			<div class="layui-input-inline">
 				<input type="text" name="goods_restriction" id="" value="" style="margin-right: 10px;" id="goods_restriction" />件
+			</div>
 			</div>
 		</div>
 		<div class="layui-form-item" class="biaoji">
