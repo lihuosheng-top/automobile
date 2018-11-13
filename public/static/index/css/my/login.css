@@ -167,6 +167,7 @@
     margin: 1.5rem auto 0;
 }
 .find-inputbox .find-phone-num,
+.reg-inputbox .reg-message-code,
 .find-inputbox .message-code,
 .find-inputbox .find-psw,
 .find-inputbox .find-repeat-psw{
@@ -183,7 +184,7 @@
     position: relative;
 }
 .find-inputbox .send-code,
-.reg-inputbox .send-code{
+.reg-inputbox .reg-send-code{
     position: absolute;
     right: 0;
     top: 50%;
@@ -210,6 +211,12 @@
     border-radius: .4rem;
     border: 0;
     margin: 0 auto;
+}
+.find-password .find-confirm[disabled]{
+    background-color: #d8d8d8;
+}
+.register-pop .reg-confirm[disabled]{
+    background-color: #d8d8d8;
 }
 .register-pop{
     position: absolute;
