@@ -9,7 +9,8 @@
 namespace app\admin\controller;
 
 use think\Controller;
-
+use think\Db;
+use think\Request;
 class Order extends Controller{
 
 
@@ -24,8 +25,88 @@ class Order extends Controller{
      **************************************
      */
     public function index(){
-       return view('index');
+        $order_parts_data =Db::table('tb_order_parts')
+            ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
+            ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
+            ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
+            ->order('tb_order_parts.order_create_time','desc')
+            ->paginate(3 ,false, [
+                'query' => request()->param(),
+            ]);
+       return view('index',['order_parts_data'=>$order_parts_data]);
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单弹窗的订单信息（前端传过来一个id）
+     * 路由："order_processing"=>"admin/Order/order_processing"
+     **************************************
+     * @param Request $request
+     */
+    public function order_processing(Request $request){
+        if($request->isPost()){
+            $id =$request->only(['id'])['id'];
+            if(!empty($id)){
+                $data =Db::name('order_parts')->where('id',$id)->find();
+                if(!empty($data)){
+                    return ajax_success('订单信息成功返回',$data);
+                }else{
+                    return ajax_error('该订单没有数据记录',['status'=>0]);
+                }
+            }else{
+                return ajax_error('沒有订单Id',['status'=>0]);
+            }
+        }
+    }
+
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商列表模糊搜索
+     **************************************
+     * @return \think\response\View
+     */
+    public function search(){
+        $keywords =input('parts_order_number'); //订单编号
+        $goods_name =input('goods_name');            //商品名称
+        $phone_num =input('phone_num');         //用户账号
+        $order_status =input('order_status');   // 订单状态
+        $timemin =input('date_min');           //开始时间
+        /*添加一天（23：59：59）*/
+        $time_max_data =strtotime(input('date_max'));
+        $t=date('Y-m-d H:i:s',$time_max_data+1*24*60*60);
+        $timemax  =strtotime($t);                       //结束时间
+
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单列表批量删除
+     **************************************
+     * @param Request $request
+     */
+    public function dels(Request $request){
+        if($request->isPost()){
+            $id =$_POST['id'];
+            if(is_array($id)){
+                $where ='id in('.implode(',',$id).')';
+            }else{
+                $where ='id='.$id;
+            }
+            $list =  Db::name('order_parts')->where($where)->delete();
+            if($list!==false)
+            {
+                return ajax_success('成功删除!',['status'=>1]);
+            }else{
+                return ajax_error('删除失败',['status'=>0]);
+            }
+        }
+    }
+
 
     /**
      **************李火生*******************
@@ -33,8 +114,10 @@ class Order extends Controller{
      *订单编辑
      **************************************
      */
-    public function edit(){
-       return view('edit');
+    public function edit($id){
+        $order_parts_data = Db::name("order_parts")->where("id",$id)->select();
+        dump($order_parts_data);
+        return view('edit',['order_parts_data'=>$order_parts_data]);
     }
 
     /**
@@ -217,6 +300,13 @@ class Order extends Controller{
      **************************************
      */
     public function service_order_index(){
+//        $service_order_data =Db::table('tb_order_service')
+//            ->field("tb_order_service.*,tb_user.phone_num phone_num,tb_goods.name gname,tb_goods.show_images gimg")
+//            ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
+//            ->order('tb_integral.operation_time','desc')
+//            ->paginate(3 ,false, [
+//                'query' => request()->param(),
+//            ]);
         return view('service_order_index');
     }
 

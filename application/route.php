@@ -45,9 +45,13 @@ Route::group("",[
 
 
     /*注册页面*/
-    "register"=>"index/Register/index",
-    "register_code"=>"index/Register/code",
-    "register_index"=>"index/Register/register",
+    "register"=>"index/Register/index",//注册页面
+    "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
+    "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
+
+
+//    "register_code"=>"index/Register/code",
+//    "register_index"=>"index/Register/register",
 
 
 
@@ -74,7 +78,6 @@ Route::group("",[
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
     "goods_list"=>"index/Classify/goods_list",//商品列表
-    "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
 
     // 购物车
@@ -126,6 +129,7 @@ Route::group("admin",[
     "menu_status"=>"admin/menu/status",
 
 
+
     /*角色列表*/
     "role_index"=>"admin/role/index",
     "role_add"=>"admin/role/add",
@@ -134,6 +138,7 @@ Route::group("admin",[
     "role_edit"=>"admin/role/edit",
     "role_updata"=>"admin/role/updata",
     "role_status"=>"admin/role/status",
+
 
 
     /*配件商品管理*/
@@ -151,6 +156,9 @@ Route::group("admin",[
     "goods_pay"=>"admin/Goods/pay",                                            //商品付费详情
     "affirm_pay"=>"admin/Goods/affirm",
 	"goods_look"=>"admin/Goods/look",
+    "goods_name"=>"admin/Goods/name",                                       //商品规格名添加
+    "goods_standard_name"=>"admin/Goods/standard_name",                                       //商品规格名显示
+
 
 
 
@@ -248,16 +256,19 @@ Route::group("admin",[
 
 
     /*订单管理：TODO:配件商订单开始*/
-    "order_index"=>"admin/Order/index", //订单列表
-    "order_edit"=>"admin/Order/edit", //*********订单设置
+    "order_index"=>"admin/Order/index", //配件商订单列表
+    "order_processing"=>"admin/Order/order_processing", //配件商订单列表弹窗接口
+    "order_search"=>"admin/Order/search", //配件商订单列表模糊搜索
+    "order_dels"=>"admin/Order/dels", //配件商订单列表
+    "order_edit"=>"admin/Order/edit", //*********配件商订单设置
 
-    "order_evaluate"=>"admin/Order/evaluate",   //订单评价
-    "order_evaluate_details"=>"admin/Order/evaluate_details", //******订单评价详情
+    "order_evaluate"=>"admin/Order/evaluate",   //配件商订单评价
+    "order_evaluate_details"=>"admin/Order/evaluate_details", //******配件商订单评价详情
 
-    "order_after_sale"=>"admin/Order/after_sale", //订单维修售后
+    "order_after_sale"=>"admin/Order/after_sale", //配件商订单维修售后
 
-    "order_invoice"=>"admin/Order/invoice", //发票列表
-    "order_invoice_edit"=>"admin/Order/invoice_edit", //****发票信息
+    "order_invoice"=>"admin/Order/invoice", //配件商发票列表
+    "order_invoice_edit"=>"admin/Order/invoice_edit", //****配件商发票信息
     /*订单管理：TODO:配件商订单结束*/
 
     /*订单管理：TODO:平台商订单开始*/
@@ -356,13 +367,17 @@ Route::group("admin",[
 
 
 
-    /*品牌*/
+    /*商品品牌*/
     "brand_index"=>"admin/Brand/index",
     "brand_add"=>"admin/Brand/add",
     "brand_save"=>"admin/Brand/save",
     "brand_edit"=>"admin/Brand/edit",
     "brand_updata"=>"admin/Brand/updata",
     "brand_del"=>"admin/Brand/del",
+    "brand_status"=>"admin/Brand/status",
+    "brand_images"=>"admin/Brand/images",
+
+
 
 
     /*店铺管理*/

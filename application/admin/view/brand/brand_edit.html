@@ -6,7 +6,7 @@
 	}
 	
 	.layui-form label {
-		width: 17%;
+		width: 20%;
 		text-align: left;
 	}
 
@@ -24,96 +24,27 @@
 		min-height: 40px;
 	}
 	
-	.biaoji .layui-form-radioed span {
-		color: #fff;
-		background: red;
-		width: 33px;
-		text-align: center;
-		height: 13px;
-		line-height: 13px;
-		font-size: 9px;
-		border-radius: 6px;
-	}
-	.title {
-		height: 50px;
-		background: #F2F2F2;
-		font-size: 20px;
-		line-height: 50px;
-		padding-left: 20px;
-		font-weight: bold;
-	}
 
-	.layui-form-item {
-		padding-left: 20px;
-	}
-
-	.add-content {
-		background: #F2F2F2;
-		width: 100%;
-	}
-
-	.general-kuang {
-		border: solid 1px #E4E4E4;
-		width: 1000px;
-	}
-
-	.btus {
-		background: #fff;
-		border: solid 1px #E4E4E4;
-		color: #0099FF;
-		width: 141px;
-		display: inline-block;
-		margin: 10px;
-	}
-
-	#general-content .layui-form-item {
-		width: 100%;
-	}
-
-	.sky-blue {
-		color: #0099FF;
-	}
-
-	.bgwhite {
-		background: #fff;
-	}
 
 	.noshow {
 		display: none;
 	}
 
-	.special .layui-form-item {
-		width: 100%;
+	/* 数据库展现图片样式 */
+	.img{
+				position: relative;
+		display: inline-block;
+		width: 100px;
 	}
-	.general .layui-form-item {
-		width: 100%;
+	.img>i{
+		display: inline-block;
+		width: 20px;
+		position: absolute;
+		right: 0;
+		top: 0;
 	}
-	.special .layui-form-item  label{
-		width: 10%;
-	}
-	.general .layui-form-item  label{
-		width: 10%;
-	}
-
-	.operation-btus {
-		width: 60px;
-		height: 40px;
-		border-radius: 3px;
-		color: #fff;
-	}
-
-	.btu-delet {
-		background: #FF0000;
-	}
-
-	.btu-cancel {}
-
-	.btu-add {
-		background: #0099FF;
-	}
-
-	.num-content {
-		overflow: hidden;
+	.layui-input{
+		width: 96%;
 	}
 </style>
 
@@ -125,29 +56,38 @@
 	<div class="open">
 
 	</div>
-	<form class="layui-form" action="">
-	
+	<form class="layui-form" action="{:url('admin/Brand/updata')}" method="post" enctype="multipart/form-data">
+		{volist name="brand_data" id="value"}
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span style="color: red;">*</span>品牌名称：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="brand_name" value="{$value.brand_name}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">品牌地址：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="brand_url" value="{$value.brand_url}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
-<div class="layui-form-item">
+	<div class="layui-form-item">
 			<label class="layui-form-label">品牌LOGO：</label>
+			<!-- 数据库展现图片 -->
+			<div class="layui-input-block">
+			<div class="imgcontent">
+				<span class="img">
+					<img src="__UPLOADS__/{$value.brand_images}"  width="100%">
+					<i class="remove-img" data-id="{$value.id}"><img src="__STATIC__/admin/common/img/a7.png" ></i>
+				</span>
+			</div>
+			</div>
 			<div class="layui-input-block">
 				<div class="img-box full">
 					<section class=" img-section">
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+								<input type="file" name="brand_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
 							</section>
 						</div>
 					</section>
@@ -164,33 +104,30 @@
 		<div class="layui-form-item">
 					<label class="layui-form-label">品牌描述：</label>
 					<div class="layui-input-block">
-						<textarea rows="10" cols="100">
-							
-						</textarea>
+						<textarea rows="10" cols="100" name="brand_describe">{$value.brand_describe}</textarea>
 						</div>
 				</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">排序：</label>
 		<div class="layui-input-block">
-			<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			<input type="text" name="sort_number" value="{$value.sort_number}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">是否显示：</label>
 		<div class="layui-input-block">
-			<input type="radio" name="sex" value="启用" title="是" checked="">
-			<input type="radio" name="sex" value="禁用" title="否">
+			<input type="radio" name="brand_status" value="1" title="是" checked="">
+			<input type="radio" name="brand_status" value="0" title="否">
 		</div>
 	</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
+				<input type="hidden" name="id" value="{$value.id}">
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-				
 				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit" >保存</button>
-			   
 			</div>
 		</div>
-
+	{/volist}
 	</form>
 	
 	{/block}
@@ -213,6 +150,24 @@
 
 			
 		})
+			// 图片删除
+			$(".remove-img").click(function(){
+				var remove=$(this).parent();
+			    var id = $(this).data("id");
+			    console.log(id);
+				   $.ajax({
+						type:"POST",
+						url:"{:url('admin/Brand/images')}",
+						data:{"id":id},
+						dataType:"json",
+						success:function (data) {
+						 remove.remove();
+						},
+						error:function (data) {
+						console.log("错误");
+						}
+				   });
+			});
 	</script>
 
 	
