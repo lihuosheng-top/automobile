@@ -297,6 +297,12 @@
             $('.wrapper').css('display', 'block');
             $('.find-password').css('display', 'none');
         })
+        $('.find-phone-num').blur(function(){
+            if($(this).val() !== ''){
+                $('.find-confirm').attr('disabled', false);
+            }
+        })
+
         // 忘记密码 发送验证码
         $('.send-code').click(function(){
             var mobile = $('.find-phone-num').val();
@@ -304,8 +310,8 @@
             if(mobile!== '' && mobile.match(reg)){
                 buttonCountdown($(this), 1000 * 60 * 1, "ss");
                 $.ajax({
-                    url: 'index/Login/Dolog',
-                    type: 'GET',
+                    url: 'sendMobileCodeByPhone',
+                    type: 'POST',
                     dataType: 'JSON',
                     data: {
                         'mobile': mobile
@@ -327,6 +333,7 @@
                 })
             }
         })
+        // 找回密码 确定按钮
         $('.find-confirm').click(function(){
             var phone_number = $('.find-phone-num').val(),
                 password = $('.find-psw').val(),
@@ -334,8 +341,8 @@
                 code = $('.message-code').val();
             if(password == password_second){
                 $.ajax({
-                    url: 'sendMobileCodeByPhone',
-                    type: 'GET',
+                    url: 'find_password_by_phone',
+                    type: 'POST',
                     dataType: 'JSON',
                     data: {
                         'phone_number': phone_number,
