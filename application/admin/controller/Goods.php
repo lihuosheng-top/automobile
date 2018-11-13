@@ -259,13 +259,26 @@ class Goods extends Controller{
     public function status(Request $request){
 
         if ($request->isPost()){
-            $goods_id = $request->only(['id'])['id'];
-            $goods_status["goods_status"] = $this->goods_status[0];
-            $bool = db("goods")->where("id",$goods_id)->update($goods_status);
-            if ($bool){
-                return ajax_success("更新成功");
-            }else{
-                return ajax_error("更新失败");
+            if($request->isPost()) {
+                $status = $request->only(["status"])["status"];
+                if($status == 0) {
+                    $id = $request->only(["id"])["id"];
+                    $bool = db("goods")->where("id", $id)->update(["goods_status" => 0]);
+                    if ($bool) {
+                        return ajax_success("成功");
+                    } else {
+                        return ajax_error("失败");
+                    }
+                }
+                if($status == 1){
+                    $id = $request->only(["id"])["id"];
+                    $bool = db("goods")->where("id", $id)->update(["goods_status" => 1]);
+                    if ($bool) {
+                        return ajax_success("成功");
+                    } else {
+                        return ajax_error("失败");
+                    }
+                }
             }
         }
 
@@ -381,7 +394,8 @@ class Goods extends Controller{
             $standard_name = $request->only(["goods_name"])["goods_name"];
             $goods_name_bool = db("standard_name")->insert(["standard_name"=>$standard_name]);
             if($goods_name_bool){
-                return ajax_success("成功",$standard_name);
+                $goods_name = db("standard_name")->order("id desc")->select();
+                return ajax_success("成功",$goods_name);
             }else{
                 return ajax_error("失败",$standard_name);
             }
