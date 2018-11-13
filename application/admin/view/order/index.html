@@ -690,7 +690,7 @@
 			var id=$(this).parent("td").data(id).id;
 			$.ajax({
 				type: "POST",
-				url: "{:url('aaa')}",
+				url: "{:url('admin/Order/order_processing')}",
 				async: false,
 				data: {
 					"id": id,
