@@ -60,6 +60,19 @@
         <button class="reset-pwd-btn">确认</button>
     </div>
 
+    <!-- 修改支付密码 -->
+    <div class="reset-pwd-pop" style="display:none;">
+        <header class="reset-pwd-header">
+            <a href="javascript:;" class="spr reset-pwd-back"></a>
+            <h3>修改支付密码</h3>
+        </header>
+        <div class="reset-pwd-box">
+            <input type="text" placeholder="输入新的密码" class="reset-pwd-input">
+            <input type="text" placeholder="确认新密码" class="repeat-pwd-input">
+        </div>
+        <button class="reset-pwd-btn">确认</button>
+    </div>
+
     <script src="__STATIC__/index/js/plugin/zepto.js"></script>
     <script src="__STATIC__/index/js/plugin/touch.js"></script>
     <!-- 退出登录 -->
@@ -70,7 +83,9 @@
                 type: 'POST',
                 dataType: 'JSON',
                 success: function(data){
+                    var data = JSON.parse(data);
                     console.log(data);
+
                 },
                 error: function(){
                     console.log('error');

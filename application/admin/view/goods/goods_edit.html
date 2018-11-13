@@ -149,19 +149,20 @@
 	<div class="open">
 
 	</div>
-	<form class="layui-form" action="{:url('admin/Goods/save')}" method="post" enctype="multipart/form-data">
+	<form class="layui-form" action="{:url('admin/Goods/updata')}" method="post" enctype="multipart/form-data">
+		{volist name="goods" id="value"}
 		<div class="basic-information title"> 基本信息
 		</div>
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品名:</label>
 			<div class="layui-input-block">
-				<input type="text" name="goods_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_name">
+				<input type="text" name="goods_name" value="{$value.goods_name}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_name">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">分享描述：</label>
 			<div class="layui-input-block">
-				<input type="text" name="goods_describe" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_describe">
+				<input type="text" name="goods_describe" value="{$value.goods_describe}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_describe">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -169,7 +170,7 @@
 		<div class="layui-input-block">
 		<div class="imgcontent">
 			<span class="img">
-				<img src="__STATIC__/admin/common/img/a11.png"  width="100%">
+				<img src="__UPLOADS__/{$value.goods_show_images}"  width="100%">
 				<i class="remove-img" data-id=""><img src="__STATIC__/admin/common/img/a7.png" ></i>
 			</span>
 		</div>
@@ -199,10 +200,12 @@
 			<label class="layui-form-label"><span>*</span>商品图片</label>
 			<div class="layui-input-block">
 			<div class="imgcontent">
+				{volist name="$value.goods_images" id="val"}
 				<span class="img">
-					<img src="__STATIC__/admin/common/img/a11.png"  width="100%">
+					<img src="__UPLOADS__/{$val.goods_images}"  width="100%">
 					<i class="remove-img" data-id=""><img src="__STATIC__/admin/common/img/a7.png" ></i>
 				</span>
+				{/volist}
 			</div>
 			</div>
 			<div class="layui-input-block">
@@ -228,9 +231,17 @@
 		<div class="layui-form-item" style="min-width: 62% !important;">
 					<label class="layui-form-label">商品分组：</label>
 					<div class="layui-input-inline">
+						{if !empty($goods_list)}
 						<select name="goods_type_id" id="goods_type_id">
-							<option value=""></option>
+							{volist name="goods_list" id="goods"}
+							<option value="{$goods.id}">{$goods.name}</option>
+							{/volist}
 						</select>
+						{else}
+						<select name="goods_type_id">
+							<option value="0">顶级</option>
+						</select>
+						{/if}
 					</div>
 					<div class="layui-input-inline" >
 						<a href="{:url('admin/Category/add')}" style="line-height: 40px;">新建分类</a>
@@ -239,29 +250,36 @@
 				<div class="layui-form-item " style="min-width: 62% !important;">
 					<label class="layui-form-label"><span>*</span>商品品牌:</label>
 					<div class="layui-input-inline">
+						{if !empty($goods_brand)}
+						{volist name="goods_brand" id="v"}
 						<select name="goods_brand_id">
-							<option value="" selected=""></option>
-						</select>	</div>
+							<option value="{$v.id}">{$v.brand_name}</option>
+						</select>
+						{/volist}
+						{else}
+						<select name="goods_brand_id">
+							<option value="0">顶级</option>
+						</select>
+						{/if}
 						<div class="layui-input-inline">
 							<a href="{:url('admin/Brand/add')}" style="line-height: 40px;">添加品牌</a>
 						</div>
 				</div>
 
 		
-		</div>
-				<div class="layui-form-item ">
-					<label class="layui-form-label"><span>*</span>商品卖点:</label>
-					<div class="layui-input-block">
-					     <textarea rows="10" cols="50"></textarea>
-						 <div class="tips">*在商品列表页、详情页标题下面展示卖点信息，建议60字以内</div>
-		
-					</div>
-				
+				</div>
+						<div class="layui-form-item ">
+							<label class="layui-form-label"><span>*</span>商品卖点:</label>
+							<div class="layui-input-block">
+								 <textarea rows="10" name="goods_selling" cols="50">{$value.goods_selling}</textarea>
+								 <div class="tips">*在商品列表页、详情页标题下面展示卖点信息，建议60字以内</div>
+							</div>
+
 				</div>
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品排序:</label>
 			<div class="layui-input-block">
-				<input type="text" name="sort_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="sort_number">
+				<input type="text" name="sort_number" value="{$value.sort_number}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="sort_number">
 			</div>
 		</div>
 		<div class="layui-form-item" class="biaoji">
@@ -278,22 +296,22 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">商品规格</label>
 			<div class="layui-input-block">
-				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige" checked="">
-				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
+				<input type="radio" name="goods_standard" value="{$value.goods_standard}" title="通用" class="general-radio" lay-filter="guige" checked="">
+				<input type="radio" name="goods_standard" value="{$value.goods_standard}" title="专用" class="special" lay-filter="guige">
 			</div>
 		</div>
 		<div>
 			<div class="layui-form-item general ">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-
+					{volist name="$goods_standard_name" id="name"}
 					<div id="general_content">
 						<div>
 							<div class="layui-form-item">
 								<label class="layui-form-label">规格名</label>
 								<div class="layui-input-inline guige_name">
 									<select class="universal_standard_name" name="goods_standard_name[]">
-										<option value="0" selected="">请选择</option>
+										<option value="{$name.goods_standard_name}" selected="">{$name.goods_standard_name}</option>
 									</select>
 								</div>
 								<div class="layui-input-inline add-name" style="">
@@ -308,38 +326,20 @@
 									<button type="button" class="operation-btus btu-add guibtu-add">添加</button>
 								</div>
 							</div>
+
 							<div class="layui-form-item">
 								<label class="layui-form-label">规格值：</label>
 								<div class="num-content">
+									{volist name="$name.goods_standard_value" id="standard_value"}
 									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+										<input type="text" name="goods_standard_value[]" value="{$standard_value}" placeholder="" style="padding-left:10px;" />
 									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
-									</div>
+									{/volist}
 								</div>
 							</div>
 						</div>
-						
 					</div>
+					{/volist}
 					<div class="add-content content" id="add_general_buts">
 						<button type="button" class="btus general_buts">添加规格项目</button>
 					</div>
@@ -455,13 +455,13 @@
 		<div class="layui-form-item">
 					<label class="layui-form-label"><span>*</span>规格：</label>
 					<div class="layui-input-block">
-						<input type="text" name="standard" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="standard">
+						<input type="text" value="{$value.standard}" name="standard" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="standard">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">商品编码：</label>
 					<div class="layui-input-block">
-						<input type="text" name="goods_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_number">
+						<input type="text" name="goods_number" value="{$value.goods_number}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_number">
 					   <div class="tips">
 						   当光标放入文本框中，可支持扫码枪录入编码，不填写系统生成默认
 					   </div>
@@ -471,13 +471,13 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label"><span>*</span> 价格：</label>
 					<div class="layui-input-block">
-						<input type="text" name="goods_new_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_new_money">
+						<input type="text" name="goods_new_money" value="{$value.goods_new_money}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_new_money">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">划线价：</label>
 					<div class="layui-input-block">
-						<input type="text" name="goods_bottom_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_bottom_money">
+						<input type="text" name="goods_bottom_money" value="{$value.goods_bottom_money}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_bottom_money">
 					<div class="tips">
 						商品没有优惠的情况下，划线价在商品详情会以划线形式显示。
 					</div>
@@ -486,7 +486,7 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label"> <span>*</span> 库存：</label>
 					<div class="layui-input-block">
-						<input type="text" name="goods_repertory" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_repertory">
+						<input type="text" name="goods_repertory" value="{$value.goods_repertory}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_repertory">
 					<div>
 						<input type="checkbox" name="" lay-skin="primary" title="商品详情不显示剩余件数" >
 					</div>
@@ -497,26 +497,26 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">速度级别：</label>
 					<div class="layui-input-block">
-						<input type="text" name="goods_speed" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_speed">
+						<input type="text" name="goods_speed" value="{$value.goods_speed}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_speed">
 					</div>
 					
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">载重指数：</label>
 					<div class="layui-input-block">
-						<input type="text" name="goods_weight" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_weight">
+						<input type="text" name="goods_weight" value="{$value.goods_weight}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_weight">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">类别：</label>
 					<div class="layui-input-block">
-						<input type="text" name="goods_category" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_category">
+						<input type="text" name="goods_category" value="{$value.goods_category}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_category">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">花纹特点：</label>
 					<div class="layui-input-block">
-						<input type="text" name="goods_trait" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_trait">
+						<input type="text" name="goods_trait" value="{$value.goods_trait}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_trait">
 					</div>
 				</div>
 				<div class="layui-form-item layui-form-text">
@@ -544,7 +544,7 @@
 						<input type="checkbox" lay-skin="primary" title="限制每人可购买数量"  >
 					</div>
 					<div class="layui-input-inline">
-						<input type="text" name="goods_restriction" id="" value="" style="margin-right: 10px;" id="goods_restriction" />件
+						<input type="text" name="goods_restriction" value="{$value.goods_restriction}" id="" value="" style="margin-right: 10px;" id="goods_restriction" />件
 					</div>
 					</div>
 				</div>
@@ -569,11 +569,12 @@
 				</div>
 				<div class="layui-form-item">
 					<div class="layui-input-block">
+						<input type="hidden" name="id" value="{$value.id}">
 						<button class="layui-btn submit_btn" lay-submit="" lay-filter="demo1" type="submit">保存</button>
 						<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
 					</div>
 				</div>
-		
+			{/volist}
 			</form>
 
 	{/block}
