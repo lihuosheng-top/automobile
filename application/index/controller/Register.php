@@ -10,6 +10,10 @@ use think\Controller;
 use think\Request;
 use think\Session;
 
+
+
+
+
 class Register extends Controller{
 
     /**
@@ -101,13 +105,11 @@ class Register extends Controller{
                     $bool = db("discounts_user")->insert($data);
                     if($bool){
                         return ajax_success('注册成功',$datas);
-//                        $this->success('注册成功','index/login/login');
                     }
                 }else{
                     $res =Db::name('user')->insert($datas);
                     if($res){
                         return ajax_success('注册成功',$datas);
-//                    $this->success('注册成功','index/login/login');
                     }else{
                         return ajax_error('注册失败',$datas);
                     }
