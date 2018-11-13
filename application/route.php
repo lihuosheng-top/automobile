@@ -25,16 +25,6 @@ Route::group("",[
     "reservation_info"=>"index/index/reservation_info",//预约服务 详情
     "shop_order"=>"index/index/shop_order",//预约服务 详情
 
-
-    /*商品列表*/
-    "goods_index"=>"index/Goods/index",
-    "goods_detail"=>"index/Goods/detail",
-    "goods_id"=>"index/Goods/ajax_id",
-    "particulars_id"=>"index/Goods/goods_id",
-    "goods_big_images"=>"index/Goods/big_images",
-
-
-
     /*登录页面*/
     "login_index"=>"index/Login/index",
     'Dolog'=>"index/Login/Dolog",
@@ -52,35 +42,15 @@ Route::group("",[
     /*判断是否登录*/
     "isLogin"=>"index/My/isLogin", //是否登录判断
 
-
     /*找回密码验证码*/
     'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
     'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
-
-
-    /*安全中心*/
-    "security_index"=>"index/Security/index",
-
-
-
-    /*模板商城*/
-    "template_index"=>"index/Template/index",
-    "template_goods_show"=>"index/Template/goods_show",
-    "template_goods_buy"=>"index/Template/goods_buy",
-
-
-    /*定制开发*/
-    "exploit_index"=>"index/Exploit/index",
-
-
-
-    /*安全中心*/
-    "center_index"=>"index/Center/index",
 
     // 分类
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
     "goods_list"=>"index/Classify/goods_list",//商品列表
+    "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
 
     // 购物车
