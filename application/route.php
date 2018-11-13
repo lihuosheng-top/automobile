@@ -253,6 +253,7 @@ Route::group("admin",[
 
     /*订单管理：TODO:配件商订单开始*/
     "order_index"=>"admin/Order/index", //配件商订单列表
+    "order_processing"=>"admin/Order/order_processing", //配件商订单列表弹窗接口
     "order_search"=>"admin/Order/search", //配件商订单列表模糊搜索
     "order_dels"=>"admin/Order/dels", //配件商订单列表
     "order_edit"=>"admin/Order/edit", //*********配件商订单设置
