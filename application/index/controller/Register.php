@@ -98,32 +98,32 @@ class Register extends Controller{
                     'phone_num'=>$mobile,
                     'password'=>md5($password),
                     'create_time'=>strtotime($create_time),
-                    "status"=>1
+                    "status"=>1,
                 ];
                 $invitation = $request->only(['invitation'])['invitation'];
                 if(!empty($invitation)) {
-                    $res =Db::name('user')->insert($datas);
-                    $data = [];
-                    $id = substr($invitation,3);
-                    $data['user_id'] = $id;
-                    $data['invitation'] = $invitation;
-                    $bool = db("discounts_user")->insert($data);
-                    if($bool){
-                        return ajax_success('注册成功',$datas);
+                    $is_user_id =Db::name('user')->where('id',$invitation)->select();
+                    if(!empty($is_user_id)){
+                        $datas['inviterId']=$invitation;
+                        $res =Db::name('user')->insert($datas);
+                        if($res){
+                            return ajax_success('注册成功',$datas);
+                        }else{
+                            return ajax_error('注册失败',['status'=>0]);
+                        }
+                    }else{
+                        return ajax_error('邀请码不正确',['status'=>0]);
                     }
                 }else{
                     $res =Db::name('user')->insert($datas);
                     if($res){
                         return ajax_success('注册成功',$datas);
                     }else{
-                        return ajax_error('注册失败',$datas);
+                        return ajax_error('注册失败',['status'=>0]);
                     }
                 }
 
             }
-
-
-
         }
     }
 
