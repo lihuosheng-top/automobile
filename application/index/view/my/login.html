@@ -210,51 +210,33 @@
                 },
                 success: function(data){
                     console.log(data);
-                    $('.register-pop').css('display', 'none');
-                    $('.wrapper').css('display', 'block');
+                    if(data.status == 0){
+                        layer.open({
+                            style: 'bottom:100px;',
+                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            skin: 'msg',
+                            content: data.info,
+                            time: 2
+                        })
+                    }else{
+                        layer.open({
+                            style: 'bottom:100px;',
+                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            skin: 'msg',
+                            content: '注册成功',
+                            time: 1
+                        })
+                        setTimeout(function(){
+                            $('.register-pop').css('display', 'none');
+                            $('.wrapper').css('display', 'block');
+                        },1200)
+                    }
                 },
                 error: function(){
                     console.log('error');
                 }
             })
         })
-
-        // var app = new Vue({
-        //     el: '#app',
-        //     data: {
-        //         showPassword: false,//登录
-        //         showRegister: false,//注册
-        //         regPhone: '',
-        //     },
-        //     methods: {
-        //         // 显示找回密码
-        //         showPsw: function (){
-        //             this.showPassword = true;
-        //         },
-        //         // 隐藏找回密码
-        //         hidePsw: function (){
-        //             this.showPassword = false;
-        //         },
-        //         // 显示注册
-        //         showReg: function(){
-        //             this.showRegister = true;
-        //         },
-        //         // 隐藏注册
-        //         hideReg: function(){
-        //             this.showRegister = false;
-        //         },
-        //         postPhoneNum: function(){
-        //             this.$http.post('sendMobileCode', {
-        //                 mobile: this.regPhone
-        //             }).then((res) => {
-        //                 console.log(res);
-        //             }, (res) => {
-        //                 console.log('error')
-        //             });
-        //         }
-
-        //     }
-        // })
     </script>
     <!-- 登录 -->
     <script>
@@ -279,7 +261,27 @@
                 },
                 success: function(data){
                     console.log(data);
-                    location.href = 'my_index';
+                    if(data.status == 0){
+                        layer.open({
+                            style: 'bottom:100px;',
+                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            skin: 'msg',
+                            content: data.info,
+                            time: 2
+                        })
+                    }else{
+                        layer.open({
+                            style: 'bottom:100px;',
+                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            skin: 'msg',
+                            content: data.info,
+                            time: 1
+                        })
+                        setTimeout(function(){
+                            location.href = 'my_index';
+                        },1200)
+                    }
+                    
                 },
                 error: function(){
                     console.log('error');

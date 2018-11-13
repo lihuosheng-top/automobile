@@ -1,7 +1,49 @@
 .wrapper{
     width: 100%;
 }
-
+.header,
+.reset-pwd-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+}
+.header h3,
+.reset-pwd-header h3{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: .88rem;
+    font-size: .36rem;
+    color: #333;
+    font-weight: normal;
+}
+.header .icon-back,
+.reset-pwd-header .reset-pwd-back{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    width: .25rem;
+    height: .43rem;
+    margin-top: -.22rem;
+    background-position: -.5rem -.5rem;
+}
+.list-box{
+    width: 100%;
+    background-color: #fff;
+    margin-top: .98rem;
+}
+.list-box .list-li{
+    height: .8rem;
+    border-bottom: 1px solid #eee;
+    padding: 0 .3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .switch_checkbox {
     display: none;
@@ -37,4 +79,53 @@
 /* ~选择器 选择前面的input checkbox被选中状态下的 label标签*/
 .switch_checkbox:checked~.switch_label {
     background: rgb(0, 153, 255);
+}
+.list-box .list-li span{
+    font-size: .24rem;
+    color: #333;
+}
+.list-box .list-li .icon-more{
+    display: block;
+    width: .16rem;
+    height: .28rem;
+    background-position: -7.3rem -1.8rem;
+}
+.exit{
+    position: absolute;
+    left: 50%;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    width: 80%;
+    height: .9rem;
+    border-radius: .2rem;
+    background-color: #0099ff;
+    border: 0;
+    outline: 0;
+    color: #fff;
+    font-size: .3rem;
+}
+.reset-pwd-box{
+    margin: 1rem 0 1.5rem 0;
+}
+.reset-pwd-box input{
+    width: 100%;
+    height: .98rem;
+    font-size: .3rem;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: .2rem;
+    padding-left: .3rem;
+    box-sizing: border-box;
+    outline: none;
+}
+.reset-pwd-btn{
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    height: .9rem;
+    border-radius: .2rem;
+    background-color: #0099ff;
+    border: 0;
+    outline: 0;
+    color: #fff;
+    font-size: .3rem;
 }
