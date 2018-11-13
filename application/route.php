@@ -45,9 +45,13 @@ Route::group("",[
 
 
     /*注册页面*/
-    "register"=>"index/Register/index",
-    "register_code"=>"index/Register/code",
-    "register_index"=>"index/Register/register",
+    "register"=>"index/Register/index",//注册页面
+    "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
+    "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
+
+
+//    "register_code"=>"index/Register/code",
+//    "register_index"=>"index/Register/register",
 
 
 
