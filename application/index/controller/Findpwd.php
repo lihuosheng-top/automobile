@@ -27,7 +27,7 @@ class Findpwd extends Controller{
             $code =trim($_POST['code']);
             $password =trim($_POST['password']);
             $password_second =trim($_POST['password_second']);
-            if($password==$password_second){
+            if($password!=$password_second){
                 return ajax_error('两次密码不一致',['status'=>0]);
             }
             $data=[
@@ -58,7 +58,13 @@ class Findpwd extends Controller{
         }
     }
 
-
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:找回密码验证码
+     **************************************
+     * @param Request $request
+     */
     public function sendMobileCodeByPhone(Request $request)
     {
         //接受验证码的手机号码
@@ -75,7 +81,6 @@ class Findpwd extends Controller{
                 session('mobileCode',$mobileCode);
                 session('mobile',$mobile);
             }
-
             $content = "尊敬的用户，您本次验证码为{$mobileCode}，十分钟内有效";
             $url = "http://120.26.38.54:8000/interface/smssend.aspx";
             $post_data = array("account" => "gagaliang", "password" => "123qwe", "mobile" => "$mobile", "content" => $content);

@@ -18,6 +18,13 @@ class Login extends Controller{
        return view("login_index");
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:登陆操作
+     **************************************
+     * @param Request $request
+     */
     public function Dolog(Request $request){
         if($request->isGet()){
             $data = $_GET;
@@ -27,12 +34,12 @@ class Login extends Controller{
                 return  ajax_error('手机号不能为空',$user_mobile);
             }
             if(empty($password)){
-                return ajax_error('密码不能为空',$password);
+                return ajax_error('密码不能为空',['status'=>0]);
             }
             $res = Db::name('user')->field('password')->where('phone_num',$user_mobile)->find();
             if(!$res)
             {
-                return ajax_error('手机号不存在',$user_mobile);
+                return ajax_error('手机号不存在',['status'=>0]);
             }
             $datas=[
                 "phone_num" => $user_mobile,
@@ -40,7 +47,7 @@ class Login extends Controller{
             ];
             $res =Db::name('user')->where($datas)->find();
             if(!$res && $res == null){
-                return ajax_success('密码错误',$password);
+                return ajax_error('密码错误',['status'=>0]);
             }
             if($res){
                 $res =Db::name('user')->where($datas)->where('status',1)->find();
@@ -55,6 +62,12 @@ class Login extends Controller{
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:退出操作
+     **************************************
+     */
     public function logout(){
         Session('member',null);
         $this->success('退出成功',url('index/Login/login'));
