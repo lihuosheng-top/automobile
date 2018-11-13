@@ -26,7 +26,7 @@ class My extends Controller
      */
     public function isLogin(Request $request){
         if($request->isPost()){
-            $member_data =$_SESSION['member'];
+            $member_data =session('member');
             if(!empty($member_data)){
                $phone_num = $member_data['phone_num'];
                if(!empty($phone_num)){
