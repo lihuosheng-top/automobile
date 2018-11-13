@@ -126,6 +126,7 @@
 	.num-content {
 		overflow: hidden;
 	}
+	
 </style>
 
 {/block}
@@ -159,7 +160,7 @@
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="goods_show_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+								<input type="file" name="goods_show_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" data-id="1"/>
 							</section>
 						</div>
 					</section>
@@ -170,9 +171,10 @@
 						<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
 					</div>
 				</aside>
+				<p style="color:#999999 ; ">建议尺寸：750*750像素</p>
 			</div>
 		</div>
-		<p style="margin-left: 17%;color:#999999 ; ">建议尺寸：750*750像素，你可以拖拽图片调整顺序，最多上传4张</p>
+		
 		<div class="layui-form-item">
 			<label class="layui-form-label"><span>*</span>商品图片</label>
 			<div class="layui-input-block">
@@ -181,7 +183,7 @@
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file"  id="files" name="goods_images[]" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+								<input type="file"  id="files" name="goods_images[]" class="file" value="" data-id="10" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
 							</section>
 						</div>
 					</section>
@@ -192,9 +194,10 @@
 						<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
 					</div>
 				</aside>
+				<p style="color:#999999; ">建议尺寸：750*480像素，最多上传10张</p>
 			</div>
 		</div>
-		<p style="margin-left: 17%;color:#999999 ; ">建议尺寸：750*480像素，你可以拖拽图片调整顺序，最多上传10张</p>
+		
 		<div class="layui-form-item" style="min-width: 62% !important;">
 			<label class="layui-form-label">商品分组：</label>
 			<div class="layui-input-inline">
@@ -219,6 +222,15 @@
 				<div class="layui-input-inline">
 					<a href="{:url('admin/Brand/add')}" style="line-height: 40px;">添加品牌</a>
 				</div>
+		</div>
+		<div class="layui-form-item ">
+			<label class="layui-form-label"><span>*</span>商品卖点:</label>
+			<div class="layui-input-block">
+			     <textarea rows="10" cols="50"></textarea>
+				 <div class="tips">*在商品列表页、详情页标题下面展示卖点信息，建议60字以内</div>
+
+			</div>
+		
 		</div>
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品排序:</label>
@@ -319,6 +331,9 @@
 			<label class="layui-form-label">商品编码：</label>
 			<div class="layui-input-block">
 				<input type="text" name="goods_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_number">
+			   <div class="tips">
+				   当光标放入文本框中，可支持扫码枪录入编码，不填写系统生成默认
+			   </div>
 			</div>
 		</div>
 
@@ -332,13 +347,21 @@
 			<label class="layui-form-label">划线价：</label>
 			<div class="layui-input-block">
 				<input type="text" name="goods_bottom_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_bottom_money">
+			<div class="tips">
+				商品没有优惠的情况下，划线价在商品详情会以划线形式显示。
+			</div>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span>*</span> 库存：</label>
 			<div class="layui-input-block">
 				<input type="text" name="goods_repertory" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_repertory">
+			<div>
+				<input type="checkbox" name="" lay-skin="primary" title="商品详情不显示剩余件数" >
 			</div>
+			<div class="tips">库存为0时，会放到[已售罄]的商品列表里，保存后买家看到的商品可售库存同步更新</div>
+			</div>
+		
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">速度级别：</label>
