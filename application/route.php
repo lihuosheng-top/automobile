@@ -153,14 +153,12 @@ Route::group("admin",[
     "goods_updata"=>"admin/Goods/updata",
     "goods_del"=>"admin/Goods/del",
     "images_del"=>"admin/Goods/images",
-    "images_dels"=>"admin/Goods/image",
     "goods_status"=>"admin/Goods/status",
     "goods_batches"=>"admin/Goods/batches",
-    "goods_putaway"=>"admin/Goods/putaway",                                    //商品上架
-    "goods_pay"=>"admin/Goods/pay",                                            //商品付费详情
-    "affirm_pay"=>"admin/Goods/affirm",
-	"goods_look"=>"admin/Goods/look",
-    "goods_name"=>"admin/Goods/name",                                       //商品规格名添加
+    "goods_pay"=>"admin/Goods/pay",                                                  //商品付费详情
+    "affirm_pay"=>"admin/Goods/affirm",                                                 //商品确认付费
+	"goods_look"=>"admin/Goods/look",                                                //商品查看详情
+    "goods_name"=>"admin/Goods/name",                                                   //商品规格名添加
     "goods_standard_name"=>"admin/Goods/standard_name",                                       //商品规格名显示
 
 
