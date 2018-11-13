@@ -528,7 +528,25 @@ layedit.build('demo');
 			//      点击专用添加规格项目添加页面
 			$(".special_buts").click(function() {
 				$("#special_content").append(dhtml);
-				
+				$.ajax({
+						type: "POST",
+						url : "{:url('admin/Goods/standard_name')}",
+						data: {},
+						success: function(data){
+							console.log(data);
+							var data= eval('(' + data + ')');
+							for(var i=0;i<data.data.length;i++){
+								var dhtml="";
+								dhtml='<option value="'+data.data[i].standard_name+'">'+data.data[i].standard_name+'</option>'
+								$(".universal_standard_name").append(dhtml);
+							}
+							
+							form.render('select');
+						},
+						error:function (data) {
+							console.log(data)
+						}
+					});
 				form.render('select');
 
 			});
@@ -537,7 +555,7 @@ layedit.build('demo');
 				$("#general_content").append(dhtml);
 				$.ajax({
 						type: "POST",
-						url : "{:url('admin/Goods/name')}",
+						url : "{:url('admin/Goods/standard_name')}",
 						data: {},
 						success: function(data){
 							console.log(data);
@@ -583,7 +601,7 @@ layedit.build('demo');
 				$(this).addClass("noshow");
 				$(this).siblings(".add-names").removeClass("noshow");
 			});
-			// 点击添加按钮
+			// 通用点击添加按钮
 			$("#general_content").on('click', ".guibtu-add", function() {
 				var text=$(this).parent().siblings(".add-names").children("input").val();
 					$.ajax({
@@ -591,15 +609,10 @@ layedit.build('demo');
 				   		url : "{:url('admin/Goods/name')}",
 						data: {"goods_name":text},
 						success: function(data){
-							var data= eval('(' + data + ')');
-							for(var i=0;i<data.data.length;i++){
-								var dhtml="";
-								 dhtml='<option value="'+data.data[i].standard_name+'">'+data.data[i].standard_name+'</option>'
-								 $(".universal_standard_name").append(dhtml);
-							}
-							// var dhtmls='<option value="'+data.data.standard_name+'">'+data.data.standard_name+'</option> ';
-//							console.log($(".universal_standard_name").children("option").val());
-							
+							layer.msg('添加成功');
+							var dhtmls="";
+							dhtmls='<option value="'+text+'">'+text+'</option> ';
+							$(".universal_standard_name").prepend(dhtmls);
 							form.render('select');
 						},
 						error:function (data) {
@@ -612,12 +625,13 @@ layedit.build('demo');
 				var text=$(this).parent().siblings(".add-names").children("input").val();
 					$.ajax({
 						type: "POST",
-				   		url : "{:url('admin/Goods/name')}",
+						url : "{:url('admin/Goods/name')}",
 						data: {"goods_name":text},
 						success: function(data){
-							var data= eval('(' + data + ')');
-							var dhtmls='<option value="'+data.data+'">'+data.data+'</option> ';
-							$(".universal_standard_name").append(dhtmls);
+							layer.msg('添加成功');
+							var dhtmls="";
+							dhtmls='<option value="'+text+'">'+text+'</option> ';
+							$(".universal_standard_name").prepend(dhtmls);
 							form.render('select');
 						},
 						error:function (data) {
@@ -626,24 +640,25 @@ layedit.build('demo');
 					});
 				
 			});
-				$("#special_content").on('click', "shuxingbtu-add", function() {
-				var text=$(this).parent().siblings(".add-names").children("input").val();
-					$.ajax({
-						type: "POST",
-				   		url : "{:url('admin/Goods/name')}",
-						data: {"goods_name":text},
-						success: function(data){
-							var data= eval('(' + data + ')');
-							var dhtmls='<option value="'+data.data+'">'+data.data+'</option> ';
-							$(".dedicated_property").append(dhtmls);
-							form.render('select');
-						},
-						error:function (data) {
-							console.log(data)
-						}
-					});
-				
-			});
+			// 属性
+// 				$("#special_content").on('click', "shuxingbtu-add", function() {
+// 				var text=$(this).parent().siblings(".add-names").children("input").val();
+// 					$.ajax({
+// 						type: "POST",
+// 				   		url : "{:url('admin/Goods/name')}",
+// 						data: {"goods_name":text},
+// 						success: function(data){
+// 							var data= eval('(' + data + ')');
+// 							var dhtmls='<option value="'+data.data+'">'+data.data+'</option> ';
+// 							$(".dedicated_property").append(dhtmls);
+// 							form.render('select');
+// 						},
+// 						error:function (data) {
+// 							console.log(data)
+// 						}
+// 					});
+// 				
+// 			});
 				
 							
 			
