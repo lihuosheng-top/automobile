@@ -126,8 +126,21 @@ class Goods extends Controller{
             $goods_standard_value = explode(",",$value["goods_standard_value"]);
             $goods_standard_value = array_chunk($goods_standard_value,8);
             $goods[$key]["goods_standard_value"] = $goods_standard_value;
+            $goods[$key]["goods_images"] = db("goods_images")->where("goods_id",$value["id"])->select();
+
         }
-        return view("goods_edit",["goods"=>$goods]);
+        $goods_standard_name = array();
+        foreach ($goods as $k=>$val){
+            foreach ($val["goods_standard_name"] as $k_1=>$v_2){
+                $goods_standard_name[$k_1] = array(
+                    "goods_standard_name" =>$val["goods_standard_name"][$k_1],
+                    "goods_standard_value"=>$val["goods_standard_value"][$k_1]
+                );
+            }
+        }
+        $goods_list = getSelectList("goods_type");
+        $goods_brand = db("brand")->select();
+        return view("goods_edit",["goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
 
