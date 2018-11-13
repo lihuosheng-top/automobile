@@ -39,7 +39,7 @@ class Register extends Controller{
                 $arr = json_decode($mobile, true);
                 $mobiles = strlen($arr);
                 if (isset($mobiles) != 11) {
-                    return ajax_error("手机号码不正确",$mobile);
+                    return ajax_error("手机号码不正确",['status'=>0]);
                 }
                 //存入session中
                 if (strlen($mobileCode)> 0) {
@@ -59,11 +59,12 @@ class Register extends Controller{
                 if ($output) {
                     return ajax_success("发送成功", $output);
                 } else {
-                    return ajax_success("发送失败",$output);
+                    return ajax_error("发送失败",['status'=>0]);
                 }
-            }
             }else{
                 return ajax_error("请填写正确的手机号",['status'=>0]);
+            }
+
             }
 
     }
