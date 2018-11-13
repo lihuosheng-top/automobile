@@ -8,6 +8,8 @@
 
 namespace app\index\controller;
 use think\Controller;
+use think\Request;
+use think\Db;
 
 class Login extends Controller{
 
