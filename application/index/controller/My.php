@@ -30,7 +30,10 @@ class My extends Controller
             if(!empty($member_data)){
                $phone_num = $member_data['phone_num'];
                if(!empty($phone_num)){
-                   $return_data =Db::name('user')->field('user_name,user_img,id,user_grade,user_wallet,user_integral_wallet')->find();
+                   $return_data =Db::table('tb_user')
+                       ->field('tb_user.*,tb_user_grade.user_grade_content user_grade_content')
+                       ->join("tb_user_grade","tb_user.user_grade=tb_user_grade.id",'left')
+                       ->find();
                    if(!empty($return_data)){
                        return ajax_success('用户信息返回成功',$return_data);
                    }else{
