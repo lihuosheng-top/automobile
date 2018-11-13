@@ -48,11 +48,9 @@ Route::group("",[
     "register"=>"index/Register/index",//注册页面
     "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
-
-
-//    "register_code"=>"index/Register/code",
-//    "register_index"=>"index/Register/register",
-
+    /*找回密码验证码*/
+    'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
+    'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
 
 
     /*安全中心*/
