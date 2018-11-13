@@ -538,7 +538,7 @@ layedit.build('demo');
 				$.ajax({
 						type: "POST",
 						url : "{:url('admin/Goods/name')}",
-						data: {"goods_name":text},
+						data: {},
 						success: function(data){
 							console.log(data);
 							var data= eval('(' + data + ')');
