@@ -11,7 +11,7 @@ class Menu extends Controller
      * 陈绪
      */
     public function index(Request $request){
-        $menu_lists = db("Menu")->order("sort_number")->paginate(10);
+        $menu_lists = db("Menu")->order("id desc")->paginate(10);
         $page = $menu_lists->render();
         return view("index",["menu_lists"=>$menu_lists,"page"=>$page]);
     }
@@ -64,8 +64,6 @@ class Menu extends Controller
         $menu_list = [];
         if($pid == 0){
             $menu_list = getSelectList("menu");
-        }else{
-            $parent_cate = model("Menu")->where("id",$pid)->field()->select();
         }
         return view("edit",["menu"=>$menu,"menu_list"=>$menu_list,"parent_cate"=>$parent_cate]);
     }

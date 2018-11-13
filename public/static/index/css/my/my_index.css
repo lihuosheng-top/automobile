@@ -24,8 +24,8 @@ html{
 }
 .head_icon .message{
     float: right;
-    width: .42rem;
-    height: .36rem;
+    width: .44rem;
+    height: .38rem;
     background-position: -.9rem 0;
     margin: .26rem .26rem 0 0;
 }
@@ -45,6 +45,15 @@ html{
 .user_headimg img{
     width: 100%;
     height: 100%;
+}
+.please_login{
+    height: .4rem;
+    background-color: rgba(0, 0, 0, .3);
+    padding: 0 .1rem;
+    border-radius: .1rem;
+    font-size: .24rem;
+    color: #fff;
+    margin-top: .5rem;
 }
 .user_info_text{
     float: left;
@@ -222,8 +231,8 @@ html{
     background-position: -6.5rem -.7rem;
 }
 .function_list li .icon_collect{
-    width: .34rem;
-    height: .34rem;
+    width: .35rem;
+    height: .35rem;
     background-position: -6.9rem -.7rem;
 }
 .function_list li .icon_rights{
@@ -233,7 +242,7 @@ html{
 }
 .function_list li .icon_mycar{
     width: .34rem;
-    height: .26rem;
+    height: .28rem;
     background-position: -6.5rem -1.2rem;
 }
 .function_list li .icon_about{
@@ -242,8 +251,8 @@ html{
     background-position: -6.9rem -1.2rem;
 }
 .function_list li .icon_feedback{
-    width: .31rem;
-    height: .31rem;
+    width: .33rem;
+    height: .33rem;
     background-position: -7.3rem -1.2rem;
 }
 

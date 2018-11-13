@@ -74,13 +74,13 @@ Route::group("",[
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
     "goods_list"=>"index/Classify/goods_list",//商品列表
-    "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
 
     // 购物车
     "cart_index"=>"index/Cart/cart_index",
     // 我的
     "my_index"=>"index/My/my_index",
+    "login"=>"index/My/login",//登录
     
 ]);
 
@@ -125,6 +125,7 @@ Route::group("admin",[
     "menu_status"=>"admin/menu/status",
 
 
+
     /*角色列表*/
     "role_index"=>"admin/role/index",
     "role_add"=>"admin/role/add",
@@ -133,6 +134,7 @@ Route::group("admin",[
     "role_edit"=>"admin/role/edit",
     "role_updata"=>"admin/role/updata",
     "role_status"=>"admin/role/status",
+
 
 
     /*配件商品管理*/
@@ -149,7 +151,10 @@ Route::group("admin",[
     "goods_putaway"=>"admin/Goods/putaway",                                    //商品上架
     "goods_pay"=>"admin/Goods/pay",                                            //商品付费详情
     "affirm_pay"=>"admin/Goods/affirm",
-	"goods_look"=>"admin/Goods/look",      
+	"goods_look"=>"admin/Goods/look",
+    "goods_name"=>"admin/Goods/name",                                       //商品规格名添加
+
+
 
 
     /*服务商品管理*/
@@ -198,20 +203,30 @@ Route::group("admin",[
     "integral_dels"=>"admin/Integral/dels", //积分列表批量删除
     "integral_search"=>"admin/Integral/search", //积分列表搜索功能
 
-    /*配件商广告，服务商广告，平台广告开始*/
-    "Accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising",
-    "Accessories_business_add"=>"admin/Advertisement/accessories_business_add",
-    "Accessories_business_edit"=>"admin/Advertisement/accessories_business_edit",
 
-    "Service_business_advertising"=>"admin/service_advertisement/Service_business_advertising",
-    "Service_business_add"=>"admin/service_advertisement/Service_business_add",
-    "Service_business_edit"=>"admin/service_advertisement/Service_business_edit",
 
+    /*配件商广告*/
+    "accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising",
+    "accessories_business_add"=>"admin/Advertisement/accessories_business_add",
+    "accessories_business_edit"=>"admin/Advertisement/accessories_business_edit",
+    "accessories_business_del"=>"admin/Advertisement/del",
+
+
+
+    /*服务商广告*/
+    "service_business_advertising"=>"admin/service_advertisement/service_business_advertising",
+    "service_business_add"=>"admin/service_advertisement/service_business_add",
+    "service_business_edit"=>"admin/service_advertisement/service_business_edit",
+    "service_business_del"=>"admin/service_advertisement/del",
+
+
+
+    /*平台广告*/
     "platform_business_index"=>"admin/platform_advertisement/platform_business_index",
     "platform_business_add"=>"admin/platform_advertisement/platform_business_add",
     "platform_business_edit"=>"admin/platform_advertisement/platform_business_edit",
+    "platform_business_del"=>"admin/platform_advertisement/del",
 
-    /*配件商广告，服务商广告，平台广告结束*/
 
 
 
@@ -346,13 +361,17 @@ Route::group("admin",[
 
 
 
-    /*品牌*/
+    /*商品品牌*/
     "brand_index"=>"admin/Brand/index",
     "brand_add"=>"admin/Brand/add",
     "brand_save"=>"admin/Brand/save",
     "brand_edit"=>"admin/Brand/edit",
     "brand_updata"=>"admin/Brand/updata",
     "brand_del"=>"admin/Brand/del",
+    "brand_status"=>"admin/Brand/status",
+    "brand_images"=>"admin/Brand/images",
+
+
 
 
     /*店铺管理*/

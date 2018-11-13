@@ -12,6 +12,7 @@ use think\Controller;
 class  ServiceAdvertisement extends  Controller{
 
 
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -43,6 +44,17 @@ class  ServiceAdvertisement extends  Controller{
      */
     public function Service_business_edit(){
         return view('Service_business_edit');
+    }
+
+
+
+
+    /**
+     * 服务商广告删除
+     * 陈绪
+     */
+    public function del(){
+
     }
 
 

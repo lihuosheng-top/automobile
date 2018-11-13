@@ -2,7 +2,10 @@
     width: 100%;
 }
 .head_search{
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     height: .88rem;
     line-height: .88rem;
@@ -33,14 +36,13 @@
     display: flex;
     width: 100%;
     height: 11.2rem;
+    margin-top: .88rem;
 }
 .classify_tab{
     width: 1.85rem;
     height: 11.2rem;
 }
 .classify_tab ul{
-    display: flex;
-    flex-direction: column;
     width: 100%;
     height: 100%;
     overflow-y: auto;
@@ -66,24 +68,25 @@
 }
 .classify_cont{
     width: 5.66rem;
-    height: 11.5rem;
+    height: 11.2rem;
     background-color: #f2f2f2;
     padding: 0 .2rem;
     box-sizing: border-box;
     overflow-y: auto;
 }
+.classify_cont .wrap{
+    width: 100%;
+    height: 100%;
+}
 .classify_cont .cont_one_ul{
     width: 100%;
-    /* height:100%; */
 }
 .classify_cont .recommend ul{
     width: 100%;
-    /* height: 100%; */
     overflow: auto;
 }
 .classify_cont .cont_one_ul>li{
     width: 100%;
-    /* height: 100%; */
 }
 .classify_cont .recommend li{
     position: relative;

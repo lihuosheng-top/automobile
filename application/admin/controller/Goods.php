@@ -61,10 +61,11 @@ class Goods extends Controller{
 
     public function add($pid=0){
         $goods_list = [];
+        $brand = db("brand")->where("brand_status",1)->select();
         if($pid == 0){
             $goods_list = getSelectList("goods_type");
         }
-        return view("goods_add",["goods_list"=>$goods_list]);
+        return view("goods_add",["goods_list"=>$goods_list,"brand"=>$brand]);
     }
 
     /**
@@ -76,7 +77,6 @@ class Goods extends Controller{
     {
         if ($request->isPost()) {
             $goods_data = $request->param();
-            halt($goods_data);
             $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
             $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
             $goods_data["goods_standard_name"] = $goods_standard_name;
@@ -99,7 +99,7 @@ class Goods extends Controller{
                 $file = request()->file('goods_images');
                 if(!empty($file)) {
                     foreach ($file as $key => $value) {
-                        $info = $value->move(ROOT_PATH . 'public' . DS . 'upload');
+                        $info = $value->move(ROOT_PATH . 'public' . DS . 'uploads');
                         $goods_url = str_replace("\\", "/", $info->getSaveName());
                         $goods_images[] = ["goods_images" => $goods_url, "goods_id" => $goodsid];
                     }
@@ -119,11 +119,12 @@ class Goods extends Controller{
      * [商品修改]
      * 陈绪
      */
-    public function edit(Request $r,$id){
+    public function edit(Request $request,$id){
         $goods = db("goods")->where("id",$id)->select();
-        $goods_type = db("goods_type")->where("id",$goods[0]["goods_type_id"])->field("name,id")->select();
-        $goods_images = db("goods_images")->where("goods_id",$id)->select();
-        return view("goods_edit",["goods"=>$goods,"goods_type"=>$goods_type,"goods_images"=>$goods_images]);
+        foreach ($goods as $value){
+
+        }
+        return view("goods_edit");
     }
 
 
@@ -271,6 +272,7 @@ class Goods extends Controller{
     }
 
 
+
     /**
      * [商品上架]
      * 陈绪
@@ -353,13 +355,39 @@ class Goods extends Controller{
         return view("affirm_pay");
 
     }
- /**
+
+
+
+
+    /**
      * 商品查看
      * 陈绪
      */
     public function look(){
 
         return view("good_look");
+
+    }
+
+
+
+    /**
+     * 通用商品规格名添加
+     * 陈绪
+     */
+    public function name(Request $request){
+
+        if($request->isPost()){
+            $standard_name = $request->only(["goods_name"])["goods_name"];
+            $goods_name_bool = db("standard_name")->insert(["standard_name"=>$standard_name]);
+            if($goods_name_bool){
+                return ajax_success("成功",$standard_name);
+            }else{
+                return ajax_error("失败",$standard_name);
+            }
+
+
+        }
 
     }
 

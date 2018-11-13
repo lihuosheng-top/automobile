@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/my/login.css">
+    <title>登录</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="wrapper">
+            <div class="head">
+                <a href="my_index" class="spr icon-back"></a>
+                <h3>登录</h3>
+                <a href="javascript:;" class="register" @click="showReg">注册</a>
+            </div>
+            <div class="logo-wrap">
+                <img src="__STATIC__/index/image/icon8.png">
+            </div>
+            <div class="inputbox">
+                <input type="text" class="phone-num" placeholder="手机号码">
+                <input type="password" class="password" placeholder="输入密码">
+                <div class="remember">
+                    <input type="checkbox" id="remember-input">
+                    <label for="remember-input" class="remember-label">记住密码</label>
+                    <a href="javascript:;" class="forget-psw" @click="showPsw">忘记密码</a>
+                </div>
+                <button class="login-btn">登录</button>
+            </div>
+            <div class="third-part">
+                <h3 class="third-txt">第三方登录</h3>
+                <a href="javascript:;" class="spr wechat"></a>
+                <a href="javascript:;" class="spr QQ"></a>
+                <a href="javascript:;" class="spr weibo"></a>
+            </div>
+        </div>
+        <!-- 找回密码 -->
+        <div class="find-password" v-show="showPassword">
+            <div class="find-psw-head">
+                <a href="javascript:;" @click="hidePsw" class="spr find-back"></a>
+                <h3 class="find-psw-txt">找回密码</h3>
+            </div>
+            <div class="find-inputbox">
+                <input type="text" placeholder="输入手机号码" class="find-phone-num">
+                <div class="identifying-code">
+                    <input type="text" class="message-code" placeholder="短信验证码">
+                    <button class="send-code">发送验证码</button>
+                </div>
+                <input type="password" placeholder="输入新的密码" class="find-psw">
+                <input type="password" placeholder="确认新密码" class="find-repeat-psw">
+            </div>
+            <button class="find-confirm">确认</button>
+        </div>
+        <!-- 注册 -->
+        <div class="register-pop" v-show="showRegister">
+            <div class="reg-head">
+                <a href="javascript:;" @click="hideReg" class="spr reg-back"></a>
+                <h3>注册</h3>
+                <a href="javascript:;" class="login" @click="hideReg">登录</a>
+            </div>
+            <div class="logo-wrap">
+                <img src="__STATIC__/index/image/icon8.png">
+            </div>
+            <div class="reg-inputbox">
+                <input type="text" placeholder="输入手机号码" class="reg-phone-num">
+                <div class="identifying-code">
+                    <input type="text" class="message-code" placeholder="短信验证码">
+                    <button class="send-code">发送验证码</button>
+                </div>
+                <input type="password" placeholder="输入密码" class="reg-psw">
+                <input type="password" placeholder="邀请码" class="reg-invite-code">
+            </div>
+            <div class="agree">
+                <input type="checkbox" id="agree-input">
+                <label for="agree-input" class="agree-label">我已阅读并同意《<span>用户服务协议</span>》</label>
+            </div>
+            <button class="reg-confirm">确定</button>
+            <div class="third-part">
+                <h3 class="third-txt">第三方登录</h3>
+                <a href="javascript:;" class="spr wechat"></a>
+                <a href="javascript:;" class="spr QQ"></a>
+                <a href="javascript:;" class="spr weibo"></a>
+            </div>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                showPassword: false,//登录
+                showRegister: false,//注册
+            },
+            methods: {
+                // 显示找回密码
+                showPsw: function (){
+                    this.showPassword = true;
+                },
+                // 隐藏找回密码
+                hidePsw: function (){
+                    this.showPassword = false;
+                },
+                // 显示注册
+                showReg: function(){
+                    this.showRegister = true;
+                },
+                // 隐藏注册
+                hideReg: function(){
+                    this.showRegister = false;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

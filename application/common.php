@@ -376,9 +376,9 @@ function exportData($title , $content , $filename = 'data'){
     header('Pragma: no-cache');
     header('Expires: 0');
 
-    echo iconv('utf-8', 'gbk', implode("\t", $title)), "\n";
+    echo iconv('utf-8', 'gbk', implode(",", $title)), "\n";
     foreach ($content as $value) {
-        echo iconv('utf-8', 'gbk', implode("\t", $value)), "\n";
+        echo iconv('utf-8', 'gbk', implode(",", $value)), "\n";
     }
     exit();
 }
@@ -558,6 +558,7 @@ function show_integral_operation($data){
 }
 
 
+
 function show_order_status($status){
     if($status==0){
         echo '<button type="button" class="state  close-btu" >已关闭</button>';
@@ -586,5 +587,6 @@ function show_order_status($status){
 /**
  * 点击
  */
+
 
 

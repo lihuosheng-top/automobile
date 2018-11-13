@@ -1,4 +1,5 @@
-{extend name="layout"} {block name="css"}
+{extend name="layout"}
+{block name="css"}
 
 <style type="text/css">
 	body {
@@ -107,32 +108,36 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
+				{volist name="goods" id="value"}
 					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>2</td>
-						<td>张三</td>
-						<td><img src="111" /></td>
-						<td>管理员</td>
-						<td>管理员</td>
+						<td><input type="checkbox" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose"></td>
+						<td>{$value.id}</td>
+						<td>店铺还没有添加</td>
+						<td style="width: 100px; height: 100px;"><img src="__UPLOADS__/{$value.goods_show_images}" /></td>
+						<td>{$value.goods_name}</td>
+						<td>￥{$value.goods_new_money}</td>
 						<td>
-							<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="2">
-							
+							{if $value.goods_status == 0}
+							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}"/>
+							{else /}
+							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}"/>
+							{/if}
 						</td>
 						<td>
-							<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="Show" checked="" data-id="2">
-							
-						</td>
-						<td>2018</td>
-						<td>2018</td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/look')}"> 查看详情</a>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}">编辑</a>
-							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"> 删除</a>
+							<input type="checkbox" class="Status" name="show" value="是否能够去商品状态值" lay-skin="switch" lay-text="是|否" lay-filter="Show" checked="" data-id="2">
 
 						</td>
+						<td>￥{$value.goods_putaway|pay_money}</td>
+						<td>{$value.sort_number}</td>
+						<td>{$value.goods_repertory}</td>
+						<td>{$value.goods_putaway|year}年</td>
+						<td style="width: 155px;">
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/look',['id'=>$value.id])}"> 查看详情</a>
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit',['id'=>$value.id])}">编辑</a>
+							<a href="{:url('admin/Goods/del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"> 删除</a>
+						</td>
 					</tr>
+				{/volist}
 				</tbody>
 			</table>
 		</div>

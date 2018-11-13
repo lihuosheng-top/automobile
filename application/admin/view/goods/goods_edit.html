@@ -5,11 +5,11 @@
 	}
 	
 	.layui-form label {
-		width: 17%;
+		width: 14%;
 		text-align: left;
 	}
 	
-	
+
 	.layui-form-label span {
 		color: red;
 	}
@@ -23,7 +23,9 @@
 	.layui-input-block {
 		min-height: 40px;
 	}
-	
+.layui-form-item{
+		width: 54%;
+	}
 	.biaoji .layui-form-radioed span {
 		color: #fff;
 		background: red;
@@ -45,12 +47,13 @@
 		padding-left: 20px;
 		font-weight: bold;
 	}
-	
-	.layui-form-item {
-		padding-left: 20px;
-		margin: 10px;
-	}
-	
+.special ,
+.general,
+.special .layui-form-item,
+.general .layui-form-item{
+
+	min-width: 100%;
+}
 	.add-content {
 		background: #F2F2F2;
 		width: 100%;
@@ -59,6 +62,7 @@
 	.general-kuang {
 		border: solid 1px #E4E4E4;
 		width: 1000px;
+		padding-left: 10px;
 	}
 	
 	.btus {
@@ -191,7 +195,7 @@
 			</div>
 		</div>
 		<p style="margin-left: 17%;color:#999999 ; ">建议尺寸：750*480像素，你可以拖拽图片调整顺序，最多上传10张</p>
-		<div class="layui-form-item">
+		<div class="layui-form-item" style="min-width: 62% !important;">
 			<label class="layui-form-label">商品分组：</label>
 			<div class="layui-input-inline">
 				<select name="goods_type_id" id="goods_type_id">
@@ -200,17 +204,17 @@
 					{/volist}
 				</select>
 			</div>
-			<div class="layui-input-inline">
+			<div class="layui-input-inline" >
 				<a href="{:url('admin/Category/add')}" style="line-height: 40px;">新建分类</a>
 			</div>
 		</div>
-		<div class="layui-form-item ">
+		<div class="layui-form-item " style="min-width: 62% !important;">
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
 			<div class="layui-input-inline">
-				<select name="goods_brand">
-					<option value="浙江" selected="">浙江省</option>
-					<option value="你的工号">江西省</option>
-					<option value="你最喜欢的老师">福建省</option>
+				<select name="goods_brand_id">
+					{volist name="brand" id="val"}
+					<option value="{$val.id}" selected="">{$val.brand_name}</option>
+					{/volist}
 				</select>	</div>
 				<div class="layui-input-inline">
 					<a href="{:url('admin/Brand/add')}" style="line-height: 40px;">添加品牌</a>
@@ -278,7 +282,7 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label">属性</label>
 						<div class="layui-input-inline">
-							<select name="dedicated_property">
+							<select name="dedicated_property" class="dedicated_property">
 								<option value="浙江" selected="">浙江省</option>
 								<option value="你的工号">江西省</option>
 								<option value="你最喜欢的老师">福建省</option>
@@ -293,7 +297,7 @@
 						<div class="layui-input-inline noshow add-attributes">
 							<button type="button" class="operation-btus btu-delet">删除</button>
 							<button type="button" class="operation-btus btu-cancel">取消</button>
-							<button type="button" class="operation-btus btu-add">添加</button>
+							<button type="button" class="operation-btus btu-add shuxingbtu-add">添加</button>
 						</div>
 					</div>
 
@@ -384,11 +388,13 @@
 		</div>
 		<div class="layui-form-item" pane="">
 			<label class="layui-form-label">限购：</label>
+				<div class="layui-input-block">
 			<div class="layui-input-inline">
 				<input type="checkbox" lay-skin="primary" title="限制每人可购买数量"  >
 			</div>
 			<div class="layui-input-inline">
 				<input type="text" name="goods_restriction" id="" value="" style="margin-right: 10px;" id="goods_restriction" />件
+			</div>
 			</div>
 		</div>
 		<div class="layui-form-item" class="biaoji">
@@ -428,95 +434,16 @@
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
-	<!-- <script type="text/javascript">
-		$(".submit_btn").click(function(){
-			var goods_name=$("#goods_name").val();
-			var goods_describe=$("#goods_describe").val();
-			var standard=$("#standard").val();
-			var goods_number=$("#goods_number").val();
-			var goods_new_money=$("#goods_new_money").val();
-			var goods_bottom_money=$("#goods_bottom_money").val();
-			var goods_repertory=$("#goods_repertory").val();
-			var goods_speed=$("#goods_speed").val();
-			var goods_weight=$("#goods_weight").val();
-			var goods_category=$("#goods_category").val();
-			var goods_restriction=$("#goods_restriction").val();
-			var goods_trait=$("#goods_trait").val();
-			   
-			var goods_type_id=$('#goods_type_id option:selected').text();
-			var goods_sign=$('input:radio[name="goods_sign"]:checked').val();
-			var goods_putaway=$('input:radio[name="goods_putaway"]:checked').val();
-			var goods_delivery=$('input:radio[name="goods_delivery"]:checked').val();
-			var sort_number=$("#sort_number").val();  
-			var goods_status=$('input:radio[name="goods_status"]:checked').val();
-			// 商品图片
-	     var mycars=new Array();
-			 var lenght=$('#file')[0].files.length;
-			
-			 for(var i = 0; i <lenght; i++){
-            mycars[i]= $('#file')[0].files[i];
-        }
-			var goods_show_images=mycars;
-			// 商品主图
-      var mycars_b=new Array();
-      var lenght=$('#files')[0].files.length;
-      
-      for(var i = 0; i <lenght; i++){
-      			mycars_b[i]= $('#files')[0].files[i];
-						}
-      var goods_images=mycars_b;
-			var goods_text=UE.getEditor('editor').getContent();
-			// 商品规格
-			var goods_standard=$('input:radio[name="goods_standard"]:checked').val();
-			var click_general_buts=0;
-			var universal_standard_name=new Array();  
-			var universal_standard_value=new Array();  
-			$(".general_buts").click(function(){
-				click_general_buts++;
-			});
-			 if(goods_standard=="通用"){
-				 var i=0;
-         var j=0;
-				 $(".universal_standard_name option:selected").each(function(){
-					 
-				    universal_standard_name[i]=$(this).text();
-						i++;
-				 });
-				 $(".list input").each(function(){
-				 	universal_standard_value[j]=$(this).val();
-				 	j++;
-				 });
-				 console.log(universal_standard_value);
-				 }
-				 else{
-					 
-				 }
-				 $.ajax({
-				 	type: "POST",
-				url : "{:url('admin/Goods/save')}",
-				 	data: {"goods_name":goods_name,"goods_describe":goods_describe,},
-				 	success: function(data){
-				 		console.log("成功")
-				 	},
-				 	error:function (data) {
-				 		console.log("错误")
-				 	}
-				 });
-		})
-		
-	</script> -->
+
 	<script type="text/javascript">
 		var dhtml = "";
 
 		dhtml += '<div>' +
 			' 			<div class="layui-form-item">                                                                                 ' +
 			' 				<label class="layui-form-label">规格名</label>                                                               ' +
-			' 				<div class="layui-input-inline">                                                                          ' +
+			' 				<div class="layui-input-inline guige_name">                                                                          ' +
 			' 					<select class="universal_standard_name" name="goods_standard_name[]">                                                                                 ' +
-			' 						<option value="请选择省">请选择省</option>                                                                    ' +
-			' 						<option value="浙江" selected="">浙江省</option>                                                       ' +
-			' 						<option value="你的工号">江西省</option>                                                                 ' +
-			' 						<option value="你最喜欢的老师">福建省</option>                                                              ' +
+			' 						<option value="0" selected="">请选择</option>                                                                    ' +
 			' 					</select>                                                                                             ' +
 			' 				</div>                                                                                                    '
 			//      +'                                                                                                                        '
@@ -533,7 +460,7 @@
 			' 				<div class="layui-input-inline noshow add-names" style="">                                                ' +
 			' 				<button type="button" class="operation-btus btu-delet">删除</button>                                                                     ' +
 			' 					<button type="button" class="operation-btus btu-cancel">取消</button>                                                                     ' +
-			' 					<button type="button" class="operation-btus btu-add">添加</button>                                                                    ' +
+			' 					<button type="button" class="operation-btus btu-add guibtu-add">添加</button>                                                                    ' +
 			' 				</div>                                                                                                    ' +
 			' 			</div>                                                                                                        ' +
 			' 			<div class="layui-form-item">                                                                                 ' +
@@ -567,31 +494,7 @@
 			' 			</div>                                                                                                        ' +
 			'          </div>                                                                                                        ';
 	</script>
-	<script type="text/javascript">
-		$("#select_class").on("click", function() {
 
-			if($(".tree").css('display') === 'none') {
-				$(".tree").show();
-			} else {
-
-				$(".tree").hide();
-			}
-		});
-		$(function() {
-			$('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', '关闭');
-			$('.tree li.parent_li > span').on('click', function(e) {
-				var children = $(this).parent('li.parent_li').find(' > ul > li');
-				if(children.is(":visible")) {
-					children.hide('fast');
-					$(this).attr('title', '展开').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
-				} else {
-					children.show('fast');
-					$(this).attr('title', '关闭').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
-				}
-				e.stopPropagation();
-			});
-		});
-	</script>
 	<script type="text/javascript">
 		layui.config({
 			base: "js/"
@@ -662,6 +565,64 @@ layedit.build('demo');
 				$(this).addClass("noshow");
 				$(this).siblings(".add-names").removeClass("noshow");
 			});
+			// 点击添加按钮
+			$("#general_content").on('click', ".guibtu-add", function() {
+				var text=$(this).parent().siblings(".add-names").children("input").val();
+					$.ajax({
+						type: "POST",
+				   		url : "{:url('admin/Goods/name')}",
+						data: {"goods_name":text},
+						success: function(data){
+							var data= eval('(' + data + ')');
+							var dhtmls='<option value="'+data.data+'">'+data.data+'</option> ';
+//							console.log($(".universal_standard_name").children("option").val());
+							$(".universal_standard_name").append(dhtmls);
+							form.render('select');
+						},
+						error:function (data) {
+							console.log(data)
+						}
+					});
+				
+			});
+				$("#special_content").on('click', ".guibtu-add", function() {
+				var text=$(this).parent().siblings(".add-names").children("input").val();
+					$.ajax({
+						type: "POST",
+				   		url : "{:url('admin/Goods/name')}",
+						data: {"goods_name":text},
+						success: function(data){
+							var data= eval('(' + data + ')');
+							var dhtmls='<option value="'+data.data+'">'+data.data+'</option> ';
+							$(".universal_standard_name").append(dhtmls);
+							form.render('select');
+						},
+						error:function (data) {
+							console.log(data)
+						}
+					});
+				
+			});
+				$("#special_content").on('click', "shuxingbtu-add", function() {
+				var text=$(this).parent().siblings(".add-names").children("input").val();
+					$.ajax({
+						type: "POST",
+				   		url : "{:url('admin/Goods/name')}",
+						data: {"goods_name":text},
+						success: function(data){
+							var data= eval('(' + data + ')');
+							var dhtmls='<option value="'+data.data+'">'+data.data+'</option> ';
+							$(".dedicated_property").append(dhtmls);
+							form.render('select');
+						},
+						error:function (data) {
+							console.log(data)
+						}
+					});
+				
+			});
+			
+		
 			// end商品规格变化
 		})
 	</script>
