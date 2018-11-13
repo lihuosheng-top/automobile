@@ -157,6 +157,7 @@ Route::group("admin",[
     "affirm_pay"=>"admin/Goods/affirm",
 	"goods_look"=>"admin/Goods/look",
     "goods_name"=>"admin/Goods/name",                                       //商品规格名添加
+    "goods_standard_name"=>"admin/Goods/standard_name",                                       //商品规格名显示
 
 
 

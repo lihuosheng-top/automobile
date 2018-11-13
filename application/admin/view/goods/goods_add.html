@@ -248,7 +248,6 @@
 			<div class="layui-form-item general noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-
 					<div id="general_content"></div>
 					<div class="add-content content" id="add_general_buts">
 						<button type="button" class="btus general_buts">添加规格项目</button>
@@ -407,7 +406,6 @@
 		</div>
 		<div class="basic-information title"> 配送与安装服务
 		</div>
-	
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label">配送与安装服务：</label>
 			<div class="layui-input-block" id="">
@@ -527,15 +525,35 @@ layedit.build('demo');
 				}
 
 			});
-			//      点击通用添加规格项目添加页面
+			//      点击专用添加规格项目添加页面
 			$(".special_buts").click(function() {
 				$("#special_content").append(dhtml);
+				
 				form.render('select');
 
 			});
-			//      点击专用添加规格项目添加页面
+			//      点击通用添加规格项目添加页面
 			$(".general_buts").click(function() {
 				$("#general_content").append(dhtml);
+				$.ajax({
+						type: "POST",
+						url : "{:url('admin/Goods/name')}",
+						data: {},
+						success: function(data){
+							console.log(data);
+							var data= eval('(' + data + ')');
+							for(var i=0;i<data.data.length;i++){
+								var dhtml="";
+								dhtml='<option value="'+data.data[i].standard_name+'">'+data.data[i].standard_name+'</option>'
+								$(".universal_standard_name").append(dhtml);
+							}
+							
+							form.render('select');
+						},
+						error:function (data) {
+							console.log(data)
+						}
+					});
 				form.render('select');
 
 			});
@@ -574,9 +592,14 @@ layedit.build('demo');
 						data: {"goods_name":text},
 						success: function(data){
 							var data= eval('(' + data + ')');
-							var dhtmls='<option value="'+data.data+'">'+data.data+'</option> ';
+							for(var i=0;i<data.data.length;i++){
+								var dhtml="";
+								 dhtml='<option value="'+data.data[i].standard_name+'">'+data.data[i].standard_name+'</option>'
+								 $(".universal_standard_name").append(dhtml);
+							}
+							// var dhtmls='<option value="'+data.data.standard_name+'">'+data.data.standard_name+'</option> ';
 //							console.log($(".universal_standard_name").children("option").val());
-							$(".universal_standard_name").append(dhtmls);
+							
 							form.render('select');
 						},
 						error:function (data) {
@@ -621,6 +644,8 @@ layedit.build('demo');
 					});
 				
 			});
+				
+							
 			
 		
 			// end商品规格变化

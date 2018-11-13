@@ -136,7 +136,7 @@
 	<div class="open">
 
 	</div>
-	<form class="layui-form" action="{:url('admin/Goods/save')}" method="post" enctype="multipart/form-data">
+	<form class="layui-form" action="{:url('admin/Goods/updata')}" method="post" enctype="multipart/form-data">
 		<div class="basic-information title"> 基本信息
 		</div>
 		<div class="layui-form-item ">
@@ -199,9 +199,7 @@
 			<label class="layui-form-label">商品分组：</label>
 			<div class="layui-input-inline">
 				<select name="goods_type_id" id="goods_type_id">
-					{volist name="goods_list" id="value"}
-					<option value="{$value.id}">{$value.name}</option>
-					{/volist}
+					<option value=""></option>
 				</select>
 			</div>
 			<div class="layui-input-inline" >
@@ -212,9 +210,9 @@
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
 			<div class="layui-input-inline">
 				<select name="goods_brand_id">
-					{volist name="brand" id="val"}
-					<option value="{$val.id}" selected="">{$val.brand_name}</option>
-					{/volist}
+
+					<option value="" selected=""></option>
+
 				</select>	</div>
 				<div class="layui-input-inline">
 					<a href="{:url('admin/Brand/add')}" style="line-height: 40px;">添加品牌</a>
@@ -240,16 +238,68 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">商品规格</label>
 			<div class="layui-input-block">
-				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
+				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige" checked="">
 				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
 			</div>
 		</div>
 		<div>
-			<div class="layui-form-item general noshow">
+			<div class="layui-form-item general ">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
 
-					<div id="general_content"></div>
+					<div id="general_content">
+						<div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">规格名</label>
+								<div class="layui-input-inline guige_name">
+									<select class="universal_standard_name" name="goods_standard_name[]">
+										<option value="0" selected="">请选择</option>
+									</select>
+								</div>
+								<div class="layui-input-inline add-name" style="">
+									<button type="button" class="sky-blue bgwhite">+添加规格名</button>
+								</div>
+								<div class="layui-input-inline noshow add-names" style="">
+									<input type="text" name="" id="" value="" />
+								</div>
+								<div class="layui-input-inline noshow add-names" style="">
+									<button type="button" class="operation-btus btu-delet">删除</button>
+									<button type="button" class="operation-btus btu-cancel">取消</button>
+									<button type="button" class="operation-btus btu-add guibtu-add">添加</button>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">规格值：</label>
+								<div class="num-content">
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
 					<div class="add-content content" id="add_general_buts">
 						<button type="button" class="btus general_buts">添加规格项目</button>
 					</div>
@@ -301,7 +351,59 @@
 						</div>
 					</div>
 
-					<div id="special_content"></div>
+					<div id="special_content">
+						<div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">规格名</label>
+								<div class="layui-input-inline guige_name">
+									<select class="universal_standard_name" name="goods_standard_name[]">
+										<option value="0" selected="">请选择</option>
+									</select>
+								</div>
+								<div class="layui-input-inline add-name" style="">
+									<button type="button" class="sky-blue bgwhite">+添加规格名</button>
+								</div>
+								<div class="layui-input-inline noshow add-names" style="">
+									<input type="text" name="" id="" value="" />
+								</div>
+								<div class="layui-input-inline noshow add-names" style="">
+									<button type="button" class="operation-btus btu-delet">删除</button>
+									<button type="button" class="operation-btus btu-cancel">取消</button>
+									<button type="button" class="operation-btus btu-add guibtu-add">添加</button>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">规格值：</label>
+								<div class="num-content">
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
+										<input type="text" name="goods_standard_value[]" id="" value="" placeholder="" style="padding-left:10px;" />
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
 					<div class="add-content content" id="add_special_buts">
 						<button type="button" class="btus special_buts">添加规格项目</button>
 					</div>
