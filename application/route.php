@@ -37,11 +37,11 @@ Route::group("",[
 
     /*登录页面*/
     "login_index"=>"index/Login/index",
+    'Dolog'=>"index/Login/Dolog",
     /*退出登录*/
     "logout"=>"index/Login/logout",
     /*验证码*/
-    "login_captcha"=>"index/Login/captchas",
-
+//    "login_captcha"=>"index/Login/captchas",
 
 
     /*注册页面*/
@@ -49,10 +49,13 @@ Route::group("",[
     "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
 
+    /*判断是否登录*/
+    "isLogin"=>"index/My/isLogin", //是否登录判断
 
-//    "register_code"=>"index/Register/code",
-//    "register_index"=>"index/Register/register",
 
+    /*找回密码验证码*/
+    'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
+    'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
 
 
     /*安全中心*/
@@ -85,6 +88,7 @@ Route::group("",[
     // 我的
     "my_index"=>"index/My/my_index",
     "login"=>"index/My/login",//登录
+    "setting"=>"index/My/setting",//设置
     
 ]);
 

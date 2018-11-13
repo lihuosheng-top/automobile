@@ -11,12 +11,7 @@ use think\Request;
 use think\Session;
 use think\Db;
 
-
-
-
-
 class Register extends Controller{
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -48,7 +43,7 @@ class Register extends Controller{
                 }
                 $content = "尊敬的用户，您本次验证码为{$mobileCode}，十分钟内有效";
                 $url = "http://120.26.38.54:8000/interface/smssend.aspx";
-                $post_data = array("account" => "gagaliang", "password" => "123qwe", "mobile" => "$mobile", "content" => $content);
+                $post_data = array("account" => "qiche", "password" => "123qwe", "mobile" => "$mobile", "content" => $content);
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $url);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -68,7 +63,6 @@ class Register extends Controller{
             }
 
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -98,32 +92,32 @@ class Register extends Controller{
                     'phone_num'=>$mobile,
                     'password'=>md5($password),
                     'create_time'=>strtotime($create_time),
-                    "status"=>1
+                    "status"=>1,
                 ];
                 $invitation = $request->only(['invitation'])['invitation'];
                 if(!empty($invitation)) {
-                    $res =Db::name('user')->insert($datas);
-                    $data = [];
-                    $id = substr($invitation,3);
-                    $data['user_id'] = $id;
-                    $data['invitation'] = $invitation;
-                    $bool = db("discounts_user")->insert($data);
-                    if($bool){
-                        return ajax_success('注册成功',$datas);
+                    $is_user_id =Db::name('user')->where('id',$invitation)->select();
+                    if(!empty($is_user_id)){
+                        $datas['inviterId']=$invitation;
+                        $res =Db::name('user')->insert($datas);
+                        if($res){
+                            return ajax_success('注册成功',$datas);
+                        }else{
+                            return ajax_error('注册失败',['status'=>0]);
+                        }
+                    }else{
+                        return ajax_error('邀请码不正确',['status'=>0]);
                     }
                 }else{
                     $res =Db::name('user')->insert($datas);
                     if($res){
                         return ajax_success('注册成功',$datas);
                     }else{
-                        return ajax_error('注册失败',$datas);
+                        return ajax_error('注册失败',['status'=>0]);
                     }
                 }
 
             }
-
-
-
         }
     }
 

@@ -184,17 +184,30 @@
                 var id=$(this).data("id");
                 var status = $(this).val();
                 console.log(status);
-                $.ajax({
-                    type: "POST",
-                    url: "{:url('admin/Goods/status')}",
-                    data: {"id":id,"status":status},
-                    success: function(data){
-                        console.log("成功")
-                    },
-                    error:function (data) {
-                        console.log("错误")
-                    }
-                });
+				if(status==1){
+					layer.confirm('付费商品需付费后才能上架！', {
+									btn: ['确定付费', '取消付费！'] //按钮
+								}, function() {
+									layer.close(layer.index);
+									window.location.href = "{:url('admin/Goods/pay')}";
+									
+// 									$.ajax({
+// 										type: "POST",
+// 										url: "{:url('admin/Goods/status')}",
+// 										data: {"id":id,"},
+// 										success: function(data){
+// 											window.location.href = "{:url('admin/Goods/pay')}";
+// 											layer.close(layer.index);
+// 											console.log("成功")
+// 										},
+// 										error:function (data) {
+// 											console.log("错误")
+// 										}
+// 									});
+									
+								});
+				}
+                
 
 
             });
