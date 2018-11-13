@@ -25,23 +25,13 @@ Route::group("",[
     "reservation_info"=>"index/index/reservation_info",//预约服务 详情
     "shop_order"=>"index/index/shop_order",//预约服务 详情
 
-
-    /*商品列表*/
-    "goods_index"=>"index/Goods/index",
-    "goods_detail"=>"index/Goods/detail",
-    "goods_id"=>"index/Goods/ajax_id",
-    "particulars_id"=>"index/Goods/goods_id",
-    "goods_big_images"=>"index/Goods/big_images",
-
-
-
     /*登录页面*/
     "login_index"=>"index/Login/index",
+    'Dolog'=>"index/Login/Dolog",
     /*退出登录*/
     "logout"=>"index/Login/logout",
     /*验证码*/
-    "login_captcha"=>"index/Login/captchas",
-
+//    "login_captcha"=>"index/Login/captchas",
 
 
     /*注册页面*/
@@ -49,35 +39,18 @@ Route::group("",[
     "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
 
+    /*判断是否登录*/
+    "isLogin"=>"index/My/isLogin", //是否登录判断
 
-//    "register_code"=>"index/Register/code",
-//    "register_index"=>"index/Register/register",
-
-
-
-    /*安全中心*/
-    "security_index"=>"index/Security/index",
-
-
-
-    /*模板商城*/
-    "template_index"=>"index/Template/index",
-    "template_goods_show"=>"index/Template/goods_show",
-    "template_goods_buy"=>"index/Template/goods_buy",
-
-
-    /*定制开发*/
-    "exploit_index"=>"index/Exploit/index",
-
-
-
-    /*安全中心*/
-    "center_index"=>"index/Center/index",
+    /*找回密码验证码*/
+    'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
+    'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
 
     // 分类
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
     "goods_list"=>"index/Classify/goods_list",//商品列表
+    "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
 
     // 购物车
@@ -85,6 +58,7 @@ Route::group("",[
     // 我的
     "my_index"=>"index/My/my_index",
     "login"=>"index/My/login",//登录
+    "setting"=>"index/My/setting",//设置
     
 ]);
 
@@ -149,14 +123,12 @@ Route::group("admin",[
     "goods_updata"=>"admin/Goods/updata",
     "goods_del"=>"admin/Goods/del",
     "images_del"=>"admin/Goods/images",
-    "images_dels"=>"admin/Goods/image",
     "goods_status"=>"admin/Goods/status",
     "goods_batches"=>"admin/Goods/batches",
-    "goods_putaway"=>"admin/Goods/putaway",                                    //商品上架
-    "goods_pay"=>"admin/Goods/pay",                                            //商品付费详情
-    "affirm_pay"=>"admin/Goods/affirm",
-	"goods_look"=>"admin/Goods/look",
-    "goods_name"=>"admin/Goods/name",                                       //商品规格名添加
+    "goods_pay"=>"admin/Goods/pay",                                                  //商品付费详情
+    "affirm_pay"=>"admin/Goods/affirm",                                                 //商品确认付费
+	"goods_look"=>"admin/Goods/look",                                                //商品查看详情
+    "goods_name"=>"admin/Goods/name",                                                   //商品规格名添加
     "goods_standard_name"=>"admin/Goods/standard_name",                                       //商品规格名显示
 
 

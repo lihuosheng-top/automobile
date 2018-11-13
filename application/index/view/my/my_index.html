@@ -14,7 +14,7 @@
     <div class="wrapper">
         <div class="user_box">
             <div class="head_icon">
-                <a href="javascript:;" class="spr set"></a>
+                <a href="setting" class="spr set"></a>
                 <a href="javascript:;" class="spr message"></a>
             </div>
             <div class="user_info clearfix">
@@ -22,11 +22,11 @@
                     <img src="__STATIC__/index/image/icon6.png">
                 </div>
                 <!-- 未登录显示 -->
-                <a href="login" class="please_login">
+                <!-- <a href="login" class="please_login" style="display:none;">
                     立即登录&gt;
-                </a>
+                </a> -->
                 <!-- 登陆后显示 -->
-                <div class="user_info_text" style="display:none;">
+                <div class="user_info_text" style="display:block;">
                     <p class="user_name">叶问</p>
                     <p class="invitation_code">邀请码: <span>649874</span></p>
                     <p class="jf_hy_qb">
@@ -165,8 +165,33 @@
             </ul>
         </div>
     </div>
-    <script src="__STATIC__/index/js/plugin/vue.js"></script>
+    <script src="__STATIC__/index/js/plugin/zepto.js"></script>
+    <script src="__STATIC__/index/js/plugin/touch.js"></script>
+    <!-- <script src="__STATIC__/index/js/plugin/jquery.js"></script> -->
+    <!-- 限制访问（没有登录） -->
     <script>
+        $.ajax({
+            url: 'isLogin',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+                var data = JSON.parse(data);
+                console.log(data);
+                if(data.status == 0){
+                    location.href = 'login';
+                }else{
+                    var data = data.data;
+                    $('.user_name').html(data.user_name);
+                    $('.invitation_code span').html(data.id);
+                    $('.point i').html(data.user_integral_wallet);
+                    $('.member_grade i').html(data.user_grade_content);
+                    $('.wallet i').html(data.user_wallet);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
         
     </script>
 </body>

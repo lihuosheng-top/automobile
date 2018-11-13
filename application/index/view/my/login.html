@@ -16,7 +16,7 @@
     <!-- <div id="app"> -->
         <div class="wrapper">
             <div class="head">
-                <a href="my_index" class="spr icon-back"></a>
+                <!-- <a href="my_index" class="spr icon-back"></a> -->
                 <h3>登录</h3>
                 <a href="javascript:;" class="register">注册</a>
             </div>
@@ -55,7 +55,7 @@
                 <input type="password" placeholder="输入新的密码" class="find-psw">
                 <input type="password" placeholder="确认新密码" class="find-repeat-psw">
             </div>
-            <button class="find-confirm">确认</button>
+            <button class="find-confirm" disabled>确认</button>
         </div>
         <!-- 注册 -->
         <div class="register-pop" style="display:none;">
@@ -70,8 +70,8 @@
             <div class="reg-inputbox">
                 <input type="text" placeholder="输入手机号码" class="reg-phone-num">
                 <div class="identifying-code">
-                    <input type="text" class="message-code" placeholder="短信验证码">
-                    <button class="send-code">发送验证码</button>
+                    <input type="text" class="reg-message-code" placeholder="短信验证码">
+                    <button class="reg-send-code">发送验证码</button>
                 </div>
                 <input type="password" placeholder="输入密码" class="reg-psw">
                 <input type="password" placeholder="邀请码" class="reg-invite-code">
@@ -80,7 +80,7 @@
                 <input type="checkbox" id="agree-input">
                 <label for="agree-input" class="agree-label">我已阅读并同意《<span>用户服务协议</span>》</label>
             </div>
-            <button class="reg-confirm">确定</button>
+            <button class="reg-confirm" disabled>确定</button>
             <div class="third-part">
                 <h3 class="third-txt">第三方登录</h3>
                 <a href="javascript:;" class="spr wechat"></a>
@@ -93,13 +93,153 @@
     <!-- <script src="__STATIC__/index/js/plugin/vue.js"></script> -->
     <!-- <script src="__STATIC__/index/js/plugin/vue.resource.js"></script> -->
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+     <!-- 验证码倒计时 -->
     <script>
-        // 显示注册
+        function buttonCountdown($el, msNum, timeFormat) {
+            var text = $el.data("text") || $el.text(),
+                    timer = 0;
+            $el.prop("disabled", true).addClass("disabled")
+                    .on("bc.clear", function () {
+                        clearTime();
+                    });
+            (function countdown() {
+                var time = showTime(msNum)[timeFormat];
+                $el.text(time + '后失效');
+                if (msNum <= 0) {
+                    msNum = 0;
+                    clearTime();
+                } else {
+                    msNum -= 1000;
+                    timer = setTimeout(arguments.callee, 1000);
+                }
+            })();
+            function clearTime() {
+                clearTimeout(timer);
+                $el.prop("disabled", false).removeClass("disabled").text(text);
+            }
+            function showTime(ms) {
+                var d = Math.floor(ms / 1000 / 60 / 60 / 24),
+                        h = Math.floor(ms / 1000 / 60 / 60 % 24),
+                        m = Math.floor(ms / 1000 / 60 % 60),
+                        s = Math.floor(ms / 1000 % 60),
+                        ss = Math.floor(ms / 1000);
+                return {
+                    d: d + "天",
+                    h: h + "小时",
+                    m: m + "分",
+                    ss: ss + "秒",
+                    "d:h:m:s": d + "天" + h + "小时" + m + "分" + s + "秒",
+                    "h:m:s": h + "小时" + m + "分" + s + "秒",
+                    "m:s": m + "分" + s + "秒"
+                };
+            }
+            return this;
+        }
+    </script>
+    
+    <!-- 注册 -->
+    <script>
         $('.register').click(function(){
             $('.wrapper').css('display', 'none');
             $('.register-pop').css('display', 'block');
         })
-        // 显示登录
+        // 注册发送验证码
+        $('.reg-send-code').click(function(){
+            var phone = $('.reg-phone-num').val();
+            var reg = /^1[34578]\d{9}$/;
+            if(phone!== '' && phone.match(reg)){
+                buttonCountdown($(this), 1000 * 60 * 1, "ss");
+                $.ajax({
+                    url: 'sendMobileCode',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'mobile': phone
+                    },
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    style: 'bottom:100px;',
+                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                    skin: 'msg',
+                    content: '号码格式不正确',
+                    time: 2
+                })
+            }
+        })
+
+        $('#agree-input').change(function(){
+            if($(this)[0].checked){
+                if($('.reg-message-code').val() !== ''){
+                    $('.reg-confirm').attr('disabled', false);
+                }
+            }
+        })
+        $('.reg-message-code').blur(function(){
+            if($(this).val() !== ''){
+                if($('#agree-input')[0].checked){
+                    $('.reg-confirm').attr('disabled', false);
+                }
+            }
+        })
+        // 注册确定按钮
+        $('.reg-confirm').click(function(){
+            var mobile = $('.reg-phone-num').val(),
+                mobile_code = $('.reg-message-code').val(),
+                password = $('.reg-psw').val();
+                confirm_password = $('.reg-psw').val();
+                invitation = $('.reg-invite-code').val();
+
+            $.ajax({
+                url: 'doRegByPhone',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'mobile': mobile,
+                    'mobile_code': mobile_code,
+                    'password': password,
+                    'confirm_password': confirm_password,
+                    'invitation': invitation
+                },
+                success: function(data){
+                    console.log(data);
+                    if(data.status == 0){
+                        layer.open({
+                            style: 'bottom:100px;',
+                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            skin: 'msg',
+                            content: data.info,
+                            time: 2
+                        })
+                    }else{
+                        layer.open({
+                            style: 'bottom:100px;',
+                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            skin: 'msg',
+                            content: '注册成功',
+                            time: 1
+                        })
+                        setTimeout(function(){
+                            $('.register-pop').css('display', 'none');
+                            $('.wrapper').css('display', 'block');
+                        },1200)
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+    </script>
+    <!-- 登录 -->
+    <script>
         $('.login').click(function(){
             $('.wrapper').css('display', 'block');
             $('.register-pop').css('display', 'none');
@@ -108,7 +248,50 @@
             $('.wrapper').css('display', 'block');
             $('.register-pop').css('display', 'none');
         })
-        // 显示忘记密码
+        $('.login-btn').click(function(){
+            var account = $('.phone-num').val(),
+                passwd = $('.password').val();
+            $.ajax({
+                url: 'Dolog',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    'account': account,
+                    'passwd': passwd
+                },
+                success: function(data){
+                    console.log(data);
+                    if(data.status == 0){
+                        layer.open({
+                            style: 'bottom:100px;',
+                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            skin: 'msg',
+                            content: data.info,
+                            time: 2
+                        })
+                    }else{
+                        layer.open({
+                            style: 'bottom:100px;',
+                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            skin: 'msg',
+                            content: data.info,
+                            time: 1
+                        })
+                        setTimeout(function(){
+                            location.href = 'my_index';
+                        },1200)
+                    }
+                    
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+    </script>
+
+    <!-- 显示忘记密码 -->
+    <script>
         $('.forget-psw').click(function(){
             $('.wrapper').css('display', 'none');
             $('.find-password').css('display', 'block');
@@ -117,45 +300,125 @@
             $('.wrapper').css('display', 'block');
             $('.find-password').css('display', 'none');
         })
+        $('.message-code').blur(function(){
+            if($(this).val() !== ''){
+                $('.find-confirm').attr('disabled', false);
+            }
+        })
 
-
-
-        // var app = new Vue({
-        //     el: '#app',
-        //     data: {
-        //         showPassword: false,//登录
-        //         showRegister: false,//注册
-        //         regPhone: '',
-        //     },
-        //     methods: {
-        //         // 显示找回密码
-        //         showPsw: function (){
-        //             this.showPassword = true;
-        //         },
-        //         // 隐藏找回密码
-        //         hidePsw: function (){
-        //             this.showPassword = false;
-        //         },
-        //         // 显示注册
-        //         showReg: function(){
-        //             this.showRegister = true;
-        //         },
-        //         // 隐藏注册
-        //         hideReg: function(){
-        //             this.showRegister = false;
-        //         },
-        //         postPhoneNum: function(){
-        //             this.$http.post('sendMobileCode', {
-        //                 mobile: this.regPhone
-        //             }).then((res) => {
-        //                 console.log(res);
-        //             }, (res) => {
-        //                 console.log('error')
-        //             });
-        //         }
-
-        //     }
-        // })
+        // 忘记密码 发送验证码
+        $('.send-code').click(function(){
+            var mobile = $('.find-phone-num').val();
+            var reg = /^1[34578]\d{9}$/;
+            if(mobile!== '' && mobile.match(reg)){
+                buttonCountdown($(this), 1000 * 60 * 1, "ss");
+                $.ajax({
+                    url: 'sendMobileCodeByPhone',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'mobile': mobile
+                    },
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    style: 'bottom:100px;',
+                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                    skin: 'msg',
+                    content: '号码格式不正确',
+                    time: 2
+                })
+            }
+        })
+        // 找回密码 确定按钮
+        $('.find-confirm').click(function(){
+            var phone_number = $('.find-phone-num').val(),
+                password = $('.find-psw').val(),
+                password_second = $('.find-repeat-psw').val(),
+                code = $('.message-code').val();
+            if(password == password_second){
+                $.ajax({
+                    url: 'find_password_by_phone',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'phone_number': phone_number,
+                        'password': password,
+                        'password_second': password_second,
+                        'code': code
+                    },
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    style: 'bottom:100px;',
+                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                    skin: 'msg',
+                    content: '两次输入密码不一致',
+                    time: 2
+                })
+            }
+        })
+        
+    </script>
+    <!-- 记住密码 -->
+    <script>
+        $(document).ready(function(){
+            var oPhoneNum = document.getElementsByClassName('phone-num')[0];
+            var oPassword = document.getElementsByClassName('password')[0];
+            var oRemember = document.getElementById('remember-input');
+            //页面初始化时，如果帐号密码cookie存在则填充
+            if (getCookie('user') && getCookie('pswd')) {
+                oPhoneNum.value = getCookie('user');
+                oPassword.value = getCookie('pswd');
+                oRemember.checked = true;
+            }
+            //复选框勾选状态发生改变时，如果未勾选则清除cookie
+            oRemember.onchange = function () {
+                if (!this.checked) {
+                    delCookie('user');
+                    delCookie('pswd'); 
+                }
+            };
+            //提交事件触发时，如果复选框是勾选状态则保存cookie
+            $('.login-btn').click(function(){
+                if (oRemember.checked) {
+                    setCookie('user', oPhoneNum.value, 7); //保存帐号到cookie，有效期7天
+                    setCookie('pswd', oPassword.value, 7); //保存密码到cookie，有效期7天
+                }
+            })
+        })
+        //设置cookie
+        function setCookie(name, value, day) {
+            var date = new Date();
+            date.setDate(date.getDate() + day);
+            document.cookie = name + '=' + value + ';expires=' + date;
+        };
+        //获取cookie
+        function getCookie(name) {
+            var reg = RegExp(name + '=([^;]+)');
+            var arr = document.cookie.match(reg);
+            if (arr) {
+                return arr[1];
+            } else {
+                return '';
+            }
+        };
+        //删除cookie
+        function delCookie(name) {
+            setCookie(name, null, -1);
+        };
     </script>
 </body>
 
