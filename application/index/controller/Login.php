@@ -70,8 +70,14 @@ class Login extends Controller{
      * Notes:退出操作
      **************************************
      */
-    public function logout(){
-        Session('member',null);
-        $this->success('退出成功',url('index/Login/login'));
+    public function logout(Request $request){
+       if($request->isPost()){
+          $res = Session('member',null);
+          if($res){
+              return ajax_success('退出成功',['status'=>1]);
+          }else{
+              return ajax_error('退出失败',['status'=>0]);
+          }
+       }
     }
 }
