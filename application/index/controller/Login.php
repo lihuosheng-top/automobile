@@ -72,12 +72,8 @@ class Login extends Controller{
      */
     public function logout(Request $request){
        if($request->isPost()){
-          $res = Session('member',null);
-          if($res){
-              return ajax_success('退出成功',['status'=>1]);
-          }else{
-              return ajax_error('退出失败',['status'=>0]);
-          }
+          Session('member',null);
+          return ajax_success('退出成功',['status'=>1]);
        }
     }
 }
