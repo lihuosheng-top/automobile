@@ -381,7 +381,8 @@ class Goods extends Controller{
             $standard_name = $request->only(["goods_name"])["goods_name"];
             $goods_name_bool = db("standard_name")->insert(["standard_name"=>$standard_name]);
             if($goods_name_bool){
-                return ajax_success("成功",$standard_name);
+                $goods_name = db("standard_name")->order("id desc")->select();
+                return ajax_success("成功",$goods_name);
             }else{
                 return ajax_error("失败",$standard_name);
             }
