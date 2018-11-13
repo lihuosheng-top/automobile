@@ -121,10 +121,13 @@ class Goods extends Controller{
      */
     public function edit(Request $request,$id){
         $goods = db("goods")->where("id",$id)->select();
-        foreach ($goods as $value){
-
+        foreach ($goods as $key=>$value){
+            $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
+            $goods_standard_value = explode(",",$value["goods_standard_value"]);
+            $goods_standard_value = array_chunk($goods_standard_value,8);
+            $goods[$key]["goods_standard_value"] = $goods_standard_value;
         }
-        return view("goods_edit");
+        return view("goods_edit",["goods"=>$goods]);
     }
 
 
