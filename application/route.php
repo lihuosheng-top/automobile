@@ -251,16 +251,18 @@ Route::group("admin",[
 
 
     /*订单管理：TODO:配件商订单开始*/
-    "order_index"=>"admin/Order/index", //订单列表
-    "order_edit"=>"admin/Order/edit", //*********订单设置
+    "order_index"=>"admin/Order/index", //配件商订单列表
+    "order_search"=>"admin/Order/search", //配件商订单列表模糊搜索
+    "order_dels"=>"admin/Order/dels", //配件商订单列表
+    "order_edit"=>"admin/Order/edit", //*********配件商订单设置
 
-    "order_evaluate"=>"admin/Order/evaluate",   //订单评价
-    "order_evaluate_details"=>"admin/Order/evaluate_details", //******订单评价详情
+    "order_evaluate"=>"admin/Order/evaluate",   //配件商订单评价
+    "order_evaluate_details"=>"admin/Order/evaluate_details", //******配件商订单评价详情
 
-    "order_after_sale"=>"admin/Order/after_sale", //订单维修售后
+    "order_after_sale"=>"admin/Order/after_sale", //配件商订单维修售后
 
-    "order_invoice"=>"admin/Order/invoice", //发票列表
-    "order_invoice_edit"=>"admin/Order/invoice_edit", //****发票信息
+    "order_invoice"=>"admin/Order/invoice", //配件商发票列表
+    "order_invoice_edit"=>"admin/Order/invoice_edit", //****配件商发票信息
     /*订单管理：TODO:配件商订单结束*/
 
     /*订单管理：TODO:平台商订单开始*/
