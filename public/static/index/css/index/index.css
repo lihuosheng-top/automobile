@@ -82,6 +82,7 @@
     height: 6rem;
     padding-top: 1.1rem;
     box-sizing: border-box;
+    background-color: #fff;
 }
 .classify_service .add_mycar{
     position: absolute;
@@ -209,6 +210,7 @@
     padding: 0 .18rem;
     box-sizing: border-box;
     margin-bottom: .4rem;
+    background-color: #fff;
 }
 .subtitle{
     font-size: .3rem;
@@ -281,12 +283,14 @@
 .hot_shop .subtitle{
     padding: 0 .18rem;
     box-sizing: border-box;
+    background-color: #fff;
 }
 .hot_shop .first_ul>li{
     padding: 0 .18rem .22rem;
     box-sizing: border-box;
     border-bottom: .1rem solid #f2f2f2;
     margin-top: .2rem;
+    background-color: #fff;
 }
 .hot_shop .shop_info{
     width: 100%;

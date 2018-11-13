@@ -229,9 +229,7 @@
 					<label class="layui-form-label">商品分组：</label>
 					<div class="layui-input-inline">
 						<select name="goods_type_id" id="goods_type_id">
-							{volist name="goods_list" id="value"}
-							<option value="{$value.id}">{$value.name}</option>
-							{/volist}
+							<option value=""></option>
 						</select>
 					</div>
 					<div class="layui-input-inline" >
@@ -239,19 +237,20 @@
 					</div>
 				</div>
 				<div class="layui-form-item " style="min-width: 62% !important;">
-					<label class="layui-form-label"><span>*</span>商品卖点:</label>
+					<label class="layui-form-label"><span>*</span>商品品牌:</label>
 					<div class="layui-input-inline">
 						<select name="goods_brand_id">
-							{volist name="brand" id="val"}
-							<option value="{$val.id}" selected="">{$val.brand_name}</option>
-							{/volist}
+							<option value="" selected=""></option>
 						</select>	</div>
 						<div class="layui-input-inline">
 							<a href="{:url('admin/Brand/add')}" style="line-height: 40px;">添加品牌</a>
 						</div>
 				</div>
+
+		
+		</div>
 				<div class="layui-form-item ">
-					<label class="layui-form-label"><span>*</span>商品排序:</label>
+					<label class="layui-form-label"><span>*</span>商品卖点:</label>
 					<div class="layui-input-block">
 					     <textarea rows="10" cols="50"></textarea>
 						 <div class="tips">*在商品列表页、详情页标题下面展示卖点信息，建议60字以内</div>
@@ -259,16 +258,6 @@
 					</div>
 				
 				</div>
-	
-		<div class="layui-form-item ">
-			<label class="layui-form-label"><span>*</span>商品排序:</label>
-			<div class="layui-input-block">
-			     <textarea rows="10" cols="50"></textarea>
-				 <div class="tips">*在商品列表页、详情页标题下面展示卖点信息，建议60字以内</div>
-
-			</div>
-		
-		</div>
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品排序:</label>
 			<div class="layui-input-block">
