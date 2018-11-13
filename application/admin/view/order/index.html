@@ -481,8 +481,8 @@
 						<td>{$vo.user_phone_number}</td>
 						<td>{$vo.order_create_time|date="Y-m-d H:i:s",###}</td>
 						<td>{$vo.harvester_address}</td>
-						<td>
-								{$vo.status|show_order_status}
+						<td data-id="{$vo.id}">
+						   {$vo.status|show_order_status}
 						</td>
 					</tr>
 					{/volist}
@@ -687,7 +687,23 @@
 	</script>
 	<script type="text/javascript">
 		$(".state").on('click', function() {
-			$(".tanchuang").removeClass("noshow");
+			var id=$(this).parent("td").data(id).id;
+			$.ajax({
+				type: "POST",
+				url: "{:url('aaa')}",
+				async: false,
+				data: {
+					"id": id,
+				},
+				success: function(data) {
+					$(".tanchuang").removeClass("noshow");
+					console.log(data);
+				},
+				error: function(data) {
+					console.log(data);
+				}
+			});
+			
 		});
 		$(".close").on('click', function() {
 			$(".tanchuang").addClass("noshow");
