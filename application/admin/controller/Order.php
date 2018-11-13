@@ -39,6 +39,32 @@ class Order extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
+     * Notes:配件商订单弹窗的订单信息（前端传过来一个id）
+     * 路由："order_processing"=>"admin/Order/order_processing"
+     **************************************
+     * @param Request $request
+     */
+    public function order_processing(Request $request){
+        if($request->isPost()){
+            $id =$request->only(['id'])['id'];
+            if(!empty($id)){
+                $data =Db::name('order_parts')->where('id',$id)->find();
+                if(!empty($data)){
+                    return ajax_success('订单信息成功返回',$data);
+                }else{
+                    return ajax_error('该订单没有数据记录',['status'=>0]);
+                }
+            }else{
+                return ajax_error('沒有订单Id',['status'=>0]);
+            }
+        }
+    }
+
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
      * Notes:配件商列表模糊搜索
      **************************************
      * @return \think\response\View
@@ -88,9 +114,10 @@ class Order extends Controller{
      *订单编辑
      **************************************
      */
-    public function edit(){
-
-       return view('edit');
+    public function edit($id){
+        $order_parts_data = Db::name("order_parts")->where("id",$id)->select();
+        dump($order_parts_data);
+        return view('edit',['order_parts_data'=>$order_parts_data]);
     }
 
     /**
