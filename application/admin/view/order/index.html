@@ -481,8 +481,8 @@
 						<td>{$vo.user_phone_number}</td>
 						<td>{$vo.order_create_time|date="Y-m-d H:i:s",###}</td>
 						<td>{$vo.harvester_address}</td>
-						<td data-id="{$vo.id}">
-							{$vo.status|show_order_status}
+						<td>
+								{$vo.status|show_order_status}
 						</td>
 					</tr>
 					{/volist}
