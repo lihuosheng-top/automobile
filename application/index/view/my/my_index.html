@@ -165,8 +165,21 @@
             </ul>
         </div>
     </div>
+    <script src="__STATIC__/index/js/plugin/zepto.js"></script>
+    <script src="__STATIC__/index/js/plugin/touch.js"></script>
+    <!-- 限制访问（没有登录） -->
     <script>
-        
+        $.ajax({
+            url: 'isLogin',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+                console.log(data);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
     </script>
 </body>
 </html>
