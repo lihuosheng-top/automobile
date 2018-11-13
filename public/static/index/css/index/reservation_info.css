@@ -185,7 +185,7 @@ html{
     right: .3rem;
     width: .32rem;
     height: .32rem;
-    background-position: -2.5rem -4.4rem;
+    background-position: 0 -1.2rem;
     transform: translateY(-50%);
 }
 .time_pop .ser_time_sel{

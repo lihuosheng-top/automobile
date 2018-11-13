@@ -11,7 +11,9 @@
     <title>填写预约信息</title>
 </head>
 <body>
-    <div id="app">
+    <!-- 预约弹窗 开始-->
+    <!-- v-cloak取消数据绑定时出现的代码闪烁，在vuejs解析{{message}}变量前不会看到字符串 配合css使用-->
+    <div v-cloak id="app">
         <div class="wrapper" v-show="!switchPop">
             <div class="head">
                 <a href="javascript:history.back(-1);" class="spr back"></a>
@@ -49,9 +51,7 @@
             </div>
         </div>
     
-        <!-- 预约弹窗 开始-->
-        <!-- v-cloak取消数据绑定时出现的代码闪烁，在vuejs解析{{message}}变量前不会看到字符串 配合css使用-->
-        <div v-cloak class="time_pop" id="time_pop" v-show="switchPop">
+        <div class="time_pop" id="time_pop" v-show="switchPop">
             <div class="head_bar">
                 <a href="javascript:;" class="spr pop_back" @click="backHide" v-show="!switchBtn"></a>
                 <h2>选择服务时间</h2>
@@ -265,7 +265,6 @@
                 this.currentMonth = currentMonth;
                 this.currentDay = currentDay;
                 this.currentHours = currentHours;
-
                 for(var i = 0; i < totalDays; i++){
                     var month = date.getMonth() + 1,
                         day = date.getDate(),

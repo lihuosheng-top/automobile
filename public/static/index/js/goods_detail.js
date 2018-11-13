@@ -1,4 +1,21 @@
-
+var app = new Vue({
+    el: '#app',
+    data: {
+        number: 0 //购买数量
+    },
+    methods: {
+        addNum: function(){
+            this.number++;
+        },
+        reduceNum: function(){
+            if(this.number == 0){
+                this.number == 0;
+            }else{
+                this.number--;
+            }
+        }
+    }
+})
 // 显示 隐藏 评价弹窗 
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
@@ -9,14 +26,14 @@ function hidePop(){
     $('html').css('overflow', 'auto');
 }
 // 往下滑 头部添加背景
-$(window).on('scroll', function(){
-    var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-    if(scrollTop > 0){
-        $('.wrapper .head').css('background', 'rgba(255, 255, 255, .5)');
-    }else{
-        $('.wrapper .head').css('background', 'transparent');
-    }
-})
+// $(window).on('scroll', function(){
+//     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+//     if(scrollTop > 0){
+//         $('.wrapper .head').css('background', 'rgba(255, 255, 255, .5)');
+//     }else{
+//         $('.wrapper .head').css('background', 'transparent');
+//     }
+// })
 
 // 所有评论切换
 $('.comment_classify_box').on('tap', 'li', function(){

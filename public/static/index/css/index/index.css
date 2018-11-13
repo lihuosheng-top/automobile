@@ -3,6 +3,9 @@
     width: 100%;
     margin-bottom: 1rem;
 }
+.hidden{
+    overflow: hidden;
+}
 .swiper-container{
     width: 7.5rem;
     height: 3.8rem;
@@ -20,7 +23,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 99;
+    z-index: 3;
     padding: 0 .2rem;
     box-sizing: border-box;
 }
@@ -118,7 +121,7 @@
 }
 .classify_service ul li{
     flex-basis: 25%;
-    height: 1.2rem;
+    height: 1.3rem;
 }
 .classify_service ul a{
     display: flex;
@@ -136,57 +139,57 @@
     color: #333;
 }
 .classify_service li .order{
-    background-position: -2.3rem 0;
-    width: .84rem;
+    background-position: -6rem -4rem;
+    width: .8rem;
     height: .8rem;
 }
 .classify_service li .parts{
-    background-position: -3.25rem 0;
-    width: .81rem;
+    background-position: -7rem -4rem;
+    width: .8rem;
     height: .8rem;
 }
 .classify_service li .daily{
-    background-position: -4.2rem 0;
+    background-position: -2.4rem 0;
     width: .8rem;
-    height: .73rem;
+    height: .8rem;
 }
 .classify_service li .agency{
-    background-position: -5.1rem 0;
-    width: .77rem;
-    height: .77rem;
+    background-position: -2.4rem -5.1rem;
+    width: .8rem;
+    height: .8rem;
 }
 .classify_service li .lease{
-    background-position: -6rem 0;
-    width: .88rem;
-    height: .54rem;
+    background-position: -3.3rem -5.1rem;
+    width: .8rem;
+    height: .8rem;
 }
 .classify_service li .mortgage{
-    background-position: -7rem 0;
-    width: .72rem;
-    height: .61rem;
+    background-position: -4.3rem -5.1rem;
+    width: .8rem;
+    height: .8rem;
 }
 .classify_service li .insurance{
-    background-position: 0 -1rem;
-    width: .87rem;
-    height: .59rem;
+    background-position: -6.2rem -5.1rem;
+    width: .8rem;
+    height: .8rem;
 }
 .classify_service li .designated_driving{
-    background-position: -1rem -1rem;
-    width: .63rem;
-    height: .63rem;
+    background-position: -7.15rem -5.1rem;
+    width: .8rem;
+    height: .8rem;
 }
 .classify_service li .used_car{
-    background-position: -1.8rem -1rem;
-    width: .81rem;
-    height: .63rem;
+    background-position: -2.4rem 0;
+    width: .8rem;
+    height: .8rem;
 }
 .classify_service li .assess{
-    background-position: -2.8rem -1rem;
-    width: .58rem;
-    height: .69rem;
+    background-position: -3.5rem 0;
+    width: .8rem;
+    height: .8rem;
 }
 .classify_service li .more{
-    background-position: -3.5rem -1rem;
+    background-position: -5.1rem -4rem;
     width: .63rem;
     height: .62rem;
 }
@@ -353,3 +356,170 @@
 .footer .icon_home{
     background-position: 0 -1.8rem;
 }
+
+/* 添加车 start */
+.select-car{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    z-index: 4;
+}
+.select-car .add-mycar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: .88rem;
+    border-bottom: 1px solid #eee;
+    z-index: 3;
+}
+.select-car .add-back{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    width: .25rem;
+    height: .43rem;
+    margin-top: -.22rem;
+    background-position: -.5rem -.5rem;
+}
+.select-car .title-txt{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    text-align: center;
+    font-size: .36rem;
+    color: #333;
+    background-color: #fff;
+}
+.car-search{
+    position: relative;
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    margin-top: .88rem;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+.car-search .icon_search{
+    position: absolute;
+    left: .92rem;
+    top: 50%;
+    width: .32rem;
+    height: .33rem;
+    margin-top: -.17rem;
+    background-position: 0 0;
+}
+.car-search .search-input{
+    width: 80%;
+    height: .6rem;
+    background-color: rgba(0, 0, 0, .08);
+    border-radius: .3rem;
+    padding-left: .6rem;
+    box-sizing: border-box;
+    outline: none;
+}
+.hot-brand{
+    width: 100%;
+}
+.hot-brand .hot-brand-title{
+    background-color: rgba(242, 242, 242, .8);
+    font-size: .24rem;
+    padding-left: .3rem;
+    box-sizing: border-box;
+    height: .7rem;
+    line-height: .7rem;
+    margin-bottom: .24rem;
+}
+.hot-brand .hot-brand-ul{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: .3rem;
+}
+.hot-brand .hot-brand-ul .hot-brand-li{
+    border: 1px solid #ccc;
+    float: left;
+    margin: 0 .15rem .2rem 0;
+    width: 1.5rem;
+    height: .6rem;
+    line-height: normal;
+    text-align: center;
+    font-size: .24rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.sort_box{
+    width: 100%;
+    overflow: hidden;
+}
+.sort_list{
+    height: 1rem;
+    border-bottom:1px solid #ddd;
+    display: flex;
+    align-items: center;
+    padding-left: .3rem;
+}
+.sort_list .num_logo{
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: .2rem;
+}
+.sort_list .num_logo img{
+    width: 100%;
+    height: 100%;
+}
+.initials{
+    position: fixed;
+    top: 2.6rem;
+    right: .1rem;
+    text-align: center;
+}
+.initials li{
+    font-size: .2rem;
+}
+.initials img{
+    width: .25rem;
+    height: .25rem;
+}
+.letter{
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    font-size: 75px;
+    color: #555;
+    text-align: center;
+    line-height: 100px;
+    background: rgba(145,145,145,0.6);
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin:-50px 0px 0px -50px;
+    z-index: 99;
+    display: none;
+}
+.letter img{
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin:25px 0px 0px 25px;
+}
+.cont{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+.cont::-webkit-scrollbar{
+    width: 0;
+}
+[v-cloak]{
+    display:none;
+}
+
+/* 添加车 end */
