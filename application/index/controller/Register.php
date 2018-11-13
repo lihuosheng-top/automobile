@@ -11,12 +11,7 @@ use think\Request;
 use think\Session;
 use think\Db;
 
-
-
-
-
 class Register extends Controller{
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -68,7 +63,6 @@ class Register extends Controller{
             }
 
     }
-
     /**
      **************李火生*******************
      * @param Request $request
