@@ -1,0 +1,40 @@
+.wrapper{
+    width: 100%;
+}
+
+
+.switch_checkbox {
+    display: none;
+}
+.switch_label {
+    margin-top: 5px;
+    background-color: rgb(242, 242, 242);
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 40px;
+    border-radius: 15px;
+}
+/* ~选择器 选择前面的input checkbox被选中状态下的 span标签*/
+.switch_checkbox:checked~.switch_label .switch_circle {
+    left: 20px;
+}
+.switch_circle {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 1px solid #eee;
+    background-color: #fff;
+    left: 0;
+    top: -1px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+/* ~选择器 选择前面的input checkbox被选中状态下的 label标签*/
+.switch_checkbox:checked~.switch_label {
+    background: rgb(0, 153, 255);
+}

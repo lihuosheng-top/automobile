@@ -84,6 +84,7 @@ Route::group("",[
     // 我的
     "my_index"=>"index/My/my_index",
     "login"=>"index/My/login",//登录
+    "setting"=>"index/My/setting",//设置
     
 ]);
 

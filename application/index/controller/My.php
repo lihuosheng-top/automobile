@@ -14,4 +14,10 @@ class My extends Controller
     {
         return view("login");
     }
+
+    // 设置
+    public function Setting()
+    {
+        return view("setting");
+    }
 }
