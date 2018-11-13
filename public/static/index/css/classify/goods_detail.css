@@ -14,6 +14,7 @@ html{
     width: 100%;
     height: .88rem;
     z-index: 2;
+    background-color: #fff;
 }
 .head .back{
     position: absolute;
@@ -36,6 +37,7 @@ html{
 .swiper-container{
     width: 7.5rem;
     height: 7.5rem;
+    margin-top: .88rem;
 }
 .swiper-container img{
     width: 100%;
@@ -121,7 +123,7 @@ html{
     background-position: -7.3rem -1.8rem;
     margin-top: .2rem;
 }
-.intro{
+/* .intro{
     padding: .2rem .3rem;
     background-color: #fff;
     margin-bottom: .1rem;
@@ -131,9 +133,14 @@ html{
     font-size: .24rem;
     color: #666;
 }
+.intro h3{
+    text-align: center;
+    margin: .1rem 0;
+}
 .intro p{
     text-indent: .48rem;
-}
+} */
+
 /* 用户评论 start */
 .wrapper .comment_box{
     width: 100%;

@@ -12,405 +12,355 @@
     <title>商品详情</title>
 </head>
 <body>
-    <div class="wrapper" id="wrapper">
-        <div class="head">
-            <a href="javascript:history.back(-1);" class="spr back"></a>
-            <a href="javascript:;" class="spr icon_share"></a>
-        </div>
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/12.png">
-                </div>
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/11.jpg">
-                </div>
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/08.png">
-
-                </div>
+    <div id="app">
+        <div class="wrapper">
+            <div class="head">
+                <a href="javascript:history.back(-1);" class="spr back"></a>
+                <a href="javascript:;" class="spr icon_share"></a>
             </div>
-            <!-- 如果需要分页器 -->
-            <div class="swiper-pagination"></div>
-        </div>
-        <div class="goods_cont">
-            <p class="goods_name">德国马牌德国马牌德国马牌德国马牌德国马牌德国马牌德国马牌德国马牌德国马牌</p>
-            <div class="price_cont clearfix">
-                <span class="sale">￥789</span>
-                <span class="through">￥987</span>
-                <span class="stock">库存5000件</span>
-            </div>
-        </div>
-        <div class="spec">
-            <div class="quantity clearfix">
-                购买数量
-                <div class="calculator_num">
-                    <a href="javascript:;" @click="reduceNum" class="minus">-</a>
-                    <input type="text" :value="number" class="calculator_val">
-                    <a href="javascript:;" @click="addNum" class="increase">+</a>
-                </div>
-            </div>
-            <div class="ser-type">
-                选择服务
-                <a href="javascript:;" class="spr icon-more"></a>
-            </div>
-        </div>
-        <div class="intro">
-            <h3>商品介绍</h3>
-            <p>近日，德国马牌ContiSportContact运动型高性能轮胎家族的新一代成员——ContiSportContactTM 5(CSC5)正式登陆中国的市场。
-                秉承良好的家族基因，马牌CSC5轮胎在操控性和高速性能方面的表现依旧抢眼，而为超级跑车研发的“Black Chilli”等创新技术，
-                更为车主带来更加良好的安全性和低油耗，打造“超跑不超支，极行也安心”的驾乘体验。该款全新面市的轮胎适用于中级、高级轿车和SUV车型。
-                1 CSC5在市场领域，CSC5相继成为宝马、奔驰、奥迪等高端汽车厂商等旗下高性能车的原配车胎。与连续十年、年年创造销售奇迹的上一代家族产品CSC3相比，
-                CSC5的性能优势再次全面升级。CSC5的滚动阻力降低了，大大降低了油耗和排放;在干、潮湿路面的刹车距离分别缩短了，发挥出更为出色的安全性能。
-                此外，操控性能再攀高峰，当车辆速度接近极限状态时，轮胎也能提供清晰的路感，让急弯和极速成为享受。</p>
-        </div>
-        <div class="comment_box">
-            <h3 class="comment_title">评论（<span>2000</span>）</h3>
-            <ul class="comment_ul">
-                <li class="comment_li">
-                    <div class="comment_user_info">
-                        <div class="comment_user_headimg">
-                            <img src="__STATIC__/index/image/icon6.png">
-                        </div>
-                        <div class="comment_phone_time">
-                            <div class="phone_time clearfix">
-                                <span class="phone_box">13691853045</span>
-                                <span class="time_box">2018-11-5</span>
-                            </div>
-                            <span class="spr star"></span>
-                        </div>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="__STATIC__/index/image/12.png">
                     </div>
-                    <div class="comment_text_box">
-                        <a href="javascript:;" class="comment_text_a">
-                            <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>
-                        </a>
-                        <ul class="comment_img_ul">
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/08.png">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/10.png">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/my_bg2.jpg">
-                            </li>
-                        </ul>
-                        <div class="reply_box">
-                            <i class="triangle"></i>
-                            <p class="reply_text">
-                                商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分
-                                感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。
-                            </p>
-                        </div>
-                        <div class="bottom_time_box">
-                            <p class="buy_time">购买时间: <span>2018-11-05</span></p>
-                            <div>
-                                <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
-                                <a href="javascript:;" class="discuss"><i class="spr icon_comment"></i><span class="comment_num">55</span></a>
+                    <div class="swiper-slide">
+                        <img src="__STATIC__/index/image/11.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="__STATIC__/index/image/08.png">
+                    </div>
+                </div>
+                <!-- 如果需要分页器 -->
+                <div class="swiper-pagination"></div>
+            </div>
+            <div class="goods_cont">
+                <p class="goods_name">德国马牌德国马牌德国马牌德国马牌德国马牌德国马牌德国马牌德国马牌德国马牌</p>
+                <div class="price_cont clearfix">
+                    <span class="sale">￥789</span>
+                    <span class="through">￥987</span>
+                    <span class="stock">库存5000件</span>
+                </div>
+            </div>
+            <div class="spec">
+                <div class="quantity clearfix">
+                    购买数量
+                    <div class="calculator_num">
+                        <a href="javascript:;" @click="reduceNum" class="minus">-</a>
+                        <input type="text" :value="number" class="calculator_val">
+                        <a href="javascript:;" @click="addNum" class="increase">+</a>
+                    </div>
+                </div>
+                <div class="ser-type">
+                    选择服务
+                    <a href="javascript:;" class="spr icon-more"></a>
+                </div>
+            </div>
+            <!-- <div class="intro">
+                <h3>商品介绍</h3>
+                <p>近日，德国马牌ContiSportContact运动型高性能轮胎家族的新一代成员——ContiSportContactTM 5(CSC5)正式登陆中国的市场。
+                    秉承良好的家族基因，马牌CSC5轮胎在操控性和高速性能方面的表现依旧抢眼，而为超级跑车研发的“Black Chilli”等创新技术，
+                    更为车主带来更加良好的安全性和低油耗，打造“超跑不超支，极行也安心”的驾乘体验。该款全新面市的轮胎适用于中级、高级轿车和SUV车型。
+                    1 CSC5在市场领域，CSC5相继成为宝马、奔驰、奥迪等高端汽车厂商等旗下高性能车的原配车胎。与连续十年、年年创造销售奇迹的上一代家族产品CSC3相比，
+                    CSC5的性能优势再次全面升级。CSC5的滚动阻力降低了，大大降低了油耗和排放;在干、潮湿路面的刹车距离分别缩短了，发挥出更为出色的安全性能。
+                    此外，操控性能再攀高峰，当车辆速度接近极限状态时，轮胎也能提供清晰的路感，让急弯和极速成为享受。</p>
+            </div> -->
+            <div class="comment_box">
+                <h3 class="comment_title">评论（<span>2000</span>）</h3>
+                <ul class="comment_ul">
+                    <li class="comment_li">
+                        <div class="comment_user_info">
+                            <div class="comment_user_headimg">
+                                <img src="__STATIC__/index/image/icon6.png">
+                            </div>
+                            <div class="comment_phone_time">
+                                <div class="phone_time clearfix">
+                                    <span class="phone_box">13691853045</span>
+                                    <span class="time_box">2018-11-5</span>
+                                </div>
+                                <span class="spr star"></span>
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li class="comment_li">
-                    <div class="comment_user_info">
-                        <div class="comment_user_headimg">
-                            <img src="__STATIC__/index/image/icon6.png">
-                        </div>
-                        <div class="comment_phone_time">
-                            <div class="phone_time clearfix">
-                                <span class="phone_box">13691853045</span>
-                                <span class="time_box">2018-11-5</span>
+                        <div class="comment_text_box">
+                            <a href="javascript:;" class="comment_text_a">
+                                <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>
+                            </a>
+                            <ul class="comment_img_ul">
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/img1.jpg">
+                                </li>
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/08.png">
+                                </li>
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/10.png">
+                                </li>
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/my_bg2.jpg">
+                                </li>
+                            </ul>
+                            <div class="reply_box">
+                                <i class="triangle"></i>
+                                <p class="reply_text">
+                                    商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分
+                                    感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。
+                                </p>
                             </div>
-                            <span class="spr star"></span>
-                        </div>
-                    </div>
-                    <div class="comment_text_box">
-                        <a href="javascript:;" class="comment_text_a">
-                            <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>
-                        </a>
-                        <ul class="comment_img_ul">
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                        </ul>
-                        <div class="reply_box">
-                            <i class="triangle"></i>
-                            <p class="reply_text">
-                                商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分
-                                感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。
-                            </p>
-                        </div>
-                        <div class="bottom_time_box">
-                            <p class="buy_time">购买时间: <span>2018-11-05</span></p>
-                            <div>
-                                <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
-                                <a href="javascript:;" class="discuss"><i class="spr icon_comment"></i><span class="comment_num">55</span></a>
+                            <div class="bottom_time_box">
+                                <p class="buy_time">购买时间: <span>2018-11-05</span></p>
+                                <div>
+                                    <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                                    <a href="javascript:;" class="discuss"><i class="spr icon_comment"></i><span class="comment_num">55</span></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li class="comment_li">
-                    <div class="comment_user_info">
-                        <div class="comment_user_headimg">
-                            <img src="__STATIC__/index/image/icon6.png">
-                        </div>
-                        <div class="comment_phone_time">
-                            <div class="phone_time clearfix">
-                                <span class="phone_box">13691853045</span>
-                                <span class="time_box">2018-11-5</span>
+                    </li>
+                    <li class="comment_li">
+                        <div class="comment_user_info">
+                            <div class="comment_user_headimg">
+                                <img src="__STATIC__/index/image/icon6.png">
                             </div>
-                            <span class="spr star"></span>
-                        </div>
-                    </div>
-                    <div class="comment_text_box">
-                        <a href="javascript:;" class="comment_text_a">
-                            <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>
-                        </a>
-                        <ul class="comment_img_ul">
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                        </ul>
-                        <div class="reply_box">
-                            <i class="triangle"></i>
-                            <p class="reply_text">
-                                商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分
-                                感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。
-                            </p>
-                        </div>
-                        <div class="bottom_time_box">
-                            <p class="buy_time">购买时间: <span>2018-11-05</span></p>
-                            <div>
-                                <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
-                                <a href="javascript:;" class="discuss"><i class="spr icon_comment"></i><span class="comment_num">55</span></a>
+                            <div class="comment_phone_time">
+                                <div class="phone_time clearfix">
+                                    <span class="phone_box">13691853045</span>
+                                    <span class="time_box">2018-11-5</span>
+                                </div>
+                                <span class="spr star"></span>
                             </div>
                         </div>
-                    </div>
-                </li>
-                <!-- 超过3条显示按钮 查看更多 -->
-                <li class="more_comment_box">
-                    <a href="javascript:showPop('.pop');">查看全部评论</a>
-                </li>
-            </ul>
-        </div>
-        <div class="shop-card">
-            <div class="card-title">
-                <img src="__STATIC__/index/image/13.png">
-                <span>xxxxxxx汽车配件零售商</span>
-                <a href="javascript:;">进店</a>
+                        <div class="comment_text_box">
+                            <a href="javascript:;" class="comment_text_a">
+                                <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>
+                            </a>
+                            <ul class="comment_img_ul">
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/img1.jpg">
+                                </li>
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/img1.jpg">
+                                </li>
+                            </ul>
+                            <div class="reply_box">
+                                <i class="triangle"></i>
+                                <p class="reply_text">
+                                    商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分
+                                    感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。
+                                </p>
+                            </div>
+                            <div class="bottom_time_box">
+                                <p class="buy_time">购买时间: <span>2018-11-05</span></p>
+                                <div>
+                                    <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                                    <a href="javascript:;" class="discuss"><i class="spr icon_comment"></i><span class="comment_num">55</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="comment_li">
+                        <div class="comment_user_info">
+                            <div class="comment_user_headimg">
+                                <img src="__STATIC__/index/image/icon6.png">
+                            </div>
+                            <div class="comment_phone_time">
+                                <div class="phone_time clearfix">
+                                    <span class="phone_box">13691853045</span>
+                                    <span class="time_box">2018-11-5</span>
+                                </div>
+                                <span class="spr star"></span>
+                            </div>
+                        </div>
+                        <div class="comment_text_box">
+                            <a href="javascript:;" class="comment_text_a">
+                                <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>
+                            </a>
+                            <ul class="comment_img_ul">
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/img1.jpg">
+                                </li>
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/img1.jpg">
+                                </li>
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/img1.jpg">
+                                </li>
+                            </ul>
+                            <div class="reply_box">
+                                <i class="triangle"></i>
+                                <p class="reply_text">
+                                    商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分
+                                    感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。
+                                </p>
+                            </div>
+                            <div class="bottom_time_box">
+                                <p class="buy_time">购买时间: <span>2018-11-05</span></p>
+                                <div>
+                                    <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                                    <a href="javascript:;" class="discuss"><i class="spr icon_comment"></i><span class="comment_num">55</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- 超过3条显示按钮 查看更多 -->
+                    <li class="more_comment_box">
+                        <a href="javascript:showPop('.pop');">查看全部评论</a>
+                    </li>
+                </ul>
             </div>
-            <div class="card-show">
-                <div>
-                    <img src="__STATIC__/index/image/02.png">
-                    <p>￥198</p>
+            <div class="shop-card">
+                <div class="card-title">
+                    <img src="__STATIC__/index/image/13.png">
+                    <span>xxxxxxx汽车配件零售商</span>
+                    <a href="javascript:;">进店</a>
                 </div>
-                <div>
-                    <img src="__STATIC__/index/image/02.png">
-                    <p>￥198</p>
-                </div>
-                <div>
-                    <img src="__STATIC__/index/image/02.png">
-                    <p>￥198</p>
-                </div>
-            </div>
-        </div>
-        <div class="may-like">
-            <div class="like_title">
-                <p><i class="spr icon_like"></i>你可能还喜欢</p>
-            </div>
-            <ul class="like_cont_ul clearfix">
-                <li>
-                    <div class="img_div">
+                <div class="card-show">
+                    <div>
                         <img src="__STATIC__/index/image/02.png">
+                        <p>￥198</p>
                     </div>
-                    <div class="goods_name">
-                        <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
-                    </div>
-                    <div class="goods_price">
-                        <span class="price">￥875</span>
-                        <span class="pay_num">1500人购买</span>
-                        <i class="spr icon_cart"></i>
-                    </div>
-                </li>
-                <li class="mgr0">
-                    <div class="img_div">
+                    <div>
                         <img src="__STATIC__/index/image/02.png">
+                        <p>￥198</p>
                     </div>
-                    <div class="goods_name">
-                        <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
+                    <div>
+                        <img src="__STATIC__/index/image/02.png">
+                        <p>￥198</p>
                     </div>
-                    <div class="goods_price">
-                        <span class="price">￥875</span>
-                        <span class="pay_num">1500人购买</span>
-                        <i class="spr icon_cart"></i>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="footbar">
-            <a href="javascript:;" class="collect">
-                <i class="spr icon-star"></i>
-                <span>收藏</span>
-            </a>
-            <a href="cart_index" class="cart">
-                <i class="spr icon-cart"></i>
-                <span>购物车</span>
-            </a>
-            <div class="trade">
-                <a href="javascript:;" class="add-cart">加入购物车</a>
-                <a href="javascript:;" class="buy">立即购买</a>
+                </div>
+            </div>
+            <div class="may-like">
+                <div class="like_title">
+                    <p><i class="spr icon_like"></i>你可能还喜欢</p>
+                </div>
+                <ul class="like_cont_ul clearfix">
+                    <li>
+                        <div class="img_div">
+                            <img src="__STATIC__/index/image/02.png">
+                        </div>
+                        <div class="goods_name">
+                            <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
+                        </div>
+                        <div class="goods_price">
+                            <span class="price">￥875</span>
+                            <span class="pay_num">1500人购买</span>
+                            <i class="spr icon_cart"></i>
+                        </div>
+                    </li>
+                    <li class="mgr0">
+                        <div class="img_div">
+                            <img src="__STATIC__/index/image/02.png">
+                        </div>
+                        <div class="goods_name">
+                            <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
+                        </div>
+                        <div class="goods_price">
+                            <span class="price">￥875</span>
+                            <span class="pay_num">1500人购买</span>
+                            <i class="spr icon_cart"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="footbar">
+                <a href="javascript:;" class="collect">
+                    <i class="spr icon-star"></i>
+                    <span>收藏</span>
+                </a>
+                <a href="cart_index" class="cart">
+                    <i class="spr icon-cart"></i>
+                    <span>购物车</span>
+                </a>
+                <div class="trade">
+                    <a href="javascript:;" class="add-cart">加入购物车</a>
+                    <a href="javascript:;" class="buy">立即购买</a>
+                </div>
+            </div>
+            
+            <!-- 放大图片 容器 -->
+            <div class="show_img">
+                <span class="img_num">1/4</span>
+                <div class="img_box"></div>
             </div>
         </div>
-
+        
         <!-- 全部评论弹窗 -->
-    <div class="pop">
-        <div class="pop_head">
-            <a href="javascript:hidePop();" class="spr back"></a>
-            <h3>全部评价</h3>
-        </div>
-        <ul class="comment_classify_box">
-            <li class="all_comment active">
-                <p>全部</p>
-                <span>999+</span>
-            </li>
-            <li class="has_picture">
-                <p>晒图</p>
-                <span>999+</span>
-            </li>
-        </ul>
-        <div class="comment_box">
-            <ul class="comment_ul">
-                <!-- <li class="comment_li">
-                    <div class="comment_user_info">
-                        <div class="comment_user_headimg">
-                            <img src="__STATIC__/index/image/icon6.png">
-                        </div>
-                        <div class="comment_phone_time">
-                            <div class="phone_time clearfix">
-                                <span class="phone_box">13691853045</span>
-                                <span class="time_box">2018-11-5</span>
-                            </div>
-                            <span class="spr star"></span>
-                        </div>
-                    </div>
-                    <div class="comment_text_box">
-                        <a href="javascript:;" class="comment_text_a">
-                            <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>
-                        </a>
-                        <ul class="comment_img_ul">
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                        </ul>
-                        <div class="reply_box">
-                            <i class="triangle"></i>
-                            <p class="reply_text">
-                                商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分
-                                感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。
-                            </p>
-                        </div>
-                        <div class="bottom_time_box">
-                            <p class="buy_time">购买时间: <span>2018-11-05</span></p>
-                            <div>
-                                <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
-                                <a href="javascript:;" class="discuss"><i class="spr icon_comment"></i><span class="comment_num">55</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </li> -->
+        <div class="pop">
+            <div class="pop_head">
+                <a href="javascript:hidePop();" class="spr back"></a>
+                <h3>全部评价</h3>
+            </div>
+            <ul class="comment_classify_box">
+                <li class="all_comment active">
+                    <p>全部</p>
+                    <span>999+</span>
+                </li>
+                <li class="has_picture">
+                    <p>晒图</p>
+                    <span>999+</span>
+                </li>
             </ul>
+            <div class="comment_box">
+                <ul class="comment_ul">
+                    <li class="comment_li">
+                        <div class="comment_user_info">
+                            <div class="comment_user_headimg">
+                                <img src="__STATIC__/index/image/icon6.png">
+                            </div>
+                            <div class="comment_phone_time">
+                                <div class="phone_time clearfix">
+                                    <span class="phone_box">13691853045</span>
+                                    <span class="time_box">2018-11-5</span>
+                                </div>
+                                <span class="spr star"></span>
+                            </div>
+                        </div>
+                        <div class="comment_text_box">
+                            <a href="javascript:;" class="comment_text_a">
+                                <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>
+                            </a>
+                            <ul class="comment_img_ul">
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/img1.jpg">
+                                </li>
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/img1.jpg">
+                                </li>
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/img1.jpg">
+                                </li>
+                                <li class="comment_img_li">
+                                    <img src="__STATIC__/index/image/img1.jpg">
+                                </li>
+                            </ul>
+                            <div class="reply_box">
+                                <i class="triangle"></i>
+                                <p class="reply_text">
+                                    商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分
+                                    感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。
+                                </p>
+                            </div>
+                            <div class="bottom_time_box">
+                                <p class="buy_time">购买时间: <span>2018-11-05</span></p>
+                                <div>
+                                    <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                                    <a href="javascript:;" class="discuss"><i class="spr icon_comment"></i><span class="comment_num">55</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <!-- 放大图片 容器 -->
-    <div class="show_img">
-        <span class="img_num">1/4</span>
-        <div class="img_box"></div>
-    </div>
+        <!-- 评论详情 -->
+
     </div>
     
-
+    
     <script src="__STATIC__/index/js/plugin/zepto.js"></script>
     <script src="__STATIC__/index/js/plugin/touch.js"></script>
     <script src="__STATIC__/index/js/plugin/vue.js"></script>
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
     <script src="__STATIC__/index/js/goods_detail.js"></script>
-    <!-- 全部评价插入（暂时） -->
-    <script>
-        var str = '';
-        for(var i = 0; i < 10; i++){
-            str += '<li class="comment_li">\
-                        <div class="comment_user_info">\
-                            <div class="comment_user_headimg">\
-                                <img src="__STATIC__/index/image/icon6.png">\
-                            </div>\
-                            <div class="comment_phone_time">\
-                                <div class="phone_time clearfix">\
-                                    <span class="phone_box">13691853045</span>\
-                                    <span class="time_box">2018-11-5</span>\
-                                </div>\
-                                <span class="spr star"></span>\
-                            </div>\
-                        </div>\
-                        <div class="comment_text_box">\
-                            <a href="javascript:;" class="comment_text_a">\
-                                <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>\
-                            </a>\
-                            <ul class="comment_img_ul">\
-                                <li class="comment_img_li">\
-                                    <img src="__STATIC__/index/image/img1.jpg">\
-                                </li>\
-                                <li class="comment_img_li">\
-                                    <img src="__STATIC__/index/image/img1.jpg">\
-                                </li>\
-                                <li class="comment_img_li">\
-                                    <img src="__STATIC__/index/image/img1.jpg">\
-                                </li>\
-                                <li class="comment_img_li">\
-                                    <img src="__STATIC__/index/image/img1.jpg">\
-                                </li>\
-                            </ul>\
-                            <div class="reply_box">\
-                                <i class="triangle"></i>\
-                                <p class="reply_text">\
-                                    商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分\
-                                    感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。\
-                                </p>\
-                            </div>\
-                            <div class="bottom_time_box">\
-                                <p class="buy_time">购买时间: <span>2018-11-05</span></p>\
-                                <div>\
-                                    <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>\
-                                    <a href="javascript:;" class="discuss"><i class="spr icon_comment"></i><span class="comment_num">55</span></a>\
-                                </div>\
-                            </div>\
-                        </div>\
-                    </li>'
-        }
-        $('.pop .comment_ul').append(str);
-    </script>
     <!-- swiper初始化 -->
-    <script>        
+    <script>
         var mySwiper = new Swiper ('.swiper-container', {
             direction: 'horizontal', // 垂直切换选项
             loop: true, // 循环模式选项
@@ -423,26 +373,6 @@
                 el: '.swiper-pagination',
             },
         })        
-    </script>
-    <script>
-        var app = new Vue({
-            el: '#wrapper',
-            data: {
-                number: 0 //购买数量
-            },
-            methods: {
-                addNum: function(){
-                    this.number++;
-                },
-                reduceNum: function(){
-                    if(this.number == 0){
-                        this.number == 0;
-                    }else{
-                        this.number--;
-                    }
-                }
-            }
-        })
     </script>
 </body>
 </html>

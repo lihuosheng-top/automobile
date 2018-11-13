@@ -22,273 +22,372 @@
     <title>首页</title>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="header">
-            <div class="map">
-                <span class="curr_city">深圳</span>
-                <i class="spr icon_location"></i>
-            </div> 
-            <div class="search">
-                <i class="spr icon_search"></i>
-                <input type="text" placeholder="输入你要搜索的内容">
-            </div>
-            <div class="message">
-                <i class="spr icon_message"></i>
-            </div>
-        </div>
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/banner1.jpg">
+    <div v-cloak id="app">
+        <div class="wrapper">
+            <div class="header">
+                <div class="map">
+                    <span class="curr_city">深圳</span>
+                    <i class="spr icon_location"></i>
+                </div> 
+                <div class="search">
+                    <i class="spr icon_search"></i>
+                    <input type="text" placeholder="输入你要搜索的内容">
                 </div>
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/banner1.jpg">
-                </div>
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/banner1.jpg">
+                <div class="message">
+                    <i class="spr icon_message"></i>
                 </div>
             </div>
-            <!-- 如果需要分页器 -->
-            <div class="swiper-pagination"></div>
-        </div>
-        <div class="classify_service">
-            <div class="add_mycar">
-                <a href="javascript:;">
-                    <i class="spr icon_add"></i>
-                    <span>添加我的爱车</span>
-                </a>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="__STATIC__/index/image/banner1.png">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="__STATIC__/index/image/banner1-2.png">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="__STATIC__/index/image/banner1-3.png">
+                    </div>
+                </div>
+                <!-- 如果需要分页器 -->
+                <div class="swiper-pagination"></div>
             </div>
-            <ul>
-                <li>
-                    <a href="service_type">
-                        <i class="spr order"></i>
-                        <span>预约服务</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="spr parts"></i>
-                        <span>配件商城</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="spr daily"></i>
-                        <span>日用商城</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="spr agency"></i>
-                        <span>代办业务</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="spr lease"></i>
-                        <span>车辆租赁</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="spr mortgage"></i>
-                        <span>汽车抵押</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="spr insurance"></i>
-                        <span>车辆保险</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="spr designated_driving"></i>
-                        <span>寻找代驾</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="spr used_car"></i>
-                        <span>二手车</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="spr assess"></i>
-                        <span>车辆评估</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="spr more"></i>
-                        <span>更多服务</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="banner">
-            <img src="__STATIC__/index/image/banner2.jpg">
-        </div>
-        <!-- 热门推荐 -->
-        <div class="hot_recommend">
-            <p class="subtitle">热门推荐</p>
-            <div class="recommend_goods">
-                <div class="recommend_top">
-                    <a href="javascript:;">
-                        <img src="__STATIC__/index/image/00.png">
-                    </a>
-                    <a href="javascript:;">
-                        <img src="__STATIC__/index/image/00.png">
+            <div class="classify_service">
+                <div class="add_mycar">
+                    <a href="javascript:;" @click="showAddCar">
+                        <i class="spr icon_add"></i>
+                        <span>添加我的爱车</span>
                     </a>
                 </div>
-                <div class="recommend_bottom">
-                    <div class="recommend_bottom_left">
+                <ul>
+                    <li>
+                        <a href="service_type">
+                            <i class="spr order"></i>
+                            <span>预约服务</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="javascript:;">
-                            <img src="__STATIC__/index/image/01.png">
+                            <i class="spr parts"></i>
+                            <span>配件商城</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="spr daily"></i>
+                            <span>日用商城</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="spr agency"></i>
+                            <span>代办业务</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="spr lease"></i>
+                            <span>车辆租赁</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="spr mortgage"></i>
+                            <span>汽车抵押</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="spr insurance"></i>
+                            <span>车辆保险</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="spr designated_driving"></i>
+                            <span>寻找代驾</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="spr used_car"></i>
+                            <span>二手车</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="spr assess"></i>
+                            <span>车辆评估</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="spr more"></i>
+                            <span>更多服务</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="banner">
+                <img src="__STATIC__/index/image/banner2.jpg">
+            </div>
+            <!-- 热门推荐 -->
+            <div class="hot_recommend">
+                <p class="subtitle">热门推荐</p>
+                <div class="recommend_goods">
+                    <div class="recommend_top">
+                        <a href="javascript:;">
+                            <img src="__STATIC__/index/image/00.png">
+                        </a>
+                        <a href="javascript:;">
+                            <img src="__STATIC__/index/image/00.png">
                         </a>
                     </div>
-                    <div class="recommend_bottom_right">
-                        <div class="recommend_bottom_right_one">
+                    <div class="recommend_bottom">
+                        <div class="recommend_bottom_left">
                             <a href="javascript:;">
-                                <img src="__STATIC__/index/image/00.png">
+                                <img src="__STATIC__/index/image/01.png">
                             </a>
                         </div>
-                        <div class="recommend_bottom_right_two">
-                            <div class="recommend_bottom_right_three">
+                        <div class="recommend_bottom_right">
+                            <div class="recommend_bottom_right_one">
                                 <a href="javascript:;">
                                     <img src="__STATIC__/index/image/00.png">
                                 </a>
                             </div>
-                            <div class="recommend_bottom_right_four">
-                                <a href="javascript:;">
-                                    <img src="__STATIC__/index/image/00.png">
-                                </a>
+                            <div class="recommend_bottom_right_two">
+                                <div class="recommend_bottom_right_three">
+                                    <a href="javascript:;">
+                                        <img src="__STATIC__/index/image/00.png">
+                                    </a>
+                                </div>
+                                <div class="recommend_bottom_right_four">
+                                    <a href="javascript:;">
+                                        <img src="__STATIC__/index/image/00.png">
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="hot_shop">
+                <p class="subtitle">热门店铺</p>
+                <ul class="first_ul">
+                    <li>
+                        <div class="shop_info">
+                            <ul>
+                                <li class="spr shop_logo"></li>
+                                <li class="shop_name">大众轮胎专卖店</li>
+                                <li class="into_shop">
+                                    <a href="javascript:;">进店</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="shop_goods">
+                            <ul>
+                                <li>
+                                    <img src="__STATIC__/index/image/02.png">
+                                    <p class="goods_price">￥249</p>
+                                </li>
+                                <li>
+                                    <img src="__STATIC__/index/image/02.png">
+                                    <p class="goods_price">￥249</p>
+                                </li>
+                                <li>
+                                    <img src="__STATIC__/index/image/02.png">
+                                    <p class="goods_price">￥249</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="shop_info">
+                            <ul>
+                                <li class="spr shop_logo"></li>
+                                <li class="shop_name">大众轮胎专卖店</li>
+                                <li class="into_shop">
+                                    <a href="javascript:;">进店</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="shop_goods">
+                            <ul>
+                                <li>
+                                    <img src="__STATIC__/index/image/02.png">
+                                    <p class="goods_price">￥249</p>
+                                </li>
+                                <li>
+                                    <img src="__STATIC__/index/image/02.png">
+                                    <p class="goods_price">￥249</p>
+                                </li>
+                                <li>
+                                    <img src="__STATIC__/index/image/02.png">
+                                    <p class="goods_price">￥249</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="shop_info">
+                            <ul>
+                                <li class="spr shop_logo"></li>
+                                <li class="shop_name">大众轮胎专卖店</li>
+                                <li class="into_shop">
+                                    <a href="javascript:;">进店</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="shop_goods">
+                            <ul>
+                                <li>
+                                    <img src="__STATIC__/index/image/02.png">
+                                    <p class="goods_price">￥249</p>
+                                </li>
+                                <li>
+                                    <img src="__STATIC__/index/image/02.png">
+                                    <p class="goods_price">￥249</p>
+                                </li>
+                                <li>
+                                    <img src="__STATIC__/index/image/02.png">
+                                    <p class="goods_price">￥249</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- footer 样式分离到common.css -->
+            <div class="footer padding-bottom">
+                <ul>
+                    <li class="home">
+                        <a href="{:url('index/index/index')}">
+                            <i class="spr icon_home"></i>
+                            <span class="text_home active">首页</span>
+                        </a>
+                    </li>
+                    <li class="classify">
+                        <a href="classify_index">
+                            <i class="spr icon_classify"></i>
+                            <span class="text_classify">分类</span>
+                        </a>
+                    </li>
+                    <li class="cart">
+                        <a href="cart_index">
+                            <i class="spr icon_cart"></i>
+                            <span class="text_cart">购物车</span>
+                        </a>
+                    </li>
+                    <li class="my">
+                        <a href="my_index">
+                            <i class="spr icon_my"></i>
+                            <span class="text_my">我的</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="hot_shop">
-            <p class="subtitle">热门店铺</p>
-            <ul class="first_ul">
-                <li>
-                    <div class="shop_info">
-                        <ul>
-                            <li class="spr shop_logo"></li>
-                            <li class="shop_name">大众轮胎专卖店</li>
-                            <li class="into_shop">
-                                <a href="javascript:;">进店</a>
-                            </li>
+
+        <!-- 添加车 -->
+        <div class="select-car" v-show="AddCar">
+            <header class="add-mycar">
+                <a href="javascript:;" class="spr add-back" @click="hideAddCar"></a>
+                <h3 class="title-txt">添加我的爱车</h3>
+            </header>
+            <div class="cont">
+                <div>
+                    <div class="car-search">
+                        <i class="spr icon_search"></i>
+                        <input type="text" class="search-input" placeholder="输入你要搜索的品牌">
+                    </div>
+                    <div class="hot-brand">
+                        <div class="hot-brand-title">
+                            热门品牌：
+                        </div>
+                        <ul class="hot-brand-ul clearfix" v-for="date in hotCar">
+                            <li class="hot-brand-li" v-for="car in date">{{car.brand}}</li>
                         </ul>
                     </div>
-                    <div class="shop_goods">
+                    <div id="letter" class="letter"></div>
+                    <div class="sort_box" v-for="(date, index) in allCarArr">
+                        <div class="sort_list">
+                            <div class="num_logo">
+                                <img src="__STATIC__/index/image/bmw.png">
+                            </div>
+                            <div class="num_name">{{date.brand}}</div>
+                        </div>
+                    </div>
+                    <div class="initials">
                         <ul>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
+                            <li><img src="__STATIC__/index/image/icon2.png"></li>
                         </ul>
                     </div>
-                </li>
-                <li>
-                    <div class="shop_info">
-                        <ul>
-                            <li class="spr shop_logo"></li>
-                            <li class="shop_name">大众轮胎专卖店</li>
-                            <li class="into_shop">
-                                <a href="javascript:;">进店</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="shop_goods">
-                        <ul>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <div class="shop_info">
-                        <ul>
-                            <li class="spr shop_logo"></li>
-                            <li class="shop_name">大众轮胎专卖店</li>
-                            <li class="into_shop">
-                                <a href="javascript:;">进店</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="shop_goods">
-                        <ul>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <!-- footer 样式分离到common.css -->
-        <div class="footer padding-bottom">
-            <ul>
-                <li class="home">
-                    <a href="{:url('index/index/index')}">
-                        <i class="spr icon_home"></i>
-                        <span class="text_home active">首页</span>
-                    </a>
-                </li>
-                <li class="classify">
-                    <a href="classify_index">
-                        <i class="spr icon_classify"></i>
-                        <span class="text_classify">分类</span>
-                    </a>
-                </li>
-                <li class="cart">
-                    <a href="cart_index">
-                        <i class="spr icon_cart"></i>
-                        <span class="text_cart">购物车</span>
-                    </a>
-                </li>
-                <li class="my">
-                    <a href="my_index">
-                        <i class="spr icon_my"></i>
-                        <span class="text_my">我的</span>
-                    </a>
-                </li>
-            </ul>
+                </div>
+            </div>
+            <div>
+                
+            </div>
         </div>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/jquery.charfirst.pinyin.js"></script>
+    <script src="__STATIC__/index/js/plugin/vue.js"></script>
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
+    <script src="__STATIC__/index/js/index.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                wrapHidden: true,
+                AddCar: false,
+                hotCar: [],
+                allCarArr: [],
+            },
+            methods: {
+                // 显示添加爱车
+                showAddCar: function(){
+                    this.AddCar = true;
+                    $('html').css('overflow', 'hidden');
+                },
+                // 隐藏添加爱车
+                hideAddCar: function(){
+                    this.AddCar = false;
+                    $('html').css('overflow', 'auto');
+                },
+                // 
+            },
+            created: function(){
+                hotCarArr = [
+                    {'brand': '大众'},{'brand': '福特'},{'brand': '本田'},
+                    {'brand': '丰田'},{'brand': '别克'},{'brand': '宝马'},
+                    {'brand': '奥迪'},{'brand': '奔驰'},{'brand': '现代'},
+                    {'brand': '比亚迪'},{'brand': '玛莎拉蒂'},{'brand': '路虎'},
+                ];
+                // allCarData = [
+                //     {'brand': '大众'},{'brand': '福特'},{'brand': '本田'},
+                //     {'brand': '丰田'},{'brand': '别克'},{'brand': '宝马'},
+                //     {'brand': '奥迪'},{'brand': '奔驰'},{'brand': '现代'},
+                //     {'brand': '比亚迪'},{'brand': '玛莎拉蒂'},{'brand': '路虎'},
+                //     {'brand': '布加迪'},{'brand': '红旗'},{'brand': '特斯拉'},
+                //     {'brand': '一汽'},{'brand': '广汽传祺'},{'brand': '悍马'},
+                // ];.
+                car_line = ['朗逸', '帕萨特', '高尔夫', '桑塔纳'];
+                car_type = ['SUV', '跑车', '三厢轿车', '两厢轿车'];
+                coty = ['2018','2017','2016','2015'];
+                var allCarData = {
+                    'brand': '大众',
+                    'car_line': car_line,
+                    'car_type': car_type,
+                    'coty': coty,
+                };
+                this.hotCar.push(hotCarArr);
+                this.allCarArr.push(allCarData);
+                console.log(this.allCarArr)
+            }
+        })
+    </script>
+    <!-- swiper初始化 -->
     <script>
         var mySwiper = new Swiper ('.swiper-container', {
             direction: 'horizontal', // 垂直切换选项

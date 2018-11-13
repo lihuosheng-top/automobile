@@ -90,9 +90,10 @@ html{
 .list_cont li{
     float: left;
     width: 3.6rem;
-    height: 5.6rem;
+    height: 5.3rem;
     margin-right: .08rem;
     background-color: #fff;
+    margin-bottom: .3rem;
 }
 .list_cont li .img_div{
     width: 100%;
