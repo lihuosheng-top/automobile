@@ -105,13 +105,13 @@
 }
 .classify_service .add_mycar .icon_add{
     display: inline-block;
-    width: .66rem;
-    height: .66rem;
+    width: .4rem;
+    height: .4rem;
     background-position: -1.5rem 0;
     margin-right: .15rem;
 }
 .classify_service .add_mycar span{
-    font-size: .3rem;
+    font-size: .28rem;
     color: #504cfb;
 }
 .classify_service ul{

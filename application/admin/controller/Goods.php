@@ -182,34 +182,34 @@ class Goods extends Controller{
     }
 
 
+
     /**
      * [商品删除]
      * 陈绪
      */
     public function del(Request $request){
-        if ($request->isPost()) {
-            $id = $request->only(["id"])["id"];
-            $image_url = db("goods_images")->where("goods_id", $id)->field("goods_images,goods_quality_img,id")->select();
-            $goods_images = db("goods")->where("id", $id)->select();
-            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_images[0]['goods_show_images']);
-            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_images[0]['goods_parts_big_img']);
-            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_images[0]['goods_spec_img']);
-            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_images[0]['goods_parts_img']);
-            foreach ($image_url as $value) {
-                if ($value['goods_images'] != null) {
-                    unlink(ROOT_PATH . 'public' . DS . 'upload/' . $value['goods_images']);
-                }
-                if ($value['goods_quality_img'] != null) {
-                    unlink(ROOT_PATH . 'public' . DS . 'upload/' . $value['goods_quality_img']);
-                }
-                db("goods_images")->where("id", $value['id'])->delete();
-            }
+        $id = $request->only(["id"])["id"];
+        $image_url = db("goods_images")->where("goods_id", $id)->field("goods_images,id")->select();
+        $goods_images = db("goods")->where("id", $id)->field("goods_show_images")->find();
+        if($goods_images["goods_show_images"] != null) {
+
+            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_images['goods_show_images']);
             $bool = db("goods")->where("id", $id)->delete();
-            if ($bool) {
-                return ajax_error("删除成功");
-            } else {
-                return ajax_error("删除失败");
+            if($bool){
+                foreach ($image_url as $value) {
+                    if ($value['goods_images'] != null) {
+                        unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $value['goods_images']);
+                    }
+                    $bool_data = db("goods_images")->where("id", $value['id'])->delete();
+                }
+                if ($bool_data) {
+                    $this->success("添加成功",url("admin/Goods/index"));
+                } else {
+                    $this->success("添加失败",url('admin/Goods/add'));
+                }
+
             }
+
         }
     }
 
@@ -366,9 +366,29 @@ class Goods extends Controller{
      * 商品查看
      * 陈绪
      */
-    public function look(){
+    public function look(Request $request,$id){
 
-        return view("good_look");
+        $goods = db("goods")->where("id",$id)->select();
+        foreach ($goods as $key=>$value){
+            $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
+            $goods_standard_value = explode(",",$value["goods_standard_value"]);
+            $goods_standard_value = array_chunk($goods_standard_value,8);
+            $goods[$key]["goods_standard_value"] = $goods_standard_value;
+            $goods[$key]["goods_images"] = db("goods_images")->where("goods_id",$value["id"])->select();
+
+        }
+        $goods_standard_name = array();
+        foreach ($goods as $k=>$val){
+            foreach ($val["goods_standard_name"] as $k_1=>$v_2){
+                $goods_standard_name[$k_1] = array(
+                    "goods_standard_name" =>$val["goods_standard_name"][$k_1],
+                    "goods_standard_value"=>$val["goods_standard_value"][$k_1]
+                );
+            }
+        }
+        $goods_list = getSelectList("goods_type");
+        $goods_brand = db("brand")->select();
+        return view("good_look",["goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
 
     }
 
@@ -412,6 +432,23 @@ class Goods extends Controller{
                 return ajax_error("失败");
             }
 
+        }
+
+    }
+
+
+
+
+    /**
+     * 角色检测
+     * 陈绪
+     */
+    public function role_name(Request $request){
+
+        if($request->isPost()) {
+            $user_id = Session::get("user_id");
+            $admin = db("admin")->where("id", $user_id)->select();
+            return ajax_success("获取成功",$admin);
         }
 
     }
