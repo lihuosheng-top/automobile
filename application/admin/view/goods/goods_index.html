@@ -143,14 +143,24 @@
 				{/volist}
 				</tbody>
 			</table>
+				<div id="page">
+					<div class="opation" style="width: 200px; float: left;">
+						<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
+							<option check="" value="0">请选择</option>
+							<option value="1">批量删除</option>
+							<option value="2">批量上架</option>
+							
+						</select>
+					</div>
+					<div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
+						<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
+						</button>
+					</div>
+				
+	
+				</div>
 		</div>
-		<div id="page">
-
-			<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-				<option value="">商家批量上架</option>
-			</select>
-			<button type="button" class="up-button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定 </button>
-		</div>
+	
 
 	</div>
 
@@ -183,6 +193,7 @@
                 var vals=data.value;
                 var id=$(this).data("id");
                 var status = $(this).val();
+				// 当上架时
 				if(status==1){
 					$.ajax({
 							type: "POST",
@@ -197,19 +208,22 @@
 												url: "{:url('admin/Goods/status')}",
 												  data: {"id":id,"status":status},
 												success: function(data){
-													console.log("成功")
+													console.log(data)
 												},
 												error:function (data) {
-													console.log("错误")
+													console.log(data)
 												}
 											});
 								}
+								// 当角色为服务商时
 								else if(role_id==5){
 									layer.confirm('付费商品需付费后才能上架！', {
 											  btn: ['确定付费','取消付费！'] //按钮
 											}, function(){
 											 layer.close(layer.index);
-											 window.location.href = "{:url('admin/Goods/pay')}";
+											var str = "{:url('admin/Goods/pay',array('id'=>'P_id'))}"; //先将变量以字符串的形式带入U函数中
+											str1 =  str.replace("P_id",id); //将代替变量的字符串用真实变量替换掉，OK搞定！
+											window.location.href =str1 ;
 											});
 
 								}
@@ -221,6 +235,20 @@
 							}
 						});
 				
+				}
+				// 当下架时
+				else{
+					$.ajax({
+								type: "POST",
+								url: "{:url('admin/Goods/status')}",
+								data: {"id":id,"status":status},
+								success: function(data){
+									console.log(data)
+								},
+								error:function (data) {
+									console.log(data)
+								}
+							});
 				}
                 
 
@@ -247,17 +275,113 @@
 				form.render('checkbox');
 			})
 
+				//点击操作确认按钮
+						var data_id = [];
+						$("#opration_btu").click(function() {
+							var opration_val=$(".opation select option:selected").val();
+							if(opration_val==0){
+								layer.alert('请选择操作', {
+									skin: 'layui-layer-molv' //样式类名
+									,closeBtn: 0
+									});
+							}
+							else if(opration_val==1){
+							layer.confirm('你确认要删除吗？', {
+								  btn: ['确认','取消'] //按钮
+								}, function(){
+									var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+													for (var i = 0; i < child.length; i++) {
+														data_id.push($(child[i])[0].dataset.id);
+													}
+													$.ajax({
+														type: "POST",
+														url: "{:url('admin/User/dels')}",
+														data: {
+															"id": data_id,
+														},
+														success: function(data) {
+															console.log("成功");
+															console.log(data);
+															var data=$.parseJSON(data);
+															layer.alert(data.info, {
+																skin: 'layui-layer-molv' //样式类名
+																,closeBtn: 0
+																});
+															location.reload();
+															data_id.splice(0, data_id.length);
+														},
+														error: function(data) {
+															var data=$.parseJSON(data);
+															layer.alert(data.info, {
+																skin: 'layui-layer-molv' //样式类名
+																,closeBtn: 0
+																});
+														console.log(data);
+															console.log("错误");
+															data_id.splice(0, data_id.length);
+														}
+													});
+								});
+									
+								
+							}
+							else if(opration_val==2){
+								var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+										for (var i = 0; i < child.length; i++) {
+											data_id.push($(child[i])[0].dataset.id);
+										}
+										$.ajax({
+												type: "POST",
+												url: "{:url('admin/Goods/role_name')}",
+												success: function(data){	
+													var data=$.parseJSON( data ); 
+													var role_id=data.data[0].role_id;
+													// 当角色为平台时
+													if(role_id==2){
+														$.ajax({
+																	type: "POST",
+																	url: "{:url('admin/Goods/status')}",
+																	  data: {"id":data_id,"status":1},
+																	success: function(data){
+																		console.log(data);
+																	},
+																	error:function (data) {
+																		console.log(data);
+																	}
+																});
+													}
+													// 当角色为服务商时
+													else if(role_id==5){
+														layer.confirm('付费商品需付费后才能上架！', {
+																  btn: ['确定付费','取消付费！'] //按钮
+																}, function(){
+																 layer.close(layer.index);
+																var str = "{:url('admin/Goods/pay',array('id'=>'P_id'))}"; //先将变量以字符串的形式带入U函数中
+																str1 =  str.replace("P_id",data_id); //将代替变量的字符串用真实变量替换掉，OK搞定！
+																window.location.href =str1 ;
+																});
+													}
+												},
+												error:function (data) {
+													console.log("错误")
+												}
+											});
+														
+							}
+							
+							
 			
-			$(".up-button").click(function() {
-				layer.confirm('付费商品需付费后才能上架！', {
-					btn: ['确定付费', '取消付费！'] //按钮
-				}, function() {
-                     window.location.href = "{:url('admin/Goods/pay')}";
-					 layer.close(layer.index);
-				}, function() {
-
-				});
-			});
+						});
+// 			$(".up-button").click(function() {
+// 				layer.confirm('付费商品需付费后才能上架！', {
+// 					btn: ['确定付费', '取消付费！'] //按钮
+// 				}, function() {
+//                      window.location.href = "{:url('admin/Goods/pay')}";
+// 					 layer.close(layer.index);
+// 				}, function() {
+// 
+// 				});
+// 			});
 
 		})
 	</script>
