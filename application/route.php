@@ -338,6 +338,8 @@ Route::group("admin",[
     /*设置*/
     "install_index"=>"admin/Install/index",
     "recommend_index"=>"admin/Install/recommend",//推荐奖励积分设置
+    "recommend_update"=>"admin/Install/recommend_update",//推荐奖励积分设置更新
+
 
     "integral_index"=>"admin/Install/integral",//积分折扣设置
     "integral_setting_add"=>"admin/Install/integral_setting_add",//积分折扣设置添加功能
