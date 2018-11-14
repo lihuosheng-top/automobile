@@ -341,7 +341,8 @@ class Goods extends Controller{
      * 商品付费详情
      * 陈绪
      */
-    public function pay(){
+    public function pay($id){
+
 
         return view("goods_pay");
 
