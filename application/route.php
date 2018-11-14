@@ -30,14 +30,14 @@ Route::group("",[
     'Dolog'=>"index/Login/Dolog",
     /*退出登录*/
     "logout"=>"index/Login/logout",
-    /*验证码*/
-//    "login_captcha"=>"index/Login/captchas",
+
 
 
     /*注册页面*/
     "register"=>"index/Register/index",//注册页面
     "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
+
 
     /*判断是否登录*/
     "isLogin"=>"index/My/isLogin", //是否登录判断
@@ -46,15 +46,25 @@ Route::group("",[
     'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
     'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
 
+
+
     // 分类
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
+
+
+
+
+    /*商品*/
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
 
     // 购物车
     "cart_index"=>"index/Cart/cart_index",
+
+
+
     // 我的
     "my_index"=>"index/My/my_index",
     "login"=>"index/My/login",//登录
