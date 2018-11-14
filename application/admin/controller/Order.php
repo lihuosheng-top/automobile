@@ -353,7 +353,13 @@ class Order extends Controller{
      **************************************
      */
     public function platform_order_parts_index(){
-        return view('platform_order_parts_index');
+        $order_parts_data =Db::table('tb_order_parts')
+            ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
+            ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
+            ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
+            ->order('tb_order_parts.order_create_time','desc')
+            ->paginate(3 );
+        return view('platform_order_parts_index',['order_parts_data'=>$order_parts_data]);
     }
 
     /**
