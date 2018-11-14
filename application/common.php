@@ -398,6 +398,7 @@ function ajaxSuccess($msg = '操作成功',$url = '',$data = []){
     return response()->json($return);
 }
 
+
 function getSelectList($table , $pid = 0 ,&$result = [] , $spac = -4){
     $spac += 4;
     $list = db($table)->where(["pid"=>$pid,"status"=>1])->field("pid,id,name")->select();     //传递条件数组
@@ -410,6 +411,8 @@ function getSelectList($table , $pid = 0 ,&$result = [] , $spac = -4){
     return $result;
 }
 
+
+//递归循环
 function recursionArr($arr,$pid = 0) {
     $array = [];
     foreach ($arr as $value) {
@@ -421,16 +424,7 @@ function recursionArr($arr,$pid = 0) {
     return $array;
 }
 
-function recursionGoods($arr) {
-    $array = [];
-    foreach ($arr as $value) {
-        if (isset($value['sub'])) {
-            $value['sub'] = recursionGoods($arr);
-            $array[] = $value;
-        }
-    }
-    return $array;
-}
+
 
 function _tree_sorts($arr){
     //子分类排序
@@ -579,6 +573,8 @@ function show_order_status($status){
     } else  if($status==8){
         echo '<button type="button" class="state  finish-btu" >已完成</button>';
     }else  if($status==9){
+        echo '<button type="button" class="state  cancel-btu" >取消订单</button>';
+    }else  if($status==10){
         echo '<button type="button" class="state  cancel-btu" >取消订单</button>';
     }
 }

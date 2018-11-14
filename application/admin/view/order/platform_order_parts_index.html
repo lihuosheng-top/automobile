@@ -415,48 +415,55 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="">
+			<form class="layui-form" action="{:url('admin/Order/platform_order_parts_search')}">
 				<div class="layui-form-item">
 					<div class="layui-inline">
 						<label class="layui-form-label">订单编号</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+							<input type="text" name="parts_order_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
 					<div class="layui-inline">
 						<label class="layui-form-label">商品名称</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+							<input type="text" name="goods_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
 					<div class="layui-inline">
 						<label class="layui-form-label">用户账号</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+							<input type="text" name="phone_num" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
 					<div class="layui-inline">
 						<label class="layui-form-label">订单状态</label>
 						<div class="layui-input-inline">
-							<select name="interest" id="admin_status">
-								<option value="1" selected="">启用</option>
-								<option value="2">禁用</option>
+							<select name="order_status" id="admin_status">
+
+								<option value="" selected="">全部</option>
+								<option value="3">待发货</option>
+								<option value="1">待付款</option>
+								<option value="4">已发货</option>
+								<option value="5">待收货</option>
+								<option value="0">已关闭</option>
+
 							</select>
 						</div>
 					</div>
 					<div class="layui-inline" style="width: 36%;">
 						<label class="layui-form-label" style="width: 14% !important; ">时间</label>
 						<div class="layui-input-inline" style="width: 80% !important; margin-top: 8px;">
-							<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""
-								 style="width: 100px; font-size: 13px;">
+							<span class="time"><input name="date_min" type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""
+													  style="width: 100px; font-size: 13px;">
 							</span>--
-							<span class="time"><input type="text" class=" text datetimepicker" readonly="readonly" id="endTime" value=""
-								 style="width: 100px; font-size: 13px;"></span>
+							<span class="time"><input  name="date_max" type="text" class=" text datetimepicker" readonly="readonly" id="endTime" value=""
+													   style="width: 100px; font-size: 13px;"></span>
 
 						</div>
+
 					</div>
 
 					<div class="layui-inline">
@@ -467,6 +474,7 @@
 			</form>
 
 		</blockquote>
+
 		<div class="layui-form news_list">
 			<table class="layui-table">
 				<colgroup>
@@ -490,21 +498,25 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
-					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>2</td>
-						<td><img src="111" /></td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>
-							<button type="button" class="state for-the-payment">111</button>
-						</td>
-					</tr>
+				{if !empty($order_parts_data)}
+				{volist name="order_parts_data" id ="vo"}
+				<tr>
+					<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$vo.id}"></td>
+					<td>{$vo.parts_order_number}</td>
+					<td style="width: 40px; height: 40px;"><img src="__UPLOADS__/{$vo.gimages}" /></td>
+					<td>{$vo.parts_goods_name}</td>
+					<td>{$vo.order_quantity}</td>
+					<td>{$vo.order_amount}</td>
+					<td>{$vo.phone_num}</td>
+					<td>{$vo.user_phone_number}</td>
+					<td>{$vo.order_create_time|date="Y-m-d H:i:s",###}</td>
+					<td>{$vo.harvester_address}</td>
+					<td data-id="{$vo.id}">
+						{$vo.status|show_order_status}
+					</td>
+				</tr>
+				{/volist}
+				{/if}
 				</tbody>
 			</table>
 			<div id="page">
@@ -518,6 +530,9 @@
 					<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px; ">确定
 					</button>
 				</div>
+				{if !empty($order_parts_data)}
+				{$order_parts_data->render()}
+				{/if}
 			</div>
 		</div>
 
@@ -561,7 +576,7 @@
 						}
 						$.ajax({
 							type: "POST",
-							url: "{:url('aaaa')}",
+							url: "{:url('admin/Order/platform_order_parts_dels')}",
 							data: {
 								"id": data_id,
 							},

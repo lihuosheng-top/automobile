@@ -215,8 +215,8 @@
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
 			<div class="layui-input-inline">
 				<select name="goods_brand_id">
-					{volist name="brand" id="val"}
-					<option value="{$val.id}" selected="">{$val.brand_name}</option>
+					{volist name="goods_brand" id="val"}
+					<option value="{$val.id}">{$val.name}</option>
 					{/volist}
 				</select>	</div>
 				<div class="layui-input-inline">
@@ -402,10 +402,11 @@
 		</div>
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label">上架年限：</label>
-			<div class="layui-input-block" id="">
-				<input type="radio" name="goods_putaway" value="1年10元/单个商品" title="1年10元/单个商品" checked="" class="hot">
-				<input type="radio" name="goods_putaway" value="2年15元/单个商品" title="2年15元/单个商品" class="">
-				<input type="radio" name="goods_putaway" value="3年25元/单个商品" title="3年25元/单个商品" class="">
+			<div class="layui-input-block">
+					<select name="">
+						<option value=""  selected="">请选择</option>
+						<option value="">1年</option>
+					</select>
 			</div>
 		</div>
 		<div class="layui-form-item" pane="">

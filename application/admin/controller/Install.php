@@ -7,6 +7,8 @@
  */
 namespace app\admin\controller;
 use think\Controller;
+use think\Db;
+use think\Request;
 
 class Install extends Controller{
 
@@ -25,25 +27,94 @@ class Install extends Controller{
 
     /**
      * 推荐奖励积分设置
-     * 陈绪
+     ***** GY *****
      */
     public function recommend(){
 
-        return view("recommend_index");
-
+        $recommend_data =Db::name('recommend_integral')->select();
+        dump($recommend_data);
+        return view("recommend_index",['recommend_data'=>$recommend_data]);
     }
 
+    /**
+     * 推荐奖励积分设置更新
+     ***** GY *****
+     *
+     */
+    public function recommend_update(Request $request)
+    {
+        if($request->isPost()){
+            $recommend_peoples = input("recommend_peoples");
+            $recommend_integral = input("recommend_integral");
+            $recommend_id = input("recommend_id");
+            if(!empty($recommend_id)){
+                $data_bool =Db::name('recommend_integral')->where('recommend_id',$recommend_id)->update(["number_peoples"=>$recommend_peoples,"recommend_integral"=>$recommend_integral]);
+                if($data_bool){
+                    return ajax_success('更新成功',['status'=>1]);
+                }else{
+                    return ajax_error('更新失败',['status'=>0]);
+                }
+            }else{
+                return ajax_error('没有这条数据',['status'=>0]);
+            }
+        }
+
+    }
 
 
     /**
-     * 积分折扣设置
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:积分折扣设置
+     **************************************
+     * @return \think\response\View
      */
     public function integral(){
-
-        return view("integral_index");
+        $integral_data =Db::name('integral_discount_settings')->select();
+        return view("integral_index",['integral_data'=>$integral_data]);
 
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:积分折扣设置添加
+     **************************************
+     * @param Request $request
+     */
+    public function  integral_setting_add(Request $request){
+        if($request->isPost()){
+            $data =input();
+            if(!empty($data)){
+                return ajax_success('返回数据',$data);
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:积分折扣设置删除
+     **************************************
+     * @param Request $request
+     */
+    public function  integral_setting_del(Request $request){
+        if($request->isPost()){
+            $setting_id =$_POST['id'];
+            if(!empty($setting_id)){
+                $data_bool =Db::name('integral_discount_setting')->where('id',$setting_id)->delete();
+                if($data_bool){
+                    return ajax_success('删除成功',['status'=>1]);
+                }else{
+                    return ajax_error('删除失败',['status'=>0]);
+                }
+            }else{
+                return ajax_error('没有这条数据',['status'=>0]);
+            }
+        }
+    }
+
+
 
 
 
