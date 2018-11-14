@@ -51,7 +51,7 @@
 <body>
 
 	{block name="content"}
-
+    
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
 			<form class="layui-form" action="">
@@ -185,11 +185,24 @@
                 var status = $(this).val();
                 console.log(status);
 				if(status==1){
-					layer.confirm('付费商品需付费后才能上架！', {
-									btn: ['确定付费', '取消付费！'] //按钮
-								}, function() {
-									layer.close(layer.index);
-									window.location.href = "{:url('admin/Goods/pay')}";
+					$.ajax({
+							type: "POST",
+							url: "{:url('admin/Goods/role_name')}",
+							success: function(data){
+								// window.location.href = "{:url('admin/Goods/pay')}";
+								// layer.close(layer.index);
+								console.log(data)
+							},
+							error:function (data) {
+								console.log("错误")
+							}
+						});
+// 					
+// 					layer.confirm('付费商品需付费后才能上架！', {
+// 									btn: ['确定付费', '取消付费！'] //按钮
+// 								}, function() {
+// 									layer.close(layer.index);
+// 									window.location.href = "{:url('admin/Goods/pay')}";
 									
 // 									$.ajax({
 // 										type: "POST",
@@ -205,8 +218,8 @@
 // 										}
 // 									});
 									
-								});
-				}
+								// });
+				// }
                 
 
 
