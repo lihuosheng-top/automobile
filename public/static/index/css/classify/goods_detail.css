@@ -49,10 +49,13 @@ html{
     margin-bottom: .1rem;
 }
 .goods_cont .goods_name{
-    font-size: .36rem;
-    line-height: .52rem;
+    font-size: .3rem;
+    line-height: normal;
     color: #333;
-    margin-bottom: .2rem;
+}
+.goods_cont .selling-point{
+    font-size: .24rem;
+    color: #999;
 }
 .goods_cont .price_cont{
     line-height: .6rem;
@@ -140,6 +143,48 @@ html{
 .intro p{
     text-indent: .48rem;
 } */
+.tab-box{
+    background-color: #fff;
+    margin-bottom: .1rem;
+}
+.switch-box{
+    display: flex;
+    height: 1rem;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    line-height: 1rem;
+}
+.switch-box div{
+    flex-basis: 50%;
+    height: 100%;
+    text-align: center;
+}
+.switch-box .switch-detail{
+    position: relative;
+}
+.switch-box .switch-on{
+    color: #504cfb !important;
+}
+.switch-box .switch-on::after{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    content: '';
+    width: 40%;
+    display: block;
+    height: 3px;
+    background: #504cfb;
+}
+.switch-box .switch-comment{
+    position: relative;
+}
+.tab-box .detail-img-box{
+    font-size: 0;
+}
+.tab-box .detail-box img{
+    width: 100%;
+}
 
 /* 用户评论 start */
 .wrapper .comment_box{
