@@ -18,7 +18,7 @@ class Brand extends Controller{
      */
     public function index(){
 
-        $brand_data = db("brand")->where("brand_status",1)->order("sort_number")->select();
+        $brand_data = db("brand")->where("status",1)->order("sort_number")->select();
         return view("brand_index",["brand_data"=>$brand_data]);
 
     }
@@ -30,9 +30,12 @@ class Brand extends Controller{
      * 陈绪
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
      */
-    public function add(){
-
-        return view("brand_add");
+    public function add($pid = 0){
+        $brand_list = [];
+        if($pid == 0) {
+            $brand_list = getSelectList("brand");
+        }
+        return view("brand_add",["brand_list"=>$brand_list]);
 
     }
 
@@ -133,7 +136,7 @@ class Brand extends Controller{
             $status = $request->only(["status"])["status"];
             if($status == 0) {
                 $id = $request->only(["id"])["id"];
-                $bool = db("brand")->where("id", $id)->update(["brand_status" => 0]);
+                $bool = db("brand")->where("id", $id)->update(["status" => 0]);
                 if ($bool) {
                     $this->redirect(url("admin/admin/index"));
                 } else {
@@ -142,7 +145,7 @@ class Brand extends Controller{
             }
             if($status == 1){
                 $id = $request->only(["id"])["id"];
-                $bool = db("brand")->where("id", $id)->update(["brand_status" => 1]);
+                $bool = db("brand")->where("id", $id)->update(["status" => 1]);
                 if ($bool) {
                     $this->redirect(url("admin/admin/index"));
                 } else {

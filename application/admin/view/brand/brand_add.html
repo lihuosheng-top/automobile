@@ -4,27 +4,27 @@
 	body {
 		background: #fff;
 	}
-	
+
 	.layui-form label {
 		width: 17%;
 		text-align: left;
 	}
-	
+
 
 	.layui-form-label span {
 		color: red;
 	}
-	
+
 	.layui-form {
 		width: 90%;
 		margin: 0 auto;
 		padding-top: 40px;
 	}
-	
+
 	.layui-input-block {
 		min-height: 40px;
 	}
-	
+
 	.biaoji .layui-form-radioed span {
 		color: #fff;
 		background: red;
@@ -84,7 +84,7 @@
 	}
 
 
-	
+
 	.operation-btus {
 		width: 60px;
 		height: 40px;
@@ -119,13 +119,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span style="color: red;">*</span>品牌名称：</label>
 			<div class="layui-input-block">
-				<input type="text" name="brand_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"> <span style="color: red;">*</span>品牌地址：</label>
-			<div class="layui-input-block">
-				<input type="text" name="brand_url" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 <div class="layui-form-item">
@@ -149,7 +143,7 @@
 				</aside>
 			</div>
 		</div>
-		
+
 		<div class="layui-form-item">
 					<label class="layui-form-label">品牌描述：</label>
 					<div class="layui-input-block">
@@ -166,8 +160,8 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">是否显示：</label>
 		<div class="layui-input-block">
-			<input type="radio" name="brand_status" value="1" title="是" checked="">
-			<input type="radio" name="brand_status" value="0" title="否">
+			<input type="radio" name="status" value="1" title="是" checked="">
+			<input type="radio" name="status" value="0" title="否">
 		</div>
 	</div>
 		<div class="layui-form-item">
@@ -178,7 +172,7 @@
 		</div>
 
 	</form>
-	
+
 	{/block}
 
 	<!--_footer 作为公共模版分离出去-->
@@ -187,7 +181,7 @@
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
-	
+
 	<script type="text/javascript">
 		layui.config({
 			base: "js/"
@@ -197,11 +191,11 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 
-			
+
 		})
 	</script>
 
-	
+
 
 	{/block}
 
