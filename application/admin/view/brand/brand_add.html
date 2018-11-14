@@ -127,7 +127,9 @@
 			<div class="layui-input-block">
 				<select name="pid" id="admin_role" class="role_list">
 					<option value="0">顶级</option>
-					<option value="1">111</option>
+					{volist name="brand_list" id="value"}
+					<option value="{$value.id}">{$value.name}</option>
+					{/volist}
 				</select>
 			</div>
 		</div>
@@ -158,7 +160,6 @@
 					<div class="layui-input-block">
 						<textarea rows="10" cols="100" name="brand_describe"></textarea>
 						</div>
-
 				</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">排序：</label>

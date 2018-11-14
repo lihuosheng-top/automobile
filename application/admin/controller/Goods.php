@@ -67,11 +67,12 @@ class Goods extends Controller{
      */
     public function add($pid=0){
         $goods_list = [];
-        $brand = db("brand")->where("status",1)->select();
+        $goods_brand = [];
         if($pid == 0){
             $goods_list = getSelectList("goods_type");
+            $goods_brand = getSelectList("brand");
         }
-        return view("goods_add",["goods_list"=>$goods_list,"brand"=>$brand]);
+        return view("goods_add",["goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
     /**
@@ -340,7 +341,8 @@ class Goods extends Controller{
      * 商品付费详情
      * 陈绪
      */
-    public function pay(){
+    public function pay($id){
+
 
         return view("goods_pay");
 

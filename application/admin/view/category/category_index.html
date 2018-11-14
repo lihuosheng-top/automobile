@@ -74,7 +74,13 @@
 		    	<tr>
 		    		<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" ></td>
 					<td align="left">{$value.name}</td>
-					<td style="width: 100px;"><img src="__UPLOADS__/{$value.type_images}" width="100%"></td>
+					<td style="width: 100px;">
+						{if !empty($value.type_images)}
+						<img src="__UPLOADS__/{$value.type_images}" width="100%">
+						{else}
+						无
+						{/if}
+					</td>
 					<td>{$value.pid}</td>
 					<td>{$value.sort_number}</td>
 					<td>
