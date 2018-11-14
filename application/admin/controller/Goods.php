@@ -67,7 +67,7 @@ class Goods extends Controller{
      */
     public function add($pid=0){
         $goods_list = [];
-        $brand = db("brand")->where("brand_status",1)->select();
+        $brand = db("brand")->where("status",1)->select();
         if($pid == 0){
             $goods_list = getSelectList("goods_type");
         }
