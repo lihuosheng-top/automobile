@@ -8,6 +8,7 @@
 namespace app\admin\controller;
 use think\Controller;
 use think\Db;
+use think\Request;
 
 class Install extends Controller{
 
@@ -48,6 +49,47 @@ class Install extends Controller{
         return view("integral_index",['integral_data'=>$integral_data]);
 
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:积分折扣设置添加
+     **************************************
+     * @param Request $request
+     */
+    public function  integral_setting_add(Request $request){
+        if($request->isPost()){
+            $data =input();
+            if(!empty($data)){
+                return ajax_success('返回数据',$data);
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:积分折扣设置删除
+     **************************************
+     * @param Request $request
+     */
+    public function  integral_setting_del(Request $request){
+        if($request->isPost()){
+            $setting_id =$_POST['id'];
+            if(!empty($setting_id)){
+                $data_bool =Db::name('integral_discount_setting')->where('id',$setting_id)->delete();
+                if($data_bool){
+                    return ajax_success('删除成功',['status'=>1]);
+                }else{
+                    return ajax_error('删除失败',['status'=>0]);
+                }
+            }else{
+                return ajax_error('没有这条数据',['status'=>0]);
+            }
+        }
+    }
+
+
 
 
 
