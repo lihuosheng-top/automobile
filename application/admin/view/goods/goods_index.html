@@ -183,43 +183,45 @@
                 var vals=data.value;
                 var id=$(this).data("id");
                 var status = $(this).val();
-                console.log(status);
 				if(status==1){
 					$.ajax({
 							type: "POST",
 							url: "{:url('admin/Goods/role_name')}",
-							success: function(data){
-								// window.location.href = "{:url('admin/Goods/pay')}";
-								// layer.close(layer.index);
-								console.log(data)
+							success: function(data){	
+								var data=$.parseJSON( data ); 
+								var role_id=data.data[0].role_id;
+								// 当角色为平台时
+								if(role_id==2){
+									$.ajax({
+												type: "POST",
+												url: "{:url('admin/Goods/status')}",
+												  data: {"id":id,"status":status},
+												success: function(data){
+													console.log("成功")
+												},
+												error:function (data) {
+													console.log("错误")
+												}
+											});
+								}
+								else if(role_id==5){
+									layer.confirm('付费商品需付费后才能上架！', {
+											  btn: ['确定付费','取消付费！'] //按钮
+											}, function(){
+											 layer.close(layer.index);
+											 window.location.href = "{:url('admin/Goods/pay')}";
+											});
+
+								}
+								
+								
 							},
 							error:function (data) {
 								console.log("错误")
 							}
 						});
-// 					
-// 					layer.confirm('付费商品需付费后才能上架！', {
-// 									btn: ['确定付费', '取消付费！'] //按钮
-// 								}, function() {
-// 									layer.close(layer.index);
-// 									window.location.href = "{:url('admin/Goods/pay')}";
-									
-// 									$.ajax({
-// 										type: "POST",
-// 										url: "{:url('admin/Goods/status')}",
-// 										data: {"id":id,"},
-// 										success: function(data){
-// 											window.location.href = "{:url('admin/Goods/pay')}";
-// 											layer.close(layer.index);
-// 											console.log("成功")
-// 										},
-// 										error:function (data) {
-// 											console.log("错误")
-// 										}
-// 									});
-									
-								// });
-				// }
+				
+				}
                 
 
 
