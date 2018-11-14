@@ -438,4 +438,21 @@ class Goods extends Controller{
 
 
 
+
+    /**
+     * 角色检测
+     * 陈绪
+     */
+    public function role_name(Request $request){
+
+        if($request->isPost()) {
+            $user_id = Session::get("user_id");
+            $admin = db("admin")->where("id", $user_id)->select();
+            return ajax_success("获取成功",$admin);
+        }
+
+    }
+
+
+
 }

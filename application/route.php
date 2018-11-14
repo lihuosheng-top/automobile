@@ -130,6 +130,7 @@ Route::group("admin",[
 	"goods_look"=>"admin/Goods/look",                                                //商品查看详情
     "goods_name"=>"admin/Goods/name",                                                   //商品规格名添加
     "goods_standard_name"=>"admin/Goods/standard_name",                                       //商品规格名显示
+    "goods_role_name"=>"admin/Goods/role_name",                                       //商品角色检测
 
 
 
