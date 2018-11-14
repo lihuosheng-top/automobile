@@ -580,6 +580,8 @@ function show_order_status($status){
         echo '<button type="button" class="state  finish-btu" >已完成</button>';
     }else  if($status==9){
         echo '<button type="button" class="state  cancel-btu" >取消订单</button>';
+    }else  if($status==10){
+        echo '<button type="button" class="state  cancel-btu" >取消订单</button>';
     }
 }
 
