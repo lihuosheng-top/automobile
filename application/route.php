@@ -48,9 +48,10 @@ Route::group("",[
 
 
 
-    // 分类
+    // 商品分类   商品品牌分类
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
+
 
 
 
@@ -258,6 +259,7 @@ Route::group("admin",[
     "platform_order_service_index"=>"admin/Order/platform_order_service_index", //平台商服务商订单列表
     "platform_order_parts_index"=>"admin/Order/platform_order_parts_index", //平台商配件商订单列表
     "platform_order_parts_search"=>"admin/Order/platform_order_parts_search", //平台商配件商订单列表模糊搜索
+    "platform_order_parts_dels"=>"admin/Order/platform_order_parts_dels", //平台商配件商订单列表批量删除
 
     "platform_after_sale"=>"admin/Order/platform_after_sale", //平台商售后服务
     "platform_invoice_index"=>"admin/Order/platform_invoice_index", //平台商发票列表

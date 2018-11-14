@@ -262,7 +262,7 @@
 				{if !empty($goods_brand)}
 				{volist name="goods_brand" id="v"}
 				<select name="goods_brand_id">
-					<option value="{$v.id}">{$v.brand_name}</option>
+					<option value="{$v.id}">{$v.name}</option>
 				</select>
 				{/volist}
 				{else}
