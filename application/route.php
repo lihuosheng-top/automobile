@@ -337,7 +337,7 @@ Route::group("admin",[
 
     /*设置*/
     "install_index"=>"admin/Install/index",
-    "recommend_index"=>"admin/Install/recommend",
+    "recommend_index"=>"admin/Install/recommend",//推荐奖励积分设置
     "integral_index"=>"admin/Install/integral",//积分折扣设置
     "putaway_index"=>"admin/Install/putaway",
     "recharge_index"=>"admin/Install/recharge",
