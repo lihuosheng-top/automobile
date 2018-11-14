@@ -73,6 +73,27 @@
         <button class="reset-payment-btn">确认</button>
     </div>
 
+    <!-- 选择角色 -->
+    <div class="change-role-pop" style="display:none;">
+        <header class="change-role-header">
+            <a href="javascript:;" class="spr change-role-back"></a>
+            <h3>选择角色</h3>
+        </header>
+        <div class="customer-box">
+            <input type="radio" name="role" class="customer" id="customer">
+            <label for="customer">车主</label>
+        </div>
+        <div class="supplier-box">
+            <input type="radio" name="role" class="supplier" id="supplier">
+            <label for="supplier">配件商</label>
+        </div>
+        <div class="facilitator-box">
+            <input type="radio" name="role" class="facilitator" id="facilitator">
+            <label for="facilitator">服务商</label>
+        </div>
+        <button class="change-role-btn">确定</button>
+    </div>
+
     <script src="__STATIC__/index/js/plugin/zepto.js"></script>
     <script src="__STATIC__/index/js/plugin/touch.js"></script>
     <!-- 退出登录 -->
@@ -119,6 +140,30 @@
         })
         $('.reset-pwd-back').on('tap', function(){
             $('.reset-pwd-pop').hide();
+            $('.wrapper').show();
+        })
+    </script>
+    <!-- 修改支付密码 -->
+    <script>
+        // 显示修改支付密码 弹窗
+        $('.reset-payment-li').on('tap', function(){
+            $('.reset-payment-pop').show();
+            $('.wrapper').hide();
+        })
+        $('.reset-payment-back').on('tap', function(){
+            $('.reset-payment-pop').hide();
+            $('.wrapper').show();
+        })
+    </script>
+    <!-- 选择角色 -->
+    <script>
+        // 显示修改支付密码 弹窗
+        $('.change-role-li').on('tap', function(){
+            $('.change-role-pop').show();
+            $('.wrapper').hide();
+        })
+        $('.change-role-back').on('tap', function(){
+            $('.change-role-pop').hide();
             $('.wrapper').show();
         })
     </script>
