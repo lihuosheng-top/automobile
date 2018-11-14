@@ -19,7 +19,9 @@
 		margin: 0 auto;
 		padding-top: 40px;
 	}
-	
+	.layui-input{
+		width: 100% !important;
+	}
 	.layui-input-block {
 		min-height: 40px;
 	}
@@ -61,13 +63,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span style="color: red;">*</span>品牌名称：</label>
 			<div class="layui-input-block">
-				<input type="text" name="brand_name" value="{$value.brand_name}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">品牌地址：</label>
-			<div class="layui-input-block">
-				<input type="text" name="brand_url" value="{$value.brand_url}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="name" value="{$value.name}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 	<div class="layui-form-item">
@@ -87,7 +83,7 @@
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="brand_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+								<input type="file" name="brand_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple  data-id="1"/>
 							</section>
 						</div>
 					</section>
@@ -107,6 +103,15 @@
 						<textarea rows="10" cols="100" name="brand_describe">{$value.brand_describe}</textarea>
 						</div>
 				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">父级分类</label>
+					<div class="layui-input-block">
+						<select name="pid" id="admin_role" class="role_list">
+							<option value="0">顶级</option>
+							<option value="1">111</option>
+						</select>
+					</div>
+				</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">排序：</label>
 		<div class="layui-input-block">
@@ -116,8 +121,8 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">是否显示：</label>
 		<div class="layui-input-block">
-			<input type="radio" name="brand_status" value="1" title="是" checked="">
-			<input type="radio" name="brand_status" value="0" title="否">
+			<input type="radio" name="status" value="1" title="是" checked="">
+			<input type="radio" name="status" value="0" title="否">
 		</div>
 	</div>
 		<div class="layui-form-item">

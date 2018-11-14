@@ -320,12 +320,9 @@ class Order extends Controller{
         return view('invoice_edit');
     }
 
-
     /**
      * TODO:配件商订单结束
      */
-
-
 
 
     /**
@@ -354,6 +351,54 @@ class Order extends Controller{
             ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
             ->order('tb_order_parts.order_create_time','desc')
             ->paginate(3 );
+        return view('platform_order_parts_index',['order_parts_data'=>$order_parts_data]);
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:平台商配件商订单列表模糊搜索
+     **************************************
+     * @return \think\response\View
+     */
+    public function platform_order_parts_search(){
+        $keywords = input('parts_order_number'); //订单编号
+        $goods_name = input('goods_name');            //商品名称
+        $phone_num = input('phone_num');         //用户账号
+        $order_status = input('order_status');   // 订单状态
+        $timemin = input('date_min');           //开始时间
+        /*添加一天（23：59：59）*/
+        $time_max_data = strtotime(input('date_max'));
+        $t = date('Y-m-d H:i:s', $time_max_data + 1 * 24 * 60 * 60);
+        $timemax = strtotime($t);                       //结束时间
+
+        if((!empty($keywords)) || (!empty($goods_name)) || (!empty($phone_num)) || (!empty($order_status))){
+            $keyword= (!empty($keywords)) ? $keywords :((!empty($goods_name)) ? $goods_name : ((!empty($phone_num)) ? $phone_num : ((!empty($order_status)) ? $order_status : '')));
+           if(!empty($keyword)){
+               $condition = " `parts_goods_name` like '%{$keyword}%' or `parts_order_number` like '%{$keyword}%'  or `user_account_name` like '%{$keyword}%' or `user_phone_number` like '%{$keyword}%'";
+               $order_parts_data =Db::table('tb_order_parts')
+                   ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
+                   ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
+                   ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
+                   ->where($condition)
+                   ->order('tb_order_parts.order_create_time','desc')
+                   ->paginate(3 );
+           }else{
+               $order_parts_data =Db::table('tb_order_parts')
+                   ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
+                   ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
+                   ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
+                   ->order('tb_order_parts.order_create_time','desc')
+                   ->paginate(3 );
+           }
+        }else{
+            $order_parts_data =Db::table('tb_order_parts')
+                ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
+                ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
+                ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
+                ->order('tb_order_parts.order_create_time','desc')
+                ->paginate(3 );
+        }
         return view('platform_order_parts_index',['order_parts_data'=>$order_parts_data]);
     }
 

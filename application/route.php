@@ -30,14 +30,14 @@ Route::group("",[
     'Dolog'=>"index/Login/Dolog",
     /*退出登录*/
     "logout"=>"index/Login/logout",
-    /*验证码*/
-//    "login_captcha"=>"index/Login/captchas",
+
 
 
     /*注册页面*/
     "register"=>"index/Register/index",//注册页面
     "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
+
 
     /*判断是否登录*/
     "isLogin"=>"index/My/isLogin", //是否登录判断
@@ -46,15 +46,25 @@ Route::group("",[
     'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
     'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
 
+
+
     // 分类
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
+
+
+
+
+    /*商品*/
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
 
     // 购物车
     "cart_index"=>"index/Cart/cart_index",
+
+
+
     // 我的
     "my_index"=>"index/My/my_index",
     "login"=>"index/My/login",//登录
@@ -247,6 +257,8 @@ Route::group("admin",[
     /*订单管理：TODO:平台商订单开始*/
     "platform_order_service_index"=>"admin/Order/platform_order_service_index", //平台商服务商订单列表
     "platform_order_parts_index"=>"admin/Order/platform_order_parts_index", //平台商配件商订单列表
+    "platform_order_parts_search"=>"admin/Order/platform_order_parts_search", //平台商配件商订单列表模糊搜索
+
     "platform_after_sale"=>"admin/Order/platform_after_sale", //平台商售后服务
     "platform_invoice_index"=>"admin/Order/platform_invoice_index", //平台商发票列表
     "platform_invoice_details"=>"admin/Order/platform_invoice_details", //平台商发票详情
