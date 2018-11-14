@@ -2,18 +2,19 @@
 namespace app\index\controller;
 
 use think\Controller;
+use think\Request;
 
 class Classify extends Controller
 {
     // 商品分类 商品品牌分类
-    public function Classify_index()
+    public function Classify_index(Request $request)
     {
-
-        $brand = db("brand")->where("status",1)->select();
-        $goods_type = db("goods_type")->where("status",1)->select();
-        $goods_type = _tree_sort(recursionArr($goods_type),'sort_number');
-
-        return ajax_success("获取成功",$goods_type);
+        if($request->isPost()) {
+            $brand = db("brand")->where("status", 1)->select();
+            $goods_type = db("goods_type")->where("status", 1)->select();
+            $goods_type = _tree_sort(recursionArr($goods_type), 'sort_number');
+            return ajax_success("获取成功");
+        }
         return view("classify_index");
     }
 

@@ -215,8 +215,8 @@
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
 			<div class="layui-input-inline">
 				<select name="goods_brand_id">
-					{volist name="brand" id="val"}
-					<option value="{$val.id}" selected="">{$val.name}</option>
+					{volist name="goods_brand" id="val"}
+					<option value="{$val.id}">{$val.name}</option>
 					{/volist}
 				</select>	</div>
 				<div class="layui-input-inline">
