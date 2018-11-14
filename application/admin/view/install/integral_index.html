@@ -38,7 +38,7 @@
 	{if !empty($integral_data)}
 	{volist name="integral_data" id="vo"}
 	<div style="" class="text">消费满<input type="text" name="" id="" value="{$vo.consumption_full}" />元可使用<input type="text" name="" id="" value="{$vo.integral_can_be_used}" />积分，<input
-		 type="text" name="" id="" value="{$vo.integral_full}" />积分抵<input type="text" name="" id="" value="{$vo.deductible_money}" />元</div>
+		 type="text" name="" id="" value="{$vo.integral_full}" />积分抵<input type="text" name="" id="" value="{$vo.deductible_money}" />元 <input type="hidden" name="" id="" value=""  data-id="{$vo.setting_id}"/></div>
 	{/volist}
 	{else}
 	<div style="" class="text">消费满<input type="text" name="" id="" value="" />元可使用<input type="text" name="" id="" value="" />积分，<input
@@ -80,14 +80,20 @@
 		remove.remove();
 	});
 	$("#submits").click(function(){
+		var shuju={};
 		var texts=$(".addcontents").children(".text");
 		var textchirdlen=texts.children("input");
-		// console.log(texts);
+		// console.log(textchirdlen);
 		for(var i=0;i<texts.length;i++){
-			for (var j=0;j<=4;j++){
-				   
+			for(var j=0;j<4;j++){
+				// shuju.push(texts.eq(i).children("input")[j].value);
+			'input'+j+':texts.eq(i).children("input")[j].value,
+			
 			}
+			
+			
 		}
+		console.log(shuju);
 	});
 </script>
 {/block}
