@@ -336,10 +336,11 @@ class Order extends Controller{
     /**
      **************李火生*******************
      * @return \think\response\View
-     * 平台商服务商订单列表
+     * 平台服务商订单列表
      **************************************
      */
     public function platform_order_service_index(){
+
         return view('platform_order_service_index');
     }
 

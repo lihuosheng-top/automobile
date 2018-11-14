@@ -35,9 +35,15 @@
 {block name="content"}
 <h4 style="padding: 10px;">推荐奖励积分设置：</h4>
 <div class="content">
+	{if !empty($integral_data)}
+	{volist name="integral_data" id="vo"}
+	<div style="" class="text">消费满<input type="text" name="" id="" value="{$vo.consumption_full}" />元可使用<input type="text" name="" id="" value="{$vo.integral_can_be_used}" />积分，<input
+		 type="text" name="" id="" value="{$vo.integral_full}" />积分抵<input type="text" name="" id="" value="{$vo.deductible_money}" />元</div>
+	{/volist}
+	{else}
 	<div style="" class="text">消费满<input type="text" name="" id="" value="" />元可使用<input type="text" name="" id="" value="" />积分，<input
-		 type="text" name="" id="" value="" />积分抵<input type="text" name="" id="" value="" />元</div>
-
+			type="text" name="" id="" value="" />积分抵<input type="text" name="" id="" value="" />元</div>
+	{/if}
 </div>
 <div class="bts" style="text-align: center;margin-top: 20px;">
 	<button type="button" class="add-bts" style="background: #FFF; width: 100px; color: #0099FF; border:solid 1px #0099FF;border-radius:4px ;">+添加</button>

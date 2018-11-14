@@ -7,6 +7,7 @@
  */
 namespace app\admin\controller;
 use think\Controller;
+use think\Db;
 
 class Install extends Controller{
 
@@ -36,12 +37,15 @@ class Install extends Controller{
 
 
     /**
-     * 积分折扣设置
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:积分折扣设置
+     **************************************
+     * @return \think\response\View
      */
     public function integral(){
-
-        return view("integral_index");
+        $integral_data =Db::name('integral_discount_settings')->select();
+        return view("integral_index",['integral_data'=>$integral_data]);
 
     }
 
