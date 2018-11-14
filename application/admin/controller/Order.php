@@ -30,9 +30,7 @@ class Order extends Controller{
             ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
             ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
             ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
-            ->where("tb_goods.goods_name", "like", "%商品2%")
             ->order('tb_order_parts.order_create_time','desc')
-
             ->paginate(3);
 
        return view('index',['order_parts_data'=>$order_parts_data]);
@@ -83,6 +81,7 @@ class Order extends Controller{
         $t = date('Y-m-d H:i:s', $time_max_data + 1 * 24 * 60 * 60);
         $timemax = strtotime($t);                       //结束时间
 
+        $order_parts_data=[];
         /*
                 if (empty($keywords)) { //空
                     if ((!empty($goods_name)) || (!empty($phone_num)) || (!empty($order_status)) || (!empty($timemin)) || (!empty($timemax))) {
@@ -149,18 +148,18 @@ class Order extends Controller{
         */
         if (empty($keywords)) { //空
 
-            if((!empty($goods_name)) && (empty($phone_num)) && (empty($order_status)) && (empty($timemin)) && (empty($timemax))) {
+            if((!empty($goods_name)) && (empty($phone_num)) && (empty($order_status)) && (empty($timemin)) && (empty($time_max_data))) {
                 $order_parts_data = Db::table('tb_order_parts')
                     ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
                     ->join("tb_user", "tb_order_parts.user_id=tb_user.id", 'left')
                     ->join("tb_goods", "tb_order_parts.goods_id=tb_goods.id", "left")
-                    ->where("goods_name", "like", "%" . $goods_name . "%")
+                    ->where("tb_order_parts.parts_goods_name", "like","%" .$goods_name ."%")
                     ->order('tb_order_parts.order_create_time', 'desc')
                     ->paginate(3, false, [
                         'query' => request()->param(),
                     ]);
             }
-            if((empty($goods_name)) && (!empty($phone_num)) && (empty($order_status)) && (empty($timemin)) && (empty($timemax))) {
+            if((empty($goods_name)) && (!empty($phone_num)) && (empty($order_status)) && (empty($timemin)) && (empty($time_max_data))) {
                 $order_parts_data = Db::table('tb_order_parts')
                     ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
                     ->join("tb_user", "tb_order_parts.user_id=tb_user.id", 'left')
@@ -171,29 +170,29 @@ class Order extends Controller{
                         'query' => request()->param(),
                     ]);
             }
-            if((empty($goods_name)) && (empty($phone_num)) && (!empty($order_status)) && (empty($timemin)) && (empty($timemax))) {
-                $condition = "  `status` like '%{$order_status}%' ";
+            if((empty($goods_name)) && (empty($phone_num)) && (!empty($order_status)) && (empty($timemin)) && (empty($time_max_data))) {
                 $order_parts_data = Db::table('tb_order_parts')
                     ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
                     ->join("tb_user", "tb_order_parts.user_id=tb_user.id", 'left')
                     ->join("tb_goods", "tb_order_parts.goods_id=tb_goods.id", "left")
-                    ->where($condition)
+                    ->where("tb_order_parts.status", "like", "%" . $order_status . "%")
                     ->order('tb_order_parts.order_create_time', 'desc')
                     ->paginate(3, false, [
                         'query' => request()->param(),
                     ]);
             }
-            if((empty($goods_name)) && (empty($phone_num)) && (empty($order_status)) && (!empty($timemin)) && (empty($timemax))) {
+            if((empty($goods_name)) && (empty($phone_num)) && (empty($order_status)) && (!empty($timemin)) && (empty($time_max_data))) {
                 $order_parts_data = Db::table('tb_order_parts')
                     ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
                     ->join("tb_user", "tb_order_parts.user_id=tb_user.id", 'left')
                     ->join("tb_goods", "tb_order_parts.goods_id=tb_goods.id", "left")
-                    ->where("tb_order_parts.order_create_time", "order_create_time>{$timemin} ")
+                    //->where("tb_order_parts.order_create_time", "order_create_time> $timemin ")
+                    ->where('tb_order_parts.order_create_time','>=',"$timemin")
                     ->order('tb_order_parts.order_create_time', 'desc')
                     ->paginate(3, false, [
                         'query' => request()->param(),
                     ]);
-            } else if ((empty($goods_name)) && (empty($phone_num)) && (empty($order_status)) && (empty($timemin)) && (!empty($timemax))) {
+            } else if ((empty($goods_name)) && (empty($phone_num)) && (empty($order_status)) && (empty($timemin)) && (!empty($time_max_data))) {
                 $order_parts_data = Db::table('tb_order_parts')
                     ->field(" ages")
                     ->join("tb_user", "tb_order_parts.user_id=tb_user.id", 'left')
