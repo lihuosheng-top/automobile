@@ -97,8 +97,11 @@ class Install extends Controller{
      * 上架年限设置
      * 陈绪
      */
-    public function putaway(){
+    public function putaway(Request $request){
 
+        $data = $request->param();
+        $bool = db("year")->insert($data);
+        dump($bool);
         return view("putaway_index");
 
     }

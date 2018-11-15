@@ -64,6 +64,10 @@ class checkLogin extends Controller {
                 }
             }
 
+            $user_id = Session::get("user_id");
+            $admin = db("admin")->where("id",$user_id)->find();
+            config("admin",$admin);
+
             $menu_list = _tree_hTree(_tree_sort($menu_list, "sort_number"));
             config("menu_list", $menu_list);
             //halt(Config::get("menu_list"));
