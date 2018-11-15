@@ -126,3 +126,33 @@ $('.detail-back').click(function(){
     $('.comment-detail-pop').hide();
 })
 
+// 选择服务
+$('.ser-type').click(function(){
+    $('html').css('overflow','hidden');
+    $('.mask').add('.select-ser-pop').show();
+})
+// 关闭选择服务 弹窗
+$('.close-select-pop').click(function(){
+    $('html').css('overflow','auto');
+    $('.mask').add('.select-ser-pop').hide();
+})
+
+// 弹窗 购买数量
+$(function(){
+    // 减
+    var select_calculator_val = document.getElementsByClassName('select-calculator_val')[0];
+    $('.select-minus').click(function(){
+        if(select_calculator_val.value > 0){
+            select_calculator_val.value -= 1;
+        }else{
+            select_calculator_val.value = 0;
+        }
+    })
+    // 加
+    $('.select-increase').click(function(){
+        var add =  select_calculator_val.value - 0;
+        add += 1;
+        select_calculator_val.value = add;
+    })
+})
+

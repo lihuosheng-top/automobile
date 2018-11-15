@@ -943,6 +943,173 @@ html{
     font-size: .24rem;
     color: #ccc;
 }
-
-
 /* 评价详情 end */
+
+/* 选择服务 start */
+.mask{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .6);
+    width: 100%;
+    height: 100vh;
+    z-index: 8;
+}
+.select-ser-pop{
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 80vh;
+    background-color: #fff;
+    z-index: 9;
+    padding: 0 .22rem;
+    box-sizing: border-box;
+}
+.select-goods-wrap{
+    width: 100%;
+    height: 2.95rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+.select-goods-wrap .select-goods-img{
+    width: 2.35rem;
+    height: 2.35rem;
+}
+.select-goods-wrap .select-goods-img img{
+    width: 100%;
+    height: 100%;
+}
+.select-goods-wrap .select-goods-info{
+    padding-left: .3rem;
+}
+.select-goods-wrap .select-goods-info .select-goods-price{
+    font-size: .4rem;
+    color: #f64747;
+}
+.select-goods-wrap .select-goods-info .select-goods-stock,
+.select-goods-wrap .select-goods-info .select-goods-spec{
+    font-size: .26rem;
+    color: #333;
+}
+.select-goods-wrap .close-select-pop{
+    position: absolute;
+    right: .2rem;
+    top: .2rem;
+    font-size: .5rem;
+    border-radius: 50%;
+    border: 1px solid #666;
+    color: #666;
+    width: .5rem;
+    height: .5rem;
+    line-height: .5rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+.select-ser-pop .spec-wrap{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 6.5rem;
+}
+.select-ser-pop .spec-wrap::-webkit-scrollbar{
+    width: 0;
+}
+.select-ser-pop .spec-box{
+    height: 2rem;
+    padding: .2rem;
+    border-bottom: 1px solid #eee;
+}
+.select-ser-pop .select-color-box p,
+.select-ser-pop .select-size-box p,
+.select-ser-pop .select-install-box p{
+    font-size: .3rem;
+    color: #666;
+    margin: .1rem 0 .2rem;
+}
+.select-ser-pop .select-color-box span,
+.select-ser-pop .select-size-box span,
+.select-ser-pop .select-install-box span{
+    display: inline-block;
+    width: 1.4rem;
+    height: .7rem;
+    border-radius: .1rem;
+    background-color: #f5f5f5;
+    text-align: center;
+    line-height: .7rem;
+    font-size: .3rem;
+    color: #666;
+    margin-right: .2rem;
+}
+.select-ser-pop .spec-wrap span.select-on{
+    background-color: #504cfb !important;
+    color: #fff !important;
+}
+.select-shop{
+    height: 1.1rem;
+    border-bottom: 1px solid #eee;
+    line-height: 1.1rem;
+}
+.select-trade{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 1rem;
+    display: flex;
+    box-shadow: 0 2px 4px #000;
+}
+.select-trade a{
+    flex: 1;
+    height: 100%;
+    line-height: 1rem;
+    text-align: center;
+    font-size: .3rem;
+}
+.select-trade .select-add-cart{
+    color: #666;
+}
+.select-trade .select-buy{
+    color: #fff;
+    background-color: #504cfb;
+}
+.select-quantity{
+    height: .7rem;
+    line-height: .7rem;
+    border-bottom: 1px solid #eee;
+    font-size: .24rem;
+    color: #666666;
+}
+.select-calculator_num{
+    float: right;
+    width: 1.45rem;
+    height: .4rem;
+    border: 1px solid #dcdcdc;
+    display: flex;
+    justify-content: space-around;
+    border-radius: .1rem;
+    margin-top: .1rem;
+}
+.select-calculator_num .select-minus,
+.select-calculator_num .select-increase{
+    flex: 1;
+    font-size: .22rem;
+    color: #ccc;
+    text-align: center;
+    line-height: .4rem;
+}
+.select-calculator_num .select-calculator_val{
+    font-size: .24rem;
+    color: #666;
+    width: .65rem;
+    text-align: center;
+    border-left: 1px solid #dcdcdc;
+    border-right: 1px solid #dcdcdc;
+    outline: none;
+}
+/* 选择服务 end */
