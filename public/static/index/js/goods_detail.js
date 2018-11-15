@@ -1,21 +1,3 @@
-var app = new Vue({
-    el: '#app',
-    data: {
-        number: 0 //购买数量
-    },
-    methods: {
-        addNum: function(){
-            this.number++;
-        },
-        reduceNum: function(){
-            if(this.number == 0){
-                this.number == 0;
-            }else{
-                this.number--;
-            }
-        }
-    }
-})
 // 显示 隐藏 评价弹窗 
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
@@ -36,14 +18,14 @@ function hidePop(){
 // })
 
 // 所有评论切换
-$('.comment_classify_box').on('tap', 'li', function(){
+$('.comment_classify_box li').click(function(){
     $(this).addClass('active').siblings().removeClass('active');
 })
 
 // 图片展示 start
 var index, curr_container, curr_img_len;
 $(function(){
-    $('.comment_img_ul').on('tap', '.comment_img_li', function(e){
+    $('.comment_img_ul comment_img_li').click(function(e){
         index = $(this).index();// 当前被点击的索引值
         curr_container = e.liveFired;//被点击li的父级
         curr_img_len = $(curr_container).children().length;//被点击容器中li的length
@@ -71,7 +53,7 @@ function loadImage(obj){
         }
     }
 }
-$('.img_box').on('tap', function(e){
+$('.img_box').click(function(e){
     e.cancelBubble = true;
     if(!$(e.targeet).hasClass('.img_box')){
         $('.show_img').hide();
@@ -101,4 +83,46 @@ $('.img_box').on('tap', function(e){
     }
 })
 // 图片展示 end
+
+// 商品详情， 评价切换
+$('.switch-detail').click(function(){
+    $(this).addClass('switch-on').siblings().removeClass('switch-on');
+    $('.detail-box').show();
+    $('.comment_box').hide();
+})
+
+$('.switch-comment').click(function(){
+    $(this).addClass('switch-on').siblings().removeClass('switch-on');
+    $('.comment_box').show();
+    $('.detail-box').hide();
+})
+
+// 购买数量
+$(function(){
+    // 减
+    var calculator_val = document.getElementsByClassName('calculator_val')[0];
+    $('.minus').click(function(){
+        if(calculator_val.value > 0){
+            calculator_val.value -= 1;
+        }else{
+            calculator_val.value = 0;
+        }
+    })
+    // 加
+    $('.increase').click(function(){
+        var add =  calculator_val.value - 0;
+        add += 1;
+        calculator_val.value = add;
+    })
+})
+
+// 查看评价详情
+$('.comment_text_a').click(function(){
+    $('.wrapper').hide();
+    $('.comment-detail-pop').show();
+})
+$('.detail-back').click(function(){
+    $('.wrapper').show();
+    $('.comment-detail-pop').hide();
+})
 
