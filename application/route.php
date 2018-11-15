@@ -68,6 +68,8 @@ Route::group("",[
 
     // 我的
     "my_index"=>"index/My/my_index",
+    "my_car"=>"index/My/my_car",//我的爱车
+
     "login"=>"index/My/login",//登录
     "setting"=>"index/My/setting",//设置
     
@@ -338,6 +340,8 @@ Route::group("admin",[
     /*设置*/
     "install_index"=>"admin/Install/index",
     "recommend_index"=>"admin/Install/recommend",//推荐奖励积分设置
+    "recommend_update"=>"admin/Install/recommend_update",//推荐奖励积分设置更新
+
 
     "integral_index"=>"admin/Install/integral",//积分折扣设置
     "integral_setting_add"=>"admin/Install/integral_setting_add",//积分折扣设置添加功能

@@ -22,6 +22,11 @@ class My extends Controller
     {
         return view("setting");
     }
+    // 我的爱车
+    public function My_car()
+    {
+        return view("my_car");
+    }
 
     /**
      **************李火生*******************
