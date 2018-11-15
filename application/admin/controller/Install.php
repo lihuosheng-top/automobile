@@ -32,7 +32,6 @@ class Install extends Controller{
     public function recommend(){
 
         $recommend_data =Db::name('recommend_integral')->select();
-        dump($recommend_data);
         return view("recommend_index",['recommend_data'=>$recommend_data]);
     }
 
@@ -85,6 +84,9 @@ class Install extends Controller{
     public function  integral_setting_add(Request $request){
         if($request->isPost()){
             $data =input();
+            foreach ($data as $k=>$v){
+                dump($v);
+            }
             if(!empty($data)){
                 return ajax_success('返回数据',$data);
             }
@@ -102,7 +104,7 @@ class Install extends Controller{
         if($request->isPost()){
             $setting_id =$_POST['id'];
             if(!empty($setting_id)){
-                $data_bool =Db::name('integral_discount_setting')->where('id',$setting_id)->delete();
+                $data_bool =Db::name('integral_discount_settings')->where('setting_id',$setting_id)->delete();
                 if($data_bool){
                     return ajax_success('删除成功',['status'=>1]);
                 }else{
@@ -122,8 +124,11 @@ class Install extends Controller{
      * 上架年限设置
      * 陈绪
      */
-    public function putaway(){
+    public function putaway(Request $request){
 
+        $data = $request->param();
+        $bool = db("year")->insert($data);
+        dump($bool);
         return view("putaway_index");
 
     }

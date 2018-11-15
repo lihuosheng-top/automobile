@@ -21,7 +21,8 @@ class Index extends Controller{
      */
     public function index(Request $request){
         $menu_list = Config::get("menu_list");
-        return view("index",["menu_list"=>Config::get("menu_list")]);
+        $admin = Config::get("admin");
+        return view("index",["menu_list"=>Config::get("menu_list"),"admin"=>$admin]);
     }
 
 
