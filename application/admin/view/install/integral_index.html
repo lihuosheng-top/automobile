@@ -41,20 +41,23 @@ div {
 		 type="text" name="" id="" value="{$vo.integral_full}"  disabled="disabled" />积分抵<input type="text" name="" id="" value="{$vo.deductible_money}"  disabled="disabled"/>元 <i class="layui-icon remove_img " data-id="{$vo.setting_id}">&#x1007;</i></div>
 	{/volist}
 	{else}
-	<div style="" class="text">消费满<input type="text" name="" id="" value="" />元可使用<input type="text" name="" id="" value="" />积分，<input
-			type="text" name="" id="" value="" />积分抵<input type="text" name="" id="" value="" />元<i class="layui-icon remove-img">&#x1007;</i></div>
+	<div style="" class="text">消费满<input type="text" name="consumption_full" id="" value="" />元可使用<input type="text" name="integral_can_be_used" id="" value="" />积分，<input
+			type="text" name="integral_full" id="" value="" />积分抵<input type="text" name="deductible_money" id="" value="" />元<i class="layui-icon remove-img">&#x1007;</i></div>
 	{/if}
 </div>
-<div class="addcontents">
-	
-</div>
-<div class="bts" style="text-align: center;margin-top: 20px;">
-	<button type="button" class="add-bts" style="background: #FFF; width: 100px; color: #0099FF; border:solid 1px #0099FF;border-radius:4px ;">+添加</button>
-</div>
-<div style="margin-top: 30px; text-align: center;">
-	<button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-	<button class="layui-btn" type="button" id="submits" style="margin-left: 190px;">保存</button>
-</div>
+<form action="{:url('admin/Install/integral_setting_add')}" method="post">
+
+			<div class="addcontents">
+				
+			</div>
+			<div class="bts" style="text-align: center;margin-top: 20px;">
+				<button type="button" class="add-bts" style="background: #FFF; width: 100px; color: #0099FF; border:solid 1px #0099FF;border-radius:4px ;">+添加</button>
+			</div>
+			<div style="margin-top: 30px; text-align: center;">
+				<button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
+				<button class="layui-btn" type="submit" id="submits" style="margin-left: 190px;">保存</button>
+			</div>
+</form>
 
 {/block}
 
@@ -76,7 +79,7 @@ div {
 	$(".add-bts").click(function() {
 		var dhtml = "";
 		dhtml +=
-			'<div style="" class="text">消费满<input type="text" name="" id="" value="" />元可使用<input type="text" name="" id="" value="" />积分，<input type="text" name="" id="" value="" />积分抵<input type="text" name="" id="" value="" />元 <i class="layui-icon remove-img">&#x1007;</i></div>';
+			'<div style="" class="text">消费满<input type="text" name="consumption_full" id="" value="" />元可使用<input type="text" name="integral_can_be_used" id="" value="" />积分，<input type="text" name="integral_full" id="" value="" />积分抵<input type="text" name="deductible_money" id="" value="" />元 <i class="layui-icon remove-img">&#x1007;</i></div>';
 
 		$(".addcontents").append(dhtml);
 	});
@@ -111,40 +114,6 @@ div {
 			});
 		});
 	});
-	//	点击确认按钮触发
-	$("#submits").click(function() {
-		var keys = ["input1", "input2", "input3", "input4"];
-		var shuju = {};
-		var shujus = new Array();
 
-		var texts = $(".addcontents").children(".text");
-		var textchirdlen = texts.children("input");
-		// console.log(textchirdlen);
-		for(var i = 0; i < texts.length; i++) {
-			for(var j = 0; j < 4; j++) {
-				var key_name = keys[j];
-				shuju[key_name] = texts.eq(i).children("input")[j].value;
-			}
-			shujus.push(shuju);
-			
-
-		}
-		console.log(shujus);
-		$.ajax({
-			type: "POST",
-			url: "{:url('admin/Install/integral_setting_add')}",
-			data: {
-				"id": shujus
-			},
-			async: false,
-			success: function(data) {
-				console.log(data)
-			},
-			error: function(data) {
-				console.log(失败)
-			}
-		});
-
-	});
 });</script>
 {/block}

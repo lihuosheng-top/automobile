@@ -6,6 +6,7 @@
  * Time: 11:25
  */
 namespace app\admin\controller;
+use app\admin\model\IntegralDiscountSettings;
 use think\Controller;
 use think\Db;
 use think\Request;
@@ -30,7 +31,6 @@ class Install extends Controller{
      ***** GY *****
      */
     public function recommend(){
-
         $recommend_data =Db::name('recommend_integral')->select();
         return view("recommend_index",['recommend_data'=>$recommend_data]);
     }
@@ -84,11 +84,15 @@ class Install extends Controller{
     public function  integral_setting_add(Request $request){
         if($request->isPost()){
             $data =input();
-            foreach ($data as $k=>$v){
-                dump($v);
+            if(empty($data)){
+                $this->error('所添加的值不能为空');
             }
-            if(!empty($data)){
-                return ajax_success('返回数据',$data);
+                $settings_table= new IntegralDiscountSettings();
+                $datas =$settings_table->isUpdate(false)->save($data);
+            if(!empty($datas)){
+                $this->success('添加成功');
+            }else{
+                $this->success('添加失败');
             }
         }
     }

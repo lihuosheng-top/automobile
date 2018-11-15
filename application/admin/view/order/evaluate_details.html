@@ -32,85 +32,89 @@
 	<div class="open">
 
 	</div>
-	<form class="layui-form" action="">
-
+	<form class="layui-form" action="{:url('admin/Order/evaluate_repay')}" method="post">
+		<div class="layui-form-item" style="display: none">
+			<label class="layui-form-label"> 用户ID：</label>
+			<div class="layui-input-block">
+				<input name="evaluate_id" value="{$evaluate_details.id}"></input>
+			</div>
+		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 用户名：</label>
 			<div class="layui-input-block">
-				<p>6843</p>
+				<p>{$evaluate_details.user_name}</p>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 评价商品：</label>
 			<div class="layui-input-block">
-				<p>优质米其林轮胎</p>
+				<p>{$evaluate_details.goods_name}</p>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 评价时间：</label>
 			<div class="layui-input-block">
-				<p>优质米其林轮胎</p>
+				<p>{$evaluate_details.create_time|date="Y-m-d H:i:s",###}</p>
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label"> 评价打分：</label>
+			<label class="layui-form-label"> 评价打分:</label>
 			<div class="layui-input-block">
-				<span style="display: inline-block; width: 40px;">
-					<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-				</span>
-				<span style="display: inline-block; width: 40px;">
-				<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-			</span>
-				<span style="display: inline-block; width: 40px;">
-				<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-			</span>
-				<span style="display: inline-block; width: 40px;">
-				<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-			</span>
-				<span style="display: inline-block; width: 40px;">
-				<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-			</span>
-				<span style="display: inline-block; width: 40px;">
-				<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-			</span>
+				{$evaluate_details.evaluate_stars|show_evaluate_start_show}
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> 服务态度:</label>
+			<div class="layui-input-block">
+				{$evaluate_details.service_attitude_stars|show_evaluate_start_show}
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> 物流服务:</label>
+			<div class="layui-input-block">
+				{$evaluate_details.logistics_stars|show_evaluate_start_show}
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 买家秀图片：</label>
 			<div class="layui-input-block">
+				{if !empty($evaluate_images)}
+				{volist name="evaluate_images" id="vo"}
 				<span style="display: inline-block; width: 40px;">
-							<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
+							<img src="__USERIMG__/{$vo.images}" width="100%" >
 						</span>
-				<span style="display: inline-block; width: 40px;">
-						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-					</span>
-				<span style="display: inline-block; width: 40px;">
-						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-					</span>
-				<span style="display: inline-block; width: 40px;">
-						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-					</span>
-				<span style="display: inline-block; width: 40px;">
-						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-					</span>
-				<span style="display: inline-block; width: 40px;">
-						<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-					</span>
+				{/volist}
+				{/if}
+				<!--<span style="display: inline-block; width: 40px;">-->
+						<!--<img src="__STATIC__/admin/common/img/a11.png" width="100%" >-->
+					<!--</span>-->
+				<!--<span style="display: inline-block; width: 40px;">-->
+						<!--<img src="__STATIC__/admin/common/img/a11.png" width="100%" >-->
+					<!--</span>-->
+				<!--<span style="display: inline-block; width: 40px;">-->
+						<!--<img src="__STATIC__/admin/common/img/a11.png" width="100%" >-->
+					<!--</span>-->
+				<!--<span style="display: inline-block; width: 40px;">-->
+						<!--<img src="__STATIC__/admin/common/img/a11.png" width="100%" >-->
+					<!--</span>-->
+				<!--<span style="display: inline-block; width: 40px;">-->
+						<!--<img src="__STATIC__/admin/common/img/a11.png" width="100%" >-->
+					<!--</span>-->
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 评价内容：</label>
 			<div class="layui-input-block">
 				<textarea rows="10" cols="100">
-					
+					{$evaluate_details.evaluate_content}
 				</textarea>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 商家回复内容：</label>
 			<div class="layui-input-block">
-				<textarea rows="10" cols="100">
-					
+				<textarea rows="10" cols="100" name="business_repay">
+					{$evaluate_details.business_repay}
 				</textarea>
 			</div>
 		</div>
@@ -122,7 +126,6 @@
 
 			</div>
 		</div>
-
 	</form>
 	<h4 style="margin: 50px;border-bottom: 1px #E4E4E4 solid;padding-bottom: 22px;">全部评论 100</h4>
 	<div style="padding-bottom: 10px; border-bottom:solid 1px #E4E4E4;width: 90%;margin: 0 auto; padding-left: 50px;">

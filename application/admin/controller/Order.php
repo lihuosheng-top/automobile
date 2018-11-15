@@ -286,8 +286,6 @@ class Order extends Controller{
             }
         }
     }
-
-
     /**
      **************李火生*******************
      * @return \think\response\View
@@ -303,21 +301,160 @@ class Order extends Controller{
     /**
      **************李火生*******************
      * @return \think\response\View
-     *订单订单评价
+     *配件商订单订单评价
      **************************************
      */
     public function evaluate(){
-        return view('evaluate');
+        $evaluate_data =Db::name('evaluate')->order('create_time','desc')->paginate(3);
+        return view('evaluate',['evaluate_data'=>$evaluate_data]);
     }
 
     /**
      **************李火生*******************
      * @return \think\response\View
-     * 订单评价详情
+     * 配件商订单评价详情
      **************************************
      */
-    public function evaluate_details(){
-        return view('evaluate_details');
+    public function evaluate_details($id){
+        $evaluate_details =Db::name('evaluate')->where('id',$id)->find();//评价信息
+        $evaluate_images =Db::name('evaluate_images')->where('evaluate_order_id',$id)->select();
+        return view('evaluate_details',['evaluate_details'=>$evaluate_details,'evaluate_images'=>$evaluate_images]);
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单评价状态编辑功能
+     **************************************
+     * @param Request $request
+     */
+    public function  evaluate_status(Request $request){
+        if($request->isPost()) {
+            $status = $request->only(["status"])["status"];
+            if($status == 0) {
+                $id = $request->only(["id"])["id"];
+                $bool = Db::name("evaluate")->where("id", $id)->update(["status" => 0]);
+                if ($bool) {
+                    return ajax_success('修改成功',['status'=>1]);
+                } else {
+                  return ajax_error('修改失败',['status'=>0]);
+                }
+            }
+            if($status == 1){
+                $id = $request->only(["id"])["id"];
+                $bool = Db::name("evaluate")->where("id", $id)->update(["status" => 1]);
+                if ($bool) {
+                    return ajax_success('修改成功',['status'=>1]);
+                } else {
+                    return ajax_error('修改失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单评价状态删除功能
+     **************************************
+     * @param $id
+     */
+    public function  evaluate_del($id){
+            $res =Db::name('evaluate')->where('id',$id)->delete();
+            if($res){
+                $this->success('删除成功','admin/order/evaluate');
+            }else{
+                $this->error('删除失败','admin/order/evaluate');
+            }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单评价状态批量删除功能
+     **************************************
+     * @param Request $request
+     */
+    public function  evaluate_dels(Request $request){
+        if($request->isPost()){
+                $id =$_POST['id'];
+                if(is_array($id)){
+                    $where ='id in('.implode(',',$id).')';
+                }else{
+                    $where ='id='.$id;
+                }
+                $list =  Db::name('evaluate')->where($where)->delete();
+                if($list!==false)
+                {
+                    return ajax_success('成功删除!',['status'=>1]);
+                }else{
+                    return ajax_error('删除失败',['status'=>0]);
+                }
+            }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单评价模糊搜索
+     **************************************
+     * @return \think\response\View
+     */
+    public function evaluate_search()
+    {
+        $keywords = input('order_nums');//订单号
+        $keyword = input('user_phone_num'); //会员账号
+        if ((!empty($keywords)) && (!empty($keyword))) {
+            $condition = " `order_information_number` like '%{$keywords}%'";
+            $user_condition = " `user_phone_num` like '%{$keyword}%' or `user_name` like '%{$keyword}%'";
+            $evaluate_data = Db::name('evaluate')
+                ->where($condition)
+                ->where($user_condition)
+                ->order('create_time', 'desc')
+                ->paginate(3, false, [
+                    'query' => request()->param(),
+                ]);
+        } else {
+            $keywords = (!empty($keywords)) ? $keywords : ((!empty($keyword)) ? $keyword : '');
+            if (!empty($keywords)) {
+                $condition = " `user_phone_num` like '%{$keywords}%' or `user_name` like '%{$keywords}%' or  `order_information_number` like '%{$keywords}%' ";
+                $evaluate_data = Db::name('evaluate')
+                    ->order('create_time', 'desc')
+                    ->where($condition)
+                    ->paginate(3, false, [
+                        'query' => request()->param(),
+                    ]);
+            } else {
+                $evaluate_data = Db::name('evaluate')
+                    ->order('create_time', 'desc')
+                    ->paginate(3, false, [
+                        'query' => request()->param(),
+                    ]);
+            }
+        }
+        return view('evaluate', ['evaluate_data' => $evaluate_data]);
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单评价商家回复
+     **************************************
+     */
+    public  function evaluate_repay(Request $request){
+        if($request->isPost()){
+            $evaluate_id =trim(input('evaluate_id'));
+            $business_repay =trim(input('business_repay'));
+            if(!empty($business_repay)){
+                $data =Db::name('evaluate')->update(['business_repay'=>$business_repay,'id'=>$evaluate_id]);
+                if($data){
+                   $this->success('回复成功');
+                }else{
+                    $this->error('回复失败');
+                }
+
+            }
+
+        }
     }
 
     /**

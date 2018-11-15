@@ -36,18 +36,18 @@ class User extends Controller{
                 $id = $request->only(["id"])["id"];
                 $bool = Db::name("user")->where("id", $id)->update(["status" => 0]);
                 if ($bool) {
-                    $this->redirect("admin/User/index");
+                    return ajax_success('修改成功',['status'=>1]);
                 } else {
-                    $this->error("修改失败", url("admin/User/index"));
+                    return ajax_error('修改失败',['status'=>0]);
                 }
             }
             if($status == 1){
                 $id = $request->only(["id"])["id"];
                 $bool = Db::name("user")->where("id", $id)->update(["status" => 1]);
                 if ($bool) {
-                    $this->redirect("admin/User/index");
+                    return ajax_success('修改成功',['status'=>1]);
                 } else {
-                    $this->error("修改失败", url("admin/User/index"));
+                    return ajax_error('修改失败',['status'=>0]);
                 }
             }
         }
