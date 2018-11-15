@@ -68,6 +68,8 @@ Route::group("",[
 
     // 我的
     "my_index"=>"index/My/my_index",
+    "my_car"=>"index/My/my_car",//我的爱车
+
     "login"=>"index/My/login",//登录
     "setting"=>"index/My/setting",//设置
     

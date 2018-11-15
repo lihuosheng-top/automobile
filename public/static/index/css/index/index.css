@@ -399,6 +399,7 @@
     font-size: .36rem;
     color: #333;
     background-color: #fff;
+    font-weight: normal;
 }
 .car-search{
     position: relative;
@@ -442,20 +443,23 @@
 .hot-brand .hot-brand-ul{
     display: flex;
     flex-wrap: wrap;
-    padding-left: .3rem;
+    justify-content: space-around;
+    padding-right: .4rem;
+    box-sizing: border-box;
 }
 .hot-brand .hot-brand-ul .hot-brand-li{
-    border: 1px solid #ccc;
-    float: left;
-    margin: 0 .15rem .2rem 0;
-    width: 1.5rem;
-    height: .6rem;
-    line-height: normal;
-    text-align: center;
+    width: 1.2rem;
+    height: 1rem;
     font-size: .24rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin-bottom: .2rem;
+}
+.hot-brand-li img{
+    width: .6rem;
+    height: .6rem;
 }
 .sort_box{
     width: 100%;
@@ -522,8 +526,81 @@
 .cont::-webkit-scrollbar{
     width: 0;
 }
-[v-cloak]{
-    display:none;
+.sort_letter{
+    height: .5rem;
+    line-height: .5rem;
+    padding-left: .3rem;
+    background-color: #eee;
+    font-size: .26rem;
 }
-
 /* 添加车 end */
+
+.car-series,
+.motorcycle-type,
+.car-year{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #f4f5f6;
+    z-index: 4;
+}
+.series-header,
+.type-header,
+.year-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: .88rem;
+    background-color: #504cfb;
+    z-index: 5;
+}
+.car-series .title-txt,
+.motorcycle-type .title-txt,
+.car-year .title-txt{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    text-align: center;
+    font-size: .36rem;
+    color: #fff;
+    font-weight: normal;
+}
+.car-series .series-back,
+.motorcycle-type .type-back,
+.car-year .year-back{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    width: .2rem;
+    height: .35rem;
+    margin-top: -.18rem;
+    background-position: -.55rem -1.15rem;
+}
+.car-series .car-brand{
+    margin-top: .88rem;
+    height: .78rem;
+    line-height: .78rem;
+    padding-left: .3rem;
+    font-size: .24rem;
+    color: #999;
+}
+.car-series .series-txt,
+.motorcycle-type .type-txt,
+.car-year .year-txt{
+    font-size: .28rem;
+    height: .98rem;
+    line-height: .98rem;
+    margin-bottom: 2px;
+    color: #333333;
+    padding-left: .3rem;
+    background-color: #fff;
+}
+.motorcycle-type .type-list,
+.car-year .year-list{
+    margin-top: .88rem;
+}
