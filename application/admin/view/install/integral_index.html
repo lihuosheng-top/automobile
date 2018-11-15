@@ -96,12 +96,13 @@ div {
 			remove.remove();
 			$.ajax({
 				type: "POST",
-				url: "{:url('aaa')}",
+				url: "{:url('admin/Install/integral_setting_del')}",
 				data: {
 					"id": id
 				},
 				async: false,
 				success: function(data) {
+				    //删除公共之后需要隐藏
 					console.log(data)
 				},
 				error: function(data) {
@@ -124,16 +125,14 @@ div {
 				var key_name = keys[j];
 				shuju[key_name] = texts.eq(i).children("input")[j].value;
 			}
-
 			shujus.push(shuju);
 			
 
 		}
 		console.log(shujus);
-
 		$.ajax({
 			type: "POST",
-			url: "{:url('aaa')}",
+			url: "{:url('admin/Install/integral_setting_add')}",
 			data: {
 				"id": shujus
 			},
