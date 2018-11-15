@@ -246,16 +246,22 @@ Route::group("admin",[
     "order_processing"=>"admin/Order/order_processing", //配件商订单列表弹窗接口
     "order_search"=>"admin/Order/search", //配件商订单列表模糊搜索
     "order_dels"=>"admin/Order/dels", //配件商订单列表
-    "order_edit"=>"admin/Order/edit", //*********配件商订单设置
+    "order_edit"=>"admin/Order/edit", //*********配件商订单设置（未做）
 
     "order_evaluate"=>"admin/Order/evaluate",   //配件商订单评价
     "order_evaluate_details"=>"admin/Order/evaluate_details", //******配件商订单评价详情
+    "order_evaluate_status"=>"admin/Order/evaluate_status", //******配件商订单评价状态值修改
+    "order_evaluate_del"=>"admin/Order/evaluate_del", //******配件商订单评价删除
+    "order_evaluate_dels"=>"admin/Order/evaluate_dels", //******配件商订单评价批量删除
+    "order_evaluate_search"=>"admin/Order/evaluate_search", //******配件商订单评价列表模糊查询
+    "order_evaluate_repay"=>"admin/Order/evaluate_repay", //******配件商订单评价回复操作（未做）
 
     "order_after_sale"=>"admin/Order/after_sale", //配件商订单维修售后
 
     "order_invoice"=>"admin/Order/invoice", //配件商发票列表
     "order_invoice_edit"=>"admin/Order/invoice_edit", //****配件商发票信息
     /*订单管理：TODO:配件商订单结束*/
+
 
     /*订单管理：TODO:平台商订单开始*/
     "platform_order_service_index"=>"admin/Order/platform_order_service_index", //平台商服务商订单列表
@@ -342,7 +348,6 @@ Route::group("admin",[
     "recommend_index"=>"admin/Install/recommend",//推荐奖励积分设置
     "recommend_update"=>"admin/Install/recommend_update",//推荐奖励积分设置更新
 
-
     "integral_index"=>"admin/Install/integral",//积分折扣设置
     "integral_setting_add"=>"admin/Install/integral_setting_add",//积分折扣设置添加功能
     "integral_setting_del"=>"admin/Install/integral_setting_del",//积分折扣设置删除功能
@@ -358,7 +363,6 @@ Route::group("admin",[
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",
-
 
 
 

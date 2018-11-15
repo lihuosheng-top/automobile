@@ -58,31 +58,29 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="aaa">
+			<form class="layui-form" action="{:url('admin/Order/evaluate_search')}">
 				<div class="layui-form-item">
 					<div class="layui-inline">
 						<label class="layui-form-label">订单号</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-
+							<input type="text" name="order_nums" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 						</div>
 					</div>
-
 					<div class="layui-inline">
-						<label class="layui-form-label">会员账号</label>
+						<label class="layui-form-label">会员名</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+							<input type="text" name="user_phone_num" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
-					<div class="layui-inline" style="width: 36%;">
-						<label class="layui-form-label" style="width: 17% !important; ">评论时间</label>
-						<div class="layui-input-inline" style="width: 70% !important; ">
-							<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""
-								 style="width: 200px; font-size: 13px;">
-							</span>
-						</div>
-					</div>
+					<!--<div class="layui-inline" style="width: 36%;">-->
+						<!--<label class="layui-form-label" style="width: 17% !important; ">评论时间</label>-->
+						<!--<div class="layui-input-inline" style="width: 70% !important; ">-->
+							<!--<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""-->
+								 <!--style="width: 200px; font-size: 13px;">-->
+							<!--</span>-->
+						<!--</div>-->
+					<!--</div>-->
 					<div class="layui-inline">
 						<button class="layui-btn search_btn" type="submit"> 查询</button>
 					</div>
@@ -116,21 +114,34 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
+				{if !empty($evaluate_data)}
+				{volist name="evaluate_data" id="vo"}
 					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>2</td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>是</td>
-						<td><input type="checkbox" class="Status" name="show" value="" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="" />
+						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$vo.id}"></td>
+						<td>{$vo.order_information_number}</td>
+						<td>{$vo.user_name}</td>
+						<td>{$vo.evaluate_stars}</td>
+						<td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>
+						<td>{$vo.is_repay|show_evaluate_is_repay}</td>
+						<!--<td><input type="checkbox" class="Status" name="show" value="" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$vo.status}" />-->
+							{if $vo.status==0}
+						<td><input type="checkbox" class="Status" name="show" value="{$vo.status}" lay-skin="switch" lay-text="是|否"
+								   lay-filter="isShow" data-id="{$vo.id}"></td>
+							{/if}
+							{if $vo.status==1}
+						<td><input type="checkbox" class="Status" name="show" value="{$vo.status}" checked="" lay-skin="switch"
+								   lay-text="是|否" lay-filter="isShow" data-id="{$vo.id}"></td>
+							{/if}
+
 						</td>
 						<td>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
-							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/order/evaluate_details',['id'=>$vo.id])}"><i class="iconfont icon-edit"></i> 编辑</a>
+							<a href="{:url('admin/order/evaluate_del',['id'=>$vo.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 
 						</td>
 					</tr>
+				{/volist}
+				{/if}
 				</tbody>
 			</table>
 			<div id="page">
@@ -188,7 +199,7 @@
 						}
 						$.ajax({
 							type: "POST",
-							url: "{:url('aaaa')}",
+							url: "{:url('admin/Order/evaluate_dels')}",
 							data: {
 								"id": data_id,
 							},
@@ -255,7 +266,7 @@
 				console.log(status);
 				$.ajax({
 					type: "POST",
-					url: "{:url('admin/admin/status')}",
+					url: "{:url('admin/order/evaluate_status')}",
 					data: {
 						"id": id,
 						"status": status

@@ -552,7 +552,13 @@ function show_integral_operation($data){
 }
 
 
-
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:配件商订单后台显示订单状态
+ **************************************
+ * @param $status
+ */
 function show_order_status($status){
     if($status==0){
         echo '<button type="button" class="state  close-btu" >已关闭</button>';
@@ -579,6 +585,24 @@ function show_order_status($status){
     }
 }
 
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:配件商订单判断是否回复的状态
+ **************************************
+ * @param $is_repay
+ * @return string
+ */
+function show_evaluate_is_repay($is_repay){
+        switch ($is_repay){
+            case '0':
+                return "否";
+                break;
+            case '1':
+                return "是";
+                break;
+        }
+}
 
 /**
  * 点击

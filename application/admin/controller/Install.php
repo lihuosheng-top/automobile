@@ -30,9 +30,7 @@ class Install extends Controller{
      ***** GY *****
      */
     public function recommend(){
-
         $recommend_data =Db::name('recommend_integral')->select();
-        dump($recommend_data);
         return view("recommend_index",['recommend_data'=>$recommend_data]);
     }
 
