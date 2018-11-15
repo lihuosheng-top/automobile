@@ -41,11 +41,11 @@ div {
 		 type="text" name="" id="" value="{$vo.integral_full}"  disabled="disabled" />积分抵<input type="text" name="" id="" value="{$vo.deductible_money}"  disabled="disabled"/>元 <i class="layui-icon remove_img " data-id="{$vo.setting_id}">&#x1007;</i></div>
 	{/volist}
 	{else}
-	<div style="" class="text">消费满<input type="text" name="" id="" value="" />元可使用<input type="text" name="" id="" value="" />积分，<input
-			type="text" name="" id="" value="" />积分抵<input type="text" name="" id="" value="" />元<i class="layui-icon remove-img">&#x1007;</i></div>
+	<div style="" class="text">消费满<input type="text" name="consumption_full" id="" value="" />元可使用<input type="text" name="integral_can_be_used" id="" value="" />积分，<input
+			type="text" name="integral_full" id="" value="" />积分抵<input type="text" name="deductible_money" id="" value="" />元<i class="layui-icon remove-img">&#x1007;</i></div>
 	{/if}
 </div>
-<form action="aaa" method="post">
+<form action="{:url('admin/Install/integral_setting_add')}" method="post">
 
 			<div class="addcontents">
 				
@@ -79,7 +79,7 @@ div {
 	$(".add-bts").click(function() {
 		var dhtml = "";
 		dhtml +=
-			'<div style="" class="text">消费满<input type="text" name="aa" id="" value="" />元可使用<input type="text" name="bb" id="" value="" />积分，<input type="text" name="v" id="" value="" />积分抵<input type="text" name="d" id="" value="" />元 <i class="layui-icon remove-img">&#x1007;</i></div>';
+			'<div style="" class="text">消费满<input type="text" name="consumption_full" id="" value="" />元可使用<input type="text" name="integral_can_be_used" id="" value="" />积分，<input type="text" name="integral_full" id="" value="" />积分抵<input type="text" name="deductible_money" id="" value="" />元 <i class="layui-icon remove-img">&#x1007;</i></div>';
 
 		$(".addcontents").append(dhtml);
 	});

@@ -254,7 +254,7 @@ Route::group("admin",[
     "order_evaluate_del"=>"admin/Order/evaluate_del", //******配件商订单评价删除
     "order_evaluate_dels"=>"admin/Order/evaluate_dels", //******配件商订单评价批量删除
     "order_evaluate_search"=>"admin/Order/evaluate_search", //******配件商订单评价列表模糊查询
-    "order_evaluate_repay"=>"admin/Order/evaluate_repay", //******配件商订单评价回复操作（未做）
+    "order_evaluate_repay"=>"admin/Order/evaluate_repay", //******配件商订单评价回复操作
 
     "order_after_sale"=>"admin/Order/after_sale", //配件商订单维修售后
 
