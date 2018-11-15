@@ -126,12 +126,20 @@
     margin-bottom: .3rem;
     /* display: none; */
 }
-.classify_cont .first_li>p{
-    width: 100%;
+.classify_cont .first_li .subtitle{
     color: #333;
     font-weight: 600;
     font-size: .3rem;
     margin-bottom: .2rem;
+}
+.adop-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.adop-box span{
+    font-size: .24rem;
+    color: #999;
 }
 .classify_cont .first_li>ul{
     width: 100%;

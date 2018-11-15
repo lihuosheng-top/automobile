@@ -115,19 +115,24 @@ div {
 	$("#submits").click(function() {
 		var keys = ["input1", "input2", "input3", "input4"];
 		var shuju = {};
-		var shujus = new Array();
+		var shujus = [];
 
 		var texts = $(".addcontents").children(".text");
 		var textchirdlen = texts.children("input");
-		// console.log(textchirdlen);
+		console.log(texts.length);
 		for(var i = 0; i < texts.length; i++) {
 			for(var j = 0; j < 4; j++) {
 				var key_name = keys[j];
-				shuju[key_name] = texts.eq(i).children("input")[j].value;
+				shuju[key_name].push(texts.eq(i).children("input")[j].value);
 			}
 			shujus.push(shuju);
+
+			// shujus.push(shuju);
+			console.log(shuju);
+			
+
 		}
-		console.log(shujus);
+		// console.log(shujus);
 		$.ajax({
 			type: "POST",
 			url: "{:url('admin/Install/integral_setting_add')}",
