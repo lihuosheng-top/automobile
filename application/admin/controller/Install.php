@@ -7,7 +7,6 @@
  */
 namespace app\admin\controller;
 use app\admin\model\IntegralDiscountSettings;
-use think\console\command\make\Model;
 use think\Controller;
 use think\Db;
 use think\Request;
@@ -85,6 +84,9 @@ class Install extends Controller{
     public function  integral_setting_add(Request $request){
         if($request->isPost()){
             $data =input();
+            if(empty($data)){
+                $this->error('所添加的值不能为空');
+            }
                 $settings_table= new IntegralDiscountSettings();
                 $datas =$settings_table->isUpdate(false)->save($data);
             if(!empty($datas)){
