@@ -1,33 +1,33 @@
 {include file="template/_meta" /}
 
 {block name="css"}
-<style type="text/css">
-	body {
-		background: #fff;
-	}
+<style type="text/css">body {
+	background: #fff;
+}
 
-	input {
-		width: 40px;
-		margin-left: 10px;
-		margin-right: 10px;
-	}
+input {
+	width: 40px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
 
-	div {
-		text-align: center;
-		margin-top: 10px;
-	}
-	.text{
-	    top: 2px;
-    width: 487px;
-    margin: 20px auto;
-    position: relative;
-	}
-	.layui-icon{
-	   position: absolute;
-    right: 0;
-    top: -9px;
-	}
-</style>
+div {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.text {
+	top: 2px;
+	width: 487px;
+	margin: 20px auto;
+	position: relative;
+}
+
+.layui-icon {
+	position: absolute;
+	right: 0;
+	top: -9px;
+}</style>
 
 {/block}
 
@@ -38,11 +38,11 @@
 	{if !empty($integral_data)}
 	{volist name="integral_data" id="vo"}
 	<div style="" class="text">消费满<input type="text" name="" id="" value="{$vo.consumption_full}" />元可使用<input type="text" name="" id="" value="{$vo.integral_can_be_used}" />积分，<input
-		 type="text" name="" id="" value="{$vo.integral_full}" />积分抵<input type="text" name="" id="" value="{$vo.deductible_money}" />元 <input type="hidden" name="" id="" value=""  data-id="{$vo.setting_id}"/></div>
+		 type="text" name="" id="" value="{$vo.integral_full}" />积分抵<input type="text" name="" id="" value="{$vo.deductible_money}" />元 <i class="layui-icon remove_img " data-id="{$vo.setting_id}">&#x1007;</i></div>
 	{/volist}
 	{else}
 	<div style="" class="text">消费满<input type="text" name="" id="" value="" />元可使用<input type="text" name="" id="" value="" />积分，<input
-			type="text" name="" id="" value="" />积分抵<input type="text" name="" id="" value="" />元</div>
+			type="text" name="" id="" value="" />积分抵<input type="text" name="" id="" value="" />元<i class="layui-icon remove-img">&#x1007;</i></div>
 	{/if}
 </div>
 <div class="addcontents">
@@ -66,7 +66,13 @@
 
 <!--请在下方写此页面业务相关的脚本-->
 {block name="bottom"}
-<script type="text/javascript">
+<script type="text/javascript">layui.config({
+	base: "js/"
+}).use(['form', 'layer', 'jquery', 'laypage'], function() {
+	var form = layui.form(),
+		layer = parent.layer === undefined ? layui.layer : parent.layer,
+		laypage = layui.laypage,
+		$ = layui.jquery;
 	$(".add-bts").click(function() {
 		var dhtml = "";
 		dhtml +=
@@ -74,26 +80,70 @@
 
 		$(".addcontents").append(dhtml);
 	});
-	$(".addcontents").on('click','.layui-icon',function(){
+	//	点击动态添加出来的删除图片触发
+	$(".addcontents").on('click', '.remove-img', function() {
 		// console.log(this)
-		var remove=$(this).parent();
+		var remove = $(this).parent();
 		remove.remove();
 	});
-	$("#submits").click(function(){
-		var shuju={};
-		var texts=$(".addcontents").children(".text");
-		var textchirdlen=texts.children("input");
-		// console.log(textchirdlen);
-		for(var i=0;i<texts.length;i++){
-			for(var j=0;j<4;j++){
-				// shuju.push(texts.eq(i).children("input")[j].value);
-			'input'+j+':texts.eq(i).children("input")[j].value,
-			
-			}
-			
-			
-		}
-		console.log(shuju);
+//	点击渲染出来的删除图片触发
+	$(".remove_img ").click(function() {
+		var id = $(this).data("id");
+		var remove = $(this).parent();
+		layer.confirm('你确认要删除吗？', {
+			btn: ['确认', '取消'] //按钮
+		}, function() {
+			remove.remove();
+			$.ajax({
+				type: "POST",
+				url: "{:url('aaa')}",
+				data: {
+					"id": id
+				},
+				async: false,
+				success: function(data) {
+					console.log(data)
+				},
+				error: function(data) {
+					console.log("失败")
+				}
+			});
+		});
 	});
-</script>
+	//	点击确认按钮触发
+	$("#submits").click(function() {
+		var keys = ["input1", "input2", "input3", "input4"];
+		var shuju = {};
+		var shujus = new Array();
+
+		var texts = $(".addcontents").children(".text");
+		var textchirdlen = texts.children("input");
+		// console.log(textchirdlen);
+		for(var i = 0; i < texts.length; i++) {
+			for(var j = 0; j < 4; j++) {
+				var key_name = keys[j];
+				shuju[key_name] = texts.eq(i).children("input")[j].value;
+			}
+
+			shujus.push(shuju);
+
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "{:url('aaa')}",
+			data: {
+				"id": shujus
+			},
+			async: false,
+			success: function(data) {
+				console.log(data)
+			},
+			error: function(data) {
+				console.log(失败)
+			}
+		});
+
+	});
+});</script>
 {/block}
