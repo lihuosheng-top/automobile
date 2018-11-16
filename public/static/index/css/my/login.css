@@ -90,7 +90,7 @@
     line-height: .8rem;
 }
 .third-part{
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);

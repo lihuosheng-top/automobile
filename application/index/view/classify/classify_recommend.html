@@ -11,153 +11,177 @@
     <title>特惠配件</title>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="header">
-            <a href="classify_index" class="spr back"></a>
-            <p class="header_title">特惠配件</p>
+    <div v-cloak id="app" :class="{isHidden: isHidden}">
+        <div class="wrapper">
+            <div class="header">
+                <a href="classify_index" class="spr back"></a>
+                <p class="header_title">特惠配件</p>
+            </div>
+            <div class="advertise">
+                <img src="__STATIC__/index/image/08.png">
+            </div>
+            <div class="tab">
+                <ul>
+                    <li>
+                        <a href="javascript:;">综合排名</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">适配轮胎</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" @click="showFilter" class="filter_a">筛选</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="container">
+                <ul class="clearfix">
+                    <li>
+                        <div class="img_div">
+                            <img src="__STATIC__/index/image/02.png">
+                        </div>
+                        <div class="goods_name">
+                            <p>德 国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
+                        </div>
+                        <div class="goods_price">
+                            <span class="price">￥875</span>
+                            <span class="pay_num">1500人购买</span>
+                            <i class="spr icon_cart"></i>
+                        </div>
+                    </li>
+                    <li class="mgr0">
+                        <div class="img_div">
+                            <img src="__STATIC__/index/image/02.png">
+                        </div>
+                        <div class="goods_name">
+                            <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
+                        </div>
+                        <div class="goods_price">
+                            <span class="price">￥875</span>
+                            <span class="pay_num">1500人购买</span>
+                            <i class="spr icon_cart"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="advertise">
-            <img src="__STATIC__/index/image/08.png">
-        </div>
-        <div class="tab">
-            <ul>
-                <li>
-                    <a href="javascript:;">综合排名</a>
-                </li>
-                <li>
-                    <a href="javascript:;">适配轮胎</a>
-                </li>
-                <li>
-                    <a href="javascript:;" class="filter_a">筛选</a>
-                </li>
-            </ul>
-        </div>
-        <div class="container">
-            <ul class="clearfix">
-                <li>
-                    <div class="img_div">
-                        <img src="__STATIC__/index/image/02.png">
+        <!-- 遮罩 -->
+        <div class="mask" v-show="filterPop" @click="hideFilter"></div>
+        <!-- 筛选弹窗 -->
+        <div class="filter_pop" v-show="filterPop">
+            <div class="top_ct">
+                <div class="commercial-spec">
+                    <p class="pop_title">价格区间(元)</p>
+                    <span class="special-purpose">专用</span>
+                    <span class="currency">通用</span>
+                </div>
+                <div class="price_section">
+                    <p class="pop_title">价格区间(元)</p>
+                    <div class="section_input clearfix">
+                        <input type="text" placeholder="最低" class="minimum_price">—
+                        <input type="text" placeholder="最高" class="highest_price">
                     </div>
-                    <div class="goods_name">
-                        <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
-                    </div>
-                    <div class="goods_price">
-                        <span class="price">￥875</span>
-                        <span class="pay_num">1500人购买</span>
-                        <i class="spr icon_cart"></i>
-                    </div>
-                </li>
-                <li class="mgr0">
-                    <div class="img_div">
-                        <img src="__STATIC__/index/image/02.png">
-                    </div>
-                    <div class="goods_name">
-                        <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
-                    </div>
-                    <div class="goods_price">
-                        <span class="price">￥875</span>
-                        <span class="pay_num">1500人购买</span>
-                        <i class="spr icon_cart"></i>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- 遮罩 -->
-    <div class="mask"></div>
-    <!-- 筛选弹窗 -->
-    <div class="filter_pop">
-        <div class="top_ct">
-            <div class="price_section">
-                <p class="pop_title">价格区间(元)</p>
-                <div class="section_input clearfix">
-                    <input type="text" placeholder="最低" class="minimum_price">—
-                    <input type="text" placeholder="最高" class="highest_price">
+                </div>
+                <div class="brand">
+                    <p class="pop_title">品牌<i class="spr shrink"></i></p>
+                    <ul class="brand_ul">
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                        <li>
+                            <img src="__STATIC__/index/image/04.jpg">
+                            <p class="brand_name">米其林轮胎</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="size">
+                    <p class="pop_title">尺寸</p>
+                    <ul class="size_ul">
+                        <li>13寸</li>
+                        <li>14寸</li>
+                        <li>15寸</li>
+                        <li>16寸</li>
+                        <li>17寸</li>
+                        <li>18寸</li>
+                        <li>19寸</li>
+                    </ul>
                 </div>
             </div>
-            <div class="brand">
-                <p class="pop_title">品牌<i class="spr shrink"></i></p>
-                <ul class="brand_ul">
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                    <li>
-                        <img src="__STATIC__/index/image/04.jpg">
-                        <p class="brand_name">米其林轮胎</p>
-                    </li>
-                </ul>
+            <div class="bottom_btn clearfix">
+                <a href="javascript:;" class="reset">重置</a>
+                <a href="javascript:;" class="confirm">确定</a>
             </div>
-            <div class="size">
-                <p class="pop_title">尺寸</p>
-                <ul class="size_ul">
-                    <li>13寸</li>
-                    <li>14寸</li>
-                    <li>15寸</li>
-                    <li>16寸</li>
-                    <li>17寸</li>
-                    <li>18寸</li>
-                    <li>19寸</li>
-                </ul>
-            </div>
-        </div>
-        <div class="bottom_btn clearfix">
-            <a href="javascript:;" class="reset">重置</a>
-            <a href="javascript:;" class="confirm">确定</a>
         </div>
     </div>
-    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/vue.js"></script>
     <script>
-        $('.mask').click(function(){
-            $(this).hide();
-            $('.filter_pop').hide();
-            $('html').css('overflow-y', 'auto');
+        var app = new Vue({
+            el: '#app',
+            data: {
+                filterPop: false,
+                isHidden: false,
+            },
+            methods: {
+                showFilter: function(){
+                    this.filterPop = true;
+                    this.isHidden = true;
+                },
+                hideFilter: function(){
+                    this.filterPop = false;
+                    this.isHidden = false;
+                }
+            }
         })
-        $('.filter_a').click(function(){
-            $('.mask').show();
-            $('.filter_pop').show();
-            $('html').css('overflow-y','hidden');
-        })
+        // $('.mask').click(function(){
+        //     $(this).hide();
+        //     $('.filter_pop').hide();
+        //     $('html').css('overflow-y', 'auto');
+        // })
+        // $('.filter_a').click(function(){
+        //     $('.mask').show();
+        //     $('.filter_pop').show();
+        //     $('html').css('overflow-y','hidden');
+        // })
     </script>
 </body>
 </html>
