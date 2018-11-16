@@ -55,6 +55,7 @@ class Goods extends Controller{
         }else{
             $goods = db("goods")->paginate(10);
             $year = db("year")->select();
+            $user_id = Session::get("user_id");
             return view("goods_index",["goods"=>$goods,"year"=>$year]);
         }
 
