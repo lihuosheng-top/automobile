@@ -98,7 +98,13 @@
 						<th>商品图片</th>
 						<th>商品名称</th>
 						<th>商品价格</th>
-						<th>调整后价格</th>
+						{volist name="role_name" id="v"}
+						{if $v.role_id == 2}
+						<th>
+							调整后价格
+						</th>
+						{/if}
+						{/volist}
 						<th>是否上架</th>
 						<th>是否付费</th>
 						<th>付费金额</th>
@@ -117,7 +123,13 @@
 						<td style="width: 100px; height: 100px;"><img src="__UPLOADS__/{$value.goods_show_images}" /></td>
 						<td>{$value.goods_name}</td>
 						<td>￥{$value.goods_new_money}</td>
-						<td style="color: red;">￥1000</td>
+						{volist name="role_name" id="v"}
+						{if $v.role_id == 2}
+						<td style="color: red;">
+							￥1100
+						</td>
+						{/if}
+						{/volist}
 						<td>
 							{if $value.goods_status == 0}
 							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}"/>
@@ -131,7 +143,7 @@
 						<td>
 							{volist name="year" id="val"}
 							{if $value.goods_year_id == $val.id}
-							{$val.year}元
+							{$val.money}元
 							{/if}
 							{/volist}
 						</td>
@@ -140,7 +152,7 @@
 						<td>
 							{volist name="year" id="val"}
 							{if $value.goods_year_id == $val.id}
-							{$val.money}元
+							{$val.year}年
 							{/if}
 							{/volist}
 						</td>
