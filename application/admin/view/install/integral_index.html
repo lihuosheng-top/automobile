@@ -40,15 +40,11 @@ div {
 	<div style="" class="text">消费满<input type="text" name="" id="" value="{$vo.consumption_full}"  disabled="disabled"/>元可使用<input type="text" name="" id="" value="{$vo.integral_can_be_used}"  disabled="disabled" />积分，<input
 		 type="text" name="" id="" value="{$vo.integral_full}"  disabled="disabled" />积分抵<input type="text" name="" id="" value="{$vo.deductible_money}"  disabled="disabled"/>元 <i class="layui-icon remove_img " data-id="{$vo.setting_id}">&#x1007;</i></div>
 	{/volist}
-	{else}
-	<div style="" class="text">消费满<input type="text" name="consumption_full" id="" value="" />元可使用<input type="text" name="integral_can_be_used" id="" value="" />积分，<input
-			type="text" name="integral_full" id="" value="" />积分抵<input type="text" name="deductible_money" id="" value="" />元<i class="layui-icon remove-img">&#x1007;</i></div>
-	{/if}
+{/if}
 </div>
 <form action="{:url('admin/Install/integral_setting_add')}" method="post">
 
-			<div class="addcontents">
-				
+			<div class="addcontents">	
 			</div>
 			<div class="bts" style="text-align: center;margin-top: 20px;">
 				<button type="button" class="add-bts" style="background: #FFF; width: 100px; color: #0099FF; border:solid 1px #0099FF;border-radius:4px ;">+添加</button>
@@ -69,7 +65,8 @@ div {
 
 <!--请在下方写此页面业务相关的脚本-->
 {block name="bottom"}
-<script type="text/javascript">layui.config({
+<script type="text/javascript">
+	layui.config({
 	base: "js/"
 }).use(['form', 'layer', 'jquery', 'laypage'], function() {
 	var form = layui.form(),
@@ -95,7 +92,8 @@ div {
 		var remove = $(this).parent();
 		layer.confirm('你确认要删除吗？', {
 			btn: ['确认', '取消'] //按钮
-		}, function() {
+		}, function(index) {
+			layer.close(index);
 			remove.remove();
 			$.ajax({
 				type: "POST",
