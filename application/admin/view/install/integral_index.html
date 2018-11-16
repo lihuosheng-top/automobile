@@ -51,7 +51,7 @@ div {
 			</div>
 			<div style="margin-top: 30px; text-align: center;">
 				<button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-				<button class="layui-btn" type="submit" id="submits" style="margin-left: 190px;">保存</button>
+				<button class="layui-btn" type="button" id="submits" style="margin-left: 190px;">保存</button>
 			</div>
 </form>
 
@@ -86,6 +86,10 @@ div {
 		var remove = $(this).parent();
 		remove.remove();
 	});
+	$("#submits").click(function(){
+	   console.log($(".addcontents input"));
+	
+	})
 //	点击渲染出来的删除图片触发
 	$(".remove_img").click(function() {
 		var id = $(this).data("id");
@@ -94,7 +98,7 @@ div {
 			btn: ['确认', '取消'] //按钮
 		}, function(index) {
 			layer.close(index);
-			$(".addcontents inp");
+			
 			remove.remove();
 			$.ajax({
 				type: "POST",
