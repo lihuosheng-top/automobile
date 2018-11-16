@@ -353,7 +353,11 @@ Route::group("admin",[
     "integral_setting_del"=>"admin/Install/integral_setting_del",//积分折扣设置删除功能
 
     "putaway_index"=>"admin/Install/putaway",
-    "recharge_index"=>"admin/Install/recharge",
+
+    "recharge_index"=>"admin/Install/recharge",//设置之充值设置
+    "recharge_setting_add"=>"admin/Install/recharge_setting_add",//设置之充值设置添加数据
+    "recharge_setting_del"=>"admin/Install/recharge_setting_del",//设置之充值设置删除数据
+
     "service_index"=>"admin/Install/service_index",
     "service_add"=>"admin/Install/service_add",
     "service_save"=>"admin/Install/service_save",
