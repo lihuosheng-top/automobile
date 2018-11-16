@@ -697,7 +697,20 @@
 				},
 				success: function(data) {
 					$(".tanchuang").removeClass("noshow");
-					console.log(data);
+					data=eval("(" + data + ")");
+					console.log(data.data);
+					new Vue({
+						el: '.list-a',
+						data: {
+							status: data.data.cancel_order_description,
+							payment: data.data.pay_type_content,
+							amount: data.data.goods_money,
+							points_Deduction: '3333',
+							real_Pay: '4444',
+			
+						}
+					})
+            
 				},
 				error: function(data) {
 					console.log(data);
@@ -722,17 +735,7 @@
 		});
 	</script>
 	<script type="text/javascript">
-		new Vue({
-			el: '.list-a',
-			data: {
-				status: '取消订单',
-				payment: '1111',
-				amount: '2222',
-				points_Deduction: '3333',
-				real_Pay: '4444',
-
-			}
-		})
+		
 	</script>
 	{/block}
 
