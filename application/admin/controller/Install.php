@@ -7,6 +7,7 @@
  */
 namespace app\admin\controller;
 use app\admin\model\IntegralDiscountSettings;
+use app\admin\model\RechargeSetting;
 use think\Controller;
 use think\Db;
 use think\Request;
@@ -18,8 +19,11 @@ class Install extends Controller{
      * 陈绪
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
      */
-    public function index(){
+    public function index(Request $request){
 
+        if($request->isPost()){
+
+        }
         return view("install_index");
 
     }
@@ -122,31 +126,84 @@ class Install extends Controller{
 
 
 
-
-
     /**
      * 上架年限设置
      * 陈绪
      */
     public function putaway(Request $request){
 
-        $data = $request->param();
-        $bool = db("year")->insert($data);
-        dump($bool);
+        if($request->isPost()) {
+            $year = $request->only(["year"])["year"];
+            $money = $request->only(["money"])["money"];
+            foreach ($year as $key => $value) {
+                $bool = db("year")->insert(["year" => $value, "money" => $money[$key]]);
+            }
+            if ($bool) {
+                $this->success("添加成功", url("admin/Home/index"));
+            }
+        }
         return view("putaway_index");
 
     }
 
 
-
     /**
-     * 充值设置
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:设置之充值设置
+     **************************************
+     * @return \think\response\View
      */
     public function recharge(){
+        $recharge_data =Db::name('recharge_setting')->select();
+        return view("recharge_index",['recharge_data'=>$recharge_data]);
+    }
 
-        return view("recharge_index");
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:充值设置添加数据
+     **************************************
+     * @param Request $request
+     */
+    public function  recharge_setting_add(Request $request){
+        if($request->isPost()){
+            $data =input();
+            if(empty($data)){
+                $this->error('所添加的值不能为空');
+            }
+            $settings_table= new RechargeSetting();
+            $datas =$settings_table->isUpdate(false)->save($data);
+            if(!empty($datas)){
+                $this->success('添加成功');
+            }else{
+                $this->success('添加失败');
+            }
+        }
+    }
 
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:设置充值设置删除功能
+     **************************************
+     * @param Request $request
+     */
+    public function recharge_setting_del(Request $request){
+        if($request->isPost()){
+            $setting_id =$_POST['id'];
+            if(!empty($setting_id)){
+                $data_bool =Db::name('recharge_setting')->where('setting_id',$setting_id)->delete();
+                if($data_bool){
+                    return ajax_success('删除成功',['status'=>1]);
+                }else{
+                    return ajax_error('删除失败',['status'=>0]);
+                }
+            }else{
+                return ajax_error('没有这条数据',['status'=>0]);
+            }
+        }
     }
 
 

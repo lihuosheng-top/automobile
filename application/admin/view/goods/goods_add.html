@@ -403,9 +403,11 @@
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label">上架年限：</label>
 			<div class="layui-input-block">
-					<select name="">
+					<select name="goods_year_id">
 						<option value=""  selected="">请选择</option>
-						<option value="">1年</option>
+						{volist name="year" id="v"}
+						<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
+						{/volist}
 					</select>
 			</div>
 		</div>

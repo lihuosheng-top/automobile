@@ -52,8 +52,8 @@
 <h4>（单个商品）</h4>
 
 	  <div class="show">
-	  	   <div style=" " class="text">年限<input type="text" name="" id="" value="" style="width: 100px;"/>费用<input type="text" name="" id="" value="" style="width: 100px;"/>元</div>
-	   </div>
+	  	   <div style=" " class="text">年限<input type="text" name="year" id="" value="" style="width: 100px;"/>费用<input type="text" name="money" id="" value="" style="width: 100px;"/>元</div>
+	  </div>
 	 <form action="{:url('admin/Install/putaway')}" method="post">
 	   <div class="content">
 	 </div>
@@ -78,7 +78,7 @@
 <script type="text/javascript">
 		 	$(".add-bts").click(function(){
 				var dhtml="";
-				dhtml+='<div style=" " class="text">年限<input type="text" name="aaaa" id="" value="" style="width: 100px;"/>费用<input type="text" name="bbb" id="" value="" style="width: 100px;"/>元 <i class="layui-icon remove-img">&#x1007;</i></div></div>';
+				dhtml+='<div style=" " class="text">年限<input type="text" name="year[]" id="" value="" style="width: 100px;"/>费用<input type="text" name="money[]" id="" value="" style="width: 100px;"/>元 <i class="layui-icon remove-img">&#x1007;</i></div></div>';
 				$(".content").append(dhtml);
 				$(".content ").on('click','.layui-icon',function(){
 					// console.log(this)
