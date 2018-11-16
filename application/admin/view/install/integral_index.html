@@ -86,8 +86,25 @@ div {
 		var remove = $(this).parent();
 		remove.remove();
 	});
+	var num=0;
 	$("#submits").click(function(){
-	   console.log($(".addcontents input"));
+	  for(var i=0;i< $(".addcontents input").length;i++){
+	  	if($(".addcontents input")[i].value==""){
+	  		layer.confirm('填写框不能为空', {
+			btn: ['确认', '取消'] //按钮
+		}, function(index) {
+			num=0;
+			layer.close(index)
+			
+			});
+	  	}
+	  	else{
+	  		num++;
+	  	}
+	  }
+	if(num==$(".addcontents input").length){
+		$(this).attr("type","submit")
+	}
 	
 	})
 //	点击渲染出来的删除图片触发
