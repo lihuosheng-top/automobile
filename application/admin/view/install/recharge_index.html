@@ -32,10 +32,14 @@
 
 {block name="content"}
        <h4 style="padding: 10px;">充值设置：</h4>
+		{if !empty($recharge_data)}
+		{volist name="recharge_data" id="vo"}
 	   <div class="content">
-	   <div style=" " class="text">充<input type="text" name="" id="" value="" style="width: 100px;"/>元送<input type="text" name="" id="" value="" style="width: 100px;"/>元<i class="layui-icon remove_img" data-id="111">&#x1007;</i></div>
+	   <div style=" " class="text">充<input type="text" name="" id="" value="{$vo.recharge_full}" style="width: 100px;"/>元送<input type="text" name="" id="" value="{$vo.send_money}" style="width: 100px;"/>元<i class="layui-icon remove_img" data-id="{$vo.setting_id}">&#x1007;</i></div>
 	   </div>
-	   <form action="{:url('admin/Install/integral_setting_add')}" method="post">
+		{/volist}
+		{/if}
+	   <form action="{:url('admin/Install/recharge_setting_add')}" method="post">
 
 			<div class="addcontents">	
 			</div>
@@ -67,7 +71,7 @@
 		$ = layui.jquery;
 		 	$(".add-bts").click(function(){
 				var dhtml="";
-				dhtml+='<div style=" " class="text">充<input type="text" name="" id="" value="" style="width: 100px;"/>元送<input type="text" name="" id="" value="" style="width: 100px;"/>元 <i class="layui-icon remove-img">&#x1007;</i></div></div>';
+				dhtml+='<div style=" " class="text">充<input type="text" name="recharge_full" id="" value="" style="width: 100px;"/>元送<input type="text" name="send_money" id="" value="" style="width: 100px;"/>元 <i class="layui-icon remove-img">&#x1007;</i></div></div>';
 				$(".addcontents").append(dhtml);
 				});
 			//	点击动态添加出来的删除图片触发
@@ -89,7 +93,7 @@ console.log($(".remove_img"));
 			remove.remove();
 			$.ajax({
 				type: "POST",
-				url: "{:url('admin/Install/integral_setting_delzss')}",
+				url: "{:url('admin/Install/recharge_setting_del')}",
 				data: {
 					"id": id
 				},

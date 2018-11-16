@@ -169,6 +169,7 @@ class Install extends Controller{
     public function  recharge_setting_add(Request $request){
         if($request->isPost()){
             $data =input();
+            dump($data);
             if(empty($data)){
                 $this->error('所添加的值不能为空');
             }
@@ -208,13 +209,15 @@ class Install extends Controller{
 
 
     /**
-     * 服务显示
-     * 陈绪
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
+     **************李火生*******************
+     * @param Request $request
+     * Notes:设置之项目服务项目设置
+     **************************************
+     * @return \think\response\View
      */
     public function service_index(){
-
-        return view("service_index");
+        $service_data =Db::name('service_setting')->order('service_setting_id')->select();
+        return view("service_index",['service_data'=>$service_data]);
 
     }
 
@@ -238,20 +241,39 @@ class Install extends Controller{
      * 服务入库
      * 陈绪
      */
-    public function service_save(){
-
-
-
-    }
-
+//    public function service_save(){
+//
+//
+//
+//    }
 
 
     /**
-     * 服务编辑
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:设置之服务项目设置编辑功能
+     **************************************
+     * @return \think\response\View
      */
-    public function service_edit(){
-
+    public function service_edit($id =null){
+        if($this->request->isPost()){
+            $data =$this->request->post();
+            $data['service_setting_time'] =time();
+            if($id>0){
+                $res =Db::name('service_setting')->where('service_setting_id',$id)->update($data);
+            }else{
+                $res =Db::name('service_setting')->insertGetId($data);
+            }
+            if($res>0){
+                 $this->success('编辑成功',('service_index'));
+            }else{
+                 $this->error('编辑失败');
+            }
+        }
+        if($id > 0){
+            $info =Db::name('service_setting')->where("service_setting_id",$id)->find();
+            $this->assign('info',$info);
+        }
         return view("service_edit");
 
     }
@@ -312,7 +334,6 @@ class Install extends Controller{
      * 陈绪
      */
     public function message_del(){
-
 
 
     }
