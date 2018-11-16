@@ -19,8 +19,11 @@ class Install extends Controller{
      * 陈绪
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
      */
-    public function index(){
+    public function index(Request $request){
 
+        if($request->isPost()){
+
+        }
         return view("install_index");
 
     }
