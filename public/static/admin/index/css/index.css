@@ -73,12 +73,20 @@ a{
 /*toubu*/
 .header{
 	color: #fff;
+	display: flex;
+	justify-content: space-between;
 	/* padding-left: 32px; */
 	height: 52px;
-	/* margin: auto; */
-	overflow: hidden;
 	line-height: 52px;
 	background: #585E6B;
+}
+/*.loading{
+	width: 400px;
+	display: flex;
+}*/
+.loading-box{
+	display: flex;
+	width: 400px;
 }
 .logo{
 	float: left;
@@ -86,7 +94,7 @@ a{
 	width: 25px;
 }
 .name{
-	width: 10%;
+	width: 83%;
 	font-size: 21px;
 	float: left;
 	font-weight: bold;
@@ -108,7 +116,7 @@ a{
 }
 .self_information{
 	float: left;
-	width: 24%;
+	width: 100%;
 	text-align: center;
 	/* line-height: 55px; */
 }
