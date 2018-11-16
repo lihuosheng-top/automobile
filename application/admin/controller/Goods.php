@@ -55,7 +55,9 @@ class Goods extends Controller{
         }else{
             $goods = db("goods")->paginate(10);
             $year = db("year")->select();
-            return view("goods_index",["goods"=>$goods,"year"=>$year]);
+            $user_id = Session::get("user_id");
+            $role_name = db("admin")->where("id",$user_id)->select();
+            return view("goods_index",["goods"=>$goods,"year"=>$year,"role_name"=>$role_name]);
         }
 
     }
@@ -148,8 +150,9 @@ class Goods extends Controller{
             }
         }
         $goods_list = getSelectList("goods_type");
-        $goods_brand = db("brand")->select();
-        return view("goods_edit",["goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
+        $goods_brand = getSelectList("brand");
+        $year = db("year")->select();
+        return view("goods_edit",["year"=>$year,"goods_brand"=>$goods_brand,"goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
 
@@ -159,10 +162,10 @@ class Goods extends Controller{
      */
     public function images(Request $request){
         if($request->isPost()){
-            $id = $request->only(['id'])['id'];
-            if(!empty($id)){
-                $image = db("goods")->where("id",$id)->field("goods_show_images")->find();
-                $bool = db("goods")->where("id",$id)->update(["goods_show_images"=>null]);
+            $id = $request->param();
+            if(!empty($id["id"])){
+                $image = db("goods")->where("id",$id["id"])->field("goods_show_images")->find();
+                $bool = db("goods")->where("id",$id["id"])->update(["goods_show_images"=>null]);
                 if ($bool){
                     if(!empty($image)){
                         unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$image['goods_show_images']);
@@ -246,13 +249,16 @@ class Goods extends Controller{
                         $goods_url = str_replace("\\", "/", $info->getSaveName());
                         $goods_images[] = ["goods_images" => $goods_url, "goods_id" => $id];
                     }
-                }
-                $booldata = model("goods_images")->saveAll($goods_images);
-                if ($booldata) {
+                    $booldata = model("goods_images")->saveAll($goods_images);
+                    if ($booldata) {
+                        $this->success("更新成功",url("admin/Goods/index"));
+                    } else {
+                        $this->success("更新失败",url('admin/Goods/add'));
+                    }
+                }else{
                     $this->success("更新成功",url("admin/Goods/index"));
-                } else {
-                    $this->success("更新失败",url('admin/Goods/add'));
                 }
+
             }
         }
 

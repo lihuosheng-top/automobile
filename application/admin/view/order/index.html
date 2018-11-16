@@ -91,6 +91,9 @@
 		width: 50%;
 		height: 40px;
 	}
+	.noshow{
+		display: none;
+	}
 	/* 弹窗内容样式 */
 	
 	.list-a ul li {
@@ -305,7 +308,11 @@
 							<span>选择状态</span>
 							<select>
 								<option value="">请选择</option>
-								<option value="">已关闭</option>
+								<option value="3">待付款</option>
+								<option value="1">待付款</option>
+								<option value="4">已发货</option>
+								<option value="5">待收货</option>
+								<option value="0">已关闭</option>
 							</select>
 						</div>
 						<div class="select-operation">
@@ -705,8 +712,8 @@
 							status: data.data.cancel_order_description,
 							payment: data.data.pay_type_content,
 							amount: data.data.goods_money,
-							points_Deduction: '3333',
-							real_Pay: '4444',
+							points_Deduction: data.data.goods_money,
+							real_Pay: data.data.goods_money,
 			
 						}
 					})
