@@ -130,9 +130,18 @@ class Install extends Controller{
      */
     public function putaway(Request $request){
 
-        $data = $request->param();
-        $bool = db("year")->insert($data);
-        dump($bool);
+        if($request->isPost()) {
+            $data = $request->param();
+            halt($data);
+            $year = $request->only(["year"])["year"];
+            $money = $request->only(["money"])["money"];
+            foreach ($year as $key => $value) {
+                $bool = db("year")->insert(["year" => $value, "money" => $money[$key]]);
+            }
+            if ($bool) {
+                $this->success("添加成功", url("admin/Home/index"));
+            }
+        }
         return view("putaway_index");
 
     }

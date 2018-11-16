@@ -260,11 +260,11 @@
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
 			<div class="layui-input-inline">
 				{if !empty($goods_brand)}
-				{volist name="goods_brand" id="v"}
 				<select name="goods_brand_id">
+					{volist name="goods_brand" id="v"}
 					<option value="{$v.id}">{$v.name}</option>
+					{/volist}
 				</select>
-				{/volist}
 				{else}
 				<select name="goods_brand_id">
 					<option value="0">顶级</option>
