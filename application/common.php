@@ -588,7 +588,7 @@ function show_order_status($status){
 /**
  **************李火生*******************
  * @param Request $request
- * Notes:配件商订单判断是否回复的状态
+ * Notes:配件商订单评价判断是否回复的状态
  **************************************
  * @param $is_repay
  * @return string
@@ -603,6 +603,118 @@ function show_evaluate_is_repay($is_repay){
                 break;
         }
 }
+
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:配件商订单评价星星的状态（显示星星）
+ **************************************
+ * @param $is_repay
+ */
+function show_evaluate_start_show($is_repay){
+    switch ($is_repay){
+        case '1':
+            echo "
+                <span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+                <span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
+				</span>
+				";
+            break;
+        case '2':
+            echo "
+                <span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+                <span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
+				</span>
+				";
+            break;
+        case '3':
+            echo "
+                <span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+                <span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
+				</span>
+            
+            ";
+            break;
+        case '4':
+            echo "
+                <span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+                <span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
+				</span>
+                    ";
+            break;
+        case '5':
+            echo "
+                <span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+				<span style=\"display: inline-block; width: 40px;\">
+					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
+				</span>
+            ";
+            break;
+    }
+}
+
+
+
+
 
 /**
  * 点击

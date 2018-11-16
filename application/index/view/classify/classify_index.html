@@ -64,7 +64,7 @@
                         <li class="first_li tyre" id="1">
                             <div class="adop-box">
                                 <p class="subtitle" id="1">轮胎品牌区</p>
-                                <span>点击适配</span>
+                                <span class="click-adop">点击适配</span>
                             </div>
                             <ul class="bgw">
                                 <li>
@@ -564,6 +564,10 @@
     <script>
         $('.classify_tab li').click(function(){
             $(this).addClass('active').siblings().removeClass('active');
+        })
+
+        $('.click-adop').click(function(){
+            location.href = 'goods_list';
         })
     </script>
 </body>

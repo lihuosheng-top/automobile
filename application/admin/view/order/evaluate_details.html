@@ -58,27 +58,21 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label"> 评价打分：{$evaluate_details.evaluate_stars}</label>
+			<label class="layui-form-label"> 评价打分:</label>
 			<div class="layui-input-block">
-
-				<span style="display: inline-block; width: 40px;">
-					<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-				</span>
-				<span style="display: inline-block; width: 40px;">
-				<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-			</span>
-				<span style="display: inline-block; width: 40px;">
-				<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-			</span>
-				<span style="display: inline-block; width: 40px;">
-				<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-			</span>
-				<span style="display: inline-block; width: 40px;">
-				<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-			</span>
-				<span style="display: inline-block; width: 40px;">
-				<img src="__STATIC__/admin/common/img/a11.png" width="100%" >
-			</span>
+				{$evaluate_details.evaluate_stars|show_evaluate_start_show}
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> 服务态度:</label>
+			<div class="layui-input-block">
+				{$evaluate_details.service_attitude_stars|show_evaluate_start_show}
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> 物流服务:</label>
+			<div class="layui-input-block">
+				{$evaluate_details.logistics_stars|show_evaluate_start_show}
 			</div>
 		</div>
 		<div class="layui-form-item">

@@ -203,6 +203,4 @@ class Integral extends Controller{
 
 
 
-
-
 }
