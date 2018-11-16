@@ -98,6 +98,7 @@
 						<th>商品图片</th>
 						<th>商品名称</th>
 						<th>商品价格</th>
+						<th>调整后价格</th>
 						<th>是否上架</th>
 						<th>是否付费</th>
 						<th>付费金额</th>
@@ -116,6 +117,7 @@
 						<td style="width: 100px; height: 100px;"><img src="__UPLOADS__/{$value.goods_show_images}" /></td>
 						<td>{$value.goods_name}</td>
 						<td>￥{$value.goods_new_money}</td>
+						<td style="color: red;">￥1000</td>
 						<td>
 							{if $value.goods_status == 0}
 							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}"/>
@@ -124,11 +126,7 @@
 							{/if}
 						</td>
 						<td>
-							{if $value.goods_status == 0}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}"/>
-							{else /}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}"/>
-							{/if}
+							是
 						</td>
 						<td>￥{$value.goods_putaway|pay_money}</td>
 						<td>{$value.sort_number}</td>
