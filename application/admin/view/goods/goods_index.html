@@ -130,10 +130,22 @@
 							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}"/>
 							{/if}
 						</td>
-						<td>￥{$value.goods_putaway|pay_money}</td>
+						<td>
+							{volist name="year" id="val"}
+							{if $value.goods_year_id == $val.id}
+							{$val.year}元
+							{/if}
+							{/volist}
+						</td>
 						<td>{$value.sort_number}</td>
 						<td>{$value.goods_repertory}</td>
-						<td>{$value.goods_putaway|year}年</td>
+						<td>
+							{volist name="year" id="val"}
+							{if $value.goods_year_id == $val.id}
+							{$val.money}元
+							{/if}
+							{/volist}
+						</td>
 						<td style="width: 155px;">
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/look',['id'=>$value.id])}"> 查看详情</a>
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit',['id'=>$value.id])}">编辑</a>

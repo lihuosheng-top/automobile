@@ -130,8 +130,6 @@ class Install extends Controller{
     public function putaway(Request $request){
 
         if($request->isPost()) {
-            $data = $request->param();
-            halt($data);
             $year = $request->only(["year"])["year"];
             $money = $request->only(["money"])["money"];
             foreach ($year as $key => $value) {
