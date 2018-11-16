@@ -33,8 +33,12 @@ class Classify extends Controller
 
 
     // 商品分类列表
-    public function Goods_list()
+    public function Goods_list(Request $request)
     {
+
+        if($request->isPost()){
+
+        }
         return view("goods_list");
     }
 
