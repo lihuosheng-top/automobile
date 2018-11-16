@@ -54,7 +54,8 @@ class Goods extends Controller{
             ]);
         }else{
             $goods = db("goods")->paginate(10);
-            return view("goods_index",["goods"=>$goods]);
+            $year = db("year")->select();
+            return view("goods_index",["goods"=>$goods,"year"=>$year]);
         }
 
     }
@@ -72,7 +73,8 @@ class Goods extends Controller{
             $goods_list = getSelectList("goods_type");
             $goods_brand = getSelectList("brand");
         }
-        return view("goods_add",["goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
+        $year = db("year")->select();
+        return view("goods_add",["year"=>$year,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
     /**
@@ -191,24 +193,18 @@ class Goods extends Controller{
     public function del(Request $request){
         $id = $request->only(["id"])["id"];
         $image_url = db("goods_images")->where("goods_id", $id)->field("goods_images,id")->select();
-        $goods_images = db("goods")->where("id", $id)->field("goods_show_images")->find();
-        if($goods_images["goods_show_images"] != null) {
-
-            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_images['goods_show_images']);
-            $bool = db("goods")->where("id", $id)->delete();
-            if($bool){
-                foreach ($image_url as $value) {
-                    if ($value['goods_images'] != null) {
-                        unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $value['goods_images']);
-                    }
-                    $bool_data = db("goods_images")->where("id", $value['id'])->delete();
+        $bool = db("goods")->where("id", $id)->delete();
+        if($bool){
+            foreach ($image_url as $value) {
+                if ($value['goods_images'] != null) {
+                    unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $value['goods_images']);
                 }
-                if ($bool_data) {
-                    $this->success("添加成功",url("admin/Goods/index"));
-                } else {
-                    $this->success("添加失败",url('admin/Goods/add'));
-                }
-
+                $bool_data = db("goods_images")->where("id", $value['id'])->delete();
+            }
+            if ($bool_data) {
+                $this->success("添加成功",url("admin/Goods/index"));
+            } else {
+                $this->success("添加失败",url('admin/Goods/add'));
             }
 
         }
