@@ -154,22 +154,22 @@ html{
     height: .9rem;
 }
 .classify_service li .daily{
-    background-position: -2.35rem .05rem;
-    width: .9rem;
-    height: .9rem;
-}
-.classify_service li .agency{
     background-position: -2.35rem -5.05rem;
     width: .9rem;
     height: .9rem;
 }
-.classify_service li .lease{
+.classify_service li .agency{
     background-position: -3.25rem -5.05rem;
     width: .9rem;
     height: .9rem;
 }
-.classify_service li .mortgage{
+.classify_service li .lease{
     background-position: -4.25rem -5.05rem;
+    width: .9rem;
+    height: .9rem;
+}
+.classify_service li .mortgage{
+    background-position: -5.2rem -5.05rem;
     width: .9rem;
     height: .9rem;
 }
@@ -362,7 +362,7 @@ html{
     background-color: rgba(0, 0, 0, .5);
 }
 .footer .icon_home{
-    background-position: 0 -1.8rem;
+    background-position: .05rem -1.75rem;
 }
 
 /* 添加车 start */

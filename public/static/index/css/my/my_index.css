@@ -17,17 +17,17 @@ html{
 }
 .head_icon .set{
     float: right;
-    width: .39rem;
-    height: .36rem;
-    background-position: -6rem -1rem;
+    width: .49rem;
+    height: .46rem;
+    background-position: -5.95rem -.95rem;
     margin: .26rem .26rem 0 0;
 }
 .head_icon .message{
     float: right;
-    width: .44rem;
-    height: .38rem;
-    background-position: -.9rem 0;
-    margin: .26rem .26rem 0 0;
+    width: .54rem;
+    height: .48rem;
+    background-position: -.85rem 0;
+    margin: .31rem .21rem 0 0;
 }
 .user_info{
     width: 100%;
@@ -256,12 +256,6 @@ html{
     background-position: -7.3rem -1.2rem;
 }
 
-
-
-
-
-
-
 .footer .icon_my{
-    background-position: -1.5rem -1.8rem;
+    background-position: -1.45rem -1.75rem;
 }
