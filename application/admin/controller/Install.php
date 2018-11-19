@@ -22,9 +22,18 @@ class Install extends Controller{
     public function index(Request $request){
 
         if($request->isPost()){
-
+            $min_money = $request->only(["min_money"])["min_money"];
+            $max_money = $request->only(["max_money"])["max_money"];
+            $ratio = $request->only(["ratio"])["ratio"];
+            foreach ($min_money as $key=>$value){
+                $bool = db("goods_ratio")->insert(["min_money"=>$value,"max_money"=>$max_money[$key],"ratio"=>$ratio[$key]]);
+            }
+            if($bool){
+                $this->success("添加成功",url("admin/Install/service_index"));
+            }
         }
-        return view("install_index");
+        $goods_ratio = db("goods_ratio")->select();
+        return view("install_index",["goods_ratio"=>$goods_ratio]);
 
     }
 
@@ -142,7 +151,8 @@ class Install extends Controller{
                 $this->success("添加成功", url("admin/Home/index"));
             }
         }
-        return view("putaway_index");
+        $year = db("year")->select();
+        return view("putaway_index",["year"=>$year]);
 
     }
 

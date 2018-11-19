@@ -138,7 +138,13 @@
 							{/if}
 						</td>
 						<td>
+							{volist name="role_name" id="v"}
+							{if $v.role_id == 2}
 							是
+							{else}
+							否
+							{/if}
+							{/volist}
 						</td>
 						<td>
 							{volist name="year" id="val"}
