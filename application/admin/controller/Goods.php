@@ -79,6 +79,8 @@ class Goods extends Controller{
         return view("goods_add",["year"=>$year,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
+
+
     /**
      * [商品添加]
      * 陈绪
@@ -88,12 +90,18 @@ class Goods extends Controller{
     {
         if ($request->isPost()) {
             $goods_data = $request->param();
-            $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
-            $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
-            $goods_data["goods_standard_name"] = $goods_standard_name;
-            $goods_data["goods_standard_value"] = $goods_standard_value;
-            $goods_delivery = implode(",",$goods_data["goods_delivery"]);
-            $goods_data["goods_delivery"] = $goods_delivery;
+            halt($goods_data);
+            if(!empty($goods_data["goods_standard_name"])){
+                $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
+                $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
+                $goods_data["goods_standard_name"] = $goods_standard_name;
+                $goods_data["goods_standard_value"] = $goods_standard_value;
+            }
+            if(!empty($goods_data["goods_delivery"])){
+                $goods_delivery = implode(",",$goods_data["goods_delivery"]);
+                $goods_data["goods_delivery"] = $goods_delivery;
+            }
+
             //图片添加
             $show_images = $request->file("goods_show_images");
 
@@ -225,12 +233,17 @@ class Goods extends Controller{
         if ($request->isPost()) {
             $id = $request->only(["id"])["id"];
             $goods_data = $request->param();
-            $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
-            $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
-            $goods_data["goods_standard_name"] = $goods_standard_name;
-            $goods_data["goods_standard_value"] = $goods_standard_value;
-            $goods_delivery = implode(",",$goods_data["goods_delivery"]);
-            $goods_data["goods_delivery"] = $goods_delivery;
+            halt($goods_data);
+            if(!empty($goods_data["goods_standard_name"])){
+                $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
+                $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
+                $goods_data["goods_standard_name"] = $goods_standard_name;
+                $goods_data["goods_standard_value"] = $goods_standard_value;
+            }
+            if(!empty($goods_data["goods_delivery"])){
+                $goods_delivery = implode(",",$goods_data["goods_delivery"]);
+                $goods_data["goods_delivery"] = $goods_delivery;
+            }
             //图片添加
             $show_images = $request->file("goods_show_images");
 

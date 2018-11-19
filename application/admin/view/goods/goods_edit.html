@@ -314,8 +314,9 @@
 			<div class="layui-form-item general ">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-					{volist name="$goods_standard_name" id="name"}
 					<div id="general_content">
+						{volist name="$goods_standard_name" id="name"}
+						{if !empty($name.goods_standard_name)}
 						<div>
 							<div class="layui-form-item">
 								<label class="layui-form-label">规格名</label>
@@ -336,7 +337,6 @@
 									<button type="button" class="operation-btus btu-add guibtu-add">添加</button>
 								</div>
 							</div>
-
 							<div class="layui-form-item">
 								<label class="layui-form-label">规格值：</label>
 								<div class="num-content">
@@ -348,8 +348,9 @@
 								</div>
 							</div>
 						</div>
+						{/if}
+						{/volist}
 					</div>
-					{/volist}
 					<div class="add-content content" id="add_general_buts">
 						<button type="button" class="btus general_buts">添加规格项目</button>
 					</div>
