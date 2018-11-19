@@ -348,8 +348,9 @@
 								</div>
 							</div>
 						</div>
-						{/volist}
+							{/volist}
 					</div>
+				
 					{/if}
 					<div class="add-content content" id="add_general_buts">
 						<button type="button" class="btus general_buts">添加规格项目</button>
@@ -557,6 +558,7 @@
 			<div class="layui-input-block" id="">
 				<div class="layui-input-block">
                     <select name="goods_year_id">
+						<option value=""  selected="">请选择</option>
 						{volist name="year" id="v"}
 						<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
 						{/volist}

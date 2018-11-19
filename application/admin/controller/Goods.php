@@ -230,6 +230,7 @@ class Goods extends Controller{
         if ($request->isPost()) {
             $id = $request->only(["id"])["id"];
             $goods_data = $request->param();
+            halt($goods_data);
             if(!empty($goods_data["goods_standard_name"])){
                 $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
                 $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
