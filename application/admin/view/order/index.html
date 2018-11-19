@@ -725,9 +725,7 @@
 			});
 			
 		});
-		$(".close").on('click', function() {
-			$(".tanchuang").addClass("noshow");
-		});
+		
 		// 弹窗选项卡切换
 		$(".card").on('click', 'li', function() {
 			$(this).addClass("active");
@@ -736,6 +734,9 @@
 			$("." + dait_id).removeClass("noshow");
 			$("." + dait_id).siblings("div").addClass("noshow");
 
+		});
+		$(".close").on('click', function() {
+			$(".tanchuang").addClass("noshow");
 		});
 		$(".btu-sumit").click(function() {
 			$(".tanchuang").addClass("noshow");

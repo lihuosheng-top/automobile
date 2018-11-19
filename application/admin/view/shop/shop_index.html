@@ -96,28 +96,35 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
+				{if !empty($store_data)}
+				{volist name="store_data" id="vo"}
 					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>2</td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>2018</td>
+						<td><input type="checkbox" name="" lay-skin="primary" lay-filter="choose" data-id="{$vo.store_id}"></td>
+						<td>{$vo.store_name}</td>
+						<td>{$vo.store_owner}</td>
+						<td>{$vo.store_detailed_address}</td>
+						<td>{$vo.store_owner_phone_num}</td>
+						<td>{$vo.store_type|show_user_type}</td>
 						<td>
-							<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
-							checked="" data-id="2">
+							{$vo.store_is_pay|store_is_pay}
+							<!--<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"-->
+							<!--checked="" data-id="{$vo.store_id}">-->
+							<!--<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"-->
+								    <!--data-id="{$vo.store_id}">-->
 						</td>
 						<td>
-							通过
+							{$vo.operation_status|operation_status}
 						</td>
 
 						<td>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Shop/add')}"><i class="iconfont icon-edit"></i> 编辑</a>
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Shop/add',['id'=>$vo.store_id])}"><i class="iconfont icon-edit"></i> 编辑</a>
 							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
 							 data-id="undefined"><i class="layui-icon"></i> 删除</a>
 
 						</td>
 					</tr>
+				{/volist}
+				{/if}
 				</tbody>
 			</table>
 		</div>
