@@ -712,7 +712,37 @@ function show_evaluate_start_show($is_repay){
     }
 }
 
+/**
+ **************李火生*******************
+ * @param $is_pay
+ * 判断店铺是否付费上架
+ **************************************
+ */
+function store_is_pay($is_pay){
+    if($is_pay==1){
+        echo '付费';
+    }else if ($is_pay==-1){
+        echo '未付费';
+    }else{
+        echo  '待操作员确定';
+    }
+}
 
+/**
+ **************李火生*******************
+ * @param $status
+ * 店铺的平台审核状态
+ **************************************
+ */
+function operation_status($status){
+    if($status==1){
+        echo '通过';
+    }elseif ($status==-1){
+        echo '拒绝';
+    }else{
+        echo '待审核';
+    }
+}
 
 
 
