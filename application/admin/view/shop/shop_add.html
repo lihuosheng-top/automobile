@@ -110,15 +110,15 @@
 				<div data-toggle="distpicker">
 					<div class="form-group">
 						<label class="sr-only" for="province3">Province</label>
-						<select class="form-control" id="province3" data-province="浙江省"  disabled="disabled"></select>
+						<select class="form-control" id="province3" data-province="{$store_city_address[0]}"  disabled="disabled"></select>
 					</div>
 					<div class="form-group">
 						<label class="sr-only" for="city3">City</label>
-						<select class="form-control" id="city3" data-city="杭州市" disabled="disabled"></select>
+						<select class="form-control" id="city3" data-city="{$store_city_address[1]}" disabled="disabled"></select>
 					</div>
 					<div class="form-group">
 						<label class="sr-only" for="district3">District</label>
-						<select class="form-control" id="district3" data-district="西湖区" disabled="disabled"></select>
+						<select class="form-control" id="district3" data-district="{$store_city_address[2]}" disabled="disabled"></select>
 					</div>
 				</div>
 			</div>
@@ -127,19 +127,23 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">店铺详细地址</label>
 			<div class="layui-input-block">
-				<input type="text" name="email" value="" placeholder="" class="layui-input" id="email" disabled="disabled">
+				<input type="text" name="email" value="{$data.store_street_address}" placeholder="" class="layui-input" id="email" disabled="disabled">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">营业时间：</label>
 			<div class="layui-input-block">
-				<input type="text" placeholder="" class="layui-input" id="repassword" disabled="disabled" value="{$data.store_do_bussiness_time|date=' H:i:s',###}">
+				<input type="text" placeholder="" class="layui-input" id="repassword" disabled="disabled" value="{$data.store_do_bussiness_time|date=' H:i:s',###}--{$data.store_do_bussiness_end_time|date=' H:i:s',###}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">服务范围：</label>
 			<div class="layui-input-block">
-				<input type="checkbox" name="like1[write]" lay-skin="primary" title="写作" checked="" disabled="disabled">
+				{if !empty($range_data)}
+				{volist name="range_data" id="value"}
+				<input type="checkbox" name="like1[write]" lay-skin="primary" title="{$value.service_setting_name}" checked="" disabled="disabled">
+				{/volist}
+				{/if}
 			</div>
 		</div>
 
@@ -159,13 +163,13 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">我要加盟为：</label>
 			<div class="layui-input-block">
-				<select name="interest" lay-filter="aihao" disabled="disabled">
-					<option value=""></option>
-					<option value="0">写作</option>
-					<option value="1" selected="">阅读</option>
-					<option value="2">游戏</option>
-					<option value="3">音乐</option>
-					<option value="4">旅行</option>
+				<select name="interest" lay-filter="aihao">
+					<option value="{$data.store_type|show_user_type}" selected="" disabled>{$data.store_type|show_user_type}</option>
+					<!--<option value="0">写作</option>-->
+					<!--<option value="1" selected="">阅读</option>-->
+					<!--<option value="2">游戏</option>-->
+					<!--<option value="3">音乐</option>-->
+					<!--<option value="4">旅行</option>-->
 				</select>
 			</div>
 		</div>
@@ -197,7 +201,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">验证真实地址：</label>
 			<div class="layui-input-block">
-				<input type="text" name="department" value="" placeholder="" class="layui-input" disabled="disabled">
+				<input type="text" name="department" value="{$data.store_detailed_address}" placeholder="" class="layui-input" disabled="disabled">
 			</div>
 		</div>
 		<div class="layui-form-item" style="width: 570px !important;">
@@ -246,9 +250,9 @@
 			<label class="layui-form-label">操作员备注：：</label>
 			<div class="layui-input-block">
 				{if !empty($data.operation_remarks)}
-				<textarea rows="10" cols="60"></textarea>
-				{else}
 				<textarea rows="10" cols="60">{$data.operation_remarks}</textarea>
+				{else}
+				<textarea rows="10" cols="60"></textarea>
 				{/if}
 			</div>
 		</div>
