@@ -315,6 +315,7 @@
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
 					{volist name="$goods_standard_name" id="name"}
+					{if !empty($goods_standard_name)}
 					<div id="general_content">
 						<div>
 							<div class="layui-form-item">
@@ -349,6 +350,7 @@
 							</div>
 						</div>
 					</div>
+					{/if}
 					{/volist}
 					<div class="add-content content" id="add_general_buts">
 						<button type="button" class="btus general_buts">添加规格项目</button>
@@ -556,7 +558,6 @@
 			<div class="layui-input-block" id="">
 				<div class="layui-input-block">
                     <select name="goods_year_id">
-						<option value=""  selected="">请选择</option>
 						{volist name="year" id="v"}
 						<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
 						{/volist}
