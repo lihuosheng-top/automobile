@@ -191,7 +191,7 @@
 					<tr>
 						{volist name="year" id="val"}
 						{if $value.goods_year_id == $val.id}
-						<td><input type="checkbox" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加"></td>
+						<td><input type="checkbox" data-text="{$val.year}" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加"></td>
 						{/if}
 						{/volist}
 						<td>{$value.id}</td>
@@ -210,7 +210,7 @@
 							{if $value.goods_status == 0}
 							{volist name="year" id="val"}
 							{if $value.goods_year_id == $val.id}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}" data-value="店铺还没有添加" data-title="{$val.money}"/>
+							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}" data-value="店铺还没有添加" data-title="{$val.money}" data-text="{$val.year}"/>
 							{/if}
 							{/volist}
 							{else /}

@@ -79,6 +79,8 @@ class Goods extends Controller{
         return view("goods_add",["year"=>$year,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
+
+
     /**
      * [商品添加]
      * 陈绪
@@ -99,6 +101,7 @@ class Goods extends Controller{
                 $goods_delivery = implode(",",$goods_data["goods_delivery"]);
                 $goods_data["goods_delivery"] = $goods_delivery;
             }
+
             //图片添加
             $show_images = $request->file("goods_show_images");
 
