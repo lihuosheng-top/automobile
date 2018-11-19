@@ -460,7 +460,7 @@
 								var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
 										for (var i = 0; i < child.length; i++) {
 											data_id.push($(child[i])[0].dataset.id);
-											all_price+=$(child[i])[0].dataset.title;
+											all_price+=parseInt($(child[i])[0].dataset.title);
 											var shop=$(child[i])[0].dataset.value;
 										}
 										$.ajax({
