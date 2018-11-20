@@ -30,9 +30,19 @@ class Serve extends Controller{
      */
     public function add(){
 
-        $car = db("car_series")->distinct(true)->field(ltrim());
-        halt($car);
-        return view("serve_add");
+        $car = db("car_series")->distinct(true)->field(trim("vehicle_model"))->select();
+        $data = [];
+        foreach ($car as $key=>$value){
+            $arr[] = trim($value["vehicle_model"]);
+            $data = array_unique($arr);
+
+        }
+        foreach ($data as $k=>$val){
+            if(empty($val)){
+                unset($data[$k]);
+            }
+        }
+        return view("serve_add",["data"=>$data]);
 
     }
 	  /**
