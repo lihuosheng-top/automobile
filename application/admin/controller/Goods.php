@@ -90,7 +90,11 @@ class Goods extends Controller{
     {
         if ($request->isPost()) {
             $goods_data = $request->param();
-            halt($goods_data);
+            if($goods_data["goods_standard"] == "通用"){
+                unset($goods_data["dedicated_vehicle"]);
+                unset($goods_data["goods_car_brand"]);
+                unset($goods_data["dedicated_property"]);
+            }
             if(!empty($goods_data["goods_standard_name"])){
                 $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
                 $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
@@ -109,7 +113,6 @@ class Goods extends Controller{
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
             }
-
             $bool = db("goods")->insert($goods_data);
             if ($bool) {
                 //取出图片在存到数据库
