@@ -76,7 +76,7 @@ class Goods extends Controller{
             $goods_brand = getSelectList("brand");
         }
         $year = db("year")->select();
-        if($request->isGet()){
+        if($request->isPost()){
             $car_series = db("car_series")->distinct(true)->field("brand")->select();
             $car_brand = db("car_series")->field("series,brand")->select();
             return ajax_success("获取成功",array("car_series"=>$car_series,"car_brand"=>$car_brand));
@@ -168,6 +168,11 @@ class Goods extends Controller{
         $goods_list = getSelectList("goods_type");
         $goods_brand = getSelectList("brand");
         $year = db("year")->select();
+        if($request->isPost()){
+            $car_series = db("car_series")->distinct(true)->field("brand")->select();
+            $car_brand = db("car_series")->field("series,brand")->select();
+            return ajax_success("获取成功",array("car_series"=>$car_series,"car_brand"=>$car_brand));
+        }
         return view("goods_edit",["year"=>$year,"goods_brand"=>$goods_brand,"goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
