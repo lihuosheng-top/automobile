@@ -30,6 +30,8 @@ class Serve extends Controller{
      */
     public function add(){
 
+        $car = db("car_series")->distinct(true)->field(ltrim());
+        halt($car);
         return view("serve_add");
 
     }

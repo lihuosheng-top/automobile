@@ -367,6 +367,10 @@ Route::group("admin",[
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",
+    "express_index"=>"admin/Install/express_index",
+    "express_add"=>"admin/Install/express_add",
+    "express_edit"=>"admin/Install/express_edit",
+    "express_save"=>"admin/Install/express_save",
 
 
 

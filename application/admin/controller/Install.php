@@ -348,4 +348,53 @@ class Install extends Controller{
 
     }
 
+
+
+    /**
+     * 快递员列表
+     * 陈绪
+     */
+    public function express_index(){
+
+        return view("express_index");
+
+    }
+
+
+
+
+    /**
+     * 快递员添加
+     * 陈绪
+     */
+    public function express_add(){
+
+        return view("express_add");
+
+    }
+
+
+
+
+    /**
+     * 快递员入库
+     * 陈绪
+     */
+    public function express_save(){
+
+
+
+    }
+
+
+
+    /**
+     * 快递员添加
+     * 陈绪
+     */
+    public function express_edit(){
+
+        return view("express_edit");
+
+    }
 }
