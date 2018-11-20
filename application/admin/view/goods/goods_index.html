@@ -312,7 +312,7 @@
 								var year = myDate.getFullYear()+years;
 								var month = myDate.getMonth() + 1;
 								var date = myDate.getDate();
-								var present = year + '/' + month + '/' + date;
+								var present = year + '-' + month + '-' + date;
 				// 当上架时
 				if(status==1){
 					$.ajax({
@@ -464,7 +464,7 @@
 											var year = myDate.getFullYear()+parseInt($(child[i])[0].dataset.text);
 											var month = myDate.getMonth() + 1;
 											var date = myDate.getDate();
-											var present = year + '/' + month + '/' + date;
+											var present = year + '-' + month + '-' + date;
 											years.push(present);
 											all_price+=parseInt($(child[i])[0].dataset.title);
 											var shop=$(child[i])[0].dataset.value;

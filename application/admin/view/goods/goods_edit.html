@@ -801,12 +801,12 @@
 
 	<script type="text/javascript">
 		var dhtml = "";
-
+        var i=0;
 		dhtml += '<div>' +
 			' 			<div class="layui-form-item">                                                                                 ' +
 			' 				<label class="layui-form-label">规格名</label>                                                               ' +
 			' 				<div class="layui-input-inline guige_name">                                                                          ' +
-			' 					<select class="universal_standard_name" name="goods_standard_name[]">                                                                                 ' +
+			' 					<select class="universal_standard_name'+i+'" name="goods_standard_name[]">                                                                                 ' +
 			' 						<option value="0" selected="">请选择</option>                                                                    ' +
 			' 					</select>                                                                                             ' +
 			' 				</div>                                                                                                    '
@@ -857,9 +857,7 @@
 			' 				</div>                                                                                                    ' +
 			' 			</div>                                                                                                        ' +
 			'          </div>                                                                                                        ';
-	</script>
 
-	<script type="text/javascript">
 		layui.config({
 			base: "js/"
 		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
@@ -869,6 +867,28 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 			layedit.build('demo');
+			$.ajax({
+						type: "POST",
+						url : "{:url('admin/Goods/standard_name')}",
+						data: {},
+						success: function(data){
+							console.log(data);
+							var data= eval('(' + data + ')');
+							for(var i=0;i<data.data.length;i++){
+								var dhtml="";
+								dhtml='<option value="'+data.data[i].standard_name+'">'+data.data[i].standard_name+'</option>'
+								$(".universal_standard_name0").append(dhtml);
+							}
+							
+							form.render('select');
+						},
+						error:function (data) {
+							console.log(data)
+						}
+					});
+				form.render('select');
+
+			
 			// 点击添加页面
 			$(".add-sevice").click(function() {
 				layer.open({
@@ -892,15 +912,57 @@
 				}
 
 			});
-			//      点击通用添加规格项目添加页面
+				//      点击专用添加规格项目添加页面
 			$(".special_buts").click(function() {
+				i++;
+				console.log(i);
 				$("#special_content").append(dhtml);
+				$.ajax({
+						type: "POST",
+						url : "{:url('admin/Goods/standard_name')}",
+						data: {},
+						success: function(data){
+							console.log(data);
+							var data= eval('(' + data + ')');
+							for(var i=0;i<data.data.length;i++){
+								var dhtml="";
+								dhtml='<option value="'+data.data[i].standard_name+'">'+data.data[i].standard_name+'</option>'
+								$(".universal_standard_name").append(dhtml);
+							}
+							
+							form.render('select');
+						},
+						error:function (data) {
+							console.log(data)
+						}
+					});
 				form.render('select');
 
 			});
-			//      点击专用添加规格项目添加页面
+			//      点击通用添加规格项目添加页面
 			$(".general_buts").click(function() {
+				i++;
+				console.log(i);
 				$("#general_content").append(dhtml);
+				$.ajax({
+						type: "POST",
+						url : "{:url('admin/Goods/standard_name')}",
+						data: {},
+						success: function(data){
+							console.log(data);
+							var data= eval('(' + data + ')');
+							for(var i=0;i<data.data.length;i++){
+								var dhtml="";
+								dhtml='<option value="'+data.data[i].standard_name+'">'+data.data[i].standard_name+'</option>'
+								$(".universal_standard_name").append(dhtml);
+							}
+							
+							form.render('select');
+						},
+						error:function (data) {
+							console.log(data)
+						}
+					});
 				form.render('select');
 
 			});
@@ -940,6 +1002,7 @@
 						"goods_name": text
 					},
 					success: function(data) {
+							layer.msg('添加成功');
 						var data = eval('(' + data + ')');
 						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
 						//							console.log($(".universal_standard_name").children("option").val());
@@ -952,6 +1015,7 @@
 				});
 
 			});
+			
 			$("#special_content").on('click', ".guibtu-add", function() {
 				var text = $(this).parent().siblings(".add-names").children("input").val();
 				$.ajax({
@@ -961,6 +1025,7 @@
 						"goods_name": text
 					},
 					success: function(data) {
+							layer.msg('添加成功');
 						var data = eval('(' + data + ')');
 						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
 						$(".universal_standard_name").append(dhtmls);
@@ -972,15 +1037,16 @@
 				});
 
 			});
-			$("#special_content").on('click', "shuxingbtu-add", function() {
-				var text = $(this).parent().siblings(".add-names").children("input").val();
+			$(".shuxingbtu-add").on('click', function() {
+				var text = $(this).parent().siblings(".add-attributes").children("input").val();
 				$.ajax({
 					type: "POST",
-					url: "{:url('admin/Goods/name')}",
+					url: "{:url('admin/Goods/property_name')}",
 					data: {
-						"goods_name": text
+						"property_name": text
 					},
 					success: function(data) {
+							layer.msg('添加成功');
 						var data = eval('(' + data + ')');
 						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
 						$(".dedicated_property").append(dhtmls);
@@ -1048,6 +1114,41 @@
 			// 		
 		});
 	</script>
+
+<script type="text/javascript">
+	var time_id =new Array();
+	$.ajax({
+					type: "POST",
+					url: "{:url('admin/Goods/addss')}",
+					data: {
+					},
+					dataType: "json",
+					success: function(data) {
+						var datas=data.data
+						console.log(datas)
+						   for(var i=0;i<datas.car_series.length;i++){
+						   	console.log(datas.car_series[i]);
+		                	for(var j=0;j<datas.car_brand.length;j++){
+		                		console.log(datas.car_brand[j].brand);
+		                		if(datas.car_brand[j].brand==datas.car_series[i]){
+//		                			console.log(datas.car_brand[j].series);
+//		                			 time_id.push({"aaa":datas.car_brand[j].series,});
+		                		}
+//		                		else{
+//		                			console.log(111);
+//		                		}
+		                		
+		                	}
+		                }
+						   console.log(time_id);
+					},
+					error: function(data) {
+						console.log("错误");
+					}
+				});
+
+           
+</script>
 
 	{/block}
 
