@@ -25,15 +25,22 @@ class Shop extends Controller{
     }
 
 
-
     /**
-     * 店铺基本信息
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:店铺基本信息
+     **************************************
+     * @param $id
+     * @return \think\response\View
      */
     public function add($id){
-        $data =Db::name('store')->where('store_id',$id)->find();
-        return view("shop_add",['data'=>$data]);
-
+        $data =Db::name('store')->where('store_id',$id)->find(); //所有数据
+        $store_work_server_range =explode(',',$data['store_work_server_range']);//服务范围
+        foreach ($store_work_server_range as $k=>$v){
+            $range_data[] =Db::name('service_setting')->field('service_setting_name')->where('service_setting_id',$v)->find();
+        }
+        $store_city_address =explode(',',$data['store_city_address']);  //三级城市
+        return view("shop_add",['data'=>$data,'store_city_address'=>$store_city_address,'range_data'=>$range_data]);
     }
 
 }
