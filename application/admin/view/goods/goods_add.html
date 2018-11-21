@@ -36,6 +36,19 @@
 		font-size: 9px;
 		border-radius: 6px;
 	}
+	.car .layui-unselect{
+		display: none !important;
+	}
+	.car select{
+		    width: 100%;
+            height: 38px;
+	}
+	#city{
+		display: block;
+	}
+	#province{
+		display: block;
+	}
 </style>
 <style type="text/css">
 	
@@ -270,23 +283,16 @@
 			<div class="layui-form-item special noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-					<div class="layui-form-item">
+					<div class="layui-form-item car" >
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
-							<select name="dedicated_vehicle">
-								<option value="">请选择省</option>
-								<option value="浙江" selected="">浙江省</option>
-								<option value="你的工号">江西省</option>
-								<option value="你最喜欢的老师">福建省</option>
+							<select name="dedicated_vehicle" id="province">
+							 	<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_brand">
-								<option value="杭州">杭州</option>
-								<option value="宁波">宁波</option>
-								<option value="温州">温州</option>
-								<option value="温州">台州</option>
-								<option value="温州">绍兴</option>
+							<select name="goods_car_brand" id="city">
+								<option value="">请选择</option>
 							</select>
 						</div>
 					</div>
@@ -697,9 +703,52 @@ layedit.build('demo');
 		//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
 		var ue = UE.getEditor('editor');
 	</script>
-	<script>
-
+<script type="text/javascript">
+		
+		var times_id = new Array();
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Goods/add')}",
+			data: {},
+			dataType: "json",
+			success: function(data) {
+				var datas = data.data
+				for(var i = 0; i < datas.car_series.length; i++) {
+					var time_id = new Array();
+					for(var j = 0; j < datas.car_brand.length; j++) {
+						if(datas.car_brand[j].brand == datas.car_series[i].brand) {
+							time_id.push({"series": datas.car_brand[j].series});
+						}
+						
+				}
+					
+					times_id[datas.car_series[i].brand]=time_id;
+				}
+            var city_obj=times_id;
+            for (var key in city_obj)
+            {
+                $("#province").append("<option value='"+key+"'>"+key+"</option>");
+            }
+            $("#province").change(function(){
+                var now_province=$(this).val();
+                $("#city").html('<option value="">请选择车型</option>');
+//              var i=0;
+                for(var k in city_obj[now_province])
+                {
+                    var now_city=city_obj[now_province][k].series;
+                    $("#city").append('<option value="'+now_city+'">'+now_city+'</option>');
+                }
+            });
+			
+			
+		},
+		error: function(data) {
+			console.log("错误");
+		}
+		});
 	</script>
+
+	
 	{/block}
 
 </body>
