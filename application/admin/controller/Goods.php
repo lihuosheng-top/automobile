@@ -431,14 +431,19 @@ class Goods extends Controller{
 
         if($request->isPost()){
             $standard_name = $request->only(["goods_name"])["goods_name"];
-            $goods_name_bool = db("goods_standard_name")->insert(["standard_name"=>$standard_name]);
-            if($goods_name_bool){
-                $goods_name = db("standard_name")->order("id desc")->select();
-                return ajax_success("成功",$goods_name);
-            }else{
-                return ajax_error("失败",$standard_name);
-            }
+            $standard =  db("goods_standard_name")->where("standard_name",$standard_name)->select();
+            if(empty($standard)){
+                $goods_name_bool = db("goods_standard_name")->insert(["standard_name"=>$standard_name]);
+                if($goods_name_bool){
+                    $goods_name = db("goods_standard_name")->order("id desc")->select();
+                    return ajax_success("成功",$goods_name);
+                }else{
+                    return ajax_error("失败",$standard_name);
+                }
 
+            }else{
+                return ajax_error("已存在");
+            }
         }
 
     }
@@ -476,11 +481,17 @@ class Goods extends Controller{
 
         if($request->isPost()){
             $property_name = $request->only(["property_name"])["property_name"];
-            $bool = db("goods_property_name")->insert($property_name);
-            if($bool){
-                return ajax_success("成功");
+            $property = db("goods_property_name")->where("property_name",$property_name)->select();
+            if(empty($property)){
+                $bool = db("goods_property_name")->insert(["property_name"=>$property_name]);
+                if($bool){
+                    $goods_property_name = db("goods_property_name")->order("id desc")->select();
+                    return ajax_success("成功",$goods_property_name);
+                }else{
+                    return ajax_error("失败");
+                }
             }else{
-                return ajax_error("失败");
+                return ajax_error("已存在");
             }
         }
 
