@@ -476,11 +476,16 @@ class Goods extends Controller{
 
         if($request->isPost()){
             $property_name = $request->only(["property_name"])["property_name"];
-            $bool = db("goods_property_name")->insert($property_name);
-            if($bool){
-                return ajax_success("成功");
+            $property = db("goods_property_name")->where("property_name",$property_name)->select();
+            if(empty($property)){
+                $bool = db("goods_property_name")->insert(["property_name"=>$property_name]);
+                if($bool){
+                    return ajax_success("成功");
+                }else{
+                    return ajax_error("失败");
+                }
             }else{
-                return ajax_error("失败");
+                return ajax_error("已存在");
             }
         }
 
