@@ -534,8 +534,17 @@ class Goods extends Controller{
      */
     public function alipay(Request $request){
 
-        $data = $request->param();
-        halt($data);
+        $year = $request->only(["goods_year"])["goods_year"];
+        $goods_year = explode(",",$year);
+        $id = $request->only(["goods_id"])["goods_id"];
+        $goods_id = explode(",",$id);
+        $time = date("Y-m-d");
+        foreach ($goods_year as $key=>$value){
+            if($time == $value){
+                db("goods")->where("id",$goods_id[$key])->update();
+            }
+        }
+
 
     }
 
