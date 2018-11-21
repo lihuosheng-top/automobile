@@ -527,4 +527,17 @@ class Goods extends Controller{
 
 
 
+
+    /**
+     * 商品提交订单
+     * 陈绪
+     */
+    public function alipay(Request $request){
+
+        $data = $request->param();
+        halt($data);
+
+    }
+
+
 }
