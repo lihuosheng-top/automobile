@@ -146,7 +146,8 @@ Route::group("admin",[
     "goods_role_name"=>"admin/Goods/role_name",                                       //商品角色检测
     "goods_property_name"=>"admin/Goods/property_name",                                       //专用属性入库
     "goods_property_show"=>"admin/Goods/property_show",                                       //专用属性显示
-    "goods_alipay"=>"admin/Goods/alipay",                                       //专用属性显示
+    "goods_alipay"=>"admin/Goods/alipay",                                       //支付
+    "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付后调
 
 
 
