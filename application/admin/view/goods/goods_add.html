@@ -300,9 +300,7 @@
 						<label class="layui-form-label">属性</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_property" class="dedicated_property">
-								<option value="浙江" selected="">浙江省</option>
-								<option value="你的工号">江西省</option>
-								<option value="你最喜欢的老师">福建省</option>
+								<option value="请选择" selected="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline add-attribute " style="">
@@ -695,6 +693,28 @@ layedit.build('demo');
 			
 		
 			// end商品规格变化
+			
+					$.ajax({
+				type: "POST",
+				url: "{:url('admin/Goods/property_show')}",
+				data: {
+				},
+				success: function(data) {
+//						layer.msg(data.info);
+					var data = eval('(' + data + ')');
+					console.log(data.data);
+					for(var i=0;i<data.data.length;i++){
+						var dhtmls = '<option value="' + data.data[i].property_name+ '">' + data.data[i].property_name + '</option> ';
+						$(".dedicated_property").append(dhtmls);
+						
+					}
+					form.render('select');
+					
+				},
+				error: function(data) {
+					console.log(data)
+				}
+			});
 		})
 	</script>
 
