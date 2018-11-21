@@ -37,6 +37,9 @@
 		font-size: 9px;
 		border-radius: 6px;
 	}
+	.car .layui-unselect{
+		display: none !important;
+	}
 </style>
 <style type="text/css">
 	.title {
@@ -126,6 +129,12 @@
 	
 	.num-content {
 		overflow: hidden;
+	}
+	#city{
+		display: block;
+	}
+	#province{
+		display: block;
 	}
 	/* 数据库展现图片样式 */
 	
@@ -356,16 +365,16 @@
 			<div class="layui-form-item special noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-					<div class="layui-form-item">
+					<div class="layui-form-item car" >
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
-							<select name="dedicated_vehicle">
-								<option value=""></option>
+							<select name="dedicated_vehicle" id="province">
+							 	<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_brand">
-								<option value=""></option>
+							<select name="goods_car_brand" id="city">
+								<option value="">请选择</option>
 							</select>
 						</div>
 					</div>
@@ -510,7 +519,7 @@
 			<div class="layui-form-item special ">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-					<div class="layui-form-item">
+					<!--<div class="layui-form-item">
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_vehicle">
@@ -520,6 +529,19 @@
 						<div class="layui-input-inline">
 							<select name="goods_car_brand">
 								<option value="{$value.goods_car_brand}">{$value.goods_car_brand}</option>
+							</select>
+						</div>
+					</div>-->
+						<div class="layui-form-item car" >
+						<label class="layui-form-label">适用车型：</label>
+						<div class="layui-input-inline">
+							<select name="dedicated_vehicle" id="province">
+							 	<option value="">请选择</option>
+							</select>
+						</div>
+						<div class="layui-input-inline">
+							<select name="goods_car_brand" id="city">
+								<option value="">请选择</option>
 							</select>
 						</div>
 					</div>
@@ -598,20 +620,17 @@
 			<div class="layui-form-item special noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-					<div class="layui-form-item">
+			
+						<div class="layui-form-item car" >
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_vehicle" id="province">
-							
+							 	<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_brand">
-								<option value="杭州">杭州</option>
-								<option value="宁波">宁波</option>
-								<option value="温州">温州</option>
-								<option value="温州">台州</option>
-								<option value="温州">绍兴</option>
+							<select name="goods_car_brand" id="city">
+								<option value="">请选择</option>
 							</select>
 						</div>
 					</div>
