@@ -642,9 +642,7 @@
 						<label class="layui-form-label">属性</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_property" class="dedicated_property">
-								<option value="浙江" selected="">浙江省</option>
-								<option value="你的工号">江西省</option>
-								<option value="你最喜欢的老师">福建省</option>
+								<option value="0" selected="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline add-attribute " style="">
@@ -753,16 +751,13 @@
 		</div>
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label">上架年限：</label>
-			<div class="layui-input-block" id="">
 				<div class="layui-input-block">
 					<select name="goods_year_id">
-						<option value="" selected="">请选择</option>
 						{volist name="year" id="v"}
 						<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
 						{/volist}
 					</select>
 				</div>
-			</div>
 		</div>
 		<div class="layui-form-item" pane="">
 			<label class="layui-form-label">限购：</label>
@@ -817,11 +812,12 @@
 	<script type="text/javascript">
 		var dhtml = "";
 		var i = 0;
+		console.log(i);
 		dhtml += '<div>' +
 			' 			<div class="layui-form-item">                                                                                 ' +
 			' 				<label class="layui-form-label">规格名</label>                                                               ' +
 			' 				<div class="layui-input-inline guige_name">                                                                          ' +
-			' 					<select class="universal_standard_name' + i + '" name="goods_standard_name[]">                                                                                 ' +
+			' 					<select class="universal_standard_name" name="goods_standard_name[]">                                                                                 ' +
 			' 						<option value="0" selected="">请选择</option>                                                                    ' +
 			' 					</select>                                                                                             ' +
 			' 				</div>                                                                                                    '
@@ -916,7 +912,6 @@
 			// 商品规格变化
 			form.on('radio(guige)', function(data) {
 				var checkval = data.value;
-				console.log(checkval);
 				if(checkval == "通用") {
 					$(".general").removeClass("noshow");
 					$(".special").addClass("noshow");
@@ -928,16 +923,14 @@
 			});
 			//      点击专用添加规格项目添加页面
 			$(".special_buts").click(function() {
-				i++;
-				console.log(i);
 				$("#special_content").append(dhtml);
 				$.ajax({
 					type: "POST",
 					url: "{:url('admin/Goods/standard_name')}",
 					data: {},
 					success: function(data) {
-						console.log(data);
 						var data = eval('(' + data + ')');
+						console.log(data);
 						for(var i = 0; i < data.data.length; i++) {
 							var dhtml = "";
 							dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
@@ -955,16 +948,14 @@
 			});
 			//      点击通用添加规格项目添加页面
 			$(".general_buts").click(function() {
-				i++;
-				console.log(i);
 				$("#general_content").append(dhtml);
 				$.ajax({
 					type: "POST",
 					url: "{:url('admin/Goods/standard_name')}",
 					data: {},
 					success: function(data) {
-						console.log(data);
 						var data = eval('(' + data + ')');
+						console.log(data);
 						for(var i = 0; i < data.data.length; i++) {
 							var dhtml = "";
 							dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
@@ -1019,7 +1010,6 @@
 						layer.msg('添加成功');
 						var data = eval('(' + data + ')');
 						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
-						//							console.log($(".universal_standard_name").children("option").val());
 						$(".universal_standard_name").append(dhtmls);
 						form.render('select');
 					},
@@ -1060,11 +1050,16 @@
 						"property_name": text
 					},
 					success: function(data) {
-						layer.msg('添加成功');
+//						layer.msg(data.info);
 						var data = eval('(' + data + ')');
-						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
-						$(".dedicated_property").append(dhtmls);
-						form.render('select');
+						console.log(data)
+						layer.msg(data.info);
+						if(data.info=="成功"){
+							var dhtmls = '<option value="' + data.data[0].property_name+ '">' + data.data[0].property_name + '</option> ';
+							$(".dedicated_property").append(dhtmls);
+							form.render('select');
+						}
+						
 					},
 					error: function(data) {
 						console.log(data)
@@ -1072,7 +1067,46 @@
 				});
 
 			});
+			$.ajax({
+				type: "POST",
+				url: "{:url('admin/Goods/property_show')}",
+				data: {
+				},
+				success: function(data) {
+//						layer.msg(data.info);
+					var data = eval('(' + data + ')');
+					console.log(data.data);
+					for(var i=0;i<data.data.length;i++){
+						var dhtmls = '<option value="' + data.data[i].property_name+ '">' + data.data[i].property_name + '</option> ';
+						$(".dedicated_property").append(dhtmls);
+						
+					}
+					form.render('select');
+					
+				},
+				error: function(data) {
+					console.log(data)
+				}
+			});
+          $.ajax({
+					type: "POST",
+					url: "{:url('admin/Goods/standard_name')}",
+					data: {},
+					success: function(data) {
+						var data = eval('(' + data + ')');
+						for(var i = 0; i < data.data.length; i++) {
+							var dhtml = "";
+							dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
+							$(".universal_standard_name").append(dhtml);
+						}
 
+						form.render('select');
+					},
+					error: function(data) {
+						console.log(data)
+					}
+				});
+				form.render('select');
 			// end商品规格变化
 		})
 	</script>
@@ -1127,11 +1161,13 @@
 			}
 			// 		
 		});
+
+
 	</script>
 	
 
 	<script type="text/javascript">
-		
+//		车型循环
 		var times_id = new Array();
 		$.ajax({
 			type: "POST",
