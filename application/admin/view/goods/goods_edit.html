@@ -299,16 +299,12 @@
 			<div class="layui-input-block">
 				{if $value.goods_standard == "通用"}
 				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige" checked="">
-				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
-				 {/if} 
-				 {if $value.goods_standard == "专用"}
+				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> {/if} {if $value.goods_standard == "专用"}
 				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
-				<input type="radio" checked="" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> 
-				{else}
-				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige" >
-				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
-				{/if}
-				
+				<input type="radio" checked="" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> {else}
+				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
+				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> {/if}
+
 			</div>
 		</div>
 		<div>
@@ -450,8 +446,7 @@
 					</div>
 				</div>
 			</div>
-			{/if}
-			{if $value.goods_standard == "专用"}
+			{/if} {if $value.goods_standard == "专用"}
 			<div class="layui-form-item general noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
@@ -590,7 +585,7 @@
 
 			</div>
 			{else}
-				<div class="layui-form-item general noshow">
+			<div class="layui-form-item general noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
 					<div id="general_content"></div>
@@ -600,17 +595,14 @@
 				</div>
 
 			</div>
-			    <div class="layui-form-item special noshow">
+			<div class="layui-form-item special noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
 					<div class="layui-form-item">
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
-							<select name="dedicated_vehicle">
-								<option value="">请选择省</option>
-								<option value="浙江" selected="">浙江省</option>
-								<option value="你的工号">江西省</option>
-								<option value="你最喜欢的老师">福建省</option>
+							<select name="dedicated_vehicle" id="province">
+							
 							</select>
 						</div>
 						<div class="layui-input-inline">
@@ -652,7 +644,7 @@
 				</div>
 
 			</div>
-     
+
 			{/if}
 
 		</div>
@@ -801,12 +793,12 @@
 
 	<script type="text/javascript">
 		var dhtml = "";
-        var i=0;
+		var i = 0;
 		dhtml += '<div>' +
 			' 			<div class="layui-form-item">                                                                                 ' +
 			' 				<label class="layui-form-label">规格名</label>                                                               ' +
 			' 				<div class="layui-input-inline guige_name">                                                                          ' +
-			' 					<select class="universal_standard_name'+i+'" name="goods_standard_name[]">                                                                                 ' +
+			' 					<select class="universal_standard_name' + i + '" name="goods_standard_name[]">                                                                                 ' +
 			' 						<option value="0" selected="">请选择</option>                                                                    ' +
 			' 					</select>                                                                                             ' +
 			' 				</div>                                                                                                    '
@@ -868,27 +860,26 @@
 				$ = layui.jquery;
 			layedit.build('demo');
 			$.ajax({
-						type: "POST",
-						url : "{:url('admin/Goods/standard_name')}",
-						data: {},
-						success: function(data){
-							console.log(data);
-							var data= eval('(' + data + ')');
-							for(var i=0;i<data.data.length;i++){
-								var dhtml="";
-								dhtml='<option value="'+data.data[i].standard_name+'">'+data.data[i].standard_name+'</option>'
-								$(".universal_standard_name0").append(dhtml);
-							}
-							
-							form.render('select');
-						},
-						error:function (data) {
-							console.log(data)
-						}
-					});
-				form.render('select');
+				type: "POST",
+				url: "{:url('admin/Goods/standard_name')}",
+				data: {},
+				success: function(data) {
+					console.log(data);
+					var data = eval('(' + data + ')');
+					for(var i = 0; i < data.data.length; i++) {
+						var dhtml = "";
+						dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
+						$(".universal_standard_name0").append(dhtml);
+					}
 
-			
+					form.render('select');
+				},
+				error: function(data) {
+					console.log(data)
+				}
+			});
+			form.render('select');
+
 			// 点击添加页面
 			$(".add-sevice").click(function() {
 				layer.open({
@@ -912,30 +903,30 @@
 				}
 
 			});
-				//      点击专用添加规格项目添加页面
+			//      点击专用添加规格项目添加页面
 			$(".special_buts").click(function() {
 				i++;
 				console.log(i);
 				$("#special_content").append(dhtml);
 				$.ajax({
-						type: "POST",
-						url : "{:url('admin/Goods/standard_name')}",
-						data: {},
-						success: function(data){
-							console.log(data);
-							var data= eval('(' + data + ')');
-							for(var i=0;i<data.data.length;i++){
-								var dhtml="";
-								dhtml='<option value="'+data.data[i].standard_name+'">'+data.data[i].standard_name+'</option>'
-								$(".universal_standard_name").append(dhtml);
-							}
-							
-							form.render('select');
-						},
-						error:function (data) {
-							console.log(data)
+					type: "POST",
+					url: "{:url('admin/Goods/standard_name')}",
+					data: {},
+					success: function(data) {
+						console.log(data);
+						var data = eval('(' + data + ')');
+						for(var i = 0; i < data.data.length; i++) {
+							var dhtml = "";
+							dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
+							$(".universal_standard_name").append(dhtml);
 						}
-					});
+
+						form.render('select');
+					},
+					error: function(data) {
+						console.log(data)
+					}
+				});
 				form.render('select');
 
 			});
@@ -945,24 +936,24 @@
 				console.log(i);
 				$("#general_content").append(dhtml);
 				$.ajax({
-						type: "POST",
-						url : "{:url('admin/Goods/standard_name')}",
-						data: {},
-						success: function(data){
-							console.log(data);
-							var data= eval('(' + data + ')');
-							for(var i=0;i<data.data.length;i++){
-								var dhtml="";
-								dhtml='<option value="'+data.data[i].standard_name+'">'+data.data[i].standard_name+'</option>'
-								$(".universal_standard_name").append(dhtml);
-							}
-							
-							form.render('select');
-						},
-						error:function (data) {
-							console.log(data)
+					type: "POST",
+					url: "{:url('admin/Goods/standard_name')}",
+					data: {},
+					success: function(data) {
+						console.log(data);
+						var data = eval('(' + data + ')');
+						for(var i = 0; i < data.data.length; i++) {
+							var dhtml = "";
+							dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
+							$(".universal_standard_name").append(dhtml);
 						}
-					});
+
+						form.render('select');
+					},
+					error: function(data) {
+						console.log(data)
+					}
+				});
 				form.render('select');
 
 			});
@@ -1002,7 +993,7 @@
 						"goods_name": text
 					},
 					success: function(data) {
-							layer.msg('添加成功');
+						layer.msg('添加成功');
 						var data = eval('(' + data + ')');
 						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
 						//							console.log($(".universal_standard_name").children("option").val());
@@ -1015,7 +1006,7 @@
 				});
 
 			});
-			
+
 			$("#special_content").on('click', ".guibtu-add", function() {
 				var text = $(this).parent().siblings(".add-names").children("input").val();
 				$.ajax({
@@ -1025,7 +1016,7 @@
 						"goods_name": text
 					},
 					success: function(data) {
-							layer.msg('添加成功');
+						layer.msg('添加成功');
 						var data = eval('(' + data + ')');
 						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
 						$(".universal_standard_name").append(dhtmls);
@@ -1046,7 +1037,7 @@
 						"property_name": text
 					},
 					success: function(data) {
-							layer.msg('添加成功');
+						layer.msg('添加成功');
 						var data = eval('(' + data + ')');
 						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
 						$(".dedicated_property").append(dhtmls);
@@ -1114,41 +1105,57 @@
 			// 		
 		});
 	</script>
+	  <script type="text/javascript">
+        $(function(){
+            //页面加载完毕后开始执行的事件
+            var city_json='{"江苏":["南京","常州"],"河南":["南阳","安阳"]}';
+            var city_obj=eval('('+city_json+')');
+            for (var key in city_obj)
+            {
+                $("#province").append("<option value='"+key+"'>"+key+"</option>");
+            }
+            $("#province").change(function(){
+                var now_province=$(this).val();
+                $("#city").html('<option value="">请选择城市</option>');
+                for(var k in city_obj[now_province])
+                {
+                    var now_city=city_obj[now_province][k];
+                    $("#city").append('<option value="'+now_city+'">'+now_city+'</option>');
+                }
+            });
+        });
+    </script>
 
-<script type="text/javascript">
-	var time_id =new Array();
-	$.ajax({
-					type: "POST",
-					url: "{:url('admin/Goods/addss')}",
-					data: {
-					},
-					dataType: "json",
-					success: function(data) {
-						var datas=data.data
-						console.log(datas)
-						   for(var i=0;i<datas.car_series.length;i++){
-						   	console.log(datas.car_series[i]);
-		                	for(var j=0;j<datas.car_brand.length;j++){
-		                		console.log(datas.car_brand[j].brand);
-		                		if(datas.car_brand[j].brand==datas.car_series[i]){
-//		                			console.log(datas.car_brand[j].series);
-//		                			 time_id.push({"aaa":datas.car_brand[j].series,});
-		                		}
-//		                		else{
-//		                			console.log(111);
-//		                		}
-		                		
-		                	}
-		                }
-						   console.log(time_id);
-					},
-					error: function(data) {
-						console.log("错误");
-					}
-				});
-
-           
-</script>
+	<script type="text/javascript">
+		
+		var times_id = new Array();
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Goods/add')}",
+			data: {},
+			dataType: "json",
+			success: function(data) {
+				var datas = data.data
+				for(var i = 0; i < datas.car_series.length; i++) {
+					var time_id = new Array();
+					for(var j = 0; j < datas.car_brand.length; j++) {
+						if(datas.car_brand[j].brand == datas.car_series[i].brand) {
+							time_id.push({"series": datas.car_brand[j].series});
+						}
+						
+				}
+					
+					times_id[datas.car_series[i].brand]=time_id;
+				}
+				console.log(times_id);
+			
+			
+		},
+		error: function(data) {
+			console.log("错误");
+		}
+		});
+	</script>
 
 	{/block}
 

@@ -114,7 +114,7 @@
 					<input type="hidden" name="" id="year" value="" />
 					<div><span style="width: 100px; text-align: right;display: inline-block;">店铺名称：</span><input type="text" name="" id="shop" value="xxxxxx旗舰店"  style="border: 0; background: #fff;" disabled="disabled" /></div>
 					<div><span style="width: 100px; text-align: right; display: inline-block;">商品总数：</span><input type="text" name="" id="num" value="20个"  style="border: 0; background: #fff;" disabled="disabled"/></div>
-					<div><span style="width: 100px; text-align: right; display: inline-block;">合计：</span><input type="text" name="" id="price" value="￥2000.00"  style="border: 0; color: red; background: #fff;" disabled="disabled"/></div>
+					<div><span style="width: 100px; text-align: right; display: inline-block;">合计：</span><span style="color: red;">￥</span><input type="text" name="" id="price" value="2000.00"  style="border: 0; color: red; background: #fff;" disabled="disabled"/></div>
 					<div class="buts">
 						<button class="layui-btn layui-btn-primary layui-btn-radius close-btus" type="button">取消</button>
 						 <button class="layui-btn layui-btn-normal layui-btn-radius" type="submit">确定</button>
@@ -346,7 +346,7 @@
 											 layer.close(layer.index);
                        $(".tanchuang").removeClass("noshow");
  											 $("#shop").val(shop);
-											 $("#price").val("¥"+price);
+											 $("#price").val(price);
 											 $("#num").val("1");
 											 $("#good-id").val(id);
 											 $("#year").val(present);
@@ -500,7 +500,7 @@
 											 layer.close(layer.index);
                        $(".tanchuang").removeClass("noshow");
  											 $("#shop").val(shop);
-											 $("#price").val("¥"+all_price);
+											 $("#price").val(all_price);
 											 $("#num").val(child.length);
 											 $("#good-id").val(data_id);
 											 $("#year").val(years);
