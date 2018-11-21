@@ -81,7 +81,7 @@ class Order extends Controller{
         $t = date('Y-m-d H:i:s', $time_max_data + 1 * 24 * 60 * 60);
         $timemax = strtotime($t);                       //结束时间
 
-/*
+
         if (empty($keywords)) { //空
             if ((!empty($goods_name)) || (!empty($phone_num)) || (!empty($order_status)) || (!empty($timemin)) || (!empty($timemax))) {
                 $order_parts_data = Db::table('tb_order_parts')
@@ -117,11 +117,11 @@ class Order extends Controller{
                     ->join("tb_user", "tb_order_parts.user_id=tb_user.id", 'left')
                     ->join("tb_goods", "tb_order_parts.goods_id=tb_goods.id", "left")
                     ->where("tb_order_parts.parts_order_number", "like", "%" . $keywords . "%")
-                    //->whereOr("tb_goods.goods_name", "like", "%" . $goods_name . "%")
-                   //->whereOr("tb_user.phone_num", "like", "%" . $phone_num . "%")
-                  // ->whereOr("tb_order_parts.status", "like", "%" . $order_status . "%")
-                   // ->whereOr("tb_order_parts.order_create_time", "order_create_time>{$timemin} and order_create_time< {$timemax}")
-                    //->order('tb_order_parts.order_create_time', 'desc')
+                    ->whereOr("tb_goods.goods_name", "like", "%" . $goods_name . "%")
+                    ->whereOr("tb_user.phone_num", "like", "%" . $phone_num . "%")
+                    ->whereOr("tb_order_parts.status", "like", "%" . $order_status . "%")
+                    ->whereOr("tb_order_parts.order_create_time", "order_create_time>{$timemin} and order_create_time< {$timemax}")
+                    ->order('tb_order_parts.order_create_time', 'desc')
                     ->paginate(3, false, [
                         'query' => request()->param(),
                     ]);
@@ -144,7 +144,8 @@ class Order extends Controller{
         }
             return view('index', ['order_parts_data' => $order_parts_data]);
         }
-*/
+
+/*
         if(empty($keywords)){ //空
 
             if ((!empty($goods_name))&& empty($phone_num) && empty($order_status) && empty($timemin) && empty($timemax)) {
@@ -157,6 +158,7 @@ class Order extends Controller{
                     ->paginate(3 ,false, [
                         'query' => request()->param(),
                     ]);
+                dump($order_parts_data);
                 return view('index',['order_parts_data'=>$order_parts_data]);
 
 
@@ -212,7 +214,7 @@ class Order extends Controller{
             }
 
         }
-
+*/
     }
 
 
