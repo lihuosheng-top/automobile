@@ -68,7 +68,7 @@ class Goods extends Controller{
      * 商品添加页面
      * 陈绪
      */
-    public function add($pid=0){
+    public function add(Request $request,$pid=0){
         $goods_list = [];
         $goods_brand = [];
         if($pid == 0){
@@ -76,6 +76,11 @@ class Goods extends Controller{
             $goods_brand = getSelectList("brand");
         }
         $year = db("year")->select();
+        if($request->isPost()){
+            $car_series = db("car_series")->distinct(true)->field("brand")->select();
+            $car_brand = db("car_series")->field("series,brand")->select();
+            return ajax_success("获取成功",array("car_series"=>$car_series,"car_brand"=>$car_brand));
+        }
         return view("goods_add",["year"=>$year,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
@@ -163,6 +168,11 @@ class Goods extends Controller{
         $goods_list = getSelectList("goods_type");
         $goods_brand = getSelectList("brand");
         $year = db("year")->select();
+        if($request->isPost()){
+            $car_series = db("car_series")->distinct(true)->field("brand")->select();
+            $car_brand = db("car_series")->field("series,brand")->select();
+            return ajax_success("获取成功",array("car_series"=>$car_series,"car_brand"=>$car_brand));
+        }
         return view("goods_edit",["year"=>$year,"goods_brand"=>$goods_brand,"goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
@@ -236,7 +246,6 @@ class Goods extends Controller{
         if ($request->isPost()) {
             $id = $request->only(["id"])["id"];
             $goods_data = $request->param();
-            halt($goods_data);
             if(!empty($goods_data["goods_standard_name"])){
                 $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
                 $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
@@ -422,7 +431,7 @@ class Goods extends Controller{
 
         if($request->isPost()){
             $standard_name = $request->only(["goods_name"])["goods_name"];
-            $goods_name_bool = db("standard_name")->insert(["standard_name"=>$standard_name]);
+            $goods_name_bool = db("goods_standard_name")->insert(["standard_name"=>$standard_name]);
             if($goods_name_bool){
                 $goods_name = db("standard_name")->order("id desc")->select();
                 return ajax_success("成功",$goods_name);
@@ -445,9 +454,52 @@ class Goods extends Controller{
     public function standard_name(Request $request){
 
         if($request->isPost()){
-            $goods_name = db("standard_name")->order("id desc")->select();
+            $goods_name = db("goods_standard_name")->order("id desc")->select();
             if($goods_name){
                 return ajax_success("获取成功",$goods_name);
+            }else{
+                return ajax_error("失败");
+            }
+
+        }
+
+    }
+
+
+
+
+    /**
+     * 专用商品属性入库
+     * 陈绪
+     */
+    public function property_name(Request $request){
+
+        if($request->isPost()){
+            $property_name = $request->only(["property_name"])["property_name"];
+            $bool = db("goods_property_name")->insert($property_name);
+            if($bool){
+                return ajax_success("成功");
+            }else{
+                return ajax_error("失败");
+            }
+        }
+
+    }
+
+
+
+
+
+    /**
+     * 专用商品属性显示
+     * 陈绪
+     */
+    public function property_show(Request $request){
+
+        if($request->isPost()){
+            $property_name = db("goods_property_name")->order("id desc")->select();
+            if($property_name){
+                return ajax_success("获取成功",$property_name);
             }else{
                 return ajax_error("失败");
             }
@@ -473,6 +525,28 @@ class Goods extends Controller{
 
     }
 
+
+
+
+    /**
+     * 商品提交订单
+     * 陈绪
+     */
+    public function alipay(Request $request){
+
+        $year = $request->only(["goods_year"])["goods_year"];
+        $goods_year = explode(",",$year);
+        $id = $request->only(["goods_id"])["goods_id"];
+        $goods_id = explode(",",$id);
+        $time = date("Y-m-d");
+        foreach ($goods_year as $key=>$value){
+            if($time == $value){
+                db("goods")->where("id",$goods_id[$key])->update();
+            }
+        }
+
+
+    }
 
 
 }

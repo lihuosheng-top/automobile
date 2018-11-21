@@ -144,7 +144,9 @@ Route::group("admin",[
     "goods_name"=>"admin/Goods/name",                                                   //商品规格名添加
     "goods_standard_name"=>"admin/Goods/standard_name",                                       //商品规格名显示
     "goods_role_name"=>"admin/Goods/role_name",                                       //商品角色检测
-
+    "goods_property_name"=>"admin/Goods/property_name",                                       //专用属性入库
+    "goods_property_show"=>"admin/Goods/property_show",                                       //专用属性显示
+    "goods_alipay"=>"admin/Goods/alipay",                                       //专用属性显示
 
 
 
@@ -367,6 +369,10 @@ Route::group("admin",[
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",
+    "express_index"=>"admin/Install/express_index",
+    "express_add"=>"admin/Install/express_add",
+    "express_edit"=>"admin/Install/express_edit",
+    "express_save"=>"admin/Install/express_save",
 
 
 

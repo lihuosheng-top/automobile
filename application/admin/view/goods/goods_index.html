@@ -109,10 +109,12 @@
 
 			<div class="dom">
 				<h2 align="center">提交订单</h2>
-				<form action="" method="post" style="text-align: center;">
-					<div><span style="width: 100px; text-align: right;display: inline-block;">店铺名称：</span><input type="text" name="" id="shop" value="xxxxxx旗舰店"  style="border: 0; background: #fff;" disabled="disabled" /></div>
-					<div><span style="width: 100px; text-align: right; display: inline-block;">商品总数：</span><input type="text" name="" id="num" value="20个"  style="border: 0; background: #fff;" disabled="disabled"/></div>
-					<div><span style="width: 100px; text-align: right; display: inline-block;">合计：</span><input type="text" name="" id="price" value="￥2000.00"  style="border: 0; color: red; background: #fff;" disabled="disabled"/></div>
+				<form action="{:url('admin/Goods/alipay')}" method="post" style="text-align: center;">
+					<input type="hidden" name="goods_id" id="good-id" value="" />
+					<input type="hidden" name="goods_year" id="year" value="" />
+					<div><span style="width: 100px; text-align: right;display: inline-block;">店铺名称：</span><input type="text" name="goods_shop" id="shop" value="xxxxxx旗舰店"  style="border: 0; background: #fff;" readonly/></div>
+					<div><span style="width: 100px; text-align: right; display: inline-block;">商品总数：</span><input type="text" name="goods_number" id="num" value="20个"  style="border: 0; background: #fff;" readonly/></div>
+					<div><span style="width: 100px; text-align: right; display: inline-block;">合计：</span><span style="color: red;">￥</span><input type="text" name="goods_money" id="price" value="2000.00"  style="border: 0; color: red; background: #fff;" readonly/></div>
 					<div class="buts">
 						<button class="layui-btn layui-btn-primary layui-btn-radius close-btus" type="button">取消</button>
 						 <button class="layui-btn layui-btn-normal layui-btn-radius" type="submit">确定</button>
@@ -302,7 +304,15 @@
                 var id=$(this).data("id");
                 var status = $(this).val();
                 var price=$(this).data("title");
-				var shop=$(this).data("value");
+				        var shop=$(this).data("value");
+								var years=$(this).data("text");
+								// 年限转化函数
+							
+								var myDate = new Date();
+								var year = myDate.getFullYear()+years;
+								var month = myDate.getMonth() + 1;
+								var date = myDate.getDate();
+								var present = year + '-' + month + '-' + date;
 				// 当上架时
 				if(status==1){
 					$.ajax({
@@ -334,25 +344,13 @@
 											  btn: ['确定付费','取消付费！'] //按钮
 											}, function(){
 											 layer.close(layer.index);
-//											 	$.ajax({
-//												type: "POST",
-//												url: "{:url('admin/Goods/status')}",
-//												data: {"id":id},
-//												success: function(data){
-//													console.log(data)
-//												},
-//												error:function (data) {
-//													console.log(data)
-//												}
-//											});
-											
-//											var str = "{:url('admin/Goods/pay',array('id'=>'P_id'))}"; //先将变量以字符串的形式带入U函数中
-//											str1 =  str.replace("P_id",id); //将代替变量的字符串用真实变量替换掉，OK搞定！
-//											window.location.href =str1 ;
-                                            $(".tanchuang").removeClass("noshow");
+                       $(".tanchuang").removeClass("noshow");
  											 $("#shop").val(shop);
-											 $("#price").val("¥"+price);
+											 $("#price").val(price);
 											 $("#num").val("1");
+											 $("#good-id").val(id);
+											 $("#year").val(present);
+											 
 											});
 
 								}
@@ -406,6 +404,7 @@
 
 				//点击操作确认按钮
 						var data_id = [];
+						var years=[];
 						$("#opration_btu").click(function() {
 							var opration_val=$(".opation select option:selected").val();
 							if(opration_val==0){
@@ -460,6 +459,13 @@
 								var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
 										for (var i = 0; i < child.length; i++) {
 											data_id.push($(child[i])[0].dataset.id);
+											// 年限转化函数
+											var myDate = new Date();
+											var year = myDate.getFullYear()+parseInt($(child[i])[0].dataset.text);
+											var month = myDate.getMonth() + 1;
+											var date = myDate.getDate();
+											var present = year + '-' + month + '-' + date;
+											years.push(present);
 											all_price+=parseInt($(child[i])[0].dataset.title);
 											var shop=$(child[i])[0].dataset.value;
 										}
@@ -492,25 +498,13 @@
 											  btn: ['确定付费','取消付费！'] //按钮
 											}, function(){
 											 layer.close(layer.index);
-//											 	$.ajax({
-//												type: "POST",
-//												url: "{:url('admin/Goods/status')}",
-//												data: {"id":id},
-//												success: function(data){
-//													console.log(data)
-//												},
-//												error:function (data) {
-//													console.log(data)
-//												}
-//											});
-											
-//											var str = "{:url('admin/Goods/pay',array('id'=>'P_id'))}"; //先将变量以字符串的形式带入U函数中
-//											str1 =  str.replace("P_id",id); //将代替变量的字符串用真实变量替换掉，OK搞定！
-//											window.location.href =str1 ;
-                                            $(".tanchuang").removeClass("noshow");
+                       $(".tanchuang").removeClass("noshow");
  											 $("#shop").val(shop);
-											 $("#price").val("¥"+all_price);
+											 $("#price").val(all_price);
 											 $("#num").val(child.length);
+											 $("#good-id").val(data_id);
+											 $("#year").val(years);
+
 											});
 
 								}
