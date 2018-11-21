@@ -11,11 +11,11 @@ html, body {
     user-select: none;
 }
 .clearfix::after{content: ''; display: block; clear: both;}
-.spr{background: url(../image/spr.png) no-repeat;background-size: 8rem 6rem;}
+.spr{background: url(../image/spr.png) no-repeat center center;background-size: 8rem 6rem;}
 .bgw{background-color: #fff;}
 .mgr0{margin-right: 0 !important;}
 .br0{border-right: 0 !important;}
-
+[v-cloak]{display: none;}
 .footer{
     position: fixed;
     left: 0;
@@ -44,25 +44,25 @@ html, body {
 }
 .footer .icon_home{
     display: inline-block;
-    width: .4rem;
-    height: .4rem;
-    background-position: 0 -2.3rem;
+    width: .5rem;
+    height: .5rem;
+    background-position: 0 -2.25rem;
 }
 .footer .icon_classify{
     display: inline-block;
-    width: .4rem;
-    height: .4rem;
-    background-position: -.5rem -2.3rem;
+    width: .5rem;
+    height: .5rem;
+    background-position: -.45rem -2.25rem;
 }
 .footer .icon_cart{
     display: inline-block;
-    width: .4rem;
-    height: .4rem;
-    background-position: -1rem -2.3rem;
+    width: .5rem;
+    height: .5rem;
+    background-position: -.95rem -2.25rem;
 }
 .footer .icon_my{
     display: inline-block;
-    width: .4rem;
-    height: .4rem;
-    background-position: -1.5rem -2.3rem;
+    width: .5rem;
+    height: .5rem;
+    background-position: -1.45rem -2.25rem;
 }

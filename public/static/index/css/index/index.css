@@ -1,7 +1,11 @@
+html{
+    background-color: #fff;
+}
 .wrapper{
     position: relative;
     width: 100%;
     margin-bottom: 1rem;
+    background-color: #fff;
 }
 .hidden{
     overflow: hidden;
@@ -140,59 +144,59 @@
     color: #333;
 }
 .classify_service li .order{
-    background-position: -6rem -4rem;
-    width: .8rem;
-    height: .8rem;
+    background-position: -5.95rem -3.95rem;
+    width: .9rem;
+    height: .9rem;
 }
 .classify_service li .parts{
-    background-position: -7rem -4rem;
-    width: .8rem;
-    height: .8rem;
+    background-position: -6.95rem -3.95rem;
+    width: .9rem;
+    height: .9rem;
 }
 .classify_service li .daily{
-    background-position: -2.4rem 0;
-    width: .8rem;
-    height: .8rem;
+    background-position: -2.35rem -5.05rem;
+    width: .9rem;
+    height: .9rem;
 }
 .classify_service li .agency{
-    background-position: -2.4rem -5.1rem;
-    width: .8rem;
-    height: .8rem;
+    background-position: -3.25rem -5.05rem;
+    width: .9rem;
+    height: .9rem;
 }
 .classify_service li .lease{
-    background-position: -3.3rem -5.1rem;
-    width: .8rem;
-    height: .8rem;
+    background-position: -4.25rem -5.05rem;
+    width: .9rem;
+    height: .9rem;
 }
 .classify_service li .mortgage{
-    background-position: -4.3rem -5.1rem;
-    width: .8rem;
-    height: .8rem;
+    background-position: -5.2rem -5.05rem;
+    width: .9rem;
+    height: .9rem;
 }
 .classify_service li .insurance{
-    background-position: -6.2rem -5.1rem;
-    width: .8rem;
-    height: .8rem;
+    background-position: -6.15rem -5.05rem;
+    width: .9rem;
+    height: .9rem;
 }
 .classify_service li .designated_driving{
-    background-position: -7.15rem -5.1rem;
-    width: .8rem;
-    height: .8rem;
+    background-position: -7.1rem -5.05rem;
+    width: .9rem;
+    height: .9rem;
 }
 .classify_service li .used_car{
-    background-position: -2.4rem 0;
-    width: .8rem;
-    height: .8rem;
+    background-position: -2.35rem .05rem;
+    width: .9rem;
+    height: .9rem;
 }
 .classify_service li .assess{
-    background-position: -3.5rem 0;
-    width: .8rem;
-    height: .8rem;
+    background-position: -3.45rem .05rem;
+    width: .9rem;
+    height: .9rem;
 }
 .classify_service li .more{
-    background-position: -5.1rem -4rem;
-    width: .63rem;
-    height: .62rem;
+    background-position: -5.05rem -3.95rem;
+    width: .73rem;
+    height: .72rem;
 }
 .banner{
     width: 100%;
@@ -358,7 +362,7 @@
     background-color: rgba(0, 0, 0, .5);
 }
 .footer .icon_home{
-    background-position: 0 -1.8rem;
+    background-position: .05rem -1.75rem;
 }
 
 /* 添加车 start */

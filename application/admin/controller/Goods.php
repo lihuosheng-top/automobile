@@ -54,7 +54,10 @@ class Goods extends Controller{
             ]);
         }else{
             $goods = db("goods")->paginate(10);
-            return view("goods_index",["goods"=>$goods]);
+            $year = db("year")->select();
+            $user_id = Session::get("user_id");
+            $role_name = db("admin")->where("id",$user_id)->select();
+            return view("goods_index",["goods"=>$goods,"year"=>$year,"role_name"=>$role_name]);
         }
 
     }
@@ -72,8 +75,11 @@ class Goods extends Controller{
             $goods_list = getSelectList("goods_type");
             $goods_brand = getSelectList("brand");
         }
-        return view("goods_add",["goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
+        $year = db("year")->select();
+        return view("goods_add",["year"=>$year,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
+
+
 
     /**
      * [商品添加]
@@ -84,12 +90,22 @@ class Goods extends Controller{
     {
         if ($request->isPost()) {
             $goods_data = $request->param();
-            $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
-            $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
-            $goods_data["goods_standard_name"] = $goods_standard_name;
-            $goods_data["goods_standard_value"] = $goods_standard_value;
-            $goods_delivery = implode(",",$goods_data["goods_delivery"]);
-            $goods_data["goods_delivery"] = $goods_delivery;
+            if($goods_data["goods_standard"] == "通用"){
+                unset($goods_data["dedicated_vehicle"]);
+                unset($goods_data["goods_car_brand"]);
+                unset($goods_data["dedicated_property"]);
+            }
+            if(!empty($goods_data["goods_standard_name"])){
+                $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
+                $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
+                $goods_data["goods_standard_name"] = $goods_standard_name;
+                $goods_data["goods_standard_value"] = $goods_standard_value;
+            }
+            if(!empty($goods_data["goods_delivery"])){
+                $goods_delivery = implode(",",$goods_data["goods_delivery"]);
+                $goods_data["goods_delivery"] = $goods_delivery;
+            }
+
             //图片添加
             $show_images = $request->file("goods_show_images");
 
@@ -97,7 +113,6 @@ class Goods extends Controller{
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
             }
-
             $bool = db("goods")->insert($goods_data);
             if ($bool) {
                 //取出图片在存到数据库
@@ -146,8 +161,9 @@ class Goods extends Controller{
             }
         }
         $goods_list = getSelectList("goods_type");
-        $goods_brand = db("brand")->select();
-        return view("goods_edit",["goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
+        $goods_brand = getSelectList("brand");
+        $year = db("year")->select();
+        return view("goods_edit",["year"=>$year,"goods_brand"=>$goods_brand,"goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
 
@@ -157,10 +173,10 @@ class Goods extends Controller{
      */
     public function images(Request $request){
         if($request->isPost()){
-            $id = $request->only(['id'])['id'];
-            if(!empty($id)){
-                $image = db("goods")->where("id",$id)->field("goods_show_images")->find();
-                $bool = db("goods")->where("id",$id)->update(["goods_show_images"=>null]);
+            $id = $request->param();
+            if(!empty($id["id"])){
+                $image = db("goods")->where("id",$id["id"])->field("goods_show_images")->find();
+                $bool = db("goods")->where("id",$id["id"])->update(["goods_show_images"=>null]);
                 if ($bool){
                     if(!empty($image)){
                         unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$image['goods_show_images']);
@@ -191,24 +207,18 @@ class Goods extends Controller{
     public function del(Request $request){
         $id = $request->only(["id"])["id"];
         $image_url = db("goods_images")->where("goods_id", $id)->field("goods_images,id")->select();
-        $goods_images = db("goods")->where("id", $id)->field("goods_show_images")->find();
-        if($goods_images["goods_show_images"] != null) {
-
-            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_images['goods_show_images']);
-            $bool = db("goods")->where("id", $id)->delete();
-            if($bool){
-                foreach ($image_url as $value) {
-                    if ($value['goods_images'] != null) {
-                        unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $value['goods_images']);
-                    }
-                    $bool_data = db("goods_images")->where("id", $value['id'])->delete();
+        $bool = db("goods")->where("id", $id)->delete();
+        if($bool){
+            foreach ($image_url as $value) {
+                if ($value['goods_images'] != null) {
+                    unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $value['goods_images']);
                 }
-                if ($bool_data) {
-                    $this->success("添加成功",url("admin/Goods/index"));
-                } else {
-                    $this->success("添加失败",url('admin/Goods/add'));
-                }
-
+                $bool_data = db("goods_images")->where("id", $value['id'])->delete();
+            }
+            if ($bool_data) {
+                $this->success("添加成功",url("admin/Goods/index"));
+            } else {
+                $this->success("添加失败",url('admin/Goods/add'));
             }
 
         }
@@ -226,12 +236,17 @@ class Goods extends Controller{
         if ($request->isPost()) {
             $id = $request->only(["id"])["id"];
             $goods_data = $request->param();
-            $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
-            $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
-            $goods_data["goods_standard_name"] = $goods_standard_name;
-            $goods_data["goods_standard_value"] = $goods_standard_value;
-            $goods_delivery = implode(",",$goods_data["goods_delivery"]);
-            $goods_data["goods_delivery"] = $goods_delivery;
+            halt($goods_data);
+            if(!empty($goods_data["goods_standard_name"])){
+                $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
+                $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
+                $goods_data["goods_standard_name"] = $goods_standard_name;
+                $goods_data["goods_standard_value"] = $goods_standard_value;
+            }
+            if(!empty($goods_data["goods_delivery"])){
+                $goods_delivery = implode(",",$goods_data["goods_delivery"]);
+                $goods_data["goods_delivery"] = $goods_delivery;
+            }
             //图片添加
             $show_images = $request->file("goods_show_images");
 
@@ -250,13 +265,16 @@ class Goods extends Controller{
                         $goods_url = str_replace("\\", "/", $info->getSaveName());
                         $goods_images[] = ["goods_images" => $goods_url, "goods_id" => $id];
                     }
-                }
-                $booldata = model("goods_images")->saveAll($goods_images);
-                if ($booldata) {
+                    $booldata = model("goods_images")->saveAll($goods_images);
+                    if ($booldata) {
+                        $this->success("更新成功",url("admin/Goods/index"));
+                    } else {
+                        $this->success("更新失败",url('admin/Goods/add'));
+                    }
+                }else{
                     $this->success("更新成功",url("admin/Goods/index"));
-                } else {
-                    $this->success("更新失败",url('admin/Goods/add'));
                 }
+
             }
         }
 

@@ -53,11 +53,13 @@
 {block name="content"}
 <h2 style="padding: 10px;">平台价格调整比例设置</h2>
 <h4>(零售商品)</h4>
+      {volist name="goods_ratio" id="value"}
 	  <div class="show">
-	  	   <div style=" " class="text">最小金额<input type="text" name="year" id="" value="" style="width: 100px;"/>至最大金额
-<input type="text" name="money" id="" value="" style="width: 100px;"/>，加价比例<input type="text" name="money" id="" value="" style="width: 100px;"/>%</div>
+	  	   <div style=" " class="text">最小金额<input type="text" name="year" id="" value="{$value.min_money}" style="width: 100px;"/>至最大金额
+        <input type="text" name="money" id="" value="{$value.max_money}" style="width: 100px;"/>，加价比例<input type="text" name="money" id="" value="{$value.ratio}" style="width: 100px;"/>%</div>
 	  </div>
-	 <form action="{:url('admin/Install/jyhjn')}" method="post">
+     {/volist}
+	 <form action="{:url('admin/Install/index')}" method="post">
 	   <div class="content">
 	 </div>
 	   <div class="bts" style="text-align: center;margin-top: 20px;">
@@ -81,7 +83,7 @@
 <script type="text/javascript">
 		 	$(".add-bts").click(function(){
 				var dhtml="";
-				dhtml+='<div style=" " class="text">最小金额<input type="text" name="year" id="" value="" style="width: 100px;"/>至最大金额<input type="text" name="money" id="" value="" style="width: 100px;"/>，加价比例<input type="text" name="money" id="" value="" style="width: 100px;"/>%<i class="layui-icon remove-img">&#x1007;</i></div>';
+				dhtml+='<div style=" " class="text">最小金额<input type="text" name="min_money[]" id="" value="" style="width: 100px;"/>至最大金额<input type="text" name="max_money[]" id="" value="" style="width: 100px;"/>，加价比例<input type="text" name="ratio[]" id="" value="" style="width: 100px;"/>%<i class="layui-icon remove-img">&#x1007;</i></div>';
 				$(".content").append(dhtml);
 				$(".content ").on('click','.layui-icon',function(){
 					// console.log(this)

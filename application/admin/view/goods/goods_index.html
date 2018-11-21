@@ -44,6 +44,54 @@
 		height: 40px;
 		border-radius: 3px;
 	}
+	/*弹窗*/
+		
+	.tanchuang {
+		width: 100%;
+		min-height: 800px;
+		background: RGBA(0, 0, 0, 0.3);
+		position: fixed;
+		z-index: 9999;
+	}
+	
+	.tanchuang-content {
+		width: 400px;
+		height: 300px;
+		background: #fff;
+		z-index: 10000;
+		position: fixed;
+		top: 25%;
+		left: 25%;
+	}
+	
+	.close {
+		width: 30px;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.title-a {
+		background: RGB(247, 247, 247);
+	}
+	
+	.content-title {
+		padding-top: 10px;
+		padding-left: 20px;
+		float: left;
+		width: 50%;
+		height: 40px;
+	}
+	.noshow{
+		display: none;
+	}
+	.dom form div{
+		margin-bottom:20px; ;
+	}
+	.buts button{
+		width: 100px;
+	}
 </style>
 
 {/block}
@@ -51,6 +99,30 @@
 <body>
 
 	{block name="content"}
+	<div class="tanchuang noshow">
+		<div class="tanchuang-content ">
+			<div class="title-a clear">
+				<div class="content-title">消息</div>
+				<div class="close"><img src="__STATIC__/admin/common/img/a7.png"></div>
+			</div>
+			<!-- 里面的内容 -->
+
+			<div class="dom">
+				<h2 align="center">提交订单</h2>
+				<form action="" method="post" style="text-align: center;">
+					<div><span style="width: 100px; text-align: right;display: inline-block;">店铺名称：</span><input type="text" name="" id="shop" value="xxxxxx旗舰店"  style="border: 0; background: #fff;" disabled="disabled" /></div>
+					<div><span style="width: 100px; text-align: right; display: inline-block;">商品总数：</span><input type="text" name="" id="num" value="20个"  style="border: 0; background: #fff;" disabled="disabled"/></div>
+					<div><span style="width: 100px; text-align: right; display: inline-block;">合计：</span><input type="text" name="" id="price" value="￥2000.00"  style="border: 0; color: red; background: #fff;" disabled="disabled"/></div>
+					<div class="buts">
+						<button class="layui-btn layui-btn-primary layui-btn-radius close-btus" type="button">取消</button>
+						 <button class="layui-btn layui-btn-normal layui-btn-radius" type="submit">确定</button>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+
     
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
@@ -92,12 +164,19 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
+						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose" ></th>
 						<th style="text-align:left;">商品编号</th>
 						<th>店铺名称</th>
 						<th>商品图片</th>
 						<th>商品名称</th>
 						<th>商品价格</th>
+						{volist name="role_name" id="v"}
+						{if $v.role_id == 2}
+						<th>
+							调整后价格
+						</th>
+						{/if}
+						{/volist}
 						<th>是否上架</th>
 						<th>是否付费</th>
 						<th>付费金额</th>
@@ -110,30 +189,59 @@
 				<tbody class="news_content">
 				{volist name="goods" id="value"}
 					<tr>
-						<td><input type="checkbox" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose"></td>
+						{volist name="year" id="val"}
+						{if $value.goods_year_id == $val.id}
+						<td><input type="checkbox" data-text="{$val.year}" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加"></td>
+						{/if}
+						{/volist}
 						<td>{$value.id}</td>
 						<td>店铺还没有添加</td>
 						<td style="width: 100px; height: 100px;"><img src="__UPLOADS__/{$value.goods_show_images}" /></td>
 						<td>{$value.goods_name}</td>
 						<td>￥{$value.goods_new_money}</td>
+						{volist name="role_name" id="v"}
+						{if $v.role_id == 2}
+						<td style="color: red;">
+							￥1100
+						</td>
+						{/if}
+						{/volist}
 						<td>
 							{if $value.goods_status == 0}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}"/>
+							{volist name="year" id="val"}
+							{if $value.goods_year_id == $val.id}
+							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}" data-value="店铺还没有添加" data-title="{$val.money}" data-text="{$val.year}"/>
+							{/if}
+							{/volist}
 							{else /}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}"/>
+							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}" data-value="店铺还没有添加" data-title="1"/>
 							{/if}
 						</td>
 						<td>
-							{if $value.goods_status == 0}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}"/>
-							{else /}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}"/>
+							{volist name="role_name" id="v"}
+							{if $v.role_id == 2}
+							是
+							{else}
+							否
 							{/if}
+							{/volist}
 						</td>
-						<td>￥{$value.goods_putaway|pay_money}</td>
+						<td>
+							{volist name="year" id="val"}
+							{if $value.goods_year_id == $val.id}
+							{$val.money}元
+							{/if}
+							{/volist}
+						</td>
 						<td>{$value.sort_number}</td>
 						<td>{$value.goods_repertory}</td>
-						<td>{$value.goods_putaway|year}年</td>
+						<td>
+							{volist name="year" id="val"}
+							{if $value.goods_year_id == $val.id}
+							{$val.year}年
+							{/if}
+							{/volist}
+						</td>
 						<td style="width: 155px;">
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/look',['id'=>$value.id])}"> 查看详情</a>
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit',['id'=>$value.id])}">编辑</a>
@@ -193,6 +301,8 @@
                 var vals=data.value;
                 var id=$(this).data("id");
                 var status = $(this).val();
+                var price=$(this).data("title");
+				var shop=$(this).data("value");
 				// 当上架时
 				if(status==1){
 					$.ajax({
@@ -217,13 +327,32 @@
 								}
 								// 当角色为服务商时
 								else if(role_id==5){
+									
+//									console.log(price);	
+//									console.log(shop);
 									layer.confirm('付费商品需付费后才能上架！', {
 											  btn: ['确定付费','取消付费！'] //按钮
 											}, function(){
 											 layer.close(layer.index);
-											var str = "{:url('admin/Goods/pay',array('id'=>'P_id'))}"; //先将变量以字符串的形式带入U函数中
-											str1 =  str.replace("P_id",id); //将代替变量的字符串用真实变量替换掉，OK搞定！
-											window.location.href =str1 ;
+//											 	$.ajax({
+//												type: "POST",
+//												url: "{:url('admin/Goods/status')}",
+//												data: {"id":id},
+//												success: function(data){
+//													console.log(data)
+//												},
+//												error:function (data) {
+//													console.log(data)
+//												}
+//											});
+											
+//											var str = "{:url('admin/Goods/pay',array('id'=>'P_id'))}"; //先将变量以字符串的形式带入U函数中
+//											str1 =  str.replace("P_id",id); //将代替变量的字符串用真实变量替换掉，OK搞定！
+//											window.location.href =str1 ;
+                                            $(".tanchuang").removeClass("noshow");
+ 											 $("#shop").val(shop);
+											 $("#price").val("¥"+price);
+											 $("#num").val("1");
 											});
 
 								}
@@ -290,45 +419,49 @@
 								  btn: ['确认','取消'] //按钮
 								}, function(){
 									var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
-													for (var i = 0; i < child.length; i++) {
-														data_id.push($(child[i])[0].dataset.id);
-													}
-													$.ajax({
-														type: "POST",
-														url: "{:url('admin/User/dels')}",
-														data: {
-															"id": data_id,
-														},
-														success: function(data) {
-															console.log("成功");
-															console.log(data);
-															var data=$.parseJSON(data);
-															layer.alert(data.info, {
-																skin: 'layui-layer-molv' //样式类名
-																,closeBtn: 0
-																});
-															location.reload();
-															data_id.splice(0, data_id.length);
-														},
-														error: function(data) {
-															var data=$.parseJSON(data);
-															layer.alert(data.info, {
-																skin: 'layui-layer-molv' //样式类名
-																,closeBtn: 0
-																});
-														console.log(data);
-															console.log("错误");
-															data_id.splice(0, data_id.length);
-														}
-													});
+										for (var i = 0; i < child.length; i++) {
+											data_id.push($(child[i])[0].dataset.id);
+										}
+									$.ajax({
+										type: "POST",
+										url: "{:url('admin/User/dels')}",
+										data: {
+											"id": data_id,
+										},
+										success: function(data) {
+											console.log("成功");
+											console.log(data);
+											var data=$.parseJSON(data);
+											layer.alert(data.info, {
+												skin: 'layui-layer-molv' //样式类名
+												,closeBtn: 0
+												});
+											location.reload();
+											data_id.splice(0, data_id.length);
+										},
+										error: function(data) {
+											var data=$.parseJSON(data);
+											layer.alert(data.info, {
+												skin: 'layui-layer-molv' //样式类名
+												,closeBtn: 0
+												});
+										console.log(data);
+											console.log("错误");
+											data_id.splice(0, data_id.length);
+										}
+									});
 								});
 									
 								
 							}
 							else if(opration_val==2){
+								
+								var all_price=0;
 								var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
 										for (var i = 0; i < child.length; i++) {
 											data_id.push($(child[i])[0].dataset.id);
+											all_price+=parseInt($(child[i])[0].dataset.title);
+											var shop=$(child[i])[0].dataset.value;
 										}
 										$.ajax({
 												type: "POST",
@@ -351,16 +484,37 @@
 																});
 													}
 													// 当角色为服务商时
-													else if(role_id==5){
-														layer.confirm('付费商品需付费后才能上架！', {
-																  btn: ['确定付费','取消付费！'] //按钮
-																}, function(){
-																 layer.close(layer.index);
-																var str = "{:url('admin/Goods/pay',array('id'=>'P_id'))}"; //先将变量以字符串的形式带入U函数中
-																str1 =  str.replace("P_id",data_id); //将代替变量的字符串用真实变量替换掉，OK搞定！
-																window.location.href =str1 ;
-																});
-													}
+														else if(role_id==5){
+									
+//									console.log(price);	
+//									console.log(shop);
+									layer.confirm('付费商品需付费后才能上架！', {
+											  btn: ['确定付费','取消付费！'] //按钮
+											}, function(){
+											 layer.close(layer.index);
+//											 	$.ajax({
+//												type: "POST",
+//												url: "{:url('admin/Goods/status')}",
+//												data: {"id":id},
+//												success: function(data){
+//													console.log(data)
+//												},
+//												error:function (data) {
+//													console.log(data)
+//												}
+//											});
+											
+//											var str = "{:url('admin/Goods/pay',array('id'=>'P_id'))}"; //先将变量以字符串的形式带入U函数中
+//											str1 =  str.replace("P_id",id); //将代替变量的字符串用真实变量替换掉，OK搞定！
+//											window.location.href =str1 ;
+                                            $(".tanchuang").removeClass("noshow");
+ 											 $("#shop").val(shop);
+											 $("#price").val("¥"+all_price);
+											 $("#num").val(child.length);
+											});
+
+								}
+								
 												},
 												error:function (data) {
 													console.log("错误")
@@ -372,6 +526,15 @@
 							
 			
 						});
+						$(".close-btus").on('click', function() {
+								$(".tanchuang").addClass("noshow");
+							});
+						  $(".close").on('click', function() {
+								$(".tanchuang").addClass("noshow");
+							});
+							$(".btu-sumit").click(function() {
+								$(".tanchuang").addClass("noshow");
+							});
 // 			$(".up-button").click(function() {
 // 				layer.confirm('付费商品需付费后才能上架！', {
 // 					btn: ['确定付费', '取消付费！'] //按钮

@@ -7,10 +7,7 @@
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
-    <link rel="stylesheet" href="__STATIC__/index/css/index/reservation.css">
-    <!-- 高德地图 -->
-    <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
-    <title>预约服务</title>
+    <link rel="stylesheet" href="__STATIC__/index/css/index/reservation.css">    <title>预约服务</title>
 </head>
 <body>
     <div class="wrapper">
@@ -20,7 +17,7 @@
             <a href="javascript:;" class="spr icon_share"></a>
         </div>
         <!-- 高德地图 -->
-        <div class="map_container" id="map_container"></div>
+        <div class="container" id="container"></div>
         <div class="shop_list">
             <div class="shop_box">
                 <div class="addr_info_box">
@@ -51,58 +48,66 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     
     <!-- 高德地图 -->
+    <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
     <script>
-        // 实例化 地图对象
-        var map = new AMap.Map('map_container', {
-            zoom: 11, //级别
-            center: [114.07, 22.62],//中心点坐标
-            viewMode:'3D'//使用3D视图
+        var map = new AMap.Map('container', {
+            zoom: 12, //级别
+            center: [114.07, 22.62]
         });
-        
-        // 添加标记点
-        var marker1 = new AMap.Marker({
-            position:[114.04818, 22.54156],//位置
-            title: '中电信息大厦'
-        })
-        var marker2 = new AMap.Marker({
-            position:[114.02755, 22.60820],//位置
-            title: '深圳北站'
-        })
-        var markerList = [marker1, marker2];
-        map.add(markerList);//添加到地图
-        
-        // //创建信息窗体
-        // var infoWindow = new AMap.InfoWindow({ 
-        //     isCustom: true,  //使用自定义窗体
-        //     content:'<div>深圳北站</div>', //信息窗体的内容可以是任意html片段
-        //     offset: new AMap.Pixel(16, -45)
-        // });
-        // var onMarkerClick  =  function(e) {
-        //     infoWindow.open(map, e.target.getPosition());//打开信息窗体
-        //     //e.target就是被点击的Marker
-        // }
-        // marker2.on('click',onMarkerClick);//绑定click事件
 
-        map.plugin('AMap.Geolocation', function() {
+        AMap.plugin([
+            // 'AMap.Scale',
+            'AMap.ToolBar',
+            'AMap.Geolocation',
+            // 'AMap.CitySearch',
+        ], function(){
+            // 在图面添加比例尺控件，展示地图在当前层级和纬度下的比例尺
+            // map.addControl(new AMap.Scale());
+            // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
+            map.addControl(new AMap.ToolBar());
+
             var geolocation = new AMap.Geolocation({
-                enableHighAccuracy: true,// 是否使用高精度定位，默认：true
-                timeout: 10000,// 设置定位超时时间，默认：无穷大
-                buttonOffset: new AMap.Pixel(10, 20),// 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
-                zoomToAccuracy: true,//  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-                buttonPosition: 'RB'//  定位按钮的排放位置,  RB表示右下
+                enableHighAccuracy: true,
+                timeout: 10000,
+                buttonPosition: 'RB',
+                buttonOffset: new AMap.Pixel(10, 20),
+                zoomToAccuracy: true
             })
+            map.addControl(geolocation);
+            geolocation.getCurrentPosition();
+            AMap.event.addListener(geolocation, 'complete', onComplete);
+            AMap.event.addListener(geolocation, 'error', onError);
+            function onComplete(e){
+                alert(e.info);
+                console.log(e.message);
+                console.log(e.addressComponent);
+                console.log(e.formattedAddress);
+            };
+            function onError(e){
+                alert(e.message);
+                console.log(e);
+            };
+            // console.log('=========================================');
 
-            geolocation.getCurrentPosition()
-            AMap.event.addListener(geolocation, 'complete', onComplete)
-            AMap.event.addListener(geolocation, 'error', onError)
+            // function showCityInfo(){
+            //     // 获取用户所在城市信息
+            //     var citysearch = new AMap.CitySearch();
+            //     citysearch.getLocalCity(function(status, result){
+            //         if(status === 'complete' && result.info === 'OK'){
+            //             if (result && result.city && result.bounds) {
+            //                 var cityinfo = result.city;
+            //                 var citybounds = result.bounds;
+            //                 console.log('您当前所在城市：' + cityinfo);
+            //                 //地图显示当前城市
+            //                 map.setBounds(citybounds);
+            //             }
+            //         }else {
+            //             console.log(result.info);
+            //         }
+            //     })
+            // }
+            // showCityInfo();
 
-            function onComplete (data) {
-                // data是具体的定位信息
-            }
-
-            function onError (data) {
-                // 定位出错
-            }
         })
     </script>
 </body>
