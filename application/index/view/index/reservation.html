@@ -7,7 +7,8 @@
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
-    <link rel="stylesheet" href="__STATIC__/index/css/index/reservation.css">    <title>预约服务</title>
+    <link rel="stylesheet" href="__STATIC__/index/css/index/reservation.css">    
+    <title>预约服务</title>
 </head>
 <body>
     <div class="wrapper">
@@ -49,66 +50,6 @@
     
     <!-- 高德地图 -->
     <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
-    <script>
-        var map = new AMap.Map('container', {
-            zoom: 12, //级别
-            center: [114.07, 22.62]
-        });
-
-        AMap.plugin([
-            // 'AMap.Scale',
-            'AMap.ToolBar',
-            'AMap.Geolocation',
-            // 'AMap.CitySearch',
-        ], function(){
-            // 在图面添加比例尺控件，展示地图在当前层级和纬度下的比例尺
-            // map.addControl(new AMap.Scale());
-            // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
-            map.addControl(new AMap.ToolBar());
-
-            var geolocation = new AMap.Geolocation({
-                enableHighAccuracy: true,
-                timeout: 10000,
-                buttonPosition: 'RB',
-                buttonOffset: new AMap.Pixel(10, 20),
-                zoomToAccuracy: true
-            })
-            map.addControl(geolocation);
-            geolocation.getCurrentPosition();
-            AMap.event.addListener(geolocation, 'complete', onComplete);
-            AMap.event.addListener(geolocation, 'error', onError);
-            function onComplete(e){
-                alert(e.info);
-                console.log(e.message);
-                console.log(e.addressComponent);
-                console.log(e.formattedAddress);
-            };
-            function onError(e){
-                alert(e.message);
-                console.log(e);
-            };
-            // console.log('=========================================');
-
-            // function showCityInfo(){
-            //     // 获取用户所在城市信息
-            //     var citysearch = new AMap.CitySearch();
-            //     citysearch.getLocalCity(function(status, result){
-            //         if(status === 'complete' && result.info === 'OK'){
-            //             if (result && result.city && result.bounds) {
-            //                 var cityinfo = result.city;
-            //                 var citybounds = result.bounds;
-            //                 console.log('您当前所在城市：' + cityinfo);
-            //                 //地图显示当前城市
-            //                 map.setBounds(citybounds);
-            //             }
-            //         }else {
-            //             console.log(result.info);
-            //         }
-            //     })
-            // }
-            // showCityInfo();
-
-        })
-    </script>
+    <script src="__STATIC__/index/js/reservation.js"></script>
 </body>
 </html>
