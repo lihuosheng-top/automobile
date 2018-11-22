@@ -24,7 +24,6 @@ class Reservation extends Controller{
             $serve = db("service_setting")->where("service_setting_status","<>",0)->select();
             $serve_goods = [];
             foreach ($serve as $key=>$value){
-                $serve_goods[$key]["id"] = $value["id"];
                 $serve_goods[$key]["service_setting_id"] = $value["service_setting_id"];
                 $serve_goods[$key]["service_setting_name"] = $value["service_setting_name"];
                 $serve_goods[$key]["service_setting_images"] = $value["service_setting_calss_img"];
@@ -81,7 +80,7 @@ class Reservation extends Controller{
             $serve_goods_id = $request->only(["id"])["id"];
             $serve_goods = db("serve_goods")->where("id",$serve_goods_id)->select();
             foreach ($serve_goods as $key=>$value){
-                
+                $serve_goods[$key]["store"] = db("store")->where("id",$value[""]);
             }
         }
         return view("reservation_detail");
