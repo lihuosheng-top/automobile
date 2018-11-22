@@ -204,7 +204,11 @@
 						{volist name="role_name" id="v"}
 						{if $v.role_id == 2}
 						<td style="color: red;">
-							￥1100
+							{if $value.goods_adjusted_money == $value.goods_new_money}
+							￥0
+							{else}
+							￥{$value.goods_adjusted_money}
+							{/if}
 						</td>
 						{/if}
 						{/volist}
@@ -335,7 +339,7 @@
 								}
 								// 当角色为服务商时
 								else if(role_id==5){
-									
+
 //									console.log(price);	
 //									console.log(shop);
 									layer.confirm('付费商品需付费后才能上架！', {
