@@ -66,3 +66,20 @@ var marker6 = new AMap.Marker({
 });
 var markerList = [marker1,marker2,marker3,marker4,marker5,marker6];
 map.add(markerList);
+
+$.ajax({
+    url: 'reservation',
+    type: 'POST',
+    dataType: 'JSON',
+    data: {
+        'service_setting_id': service_setting_id
+    },
+    success: function(data){
+        console.log(data);
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+
+

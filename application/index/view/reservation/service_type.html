@@ -61,5 +61,18 @@
         </ul>
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script>
+        $.ajax({
+            url: 'service_type',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+                console.log(data);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+    </script>
 </body>
 </html>

@@ -236,8 +236,7 @@ function gecInitials() {//公众号排序
     if(num!=0){SortBox.append('<div class="gec-sort-letter" id="gec-default">#</div>');}
 
     for (var i =0;i<SortList.length;i++) {//插入到对应的首字母后面
-        var letter=makePy(SortList.eq(i).find('.gec-city-name').text().charAt(0))[0].toUpperCase();
-        console.log(SortList.eq(i));
+        // var letter=makePy(SortList.eq(i).find('.gec-city-name').text().charAt(0))[0].toUpperCase();
         switch(letter){
             case "A":
                 $('#A').after(SortList.eq(i));
