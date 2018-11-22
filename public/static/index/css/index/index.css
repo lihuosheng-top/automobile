@@ -195,8 +195,9 @@ html{
 }
 .classify_service li .more{
     background-position: -5.05rem -3.95rem;
-    width: .73rem;
-    height: .72rem;
+    width: .7rem;
+    height: .7rem;
+    margin-top: .1rem;
 }
 .banner{
     width: 100%;
