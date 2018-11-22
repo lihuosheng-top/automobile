@@ -101,11 +101,16 @@ $.ajax({
     success: function(data){
         console.log(data);
         var str = '';
+        var str2 = '';
         $.each(data.data, function(idx, val){
-            str += '<p class="shop_name">'+val.store_name+'</p>\
+            str += '<p class="shop_name">'+val.store.store_name+'</p>\
                     <i class="spr star"></i>\
-                    <p class="nature">汽车维修</p>'
+                    <p class="nature">'+val.service_setting_name+'</p>';
+            str2 += '<p class="addr_p"><i class="spr icon_addr"></i>'+val.store.store_detailed_address+'</p>\
+                    <p class="phone_p"><i class="spr icon_phone"></i>'+val.store.store_owner_seat_num+'</p>'
         })
+        $('.order_confirm').after(str);
+        $('.addr_phone_box').append(str2);
     },
     error: function(){
         console.log('error');
