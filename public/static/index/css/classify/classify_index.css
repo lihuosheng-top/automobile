@@ -67,6 +67,9 @@
     background-color: #f2f2f2;
     font-weight: 700;
 }
+.classify_tab ul li.active a{
+    color: #504cfb;
+}
 .classify_cont{
     width: 5.66rem;
     /* height: 11.2rem; */

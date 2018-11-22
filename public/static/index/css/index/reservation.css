@@ -1,3 +1,6 @@
+body,html{
+    background-color: #fff;
+}
 .wrapper{
     width: 100%;
 }
@@ -118,9 +121,9 @@
 }
 .shop_box .order_box .icon_order{
     display: inline-block;
-    width: .43rem;
-    height: .43rem;
-    background-position: -2.7rem -2.5rem;
+    width: .53rem;
+    height: .53rem;
+    background-position: -2.65rem -2.45rem;
 }
 .shop_box .order_box .order_text{
     font-size: .24rem;
