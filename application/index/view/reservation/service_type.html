@@ -22,7 +22,7 @@
             便民生活，方便你我
         </div>
         <ul class="service_ul">
-            <li>
+            <!-- <li>
                 <a href="reservation">
                     <i class="vehicle_cleaning"></i>
                     <p>预约洗车</p>
@@ -57,7 +57,7 @@
                     <i class="agency"></i>
                     <p>预约代办</p>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
@@ -68,11 +68,22 @@
             dataType: 'JSON',
             success: function(data){
                 console.log(data);
+                var str = '';
+                $.each(data.data, function(idx, val){
+                    str += '<li>\
+                                <a href="reservation?id='+val.service_setting_id+'">\
+                                    <img src="uploads/'+val.service_setting_images+'">\
+                                    <p>'+val.service_setting_name+'</p>\
+                                </a>\
+                            </li>'
+                })
+                $('.service_ul').append(str);
             },
             error: function(){
                 console.log('error');
             }
         })
+        
     </script>
 </body>
 </html>

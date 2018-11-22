@@ -102,21 +102,21 @@ html{
 }
 .sponsor .icon_spread{
     display: inline-block;
-    width: .6rem;
-    height: .52rem;
-    background-position: -5rem -1.8rem;
+    width: .7rem;
+    height: .62rem;
+    background-position: -4.95rem -1.75rem;
 }
 .sponsor .icon_league{
     display: inline-block;
-    width: .64rem;
-    height: .60rem;
-    background-position: -5.7rem -1.8rem;
+    width: .74rem;
+    height: .7rem;
+    background-position: -5.65rem -1.75rem;
 }
 .sponsor .icon_consume{
     display: inline-block;
-    width: .52rem;
-    height: .6rem;
-    background-position: -6.5rem -1.8rem;
+    width: .62rem;
+    height: .7rem;
+    background-position: -6.45rem -1.75rem;
 }
 .sponsor a i{
     margin-bottom: .1rem;
