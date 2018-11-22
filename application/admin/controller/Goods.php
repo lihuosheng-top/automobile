@@ -61,7 +61,7 @@ class Goods extends Controller{
                 $year = db("year")->where("id",$value["goods_year_id"])->value("year");
                 $date = date("Y-m-d",strtotime("+$year year"));
                 if($time == $date){
-                    $bool = db("goods")->where("id",$value["id"])->update(["goods_status"=>0,"putaway_status"=>0]);
+                    $bool = db("goods")->where("id",$value["id"])->update(["goods_status"=>0,"putaway_status"=>null]);
                 }
             }
             $goods_money = db("goods")->field("goods_new_money,id")->select();
