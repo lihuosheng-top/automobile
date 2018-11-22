@@ -46,7 +46,7 @@ html, body {
     display: inline-block;
     width: .5rem;
     height: .5rem;
-    background-position: 0 -2.25rem;
+    background-position: .05rem -2.25rem;
 }
 .footer .icon_classify{
     display: inline-block;

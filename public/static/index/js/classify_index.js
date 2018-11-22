@@ -1,10 +1,3 @@
-$('.classify_tab li').click(function(){
-    $(this).addClass('active').siblings().removeClass('active');
-})
-
-$('.click-adop').click(function(){
-    location.href = 'goods_list';
-})
 
 // 分类中的品牌分类和商品分类
 $.ajax({
@@ -71,6 +64,13 @@ $.ajax({
 
         $('.cont_one_ul').append(goodsLi);
         $('.classify_ul').append(brandLi);
+
+        $('.classify_tab li').click(function(){
+            $(this).addClass('active').siblings().removeClass('active');
+        })
+        $('.click-adop').click(function(){
+            location.href = 'goods_list';
+        })
     },
     error: function(){
         console.log('error');

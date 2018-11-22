@@ -190,7 +190,7 @@ html{
     display: inline-block;
 }
 .wrapper .comment_box .comment_text_box .comment_text_p{
-    font-size: .2rem;
+    font-size: .28rem;
     color: #666666;
     overflow: hidden;
     text-overflow: ellipsis;

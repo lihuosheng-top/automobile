@@ -48,10 +48,9 @@ html{
 }
 .please_login{
     height: .4rem;
-    background-color: rgba(0, 0, 0, .3);
     padding: 0 .1rem;
     border-radius: .1rem;
-    font-size: .24rem;
+    font-size: .3rem;
     color: #fff;
     margin-top: .5rem;
 }
@@ -226,7 +225,7 @@ html{
     vertical-align: text-bottom;
 }
 .function_list li .icon_addr{
-    width: .29rem;
+    width: .34rem;
     height: .31rem;
     background-position: -6.5rem -.7rem;
 }
