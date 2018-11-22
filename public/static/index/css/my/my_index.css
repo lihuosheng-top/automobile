@@ -48,10 +48,9 @@ html{
 }
 .please_login{
     height: .4rem;
-    background-color: rgba(0, 0, 0, .3);
     padding: 0 .1rem;
     border-radius: .1rem;
-    font-size: .24rem;
+    font-size: .3rem;
     color: #fff;
     margin-top: .5rem;
 }
@@ -171,27 +170,27 @@ html{
 }
 .order_step .wait_pay .icon_wait_pay{
     display: inline-block;
-    width: .66rem;
-    height: .55rem;
-    background-position: -2rem -1.8rem;
+    width: .76rem;
+    height: .65rem;
+    background-position: -1.95rem -1.75rem;
 }
 .order_step .wait_deliver .icon_wait_deliver{
     display: inline-block;
-    width: .6rem;
-    height: .57rem;
-    background-position: -2.8rem -1.8rem;
+    width: .7rem;
+    height: .67rem;
+    background-position: -2.75rem -1.75rem;
 }
 .order_step .wait_evaluation .icon_wait_evaluation{
     display: inline-block;
-    width: .52rem;
-    height: .58rem;
-    background-position: -3.5rem -1.8rem;
+    width: .62rem;
+    height: .68rem;
+    background-position: -3.45rem -1.75rem;
 }
 .order_step .reject .icon_reject{
     display: inline-block;
-    width: .59rem;
-    height: .59rem;
-    background-position: -4.2rem -1.8rem;
+    width: .69rem;
+    height: .69rem;
+    background-position: -4.15rem -1.75rem;
 }
 .order_step .order_step_text{
     font-size: .22rem;
@@ -226,7 +225,7 @@ html{
     vertical-align: text-bottom;
 }
 .function_list li .icon_addr{
-    width: .29rem;
+    width: .34rem;
     height: .31rem;
     background-position: -6.5rem -.7rem;
 }

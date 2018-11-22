@@ -19,11 +19,19 @@ use think\Route;
 Route::group("",[
     /*首页*/
     "/$"=>"index/index/index",
-    "service_type"=>"index/index/service_type",//选择服务类型
-    "reservation"=>"index/index/reservation",//预约服务 首页
-    "reservation_detail"=>"index/index/reservation_detail",//预约服务 详情
-    "reservation_info"=>"index/index/reservation_info",//预约服务 详情
-    "shop_order"=>"index/index/shop_order",//预约服务 详情
+
+
+    /*服务商品*/
+    "service_type"=>"index/reservation/service_type",//选择服务类型
+    "reservation"=>"index/reservation/reservation",//预约服务 首页
+    "reservation_detail"=>"index/reservation/reservation_detail",//预约服务 详情
+    "reservation_info"=>"index/reservation/reservation_info",//预约服务 详情
+
+
+    /*服务订单*/
+    "shop_order"=>"index/OrderService/shop_order",//预约服务 详情
+
+
 
     /*登录页面*/
     "login_index"=>"index/Login/index",
@@ -144,7 +152,10 @@ Route::group("admin",[
     "goods_name"=>"admin/Goods/name",                                                   //商品规格名添加
     "goods_standard_name"=>"admin/Goods/standard_name",                                       //商品规格名显示
     "goods_role_name"=>"admin/Goods/role_name",                                       //商品角色检测
-
+    "goods_property_name"=>"admin/Goods/property_name",                                       //专用属性入库
+    "goods_property_show"=>"admin/Goods/property_show",                                       //专用属性显示
+    "goods_alipay"=>"admin/Goods/alipay",                                       //支付
+    "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付后调
 
 
 
@@ -152,6 +163,10 @@ Route::group("admin",[
     "serve_index"=>"admin/Serve/index",
     "serve_add"=>"admin/Serve/add",
 	"serve_look"=>"admin/Serve/look",
+    "serve_save"=>"admin/Serve/save",
+    "serve_edit"=>"admin/Serve/edit",
+    "serve_updata"=>"admin/Serve/updata",
+    "serve_del"=>"admin/Serve/del",
 
 
 
@@ -367,6 +382,10 @@ Route::group("admin",[
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",
+    "express_index"=>"admin/Install/express_index",
+    "express_add"=>"admin/Install/express_add",
+    "express_edit"=>"admin/Install/express_edit",
+    "express_save"=>"admin/Install/express_save",
 
 
 

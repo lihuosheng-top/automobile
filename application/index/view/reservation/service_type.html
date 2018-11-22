@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/index/service_type.css">
+    <!-- 高德地图 -->
+    <title>选择服务类型</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="head">
+            <a href="{:url('index/index/index')}" class="spr back"></a>
+            <p class="headtitle">选择服务类型</p>
+            <a href="javascript:;" class="spr icon_share"></a>
+        </div>
+        <div class="title">
+            便民生活，方便你我
+        </div>
+        <ul class="service_ul">
+            <li>
+                <a href="reservation">
+                    <i class="vehicle_cleaning"></i>
+                    <p>预约洗车</p>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="maintain"></i>
+                    <p>预约保养</p>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="designated_driving"></i>
+                    <p>预约代驾</p>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="repair"></i>
+                    <p>预约修理</p>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="insurance"></i>
+                    <p>预约保险</p>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="agency"></i>
+                    <p>预约代办</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script>
+        $.ajax({
+            url: 'service_type',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+                console.log(data);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+    </script>
+</body>
+</html>

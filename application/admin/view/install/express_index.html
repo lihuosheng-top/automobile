@@ -1,0 +1,325 @@
+{include file="template/_meta" /}
+<title></title>
+</head>
+
+{block name="css"}
+
+<style type="text/css">
+	body {
+		background: #fff;
+	}
+	
+	label {
+		text-align: left !important;
+	}
+	
+	.layui-form-item {
+		width: 100%;
+		margin-bottom: 0;
+		margin-top: 0;
+	}
+	
+	.layui-form-item {
+		max-width: 100% !important;
+	}
+	
+	.layui-form-item {
+		max-width: 100% !important;
+	}
+	
+	.layui-form-label {
+		width: 26% !important;
+	}
+	
+	.layui-input-inline {
+		width: 70% !important;
+	}
+	
+	#page {
+		width: 96%;
+		height: 50px;
+		line-height: 50px;
+		border: solid 1px #E2E2E2;
+		padding-left: 50px;
+		background: #FDFDFE;
+	}
+	
+	.time {
+		width: 110px;
+		display: inline-block;
+	}
+	
+	.noshow {
+		display: none;
+	}
+	
+</style>
+
+{/block}
+
+<body>
+
+	{block name="content"}
+	
+	<div class="childrenBody">
+		<blockquote class="layui-elem-quote news_search">
+			<form class="layui-form" action="{:url('admin/Order/search')}">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">手机号：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="parts_order_number" lay-verify="title" autocomplete="off" placeholder="请输入手机号" class="layui-input">
+
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">快递员：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="goods_name" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input">
+
+						</div>
+					</div>
+					<div class="layui-inline">
+						<button class="layui-btn search_btn" type="submit">搜索</button>
+					</div>
+				</div>
+
+			</form>
+
+		</blockquote>
+		<div class="layui-form news_list">
+			<table class="layui-table">
+				<colgroup>
+					<col width="3%">
+
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
+						<th>序号</th>
+						<th>服务区域</th>
+						<th>配送员姓名</th>
+						<th>联系电话</th>
+						<th>账号</th>
+						<th>密码</th>
+						<th>创建时间</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody class="news_content">
+					<tr>
+						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" ></td>
+					     <td>111</td>
+						 <td>111</td>
+						 <td>111</td>
+						 <td>111</td>
+						 <td>111</td>
+						 <td>111</td>
+						 <td>111</td>
+						<td>
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Brand/edit')}"> 编辑</a>
+							<a href="{:url('admin/Brand/del')}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="page">
+				<div class="opations" style="width: 200px; float: left;">
+					<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
+						<option check="" value="0">请选择</option>
+						<option value="1">批量删除</option>
+					</select>
+				</div>
+				<div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
+					<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
+					</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	{/block}
+
+	<!--_footer 作为公共模版分离出去-->
+	{include file="template/_footer" /}
+	<!--/_footer 作为公共模版分离出去-->
+
+	<!--请在下方写此页面业务相关的脚本-->
+	{block name="bottom"}
+	<script type="text/javascript">
+		layui.config({
+			base: "js/"
+		}).use(['form', 'layer', 'jquery', 'laypage'], function() {
+			var form = layui.form(),
+				layer = parent.layer === undefined ? layui.layer : parent.layer,
+				laypage = layui.laypage,
+				$ = layui.jquery;
+			var vals = $("input").data("id");
+			//是否展示
+			//点击操作确认按钮
+			var data_id = [];
+			$("#opration_btu").click(function() {
+				var opration_val = $(".opations select option:selected").val();
+				console.log(opration_val);
+				if(opration_val == 0) {
+					layer.alert('请选择操作', {
+						skin: 'layui-layer-molv' //样式类名
+							,
+						closeBtn: 0
+					});
+				} else if(opration_val == 1) {
+					layer.confirm('你确认要删除吗？', {
+						btn: ['确认', '取消'] //按钮
+					}, function() {
+						var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+						for(var i = 0; i < child.length; i++) {
+							data_id.push($(child[i])[0].dataset.id);
+						}
+						$.ajax({
+							type: "POST",
+							url: "{:url('admin/Order/dels')}",
+							data: {
+								"id": data_id,
+							},
+							success: function(data) {
+								console.log("成功");
+								console.log(data);
+								var data = $.parseJSON(data);
+								layer.alert(data.info, {
+									skin: 'layui-layer-molv' //样式类名
+										,
+									closeBtn: 0
+								});
+								location.reload();
+								data_id.splice(0, data_id.length);
+							},
+							error: function(data) {
+								var data = $.parseJSON(data);
+								layer.alert(data.info, {
+									skin: 'layui-layer-molv' //样式类名
+										,
+									closeBtn: 0
+								});
+								console.log(data);
+								console.log("错误");
+								data_id.splice(0, data_id.length);
+							}
+						});
+					});
+
+				}
+
+			});
+			//全选
+			form.on('checkbox(allChoose)', function(data) {
+				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
+				child.each(function(index, item) {
+					item.checked = data.elem.checked;
+				});
+				form.render('checkbox');
+			});
+
+			//通过判断文章是否全部选中来确定全选按钮是否选中
+			form.on("checkbox(choose)", function(data) {
+				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
+				var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
+				if(childChecked.length == child.length) {
+					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
+				} else {
+					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
+				}
+				form.render('checkbox');
+			})
+
+		})
+	</script>
+	<script type="text/javascript">
+		//时间
+		if($(".datetimepickers").length > 0) {
+			$('.datetimepickers').datetimepicker({
+				timepicker: false,
+				scrollMonth: false
+			})
+		}
+
+		if($(".datetimepickers2").length > 0) {
+			var datenow = new Date();
+			datenow = datenow.getFullYear() + "/" + (datenow.getMonth() + 1) + "/" + (datenow.getDate());
+			$('.datetimepickers2').datetimepicker({
+				timepicker: false,
+				maxDate: datenow,
+				scrollMonth: false
+			})
+		}
+		if($(".datetimepicker").length > 0) {
+			var datenow = new Date();
+			datenow = datenow.getFullYear() + "/" + (datenow.getMonth() + 1) + "/" + (datenow.getDate());
+			var date = $("#beginTime").val();
+			var date1 = $("#endTime").val();
+			//时间控件
+			$('#beginTime').datetimepicker({
+				timepicker: false,
+				maxDate: datenow,
+				scrollMonth: false,
+				onClose: function(ct, $i) {
+					$('#endTime').datetimepicker({
+						minDate: $('#beginTime').val(),
+						maxDate: datenow,
+					});
+				}
+			});
+
+			$('#endTime').datetimepicker({
+				timepicker: false,
+				maxDate: datenow,
+				scrollMonth: false,
+				onClose: function(ct, $i) {
+					$('#beginTime').datetimepicker({
+						maxDate: $('#endTime').val(),
+					});
+				}
+			});
+		}
+		//清空时间
+		$(".handle_main span .cleartime").click(function() {
+			$(this).prev("input").val("")
+		})
+		//时间插件封装
+		function datetimepicker(beginTime, endTime) {
+			var datenow = new Date();
+			datenow = datenow.getFullYear() + "/" + (datenow.getMonth() + 1) + "/" + (datenow.getDate());
+			var date = $(beginTime).val();
+			var date1 = $(endTime).val();
+			//时间控件
+			$(beginTime).datetimepicker({
+				timepicker: false,
+				maxDate: datenow,
+				scrollMonth: false,
+				onClose: function(ct, $i) {
+					$(endTime).datetimepicker({
+						minDate: $(beginTime).val(),
+						maxDate: datenow,
+					});
+				}
+			});
+
+			$(endTime).datetimepicker({
+				timepicker: false,
+				maxDate: datenow,
+				scrollMonth: false,
+				onClose: function(ct, $i) {
+					$(beginTime).datetimepicker({
+						maxDate: $(endTime).val(),
+					});
+				}
+			});
+		}
+	</script>
+	
+	{/block}
+
+</body>
+
+</html>

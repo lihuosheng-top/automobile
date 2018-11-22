@@ -1,3 +1,6 @@
+html,body{
+    background-color: #fff;
+}
 .wrapper{
     width: 100%;
 }
@@ -50,39 +53,45 @@
 }
 .vehicle_cleaning{
     display: inline-block;
-    width: 1.28rem;
-    height: 1.28rem;
-    background-position: -1.2rem -2.95rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    background: url(../../image/b1.png) no-repeat center;
+    background-size: 100%;
 }
 .maintain{
     display: inline-block;
-    width: 1.19rem;
-    height: 1.01rem;
-    background-position: -2.65rem -2.95rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    background: url(../../image/b2.png) no-repeat center;
+    background-size: 100%;
 }
 .designated_driving{
     display: inline-block;
-    width: 1.21rem;
-    height: 1.23rem;
-    background-position: -4rem -2.7rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    background: url(../../image/b3.png) no-repeat center;
+    background-size: 100%;
 }
 .repair{
     display: inline-block;
-    width: 1.11rem;
-    height: .95rem;
-    background-position: -5.35rem -2.7rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    background: url(../../image/b4.png) no-repeat center;
+    background-size: 100%;
 }
 .insurance{
     display: inline-block;
-    width: 1.38rem;
-    height: .95rem;
-    background-position: -6.6rem -2.8rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    background: url(../../image/b5.png) no-repeat center;
+    background-size: 100%;
 }
 .agency{
     display: inline-block;
-    width: 1.2rem;
-    height: 1.2rem;
-    background-position: 0 -4.4rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    background: url(../../image/b6.png) no-repeat center;
+    background-size: 100%;
 }
 .service_ul{
     display: flex;
