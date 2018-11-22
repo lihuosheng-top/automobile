@@ -36,6 +36,8 @@ Route::group("",[
     "ios_api_order_button"=>"index/OrderService/ios_api_order_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
 
+    'aliPay'=>"index/Apppay/aliPay",
+    'pay_code'=>"index/Apppay/pay_code",
     /*TODO:服务商订单结束*/
 
 

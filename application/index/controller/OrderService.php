@@ -29,7 +29,7 @@ class OrderService extends Controller{
      **************************************
      */
     public function  ios_api_order_button(Request $request){
-        if ($request->isGet()) {
+        if ($request->isPost()) {
 //            $data = $_POST;
             $member_data = session('member');
             $data =1;
@@ -68,7 +68,7 @@ class OrderService extends Controller{
      **************************************
      */
     public function ios_api_alipay(Request $request){
-        if($request->isGet()){
+        if($request->isPost()){
 //            $order_num =$request->only(['order_num'])['order_num'];
             $order_num =15428821121022;
             $product_code ="QUICK_MSECURITY_PAY";
