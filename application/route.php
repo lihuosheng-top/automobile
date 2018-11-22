@@ -37,7 +37,7 @@ Route::group("",[
     "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单
     'aliPay'=>"index/Apppay/aliPay",
-    'pay_code'=>"index/Apppay/pay_code",
+    'index_pay_code'=>"index/Apppay/index_pay_code",
     /*TODO:服务商订单结束*/
 
 
