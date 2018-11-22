@@ -338,6 +338,7 @@ AMap.plugin('AMap.CitySearch', function () {
         if (status === 'complete' && result.info === 'OK') {
             // 查询成功，result即为当前所在城市信息
             $('.gec-curr-txt').text(result.city);
+            $('.curr_city').text(result.city);
         }
     })
 })
