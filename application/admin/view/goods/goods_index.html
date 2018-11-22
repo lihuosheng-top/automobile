@@ -307,6 +307,8 @@
                 var status = $(this).val();
                 var price=$(this).data("title");
 			    var shop=$(this).data("value");
+			    var putaway_status=$(this).data("action");
+			    console.log(putaway_status);
 								var years=$(this).data("text");
 								// 年限转化函数
 							
@@ -324,7 +326,8 @@
 							success: function(data){	
 								var data=$.parseJSON( data ); 
 								var role_id=data.data.admin[0].role_id;
-								var putaway_status=data.data.goods[0].putaway_status
+								
+								
 								// 当角色为平台时
 								if(role_id==2){
 									$.ajax({ 

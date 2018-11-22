@@ -19,14 +19,14 @@ $(window).on('scroll', function(){
 })
 
 // 所有评论切换
-$('.comment_classify_box').on('tap', 'li', function(){
+$('.comment_classify_box li').on('click', function(){
     $(this).addClass('active').siblings().removeClass('active');
 })
 
 // 图片展示 start
 var index, curr_container, curr_img_len;
 $(function(){
-    $('.comment_img_ul').on('tap', '.comment_img_li', function(e){
+    $('.comment_img_ul .comment_img_li').on('click', function(e){
         index = $(this).index();// 当前被点击的索引值
         curr_container = e.liveFired;//被点击li的父级
         curr_img_len = $(curr_container).children().length;//被点击容器中li的length
@@ -54,7 +54,7 @@ function loadImage(obj){
         }
     }
 }
-$('.img_box').on('tap', function(e){
+$('.img_box').on('click', function(e){
     e.cancelBubble = true;
     if(!$(e.targeet).hasClass('.img_box')){
         $('.show_img').hide();
@@ -85,3 +85,34 @@ $('.img_box').on('tap', function(e){
 })
 // 图片展示 end
 
+// 获取url地址id
+var url = location.search;
+var id;
+if(url.indexOf('?') != -1){
+    id = url.substr(1).split('=')[1];
+}
+$.ajax({
+    url: 'reservation_detail',
+    type: 'POST',
+    dataType: 'JSON',
+    data: {
+        'id': id
+    },
+    success: function(data){
+        console.log(data);
+        var str = '';
+        var str2 = '';
+        $.each(data.data, function(idx, val){
+            str += '<p class="shop_name">'+val.store.store_name+'</p>\
+                    <i class="spr star"></i>\
+                    <p class="nature">'+val.service_setting_name+'</p>';
+            str2 += '<p class="addr_p"><i class="spr icon_addr"></i>'+val.store.store_detailed_address+'</p>\
+                    <p class="phone_p"><i class="spr icon_phone"></i>'+val.store.store_owner_seat_num+'</p>'
+        })
+        $('.order_confirm').after(str);
+        $('.addr_phone_box').append(str2);
+    },
+    error: function(){
+        console.log('error');
+    }
+})
