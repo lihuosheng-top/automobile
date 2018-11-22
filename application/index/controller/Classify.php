@@ -33,7 +33,7 @@ class Classify extends Controller
 
 
     // 商品分类列表
-    public function Goods_list(Request $request)
+    public function goods_list(Request $request)
     {
 
         if($request->isPost()){
@@ -46,7 +46,7 @@ class Classify extends Controller
 
 
     // 商品详情
-    public function Goods_detail()
+    public function goods_detail()
     {
         return view("goods_detail");
     }
