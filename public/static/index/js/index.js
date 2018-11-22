@@ -342,12 +342,12 @@ AMap.plugin('AMap.CitySearch', function () {
     })
 })
 // 城市定位 弹窗
-$('.map').click(function(){
-    $('.wrapper').hide();
-    $('.geclocation-pop').show();
-})
+// $('.map').click(function(){
+//     $('.wrapper').hide();
+//     $('.geclocation-pop').show();
+// })
 // 城市定位弹窗 返回
-$('.gec-back').click(function(){
-    $('.select-car').hide();
-    $('.wrapper').show();
-})
+// $('.gec-back').click(function(){
+//     $('.select-car').hide();
+//     $('.wrapper').show();
+// })

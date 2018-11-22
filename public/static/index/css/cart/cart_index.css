@@ -184,6 +184,7 @@ html{
 .goods_wrap .goods_info_wrap{
     display: flex;
     align-items: center;
+    margin-bottom: .15rem;
 }
 .goods_wrap .goods_img_wrap{
     width: 1.8rem;
