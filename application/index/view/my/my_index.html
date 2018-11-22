@@ -22,9 +22,9 @@
                     <img src="__STATIC__/index/image/icon6.png">
                 </div>
                 <!-- 未登录显示 -->
-                <!-- <a href="login" class="please_login" style="display:none;">
-                    立即登录&gt;
-                </a> -->
+                <a href="login" class="please_login" style="display:block;">
+                    立即登录
+                </a>
                 <!-- 登陆后显示 -->
                 <div class="user_info_text" style="display:block;">
                     <!-- <p class="user_name">叶问</p>
@@ -190,6 +190,7 @@
                                 <span class="member_grade">会员: <i>'+data.user_grade_content+'</i></span>\
                                 <span class="wallet br0">钱包: ￥<i>'+data.user_wallet+'</i></span>\
                             </p>'
+                    $('.please_login').hide();
                     $('.user_info_text').append(str);
                 }
             },

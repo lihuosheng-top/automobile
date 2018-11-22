@@ -1,8 +1,9 @@
-html{
+body,html{
     background-color: #f7f7f7;
 }
 .wrapper{
     width: 100%;
+    margin-bottom: 1.1rem;
 }
 .head{
     position: relative;
@@ -112,7 +113,7 @@ html{
     float: right;
 }
 .footbar{
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;

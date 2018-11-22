@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/index/reservation.css">    
+    <title>预约服务</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="head">
+            <a href="javascript:history.back(-1);" class="spr back"></a>
+            <p class="headtitle">预约服务</p>
+            <a href="javascript:;" class="spr icon_share"></a>
+        </div>
+        <!-- 高德地图 -->
+        <div class="container" id="container"></div>
+        <div class="shop_list">
+            <div class="shop_box">
+                <div class="addr_info_box">
+                    <p class="shop_name_p">得朋宝马汽车销售维修中123456</p>
+                    <div class="comment_box">
+                        <i class="spr icon_star"></i>
+                        <p class="statistic_member">汽车维修<span class="member_num">2000</span>人去过</p>
+                    </div>
+                    <p class="distance_addr_box">
+                        <span class="distance_span">500米</span>
+                        <span class="addr_span">新闻路111</span>
+                    </p>
+                </div>
+                <div class="service_type">
+                    <p class="service_price">￥50</p>
+                    <p class="service_text">标准洗车</p>
+                </div>
+                <div class="order_box">
+                    <a href="reservation_detail">
+                        <i class="spr icon_order"></i>
+                        <p class="order_text">预约</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    
+    <!-- 高德地图 -->
+    <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
+    <script src="__STATIC__/index/js/reservation.js"></script>
+</body>
+</html>
