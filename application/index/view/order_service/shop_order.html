@@ -43,10 +43,10 @@
             </div>
             <div class="footbar">
                 <div class="totalprice">
-                    合计：<span class="txt">￥0.1</span>
+                    合计：<span class="txt">￥0.01</span>
                 </div>
                 <div class="btn_buy">
-                    <a href="javascript:;" class="txt">去支付</a>
+                    <a href="javascript:;" class="txt" id="goAlipay">去支付</a>
                 </div>
             </div>
         </div>
@@ -84,11 +84,11 @@
             <div class="middle_box">
                 <div class="price-box">
                     <span>￥</span>
-                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="0.1" readonly>
+                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="0.01" readonly>
                 </div>
                 <ul class="content">
                     <li>
-                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="15428821121022" readonly>
+                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="15428821121021" readonly>
                     </li>
                     <li>
                         订单名称: <input id="WIDsubject" name="WIDsubject" value="预约洗车" readonly>
@@ -101,8 +101,8 @@
             <button type="submit" class="alipay-submit">立即付款</button>
         </div>
     </form>
-    <script src="__STATIC__/index/js/plugin/zepto.js"></script>
-    <script src="__STATIC__/index/js/plugin/touch.js"></script>
+    <div class="mask" style="display:none;"></div>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/vue.js"></script>
     <script>
         var app = new Vue({
@@ -117,6 +117,30 @@
                 popHide: function(){
                     this.switchPop = true;
                 }
+            }
+        })
+    </script>
+    <script>
+        $('#goAlipay').click(function(){
+            $('.mask').show();
+            $('.alipay-pop').animate({'bottom': '0'});
+        })
+        $('.close-alipay').click(function(){
+            $('.mask').hide();
+            $('.alipay-pop').animate({'bottom': '-100%'});
+        })
+        
+        // 订单号
+        $.ajax({
+            url: 'ios_api_order_button',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+                console.log(data);
+                $('#WIDout_trade_no').val(data.data);
+            },
+            error: function(){
+                console.log('error');
             }
         })
     </script>
