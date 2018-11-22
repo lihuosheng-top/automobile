@@ -422,8 +422,7 @@
 
 				//点击操作确认按钮
 						var data_id = [];
-						var nmdata_id=[];
-						var mdata_id=[];
+						
 						var years=[];
 						$("#opration_btu").click(function() {
 							var opration_val=$(".opation select option:selected").val();
@@ -474,13 +473,15 @@
 								
 							}
 							else if(opration_val==2){
-								
+								var nmdata_id=[];
+						        var mdata_id=[];
 								var all_price=0;
 								var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
 										for (var i = 0; i < child.length; i++) {
 											data_id.push($(child[i])[0].dataset.id);
-											if($(child[i])[0].dataset.action==1){
+											if($(child[i])[0].dataset.action==0){
 												mdata_id.push($(child[i])[0].dataset.id);
+												all_price+=parseFloat($(child[i])[0].dataset.title);
 											}
 											else{
 												nmdata_id.push($(child[i])[0].dataset.id);
@@ -492,7 +493,7 @@
 											var date = myDate.getDate();
 											var present = year + '-' + month + '-' + date;
 											years.push(present);
-											all_price+=parseFloat($(child[i])[0].dataset.title);
+											
 											var shop=$(child[i])[0].dataset.value;
 										}
 										$.ajax({
@@ -501,7 +502,7 @@
 												data: {"goods_id":data_id},
 												success: function(data){	
 													var data=$.parseJSON( data ); 
-													var role_id=data.data[0].role_id;
+													var role_id=data.data.admin[0].role_id;
 													// 当角色为平台时
 													if(role_id==2){
 														$.ajax({
@@ -518,19 +519,33 @@
 													}
 													// 当角色为服务商时
 														else if(role_id==5){
+															if(mdata_id.length>0){
+																$.ajax({
+																	type: "POST",
+																	url: "{:url('admin/Goods/status')}",
+																	  data: {"id":nmdata_id,"status":1},
+																	success: function(data){
+																		console.log(data);
+																	},
+																	error:function (data) {
+																		console.log(data);
+																	}
+																});
+																layer.confirm('付费商品需付费后才能上架！', {
+																  btn: ['确定付费','取消付费！'] //按钮
+																}, function(){
+																 layer.close(layer.index);
+					                                             $(".tanchuang").removeClass("noshow");
+					 											 $("#shop").val(shop);
+																 $("#price").val(all_price);
+																 $("#num").val(mdata_id.length);
+																 $("#good-id").val(mdata_id);
+					
+																});
+																
+															}
 															
-									layer.confirm('付费商品需付费后才能上架！', {
-											  btn: ['确定付费','取消付费！'] //按钮
-											}, function(){
-											 layer.close(layer.index);
-                                             $(".tanchuang").removeClass("noshow");
- 											 $("#shop").val(shop);
-											 $("#price").val(all_price);
-											 $("#num").val(child.length);
-											 $("#good-id").val(data_id);
-											 $("#year").val(years);
-
-											});
+									
 
 								}
 								
