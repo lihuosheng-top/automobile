@@ -545,10 +545,8 @@ class Goods extends Controller{
 
         if($request->isPost()) {
             $user_id = Session::get("user_id");
-            $goods_id = $request->only(["goods_id"])["goods_id"];
             $admin = db("admin")->where("id", $user_id)->select();
-            $goods = db("goods")->where("id",$goods_id)->field("putaway_status")->select();
-            return ajax_success("获取成功",array("admin"=>$admin,"goods"=>$goods));
+            return ajax_success("获取成功",array("admin"=>$admin));
         }
 
     }

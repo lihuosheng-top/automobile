@@ -21,23 +21,17 @@ Route::group("",[
     "/$"=>"index/index/index",
 
 
-    "service_type"=>"index/index/service_type",//选择服务类型
+    /*服务商品*/
+    "service_type"=>"index/reservation/service_type",//选择服务类型
+    "reservation"=>"index/reservation/reservation",//预约服务 首页
+    "reservation_detail"=>"index/reservation/reservation_detail",//预约服务 详情
+    "reservation_info"=>"index/reservation/reservation_info",//预约服务 详情
 
 
-
-    "reservation"=>"index/index/reservation",//预约服务 首页
-
-
-
-    "reservation_detail"=>"index/index/reservation_detail",//预约服务 详情
+    /*服务订单*/
+    "shop_order"=>"index/OrderService/shop_order",//预约服务 详情
 
 
-
-    "reservation_info"=>"index/index/reservation_info",//预约服务 详情
-
-
-
-    "shop_order"=>"index/index/shop_order",//预约服务 详情
 
     /*登录页面*/
     "login_index"=>"index/Login/index",
