@@ -126,4 +126,23 @@ class OrderService extends Controller{
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:
+     **************************************
+     * @param Request $request
+     */
+    public function ios_return_num(Request $request){
+        if($request->isPost()){
+            $ios_return_num =$request->only(['num'])['num'];
+            $data =Db::name('order_service')->where('service_order_number',$ios_return_num)->find();
+            if($data){
+                return ajax_success('成功',$data);
+            }else{
+                return ajax_error('失败');
+            }
+        }
+    }
+
 }
