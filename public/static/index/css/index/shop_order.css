@@ -191,10 +191,11 @@ body,html{
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: -100%;
     background-color: #fff;
     width: 100%;
     height: 60vh;
+    z-index: 5;
 }
 .alipay-pop header{
     position: relative;
@@ -269,6 +270,14 @@ body,html{
 	border-radius: 5px;
 	border: 1px solid #2e8ffd;
 }
-
+.mask{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100vh;
+}
 
 

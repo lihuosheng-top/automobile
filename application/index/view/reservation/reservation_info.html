@@ -46,7 +46,7 @@
                     合计：<span class="txt">￥0.1</span>
                 </div>
                 <div class="btn_buy">
-                    <a href="shop_order" class="txt">确认</a>
+                    <a href="javascript:;" class="txt" id="confirm-info">确认</a>
                 </div>
             </div>
         </div>
@@ -136,8 +136,7 @@
         <!-- 预约弹窗 结束 -->
     </div>
 
-    <script src="__STATIC__/index/js/plugin/zepto.js"></script>
-    <script src="__STATIC__/index/js/plugin/touch.js"></script>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/vue.js"></script>
     <script>
         var app = new Vue({
@@ -302,6 +301,22 @@
                 console.log(this.dates);
             },
         })
+    </script>
+    <script>
+        // $('#confirm-info').click(function(){
+        //     $.ajax({
+        //         url: 'ios_api_order_button',
+        //         type: 'POST',
+        //         dataType: 'JSON',
+        //         success: function(data){
+        //             console.log(data);
+        //             location.href = 'shop_order';
+        //         },
+        //         error: function(){
+        //             console.log('error');
+        //         }
+        //     })
+        // })
     </script>
 </body>
 </html>
