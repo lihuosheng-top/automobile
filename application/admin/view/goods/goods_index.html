@@ -193,7 +193,7 @@
 					<tr>
 						{volist name="year" id="val"}
 						{if $value.goods_year_id == $val.id}
-						<td><input type="checkbox" data-text="{$val.year}" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加"></td>
+						<td><input type="checkbox" data-text="{$val.year}" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加" data-action="{$value.putaway_status}"></td>
 						{/if}
 						{/volist}
 						<td>{$value.id}</td>
@@ -216,7 +216,7 @@
 							{if $value.goods_status == 0}
 							{volist name="year" id="val"}
 							{if $value.goods_year_id == $val.id}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}" data-value="店铺还没有添加" data-title="{$val.money}" data-text="{$val.year}"/>
+							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}" data-value="店铺还没有添加" data-title="{$val.money}" data-text="{$val.year}" data-action="{$value.putaway_status}" />
 							{/if}
 							{/volist}
 							{else /}
@@ -422,6 +422,8 @@
 
 				//点击操作确认按钮
 						var data_id = [];
+						var nmdata_id=[];
+						var mdata_id=[];
 						var years=[];
 						$("#opration_btu").click(function() {
 							var opration_val=$(".opation select option:selected").val();
@@ -477,6 +479,12 @@
 								var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
 										for (var i = 0; i < child.length; i++) {
 											data_id.push($(child[i])[0].dataset.id);
+											if($(child[i])[0].dataset.action==1){
+												mdata_id.push($(child[i])[0].dataset.id);
+											}
+											else{
+												nmdata_id.push($(child[i])[0].dataset.id);
+											}
 											// 年限转化函数
 											var myDate = new Date();
 											var year = myDate.getFullYear()+parseInt($(child[i])[0].dataset.text);
