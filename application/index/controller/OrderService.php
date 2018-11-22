@@ -32,6 +32,7 @@ class OrderService extends Controller{
         if ($request->isGet()) {
 //            $data = $_POST;
             $member_data = session('member');
+            $data =1;
             $member = Db::name('user')->field('id,harvester,harvester_phone_num,harvester_real_address')->where('phone_num', $member_data['phone_num'])->find();
 //            $commodity_id = $_POST['goods_id'];
             $commodity_id = 2;
@@ -55,7 +56,6 @@ class OrderService extends Controller{
                     $res = Db::name('order_service')->insertGetId($datas);
                     if ($res) {
                         session('order_id', $res);
-                        dump($datas['service_order_number']);
                         return ajax_success('下单成功', $datas['service_order_number']);
                     }
                 }
@@ -68,8 +68,9 @@ class OrderService extends Controller{
      **************************************
      */
     public function ios_api_alipay(Request $request){
-        if($request->isPost()){
-            $order_num =$request->only(['order_num'])['order_num'];
+        if($request->isGet()){
+//            $order_num =$request->only(['order_num'])['order_num'];
+            $order_num =15428821121022;
             $product_code ="QUICK_MSECURITY_PAY";
             $out_trade_no="ZQLM3O56MJD4SK3";
             $time =date('Y-m-d H:i:s');
