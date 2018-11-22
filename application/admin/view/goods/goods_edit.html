@@ -312,12 +312,15 @@
 			<div class="layui-input-block">
 				{if $value.goods_standard == "通用"}
 				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige" checked="">
-				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> {/if} {if $value.goods_standard == "专用"}
+				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
+				{/if}
+				{if $value.goods_standard == "专用"}
 				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
-				<input type="radio" checked="" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> {else}
+				<input type="radio" checked="" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
+				{else}
 				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
-				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> {/if}
-
+				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
+				{/if}
 			</div>
 		</div>
 		<div>
@@ -710,31 +713,6 @@
 				<div class="tips">库存为0时，会放到[已售罄]的商品列表里，保存后买家看到的商品可售库存同步更新</div>
 			</div>
 
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">速度级别：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_speed" value="{$value.goods_speed}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_speed">
-			</div>
-
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">载重指数：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_weight" value="{$value.goods_weight}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_weight">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">类别：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_category" value="{$value.goods_category}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_category">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">花纹特点：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_trait" value="{$value.goods_trait}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_trait">
-			</div>
 		</div>
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>

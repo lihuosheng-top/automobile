@@ -7,6 +7,7 @@
  */
 namespace app\admin\controller;
 use think\Controller;
+use think\Request;
 
 class Serve extends Controller{
 
@@ -18,7 +19,11 @@ class Serve extends Controller{
      */
     public function index(){
 
-        return view("serve_index");
+        $serve_goods = db("serve_goods")->order("id desc")->select();
+        foreach ($serve_goods as $key=>$value){
+            $serve_goods[$key]["serve_goods_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
+        }
+        return view("serve_index",["serve_goods"=>$serve_goods]);
 
     }
 
@@ -30,29 +35,50 @@ class Serve extends Controller{
      */
     public function add(){
 
-        $car = db("car_series")->distinct(true)->field(trim("vehicle_model"))->select();
+        $car = db("car_series")->distinct(true)->field("vehicle_model")->select();
         $data = [];
         foreach ($car as $key=>$value){
             $arr[] = trim($value["vehicle_model"]);
             $data = array_unique($arr);
-
         }
         foreach ($data as $k=>$val){
             if(empty($val)){
                 unset($data[$k]);
             }
         }
-        return view("serve_add",["data"=>$data]);
+        $service_setting = db("service_setting")->select();
+        return view("serve_add",["data"=>$data,"service_setting"=>$service_setting]);
 
     }
-	  /**
-	     * 服务商品查看详情
-	     * 陈绪
-	     */
-	    public function look(){
-	
-	        return view("serve_look");
-	
-	    }
+
+
+
+    /**
+     * 服务商品查看详情
+     * 陈绪
+     */
+    public function look(){
+
+        return view("serve_look");
+
+    }
+
+
+
+    /**
+     * 服务商品入库
+     * 陈绪
+     */
+    public function save(Request $request){
+
+        $serve_goods = $request->param();
+        $bool = db("serve_goods")->insert($serve_goods);
+        if($bool){
+            $this->success("保存成功",url("admin/Serve/index"));
+        }else{
+            $this->error("保存失败",url("admin/Serve/index"));
+        }
+
+    }
 
 }

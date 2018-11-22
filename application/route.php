@@ -155,6 +155,9 @@ Route::group("admin",[
     "serve_index"=>"admin/Serve/index",
     "serve_add"=>"admin/Serve/add",
 	"serve_look"=>"admin/Serve/look",
+    "serve_save"=>"admin/Serve/save",
+    "serve_edit"=>"admin/Serve/edit",
+    "serve_updata"=>"admin/Serve/updata",
 
 
 

@@ -24,9 +24,10 @@ class Install extends Controller{
         if($request->isPost()){
             $min_money = $request->only(["min_money"])["min_money"];
             $max_money = $request->only(["max_money"])["max_money"];
-            $ratio = $request->only(["ratio"])["ratio"];
+            $rati = $request->only(["ratio"])["ratio"];
             foreach ($min_money as $key=>$value){
-                $bool = db("goods_ratio")->insert(["min_money"=>$value,"max_money"=>$max_money[$key],"ratio"=>$ratio[$key]]);
+                $ratio = (float)$rati[$key]/100;
+                $bool = db("goods_ratio")->insert(["min_money"=>$value,"max_money"=>$max_money[$key],"ratio"=>$ratio]);
             }
             if($bool){
                 $this->success("添加成功",url("admin/Install/service_index"));

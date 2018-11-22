@@ -64,6 +64,12 @@ class Goods extends Controller{
                     $bool = db("goods")->where("id",$value["id"])->update(["goods_status"=>0,"putaway_status"=>0]);
                 }
             }
+            $goods_money = db("goods")->field("goods_new_money,id")->select();
+            foreach ($goods_money as $k=>$val){
+                $goods_ratio[] = db("goods_ratio")->where("min_money","<=",$val["goods_new_money"])->where("max_money",">=",$val["goods_new_money"])->field("ratio")->find();
+                $goods_adjusted_money[] = $val["goods_new_money"]+($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
+                db("goods")->where("id",$val["id"])->update(["goods_adjusted_money"=>$goods_adjusted_money[$k]]);
+            }
 
             $year = db("year")->select();
             $user_id = Session::get("user_id");
@@ -344,14 +350,7 @@ class Goods extends Controller{
         if($request->isPost()) {
             $id = $request->only(["ids"])["ids"];
             foreach ($id as $value) {
-                $goods_url = db("goods")->where("id", $value)->find();
                 $goods_images = db("goods_images")->where("goods_id", $value)->select();
-                if($goods_url['goods_show_images'] != null){
-                    unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_url['goods_show_images']);
-                    unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_url['goods_parts_big_img']);
-                    unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_url['goods_spec_img']);
-                    unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_url['goods_parts_img']);
-                }
                 foreach ($goods_images as $val) {
                     if ($val['goods_images'] != null) {
                         unlink(ROOT_PATH . 'public' . DS . 'upload/' . $val['goods_images']);
@@ -427,9 +426,14 @@ class Goods extends Controller{
             }
         }
         $goods_list = getSelectList("goods_type");
-        $goods_brand = db("brand")->select();
-        return view("good_look",["goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
-
+        $goods_brand = getSelectList("brand");
+        $year = db("year")->select();
+        if($request->isPost()){
+            $car_series = db("car_series")->distinct(true)->field("brand")->select();
+            $car_brand = db("car_series")->field("series,brand")->select();
+            return ajax_success("获取成功",array("car_series"=>$car_series,"car_brand"=>$car_brand));
+        }
+        return view("goods_look",["year"=>$year,"goods_brand"=>$goods_brand,"goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
 
