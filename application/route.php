@@ -158,6 +158,7 @@ Route::group("admin",[
     "serve_save"=>"admin/Serve/save",
     "serve_edit"=>"admin/Serve/edit",
     "serve_updata"=>"admin/Serve/updata",
+    "serve_del"=>"admin/Serve/del",
 
 
 
