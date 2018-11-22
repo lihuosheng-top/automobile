@@ -31,6 +31,16 @@ Route::group("",[
     /*服务订单*/
     "shop_order"=>"index/OrderService/shop_order",//预约服务 详情
 
+    /*TODO:服务商订单开始*/
+    "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
+    "ios_api_order_button"=>"index/OrderService/ios_api_order_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
+    "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
+
+    'aliPay'=>"index/Apppay/aliPay",
+    'pay_code'=>"index/Apppay/pay_code",
+    /*TODO:服务商订单结束*/
+
+
 
 
     /*登录页面*/
