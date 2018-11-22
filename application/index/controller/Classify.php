@@ -70,6 +70,7 @@ class Classify extends Controller
             $goods = db("goods")->where("id",$goods_id)->select();
             foreach ($goods as $key=>$value){
                 $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
+                $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
             }
             if($goods){
                 return ajax_success("获取成功",$goods);
