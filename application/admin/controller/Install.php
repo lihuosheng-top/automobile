@@ -273,11 +273,11 @@ class Install extends Controller{
         if($this->request->isPost()){
             $data =$this->request->post();
             $data['service_setting_time'] =time();
-            $file =$this->request->file("service_setting_class_img");
+            $file =$this->request->file("service_setting_calss_img");
             if($file){
                 $datas = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $images_url = str_replace("\\","/",$datas->getSaveName());
-                $data['service_setting_class_img'] =$images_url;
+                $data["service_setting_calss_img"] =$images_url;
             }
             if($id>0){
                 $res =Db::name('service_setting')->where('service_setting_id',$id)->update($data);
@@ -285,7 +285,7 @@ class Install extends Controller{
                 $res =Db::name('service_setting')->insertGetId($data);
             }
             if($res>0){
-                 $this->success('编辑成功',('service_index'));
+                 $this->success('编辑成功','admin/Install/service_index');
             }else{
                  $this->error('编辑失败');
             }
@@ -304,11 +304,11 @@ class Install extends Controller{
     public function  service_image_del(Request $request){
         if ($request->isPost()) {
             $id = $request->only(['id'])['id'];
-            $image_url = Db::name('service_setting')->where("service_setting_id", $id)->field("service_setting_class_img")->find();
-            if ($image_url['service_setting_class_img'] != null) {
-                unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $image_url['service_setting_class_img']);
+            $image_url = db('service_setting')->where("service_setting_id", $id)->field("service_setting_calss_img")->find();
+            if ($image_url["service_setting_calss_img"] != null) {
+                unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $image_url["service_setting_calss_img"]);
             }
-            $bool = Db::name('service_setting')->where("service_setting_id", $id)->field("service_setting_class_img")->update(["service_setting_class_img" => null]);
+            $bool = Db::name('service_setting')->where("service_setting_id", $id)->field("service_setting_calss_img")->update(["service_setting_calss_img" => null]);
             if ($bool) {
                 return ajax_success("删除成功");
             } else {
@@ -327,9 +327,9 @@ class Install extends Controller{
     public function service_del($id){
         $bool = Db::name("service_setting")->where("service_setting_id", $id)->delete();
         if ($bool) {
-            $this->success("删除成功", ('service_index'));
+            $this->success("删除成功", 'admin/Install/service_index');
         } else {
-            $this->error("删除失败", ('service_index'));
+            $this->error("删除失败", 'admin/Install/service_index');
         }
     }
 
