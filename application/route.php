@@ -383,12 +383,13 @@ Route::group("admin",[
     "recharge_setting_add"=>"admin/Install/recharge_setting_add",//设置之充值设置添加数据
     "recharge_setting_del"=>"admin/Install/recharge_setting_del",//设置之充值设置删除数据
 
-    "service_index"=>"admin/Install/service_index",
+    "service_index"=>"admin/Install/service_index",//服务设置之列表
     "service_add"=>"admin/Install/service_add",
     "service_save"=>"admin/Install/service_save",
-    "service_edit"=>"admin/Install/service_edit",
+    "service_edit"=>"admin/Install/service_edit",//服务设置之编辑添加
+    "service_image_del"=>"admin/Install/service_image_del",//服务设置之编辑里面图片删除
     "service_updata"=>"admin/Install/service_updata",
-    "service_del"=>"admin/Install/service_del",
+    "service_del"=>"admin/Install/service_del", //服务设置之删除
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",
