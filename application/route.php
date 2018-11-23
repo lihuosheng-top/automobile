@@ -57,6 +57,12 @@ Route::group("",[
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
 
 
+
+    /*店铺*/
+    "store_index"=>"index/Store/index",
+
+
+
     /*判断是否登录*/
     "isLogin"=>"index/My/isLogin", //是否登录判断
 
@@ -73,10 +79,15 @@ Route::group("",[
 
 
 
-
-    /*商品*/
+    /*配件商品*/
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
+
+
+
+    /*配件商城*/
+    "parts_index"=>"index/Parts/parts_index",
+
 
 
     // 购物车
