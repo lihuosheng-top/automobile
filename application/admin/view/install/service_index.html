@@ -43,7 +43,7 @@
 						<td>{$vo.service_setting_time|date="Y-m-d H:i:s",###}</td>
 						<td>
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Install/service_edit',['id'=>$vo.service_setting_id])}"><i class="iconfont icon-edit"></i> 编辑</a>
-							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
+							<a href="{:url('admin/Install/service_del',['id'=>$vo.service_setting_id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
 							 data-id="undefined"><i class="layui-icon"></i> 删除</a>
 						</td>
 					</tr>

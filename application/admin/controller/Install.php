@@ -285,7 +285,7 @@ class Install extends Controller{
                 $res =Db::name('service_setting')->insertGetId($data);
             }
             if($res>0){
-                 $this->success('编辑成功',('service_index'));
+                 $this->success('编辑成功','admin/Install/service_index');
             }else{
                  $this->error('编辑失败');
             }
@@ -327,9 +327,9 @@ class Install extends Controller{
     public function service_del($id){
         $bool = Db::name("service_setting")->where("service_setting_id", $id)->delete();
         if ($bool) {
-            $this->success("删除成功", ('service_index'));
+            $this->success("删除成功", 'admin/Install/service_index');
         } else {
-            $this->error("删除失败", ('service_index'));
+            $this->error("删除失败", 'admin/Install/service_index');
         }
     }
 
