@@ -54,7 +54,7 @@ class Goods extends Controller{
                 'datemin' => $datemin
             ]);
         }else{
-            $goods = db("goods")->paginate(10);
+            $goods = db("goods")->order("id desc")->paginate(10);
             $goods_year = db("goods")->field("goods_year_id,id")->select();
             $time = date("Y-m-d");
             foreach ($goods_year as $key=>$value){
@@ -263,6 +263,12 @@ class Goods extends Controller{
         if ($request->isPost()) {
             $id = $request->only(["id"])["id"];
             $goods_data = $request->param();
+
+            if($goods_data["goods_standard"] == "通用"){
+                unset($goods_data["dedicated_vehicle"]);
+                unset($goods_data["goods_car_brand"]);
+                unset($goods_data["dedicated_property"]);
+            }
             if(!empty($goods_data["goods_standard_name"])){
                 $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
                 $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);

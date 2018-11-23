@@ -21,6 +21,13 @@ Route::group("",[
     "/$"=>"index/index/index",
 
 
+
+    /*我的爱车*/
+    "love_car"=>"index/LoveCar/love_car",
+    "love_list"=>"index/LoveCar/love_list",                         //我的爱车列表
+
+
+
     /*服务商品*/
     "service_type"=>"index/reservation/service_type",//选择服务类型
     "reservation"=>"index/reservation/reservation",//预约服务 首页
@@ -97,7 +104,7 @@ Route::group("",[
 
     // 我的
     "my_index"=>"index/My/my_index",
-    "my_car"=>"index/My/my_car",//我的爱车
+
 
     "login"=>"index/My/login",//登录
     "setting"=>"index/My/setting",//设置
