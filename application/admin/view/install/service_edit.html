@@ -133,23 +133,24 @@
 
 	</div>
 	{if !empty($info)}
-	<form class="layui-form" action="">
+	<form class="layui-form" action="{:url('admin/Install/service_edit',['id'=>$info.service_setting_id])}" method="post" enctype="multipart/form-data">
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span style="color: red;">*</span>商品项目名称：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$info.service_setting_name}">
+				<input type="text" name="service_setting_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$info.service_setting_name}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span style="color: red;">*</span>菜单排序：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$info.service_order_id}">
+				<input type="text" name="service_order_id" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$info.service_order_id}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">添加日期：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$info.service_setting_time|date='Y-m-d H:i:s',###}">
+				<!--<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$info.service_setting_time|date='Y-m-d H:i:s',###}">-->
+				{$info.service_setting_time|date='Y-m-d H:i:s',###}
 			</div>
 		</div>
 <div class="layui-form-item">
@@ -157,8 +158,8 @@
 				<div class="layui-input-block">
 				<div class="imgcontent">
 					<span class="img">
-						<img src="__UPLOADS__/{$info.member_grade_img}" width="100%">
-						<i class="remove-img" data-id="{$info.member_grade_id}" data-value="2"><img src="__STATIC__/admin/common/img/a7.png"></i>
+						<img src="__UPLOADS__/{$info.service_setting_calss_img}" width="100%">
+						<i class="remove-img" data-id="{$info.service_setting_id}" data-value="2"><img src="__STATIC__/admin/common/img/a7.png"></i>
 					</span>
 				</div>
 			</div>
@@ -167,8 +168,8 @@
 					<section class=" img-section">
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
-								<img src="__USERIMG__/{$info.service_setting_calss_img}" class="add-img">
-								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+								<input type="file" name="service_setting_calss_img" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple  data-id="1"/>
 							</section>
 						</div>
 					</section>
@@ -184,8 +185,14 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">是否显示：</label>
 		<div class="layui-input-block">
-			<input type="radio" name="sex" value="启用" title="是" checked="">
-			<input type="radio" name="sex" value="禁用" title="否">
+			{if $info.service_setting_status==1 }
+			<input type="radio" name="service_setting_status" value="1" title="是" checked="">
+			<input type="radio" name="service_setting_status" value="-1" title="否">
+			{/if}
+			{if $info.service_setting_status==-1 }
+			<input type="radio" name="service_setting_status" value="1" title="是" >
+			<input type="radio" name="service_setting_status" value="-1" title="否" checked="">
+			{/if}
 		</div>
 	</div>
 		<div class="layui-form-item">
@@ -201,26 +208,26 @@
 	{/if}
 
 	{if empty($info)}
-	<form class="layui-form" action="">
+	<form class="layui-form" action="{:url('admin/Install/service_edit',['id'=>0])}" method="post" enctype="multipart/form-data">
 
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span style="color: red;">*</span>商品项目名称：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="service_setting_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span style="color: red;">*</span>菜单排序：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="service_order_id" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">添加日期：</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
+		<!--<div class="layui-form-item">-->
+			<!--<label class="layui-form-label">添加日期：</label>-->
+			<!--<div class="layui-input-block">-->
+				<!--<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">-->
+			<!--</div>-->
+		<!--</div>-->
 		<div class="layui-form-item">
 			<label class="layui-form-label">商品分类图标：</label>
 			<div class="layui-input-block">
@@ -229,7 +236,7 @@
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+								<input type="file" name="service_setting_calss_img" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="1"/>
 							</section>
 						</div>
 					</section>
@@ -246,8 +253,8 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">是否显示：</label>
 			<div class="layui-input-block">
-				<input type="radio" name="sex" value="启用" title="是" checked="">
-				<input type="radio" name="sex" value="禁用" title="否">
+				<input type="radio" name="service_setting_status" value="1" title="是" checked="">
+				<input type="radio" name="service_setting_status" value="-1" title="否">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -288,7 +295,7 @@
 						if (value == 1) {
 							$.ajax({
 								type: "POST",
-								url: "{:url('admin/User/grade_start_image_del')}",
+								url: "{:url('admin/Install/service_image_del')}",
 								data: {
 									"id": id
 								},
@@ -303,7 +310,7 @@
 						} else {
 							$.ajax({
 								type: "POST",
-								url: "{:url('admin/User/grade_start_image_del')}",
+								url: "{:url('admin/Install/service_image_del')}",
 								data: {
 									"id": id
 								},
@@ -322,7 +329,6 @@
 			
 		})
 	</script>
-
 	
 
 	{/block}
