@@ -313,26 +313,34 @@ class Goods extends Controller{
      */
     public function status(Request $request){
 
-        if ($request->isPost()){
-            if($request->isPost()) {
-                $status = $request->only(["status"])["status"];
-                if($status == 0) {
-                    $id = $request->only(["id"])["id"];
+        if($request->isPost()) {
+            $status = $request->only(["status"])["status"];
+            if($status == 0) {
+                $id = $request->only(["id"])["id"];
+                $admin_id = Session::get("user_id");
+                $goods = db("goods")->where("id",$id)->field("putaway_status")->find();
+                if($admin_id == 2){
                     $bool = db("goods")->where("id", $id)->update(["goods_status" => 0]);
-                    if ($bool) {
-                        return ajax_success("成功");
-                    } else {
-                        return ajax_error("失败");
-                    }
+                }else{
+                    $bool = db("goods")->where("id", $id)->update(["goods_status" => 0]);
                 }
-                if($status == 1){
-                    $id = $request->only(["id"])["id"];
-                    $bool = db("goods")->where("id", $id)->update(["goods_status" => 1]);
-                    if ($bool) {
-                        return ajax_success("成功");
-                    } else {
-                        return ajax_error("失败");
-                    }
+                if ($bool) {
+                    return ajax_success("成功");
+                } else {
+                    return ajax_error("失败");
+                }
+            }
+            if($status == 1){
+                $id = $request->only(["id"])["id"];
+                $admin_id = Session::get("user_id");
+                $goods = db("goods")->where("id",$id)->field("putaway_status")->find();
+                if($admin_id == 2 || $goods["putaway_status"] != null){
+                    $bool = db("goods")->where("id", $id)->update(["goods_status" => 1,"putaway_status"=>1]);
+                }
+                if ($bool) {
+                    return ajax_success("成功");
+                } else {
+                    return ajax_error("失败");
                 }
             }
         }

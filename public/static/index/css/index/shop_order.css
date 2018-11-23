@@ -187,7 +187,97 @@ body,html{
 .discount_wrap .dis span{
     font-size: .24rem;
 }
-
-
+.alipay-pop{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: -100%;
+    background-color: #fff;
+    width: 100%;
+    height: 60vh;
+    z-index: 5;
+}
+.alipay-pop header{
+    position: relative;
+    width: 100%;
+    height: .88rem;
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+    background-color: #fff;
+    margin-bottom: .5rem;
+}
+.alipay-pop header .close-alipay{
+    position: absolute;
+    top: 50%;
+    left: .2rem;
+    font-size: .6rem;
+    color: #333;
+    transform: translateY(-50%);
+}
+.alipay-pop header .alipay-title{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    text-align: center;
+}
+.alipay-pop .price-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: .88rem;
+}
+.alipay-pop .price-box span{
+    font-size: .6rem;
+    flex-basis: 45%;
+    text-align: right;
+}
+.alipay-pop .price-box input{
+    width: 50%;
+    font-size: .6rem;
+}
+.alipay-pop .middle_box .content{
+	width: 100%;
+}
+.alipay-pop .content li{
+	width: 100%;
+	border-bottom: 1px solid #e6e6e6;
+	padding: 0 .2rem;
+	height: 44px;
+	line-height: 44px;
+	font-size: 14px;
+	color: #666;
+	display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.alipay-pop .content li input{
+	float: right;
+	color: #333;
+	height: 100%;
+	border: 0;
+	text-align: right;
+}
+.alipay-pop .alipay-submit{
+	position: absolute;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 90%;
+	height: 40px;
+	font-size: 14px;
+	color: #fff;
+	background-color: #2e8ffd;
+	border-radius: 5px;
+	border: 1px solid #2e8ffd;
+}
+.mask{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100vh;
+}
 
 
