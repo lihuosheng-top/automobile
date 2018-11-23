@@ -154,6 +154,14 @@
 		</div>
 <div class="layui-form-item">
 			<label class="layui-form-label">商品分类图标：</label>
+				<div class="layui-input-block">
+				<div class="imgcontent">
+					<span class="img">
+						<img src="__UPLOADS__/{$info.member_grade_img}" width="100%">
+						<i class="remove-img" data-id="{$info.member_grade_id}" data-value="2"><img src="__STATIC__/admin/common/img/a7.png"></i>
+					</span>
+				</div>
+			</div>
 			<div class="layui-input-block">
 				<div class="img-box full">
 					<section class=" img-section">
@@ -270,6 +278,46 @@
 				layer = parent.layer === undefined ? layui.layer : parent.layer,
 				laypage = layui.laypage,
 				$ = layui.jquery;
+				// 图片删除
+					$(".remove-img").click(function() {
+						var remove = $(this).parent();
+						var id = $(this).data("id");
+						var value = $(this).data("value");
+						console.log(value)
+						console.log(id);
+						if (value == 1) {
+							$.ajax({
+								type: "POST",
+								url: "{:url('admin/User/grade_start_image_del')}",
+								data: {
+									"id": id
+								},
+								dataType: "json",
+								success: function(data) {
+									remove.remove();
+								},
+								error: function(data) {
+									console.log("错误");
+								}
+							});
+						} else {
+							$.ajax({
+								type: "POST",
+								url: "{:url('admin/User/grade_start_image_del')}",
+								data: {
+									"id": id
+								},
+								dataType: "json",
+								success: function(data) {
+									remove.remove();
+								},
+								error: function(data) {
+									console.log("错误");
+								}
+							});
+						}
+						// 		
+					});
 
 			
 		})
