@@ -1,10 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/store/store_index.css">
+    <title>店铺</title>
 </head>
 <body>
-店铺首页
+    <div class="wrapper">
+        <div class="head">
+            <a href="javascript:history.back(-1);" class="spr back"></a>
+            <input type="text" placeholder="输入你要搜索的品牌">
+            <i class="spr icon_search"></i>
+            <a href="javascript:;" class="spr icon_share"></a>
+        </div>
+        <div class="flagship-name">
+            <img src="__STATIC__/index/image/16498.png">
+            <div>
+                <p>米其林旗舰店</p>
+                <span class="spr icon-star"></span>
+            </div>
+        </div>
+        <div class="filter_box">
+            <button class="current">综合</button>
+            <button>销量</button>
+            <button>价格</button>
+            <button>筛选</button>
+        </div>
+        <ul class="list_cont clearfix">
+            <li>
+                <a href="goods_detail">
+                    <div class="img_div">
+                        <img src="__STATIC__/index/image/02.png">
+                    </div>
+                    <div class="goods_name">
+                        <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
+                    </div>
+                    <div class="goods_price">
+                        <span class="price">￥875</span>
+                        <span class="pay_num">1500人购买</span>
+                        <i class="spr icon_cart"></i>
+                    </div>
+                </a>
+            </li>
+            <li class="mgr0">
+                <a href="goods_detail">
+                    <div class="img_div">
+                        <img src="__STATIC__/index/image/02.png">
+                    </div>
+                    <div class="goods_name">
+                        <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
+                    </div>
+                    <div class="goods_price">
+                        <span class="price">￥875</span>
+                        <span class="pay_num">1500人购买</span>
+                        <i class="spr icon_cart"></i>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script>
+        $('.filter_box button').click(function(){
+            $(this).addClass('current').siblings().removeClass('current');
+            var idx = $(this).index();
+        })
+    </script>
 </body>
 </html>

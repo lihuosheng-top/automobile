@@ -18,6 +18,43 @@ $.ajax({
     },
     success: function(res){
         console.log(res);
+        var str = '';
+        $.each(res.data, function(idx, val){
+            if(idx % 2 == 0){
+                str += '<li>\
+                            <a href="goods_detail">\
+                                <div class="img_div">\
+                                    <img src="uploads/'+val.goods_show_images+'">\
+                                </div>\
+                                <div class="goods_name">\
+                                    <p>'+val.goods_name+'</p>\
+                                </div>\
+                                <div class="goods_price">\
+                                    <span class="price">￥'+val.goods_adjusted_money+'</span>\
+                                    <span class="pay_num">1500人购买</span>\
+                                    <i class="spr icon_cart"></i>\
+                                </div>\
+                            </a>\
+                        </li>'
+            }else{
+                str += '<li class="mgr0">\
+                            <a href="goods_detail">\
+                                <div class="img_div">\
+                                    <img src="uploads/'+val.goods_show_images+'">\
+                                </div>\
+                                <div class="goods_name">\
+                                    <p>'+val.goods_name+'</p>\
+                                </div>\
+                                <div class="goods_price">\
+                                    <span class="price">￥'+val.goods_adjusted_money+'</span>\
+                                    <span class="pay_num">1500人购买</span>\
+                                    <i class="spr icon_cart"></i>\
+                                </div>\
+                            </a>\
+                        </li>'
+            }
+        })
+        $('.list_cont').append(str);
     },
     error: function(){
         console.log('error');
