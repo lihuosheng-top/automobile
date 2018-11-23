@@ -36,8 +36,8 @@ Route::group("",[
     "ios_api_order_button"=>"index/OrderService/ios_api_order_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单
-    'aliPay'=>"index/Apppay/aliPay",
-    'pay_code'=>"index/Apppay/pay_code",
+    'index_aliPay'=>"index/Apppay/index_aliPay",
+    'index_pay_code'=>"index/Apppay/index_pay_code",
     /*TODO:服务商订单结束*/
 
 
@@ -57,6 +57,12 @@ Route::group("",[
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
 
 
+
+    /*店铺*/
+    "store_index"=>"index/Store/index",
+
+
+
     /*判断是否登录*/
     "isLogin"=>"index/My/isLogin", //是否登录判断
 
@@ -73,10 +79,15 @@ Route::group("",[
 
 
 
-
-    /*商品*/
+    /*配件商品*/
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
+
+
+
+    /*配件商城*/
+    "parts_index"=>"index/Parts/parts_index",
+
 
 
     // 购物车
@@ -383,12 +394,13 @@ Route::group("admin",[
     "recharge_setting_add"=>"admin/Install/recharge_setting_add",//设置之充值设置添加数据
     "recharge_setting_del"=>"admin/Install/recharge_setting_del",//设置之充值设置删除数据
 
-    "service_index"=>"admin/Install/service_index",
+    "service_index"=>"admin/Install/service_index",//服务设置之列表
     "service_add"=>"admin/Install/service_add",
     "service_save"=>"admin/Install/service_save",
-    "service_edit"=>"admin/Install/service_edit",
+    "service_edit"=>"admin/Install/service_edit",//服务设置之编辑添加
+    "service_image_del"=>"admin/Install/service_image_del",//服务设置之编辑里面图片删除
     "service_updata"=>"admin/Install/service_updata",
-    "service_del"=>"admin/Install/service_del",
+    "service_del"=>"admin/Install/service_del", //服务设置之删除
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",

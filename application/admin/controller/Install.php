@@ -17,7 +17,7 @@ class Install extends Controller{
     /**
      * 价格调整设置
      * 陈绪
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
+     * @return
      */
     public function index(Request $request){
 
@@ -180,7 +180,6 @@ class Install extends Controller{
     public function  recharge_setting_add(Request $request){
         if($request->isPost()){
             $data =input();
-            dump($data);
             if(empty($data)){
                 $this->error('所添加的值不能为空');
             }
@@ -267,28 +266,72 @@ class Install extends Controller{
      * @return \think\response\View
      */
     public function service_edit($id =null){
+        if($id > 0){
+            $info =Db::name('service_setting')->where("service_setting_id",$id)->find();
+            $this->assign('info',$info);
+        }
         if($this->request->isPost()){
             $data =$this->request->post();
             $data['service_setting_time'] =time();
+            $file =$this->request->file("service_setting_calss_img");
+            if($file){
+                $datas = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $images_url = str_replace("\\","/",$datas->getSaveName());
+                $data["service_setting_calss_img"] =$images_url;
+            }
             if($id>0){
                 $res =Db::name('service_setting')->where('service_setting_id',$id)->update($data);
             }else{
                 $res =Db::name('service_setting')->insertGetId($data);
             }
             if($res>0){
-                 $this->success('编辑成功',('service_index'));
+                 $this->success('编辑成功','admin/Install/service_index');
             }else{
                  $this->error('编辑失败');
             }
-        }
-        if($id > 0){
-            $info =Db::name('service_setting')->where("service_setting_id",$id)->find();
-            $this->assign('info',$info);
         }
         return view("service_edit");
 
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:设置之服务项目设置(图片删除)
+     **************************************
+     * @return \think\response\View
+     */
+    public function  service_image_del(Request $request){
+        if ($request->isPost()) {
+            $id = $request->only(['id'])['id'];
+            $image_url = db('service_setting')->where("service_setting_id", $id)->field("service_setting_calss_img")->find();
+            if ($image_url["service_setting_calss_img"] != null) {
+                unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $image_url["service_setting_calss_img"]);
+            }
+            $bool = Db::name('service_setting')->where("service_setting_id", $id)->field("service_setting_calss_img")->update(["service_setting_calss_img" => null]);
+            if ($bool) {
+                return ajax_success("删除成功");
+            } else {
+                return ajax_error("删除失败");
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:设置之服务项目设置列表删除
+     **************************************
+     * @param $id
+     */
+    public function service_del($id){
+        $bool = Db::name("service_setting")->where("service_setting_id", $id)->delete();
+        if ($bool) {
+            $this->success("删除成功", 'admin/Install/service_index');
+        } else {
+            $this->error("删除失败", 'admin/Install/service_index');
+        }
+    }
 
 
 
@@ -304,15 +347,6 @@ class Install extends Controller{
 
 
 
-    /**
-     * 服务删除
-     * 陈绪
-     */
-    public function service_del(){
-
-
-
-    }
 
 
 
