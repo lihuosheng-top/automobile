@@ -29,7 +29,7 @@ $.ajax({
             if(val.child.length != 0){
                 $.each(val.child, function(idx, val){
                     goodsLi += '<li>\
-                                    <a href="goods_list">\
+                                    <a href="goods_list?id='+val.id+'">\
                                         <img src="uploads/'+val.brand_images+'">\
                                         <span class="brand_name">'+val.name+'</span>\
                                     </a>\
@@ -51,7 +51,7 @@ $.ajax({
             if(val.child.length != 0){
                 $.each(val.child, function(idx, val){
                     goodsLi += '<li>\
-                                    <a href="goods_list">\
+                                    <a href="goods_list?id='+val.id+'">\
                                         <img src="uploads/'+val.type_images+'">\
                                         <span class="brand_name">'+val.name+'</span>\
                                     </a>\

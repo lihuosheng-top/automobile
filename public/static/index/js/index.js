@@ -332,20 +332,22 @@ var map = new AMap.Map('container', {
 AMap.plugin([
     'AMap.CitySearch',
     'AMap.Geolocation',
+    // 'AMap.CitySearch',
 ], function () {
-    var citySearch = new AMap.CitySearch()
-    citySearch.getLocalCity(function (status, result) {
-        if (status === 'complete' && result.info === 'OK') {
-            // 查询成功，result即为当前所在城市信息
-            $('.gec-curr-txt').text(result.city);
-            $('.curr_city').text(result.city);
-            // console.log(result);
-        }
-    })
+    // 城市获取服务，获取用户所在城市信息或根据给定IP参数查询城市信息
+    // var citySearch = new AMap.CitySearch()
+    // citySearch.getLocalCity(function (status, result) {
+    //     if (status === 'complete' && result.info === 'OK') {
+    //         // 查询成功，result即为当前所在城市信息
+            // $('.gec-curr-txt').text(result.city);
+            // $('.curr_city').text(result.city);
+    //         console.log(result);
+    //     }
+    // })
 
     var geolocation = new AMap.Geolocation({
         enableHighAccuracy: true,
-        timeout: 1000,
+        timeout: 0,
         buttonPosition: 'RB',
         buttonOffset: new AMap.Pixel(10, 20),
         zoomToAccuracy: true
@@ -355,12 +357,15 @@ AMap.plugin([
     AMap.event.addListener(geolocation, 'complete', onComplete);
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
-        // console.log(e.addressComponent.city);
+        console.log(e);
+        $('.gec-curr-txt').text(e.addressComponent.city);
+        $('.curr_city').text(e.addressComponent.city);
     };
     function onError(e){
         // console.log(e);
     };
 })
+
 // 城市定位 弹窗
 $('.map').click(function(){
     $('.wrapper').hide();
@@ -368,6 +373,6 @@ $('.map').click(function(){
 })
 // 城市定位弹窗 返回
 $('.gec-back').click(function(){
-    $('.select-car').hide();
+    $('.geclocation-pop').hide();
     $('.wrapper').show();
 })
