@@ -317,9 +317,6 @@
 				{if $value.goods_standard == "专用"}
 				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
 				<input type="radio" checked="" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
-				{else}
-				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
-				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
 				{/if}
 			</div>
 		</div>
@@ -376,7 +373,7 @@
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_vehicle" id="province">
-							 	<option value="">请选择</option>
+								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
@@ -406,117 +403,18 @@
 					</div>
 
 					<div id="special_content">
-						<div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格名</label>
-								<div class="layui-input-inline guige_name">
-									<select class="universal_standard_name" name="goods_standard_name[]">
-										<option value="" selected=""></option>
-									</select>
-								</div>
-								<div class="layui-input-inline add-name" style="">
-									<button type="button" class="sky-blue bgwhite">+添加规格名</button>
-								</div>
-								<div class="layui-input-inline noshow add-names" style="">
-									<input type="text" name="" id="" value="" />
-								</div>
-								<div class="layui-input-inline noshow add-names" style="">
-									<button type="button" class="operation-btus btu-delet">删除</button>
-									<button type="button" class="operation-btus btu-cancel">取消</button>
-									<button type="button" class="operation-btus btu-add guibtu-add">添加</button>
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格值：</label>
-								<div class="num-content">
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 					<div class="add-content content" id="add_special_buts">
 						<button type="button" class="btus special_buts">添加规格项目</button>
 					</div>
 				</div>
 			</div>
-			{/if} {if $value.goods_standard == "专用"}
+			{/if}
+			{if $value.goods_standard == "专用"}
 			<div class="layui-form-item general noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
 					<div id="general_content">
-						<div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格名</label>
-								<div class="layui-input-inline guige_name">
-									<select class="universal_standard_name" name="goods_standard_name[]">
-										<option value="" selected=""></option>
-									</select>
-								</div>
-								<div class="layui-input-inline add-name" style="">
-									<button type="button" class="sky-blue bgwhite">+添加规格名</button>
-								</div>
-								<div class="layui-input-inline noshow add-names" style="">
-									<input type="text" name="" id="" value="" />
-								</div>
-								<div class="layui-input-inline noshow add-names" style="">
-									<button type="button" class="operation-btus btu-delet">删除</button>
-									<button type="button" class="operation-btus btu-cancel">取消</button>
-									<button type="button" class="operation-btus btu-add guibtu-add">添加</button>
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格值：</label>
-								<div class="num-content">
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 					<div class="add-content content" id="add_general_buts">
 						<button type="button" class="btus general_buts">添加规格项目</button>
@@ -527,23 +425,23 @@
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
 					<!--<div class="layui-form-item">
-						<label class="layui-form-label">适用车型：</label>
-						<div class="layui-input-inline">
-							<select name="dedicated_vehicle">
-								<option value="{$value.dedicated_vehicle}">{$value.dedicated_vehicle}</option>
-							</select>
-						</div>
-						<div class="layui-input-inline">
-							<select name="goods_car_brand">
-								<option value="{$value.goods_car_brand}">{$value.goods_car_brand}</option>
-							</select>
-						</div>
-					</div>-->
-						<div class="layui-form-item car" >
+                        <label class="layui-form-label">适用车型：</label>
+                        <div class="layui-input-inline">
+                            <select name="dedicated_vehicle">
+                                <option value="{$value.dedicated_vehicle}">{$value.dedicated_vehicle}</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline">
+                            <select name="goods_car_brand">
+                                <option value="{$value.goods_car_brand}">{$value.goods_car_brand}</option>
+                            </select>
+                        </div>
+                    </div>-->
+					<div class="layui-form-item car" >
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_vehicle" id="province">
-							 	<option value="">请选择</option>
+								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
@@ -613,64 +511,7 @@
 				</div>
 
 			</div>
-			{else}
-			<div class="layui-form-item general noshow">
-				<label class="layui-form-label"></label>
-				<div class="layui-input-block general-kuang">
-					<div id="general_content"></div>
-					<div class="add-content content" id="add_general_buts">
-						<button type="button" class="btus general_buts">添加规格项目</button>
-					</div>
-				</div>
-
-			</div>
-			<div class="layui-form-item special noshow">
-				<label class="layui-form-label"></label>
-				<div class="layui-input-block general-kuang">
-			
-						<div class="layui-form-item car" >
-						<label class="layui-form-label">适用车型：</label>
-						<div class="layui-input-inline">
-							<select name="dedicated_vehicle" id="province">
-							 	<option value="">请选择</option>
-							</select>
-						</div>
-						<div class="layui-input-inline">
-							<select name="goods_car_brand" id="city">
-								<option value="">请选择</option>
-							</select>
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">属性</label>
-						<div class="layui-input-inline">
-							<select name="dedicated_property" class="dedicated_property">
-								<option value="0" selected="">请选择</option>
-							</select>
-						</div>
-						<div class="layui-input-inline add-attribute " style="">
-							<button type="button" class="sky-blue bgwhite ">+添加属性</button>
-						</div>
-						<div class="layui-input-inline noshow add-attributes">
-							<input type="text" name="" id="" value="" />
-						</div>
-						<div class="layui-input-inline noshow add-attributes">
-							<button type="button" class="operation-btus btu-delet">删除</button>
-							<button type="button" class="operation-btus btu-cancel">取消</button>
-							<button type="button" class="operation-btus btu-add shuxingbtu-add">添加</button>
-						</div>
-					</div>
-
-					<div id="special_content"></div>
-					<div class="add-content content" id="add_special_buts">
-						<button type="button" class="btus special_buts">添加规格项目</button>
-					</div>
-				</div>
-
-			</div>
-
 			{/if}
-
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"><span>*</span>规格：</label>

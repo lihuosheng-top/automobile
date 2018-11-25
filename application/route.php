@@ -21,6 +21,13 @@ Route::group("",[
     "/$"=>"index/index/index",
 
 
+
+    /*我的爱车*/
+    "love_car"=>"index/LoveCar/love_car",
+    "love_list"=>"index/LoveCar/love_list",                         //我的爱车列表
+
+
+
     /*服务商品*/
     "service_type"=>"index/reservation/service_type",//选择服务类型
     "reservation"=>"index/reservation/reservation",//预约服务 首页
@@ -57,6 +64,12 @@ Route::group("",[
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
 
 
+
+    /*店铺*/
+    "store_index"=>"index/Store/index",
+
+
+
     /*判断是否登录*/
     "isLogin"=>"index/My/isLogin", //是否登录判断
 
@@ -73,10 +86,15 @@ Route::group("",[
 
 
 
-
-    /*商品*/
+    /*配件商品*/
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
+
+
+
+    /*配件商城*/
+    "parts_index"=>"index/Parts/parts_index",
+
 
 
     // 购物车
@@ -86,7 +104,7 @@ Route::group("",[
 
     // 我的
     "my_index"=>"index/My/my_index",
-    "my_car"=>"index/My/my_car",//我的爱车
+
 
     "login"=>"index/My/login",//登录
     "setting"=>"index/My/setting",//设置
@@ -383,12 +401,13 @@ Route::group("admin",[
     "recharge_setting_add"=>"admin/Install/recharge_setting_add",//设置之充值设置添加数据
     "recharge_setting_del"=>"admin/Install/recharge_setting_del",//设置之充值设置删除数据
 
-    "service_index"=>"admin/Install/service_index",
+    "service_index"=>"admin/Install/service_index",//服务设置之列表
     "service_add"=>"admin/Install/service_add",
     "service_save"=>"admin/Install/service_save",
-    "service_edit"=>"admin/Install/service_edit",
+    "service_edit"=>"admin/Install/service_edit",//服务设置之编辑添加
+    "service_image_del"=>"admin/Install/service_image_del",//服务设置之编辑里面图片删除
     "service_updata"=>"admin/Install/service_updata",
-    "service_del"=>"admin/Install/service_del",
+    "service_del"=>"admin/Install/service_del", //服务设置之删除
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",
