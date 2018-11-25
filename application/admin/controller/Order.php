@@ -781,13 +781,8 @@ class Order extends Controller{
      **************************************
      */
     public function service_order_index(){
-//        $service_order_data =Db::table('tb_order_service')
-//            ->field("tb_order_service.*,tb_user.phone_num phone_num,tb_goods.name gname,tb_goods.show_images gimg")
-//            ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
-//            ->order('tb_integral.operation_time','desc')
-//            ->paginate(3 ,false, [
-//                'query' => request()->param(),
-//            ]);
+        $service_order_data =Db::name('order_service')->paginate(5);
+
         return view('service_order_index');
     }
 
