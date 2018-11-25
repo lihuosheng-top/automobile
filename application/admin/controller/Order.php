@@ -782,8 +782,7 @@ class Order extends Controller{
      */
     public function service_order_index(){
         $service_order_data =Db::name('order_service')->paginate(5);
-
-        return view('service_order_index');
+        return view('service_order_index',['service_order_data'=>$service_order_data]);
     }
 
     /**

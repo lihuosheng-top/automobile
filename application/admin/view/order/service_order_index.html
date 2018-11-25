@@ -490,21 +490,25 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
+				{if !empty($service_order_data)}
+				{volist name="service_order_data" id ="vo"}
 					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>2</td>
-						<td><img src="111" /></td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>管理员</td>
+						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$vo.id}"></td>
+						<td>{$vo.service_order_number}</td>
+						<td style="width: 40px; height: 40px;"><img width="100%" src="__UPLOADS__/{$vo.service_goods_image}" /></td>
+						<td>{$vo.service_order_amount}</td>
+						<td>{$vo.service_reservations}</td>
+						<td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>
+						<td>{$vo.car_owner_name}</td>
+						<td>{$vo.car_number}</td>
+						<td>{$vo.car_owner_phone_number}</td>
+						<td>{$vo.got_to_time|date="Y-m-d H:i:s",###}</td>
 						<td>
 							<button type="button" class="state for-the-payment">111</button>
 						</td>
 					</tr>
+				{/volist}
+				{/if}
 				</tbody>
 			</table>
 			<div id="page">
