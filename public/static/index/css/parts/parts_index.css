@@ -1,0 +1,207 @@
+html, body{
+    background-color: #fff;
+}
+.wrapper{
+    position: relative;
+    background-color: #fff;
+}
+.header{
+    position: relative;
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+}
+.header .header-title{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    text-align: center;
+    font-size: .36rem;
+    font-weight: normal;
+}
+.header .icon-header-back{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    width: .25rem;
+    height: .43rem;
+    margin-top: -.22rem;
+    background-position: -.5rem -.5rem;
+}
+.swiper-container{
+    width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid #eee;
+}
+.swiper-container img{
+    width: 100%;
+    height: 100%;
+}
+.server-list{
+    height: 6rem;
+    padding: .24rem .7rem;
+    border-bottom: 1px solid #eee;
+}
+.server-list .server-txt{
+    color: #333;
+    font-size: .24rem;
+    display: block;
+}
+.server-list i{
+    display: inline-block;
+    width: .76rem;
+    height: .75rem;
+}
+.server-list .icon1{
+    background-position: .05rem .05rem;
+}
+.server-list .icon2{
+    background-position: -.95rem .05rem;
+}
+.server-list .icon3{
+    background-position: -1.95rem .05rem;
+}
+.server-list .icon4{
+    background-position: -2.95rem .05rem;
+}
+.server-list .icon5{
+    background-position: .05rem -.95rem;
+}
+.server-list .icon6{
+    background-position: -.95rem -.95rem;
+}
+.server-list .icon7{
+    background-position: -1.95rem -.95rem;
+}
+.server-list .icon8{
+    background-position: -2.95rem -.95rem;
+}
+.server-list .icon9{
+    background-position: .05rem -1.95rem;
+}
+.server-list .icon10{
+    background-position: -.95rem -1.95rem;
+}
+.server-list .icon11{
+    background-position: -1.95rem -1.95rem;
+}
+.server-list .icon12{
+    background-position: -2.95rem -1.95rem;
+}
+.server-list .icon13{
+    background-position: .05rem -2.95rem;
+}
+.server-list .server-ul li{
+    float: left;
+    width: 1.5rem;
+    height: 1.2rem;
+    margin-bottom: .3rem;
+}
+.server-list .server-ul a{
+    display: block;width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.swiper-container2{
+    width: 100%;
+    height: 1.6rem;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    z-index: 1;
+}
+.swiper-container2 img{
+    width: 100%;
+    height: 100%;
+}
+.preferential{
+    margin-bottom: .5rem;
+}
+.preferential h3{
+    padding: .2rem 0 .2rem .3rem;
+    font-size: .3rem;
+    color: #333;
+    font-weight: normal;
+}
+
+.like_title{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 1.15rem;
+    background-color: #fff;
+}
+.like_title p{
+    width: 4.65rem;
+    margin: 0 auto;
+    font-size: .38rem;
+    color: #504cfb;
+    text-align: center;
+    background: url(../../image/icon5.png) no-repeat center;
+    background-size: 100%;
+}
+.like_title i.icon_like{
+    display: inline-block;
+    width: .48rem;
+    height: .48rem;
+    background-position: -5rem -1rem;
+    vertical-align: text-top;
+    margin-right: .1rem;
+}
+
+.like_cont_ul{
+    width: 100%;
+    padding: 0 .1rem;
+    box-sizing: border-box;
+}
+.like_cont_ul li{
+    float: left;
+    width: 3.6rem;
+    height: 5.6rem;
+    margin-right: .08rem;
+    background-color: #fff;
+}
+.like_cont_ul li .img_div{
+    width: 100%;
+    height: 3.95rem;
+}
+.like_cont_ul .img_div img{
+    width: 100%;
+    height: 100%;
+}
+.like_cont_ul .goods_name{
+    width: 100%;
+}
+.like_cont_ul .goods_name p{
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: .24rem;
+    color: #333;
+    padding: 0 .16rem;
+    box-sizing: border-box;
+}
+.like_cont_ul .goods_price{
+    padding-right: .3rem;
+}
+.like_cont_ul .goods_price .price{
+    font-size: .3rem;
+    color: #f00;
+}
+.like_cont_ul .goods_price .pay_num{
+    font-size: .2rem;
+    color: #999;
+}
+.like_cont_ul .goods_price .icon_cart{
+    float: right;
+    width: .34rem;
+    height: .34rem;
+    background-position: -1rem -.5rem;
+}

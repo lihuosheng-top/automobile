@@ -5,7 +5,6 @@
 	}
 	
 	.layui-form label {
-		width: 14%;
 		text-align: left;
 	}
 	
@@ -245,7 +244,8 @@
 		</div>
 		<div class="layui-form-item" style="min-width: 62% !important;">
 			<label class="layui-form-label">商品分组：</label>
-			<div class="layui-input-inline">
+			
+			<div class="layui-input-inline" style="margin-left: 30px;">
 				{if !empty($goods_list)}
 				<select name="goods_type_id" id="goods_type_id">
 					{volist name="goods_list" id="goods"}
@@ -264,7 +264,7 @@
 		</div>
 		<div class="layui-form-item " style="min-width: 62% !important;">
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
-			<div class="layui-input-inline">
+			<div class="layui-input-inline" style="margin-left: 30px;">
 				{if !empty($goods_brand)}
 				<select name="goods_brand_id">
 					{volist name="goods_brand" id="v"}

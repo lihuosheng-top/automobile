@@ -1,13 +1,22 @@
 // 模糊搜索
 $(function(){
-    // 搜索框
+    // 汽车搜索框
     var search_input = $('input[name="search_input"]');
     $(search_input).keyup(function(){
         // jquery contains方法， :contains(text) 先隐藏后显示
         $('.num_name:not(:contains('+search_input.val().trim()+'))').parents('.sort_list').add('.sort_letter').hide();
         $('.num_name:contains('+search_input.val().trim()+')').parents('.sort_list').show();
         // 首字母标签显示
-        // $('.num_name:contains('+search_input.val().trim()+')').parents('.sort_list').prev('.sort_letter').show();
+        $('.num_name:contains('+search_input.val().trim()+')').parents('.sort_list').prev('.sort_letter').show();
+    });
+    // 城市 搜索框
+    var gecSearchInput = $('input[name="gec-search-input"]');
+    $(gecSearchInput).keyup(function(){
+        // jquery contains方法， :contains(text) 先隐藏后显示
+        $('.gec-city-name:not(:contains('+gecSearchInput.val().trim()+'))').parents('.gec-sort-list').add('.gec-sort-letter').hide();
+        $('.gec-city-name:contains('+gecSearchInput.val().trim()+')').parents('.gec-sort-list').show();
+        // 首字母标签显示
+        $('.gec-city-name:contains('+gecSearchInput.val().trim()+')').parents('.gec-sort-list').prev('.gec-sort-letter').show();
     });
 })
 
