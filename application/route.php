@@ -25,6 +25,7 @@ Route::group("",[
     /*我的爱车*/
     "love_car"=>"index/LoveCar/love_car",
     "love_list"=>"index/LoveCar/love_list",                         //我的爱车列表
+    "love_save"=>"index/LoveCar/love_save",                         //我的爱车入库
 
 
 
@@ -51,7 +52,6 @@ Route::group("",[
 
 
     /*登录页面*/
-    "login_index"=>"index/Login/index",
     'Dolog'=>"index/Login/Dolog",
     /*退出登录*/
     "logout"=>"index/Login/logout",
