@@ -30,12 +30,12 @@ class OrderService extends Controller{
      */
     public function  ios_api_order_button(Request $request){
         if ($request->isPost()) {
-//            $data = $_POST;
+            $data = $_POST;
             $member_data = session('member');
-            $data =1;
+//            $data =1;
             $member = Db::name('user')->field('id,harvester,harvester_phone_num,harvester_real_address')->where('phone_num', $member_data['phone_num'])->find();
-//            $commodity_id = $_POST['goods_id'];
-            $commodity_id = 2;
+            $commodity_id = $_POST['goods_id'];
+//            $commodity_id = 2;
             if (!empty($commodity_id)) {
                 $goods_data = Db::name('serve_goods')->where('id', $commodity_id)->find();
                 $create_time = time();
@@ -43,12 +43,12 @@ class OrderService extends Controller{
                     $datas = [
                         'service_goods_id'=>$goods_data['id'],//服务项目ID
                         'service_goods_name' => $goods_data['vehicle_model'], //车型
-//                        'service_order_quantitative' => $data['service_order_quantitative'],      //订单数量
-                        'service_order_quantitative' => 1,      //订单数量
+                        'service_order_quantitative' => $data['service_order_quantitative'],      //订单数量
+//                        'service_order_quantitative' => 1,      //订单数量
                         'user_id' => $member['id'],         //用户id
                         'create_time' => $create_time,
-//                        'service_order_amount' => $data['service_money'],//服务金额
-                        'service_order_amount' => 0.01,//服务金额
+                        'service_order_amount' => $data['service_money'],//服务金额
+//                        'service_order_amount' => 0.01,//服务金额
                         'status' => 1,      //订单状态
                         'service_goods_id' => $commodity_id,        //服务项目ID
                         'service_order_number' => $create_time . $member['id'],//时间戳+用户id构成订单号
@@ -69,8 +69,8 @@ class OrderService extends Controller{
      */
     public function ios_api_alipay(Request $request){
         if($request->isPost()){
-//            $order_num =$request->only(['order_num'])['order_num'];
-            $order_num =15428821121022;
+            $order_num =$request->only(['order_num'])['order_num'];
+//            $order_num =15428821121022;
             $product_code ="QUICK_MSECURITY_PAY";
             $out_trade_no="ZQLM3O56MJD4SK3";
             $time =date('Y-m-d H:i:s');

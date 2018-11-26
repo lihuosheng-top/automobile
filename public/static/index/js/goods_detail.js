@@ -1,3 +1,53 @@
+// 获取url地址id
+var url = location.search;
+var id;
+if(url.indexOf('?') != -1){
+    id = url.substr(1).split('=')[1];
+}
+$.ajax({
+    url: 'goods_detail',
+    type: 'POST',
+    dataType: 'JSON',
+    data: {
+        'id': id
+    },
+    success: function(res){
+        console.log(res);
+        // 轮播图
+        var swiperImgStr = '';
+        $.each(res.data[0].images, function(idx, val){
+            swiperImgStr += '<div class="swiper-slide">\
+                                <img src="uploads/'+val.goods_images+'">\
+                            </div>'
+        })
+        $('.swiper-wrapper').append(swiperImgStr);
+        $.each(res.data, function(idx, val){
+            // 商品名字
+            $('.goods_cont .goods_name').html(val.goods_name);
+            // 卖点
+            $('.selling-point').html(val.goods_selling);
+            // 划线价
+            $('.through').html('￥' + val.goods_bottom_money);
+            // 售价
+            $('.sale').html('￥' + val.goods_new_money);
+            // 库存
+            $('.stock').html('库存' + val.goods_repertory + '件');
+        })
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+
+
+
+
+
+
+
+
+
+
 // 显示 隐藏 评价弹窗 
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
@@ -97,25 +147,6 @@ $('.switch-comment').click(function(){
     $('.detail-box').hide();
 })
 
-// 购买数量
-$(function(){
-    // 减
-    var calculator_val = document.getElementsByClassName('calculator_val')[0];
-    $('.minus').click(function(){
-        if(calculator_val.value > 0){
-            calculator_val.value -= 1;
-        }else{
-            calculator_val.value = 0;
-        }
-    })
-    // 加
-    $('.increase').click(function(){
-        var add =  calculator_val.value - 0;
-        add += 1;
-        calculator_val.value = add;
-    })
-})
-
 // 查看评价详情
 $('.comment_text_a').click(function(){
     $('.wrapper').hide();
@@ -137,15 +168,34 @@ $('.close-select-pop').click(function(){
     $('.mask').add('.select-ser-pop').hide();
 })
 
+// 购买数量
+$(function(){
+    // 减
+    var calculator_val = document.getElementsByClassName('calculator_val')[0];
+    $('.minus').click(function(){
+        if(calculator_val.value > 1){
+            calculator_val.value -= 1;
+        }else{
+            calculator_val.value = 1;
+        }
+    })
+    // 加
+    $('.increase').click(function(){
+        var add =  calculator_val.value - 0;
+        add += 1;
+        calculator_val.value = add;
+    })
+})
+
 // 弹窗 购买数量
 $(function(){
     // 减
     var select_calculator_val = document.getElementsByClassName('select-calculator_val')[0];
     $('.select-minus').click(function(){
-        if(select_calculator_val.value > 0){
+        if(select_calculator_val.value > 1){
             select_calculator_val.value -= 1;
         }else{
-            select_calculator_val.value = 0;
+            select_calculator_val.value = 1;
         }
     })
     // 加

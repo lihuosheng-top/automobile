@@ -734,18 +734,46 @@ class Order extends Controller{
      **************************************
      */
     public function platform_order_evaluate(){
-        return view('platform_order_evaluate');
+        $evaluate_data =Db::name('order_parts_evaluate')->order('create_time','desc')->paginate(3);
+        return view('platform_order_evaluate',['evaluate_data'=>$evaluate_data]);
     }
 
     /**
      **************李火生*******************
      * @return \think\response\View
-     * 平台商订单评价编辑
+     * 平台配件商订单评价编辑
      **************************************
      */
     public function platform_order_evaluate_edit(){
         return view('platform_order_evaluate_edit');
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:平台服务商订单评价列表
+     **************************************
+     */
+    public function platform_order_service_evaluate(){
+        $service_order_evaluate =Db::name('order_service_evaluate')->order('create_time','desc')->paginate(5);
+        return view('platform_order_service_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:平台服务商订单评价编辑
+     **************************************
+     */
+    public function platform_order_service_evaluate_edit($id){
+        $evaluate_details =Db::name('order_service_evaluate')->where('id',$id)->find();//评价信息
+        $evaluate_images =Db::name('order_service_evaluate_images')->where('evaluate_order_id',$id)->select();
+        return view('platform_order_service_evaluate_edit',['evaluate_details'=>$evaluate_details,'evaluate_images'=>$evaluate_images]);
+    }
+
+
+
+
 
     /**
      **************李火生*******************
@@ -823,8 +851,10 @@ class Order extends Controller{
      * 服务商界面订单评价
      **************************************
      */
-    public function service_order_evaluate_edit(){
-        return view('service_order_evaluate_edit');
+    public function service_order_evaluate_edit($id){
+            $evaluate_details =Db::name('order_service_evaluate')->where('id',$id)->find();//评价信息
+            $evaluate_images =Db::name('order_service_evaluate_images')->where('evaluate_order_id',$id)->select();
+        return view('service_order_evaluate_edit',['evaluate_details'=>$evaluate_details,'evaluate_images'=>$evaluate_images]);
     }
     /**
      * TODO:服务商订结束

@@ -1,3 +1,247 @@
+$.ajax({
+    url: 'love_car',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+        var hotBrand = res.data.brand.slice(0, 10);
+        var hotBrandStr = '';
+        var carBrandStr = '';
+        // 爱车热门品牌
+        $.each(hotBrand, function(idx, val){
+            hotBrandStr += '<li class="hot-brand-li">\
+                                <img src="static/index/image/bmw.png">\
+                                <span>'+val.brand+'</span>\
+                            </li>';
+        })
+        $('.hot-brand-ul').append(hotBrandStr);
+        // 爱车品牌
+        $.each(res.data.brand, function(idx, val){
+            carBrandStr += '<div class="sort_list">\
+                                <div class="num_logo">\
+                                    <img src="static/index/image/bmw.png">\
+                                </div>\
+                                <div class="num_name">'+val.brand+'</div>\
+                            </div>'
+        })
+        $('.sort_box').append(carBrandStr);
+        // 添加车首字母匹配 start
+        $(function(){
+            var Initials=$('.initials');
+            var LetterBox=$('#letter');
+            Initials.find('ul').append('<li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li><li>G</li><li>H</li><li>I</li><li>J</li><li>K</li><li>L</li><li>M</li><li>N</li><li>O</li><li>P</li><li>Q</li><li>R</li><li>S</li><li>T</li><li>U</li><li>V</li><li>W</li><li>X</li><li>Y</li><li>Z</li><li>#</li>');
+            initials();
+
+            $(".initials ul li").click(function(){
+                var _this=$(this);
+                var LetterHtml=_this.html();
+                LetterBox.html(LetterHtml).fadeIn();
+
+                setTimeout(function(){
+                    LetterBox.fadeOut();
+                },1000);
+
+                var _index = _this.index();
+                if(_index==0){
+                    $('.cont').animate({scrollTop: '0px'}, 300);//点击第一个滚到顶部
+                }else if(_index==27){
+                    var DefaultTop=$('#default').position().top;
+                    $('.cont').animate({scrollTop: DefaultTop +'px'}, 300);//点击最后一个滚到#号
+                }else{
+                    var letter = _this.text();
+                    if($('#'+letter).length>0){//点击的字母 有值
+                        var LetterTop = $('#'+letter).position().top;
+                        $('.cont').animate({scrollTop: LetterTop-45+'px'}, 300);
+                        // var bodyTop = $('.cont').position().top;
+                    }
+                    console.log(LetterTop);
+                }
+            })
+
+            var windowHeight=$(window).height();
+            var InitHeight=windowHeight-180;
+            Initials.height(InitHeight);
+            var LiHeight=InitHeight/28;
+            Initials.find('li').height(LiHeight);
+        })
+        function initials() {//公众号排序
+            var SortList=$(".sort_list");
+            var SortBox=$(".sort_box");
+            SortList.sort(asc_sort).appendTo('.sort_box');//按首字母排序
+            function asc_sort(a, b) {
+                return makePy($(b).find('.num_name').text().charAt(0))[0].toUpperCase() < makePy($(a).find('.num_name').text().charAt(0))[0].toUpperCase() ? 1 : -1;
+            }
+
+            var carInitials = [];
+            var num=0;
+            SortList.each(function(i) {
+                var initial = makePy($(this).find('.num_name').text().charAt(0))[0].toUpperCase();
+                if(initial>='A'&&initial<='Z'){
+                    if (carInitials.indexOf(initial) === -1)
+                        carInitials.push(initial);
+                }else{
+                    num++;
+                }
+                
+            });
+
+            $.each(carInitials, function(index, value) {//添加首字母标签
+                SortBox.append('<div class="sort_letter" id="'+ value +'">' + value + '</div>');
+            });
+            if(num!=0){SortBox.append('<div class="sort_letter" id="default">#</div>');}
+
+            for (var i =0;i<SortList.length;i++) {//插入到对应的首字母后面
+                var letter=makePy(SortList.eq(i).find('.num_name').text().charAt(0))[0].toUpperCase();
+                switch(letter){
+                    case "A":
+                        $('#A').after(SortList.eq(i));
+                        break;
+                    case "B":
+                        $('#B').after(SortList.eq(i));
+                        break;
+                    case "C":
+                        $('#C').after(SortList.eq(i));
+                        break;
+                    case "D":
+                        $('#D').after(SortList.eq(i));
+                        break;
+                    case "E":
+                        $('#E').after(SortList.eq(i));
+                        break;
+                    case "F":
+                        $('#F').after(SortList.eq(i));
+                        break;
+                    case "G":
+                        $('#G').after(SortList.eq(i));
+                        break;
+                    case "H":
+                        $('#H').after(SortList.eq(i));
+                        break;
+                    case "I":
+                        $('#I').after(SortList.eq(i));
+                        break;
+                    case "J":
+                        $('#J').after(SortList.eq(i));
+                        break;
+                    case "K":
+                        $('#K').after(SortList.eq(i));
+                        break;
+                    case "L":
+                        $('#L').after(SortList.eq(i));
+                        break;
+                    case "M":
+                        $('#M').after(SortList.eq(i));
+                        break;
+                    case "N":
+                        $('#N').after(SortList.eq(i));
+                        break;
+                    case "O":
+                        $('#O').after(SortList.eq(i));
+                        break;
+                    case "P":
+                        $('#P').after(SortList.eq(i));
+                        break;
+                    case "Q":
+                        $('#Q').after(SortList.eq(i));
+                        break;
+                    case "R":
+                        $('#R').after(SortList.eq(i));
+                        break;
+                    case "S":
+                        $('#S').after(SortList.eq(i));
+                        break;
+                    case "T":
+                        $('#T').after(SortList.eq(i));
+                        break;
+                    case "U":
+                        $('#U').after(SortList.eq(i));
+                        break;
+                    case "V":
+                        $('#V').after(SortList.eq(i));
+                        break;
+                    case "W":
+                        $('#W').after(SortList.eq(i));
+                        break;
+                    case "X":
+                        $('#X').after(SortList.eq(i));
+                        break;
+                    case "Y":
+                        $('#Y').after(SortList.eq(i));
+                        break;
+                    case "Z":
+                        $('#Z').after(SortList.eq(i));
+                        break;
+                    default:
+                        $('#default').after(SortList.eq(i));
+                        break;
+                }
+            };
+        }
+        // 添加车首字母匹配 end
+
+        // 点击品牌 选择车系 start
+        var userChoseCarName;
+        $('.hot-brand-ul li').add('.sort_list').click(function(){
+            $('.select-car').hide();
+            $('.car-series').show();
+            userChoseCarName = $(this)[0].innerText;
+            $('.car-brand').html(userChoseCarName);
+            // 清空容器
+            $('.series-list').html('');
+            var vehicleStr = '';
+            // 遍历品牌 筛选车系
+
+            $.each(res.data.series, function(idx, val){
+                if(userChoseCarName.trim() == val.brand){
+                    // console.log(val.series)
+                    vehicleStr += '<div class="series-txt">'+val.series+'</div>';
+                }
+            })
+            $('.series-list').append(vehicleStr);
+
+            // 点击车型 选择车型 start
+            // 用户选择的车型
+            // var userChoseCarType = [];
+            // $('.series-txt').click(function(){
+            //     $('.car-series').hide();
+            //     $('.motorcycle-type').show();
+            //     var motorcycleTypeStr = '';
+            //     $.each(res.data.series, function(idx, val){
+            //         if(userChoseCarName.trim() == val.brand){
+            //             userChoseCarType.push(val.vehicle_model);
+            //         }
+            //     })
+            //     console.log(userChoseCarType);
+            // })
+            // 点击车型 选择车型 end
+
+        })
+        $('.series-back').click(function(){
+            $('.select-car').show();
+            $('.car-series').hide();
+        })
+        // 点击品牌 选择车型 end
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+// 去重
+// function unique(arr){
+//     arr.sort(); 
+//     var result = [arr[0]];
+//     for(var i = 1; i < arr.length; i++){
+//         if(arr[i] !== result[result.length - 1]){
+//             result.push(arr[i]);
+//         }
+//     }
+//     return result;
+// }
+
+
+
+
+
 // 模糊搜索
 $(function(){
     // 汽车搜索框
@@ -25,159 +269,8 @@ $('.add_mycar a').click(function(){
     $('.select-car').show();
     $('.wrapper').hide();
 })
-// 显示 选择车系 弹窗
 
 
-// 添加车首字母匹配 start
-$(function(){
-    var Initials=$('.initials');
-    var LetterBox=$('#letter');
-    Initials.find('ul').append('<li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li><li>G</li><li>H</li><li>I</li><li>J</li><li>K</li><li>L</li><li>M</li><li>N</li><li>O</li><li>P</li><li>Q</li><li>R</li><li>S</li><li>T</li><li>U</li><li>V</li><li>W</li><li>X</li><li>Y</li><li>Z</li><li>#</li>');
-    initials();
-
-    $(".initials ul li").click(function(){
-        var _this=$(this);
-        var LetterHtml=_this.html();
-        LetterBox.html(LetterHtml).fadeIn();
-
-        setTimeout(function(){
-            LetterBox.fadeOut();
-        },1000);
-
-        var _index = _this.index();
-        if(_index==0){
-            $('.cont').animate({scrollTop: '0px'}, 300);//点击第一个滚到顶部
-        }else if(_index==27){
-            var DefaultTop=$('#default').position().top;
-            $('.cont').animate({scrollTop: DefaultTop +'px'}, 300);//点击最后一个滚到#号
-        }else{
-            var letter = _this.text();
-            if($('#'+letter).length>0){//点击的字母 有值
-                var LetterTop = $('#'+letter).position().top;
-                $('.cont').animate({scrollTop: LetterTop-45+'px'}, 300);
-                // var bodyTop = $('.cont').position().top;
-            }
-            console.log(LetterTop);
-        }
-    })
-
-    var windowHeight=$(window).height();
-    var InitHeight=windowHeight-180;
-    Initials.height(InitHeight);
-    var LiHeight=InitHeight/28;
-    Initials.find('li').height(LiHeight);
-})
-function initials() {//公众号排序
-    var SortList=$(".sort_list");
-    var SortBox=$(".sort_box");
-    SortList.sort(asc_sort).appendTo('.sort_box');//按首字母排序
-    function asc_sort(a, b) {
-        return makePy($(b).find('.num_name').text().charAt(0))[0].toUpperCase() < makePy($(a).find('.num_name').text().charAt(0))[0].toUpperCase() ? 1 : -1;
-    }
-
-    var carInitials = [];
-    var num=0;
-    SortList.each(function(i) {
-        var initial = makePy($(this).find('.num_name').text().charAt(0))[0].toUpperCase();
-        if(initial>='A'&&initial<='Z'){
-            if (carInitials.indexOf(initial) === -1)
-                carInitials.push(initial);
-        }else{
-            num++;
-        }
-        
-    });
-
-    $.each(carInitials, function(index, value) {//添加首字母标签
-        SortBox.append('<div class="sort_letter" id="'+ value +'">' + value + '</div>');
-    });
-    if(num!=0){SortBox.append('<div class="sort_letter" id="default">#</div>');}
-
-    for (var i =0;i<SortList.length;i++) {//插入到对应的首字母后面
-        var letter=makePy(SortList.eq(i).find('.num_name').text().charAt(0))[0].toUpperCase();
-        switch(letter){
-            case "A":
-                $('#A').after(SortList.eq(i));
-                break;
-            case "B":
-                $('#B').after(SortList.eq(i));
-                break;
-            case "C":
-                $('#C').after(SortList.eq(i));
-                break;
-            case "D":
-                $('#D').after(SortList.eq(i));
-                break;
-            case "E":
-                $('#E').after(SortList.eq(i));
-                break;
-            case "F":
-                $('#F').after(SortList.eq(i));
-                break;
-            case "G":
-                $('#G').after(SortList.eq(i));
-                break;
-            case "H":
-                $('#H').after(SortList.eq(i));
-                break;
-            case "I":
-                $('#I').after(SortList.eq(i));
-                break;
-            case "J":
-                $('#J').after(SortList.eq(i));
-                break;
-            case "K":
-                $('#K').after(SortList.eq(i));
-                break;
-            case "L":
-                $('#L').after(SortList.eq(i));
-                break;
-            case "M":
-                $('#M').after(SortList.eq(i));
-                break;
-            case "O":
-                $('#O').after(SortList.eq(i));
-                break;
-            case "P":
-                $('#P').after(SortList.eq(i));
-                break;
-            case "Q":
-                $('#Q').after(SortList.eq(i));
-                break;
-            case "R":
-                $('#R').after(SortList.eq(i));
-                break;
-            case "S":
-                $('#S').after(SortList.eq(i));
-                break;
-            case "T":
-                $('#T').after(SortList.eq(i));
-                break;
-            case "U":
-                $('#U').after(SortList.eq(i));
-                break;
-            case "V":
-                $('#V').after(SortList.eq(i));
-                break;
-            case "W":
-                $('#W').after(SortList.eq(i));
-                break;
-            case "X":
-                $('#X').after(SortList.eq(i));
-                break;
-            case "Y":
-                $('#Y').after(SortList.eq(i));
-                break;
-            case "Z":
-                $('#Z').after(SortList.eq(i));
-                break;
-            default:
-                $('#default').after(SortList.eq(i));
-                break;
-        }
-    };
-}
-// 添加车首字母匹配 end
 
 // 城市定位 首字母匹配 start
 $(function(){
@@ -284,6 +377,9 @@ function gecInitials() {//公众号排序
             case "M":
                 $('#gec_M').after(gecSortList.eq(i));
                 break;
+            case "N":
+                $('#gec_N').after(gecSortList.eq(i));
+                break;
             case "O":
                 $('#gec_O').after(gecSortList.eq(i));
                 break;
@@ -366,9 +462,9 @@ AMap.plugin([
     AMap.event.addListener(geolocation, 'complete', onComplete);
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
-        console.log(e);
+        // console.log(e);
         $('.gec-curr-txt').text(e.addressComponent.city);
-        $('.curr_city').text(e.addressComponent.city);
+        $('.curr_city').text(e.addressComponent.district);
     };
     function onError(e){
         // console.log(e);
@@ -385,3 +481,6 @@ $('.gec-back').click(function(){
     $('.geclocation-pop').hide();
     $('.wrapper').show();
 })
+
+
+

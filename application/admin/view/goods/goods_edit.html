@@ -828,7 +828,7 @@
 					success: function(data) {
 						layer.msg('添加成功');
 						var data = eval('(' + data + ')');
-						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
+						var dhtmls = '<option value="' + text + '">' + text + '</option> ';
 						$(".universal_standard_name").append(dhtmls);
 						form.render('select');
 					},
@@ -850,7 +850,7 @@
 					success: function(data) {
 						layer.msg('添加成功');
 						var data = eval('(' + data + ')');
-						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
+						var dhtmls = '<option value="' + text + '">' + text + '</option> ';
 						$(".universal_standard_name").append(dhtmls);
 						form.render('select');
 					},
