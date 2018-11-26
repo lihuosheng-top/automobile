@@ -520,6 +520,30 @@ class Order extends Controller{
         return view('platform_order_service_index',['service_order_data'=>$service_order_data]);
     }
 
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:平台服务商订单列表弹框详情
+     **************************************
+     * @param Request $request
+     */
+    public function platform_order_service_processing(Request $request){
+        if($request->isPost()){
+            $id =$request->only(['id'])['id'];
+            if(!empty($id)){
+                $data =Db::name('order_service')->where('id',$id)->find();
+                if(!empty($data)){
+                    return ajax_success('订单信息成功返回',$data);
+                }else{
+                    return ajax_error('该订单没有数据记录',['status'=>0]);
+                }
+            }else{
+                return ajax_error('沒有订单Id',['status'=>0]);
+            }
+        }
+    }
+
     /**
      **************李火生*******************
      * @return \think\response\View
@@ -534,6 +558,29 @@ class Order extends Controller{
             ->order('tb_order_parts.order_create_time','desc')
             ->paginate(3 );
         return view('platform_order_parts_index',['order_parts_data'=>$order_parts_data]);
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:平台商配件商订单弹窗的订单信息（前端传过来一个id）
+     **************************************
+     * @param Request $request
+     */
+    public function platform_order_processing(Request $request){
+        if($request->isPost()){
+            $id =$request->only(['id'])['id'];
+            if(!empty($id)){
+                $data =Db::name('order_parts')->where('id',$id)->find();
+                if(!empty($data)){
+                    return ajax_success('订单信息成功返回',$data);
+                }else{
+                    return ajax_error('该订单没有数据记录',['status'=>0]);
+                }
+            }else{
+                return ajax_error('沒有订单Id',['status'=>0]);
+            }
+        }
     }
 
     /**
@@ -671,6 +718,7 @@ class Order extends Controller{
         return view('platform_order_parts_index',['order_parts_data'=>$order_parts_data]);
     }
 
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -806,6 +854,33 @@ class Order extends Controller{
         $service_order_data =Db::name('order_service')->order('create_time','desc')->paginate(5);
         return view('service_order_index',['service_order_data'=>$service_order_data]);
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单弹窗的订单信息（前端传过来一个id）
+     * 路由："order_processing"=>"admin/Order/order_processing"
+     **************************************
+     * @param Request $request
+     */
+    public function service_order_processing(Request $request){
+        if($request->isPost()){
+            $id =$request->only(['id'])['id'];
+            if(!empty($id)){
+                $data =Db::name('order_service')->where('id',$id)->find();
+                if(!empty($data)){
+                    return ajax_success('订单信息成功返回',$data);
+                }else{
+                    return ajax_error('该订单没有数据记录',['status'=>0]);
+                }
+            }else{
+                return ajax_error('沒有订单Id',['status'=>0]);
+            }
+        }
+    }
+
+
+
 
     /**
      **************李火生*******************
