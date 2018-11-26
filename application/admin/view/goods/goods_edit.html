@@ -168,6 +168,9 @@
 		{volist name="goods" id="value"}
 		<div class="basic-information title"> 基本信息
 		</div>
+		<div class="hide futext">
+					{$value.goods_text}
+		</div>
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品名:</label>
 			<div class="layui-input-block">
@@ -558,9 +561,7 @@
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
-				<div class="hide futext">
-					{$value.goods_text}
-				</div>
+				
 				<div id="goods_text">
 					<script id="editor" type="text/plain" name="goods_text" style="width:800px;height:500px;"></script>
 				</div>
@@ -592,8 +593,8 @@
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label"><span>*</span>是否上架：</label>
 			<div class="layui-input-block" id="goods_sign">
-				<input type="radio" name="goods_status" value="hot" title="上架" checked="" class="hot">
-				<input type="radio" name="goods_status" value="促销" title="不上架" class="">
+				<input type="radio" name="goods_status" value="1" title="上架" checked="" class="hot">
+				<input type="radio" name="goods_status" value="2" title="不上架" class="">
 
 			</div>
 		</div>
