@@ -323,6 +323,7 @@ Route::group("admin",[
     
     /*订单管理：TODO:服务商商订单开始*/
     'service_order_index'=>"admin/Order/service_order_index", //服务商界面服务商订单列表
+    'service_order_parts_dels'=>"admin/Order/service_order_parts_dels", //服务商界面服务商订单列表批量删除
     "service_order_evaluate"=>"admin/Order/service_order_evaluate", //服务商界面订单评价
     "service_order_evaluate_edit"=>"admin/Order/service_order_evaluate_edit", //服务商界面订单评价
     /*订单管理：TODO:服务商订单结束*/
