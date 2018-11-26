@@ -4,7 +4,7 @@
 
 		<!--<p class="index_text">首页</p>-->
 		{if $admin.role_id == 2}
-		<div style="text-align: center; font-weight: bold;"><a class="index_text" href="{:url('admin/index/index')}">系统首页</a></div>
+		<div style="text-align: center; font-weight: bold;"><a class="index_text" href="{:url('admin/Home/index')}">系统首页</a></div>
 		{volist name="menu_list" id="value"}
 		{if isset($value["sub"])}
 		<dl class="">
