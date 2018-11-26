@@ -827,11 +827,14 @@
 						"goods_name": text
 					},
 					success: function(data) {
-						layer.msg('添加成功');
+					
 						var data = eval('(' + data + ')');
+						layer.msg(data.info);
+						if(data.info=="成功"){
 						var dhtmls = '<option value="' + text + '">' + text + '</option> ';
 						$(".universal_standard_name").append(dhtmls);
 						form.render('select');
+						}
 					},
 					error: function(data) {
 						console.log(data)
@@ -849,11 +852,13 @@
 						"goods_name": text
 					},
 					success: function(data) {
-						layer.msg('添加成功');
 						var data = eval('(' + data + ')');
+						layer.msg(data.info);
+						if(data.info=="成功"){
 						var dhtmls = '<option value="' + text + '">' + text + '</option> ';
 						$(".universal_standard_name").append(dhtmls);
 						form.render('select');
+						}
 					},
 					error: function(data) {
 						console.log(data)
