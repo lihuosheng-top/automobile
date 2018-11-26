@@ -140,9 +140,11 @@
 			<label class="layui-form-label">服务范围：</label>
 			<div class="layui-input-block">
 				{if !empty($range_data)}
+
 				{volist name="range_data" id="value"}
 				<input type="checkbox" name="" lay-skin="primary" title="{$value.service_setting_name}" checked="" disabled="disabled">
 				{/volist}
+
 				{/if}
 			</div>
 		</div>
