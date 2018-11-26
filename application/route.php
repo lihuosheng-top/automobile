@@ -43,7 +43,7 @@ Route::group("",[
     "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_order_button"=>"index/OrderService/ios_api_order_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
-    "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单
+    "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
     'index_aliPay'=>"index/Apppay/index_aliPay",
     'index_pay_code'=>"index/Apppay/index_pay_code",
     /*TODO:服务商订单结束*/
@@ -65,8 +65,11 @@ Route::group("",[
 
 
 
+
     /*店铺*/
-    "store_index"=>"index/Store/index",
+    "store_index"=>"index/Store/index",             //店铺首页
+    "store_league"=>"index/Store/league",           //我要加盟
+
 
 
 
@@ -414,6 +417,8 @@ Route::group("admin",[
     "service_image_del"=>"admin/Install/service_image_del",//服务设置之编辑里面图片删除
     "service_updata"=>"admin/Install/service_updata",
     "service_del"=>"admin/Install/service_del", //服务设置之删除
+
+
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",
@@ -437,9 +442,15 @@ Route::group("admin",[
 
 
 
-    /*店铺管理*/
-    "shop_index"=>"admin/Shop/index",
-    "shop_add"=>"admin/Shop/add",
+    /*TODO:店铺管理开始*/
+    "shop_index"=>"admin/Shop/index",//店铺列表
+    "shop_add"=>"admin/Shop/add",//店铺详情
+    "shop_update"=>"admin/Shop/update",//店铺详情更新
+    "shop_del"=>"admin/Shop/del",//店铺列表删除
+    "shop_dels"=>"admin/Shop/dels",//店铺列表批量删除
+    "shop_search"=>"admin/Shop/search",//店铺列表模糊查询
+
+    /*TODO:店铺管理结束*/
 
 ]);
 
