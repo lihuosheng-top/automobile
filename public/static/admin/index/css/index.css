@@ -31,10 +31,10 @@
 	font-size: 14px;
 }
 .layui-form label{
-	font-size: 15px;
+	font-size: 13px;
 	height: 38px;
 	line-height: 38px;
-	width: 21%;
+	/*width: 21%;*/
 	padding: 0;
 	
 }
@@ -43,6 +43,8 @@
 	width: 40%;
 	margin-bottom: 27px;
 	margin-top: 20px;
+	box-sizing: border-box;
+	margin-left: 20px;
 }
 .layui-form-select .layui-edge{
 	right: 33px;

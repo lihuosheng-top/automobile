@@ -9,7 +9,6 @@
 		margin: 20px auto;
 	}
 	.layui-form label {
-		width: 17%;
 		text-align: left;
 	}
 
@@ -50,27 +49,26 @@
 				 <option value="微信">微信</option>
 				 {/if}
 
-        </select></div>
+        </select>
+			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">类型：</label>
 			<div class="layui-input-block">
 				{if $recharge_data.operation_type==1}
-			  <input type="radio" name="sex" value="{$recharge_data.operation_type}" title="充值" checked="" >
+			   <input type="radio" name="sex" value="{$recharge_data.operation_type}" title="充值" checked="" >
       			<input type="radio" name="sex" value="2" title="提现"></div>
 				{/if}
 			{if $recharge_data.operation_type==2}
 			<input type="radio" name="sex" value="1" title="充值"  >
 			<input type="radio" name="sex" value="{$recharge_data.operation_type}" title="提现" checked=""></div>
 		{/if}
-
+		</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">会员描述：</label>
 			<div class="layui-input-block">
-	<textarea rows="10" cols="50"  >
-{$recharge_data.recharge_describe}
-	</textarea>
+	<textarea rows="10" cols="50"  >{$recharge_data.recharge_describe}</textarea>
 		</div>
 		</div>
 			<div class="layui-form-item">
