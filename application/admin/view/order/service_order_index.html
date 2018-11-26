@@ -503,8 +503,8 @@
 						<td>{$vo.car_number}</td>
 						<td>{$vo.car_owner_phone_number}</td>
 						<td>{$vo.got_to_time|date="Y-m-d H:i:s",###}</td>
-						<td>
-							<button type="button" class="state for-the-payment">111</button>
+						<td data-id="{$vo.id}">
+							{$vo.status|show_service_order_status}
 						</td>
 					</tr>
 				{/volist}
@@ -522,6 +522,10 @@
 					<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px; ">确定
 					</button>
 				</div>
+
+				{if !empty($service_order_data)}
+				{$service_order_data->render()}
+				{/if}
 			</div>
 		</div>
 
