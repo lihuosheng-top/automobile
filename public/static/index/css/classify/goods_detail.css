@@ -1050,9 +1050,19 @@ html{
     color: #fff !important;
 }
 .select-shop{
+    position: relative;
     height: 1.1rem;
     border-bottom: 1px solid #eee;
     line-height: 1.1rem;
+}
+.select-shop .icon-select-shop{
+    position: absolute;
+    right: .4rem;
+    top: 50%;
+    width: .26rem;
+    height: .38rem;
+    background-position: -7.25rem -1.75rem;
+    transform: translateY(-50%);
 }
 .select-trade{
     position: absolute;
