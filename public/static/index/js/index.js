@@ -1,3 +1,33 @@
+$.ajax({
+    url: 'love_car',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // 模糊搜索
 $(function(){
     // 汽车搜索框
@@ -25,8 +55,6 @@ $('.add_mycar a').click(function(){
     $('.select-car').show();
     $('.wrapper').hide();
 })
-// 显示 选择车系 弹窗
-
 
 // 添加车首字母匹配 start
 $(function(){
@@ -366,9 +394,9 @@ AMap.plugin([
     AMap.event.addListener(geolocation, 'complete', onComplete);
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
-        console.log(e);
+        // console.log(e);
         $('.gec-curr-txt').text(e.addressComponent.city);
-        $('.curr_city').text(e.addressComponent.city);
+        $('.curr_city').text(e.addressComponent.district);
     };
     function onError(e){
         // console.log(e);
@@ -385,3 +413,6 @@ $('.gec-back').click(function(){
     $('.geclocation-pop').hide();
     $('.wrapper').show();
 })
+
+
+
