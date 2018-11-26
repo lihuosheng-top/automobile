@@ -286,9 +286,9 @@ Route::group("admin",[
 
     /*订单管理：TODO:配件商订单开始*/
     "order_index"=>"admin/Order/index", //配件商订单列表
-    "order_processing"=>"admin/Order/order_processing", //配件商订单列表弹窗接口
+    "order_processing"=>"admin/Order/order_processing", //配件商订单列表弹窗接口（ajax）
     "order_search"=>"admin/Order/search", //配件商订单列表模糊搜索
-    "order_dels"=>"admin/Order/dels", //配件商订单列表
+    "order_dels"=>"admin/Order/dels", //配件商订单列表批量删除
     "order_edit"=>"admin/Order/edit", //*********配件商订单设置（未做）
 
     "order_evaluate"=>"admin/Order/evaluate",   //配件商订单评价
@@ -308,9 +308,12 @@ Route::group("admin",[
 
     /*订单管理：TODO:平台商订单开始*/
     "platform_order_service_index"=>"admin/Order/platform_order_service_index", //平台商服务商订单列表
+    "platform_order_service_processing"=>"admin/Order/platform_order_service_processing", //平台商服务商订单列表弹框详情（ajax）
     "platform_order_parts_index"=>"admin/Order/platform_order_parts_index", //平台商配件商订单列表
+    "platform_order_processing"=>"admin/Order/platform_order_processing", //平台商配件商订单列表弹框详情（ajax）
     "platform_order_parts_search"=>"admin/Order/platform_order_parts_search", //平台商配件商订单列表模糊搜索
     "platform_order_parts_dels"=>"admin/Order/platform_order_parts_dels", //平台商配件商订单列表批量删除
+
 
     "platform_after_sale"=>"admin/Order/platform_after_sale", //平台商售后服务
     "platform_invoice_index"=>"admin/Order/platform_invoice_index", //平台商发票列表
@@ -328,6 +331,7 @@ Route::group("admin",[
     
     /*订单管理：TODO:服务商商订单开始*/
     'service_order_index'=>"admin/Order/service_order_index", //服务商界面服务商订单列表
+    "service_order_processing"=>"admin/Order/service_order_processing", //服务商界面服务商订单列表弹窗接口（ajax）
     'service_order_parts_dels'=>"admin/Order/service_order_parts_dels", //服务商界面服务商订单列表批量删除
     "service_order_evaluate"=>"admin/Order/service_order_evaluate", //服务商界面订单评价
     "service_order_evaluate_edit"=>"admin/Order/service_order_evaluate_edit", //服务商界面订单评价
