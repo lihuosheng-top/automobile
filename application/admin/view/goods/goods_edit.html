@@ -168,6 +168,9 @@
 		{volist name="goods" id="value"}
 		<div class="basic-information title"> 基本信息
 		</div>
+		<div class="hide futext">
+					{$value.goods_text}
+		</div>
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品名:</label>
 			<div class="layui-input-block">
@@ -566,9 +569,7 @@
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
-				<div class="hide futext">
-					{$value.goods_text}
-				</div>
+				
 				<div id="goods_text">
 					<script id="editor" type="text/plain" name="goods_text" style="width:800px;height:500px;"></script>
 				</div>
@@ -607,7 +608,6 @@
 				<input type="radio" name="goods_status" value="1" title="上架" class="hot">
 				<input type="radio" name="goods_status" value="{$value.goods_status}" title="不上架"  checked="">
 				{/if}
-
 			</div>
 		</div>
 		<div class="basic-information title"> 配送与安装服务
@@ -841,11 +841,14 @@
 						"goods_name": text
 					},
 					success: function(data) {
-						layer.msg('添加成功');
+					
 						var data = eval('(' + data + ')');
+						layer.msg(data.info);
+						if(data.info=="成功"){
 						var dhtmls = '<option value="' + text + '">' + text + '</option> ';
 						$(".universal_standard_name").append(dhtmls);
 						form.render('select');
+						}
 					},
 					error: function(data) {
 						console.log(data)
@@ -863,11 +866,13 @@
 						"goods_name": text
 					},
 					success: function(data) {
-						layer.msg('添加成功');
 						var data = eval('(' + data + ')');
+						layer.msg(data.info);
+						if(data.info=="成功"){
 						var dhtmls = '<option value="' + text + '">' + text + '</option> ';
 						$(".universal_standard_name").append(dhtmls);
 						form.render('select');
+						}
 					},
 					error: function(data) {
 						console.log(data)
