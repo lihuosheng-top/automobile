@@ -100,8 +100,9 @@
                 <th>用户名</th>
                 <th>评价星级</th>
                 <th>评论时间</th>
-                <th>是否回复</th>
-                <th>状态</th>
+                <th>评论内容</th>
+                <!--<th>是否回复</th>-->
+                <!--<th>状态</th>-->
                 <th>操作</th>
             </tr>
             </thead>
@@ -114,18 +115,19 @@
                 <td>{$vo.user_name}</td>
                 <td>{$vo.evaluate_stars|show_evaluate_start_show}</td>
                 <td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>
-                <td>{$vo.is_repay|show_evaluate_is_repay}</td>
-                {if $vo.status==0}
-                <td><input type="checkbox" class="Status" name="show" value="{$vo.status}" lay-skin="switch" lay-text="是|否"
-                           lay-filter="isShow" data-id="{$vo.id}"></td>
-                {/if}
-                {if $vo.status==1}
-                <td><input type="checkbox" class="Status" name="show" value="{$vo.status}" checked="" lay-skin="switch"
-                           lay-text="是|否" lay-filter="isShow" data-id="{$vo.id}"></td>
-                {/if}
-                </td>
+                <td>{$vo.evaluate_content}</td>
+                <!--<td>{$vo.is_repay|show_evaluate_is_repay}</td>-->
+                <!--{if $vo.status==0}-->
+                <!--<td><input type="checkbox" class="Status" name="show" value="{$vo.status}" lay-skin="switch" lay-text="是|否"-->
+                           <!--lay-filter="isShow" data-id="{$vo.id}"></td>-->
+                <!--{/if}-->
+                <!--{if $vo.status==1}-->
+                <!--<td><input type="checkbox" class="Status" name="show" value="{$vo.status}" checked="" lay-skin="switch"-->
+                           <!--lay-text="是|否" lay-filter="isShow" data-id="{$vo.id}"></td>-->
+                <!--{/if}-->
+                <!--</td>-->
                 <td>
-                    <a class="layui-btn layui-btn-mini edit" href="{:url('admin/Order/service_order_evaluate_edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
+                    <a class="layui-btn layui-btn-mini edit" href="{:url('admin/Order/platform_order_service_evaluate_edit',['id'=>$vo.id])}"><i class="iconfont icon-edit"></i> 编辑</a>
                     <a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 
                 </td>
