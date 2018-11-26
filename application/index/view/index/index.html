@@ -67,7 +67,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">
+                    <a href="parts_index">
                         <i class="spr parts"></i>
                         <span>配件商城</span>
                     </a>
@@ -493,7 +493,7 @@
             <div>
                 <div class="city-search">
                     <i class="spr icon_search"></i>
-                    <input type="text" name="search_input" class="search-input" placeholder="输入城市名查询">
+                    <input type="text" name="gec-search-input" class="search-input" placeholder="输入城市名查询">
                 </div>
                 <div class="gec-curr-city">
                     <div class="gec-curr-title">定位城市</div>
@@ -604,6 +604,11 @@
             autoplay: {
                 disableOnInteraction: false
             }
+        })
+    </script>
+    <script>
+        $('.first_ul li').click(function(){
+            location.href = 'store_index';
         })
     </script>
 </body>
