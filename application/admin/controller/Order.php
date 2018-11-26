@@ -740,12 +740,36 @@ class Order extends Controller{
     /**
      **************李火生*******************
      * @return \think\response\View
-     * 平台商订单评价编辑
+     * 平台配件商订单评价编辑
      **************************************
      */
     public function platform_order_evaluate_edit(){
         return view('platform_order_evaluate_edit');
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:平台服务商订单评价列表
+     **************************************
+     */
+    public function platform_order_service_evaluate(){
+        return view('platform_order_service_evaluate');
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:平台服务商订单评价编辑
+     **************************************
+     */
+    public function platform_order_service_evaluate_edit(){
+        return view('platform_order_service_evaluate_edit');
+    }
+
+
+
+
 
     /**
      **************李火生*******************
