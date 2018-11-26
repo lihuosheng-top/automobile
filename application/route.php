@@ -65,8 +65,11 @@ Route::group("",[
 
 
 
+
     /*店铺*/
-    "store_index"=>"index/Store/index",
+    "store_index"=>"index/Store/index",             //店铺首页
+    "store_league"=>"index/Store/league",           //我要加盟
+
 
 
 

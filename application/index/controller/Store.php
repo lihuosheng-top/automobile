@@ -22,4 +22,17 @@ class Store extends Controller{
     }
 
 
+
+    /**
+     * 我要加盟
+     * 陈绪
+     */
+    public function league(){
+
+        return view("store_league");
+
+    }
+
+
+
 }
