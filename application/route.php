@@ -104,9 +104,26 @@ Route::group("",[
     "cart_index"=>"index/Cart/cart_index",
 
 
+    /*TODO:配件商订单状态开始*/
+    "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单
+    "order_parts_wait_pay"=>"index/OrderParts/order_parts_wait_pay",//待付款
+    "order_wait_deliver"=>"index/OrderParts/order_wait_deliver", //待收货
+    "order_wait_evaluate"=>"index/OrderParts/order_wait_evaluate", //待评价
+    "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货
+    /*TODO:配件商订单状态结束*/
+
+    /*TODO:服务商订单状态开始*/
+    "order_service_all"=>"index/OrderService/order_service_all",//全部订单
+    "order_service_wait_pay"=>"index/OrderService/order_service_wait_pay",//待付款
+    "order_service_wait_deliver"=>"index/OrderService/order_service_wait_deliver", //待收货
+    "order_service_wait_evaluate"=>"index/OrderService/order_service_wait_evaluate", //待评价
+    "order_service_return_goods"=>"index/OrderService/order_service_return_goods",//退货
+    /*TODO:服务商订单状态结束*/
+
 
     // 我的
     "my_index"=>"index/My/my_index",
+
 
 
     "login"=>"index/My/login",//登录
