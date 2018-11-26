@@ -256,12 +256,6 @@ class Order extends Controller{
             return view('index', ['order_parts_data' => $order_parts_data]);
         }
     }
-
-
-
-
-
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -522,8 +516,8 @@ class Order extends Controller{
      **************************************
      */
     public function platform_order_service_index(){
-
-        return view('platform_order_service_index');
+        $service_order_data =Db::name('order_service')->order('create_time','desc')->paginate(5);
+        return view('platform_order_service_index',['service_order_data'=>$service_order_data]);
     }
 
     /**
@@ -736,7 +730,7 @@ class Order extends Controller{
     /**
      **************李火生*******************
      * @return \think\response\View
-     * 平台商订单评价
+     * 平台商配件商订单评价
      **************************************
      */
     public function platform_order_evaluate(){
@@ -819,8 +813,8 @@ class Order extends Controller{
      **************************************
      */
     public function service_order_evaluate(){
-        $service_order_evaluate =Db::name('order_service_evaluate')->paginate(5);
-        return view('service_order_evaluate');
+        $service_order_evaluate =Db::name('order_service_evaluate')->order('create_time','desc')->paginate(5);
+        return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
     }
 
     /**
