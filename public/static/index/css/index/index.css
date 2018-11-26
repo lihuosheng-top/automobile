@@ -35,22 +35,30 @@ html{
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 1rem;
-    margin-right: .15rem;
+    width: 1.4rem;
+    margin-right: .1rem;
 }
 .map .curr_city{
     font-size: .3rem;
     color: #fff;
+    width: .9rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
 }
 .map .icon_location{
     display: inline-block;
     width: .25rem;
     height: .31rem;
     background-position: -.5rem 0;
+    margin-right: .1rem;
 }
 .search{
     position: relative;
-    width: 5.1rem;
+    width: 4.8rem;
     margin-right: .3rem;
 }
 .search .icon_search{
@@ -109,14 +117,19 @@ html{
 }
 .classify_service .add_mycar .icon_add{
     display: inline-block;
-    width: .4rem;
-    height: .4rem;
-    background-position: -1.5rem 0;
+    width: .65rem;
+    height: .65rem;
+    background-position: -1.45rem .05rem;
+}
+.classify_service .add_mycar .txt-div{
+    font-size: .28rem;
+    color: #333333;
+    line-height: normal;
     margin-right: .15rem;
 }
-.classify_service .add_mycar span{
-    font-size: .28rem;
-    color: #504cfb;
+.classify_service .txt-div span{
+    font-size: .2rem;
+    color: #666666;
 }
 .classify_service ul{
     display: flex;
@@ -195,8 +208,9 @@ html{
 }
 .classify_service li .more{
     background-position: -5.05rem -3.95rem;
-    width: .73rem;
-    height: .72rem;
+    width: .7rem;
+    height: .7rem;
+    margin-top: .1rem;
 }
 .banner{
     width: 100%;
@@ -321,7 +335,6 @@ html{
     display: inline-block;
     width: .98rem;
     height: .38rem;
-    line-height: .38rem;
     text-align: center;
     border-radius: .19rem;
     font-size: .26rem;
@@ -366,7 +379,8 @@ html{
 }
 
 /* 添加车 start */
-.select-car{
+.select-car,
+.geclocation-pop{
     position: absolute;
     left: 0;
     right: 0;
@@ -376,7 +390,8 @@ html{
     background-color: #fff;
     z-index: 4;
 }
-.select-car .add-mycar{
+.select-car .add-mycar,
+.geclocation-title{
     position: fixed;
     top: 0;
     left: 0;
@@ -386,7 +401,8 @@ html{
     border-bottom: 1px solid #eee;
     z-index: 3;
 }
-.select-car .add-back{
+.select-car .add-back,
+.geclocation-title .gec-back{
     position: absolute;
     left: .2rem;
     top: 50%;
@@ -395,7 +411,8 @@ html{
     margin-top: -.22rem;
     background-position: -.5rem -.5rem;
 }
-.select-car .title-txt{
+.select-car .title-txt,
+.geclocation-title .title-txt{
     width: 100%;
     height: .88rem;
     line-height: .88rem;
@@ -405,16 +422,17 @@ html{
     background-color: #fff;
     font-weight: normal;
 }
-.car-search{
+.car-search,
+.city-search{
     position: relative;
     width: 100%;
     height: .88rem;
     line-height: .88rem;
-    margin-top: .88rem;
     border-bottom: 1px solid #eee;
     text-align: center;
 }
-.car-search .icon_search{
+.car-search .icon_search,
+.city-search .icon_search{
     position: absolute;
     left: .92rem;
     top: 50%;
@@ -423,7 +441,8 @@ html{
     margin-top: -.17rem;
     background-position: 0 0;
 }
-.car-search .search-input{
+.car-search .search-input,
+.city-search .search-input{
     width: 80%;
     height: .6rem;
     background-color: rgba(0, 0, 0, .08);
@@ -435,14 +454,16 @@ html{
 .hot-brand{
     width: 100%;
 }
-.hot-brand .hot-brand-title{
-    background-color: rgba(242, 242, 242, .8);
+.hot-brand .hot-brand-title,
+.hot-city .hot-city-title{
+    background-color: rgba(242, 242, 242, .3);
     font-size: .24rem;
     padding-left: .3rem;
     box-sizing: border-box;
     height: .7rem;
     line-height: .7rem;
     margin-bottom: .24rem;
+    color: #666;
 }
 .hot-brand .hot-brand-ul{
     display: flex;
@@ -465,11 +486,13 @@ html{
     width: .6rem;
     height: .6rem;
 }
-.sort_box{
+.sort_box,
+.gec-sort-box{
     width: 100%;
     overflow: hidden;
 }
-.sort_list{
+.sort_list,
+.gec-sort-list{
     height: 1rem;
     border-bottom:1px solid #ddd;
     display: flex;
@@ -487,20 +510,24 @@ html{
     width: 100%;
     height: 100%;
 }
-.initials{
+.initials,
+.gec-initials{
     position: fixed;
     top: 2.6rem;
     right: .1rem;
     text-align: center;
 }
-.initials li{
+.initials li,
+.gec-initials li{
     font-size: .2rem;
 }
-.initials img{
+.initials img,
+.gec-initials img{
     width: .25rem;
     height: .25rem;
 }
-.letter{
+.letter,
+.gec-letter{
     width: 100px;
     height: 100px;
     border-radius: 5px;
@@ -516,26 +543,42 @@ html{
     z-index: 99;
     display: none;
 }
-.letter img{
+.letter img,
+.gec-letter img{
     width: 50px;
     height: 50px;
     float: left;
     margin:25px 0px 0px 25px;
 }
-.cont{
+.cont>div,
+.gec-cont>div{
+    padding-top: .88rem;
+    /* overflow: auto;
+    height: 100%;
+    box-sizing: border-box; */
+}
+.cont,
+.gec-cont{
     width: 100%;
     height: 100%;
-    overflow-y: auto;
+    overflow: auto;
+    position: relative;
 }
+
 .cont::-webkit-scrollbar{
     width: 0;
 }
-.sort_letter{
+.gec-cont::-webkit-scrollbar{
+    width: 0;
+}
+.sort_letter,
+.gec-sort-letter{
     height: .5rem;
     line-height: .5rem;
     padding-left: .3rem;
-    background-color: #eee;
+    background-color: rgba(245, 245, 245, .3);
     font-size: .26rem;
+    color: #666;
 }
 /* 添加车 end */
 
@@ -607,4 +650,52 @@ html{
 .motorcycle-type .type-list,
 .car-year .year-list{
     margin-top: .88rem;
+}
+
+/* 定位城市 */
+.gec-curr-city{
+    margin-bottom: .2rem;
+}
+.gec-curr-city .gec-curr-title{
+    font-size: .24rem;
+    color: #666;
+    height: .7rem;
+    line-height: .7rem;
+    margin-bottom: .15rem;
+    padding-left: .3rem;
+    background-color: rgba(242, 242, 242, .3);
+}
+.gec-curr-city .gec-curr-box{
+    width: 1.5rem;
+    height: .7rem;
+    border: 1px solid #eee;
+    font-size: .28rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: .3rem;
+}
+.gec-curr-city .gec-curr-box .gec-curr-icon{
+    display: inline-block;
+    width: .35rem;
+    height: .41rem;
+    background-position: -.95rem -1.15rem;
+}
+.hot-city .hot-city-ul{
+    display: flex;
+    flex-wrap: wrap;
+    padding-right: .4rem;
+    padding-left: .3rem;
+}
+.hot-city .hot-city-ul .hot-city-li{
+    width: 1.4rem;
+    height: .6rem;
+    font-size: .24rem;
+    line-height: .6rem;
+    text-align: center;
+    justify-content: space-between;
+    margin-bottom: .2rem;
+    border: 1px solid #eee;
+    margin-right: .2rem;
 }

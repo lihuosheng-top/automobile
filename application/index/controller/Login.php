@@ -10,8 +10,10 @@ namespace app\index\controller;
 use think\Controller;
 use think\Request;
 use think\Db;
+use think\Session;
 
 class Login extends Controller{
+
 
     /**
      * 注册首页
@@ -19,6 +21,8 @@ class Login extends Controller{
     public function index(){
        return view("login_index");
     }
+
+
 
     /**
      **************李火生*******************
@@ -52,9 +56,10 @@ class Login extends Controller{
                 return ajax_error('密码错误',['status'=>0]);
             }
             if($res){
-                $res =Db::name('user')->where($datas)->where('status',1)->find();
+                $res =Db::name('user')->where($datas)->where('status',1)->field("id")->find();
                 if($res)
                 {
+                    Session("user",$res["id"]);
                     session('member',$datas);
                     return ajax_success('登录成功',$datas);
                 }else{

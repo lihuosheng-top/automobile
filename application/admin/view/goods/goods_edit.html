@@ -5,7 +5,6 @@
 	}
 	
 	.layui-form label {
-		width: 14%;
 		text-align: left;
 	}
 	
@@ -39,6 +38,10 @@
 	}
 	.car .layui-unselect{
 		display: none !important;
+	}
+	.car select{
+		    width: 100%;
+            height: 38px;
 	}
 </style>
 <style type="text/css">
@@ -241,7 +244,8 @@
 		</div>
 		<div class="layui-form-item" style="min-width: 62% !important;">
 			<label class="layui-form-label">商品分组：</label>
-			<div class="layui-input-inline">
+			
+			<div class="layui-input-inline" style="margin-left: 30px;">
 				{if !empty($goods_list)}
 				<select name="goods_type_id" id="goods_type_id">
 					{volist name="goods_list" id="goods"}
@@ -260,7 +264,7 @@
 		</div>
 		<div class="layui-form-item " style="min-width: 62% !important;">
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
-			<div class="layui-input-inline">
+			<div class="layui-input-inline" style="margin-left: 30px;">
 				{if !empty($goods_brand)}
 				<select name="goods_brand_id">
 					{volist name="goods_brand" id="v"}
@@ -308,12 +312,12 @@
 			<div class="layui-input-block">
 				{if $value.goods_standard == "通用"}
 				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige" checked="">
-				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> {/if} {if $value.goods_standard == "专用"}
+				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
+				{/if}
+				{if $value.goods_standard == "专用"}
 				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
-				<input type="radio" checked="" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> {else}
-				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
-				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> {/if}
-
+				<input type="radio" checked="" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
+				{/if}
 			</div>
 		</div>
 		<div>
@@ -369,7 +373,7 @@
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_vehicle" id="province">
-							 	<option value="">请选择</option>
+								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
@@ -399,117 +403,18 @@
 					</div>
 
 					<div id="special_content">
-						<div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格名</label>
-								<div class="layui-input-inline guige_name">
-									<select class="universal_standard_name" name="goods_standard_name[]">
-										<option value="" selected=""></option>
-									</select>
-								</div>
-								<div class="layui-input-inline add-name" style="">
-									<button type="button" class="sky-blue bgwhite">+添加规格名</button>
-								</div>
-								<div class="layui-input-inline noshow add-names" style="">
-									<input type="text" name="" id="" value="" />
-								</div>
-								<div class="layui-input-inline noshow add-names" style="">
-									<button type="button" class="operation-btus btu-delet">删除</button>
-									<button type="button" class="operation-btus btu-cancel">取消</button>
-									<button type="button" class="operation-btus btu-add guibtu-add">添加</button>
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格值：</label>
-								<div class="num-content">
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 					<div class="add-content content" id="add_special_buts">
 						<button type="button" class="btus special_buts">添加规格项目</button>
 					</div>
 				</div>
 			</div>
-			{/if} {if $value.goods_standard == "专用"}
+			{/if}
+			{if $value.goods_standard == "专用"}
 			<div class="layui-form-item general noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
 					<div id="general_content">
-						<div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格名</label>
-								<div class="layui-input-inline guige_name">
-									<select class="universal_standard_name" name="goods_standard_name[]">
-										<option value="" selected=""></option>
-									</select>
-								</div>
-								<div class="layui-input-inline add-name" style="">
-									<button type="button" class="sky-blue bgwhite">+添加规格名</button>
-								</div>
-								<div class="layui-input-inline noshow add-names" style="">
-									<input type="text" name="" id="" value="" />
-								</div>
-								<div class="layui-input-inline noshow add-names" style="">
-									<button type="button" class="operation-btus btu-delet">删除</button>
-									<button type="button" class="operation-btus btu-cancel">取消</button>
-									<button type="button" class="operation-btus btu-add guibtu-add">添加</button>
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格值：</label>
-								<div class="num-content">
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="" placeholder="" style="padding-left:10px;" />
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 					<div class="add-content content" id="add_general_buts">
 						<button type="button" class="btus general_buts">添加规格项目</button>
@@ -520,23 +425,23 @@
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
 					<!--<div class="layui-form-item">
-						<label class="layui-form-label">适用车型：</label>
-						<div class="layui-input-inline">
-							<select name="dedicated_vehicle">
-								<option value="{$value.dedicated_vehicle}">{$value.dedicated_vehicle}</option>
-							</select>
-						</div>
-						<div class="layui-input-inline">
-							<select name="goods_car_brand">
-								<option value="{$value.goods_car_brand}">{$value.goods_car_brand}</option>
-							</select>
-						</div>
-					</div>-->
-						<div class="layui-form-item car" >
+                        <label class="layui-form-label">适用车型：</label>
+                        <div class="layui-input-inline">
+                            <select name="dedicated_vehicle">
+                                <option value="{$value.dedicated_vehicle}">{$value.dedicated_vehicle}</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline">
+                            <select name="goods_car_brand">
+                                <option value="{$value.goods_car_brand}">{$value.goods_car_brand}</option>
+                            </select>
+                        </div>
+                    </div>-->
+					<div class="layui-form-item car" >
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_vehicle" id="province">
-							 	<option value="">请选择</option>
+								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
@@ -606,66 +511,7 @@
 				</div>
 
 			</div>
-			{else}
-			<div class="layui-form-item general noshow">
-				<label class="layui-form-label"></label>
-				<div class="layui-input-block general-kuang">
-					<div id="general_content"></div>
-					<div class="add-content content" id="add_general_buts">
-						<button type="button" class="btus general_buts">添加规格项目</button>
-					</div>
-				</div>
-
-			</div>
-			<div class="layui-form-item special noshow">
-				<label class="layui-form-label"></label>
-				<div class="layui-input-block general-kuang">
-			
-						<div class="layui-form-item car" >
-						<label class="layui-form-label">适用车型：</label>
-						<div class="layui-input-inline">
-							<select name="dedicated_vehicle" id="province">
-							 	<option value="">请选择</option>
-							</select>
-						</div>
-						<div class="layui-input-inline">
-							<select name="goods_car_brand" id="city">
-								<option value="">请选择</option>
-							</select>
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">属性</label>
-						<div class="layui-input-inline">
-							<select name="dedicated_property" class="dedicated_property">
-								<option value="浙江" selected="">浙江省</option>
-								<option value="你的工号">江西省</option>
-								<option value="你最喜欢的老师">福建省</option>
-							</select>
-						</div>
-						<div class="layui-input-inline add-attribute " style="">
-							<button type="button" class="sky-blue bgwhite ">+添加属性</button>
-						</div>
-						<div class="layui-input-inline noshow add-attributes">
-							<input type="text" name="" id="" value="" />
-						</div>
-						<div class="layui-input-inline noshow add-attributes">
-							<button type="button" class="operation-btus btu-delet">删除</button>
-							<button type="button" class="operation-btus btu-cancel">取消</button>
-							<button type="button" class="operation-btus btu-add shuxingbtu-add">添加</button>
-						</div>
-					</div>
-
-					<div id="special_content"></div>
-					<div class="add-content content" id="add_special_buts">
-						<button type="button" class="btus special_buts">添加规格项目</button>
-					</div>
-				</div>
-
-			</div>
-
 			{/if}
-
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"><span>*</span>规格：</label>
@@ -709,31 +555,6 @@
 			</div>
 
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">速度级别：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_speed" value="{$value.goods_speed}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_speed">
-			</div>
-
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">载重指数：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_weight" value="{$value.goods_weight}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_weight">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">类别：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_category" value="{$value.goods_category}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_category">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">花纹特点：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_trait" value="{$value.goods_trait}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_trait">
-			</div>
-		</div>
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
@@ -749,16 +570,13 @@
 		</div>
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label">上架年限：</label>
-			<div class="layui-input-block" id="">
 				<div class="layui-input-block">
 					<select name="goods_year_id">
-						<option value="" selected="">请选择</option>
 						{volist name="year" id="v"}
 						<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
 						{/volist}
 					</select>
 				</div>
-			</div>
 		</div>
 		<div class="layui-form-item" pane="">
 			<label class="layui-form-label">限购：</label>
@@ -813,11 +631,12 @@
 	<script type="text/javascript">
 		var dhtml = "";
 		var i = 0;
+		console.log(i);
 		dhtml += '<div>' +
 			' 			<div class="layui-form-item">                                                                                 ' +
 			' 				<label class="layui-form-label">规格名</label>                                                               ' +
 			' 				<div class="layui-input-inline guige_name">                                                                          ' +
-			' 					<select class="universal_standard_name' + i + '" name="goods_standard_name[]">                                                                                 ' +
+			' 					<select class="universal_standard_name" name="goods_standard_name[]">                                                                                 ' +
 			' 						<option value="0" selected="">请选择</option>                                                                    ' +
 			' 					</select>                                                                                             ' +
 			' 				</div>                                                                                                    '
@@ -912,7 +731,6 @@
 			// 商品规格变化
 			form.on('radio(guige)', function(data) {
 				var checkval = data.value;
-				console.log(checkval);
 				if(checkval == "通用") {
 					$(".general").removeClass("noshow");
 					$(".special").addClass("noshow");
@@ -924,16 +742,14 @@
 			});
 			//      点击专用添加规格项目添加页面
 			$(".special_buts").click(function() {
-				i++;
-				console.log(i);
 				$("#special_content").append(dhtml);
 				$.ajax({
 					type: "POST",
 					url: "{:url('admin/Goods/standard_name')}",
 					data: {},
 					success: function(data) {
-						console.log(data);
 						var data = eval('(' + data + ')');
+						console.log(data);
 						for(var i = 0; i < data.data.length; i++) {
 							var dhtml = "";
 							dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
@@ -951,16 +767,14 @@
 			});
 			//      点击通用添加规格项目添加页面
 			$(".general_buts").click(function() {
-				i++;
-				console.log(i);
 				$("#general_content").append(dhtml);
 				$.ajax({
 					type: "POST",
 					url: "{:url('admin/Goods/standard_name')}",
 					data: {},
 					success: function(data) {
-						console.log(data);
 						var data = eval('(' + data + ')');
+						console.log(data);
 						for(var i = 0; i < data.data.length; i++) {
 							var dhtml = "";
 							dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
@@ -1015,7 +829,6 @@
 						layer.msg('添加成功');
 						var data = eval('(' + data + ')');
 						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
-						//							console.log($(".universal_standard_name").children("option").val());
 						$(".universal_standard_name").append(dhtmls);
 						form.render('select');
 					},
@@ -1056,11 +869,16 @@
 						"property_name": text
 					},
 					success: function(data) {
-						layer.msg('添加成功');
+//						layer.msg(data.info);
 						var data = eval('(' + data + ')');
-						var dhtmls = '<option value="' + data.data + '">' + data.data + '</option> ';
-						$(".dedicated_property").append(dhtmls);
-						form.render('select');
+						console.log(data)
+						layer.msg(data.info);
+						if(data.info=="成功"){
+							var dhtmls = '<option value="' + data.data[0].property_name+ '">' + data.data[0].property_name + '</option> ';
+							$(".dedicated_property").append(dhtmls);
+							form.render('select');
+						}
+						
 					},
 					error: function(data) {
 						console.log(data)
@@ -1068,7 +886,46 @@
 				});
 
 			});
+			$.ajax({
+				type: "POST",
+				url: "{:url('admin/Goods/property_show')}",
+				data: {
+				},
+				success: function(data) {
+//						layer.msg(data.info);
+					var data = eval('(' + data + ')');
+					console.log(data.data);
+					for(var i=0;i<data.data.length;i++){
+						var dhtmls = '<option value="' + data.data[i].property_name+ '">' + data.data[i].property_name + '</option> ';
+						$(".dedicated_property").append(dhtmls);
+						
+					}
+					form.render('select');
+					
+				},
+				error: function(data) {
+					console.log(data)
+				}
+			});
+          $.ajax({
+					type: "POST",
+					url: "{:url('admin/Goods/standard_name')}",
+					data: {},
+					success: function(data) {
+						var data = eval('(' + data + ')');
+						for(var i = 0; i < data.data.length; i++) {
+							var dhtml = "";
+							dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
+							$(".universal_standard_name").append(dhtml);
+						}
 
+						form.render('select');
+					},
+					error: function(data) {
+						console.log(data)
+					}
+				});
+				form.render('select');
 			// end商品规格变化
 		})
 	</script>
@@ -1123,30 +980,13 @@
 			}
 			// 		
 		});
+
+
 	</script>
-	  <script type="text/javascript">
-        $(function(){
-            //页面加载完毕后开始执行的事件
-            var city_json='{"江苏":["南京","常州"],"河南":["南阳","安阳"]}';
-            var city_obj=eval('('+city_json+')');
-            for (var key in city_obj)
-            {
-                $("#province").append("<option value='"+key+"'>"+key+"</option>");
-            }
-            $("#province").change(function(){
-                var now_province=$(this).val();
-                $("#city").html('<option value="">请选择城市</option>');
-                for(var k in city_obj[now_province])
-                {
-                    var now_city=city_obj[now_province][k];
-                    $("#city").append('<option value="'+now_city+'">'+now_city+'</option>');
-                }
-            });
-        });
-    </script>
+	
 
 	<script type="text/javascript">
-		
+//		车型循环
 		var times_id = new Array();
 		$.ajax({
 			type: "POST",
@@ -1166,7 +1006,21 @@
 					
 					times_id[datas.car_series[i].brand]=time_id;
 				}
-				console.log(times_id);
+            var city_obj=times_id;
+            for (var key in city_obj)
+            {
+                $("#province").append("<option value='"+key+"'>"+key+"</option>");
+            }
+            $("#province").change(function(){
+                var now_province=$(this).val();
+                $("#city").html('<option value="">请选择车型</option>');
+//              var i=0;
+                for(var k in city_obj[now_province])
+                {
+                    var now_city=city_obj[now_province][k].series;
+                    $("#city").append('<option value="'+now_city+'">'+now_city+'</option>');
+                }
+            });
 			
 			
 		},

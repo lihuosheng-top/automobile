@@ -19,11 +19,36 @@ use think\Route;
 Route::group("",[
     /*首页*/
     "/$"=>"index/index/index",
-    "service_type"=>"index/index/service_type",//选择服务类型
-    "reservation"=>"index/index/reservation",//预约服务 首页
-    "reservation_detail"=>"index/index/reservation_detail",//预约服务 详情
-    "reservation_info"=>"index/index/reservation_info",//预约服务 详情
-    "shop_order"=>"index/index/shop_order",//预约服务 详情
+
+
+
+    /*我的爱车*/
+    "love_car"=>"index/LoveCar/love_car",
+    "love_list"=>"index/LoveCar/love_list",                         //我的爱车列表
+
+
+
+    /*服务商品*/
+    "service_type"=>"index/reservation/service_type",//选择服务类型
+    "reservation"=>"index/reservation/reservation",//预约服务 首页
+    "reservation_detail"=>"index/reservation/reservation_detail",//预约服务 详情
+    "reservation_info"=>"index/reservation/reservation_info",//预约服务 详情
+
+
+    /*服务订单*/
+    "shop_order"=>"index/OrderService/shop_order",//预约服务 详情
+
+    /*TODO:服务商订单开始*/
+    "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
+    "ios_api_order_button"=>"index/OrderService/ios_api_order_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
+    "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
+    "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单
+    'index_aliPay'=>"index/Apppay/index_aliPay",
+    'index_pay_code'=>"index/Apppay/index_pay_code",
+    /*TODO:服务商订单结束*/
+
+
+
 
     /*登录页面*/
     "login_index"=>"index/Login/index",
@@ -37,6 +62,12 @@ Route::group("",[
     "register"=>"index/Register/index",//注册页面
     "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
+
+
+
+    /*店铺*/
+    "store_index"=>"index/Store/index",
+
 
 
     /*判断是否登录*/
@@ -55,10 +86,15 @@ Route::group("",[
 
 
 
-
-    /*商品*/
+    /*配件商品*/
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
+
+
+
+    /*配件商城*/
+    "parts_index"=>"index/Parts/parts_index",
+
 
 
     // 购物车
@@ -68,7 +104,7 @@ Route::group("",[
 
     // 我的
     "my_index"=>"index/My/my_index",
-    "my_car"=>"index/My/my_car",//我的爱车
+
 
     "login"=>"index/My/login",//登录
     "setting"=>"index/My/setting",//设置
@@ -146,7 +182,8 @@ Route::group("admin",[
     "goods_role_name"=>"admin/Goods/role_name",                                       //商品角色检测
     "goods_property_name"=>"admin/Goods/property_name",                                       //专用属性入库
     "goods_property_show"=>"admin/Goods/property_show",                                       //专用属性显示
-    "goods_alipay"=>"admin/Goods/alipay",                                       //专用属性显示
+    "goods_alipay"=>"admin/Goods/alipay",                                       //支付
+    "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付后调
 
 
 
@@ -154,6 +191,10 @@ Route::group("admin",[
     "serve_index"=>"admin/Serve/index",
     "serve_add"=>"admin/Serve/add",
 	"serve_look"=>"admin/Serve/look",
+    "serve_save"=>"admin/Serve/save",
+    "serve_edit"=>"admin/Serve/edit",
+    "serve_updata"=>"admin/Serve/updata",
+    "serve_del"=>"admin/Serve/del",
 
 
 
@@ -282,6 +323,7 @@ Route::group("admin",[
     
     /*订单管理：TODO:服务商商订单开始*/
     'service_order_index'=>"admin/Order/service_order_index", //服务商界面服务商订单列表
+    'service_order_parts_dels'=>"admin/Order/service_order_parts_dels", //服务商界面服务商订单列表批量删除
     "service_order_evaluate"=>"admin/Order/service_order_evaluate", //服务商界面订单评价
     "service_order_evaluate_edit"=>"admin/Order/service_order_evaluate_edit", //服务商界面订单评价
     /*订单管理：TODO:服务商订单结束*/
@@ -360,12 +402,13 @@ Route::group("admin",[
     "recharge_setting_add"=>"admin/Install/recharge_setting_add",//设置之充值设置添加数据
     "recharge_setting_del"=>"admin/Install/recharge_setting_del",//设置之充值设置删除数据
 
-    "service_index"=>"admin/Install/service_index",
+    "service_index"=>"admin/Install/service_index",//服务设置之列表
     "service_add"=>"admin/Install/service_add",
     "service_save"=>"admin/Install/service_save",
-    "service_edit"=>"admin/Install/service_edit",
+    "service_edit"=>"admin/Install/service_edit",//服务设置之编辑添加
+    "service_image_del"=>"admin/Install/service_image_del",//服务设置之编辑里面图片删除
     "service_updata"=>"admin/Install/service_updata",
-    "service_del"=>"admin/Install/service_del",
+    "service_del"=>"admin/Install/service_del", //服务设置之删除
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",

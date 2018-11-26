@@ -5,7 +5,6 @@
 	}
 	
 	.layui-form label {
-		width: 14%;
 		text-align: left;
 	}
 	
@@ -35,6 +34,19 @@
 		line-height: 13px;
 		font-size: 9px;
 		border-radius: 6px;
+	}
+	.car .layui-unselect{
+		display: none !important;
+	}
+	.car select{
+		    width: 100%;
+            height: 38px;
+	}
+	#city{
+		display: block;
+	}
+	#province{
+		display: block;
 	}
 </style>
 <style type="text/css">
@@ -200,7 +212,7 @@
 		
 		<div class="layui-form-item" style="min-width: 62% !important;">
 			<label class="layui-form-label">商品分组：</label>
-			<div class="layui-input-inline">
+			<div class="layui-input-inline" style="margin-left: 30px;">
 				<select name="goods_type_id" id="goods_type_id">
 					{volist name="goods_list" id="value"}
 					<option value="{$value.id}">{$value.name}</option>
@@ -213,7 +225,7 @@
 		</div>
 		<div class="layui-form-item " style="min-width: 62% !important;">
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
-			<div class="layui-input-inline">
+			<div class="layui-input-inline" style="margin-left: 30px;">
 				<select name="goods_brand_id">
 					{volist name="goods_brand" id="val"}
 					<option value="{$val.id}">{$val.name}</option>
@@ -270,23 +282,16 @@
 			<div class="layui-form-item special noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-					<div class="layui-form-item">
+					<div class="layui-form-item car" >
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
-							<select name="dedicated_vehicle">
-								<option value="">请选择省</option>
-								<option value="浙江" selected="">浙江省</option>
-								<option value="你的工号">江西省</option>
-								<option value="你最喜欢的老师">福建省</option>
+							<select name="dedicated_vehicle" id="province">
+							 	<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_brand">
-								<option value="杭州">杭州</option>
-								<option value="宁波">宁波</option>
-								<option value="温州">温州</option>
-								<option value="温州">台州</option>
-								<option value="温州">绍兴</option>
+							<select name="goods_car_brand" id="city">
+								<option value="">请选择</option>
 							</select>
 						</div>
 					</div>
@@ -294,9 +299,7 @@
 						<label class="layui-form-label">属性</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_property" class="dedicated_property">
-								<option value="浙江" selected="">浙江省</option>
-								<option value="你的工号">江西省</option>
-								<option value="你最喜欢的老师">福建省</option>
+								<option value="请选择" selected="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline add-attribute " style="">
@@ -361,31 +364,6 @@
 			<div class="tips">库存为0时，会放到[已售罄]的商品列表里，保存后买家看到的商品可售库存同步更新</div>
 			</div>
 		
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">速度级别：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_speed" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_speed">
-			</div>
-			
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">载重指数：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_weight" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_weight">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">类别：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_category" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_category">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">花纹特点：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_trait" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_trait">
-			</div>
 		</div>
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
@@ -689,6 +667,28 @@ layedit.build('demo');
 			
 		
 			// end商品规格变化
+			
+					$.ajax({
+				type: "POST",
+				url: "{:url('admin/Goods/property_show')}",
+				data: {
+				},
+				success: function(data) {
+//						layer.msg(data.info);
+					var data = eval('(' + data + ')');
+					console.log(data.data);
+					for(var i=0;i<data.data.length;i++){
+						var dhtmls = '<option value="' + data.data[i].property_name+ '">' + data.data[i].property_name + '</option> ';
+						$(".dedicated_property").append(dhtmls);
+						
+					}
+					form.render('select');
+					
+				},
+				error: function(data) {
+					console.log(data)
+				}
+			});
 		})
 	</script>
 
@@ -697,9 +697,52 @@ layedit.build('demo');
 		//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
 		var ue = UE.getEditor('editor');
 	</script>
-	<script>
-
+<script type="text/javascript">
+		
+		var times_id = new Array();
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Goods/add')}",
+			data: {},
+			dataType: "json",
+			success: function(data) {
+				var datas = data.data
+				for(var i = 0; i < datas.car_series.length; i++) {
+					var time_id = new Array();
+					for(var j = 0; j < datas.car_brand.length; j++) {
+						if(datas.car_brand[j].brand == datas.car_series[i].brand) {
+							time_id.push({"series": datas.car_brand[j].series});
+						}
+						
+				}
+					
+					times_id[datas.car_series[i].brand]=time_id;
+				}
+            var city_obj=times_id;
+            for (var key in city_obj)
+            {
+                $("#province").append("<option value='"+key+"'>"+key+"</option>");
+            }
+            $("#province").change(function(){
+                var now_province=$(this).val();
+                $("#city").html('<option value="">请选择车型</option>');
+//              var i=0;
+                for(var k in city_obj[now_province])
+                {
+                    var now_city=city_obj[now_province][k].series;
+                    $("#city").append('<option value="'+now_city+'">'+now_city+'</option>');
+                }
+            });
+			
+			
+		},
+		error: function(data) {
+			console.log("错误");
+		}
+		});
 	</script>
+
+	
 	{/block}
 
 </body>
