@@ -64,22 +64,18 @@ Route::group("",[
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
 
 
-
-
     /*店铺*/
     "store_index"=>"index/Store/index",             //店铺首页
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
 
 
-
-
     /*判断是否登录*/
     "isLogin"=>"index/My/isLogin", //是否登录判断
-
     /*找回密码验证码*/
     'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
     'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
+    'update_password'=>"index/findpwd/update_password",//修改密码
 
 
 

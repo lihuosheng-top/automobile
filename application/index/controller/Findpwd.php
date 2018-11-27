@@ -43,9 +43,10 @@ class Findpwd extends Controller{
                     if (session('mobileCode') != $code) {
                         return ajax_error("验证码不正确",$mobile);
                     }else{
-                        $passwords =md5($password);
+//                        $passwords =md5($password);
+                        $passwords =password_hash($password,PASSWORD_DEFAULT);
                         $password_bool =Db::name('user')->where('phone_num',$mobile)->update(['password'=>$passwords]);
-                        if(!empty($password_bool)){
+                        if($password_bool){
                             $user_data =Db::name('user')->where('phone_num',$mobile)->find();
                             return ajax_success('密码修改成功',$user_data);
                         }else{
@@ -95,6 +96,27 @@ class Findpwd extends Controller{
                 return ajax_success("发送成功", $output);
             } else {
                 return ajax_error("发送失败",['status'=>0]);
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:修改密码
+     **************************************
+     */
+    public function update_password(Request $request){
+        if($request->isPost()){
+            $password =$request->only(['password'])['password'];
+            $member =session('member');
+            if(!empty(trim($password))){
+                $bool =Db::name('user')->where('phone_num',$member['phone'])->update(['password'=>trim($password)]);
+                if($bool){
+                    return ajax_success('修改成功',['status'=>1]);
+                }else{
+                    return ajax_error('修改失败',['status'=>0]);
+                }
             }
         }
     }
