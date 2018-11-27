@@ -67,7 +67,7 @@ var app = new Vue({
             return this.businessPopFlag = true;
         },
         hideBusinessPop(){
-            this.businessPopFlag = false;
+            return this.businessPopFlag = false;
         },
         nextButton(){
             location.href = 'store_verify';
