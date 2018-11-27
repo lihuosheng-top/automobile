@@ -48,16 +48,14 @@ class LoveCar extends Controller{
                 $love["status"] = 0;
                 $bool = db("user_car")->insert($love);
                 if($bool){
-                    return ajax_success("入库成功");
+                    return ajax_success("添加成功");
                 }else{
-                    return ajax_error("入库失败");
+                    return ajax_error("添加失败");
                 }
             }
         }else{
             $this->success("请登录",url("index/My/login"));
         }
-
-
     }
 
 
@@ -67,9 +65,62 @@ class LoveCar extends Controller{
      * 我的爱车列表
      * 陈绪
      */
-    public function love_list()
+    public function love_list(Request $request)
     {
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $love = db("user_car")->where("user_id",$user_id)->select();
+            return view("获取成功",$love);
+        }
         return view("love_list");
+    }
+
+
+
+    /**
+     * 我的爱车状态修改
+     * 陈绪
+     */
+    public function love_status(Request $request){
+
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $love = db("user_car")->where("user_id",$user_id)->where("status",1)->field("status")->find();
+            if(!empty($love)){
+                db("user_car")->where("user_id",$user_id)->where("status",1)->update(["status"=>0]);
+            }
+            $love_id = $request->only(["id"])["id"];
+            $status = $request->only(["status"])["status"];
+            $bool = db("user_car")->where("id",$love_id)->update(["status"=>$status]);
+            if($bool){
+                return ajax_success("设置成功");
+            }else{
+                return ajax_error("设置失败");
+            }
+        }
+
+    }
+
+
+
+
+
+    /**
+     * 我的爱车列表删除
+     * 陈绪
+     */
+    public function love_del(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $bool = db("user_car")->where("id",$id)->delete();
+            if($bool){
+                return ajax_success("删除成功 ");
+            }else{
+                return ajax_error("删除失败");
+            }
+        }
+
     }
 
 
