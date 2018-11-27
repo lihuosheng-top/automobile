@@ -7,6 +7,7 @@
  */
 namespace app\index\controller;
 use think\Controller;
+use think\Request;
 
 class Store extends Controller{
 
@@ -27,7 +28,17 @@ class Store extends Controller{
      * 我要加盟
      * 陈绪
      */
-    public function league(){
+    public function league(Request $request){
+
+        if($request->isPost()){
+            $roles = db("role")->where("status","1")->field("id,name")->select();
+            if($roles){
+                return ajax_success("获取成功",$roles);
+            }else{
+                return ajax_error("获取失败");
+            }
+
+        }
 
         return view("store_league");
 
