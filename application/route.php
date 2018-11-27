@@ -125,6 +125,7 @@ Route::group("",[
 
     // 我的
     "my_index"=>"index/My/my_index",
+    "my_message"=>"index/My/message",                //我的个人信息
 
 
 
