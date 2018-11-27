@@ -199,13 +199,6 @@ class OrderService extends Controller{
         return view('order_service_return_goods');
     }
 
-
-
-
-
-
-
-
     /**
      **************李火生*******************
      * ios提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
