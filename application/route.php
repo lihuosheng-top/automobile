@@ -69,6 +69,7 @@ Route::group("",[
     /*店铺*/
     "store_index"=>"index/Store/index",             //店铺首页
     "store_league"=>"index/Store/league",           //我要加盟
+    "store_verify"=>"index/Store/verify",           //身份验证
 
 
 

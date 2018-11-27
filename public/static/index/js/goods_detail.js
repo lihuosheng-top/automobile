@@ -32,6 +32,8 @@ $.ajax({
             $('.sale').html('￥' + val.goods_new_money);
             // 库存
             $('.stock').html('库存' + val.goods_repertory + '件');
+            // 商品详情
+            $('.detail-img-box').html(val.goods_text);
         })
     },
     error: function(){
@@ -39,7 +41,19 @@ $.ajax({
     }
 })
 
-
+// swiper初始化
+var mySwiper = new Swiper ('.swiper-container', {
+    direction: 'horizontal', // 垂直切换选项
+    loop: true, // 循环模式选项
+    autoplay: {
+        delay: 2000,
+        disableOnInteraction: false,//用户操作swiper后，不禁止autoplay
+    },
+    // 如果需要分页器
+    pagination: {
+        el: '.swiper-pagination',
+    },
+}) 
 
 
 
