@@ -761,14 +761,10 @@ function show_service_order_status($status){
     }else  if($status==3){
         echo '<button type="button" class="state  shipmenting-btu" >待服务</button>';
     }else  if($status==4){
-        echo '<button type="button" class="state  shipmented-btu" >已发货</button>';
+        echo '<button type="button" class="state  shipmented-btu" >已服务</button>';
     }else  if($status==5){
-        echo '<button type="button" class="state  gooding-btu" >待收货</button>';
-    }else  if($status==6){
-        echo '<button type="button" class="state  gooded-btu" >已收货</button>';
-    }else  if($status==7){
         echo '<button type="button" class="state  obligation" >待评价</button>';
-    } else  if($status==8){
+    } else  if($status==6){
         echo '<button type="button" class="state  finish-btu" >已完成</button>';
     }else  if($status==9){
         echo '<button type="button" class="state  cancel-btu" >取消订单</button>';
