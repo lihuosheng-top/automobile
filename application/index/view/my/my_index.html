@@ -183,13 +183,23 @@
                 islogin = data.status;
                 if(data.status == 1){
                     var data = data.data;
-                    str += '<p class="user_name">'+data.user_name+'</p>\
-                            <p class="invitation_code">邀请码: <span>'+data.id+'</span></p>\
-                            <p class="jf_hy_qb">\
-                                <span class="point">积分: <i>'+data.user_integral_wallet+'</i></span>\
-                                <span class="member_grade">会员: <i>'+data.user_grade_content+'</i></span>\
-                                <span class="wallet br0">钱包: ￥<i>'+data.user_wallet+'</i></span>\
-                            </p>'
+                    if(data.user_name != null){
+                        str += '<p class="user_name">'+data.user_name+'</p>\
+                                <p class="invitation_code">邀请码: <span>'+data.id+'</span></p>\
+                                <p class="jf_hy_qb">\
+                                    <span class="point">积分: <i>'+data.user_integral_wallet+'</i></span>\
+                                    <span class="member_grade">会员: <i>'+data.user_grade_content+'</i></span>\
+                                    <span class="wallet br0">钱包: ￥<i>'+data.user_wallet+'</i></span>\
+                                </p>'
+                    }else{
+                        str += '<p class="user_name">'+data.phone_num+'</p>\
+                                <p class="invitation_code">邀请码: <span>'+data.id+'</span></p>\
+                                <p class="jf_hy_qb">\
+                                    <span class="point">积分: <i>'+data.user_integral_wallet+'</i></span>\
+                                    <span class="member_grade">会员: <i>'+data.user_grade_content+'</i></span>\
+                                    <span class="wallet br0">钱包: ￥<i>'+data.user_wallet+'</i></span>\
+                                </p>'
+                    }
                     $('.please_login').hide();
                     $('.user_info_text').append(str);
                 }
@@ -251,7 +261,8 @@
                     case 1:break
                     case 2:break
                     case 3:
-                        location.href = 'my_car';break;
+                        location.href = 'love_list';
+                        break;
                     case 4:break
                     case 5:break
                 }

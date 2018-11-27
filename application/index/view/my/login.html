@@ -91,7 +91,6 @@
     <!-- </div> -->
 
     <!-- <script src="__STATIC__/index/js/plugin/vue.js"></script> -->
-    <!-- <script src="__STATIC__/index/js/plugin/vue.resource.js"></script> -->
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
      <!-- 验证码倒计时 -->
@@ -293,12 +292,12 @@
     <!-- 显示忘记密码 -->
     <script>
         $('.forget-psw').click(function(){
-            $('.wrapper').css('display', 'none');
-            $('.find-password').css('display', 'block');
+            $('.wrapper').hide()
+            $('.find-password').show();
         })
         $('.find-back').click(function(){
-            $('.wrapper').css('display', 'block');
-            $('.find-password').css('display', 'none');
+            $('.wrapper').show();
+            $('.find-password').hide();
         })
         $('.message-code').blur(function(){
             if($(this).val() !== ''){
@@ -354,7 +353,27 @@
                         'code': code
                     },
                     success: function(data){
-                        console.log(data);
+                        if(data.status == 0){
+                            layer.open({
+                                style: 'bottom:100px;',
+                                type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                skin: 'msg',
+                                content: data.info,
+                                time: 2
+                            })
+                        }else if(data.status == 1){
+                            layer.open({
+                                style: 'bottom:100px;',
+                                type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                skin: 'msg',
+                                content: data.info,
+                                time: 2
+                            })
+                            setTimeout(function(){
+                                $('.find-password').hide();
+                                $('.wrapper').show();
+                            }, 2200)
+                        }
                     },
                     error: function(){
                         console.log('error');

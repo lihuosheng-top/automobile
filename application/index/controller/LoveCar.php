@@ -64,7 +64,7 @@ class LoveCar extends Controller{
 
 
     /**
-     * 我的爱车
+     * 我的爱车列表
      * 陈绪
      */
     public function love_list()

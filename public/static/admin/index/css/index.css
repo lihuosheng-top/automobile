@@ -150,12 +150,13 @@ a{
 }
 
 .UCleft {
-	margin-left: 2%;
-	height: 1000px;
+	margin-left: 10px;
+	margin-right: 10px;
+	height: 910px;
 	background: #fff;
-	width: 14%;
+	width: 12%;
 	float: left;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .UCleft-fixed {
@@ -405,11 +406,11 @@ a{
 /*å³è¾¹å†…å®¹*/
 .right-content{
 	float: right;
-	width: 80%;
-	height: 1000px;
+	width: 85.5%;
+	height: 910px;
 	/* background: #fff; */
-	margin-top: 21px;
-	margin-right: 29px;
+	margin-top: 10px;
+	margin-right: 10px;
 }
 .right-content-title{
 	overflow: hidden;
@@ -430,9 +431,11 @@ a{
 }
 .recontent{
 	width: 100%;
-	min-height: 800px;
+	min-height: 910px;
 	background: #fff;
-	padding-bottom: 30px;
+}
+.layui-elem-quote{
+	padding: 6px !important;
 }
 /* 按钮颜色 */
 /* 待付款 */
