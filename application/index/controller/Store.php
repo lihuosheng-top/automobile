@@ -8,6 +8,7 @@
 namespace app\index\controller;
 use think\Controller;
 use think\Request;
+use think\Session;
 
 class Store extends Controller{
 
@@ -31,17 +32,17 @@ class Store extends Controller{
     public function league(Request $request){
 
         if($request->isPost()){
+            $user_id = Session::get("user");
+            $user = db("user")->where("id",$user_id)->field("phone_num,sex,real_name")->select();
             $roles = db("role")->where("status","1")->field("id,name")->select();
             if($roles){
-                return ajax_success("获取成功",$roles);
+                return ajax_success("获取成功",array("user"=>$user,"roles"=>$roles));
             }else{
                 return ajax_error("获取失败");
             }
-
         }
 
         return view("store_league");
-
     }
 
 
