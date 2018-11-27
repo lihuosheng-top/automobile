@@ -35,4 +35,17 @@ class Store extends Controller{
 
 
 
+
+    /**
+     * 身份验证
+     * 陈绪
+     */
+    public function verify(){
+
+        return view("store_verify");
+
+    }
+
+
+
 }
