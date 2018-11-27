@@ -22,6 +22,7 @@ class Findpwd extends Controller{
      **************************************
      */
     public function find_password_by_phone(Request $request){
+
         if($request->isPost()){
             $mobile =trim($_POST['phone_number']);
             $code =trim($_POST['code']);
