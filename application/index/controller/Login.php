@@ -49,7 +49,7 @@ class Login extends Controller{
             }
             $datas=[
                 "phone_num" => $user_mobile,
-                "password" => md5($password),
+//                "password" => $passwords,
             ];
             $res =Db::name('user')->where($datas)->find();
             if(!$res && $res == null){

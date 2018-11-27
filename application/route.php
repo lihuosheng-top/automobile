@@ -107,6 +107,7 @@ Route::group("",[
 
     /*TODO:配件商订单状态开始*/
     "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单
+    "ios_api_order_parts_all"=>"index/OrderParts/ios_api_order_parts_all",//全部订单接口（ajax）
     "order_parts_wait_pay"=>"index/OrderParts/order_parts_wait_pay",//待付款
     "order_wait_deliver"=>"index/OrderParts/order_wait_deliver", //待收货
     "order_wait_evaluate"=>"index/OrderParts/order_wait_evaluate", //待评价
