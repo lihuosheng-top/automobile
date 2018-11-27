@@ -81,4 +81,8 @@ class Login extends Controller{
           return ajax_success('退出成功',['status'=>1]);
        }
     }
+
+
+
+
 }
