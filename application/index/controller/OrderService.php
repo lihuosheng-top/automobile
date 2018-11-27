@@ -12,6 +12,7 @@ use  think\Db;
 use think\Request;
 
 class OrderService extends Controller{
+
     /**
      * 服务订单首页
      */
@@ -20,6 +21,62 @@ class OrderService extends Controller{
     {
         return view("shop_order");
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单我的所有订单
+     **************************************
+     * @return \think\response\View
+     */
+    public function order_service_all(){
+        return view('order_service_all');
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单我的待付款
+     **************************************
+     * @return \think\response\View
+     */
+    public function order_service_wait_pay(){
+        return view('order_service_wait_pay');
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单我的待收货
+     **************************************
+     * @return \think\response\View
+     */
+    public function order_service_wait_deliver(){
+        return view('order_service_wait_deliver');
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单我的待评价
+     **************************************
+     * @return \think\response\View
+     */
+    public function order_service_wait_evaluate(){
+        return view('order_service_wait_evaluate');
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单我的退货
+     **************************************
+     * @return \think\response\View
+     */
+    public function order_service_return_goods(){
+        return view('order_service_return_goods');
+    }
+
+
+
+
+
     /**
      **************李火生*******************
      * ios提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
@@ -144,5 +201,10 @@ class OrderService extends Controller{
             }
         }
     }
+
+
+
+
+
 
 }

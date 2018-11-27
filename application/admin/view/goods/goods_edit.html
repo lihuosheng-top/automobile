@@ -252,7 +252,11 @@
 				{if !empty($goods_list)}
 				<select name="goods_type_id" id="goods_type_id">
 					{volist name="goods_list" id="goods"}
+					{if $value.goods_type_id == $goods.id}
+					<option value="{$goods.id}" selected="">{$goods.name}</option>
+					{else}
 					<option value="{$goods.id}">{$goods.name}</option>
+					{/if}
 					{/volist}
 				</select>
 				{else}
@@ -271,7 +275,11 @@
 				{if !empty($goods_brand)}
 				<select name="goods_brand_id">
 					{volist name="goods_brand" id="v"}
+					{if $value.goods_brand_id == $v.id}
+					<option value="{$v.id}" selected>{$v.name}</option>
+					{else}
 					<option value="{$v.id}">{$v.name}</option>
+					{/if}
 					{/volist}
 				</select>
 				{else}
@@ -593,9 +601,13 @@
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label"><span>*</span>是否上架：</label>
 			<div class="layui-input-block" id="goods_sign">
-				<input type="radio" name="goods_status" value="1" title="上架" checked="" class="hot">
-				<input type="radio" name="goods_status" value="2" title="不上架" class="">
-
+				{if $value.goods_status == 1}
+				<input type="radio" name="goods_status" value="{$value.goods_status}" title="上架" checked="" class="hot">
+				<input type="radio" name="goods_status" value="0" title="不上架" class="">
+				{else}
+				<input type="radio" name="goods_status" value="1" title="上架" class="hot">
+				<input type="radio" name="goods_status" value="{$value.goods_status}" title="不上架"  checked="">
+				{/if}
 			</div>
 		</div>
 		<div class="basic-information title"> 配送与安装服务
@@ -603,10 +615,12 @@
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label">配送与安装服务：</label>
 			<div class="layui-input-block" id="">
-				<input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" checked="" class="hot">
+
+                <input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" checked="" class="hot">
 				<input type="checkbox" name="goods_delivery[]" value="上门安装" title="上门安装" class="">
 				<input type="checkbox" name="goods_delivery[]" value="送货上门" title="无需安装" class="">
 				<input type="checkbox" name="goods_delivery[]" value="送货上门" title="到店安装" class="">
+
 			</div>
 		</div>
 
