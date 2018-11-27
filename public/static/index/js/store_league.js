@@ -9,7 +9,7 @@ var app = new Vue({
         businessPopFlag: false,
     },
     methods: {
-        uploadImg: function(e){
+        uploadImg(e){
             var reader = new FileReader();
             let $target = e.target || e.srcElement;
             let img = $target.files[0];
@@ -66,8 +66,11 @@ var app = new Vue({
         showBusinessPop(){
             return this.businessPopFlag = true;
         },
-        hideBusinessPop: function(){
+        hideBusinessPop(){
             this.businessPopFlag = false;
+        },
+        nextButton(){
+            location.href = 'store_verify';
         }
     }
 })

@@ -292,12 +292,12 @@
     <!-- 显示忘记密码 -->
     <script>
         $('.forget-psw').click(function(){
-            $('.wrapper').css('display', 'none');
-            $('.find-password').css('display', 'block');
+            $('.wrapper').hide()
+            $('.find-password').show();
         })
         $('.find-back').click(function(){
-            $('.wrapper').css('display', 'block');
-            $('.find-password').css('display', 'none');
+            $('.wrapper').show();
+            $('.find-password').hide();
         })
         $('.message-code').blur(function(){
             if($(this).val() !== ''){
@@ -369,6 +369,10 @@
                                 content: data.info,
                                 time: 2
                             })
+                            setTimeout(function(){
+                                $('.find-password').hide();
+                                $('.wrapper').show();
+                            }, 2200)
                         }
                     },
                     error: function(){
