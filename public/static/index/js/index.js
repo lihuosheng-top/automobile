@@ -185,7 +185,7 @@ $.ajax({
         $('.hot-brand-ul li').add('.sort_list').click(function(){
             $('.select-car').hide();
             $('.car-series').show();
-            userChoseCarName = $(this)[0].innerText;
+            userChoseCarName = $(this)[0].innerText.trim();
             $('.car-brand').html(userChoseCarName);
             // 清空容器
             $('.series-list').html('');
@@ -193,7 +193,7 @@ $.ajax({
             // 遍历品牌 筛选车系
             var vehicleArr = [];
             $.each(res.data.series, function(idx, val){
-                if(userChoseCarName.trim() == val.brand){
+                if(userChoseCarName == val.brand){
                     // 筛选对应品牌车系 插入数组
                     vehicleArr.push(val.series);
                     // vehicleStr += '<div class="series-txt">'+val.series+'</div>';
@@ -213,14 +213,14 @@ $.ajax({
             $('.series-txt').click(function(){
                 $('.car-series').hide();
                 $('.motorcycle-type').show();
-                userChoseCarType = $(this)[0].innerText;
+                userChoseCarType = $(this)[0].innerText.trim();
                 // 清空容器
                 $('.type-list').html('');
                 var motorcycleTypeStr = '';
                 // 遍历车系 筛选排量
                 var motorcycleArr = [];
                 $.each(res.data.series, function(idx, val){
-                    if(userChoseCarType.trim() == val.series){
+                    if(userChoseCarType == val.series){
                         motorcycleArr.push(val.displacement);
                     }
                 })
@@ -234,18 +234,18 @@ $.ajax({
 
                 // 点击车型 选择年产 start
                 // 用户选择的排量
-                var varuserChoseMoto;
+                var userChoseMoto;
                 $('.type-txt').click(function(){
                     $('.motorcycle-type').hide();
                     $('.car-year').show();
-                    varuserChoseMoto = $(this)[0].innerText;
+                    userChoseMoto = $(this)[0].innerText.trim();
                     // 清空容器
                     $('.year-list').html('');
                     var yearStr = '';
                     // 遍历排量 筛选年产
                     var yearArr = [];
                     $.each(res.data.series, function(idx, val){
-                        if(varuserChoseMoto.trim() == val.displacement){
+                        if(userChoseMoto == val.displacement){
                             yearArr.push(val.year);
                         }
                     })
@@ -256,6 +256,51 @@ $.ajax({
                         yearStr += '<div class="year-txt">'+uniqYear[i]+'</div>'
                     }
                     $('.year-list').append(yearStr);
+
+                    // 添加我的爱车 传参 start
+                    // 用户选择的年产
+                    var userChoseYear;
+                    $('.year-txt').click(function(){
+                        userChoseYear = $(this)[0].innerText.trim();
+                        $.ajax({
+                            url: 'love_save',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'brand': userChoseCarName,
+                                'series': userChoseCarType,
+                                'displacement': userChoseMoto,
+                                'production_time': userChoseYear
+                            },
+                            success: function(data){
+                                console.log(data);
+                                if(data.status == 1){
+                                    layer.open({
+                                        style: 'bottom:100px;',
+                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                        skin: 'msg',
+                                        content: data.info,
+                                        time: 1.2
+                                    })
+                                    setTimeout(function(){
+                                        location.href = 'love_list';
+                                    }, 2000);
+                                }else{
+                                    layer.open({
+                                        style: 'bottom:100px;',
+                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                        skin: 'msg',
+                                        content: data.info,
+                                        time: 1.2
+                                    })
+                                }
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
+                        })
+                    })
+                    // 添加我的爱车 传参 end
                 })
                 $('.year-back').click(function(){
                     $('.motorcycle-type').show();
