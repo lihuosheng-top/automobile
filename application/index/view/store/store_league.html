@@ -55,7 +55,7 @@
                     <p class="list-title-p">营业时间</p>
                     <input type="text" value="00:00 -- 24:00" readonly class="text-input">
                 </li>
-                <li class="list-li business-li">
+                <li class="list-li business-li" @click="showBusinessPop">
                     <p class="list-title-p">经营范围</p>
                     <a href="javascript:;" class="spr icon-more"></a>
                 </li>
@@ -81,9 +81,14 @@
                     <p class="list-title-p">绑定微信</p>
                     <a href="javascript:;" class="spr icon-more"></a>
                 </li>
-                <li class="list-li" @click="showBusinessPop">
+                <li class="list-li">
                     <p class="list-title-p">我要加盟</p>
-                    <a href="javascript:;" class="spr icon-more"></a>
+                    <div class="league-box">
+                        <input type="radio" name="league" id="accessory-dealer" checked class="radio-input">
+                        <label for="accessory-dealer" class="accessory-dealer-label">配件商</label>
+                        <input type="radio" name="league" id="facilitator" class="radio-input">
+                        <label for="facilitator" class="facilitator-label">服务商</label>
+                    </div>
                 </li>
             </ul>
             <button class="next-button">下一步</button>

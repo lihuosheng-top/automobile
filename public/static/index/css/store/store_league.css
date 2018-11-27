@@ -63,20 +63,23 @@ html,body{
     outline: none;
     font-size: .3rem;
 }
-.sex-box{
+.sex-box,
+.league-box{
     flex: 1;
     height: .85rem;
     line-height: .85rem;
     padding-left: .3rem;
     box-sizing: border-box;
 }
-.sex-box .radio-input{
+.sex-box .radio-input,
+.league-box .radio-input{
     vertical-align: middle;
 }
 .sex-box .male-label{
     margin-right: .5rem;
 }
-.sex-box label{
+.sex-box label,
+.league-box label{
     font-size: .3rem;
 }
 .sex-li,
@@ -213,4 +216,7 @@ html,body{
     float: right;
     background-color: #3169f6;
     color: #fff;
+}
+.league-box .accessory-dealer-label{
+    margin-right: .5rem;
 }
