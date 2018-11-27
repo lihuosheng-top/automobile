@@ -26,7 +26,8 @@ Route::group("",[
     "love_car"=>"index/LoveCar/love_car",
     "love_list"=>"index/LoveCar/love_list",                         //我的爱车列表
     "love_save"=>"index/LoveCar/love_save",                         //我的爱车入库
-
+    "love_status"=>"index/LoveCar/love_status",                         //我的爱车状态修改
+    "love_del"=>"index/LoveCar/love_del",                         //我的爱车列表删除
 
 
     /*服务商品*/
@@ -41,7 +42,7 @@ Route::group("",[
 
     /*TODO:服务商订单开始*/
     "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
-    "ios_api_order_button"=>"index/OrderService/ios_api_order_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
+    "ios_api_order_service_button"=>"index/OrderService/ios_api_order_service_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
     'index_aliPay'=>"index/Apppay/index_aliPay",
@@ -102,20 +103,28 @@ Route::group("",[
 
 
     /*TODO:配件商订单状态开始*/
-    "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单
+    "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单页面
     "ios_api_order_parts_all"=>"index/OrderParts/ios_api_order_parts_all",//全部订单接口（ajax）
-    "order_parts_wait_pay"=>"index/OrderParts/order_parts_wait_pay",//待付款
-    "order_wait_deliver"=>"index/OrderParts/order_wait_deliver", //待收货
-    "order_wait_evaluate"=>"index/OrderParts/order_wait_evaluate", //待评价
-    "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货
+    "order_parts_wait_pay"=>"index/OrderParts/order_parts_wait_pay",//待付款页面
+    "ios_api_order_parts_wait_pay"=>"index/OrderParts/ios_api_order_parts_wait_pay",//待付款接口(ajax)
+    "order_wait_deliver"=>"index/OrderParts/order_wait_deliver", //待收货页面
+    "ios_api_order_wait_deliver"=>"index/OrderParts/ios_api_order_wait_deliver", //待收货接口（ajax）
+    "order_wait_evaluate"=>"index/OrderParts/order_wait_evaluate", //待评价页面
+    "ios_api_order_wait_evaluate"=>"index/OrderParts/ios_api_order_wait_evaluate", //待评价接口（ajax）
+    "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货页面
+
     /*TODO:配件商订单状态结束*/
 
     /*TODO:服务商订单状态开始*/
-    "order_service_all"=>"index/OrderService/order_service_all",//全部订单
-    "order_service_wait_pay"=>"index/OrderService/order_service_wait_pay",//待付款
-    "order_service_wait_deliver"=>"index/OrderService/order_service_wait_deliver", //待收货
-    "order_service_wait_evaluate"=>"index/OrderService/order_service_wait_evaluate", //待评价
-    "order_service_return_goods"=>"index/OrderService/order_service_return_goods",//退货
+    "order_service_all"=>"index/OrderService/order_service_all",//全部订单页面
+    "ios_api_order_service_all"=>"index/OrderService/ios_api_order_service_all",//全部订单接口（ajax）
+    "order_service_wait_pay"=>"index/OrderService/order_service_wait_pay",//待付款页面
+    "ios_api_order_service_wait_pay"=>"index/OrderService/ios_api_order_service_wait_pay",//待付款接口（ajax）
+    "order_service_wait_deliver"=>"index/OrderService/order_service_wait_deliver", //待服务页面
+    "ios_api_order_service_wait_deliver"=>"index/OrderService/ios_api_order_service_wait_deliver", //待服务接口（ajax）
+    "order_service_wait_evaluate"=>"index/OrderService/order_service_wait_evaluate", //待评价页面
+    "ios_api_order_service_wait_evaluate"=>"index/OrderService/ios_api_order_service_wait_evaluate", //待评价接口（ajax）
+    "order_service_return_goods"=>"index/OrderService/order_service_return_goods",//退货页面
     /*TODO:服务商订单状态结束*/
 
 

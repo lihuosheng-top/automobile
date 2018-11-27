@@ -22,6 +22,12 @@ class OrderService extends Controller{
         return view("shop_order");
     }
 
+
+
+
+
+
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -32,6 +38,33 @@ class OrderService extends Controller{
     public function order_service_all(){
         return view('order_service_all');
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单我的所有订单接口
+     **************************************
+     * @param Request $request
+     */
+    public function ios_api_order_service_all(Request $request){
+        if($request->isPost()){
+            $datas =session('member');
+            if(!empty($datas)){
+                $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
+                if(!empty($datas)){
+                    $data =Db::name('order_service')->where('user_id',$member_id['id'])->order('create_time','desc')->select();
+                    if(!empty($data)){
+                        return ajax_success('全部信息返回成功',$data);
+                    }else{
+                        return ajax_error('没有订单',['status'=>0]);
+                    }
+                }
+            }else{
+                return ajax_error('请登录',['status'=>0]);
+            }
+        }
+    }
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -42,15 +75,76 @@ class OrderService extends Controller{
     public function order_service_wait_pay(){
         return view('order_service_wait_pay');
     }
+
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:服务商订单我的待收货
+     * Notes:服务商订单我的待付款接口
+     **************************************
+     * @param Request $request
+     */
+    public function ios_api_order_service_wait_pay(Request $request){
+        if($request->isPost()){
+            $datas =session('member');
+            if(!empty($datas)){
+                $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
+                if(!empty($datas)){
+                    $data =Db::name('order_service')
+                        ->where('user_id',$member_id['id'])
+                        ->where('status',1)
+                        ->order('create_time','desc')
+                        ->select();
+                    if(!empty($data)){
+                        return ajax_success('全部信息返回成功',$data);
+                    }else{
+                        return ajax_error('没有订单',['status'=>0]);
+                    }
+                }
+            }else{
+                return ajax_error('请登录',['status'=>0]);
+            }
+        }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单我的待服务
      **************************************
      * @return \think\response\View
      */
     public function order_service_wait_deliver(){
         return view('order_service_wait_deliver');
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单我的待服务接口
+     **************************************
+     * @param Request $request
+     */
+    public function ios_api_order_service_wait_deliver(Request $request){
+        if($request->isPost()){
+            $datas =session('member');
+            if(!empty($datas)){
+                $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
+                if(!empty($datas)){
+                    $condition ="`status` = '2' or `status` = '3'";
+                    $data =Db::name('order_service')
+                        ->where('user_id',$member_id['id'])
+                        ->where($condition)
+                        ->order('create_time','desc')
+                        ->select();
+                    if(!empty($data)){
+                        return ajax_success('全部信息返回成功',$data);
+                    }else{
+                        return ajax_error('没有订单',['status'=>0]);
+                    }
+                }
+            }else{
+                return ajax_error('请登录',['status'=>0]);
+            }
+        }
     }
     /**
      **************李火生*******************
@@ -62,6 +156,38 @@ class OrderService extends Controller{
     public function order_service_wait_evaluate(){
         return view('order_service_wait_evaluate');
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单我的待评价接口
+     **************************************
+     * @param Request $request
+     */
+    public function ios_api_order_service_wait_evaluate(Request $request){
+        if($request->isPost()){
+            $datas =session('member');
+            if(!empty($datas)){
+                $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
+                if(!empty($datas)){
+                    $condition ="`status` = '4' or `status` = '5'";
+                    $data =Db::name('order_service')
+                        ->where('user_id',$member_id['id'])
+                        ->where($condition)
+                        ->order('create_time','desc')
+                        ->select();
+                    if(!empty($data)){
+                        return ajax_success('全部信息返回成功',$data);
+                    }else{
+                        return ajax_error('没有订单',['status'=>0]);
+                    }
+                }
+            }else{
+                return ajax_error('请登录',['status'=>0]);
+            }
+        }
+    }
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -73,10 +199,6 @@ class OrderService extends Controller{
         return view('order_service_return_goods');
     }
 
-
-
-
-
     /**
      **************李火生*******************
      * ios提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
@@ -85,14 +207,12 @@ class OrderService extends Controller{
      * service_money                //服务金额
      **************************************
      */
-    public function  ios_api_order_button(Request $request){
+    public function  ios_api_order_service_button(Request $request){
         if ($request->isPost()) {
             $data = $_POST;
             $member_data = session('member');
-//            $data =1;
             $member = Db::name('user')->field('id,harvester,harvester_phone_num,harvester_real_address')->where('phone_num', $member_data['phone_num'])->find();
             $commodity_id = $_POST['goods_id'];
-//            $commodity_id = 2;
             if (!empty($commodity_id)) {
                 $goods_data = Db::name('serve_goods')->where('id', $commodity_id)->find();
                 $create_time = time();
@@ -112,7 +232,6 @@ class OrderService extends Controller{
                     ];
                     $res = Db::name('order_service')->insertGetId($datas);
                     if ($res) {
-                        session('order_id', $res);
                         return ajax_success('下单成功', $datas['service_order_number']);
                     }
                 }
