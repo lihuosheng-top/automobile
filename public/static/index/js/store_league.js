@@ -5,7 +5,8 @@ var app = new Vue({
         imageUrl: 'static/index/image/icon8.png',
         imageAccept: {
             accept: 'image/jpeg, image/jpg, image/png'
-        }
+        },
+        businessPopFlag: false,
     },
     methods: {
         uploadImg: function(e){
@@ -61,6 +62,12 @@ var app = new Vue({
             //         time: 1
             //     })
             // })   
+        },
+        showBusinessPop(){
+            return this.businessPopFlag = true;
+        },
+        hideBusinessPop: function(){
+            this.businessPopFlag = false;
         }
     }
 })
@@ -70,7 +77,7 @@ var app = new Vue({
 var area = new LArea();
 area.init({
     'trigger': '#area-li',//触发选择控件的文本框，同时选择完毕后name属性输出到该位置
-    'valueTo': '#value2',//选择完毕后id属性输出到该位置
+    'valueTo': '#value1',//选择完毕后id属性输出到该位置
     'keys': { //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
         id: 'id',
         name: 'name'
