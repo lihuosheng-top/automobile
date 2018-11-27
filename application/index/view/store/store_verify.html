@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/store/store_verify.css">
+    <title>身份验证</title>
+</head>
+<body>
+    <div v-cloak class="wrapper" id="app">
+        <header class="header">
+            <a href="store_league" class="spr icon-back"></a>
+            <h3 class="header-title">身份验证</h3>
+        </header>
+        <div class="verify-box">
+            <ul class="verify-ul">
+                <li class="verfy-li">
+                    <p class="verify-title-p">验证身份证</p>
+                    <a href="javascript:;" class="spr icon-more"></a>
+                </li>
+                <li class="verfy-li">
+                    <p class="verify-title-p">验证营业执照</p>
+                    <a href="javascript:;" class="spr icon-more"></a>
+                </li>
+                <li class="verfy-li">
+                    <p class="verify-title-p">验证实体店面</p>
+                    <a href="javascript:;" class="spr icon-more"></a>
+                </li>
+                <li class="verfy-li">
+                    <p class="verify-title-p">验证真实地址</p>
+                    <a href="javascript:;" class="spr icon-more"></a>
+                </li>
+            </ul>
+            <button class="submit-button">提交申请</button>
+        </div>
+        <!-- 验证身份证弹窗 -->
+        <div class="id-card-pop">
+            <header class="id-card-header">
+                <a href="javascript:;" class="spr icon-back"></a>
+                <h3 class="header-title">身份验证</h3>
+            </header>
+        </div>
+    </div>
+    <script src="__STATIC__/index/js/plugin/vue.js"></script>
+    
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/store_verify.js"></script>
+</body>
+</html>

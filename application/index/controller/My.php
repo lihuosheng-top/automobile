@@ -7,15 +7,23 @@ use think\Request;
 
 class My extends Controller
 {
+
+
     public function My_index()
     {
         return view("my_index");
     }
+
+
+
     // 登录
     public function Login()
     {
         return view("login");
     }
+
+
+
 
     // 设置
     public function Setting()
@@ -51,4 +59,31 @@ class My extends Controller
             }
         }
     }
+
+
+
+
+    /**
+     * 我的消费
+     * 陈绪
+     */
+    public function consume(){
+
+        return view("my_consume");
+
+    }
+
+
+
+
+    /**
+     * 个人信息
+     * 陈绪
+     */
+    public function message(){
+
+        return view("my_message");
+
+    }
+
 }

@@ -118,10 +118,23 @@
 	</div>
 	<form class="layui-form" action="">
 	
-		<div class="layui-form-item">
-			<label class="layui-form-label"> <span style="color: red;">*</span>商品项目名称：</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+		<div class="layui-form-item" style="width: 600px !important;">
+			<label class="layui-form-label">店铺所在地：</label>
+			<div class="form-inline">
+				<div data-toggle="distpicker">
+					<div class="form-group">
+						<label class="sr-only" for="province3">Province</label>
+						<select class="form-control" id="province3" data-province="湖南省"  disabled="disabled"></select>
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="city3">City</label>
+						<select class="form-control" id="city3" data-city="长沙市" disabled="disabled"></select>
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="district3">District</label>
+						<select class="form-control" id="district3" data-district="芙蓉区" disabled="disabled"></select>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="layui-form-item">

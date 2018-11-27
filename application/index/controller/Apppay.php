@@ -46,7 +46,6 @@ class Apppay extends Controller
         }
     }
 
-
     public function index_aliPay(Request $request)
     {
         $config = array (
@@ -102,7 +101,6 @@ class Apppay extends Controller
             return ;
         }
     }
-
 
     /**
      * [回调修改数据]

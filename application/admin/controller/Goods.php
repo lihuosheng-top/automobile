@@ -95,7 +95,7 @@ class Goods extends Controller{
         $year = db("year")->select();
         if($request->isPost()){
             $car_series = db("car_series")->distinct(true)->field("brand")->select();
-            $car_brand = db("car_series")->field("series,brand")->select();
+            $car_brand = db("car_series")->field("series,brand,year,displacement")->select();
             return ajax_success("获取成功",array("car_series"=>$car_series,"car_brand"=>$car_brand));
         }
         return view("goods_add",["year"=>$year,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
@@ -169,6 +169,8 @@ class Goods extends Controller{
             $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
             $goods_standard_value = explode(",",$value["goods_standard_value"]);
             $goods_standard_value = array_chunk($goods_standard_value,8);
+            $goods_delivery = explode(",",$value["goods_delivery"]);
+            $goods[$key]["goods_delivery"] = $goods_delivery;
             $goods[$key]["goods_standard_value"] = $goods_standard_value;
             $goods[$key]["goods_images"] = db("goods_images")->where("goods_id",$value["id"])->select();
 
