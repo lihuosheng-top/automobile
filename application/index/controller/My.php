@@ -73,4 +73,17 @@ class My extends Controller
 
     }
 
+
+
+
+    /**
+     * 个人信息
+     * 陈绪
+     */
+    public function message(){
+
+        return view("my_message");
+
+    }
+
 }
