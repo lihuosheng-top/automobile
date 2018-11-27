@@ -180,6 +180,7 @@ $.ajax({
         // 添加车首字母匹配 end
 
         // 点击品牌 选择车系 start
+        // 用户选择的车名
         var userChoseCarName;
         $('.hot-brand-ul li').add('.sort_list').click(function(){
             $('.select-car').hide();
@@ -190,53 +191,107 @@ $.ajax({
             $('.series-list').html('');
             var vehicleStr = '';
             // 遍历品牌 筛选车系
-
+            var vehicleArr = [];
             $.each(res.data.series, function(idx, val){
                 if(userChoseCarName.trim() == val.brand){
-                    // console.log(val.series)
-                    vehicleStr += '<div class="series-txt">'+val.series+'</div>';
+                    // 筛选对应品牌车系 插入数组
+                    vehicleArr.push(val.series);
+                    // vehicleStr += '<div class="series-txt">'+val.series+'</div>';
                 }
             })
+            // 去重后车系
+            var uniqVehicle = unique(vehicleArr);
+            // 循环
+            for(var i = 0, l = uniqVehicle.length; i < l; i++){
+                vehicleStr += '<div class="series-txt">'+uniqVehicle[i]+'</div>';
+            }
             $('.series-list').append(vehicleStr);
 
-            // 点击车型 选择车型 start
-            // 用户选择的车型
-            // var userChoseCarType = [];
-            // $('.series-txt').click(function(){
-            //     $('.car-series').hide();
-            //     $('.motorcycle-type').show();
-            //     var motorcycleTypeStr = '';
-            //     $.each(res.data.series, function(idx, val){
-            //         if(userChoseCarName.trim() == val.brand){
-            //             userChoseCarType.push(val.vehicle_model);
-            //         }
-            //     })
-            //     console.log(userChoseCarType);
-            // })
-            // 点击车型 选择车型 end
+            // 点击车系 选择排量 start
+            // 用户选择的车系
+            var userChoseCarType;
+            $('.series-txt').click(function(){
+                $('.car-series').hide();
+                $('.motorcycle-type').show();
+                userChoseCarType = $(this)[0].innerText;
+                // 清空容器
+                $('.type-list').html('');
+                var motorcycleTypeStr = '';
+                // 遍历车系 筛选排量
+                var motorcycleArr = [];
+                $.each(res.data.series, function(idx, val){
+                    if(userChoseCarType.trim() == val.series){
+                        motorcycleArr.push(val.displacement);
+                    }
+                })
+                // 去重 排量
+                var uniqMotorcycle = unique(motorcycleArr);
+                // 循环
+                for(var i = 0, l = uniqMotorcycle.length; i < l; i++){
+                    motorcycleTypeStr += '<div class="type-txt">'+uniqMotorcycle[i]+'</div>'
+                }
+                $('.type-list').append(motorcycleTypeStr);
+
+                // 点击车型 选择年产 start
+                // 用户选择的排量
+                var varuserChoseMoto;
+                $('.type-txt').click(function(){
+                    $('.motorcycle-type').hide();
+                    $('.car-year').show();
+                    varuserChoseMoto = $(this)[0].innerText;
+                    // 清空容器
+                    $('.year-list').html('');
+                    var yearStr = '';
+                    // 遍历排量 筛选年产
+                    var yearArr = [];
+                    $.each(res.data.series, function(idx, val){
+                        if(varuserChoseMoto.trim() == val.displacement){
+                            yearArr.push(val.year);
+                        }
+                    })
+                    // 去重 年产
+                    var uniqYear = unique(yearArr);
+                    // 循环
+                    for(var i = 0, l = uniqYear.length; i < l; i++){
+                        yearStr += '<div class="year-txt">'+uniqYear[i]+'</div>'
+                    }
+                    $('.year-list').append(yearStr);
+                })
+                $('.year-back').click(function(){
+                    $('.motorcycle-type').show();
+                    $('.car-year').hide();
+                })
+                // 点击排量 选择年产 end
+
+            })
+            $('.type-back').click(function(){
+                $('.car-series').show();
+                $('.motorcycle-type').hide();
+            })
+            // 点击车系 选择排量 end
 
         })
         $('.series-back').click(function(){
             $('.select-car').show();
             $('.car-series').hide();
         })
-        // 点击品牌 选择车型 end
+        // 点击品牌 选择排量 end
     },
     error: function(){
         console.log('error');
     }
 })
 // 去重
-// function unique(arr){
-//     arr.sort(); 
-//     var result = [arr[0]];
-//     for(var i = 1; i < arr.length; i++){
-//         if(arr[i] !== result[result.length - 1]){
-//             result.push(arr[i]);
-//         }
-//     }
-//     return result;
-// }
+function unique(arr){
+    arr.sort(); 
+    var result = [arr[0]];
+    for(var i = 1; i < arr.length; i++){
+        if(arr[i] !== result[result.length - 1]){
+            result.push(arr[i]);
+        }
+    }
+    return result;
+}
 
 
 
