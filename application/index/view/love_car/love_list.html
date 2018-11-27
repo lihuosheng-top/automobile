@@ -122,49 +122,6 @@
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
-    <script>
-        let show = document.getElementById('show-input');
-		let words = document.getElementById('word-select');
-		show.onclick = function(e){
-            if(words.style.display == 'none'){
-                words.style.display = 'block';
-            }else{
-                words.style.display = 'none';
-            }
-		}
-		words.size = 5;
-		words.onchange = function(e){
-			var option = this.options[this.selectedIndex];
-			show.value = option.innerHTML;
-			words.style.display = 'none';
-		}
-    </script>
-
-    <!-- 车辆列表 -->
-    <script>
-        // 添加
-        $('.add-car-btn').click(function(){
-            $('.wrapper').hide();
-            $('.car-detail-pop').show();
-        })
-    </script>
-    <!-- 车辆信息 -->
-    <script>
-        // 返回
-        $('.detail-back').click(function(){
-            $('.wrapper').show();
-            $('.car-detail-pop').hide();
-        })
-        // 保存 
-        $('.save-btn').click(function(){
-            // layer.open({
-            //     style: 'bottom:100px;',
-            //     type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
-            //     skin: 'msg',
-            //     content: '号码格式不正确',
-            //     time: 2
-            // })
-        })
-    </script>
+    <script src="__STATIC__/index/js/love_list.js"></script>
 </body>
 </html>
