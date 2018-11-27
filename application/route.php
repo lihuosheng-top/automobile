@@ -64,21 +64,18 @@ Route::group("",[
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
 
 
-
-
     /*店铺*/
     "store_index"=>"index/Store/index",             //店铺首页
     "store_league"=>"index/Store/league",           //我要加盟
-
-
+    "store_verify"=>"index/Store/verify",           //身份验证
 
 
     /*判断是否登录*/
     "isLogin"=>"index/My/isLogin", //是否登录判断
-
     /*找回密码验证码*/
     'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
     'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
+    'update_password'=>"index/findpwd/update_password",//修改密码
 
 
 
@@ -106,6 +103,7 @@ Route::group("",[
 
     /*TODO:配件商订单状态开始*/
     "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单
+    "ios_api_order_parts_all"=>"index/OrderParts/ios_api_order_parts_all",//全部订单接口（ajax）
     "order_parts_wait_pay"=>"index/OrderParts/order_parts_wait_pay",//待付款
     "order_wait_deliver"=>"index/OrderParts/order_wait_deliver", //待收货
     "order_wait_evaluate"=>"index/OrderParts/order_wait_evaluate", //待评价
@@ -123,6 +121,7 @@ Route::group("",[
 
     // 我的
     "my_index"=>"index/My/my_index",
+    "my_message"=>"index/My/message",                //我的个人信息
 
 
 

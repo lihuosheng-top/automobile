@@ -1,9 +1,6 @@
 html,body{
     background-color: #f2f2f2;
 }
-[v-cloak]{
-    display: none;
-}
 .header{
     position: fixed;
     top: 0;
@@ -63,20 +60,23 @@ html,body{
     outline: none;
     font-size: .3rem;
 }
-.sex-box{
+.sex-box,
+.league-box{
     flex: 1;
     height: .85rem;
     line-height: .85rem;
     padding-left: .3rem;
     box-sizing: border-box;
 }
-.sex-box .radio-input{
+.sex-box .radio-input,
+.league-box .radio-input{
     vertical-align: middle;
 }
 .sex-box .male-label{
     margin-right: .5rem;
 }
-.sex-box label{
+.sex-box label,
+.league-box label{
     font-size: .3rem;
 }
 .sex-li,
@@ -122,4 +122,98 @@ html,body{
     margin: .5rem auto;
     border: 0;
     outline: 0;
+}
+.mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .3); 
+}
+.business-pop{
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 50vh;
+    background-color: #fff;
+    transition: all .3s ease-in;
+}
+.popEaseIn{
+    bottom: 0;
+}
+.business-header{
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+.business-header .business-title{
+    width: 100%;
+    height: .88rem;
+    text-align: center;
+    line-height: .88rem;
+    font-size: .36rem;
+    font-weight: normal;
+}
+.business-tips{
+    font-size: .2rem;
+    color: #999999;
+    width: 100%;
+    height: .8rem;
+    text-align: center;
+    line-height: .8rem;
+    margin-bottom: .5rem;
+}
+.business-range-box{
+    padding: 0 1rem;
+}
+.business-range-ul{
+    display: flex;
+    flex-wrap: wrap;
+}
+.business-range-ul .business-range-li{
+    flex-basis: 33%;
+    text-align: center;
+    margin-bottom: .5rem;
+}
+.business-range-ul .business-range-li .checkbox-input{
+    vertical-align: middle;
+}
+.business-range-ul .business-range-li label{
+    font-size: .22rem;
+    color: #333;
+}
+.business-btn-box{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: .88rem;
+    border-top: 1px solid #eee;
+}
+.business-btn-box .business-btn{
+    width: 50%;
+    height: .88rem;
+    border: 0;
+    padding: 0;
+    font-size: .3rem;
+}
+.business-btn-box .business-btn-cancel{
+    float: left;
+    background-color: #fff;
+    color: #333;
+}
+.business-btn-box .business-btn-confirm{
+    float: right;
+    background-color: #3169f6;
+    color: #fff;
+}
+.league-box .accessory-dealer-label{
+    margin-right: .5rem;
 }
