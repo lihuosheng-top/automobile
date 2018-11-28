@@ -34,8 +34,10 @@ class  PlatformAdvertisement extends  Controller{
 
 
 
-    public function platform_business_edit(){
-        return view('platform_business_edit');
+    public function platform_business_edit($id){
+        
+        $plat = db("platform")->where("id",$id)->select();
+        return view('platform_business_edit',['plat'=>$plat]);
     }
 
 
