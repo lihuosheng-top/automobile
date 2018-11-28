@@ -389,17 +389,17 @@
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_brand[]" id="city"  xm-select-show-count="1" xm-select="city" multiple="multiple">
+							<select name="goods_car_series" id="city"  xm-select-show-count="1" xm-select="city" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_cars_brand[]" id="displacement" xm-select-show-count="1" xm-select="displacement" multiple="multiple">
+							<select name="goods_car_displacement" id="displacement" xm-select-show-count="1" xm-select="displacement" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_carss_brand[]" id="production"  xm-select-show-count="1" xm-select="production" multiple="multiple">
+							<select name="goods_car_year" id="production"  xm-select-show-count="1" xm-select="production" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -446,39 +446,27 @@
 			<div class="layui-form-item special ">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-					<!--<div class="layui-form-item">
-                        <label class="layui-form-label">适用车型：</label>
-                        <div class="layui-input-inline">
-                            <select name="dedicated_vehicle">
-                                <option value="{$value.dedicated_vehicle}">{$value.dedicated_vehicle}</option>
-                            </select>
-                        </div>
-                        <div class="layui-input-inline">
-                            <select name="goods_car_brand">
-                                <option value="{$value.goods_car_brand}">{$value.goods_car_brand}</option>
-                            </select>
-                        </div>
-                    </div>-->
 					<div class="layui-form-item car">
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_vehicle" id="province" lay-filter="province">
-								<option value="">请选择</option>
+								<option value="{$value.dedicated_vehicle}">{$value.dedicated_vehicle}</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_brand[]" id="city"  xm-select-show-count="1" xm-select="city" multiple="multiple">
-								<option value="">请选择</option>
+							<select name="goods_car_series" id="city"  xm-select-show-count="1" xm-select="city" multiple="multiple">
+								<option value="{$value.goods_car_series}">{$value.goods_car_series}</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_cars_brand[]" id="displacement" xm-select-show-count="1" xm-select="displacement" multiple="multiple">
-								<option value="">请选择</option>
+							<select name="goods_car_displacement" id="displacement" xm-select-show-count="1" xm-select="displacement" multiple="multiple">
+
+								<option value="{$value.goods_car_displacement}">{$value.goods_car_displacement}</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_carss_brand[]" id="production"  xm-select-show-count="1" xm-select="production" multiple="multiple">
-								<option value="">请选择</option>
+							<select name="goods_car_year" id="production"  xm-select-show-count="1" xm-select="production" multiple="multiple">
+								<option value="{$value.goods_car_year}">{$value.goods_car_year}</option>
 							</select>
 						</div>
 					</div>
@@ -1114,50 +1102,7 @@ function quchong(arr){
 	</script>
 	
 
-	<!--<script type="text/javascript">
-//		车型循环
-		var times_id = new Array();
-		$.ajax({
-			type: "POST",
-			url: "{:url('admin/Goods/add')}",
-			data: {},
-			dataType: "json",
-			success: function(data) {
-				var datas = data.data
-				for(var i = 0; i < datas.car_series.length; i++) {
-					var time_id = new Array();
-					for(var j = 0; j < datas.car_brand.length; j++) {
-						if(datas.car_brand[j].brand == datas.car_series[i].brand) {
-							time_id.push({"series": datas.car_brand[j].series});
-						}
-						
-				}
-					
-					times_id[datas.car_series[i].brand]=time_id;
-				}
-            var city_obj=times_id;
-            for (var key in city_obj)
-            {
-                $("#province").append("<option value='"+key+"'>"+key+"</option>");
-            }
-            $("#province").change(function(){
-                var now_province=$(this).val();
-                $("#city").html('<option value="">请选择车型</option>');
-//              var i=0;
-                for(var k in city_obj[now_province])
-                {
-                    var now_city=city_obj[now_province][k].series;
-                    $("#city").append('<option value="'+now_city+'">'+now_city+'</option>');
-                }
-            });
-			
-			
-		},
-		error: function(data) {
-			console.log("错误");
-		}
-		});
-	</script>-->
+
 
 	{/block}
 
