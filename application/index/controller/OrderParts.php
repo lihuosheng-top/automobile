@@ -59,8 +59,18 @@ class OrderParts extends Controller{
                             $data_return[$key][] =Db::name('order_parts')->where('id',$value)->find();
                         }
                     }
-                    if(!empty($data_return)){
-                        return ajax_success('全部信息返回成功',$data_return);
+                    foreach ($data_return as $keys=>$values){
+//                        dump($values);
+                        foreach ($values as $ke=>$item){
+//                            $newArr =[];
+                           $newArr[$keys][$item['store_id']][] = $item;
+                        }
+                    }
+//                    dump($newArr);
+
+
+                    if(!empty($newArr)){
+                        return ajax_success('全部信息返回成功',$newArr);
                     }else{
                         return ajax_error('没有订单',['status'=>0]);
                     }
