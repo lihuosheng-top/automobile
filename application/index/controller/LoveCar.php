@@ -54,7 +54,7 @@ class LoveCar extends Controller{
                 }
             }
         }else{
-            $this->success("请登录",url("index/My/login"));
+            exit(json_encode(array("status"=>2,"info"=>"请登录"),JSON_UNESCAPED_UNICODE));
         }
     }
 
@@ -70,7 +70,7 @@ class LoveCar extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");
             $love = db("user_car")->where("user_id",$user_id)->select();
-            return view("获取成功",$love);
+            return ajax_success("获取成功",$love);
         }
         return view("love_list");
     }
@@ -115,7 +115,7 @@ class LoveCar extends Controller{
             $id = $request->only(["id"])["id"];
             $bool = db("user_car")->where("id",$id)->delete();
             if($bool){
-                return ajax_success("删除成功 ");
+                return ajax_success("删除成功");
             }else{
                 return ajax_error("删除失败");
             }

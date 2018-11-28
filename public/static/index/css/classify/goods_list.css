@@ -110,7 +110,7 @@ html{
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: wrap;
+    display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     font-size: .24rem;
@@ -134,4 +134,5 @@ html{
     width: .34rem;
     height: .34rem;
     background-position: -1rem -.5rem;
+    margin-top: .1rem;
 }

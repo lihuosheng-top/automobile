@@ -187,12 +187,13 @@ class Goods extends Controller{
         $goods_list = getSelectList("goods_type");
         $goods_brand = getSelectList("brand");
         $year = db("year")->select();
+        $car_series = db("car_series")->distinct(true)->field("brand")->select();
         if($request->isPost()){
             $car_series = db("car_series")->distinct(true)->field("brand")->select();
             $car_brand = db("car_series")->field("series,brand")->select();
             return ajax_success("获取成功",array("car_series"=>$car_series,"car_brand"=>$car_brand));
         }
-        return view("goods_edit",["year"=>$year,"goods_brand"=>$goods_brand,"goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
+        return view("goods_edit",["car_series"=>$car_series,"year"=>$year,"goods_brand"=>$goods_brand,"goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
 
@@ -636,8 +637,11 @@ class Goods extends Controller{
     }
 
 
-
-
+    /**
+     * 回调地址
+     * 陈绪
+     * @param Request $request
+     */
     public function pay_code(Request $request){
 
         if($request->isGet()){
@@ -652,6 +656,34 @@ class Goods extends Controller{
                 $this->error("上架失败",url("admin/Goods/index"));
             }
         }
+    }
+
+
+
+
+    /**
+     * 专用适用车型编辑显示
+     * 陈绪
+     */
+    public function edit_show(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $goods = db("goods")->where("id",$id)->field("dedicated_vehicle,goods_car_year,goods_car_displacement,goods_car_series")->select();
+            foreach ($goods as $key=>$value){
+
+                $goods[$key]["goods_car_year"] = explode(",",$value["goods_car_year"]);
+                $goods[$key]["goods_car_displacement"] = explode(",",$value["goods_car_displacement"]);
+                $goods[$key]["goods_car_series"] = explode(",",$value["goods_car_series"]);
+
+            }
+            if($goods){
+                return ajax_success("获取成功",$goods);
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
+
     }
 
 
