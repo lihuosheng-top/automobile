@@ -304,25 +304,6 @@ Route::group("admin",[
 
 
 
-    /*优惠券*/
-    "discount_index"=>"admin/Discount/index",
-    "discount_add"=>"admin/Discount/add",
-    "discount_save"=>"admin/Discount/save",
-    "discount_edit"=>"admin/Discount/edit",
-    "discount_updata"=>"admin/Discount/updata",
-    "discount_del"=>"admin/Discount/del",
-    "discount_batches"=>"admin/Discount/batches",
-
-
-    /*代理*/
-    "agency_index"=>"admin/Agency/index",
-    "agency_add"=>"admin/Agency/add",
-    "agency_save"=>"admin/Agency/save",
-    "agency_edit"=>"admin/Agency/edit",
-    "agency_updata"=>"admin/Agency/updata",
-    "agency_del"=>"admin/Agency/del",
-
-
 
     /*订单管理：TODO:配件商订单开始*/
     "order_index"=>"admin/Order/index", //配件商订单列表
@@ -401,39 +382,10 @@ Route::group("admin",[
     "admin_chat_push"=>"admin/Chat/admin_chat_push",
 
 
-    /*内容管理*/
-    "content_index"=>"admin/Content/index",
-    "content_add"=>"admin/Content/add",
-    "content_save"=>"admin/Content/save",
-    "content_edit"=>"admin/Content/edit",
-    "content_del"=>"admin/Content/del",
-    "content_updata"=>"admin/Content/updata",
-
-
-    /*常见问题*/
-    "issue_index"=>"admin/Issue/index",
-    "issue_add"=>"admin/Issue/add",
-    "issue_save"=>"admin/Issue/save",
-    "issue_edit"=>"admin/Issue/edit",
-    "issue_del"=>"admin/Issue/del",
-    "issue_updata"=>"admin/Issue/updata",
-    "issue_status"=>"admin/Issue/status",
-    "issue_putaway"=>"admin/Issue/putaway",
-
 
     /*客户中心*/
     "client_index"=>"admin/Client/index",
 
-
-
-    /*广告管理*/
-    "advertising_index"=>"admin/Advertising/index",
-    "advertising_add"=>"admin/Advertising/add",
-    "advertising_save"=>"admin/Advertising/save",
-    "advertising_del"=>"admin/Advertising/del",
-    "advertising_edit"=>"admin/Advertising/edit",
-    "advertising_updata"=>"admin/Advertising/updata",
-    "advertising_images"=>"admin/Advertising/images",
 
 
     /*设置*/

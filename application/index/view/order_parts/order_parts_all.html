@@ -26,7 +26,7 @@
         </div>
         <div class="shops-goods-wrap">
             <!-- 待付款 -->
-            <div class="single-shop-box" v-for="allData in allDatas">
+            <div class="single-shop-box">
                 <div class="shop-name-box">
                     <div class="name-txt-div">
                         <i class="spr icon-shop"></i>
@@ -35,7 +35,7 @@
                     <p class="status-txt-p">等待付款</p>
                 </div>
                 <div class="all-goods-box">
-                    <div class="single-goods-box" :class="{'single-goods-box-border': false}" v-for="singleGood in allData">
+                    <div class="single-goods-box single-goods-box-border">
                         <div class="shop-img-box">
                             <img src="__STATIC__/index/image/14.png">
                         </div>
@@ -57,14 +57,14 @@
                         <button class="del-order-btn" style="display:none;">删除订单</button>
                         <button class="check-logistics-btn" style="display:none;">查看物流</button>
                         <button class="conf-receipt-btn" style="display:none;">确认收货</button>
+                        <button class="evaluation-btn" style="display:none;">去评价</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
-    <script src="__STATIC__/index/js/plugin/vue.js"></script>
-    <script src="__STATIC__/index/js/plugin/vue.resource.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_all.js"></script>
 </html>
