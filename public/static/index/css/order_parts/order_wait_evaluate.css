@@ -16,6 +16,7 @@ html, body{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    z-index: 2;
 }
 .header .icon-back{
     position: absolute;

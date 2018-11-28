@@ -26,16 +26,16 @@
         </div>
         <div class="shops-goods-wrap">
             <!-- 待付款 -->
-            <div class="single-shop-box">
+            <div class="single-shop-box" v-for="allData in allDatas">
                 <div class="shop-name-box">
                     <div class="name-txt-div">
                         <i class="spr icon-shop"></i>
                         <span class="name-txt-span">北方轮胎旗舰店</span>
                     </div>
-                    <p class="status-txt-p">等待付款</p>
+                    <p class="status-txt-p" v-for="data in allData">{{data.status}}</p>
                 </div>
                 <div class="all-goods-box">
-                    <div class="single-goods-box single-goods-box-border">
+                    <div class="single-goods-box" :class="{'single-goods-box-border': false}" v-for="singleGood in allData">
                         <div class="shop-img-box">
                             <img src="__STATIC__/index/image/14.png">
                         </div>
@@ -63,8 +63,8 @@
         </div>
     </div>
 
-
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/plugin/vue.js"></script>
+    <script src="__STATIC__/index/js/plugin/vue.resource.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_all.js"></script>
 </html>
