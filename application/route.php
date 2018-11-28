@@ -268,10 +268,13 @@ Route::group("admin",[
 
 
     /*配件商广告*/
-    "accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising",
-    "accessories_business_add"=>"admin/Advertisement/accessories_business_add",
-    "accessories_business_edit"=>"admin/Advertisement/accessories_business_edit",
-    "accessories_business_del"=>"admin/Advertisement/del",
+    "accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising", //汽车配件商广告显示
+    "accessories_business_add"=>"admin/Advertisement/accessories_business_add",                 //汽车配件商广告添加
+    "accessories_business_edit"=>"admin/Advertisement/accessories_business_edit",               //汽车配件商广告编辑
+    "accessories_business_save"=>"admin/Advertisement/accessories_business_save",               //汽车配件商广告保存
+    "accessories_business_updata"=>"admin/Advertisement/accessories_business_updata",           //汽车配件商广告更新
+    "accessories_business_del"=>"admin/Advertisement/accessories_business_del",                 //汽车配件商广告删除
+    "accessories_business_search"=>"admin/Advertisement/accessories_business_search",           //汽车配件商广告模糊搜索
 
 
 
@@ -286,10 +289,11 @@ Route::group("admin",[
     /*平台广告*/
     "platform_business_index"=>"admin/platform_advertisement/platform_business_index",  //汽车平台广告显示
     "platform_business_add"=>"admin/platform_advertisement/platform_business_add",      //汽车平台广告添加
-    "platform_business_save"=>"admin/platform_advertisement/platform_business_save",      //汽车平台广告保存
-    "platform_business_edit"=>"admin/platform_advertisement/platform_business_edit",
-    "platform_business_del"=>"admin/platform_advertisement/del",
-
+    "platform_business_save"=>"admin/platform_advertisement/platform_business_save",    //汽车平台广告保存
+    "platform_business_edit"=>"admin/platform_advertisement/platform_business_edit",    //汽车平台广告编辑
+    "platform_business_updata"=>"admin/platform_advertisement/platform_business_updata",//汽车平台广告更新
+    "platform_business_del"=>"admin/platform_advertisement/platform_business_del",      //汽车平台广告删除  
+    "platform_business_search"=>"admin/platform_advertisement/platform_business_search",//汽车平台广告模糊搜索
 
 
 
