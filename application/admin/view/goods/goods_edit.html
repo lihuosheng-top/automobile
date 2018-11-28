@@ -1,4 +1,5 @@
 {extend name="layout"} {block name="css"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/admin/index/common/formSelects-v4.css" />
 <style type="text/css">
 	body {
 		background: #fff;
@@ -36,9 +37,9 @@
 		font-size: 9px;
 		border-radius: 6px;
 	}
-	.car .layui-unselect{
+	/*.car .layui-unselect{
 		display: none !important;
-	}
+	}*/
 	.car select{
 		    width: 100%;
             height: 38px;
@@ -133,12 +134,12 @@
 	.num-content {
 		overflow: hidden;
 	}
-	#city{
+	/*#city{
 		display: block;
 	}
 	#province{
 		display: block;
-	}
+	}*/
 	/* 数据库展现图片样式 */
 	
 	.img {
@@ -380,15 +381,25 @@
 			<div class="layui-form-item special noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-					<div class="layui-form-item car" >
+					<div class="layui-form-item car">
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
-							<select name="dedicated_vehicle" id="province">
+							<select name="dedicated_vehicle" id="province" lay-filter="province">
 								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_brand" id="city">
+							<select name="goods_car_series" id="city"  xm-select-show-count="1" xm-select="city" multiple="multiple">
+								<option value="">请选择</option>
+							</select>
+						</div>
+						<div class="layui-input-inline">
+							<select name="goods_car_displacement" id="displacement" xm-select-show-count="1" xm-select="displacement" multiple="multiple">
+								<option value="">请选择</option>
+							</select>
+						</div>
+						<div class="layui-input-inline">
+							<select name="goods_car_year" id="production"  xm-select-show-count="1" xm-select="production" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -435,29 +446,27 @@
 			<div class="layui-form-item special ">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-					<!--<div class="layui-form-item">
-                        <label class="layui-form-label">适用车型：</label>
-                        <div class="layui-input-inline">
-                            <select name="dedicated_vehicle">
-                                <option value="{$value.dedicated_vehicle}">{$value.dedicated_vehicle}</option>
-                            </select>
-                        </div>
-                        <div class="layui-input-inline">
-                            <select name="goods_car_brand">
-                                <option value="{$value.goods_car_brand}">{$value.goods_car_brand}</option>
-                            </select>
-                        </div>
-                    </div>-->
-					<div class="layui-form-item car" >
+					<div class="layui-form-item car">
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
-							<select name="dedicated_vehicle" id="province">
-								<option value="">请选择</option>
+							<select name="dedicated_vehicle" id="province" lay-filter="province">
+								<option value="{$value.dedicated_vehicle}">{$value.dedicated_vehicle}</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_brand" id="city">
-								<option value="">请选择</option>
+							<select name="goods_car_series" id="city"  xm-select-show-count="1" xm-select="city" multiple="multiple">
+								<option value="{$value.goods_car_series}">{$value.goods_car_series}</option>
+							</select>
+						</div>
+						<div class="layui-input-inline">
+							<select name="goods_car_displacement" id="displacement" xm-select-show-count="1" xm-select="displacement" multiple="multiple">
+
+								<option value="{$value.goods_car_displacement}">{$value.goods_car_displacement}</option>
+							</select>
+						</div>
+						<div class="layui-input-inline">
+							<select name="goods_car_year" id="production"  xm-select-show-count="1" xm-select="production" multiple="multiple">
+								<option value="{$value.goods_car_year}">{$value.goods_car_year}</option>
 							</select>
 						</div>
 					</div>
@@ -642,7 +651,7 @@
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
-
+<script src="__STATIC__/admin/index/common/formSelects-v4.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		var dhtml = "";
 		var i = 0;
@@ -702,7 +711,18 @@
 			' 				</div>                                                                                                    ' +
 			' 			</div>                                                                                                        ' +
 			'          </div>                                                                                                        ';
-
+function quchong(arr){
+			var b=[];
+			for(var k in arr) {
+				if(b.indexOf(arr[k].series)== -1){
+					 b.push(arr[k].series);
+               
+				}
+				
+			}
+			return b;
+		}
+		 var formSelects = layui.formSelects;
 		layui.config({
 			base: "js/"
 		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
@@ -732,6 +752,34 @@
 				}
 			});
 			form.render('select');
+			         form.on('select(province)', function(data) {
+							   var now_province = data.value;
+								$("#city").html('<option value="">请选择车系</option>');
+								$("#displacement").html('<option value="">请选择排量</option>');
+								$("#production").html('<option value="">请选择年产</option>');
+								formSelects.render();
+//								quchong(times_id[now_province])/;
+								var num=0;
+								var tim_id=quchong(times_id[now_province]);
+								var displacemen_id=quchong(displacements_id[now_province]);
+								var year_id=quchong(years_id[now_province]);
+								for(var k in tim_id) {
+									var now_city = tim_id[k];
+									$("#city").append('<option value="' + now_city + '">' + now_city + '</option>');
+								
+								}
+								for(var k in displacemen_id) {
+									var now_displacement = displacemen_id[k];
+									$("#displacement").append('<option value="' + now_displacement + '">' + now_displacement + '</option>');
+								}
+								for(var k in year_id) {
+									var now_production = year_id[k];
+									$("#production").append('<option value="' + now_production + '">' + now_production + '</option>');
+								}
+								formSelects.render();
+								
+							});
+		
 
 			// 点击添加页面
 			$(".add-sevice").click(function() {
@@ -949,7 +997,56 @@
 			// end商品规格变化
 		})
 	</script>
+<script type="text/javascript">
+		   var times_id = new Array();
+				var displacements_id = new Array();
+				var years_id = new Array();
+				$.ajax({
+					type: "POST",
+					url: "{:url('admin/Goods/add')}",
+					data: {},
+					dataType: "json",
+					success: function(data) {
+						console.log(data);
+						var datas = data.data
+						for(var i = 0; i < datas.car_series.length; i++) {
+							var series = new Array();
+							var displacement = new Array();
+							var year = new Array();
+							for(var j = 0; j < datas.car_brand.length; j++) {
+								if(datas.car_brand[j].brand == datas.car_series[i].brand) {
+									series.push({
+										"series": datas.car_brand[j].series
+									});
+									displacement.push({
+										"series": datas.car_brand[j].displacement
+									});
+									year.push({
+										"series": datas.car_brand[j].year
+									});
+								}
 
+							}
+							times_id[datas.car_series[i].brand] = series;
+							
+							displacements_id[datas.car_series[i].brand] = displacement;
+							years_id[datas.car_series[i].brand] = year;
+						}
+							
+						var city_obj = times_id;
+						for(var key in city_obj) {
+							$("#province").append("<option value='" + key + "'>" + key + "</option>");
+						}
+						
+						
+
+					},
+					error: function(data) {
+						console.log("错误");
+					}
+				});
+		
+	</script>
 	<script type="text/javascript">
 		setTimeout(insertHtml, 1000);
 
@@ -1005,50 +1102,7 @@
 	</script>
 	
 
-	<script type="text/javascript">
-//		车型循环
-		var times_id = new Array();
-		$.ajax({
-			type: "POST",
-			url: "{:url('admin/Goods/add')}",
-			data: {},
-			dataType: "json",
-			success: function(data) {
-				var datas = data.data
-				for(var i = 0; i < datas.car_series.length; i++) {
-					var time_id = new Array();
-					for(var j = 0; j < datas.car_brand.length; j++) {
-						if(datas.car_brand[j].brand == datas.car_series[i].brand) {
-							time_id.push({"series": datas.car_brand[j].series});
-						}
-						
-				}
-					
-					times_id[datas.car_series[i].brand]=time_id;
-				}
-            var city_obj=times_id;
-            for (var key in city_obj)
-            {
-                $("#province").append("<option value='"+key+"'>"+key+"</option>");
-            }
-            $("#province").change(function(){
-                var now_province=$(this).val();
-                $("#city").html('<option value="">请选择车型</option>');
-//              var i=0;
-                for(var k in city_obj[now_province])
-                {
-                    var now_city=city_obj[now_province][k].series;
-                    $("#city").append('<option value="'+now_city+'">'+now_city+'</option>');
-                }
-            });
-			
-			
-		},
-		error: function(data) {
-			console.log("错误");
-		}
-		});
-	</script>
+
 
 	{/block}
 
