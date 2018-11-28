@@ -284,8 +284,9 @@ Route::group("admin",[
 
 
     /*平台广告*/
-    "platform_business_index"=>"admin/platform_advertisement/platform_business_index",
-    "platform_business_add"=>"admin/platform_advertisement/platform_business_add",
+    "platform_business_index"=>"admin/platform_advertisement/platform_business_index",  //汽车平台广告显示
+    "platform_business_add"=>"admin/platform_advertisement/platform_business_add",      //汽车平台广告添加
+    "platform_business_save"=>"admin/platform_advertisement/platform_business_save",      //汽车平台广告保存
     "platform_business_edit"=>"admin/platform_advertisement/platform_business_edit",
     "platform_business_del"=>"admin/platform_advertisement/del",
 

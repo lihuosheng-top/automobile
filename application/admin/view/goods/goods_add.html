@@ -299,17 +299,17 @@
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_brand" id="city"  xm-select-max="3">
+							<select name="goods_car_brand[]" id="city"  xm-select-show-count="1" xm-select="city" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_brand" id="displacement" xm-select-max="3">
+							<select name="goods_cars_brand[]" id="displacement" xm-select-show-count="1" xm-select="example6_2" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_brand" id="production"  xm-select-max="3">
+							<select name="goods_carss_brand[]" id="production"  xm-select-show-count="1" xm-select="example6_2" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -536,18 +536,20 @@
 										"series": datas.car_brand[j].series
 									});
 									displacement.push({
-										"displacement": datas.car_brand[j].displacement
+										"series": datas.car_brand[j].displacement
 									});
 									year.push({
-										"year": datas.car_brand[j].year
+										"series": datas.car_brand[j].year
 									});
 								}
 
 							}
 							times_id[datas.car_series[i].brand] = series;
+							
 							displacements_id[datas.car_series[i].brand] = displacement;
 							years_id[datas.car_series[i].brand] = year;
 						}
+							
 						var city_obj = times_id;
 						for(var key in city_obj) {
 							$("#province").append("<option value='" + key + "'>" + key + "</option>");
@@ -564,6 +566,18 @@
 	</script>
 
 	<script type="text/javascript">
+		function quchong(arr){
+			var b=[];
+			for(var k in arr) {
+				if(b.indexOf(arr[k].series)== -1){
+					 b.push(arr[k].series);
+               
+				}
+				
+			}
+			return b;
+		}
+		 var formSelects = layui.formSelects;
 		layui.config({
 			base: "js/"
 		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
@@ -575,24 +589,29 @@
 			layedit.build('demo');
 	                form.on('select(province)', function(data) {
 							   var now_province = data.value;
-							   console.log($("#city"));
 								$("#city").html('<option value="">请选择车系</option>');
 								$("#displacement").html('<option value="">请选择排量</option>');
 								$("#production").html('<option value="">请选择年产</option>');
-								form.render();
-								for(var k in times_id[now_province]) {
-									var now_city = times_id[now_province][k].series;
+								formSelects.render();
+//								quchong(times_id[now_province])/;
+								var num=0;
+								var tim_id=quchong(times_id[now_province]);
+								var displacemen_id=quchong(displacements_id[now_province]);
+								var year_id=quchong(years_id[now_province]);
+								for(var k in tim_id) {
+									var now_city = tim_id[k];
 									$("#city").append('<option value="' + now_city + '">' + now_city + '</option>');
+								
 								}
-								for(var k in displacements_id[now_province]) {
-									var now_displacement = displacements_id[now_province][k].displacement;
+								for(var k in displacemen_id) {
+									var now_displacement = displacemen_id[k];
 									$("#displacement").append('<option value="' + now_displacement + '">' + now_displacement + '</option>');
 								}
-								for(var k in years_id[now_province]) {
-									var now_production = years_id[now_province][k].year;
+								for(var k in year_id) {
+									var now_production = year_id[k];
 									$("#production").append('<option value="' + now_production + '">' + now_production + '</option>');
 								}
-								form.render();
+								formSelects.render();
 								
 							});
 			// 点击添加页面
@@ -785,10 +804,10 @@
 		//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
 		var ue = UE.getEditor('editor');
 	</script>
-	
-	<script type="text/javascript">
-	</script>
-
+<!--<script type="text/javascript">
+    var formSelects = layui.formSelects;
+     formSelects.value('city', [2, 4], false); 
+</script>-->
 	{/block}
 
 </body>
