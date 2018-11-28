@@ -15,5 +15,21 @@ words.onchange = function(e){
     words.style.display = 'none';
 }
 
+$.ajax({
+    url: 'love_list',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+    },
+    error: function(){
+        console.log('error');
+    }
+    
+    
+})
 
+$('.car-info-top').click(function(){
+
+})
 
