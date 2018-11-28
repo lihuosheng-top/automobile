@@ -35,25 +35,27 @@ $.ajax({
             // 商品详情
             $('.detail-img-box').html(val.goods_text);
         })
+        
+        // swiper初始化
+        var mySwiper = new Swiper ('.swiper-container', {
+            direction: 'horizontal', // 垂直切换选项
+            loop: true, // 循环模式选项
+            autoplay: {
+                delay: 2000,
+                disableOnInteraction: false,//用户操作swiper后，不禁止autoplay
+            },
+            // 如果需要分页器
+            pagination: {
+                el: '.swiper-pagination',
+            },
+        }) 
     },
     error: function(){
         console.log('error');
     }
 })
 
-// swiper初始化
-var mySwiper = new Swiper ('.swiper-container', {
-    direction: 'horizontal', // 垂直切换选项
-    loop: true, // 循环模式选项
-    autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,//用户操作swiper后，不禁止autoplay
-    },
-    // 如果需要分页器
-    pagination: {
-        el: '.swiper-pagination',
-    },
-}) 
+
 
 
 
@@ -174,12 +176,14 @@ $('.detail-back').click(function(){
 // 选择服务
 $('.ser-type').click(function(){
     $('html').css('overflow','hidden');
-    $('.mask').add('.select-ser-pop').show();
+    $('.mask').show();
+    $('.select-ser-pop').addClass('select-ser-easeout');
 })
 // 关闭选择服务 弹窗
 $('.close-select-pop').click(function(){
     $('html').css('overflow','auto');
-    $('.mask').add('.select-ser-pop').hide();
+    $('.mask').hide();
+    $('.select-ser-pop').removeClass('select-ser-easeout');
 })
 
 // 购买数量

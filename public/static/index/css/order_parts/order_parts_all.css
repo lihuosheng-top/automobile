@@ -16,6 +16,7 @@ html, body{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    z-index: 2;
 }
 .header .icon-back{
     position: absolute;
@@ -49,6 +50,7 @@ html, body{
     color: #3c3d3f;
     background-color: #fff;
     height: .82rem;
+    outline: none;
 }
 .tabs .tab.tab-on{
     position: relative;
@@ -71,6 +73,7 @@ html, body{
     background-color: #fff;
     border-radius: .1rem;
     padding: .24rem .28rem;
+    margin-bottom: .3rem;
 }
 .shop-name-box{
     display: flex;
