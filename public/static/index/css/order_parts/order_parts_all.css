@@ -50,6 +50,7 @@ html, body{
     color: #3c3d3f;
     background-color: #fff;
     height: .82rem;
+    outline: none;
 }
 .tabs .tab.tab-on{
     position: relative;
