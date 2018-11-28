@@ -22,6 +22,12 @@ $.ajax({
     dataType: 'JSON',
     success: function(res){
         console.log(res);
+        // $.each(res.data, function(idx, val){
+        //     // console.log(val);
+        //     $.each(val, function(idx, val){
+        //         console.log(val)
+        //     })
+        // })
     },
     error: function(){
         console.log('error');
