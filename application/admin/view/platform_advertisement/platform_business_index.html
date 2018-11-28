@@ -55,24 +55,24 @@
 
     <div class="childrenBody">
         <blockquote class="layui-elem-quote news_search">
-            <form class="layui-form" action="">
+            <form class="layui-form" action="{:url('admin/platform_advertisement/platform_business_search')}">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">广告名称：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" name="key" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">广告位置</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" name="keys" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <a class="layui-btn search_btn">搜索</a>
+                        <button class="layui-btn search_btn" type="submit">搜索</button>
                     </div>
                 </div>
 
@@ -110,8 +110,8 @@
                         </td>
                         <td>{$value.forms}</td>
                         <td>{$value.location}</td>
-                        <td>{$value.start_time|date="Y-m-d H:i:s",###}</td>
-                        <td>{$value.end_time|date="Y-m-d H:i:s",###}</td>
+                        <td>{$value.start_time|date="Y-m-d",###}</td>
+                        <td>{$value.end_time|date="Y-m-d",###}</td>
                         <td class="td-status">
                             {if $value.status == 1}
                             <span class="label label-success radius">通过</span> {else}
@@ -119,8 +119,8 @@
                         </td>
 
                         <td>
-                            <a class="layui-btn layui-btn-mini edit" href="{:url('admin/platform_advertisement/platform_business_edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
-                            <a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+                            <a class="layui-btn layui-btn-mini edit" href="{:url('admin/platform_advertisement/platform_business_edit',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 编辑</a>
+                            <a href="{:url('admin/platform_advertisement/platform_business_del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 
                         </td>
                     </tr>
