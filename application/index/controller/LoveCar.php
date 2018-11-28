@@ -70,7 +70,7 @@ class LoveCar extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");
             $love = db("user_car")->where("user_id",$user_id)->select();
-            return view("获取成功",$love);
+            return ajax_success("获取成功",$love);
         }
         return view("love_list");
     }
