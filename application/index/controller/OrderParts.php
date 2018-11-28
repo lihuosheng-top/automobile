@@ -67,8 +67,6 @@ class OrderParts extends Controller{
                         }
                     }
 //                    dump($newArr);
-
-
                     if(!empty($newArr)){
                         return ajax_success('全部信息返回成功',$newArr);
                     }else{
@@ -357,30 +355,25 @@ class OrderParts extends Controller{
                 $create_time = time();
                 if (!empty($data)) {
                     $datas = [
-                        'goods_img' => $goods_data['goods_show_images'],
-                        'goods_name' => $data['goods_name'],
-                        'order_num' => $data['order_num'],
+                        'goods_image' => $goods_data['goods_show_images'],//图片
+                        'parts_goods_name' => $goods_data['goods_name'],//名字
+                        'order_quantity' => $data['order_quantity'],//订单数量
                         'user_id' => $member['id'],
                         'harvester' => $member['harvester'],
                         'harvest_phone_num' => $member['harvester_phone_num'],
-                        'harvest_address' => $position,
-                        'create_time' => $create_time,
-                        'pay_money' => $data['all_pay'],
+                        'harvest_address' => $member['harvester_real_address'],
+                        'order_create_time' => $create_time,
+                        'order_amount' => $data['order_amount'], //订单金额
                         'status' => 1,
                         'goods_id' => $commodity_id,
-                        'send_money' => $data['express_fee'],
-                        'order_information_number' => $create_time . $member['id'],//时间戳+用户id构成订单号
+                        'shop_id' => $data['shop_id'],
+                        'parts_order_number' => $create_time . $member['id'],//时间戳+用户id构成订单号
                     ];
                     $res = Db::name('order')->insertGetId($datas);
                     if ($res) {
-                        //TODO:
-//                        Session::delete('goods_id');
-                        session('order_id', $res);
-                        $discounts =  Db::name('discounts_user')->field('discounts_id')->where('user_id',$member['id'])->find();
-                        if(!empty($discounts)){
-                            $bools =Db::name('discounts')->where('id',$discounts['discounts_id'])->update(['status'=>2]);
-                        }
-                        return ajax_success('下单成功', $datas['order_information_number']);
+                        return ajax_success('下单成功', $datas['parts_order_number']);
+                    }else{
+                        return ajax_error('失败',['status'=>0]);
                     }
                 }
             }

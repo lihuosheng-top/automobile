@@ -51,7 +51,7 @@ Route::group("",[
 
     /*TODO:配件商订单开始*/
 //    "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
-    "ios_api_order_parts_button"=>"index/OrderService/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
+    "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
 //    "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
 //    "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
 //    'index_aliPay'=>"index/Apppay/index_aliPay",
