@@ -201,6 +201,36 @@ class OrderService extends Controller{
 
     /**
      **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单我的退货接口
+     **************************************
+     * @return \think\response\View
+     */
+    public function ios_api_order_service_return_goods(Request $request){
+        if($request->isPost()){
+            $datas =session('member');
+            if(!empty($datas)){
+                $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
+                if(!empty($datas)){
+                    $data =Db::name('order_service')
+                        ->where('user_id',$member_id['id'])
+                        ->where('status',11)
+                        ->order('create_time','desc')
+                        ->select();
+                    if(!empty($data)){
+                        return ajax_success('全部信息返回成功',$data);
+                    }else{
+                        return ajax_error('没有订单',['status'=>0]);
+                    }
+                }
+            }else{
+                return ajax_error('请登录',['status'=>0]);
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
      * ios提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     'goods_id' 商品id
      * 'service_order_quantitative' //订单数量
