@@ -40,9 +40,10 @@
 	/*.car .layui-unselect{
 		display: none !important;
 	}*/
-	.car select{
-		    width: 100%;
-            height: 38px;
+	
+	.car select {
+		width: 100%;
+		height: 38px;
 	}
 </style>
 <style type="text/css">
@@ -170,7 +171,7 @@
 		<div class="basic-information title"> 基本信息
 		</div>
 		<div class="hide futext">
-					{$value.goods_text}
+			{$value.goods_text}
 		</div>
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品名:</label>
@@ -248,17 +249,15 @@
 		</div>
 		<div class="layui-form-item" style="min-width: 62% !important;">
 			<label class="layui-form-label">商品分组：</label>
-			
+
 			<div class="layui-input-inline" style="margin-left: 30px;">
 				{if !empty($goods_list)}
 				<select name="goods_type_id" id="goods_type_id">
-					{volist name="goods_list" id="goods"}
-					{if $value.goods_type_id == $goods.id}
+					{volist name="goods_list" id="goods"} {if $value.goods_type_id == $goods.id}
 					<option value="{$goods.id}" selected="">{$goods.name}</option>
 					{else}
 					<option value="{$goods.id}">{$goods.name}</option>
-					{/if}
-					{/volist}
+					{/if} {/volist}
 				</select>
 				{else}
 				<select name="goods_type_id">
@@ -275,13 +274,11 @@
 			<div class="layui-input-inline" style="margin-left: 30px;">
 				{if !empty($goods_brand)}
 				<select name="goods_brand_id">
-					{volist name="goods_brand" id="v"}
-					{if $value.goods_brand_id == $v.id}
+					{volist name="goods_brand" id="v"} {if $value.goods_brand_id == $v.id}
 					<option value="{$v.id}" selected>{$v.name}</option>
 					{else}
 					<option value="{$v.id}">{$v.name}</option>
-					{/if}
-					{/volist}
+					{/if} {/volist}
 				</select>
 				{else}
 				<select name="goods_brand_id">
@@ -324,12 +321,9 @@
 			<div class="layui-input-block">
 				{if $value.goods_standard == "通用"}
 				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige" checked="">
-				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
-				{/if}
-				{if $value.goods_standard == "专用"}
+				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> {/if} {if $value.goods_standard == "专用"}
 				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
-				<input type="radio" checked="" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
-				{/if}
+				<input type="radio" checked="" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige"> {/if}
 			</div>
 		</div>
 		<div>
@@ -389,7 +383,7 @@
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_series" id="city"  xm-select-show-count="1" xm-select="city" multiple="multiple">
+							<select name="goods_car_series" id="city" xm-select-show-count="1" xm-select="city" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -399,7 +393,7 @@
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_year" id="production"  xm-select-show-count="1" xm-select="production" multiple="multiple">
+							<select name="goods_car_year" id="production" xm-select-show-count="1" xm-select="production" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -431,8 +425,7 @@
 					</div>
 				</div>
 			</div>
-			{/if}
-			{if $value.goods_standard == "专用"}
+			{/if} {if $value.goods_standard == "专用"}
 			<div class="layui-form-item general noshow">
 				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
@@ -450,23 +443,29 @@
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_vehicle" id="province" lay-filter="province">
+								{volist name="car_series" id="car"}
+								{if $value.dedicated_vehicle == $car.brand}
 								<option value="{$value.dedicated_vehicle}">{$value.dedicated_vehicle}</option>
+								{else}
+								<option value="{$car.brand}">{$car.brand}</option>
+								{/if}
+								{/volist}
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_series" id="city"  xm-select-show-count="1" xm-select="city" multiple="multiple">
-								<option value="{$value.goods_car_series}">{$value.goods_car_series}</option>
+							<select name="goods_car_series" id="city" xm-select-show-count="1" xm-select="city" multiple="multiple">
+								<option value="{$value.goods_car_series}"></option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
 							<select name="goods_car_displacement" id="displacement" xm-select-show-count="1" xm-select="displacement" multiple="multiple">
 
-								<option value="{$value.goods_car_displacement}">{$value.goods_car_displacement}</option>
+								<option value="{$value.goods_car_displacement}"></option>
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_year" id="production"  xm-select-show-count="1" xm-select="production" multiple="multiple">
-								<option value="{$value.goods_car_year}">{$value.goods_car_year}</option>
+							<select name="goods_car_year" id="production" xm-select-show-count="1" xm-select="production" multiple="multiple">
+								<option value="{$value.goods_car_year}"></option>
 							</select>
 						</div>
 					</div>
@@ -578,7 +577,7 @@
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
-				
+
 				<div id="goods_text">
 					<script id="editor" type="text/plain" name="goods_text" style="width:800px;height:500px;"></script>
 				</div>
@@ -588,13 +587,13 @@
 		</div>
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label">上架年限：</label>
-				<div class="layui-input-block">
-					<select name="goods_year_id">
-						{volist name="year" id="v"}
-						<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
-						{/volist}
-					</select>
-				</div>
+			<div class="layui-input-block">
+				<select name="goods_year_id">
+					{volist name="year" id="v"}
+					<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
+					{/volist}
+				</select>
+			</div>
 		</div>
 		<div class="layui-form-item" pane="">
 			<label class="layui-form-label">限购：</label>
@@ -612,11 +611,9 @@
 			<div class="layui-input-block" id="goods_sign">
 				{if $value.goods_status == 1}
 				<input type="radio" name="goods_status" value="{$value.goods_status}" title="上架" checked="" class="hot">
-				<input type="radio" name="goods_status" value="0" title="不上架" class="">
-				{else}
+				<input type="radio" name="goods_status" value="0" title="不上架" class=""> {else}
 				<input type="radio" name="goods_status" value="1" title="上架" class="hot">
-				<input type="radio" name="goods_status" value="{$value.goods_status}" title="不上架"  checked="">
-				{/if}
+				<input type="radio" name="goods_status" value="{$value.goods_status}" title="不上架" checked=""> {/if}
 			</div>
 		</div>
 		<div class="basic-information title"> 配送与安装服务
@@ -625,7 +622,7 @@
 			<label class="layui-form-label">配送与安装服务：</label>
 			<div class="layui-input-block" id="">
 
-                <input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" checked="" class="hot">
+				<input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" checked="" class="hot">
 				<input type="checkbox" name="goods_delivery[]" value="上门安装" title="上门安装" class="">
 				<input type="checkbox" name="goods_delivery[]" value="送货上门" title="无需安装" class="">
 				<input type="checkbox" name="goods_delivery[]" value="送货上门" title="到店安装" class="">
@@ -651,7 +648,7 @@
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
-<script src="__STATIC__/admin/index/common/formSelects-v4.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__STATIC__/admin/index/common/formSelects-v4.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		var dhtml = "";
 		var i = 0;
@@ -710,19 +707,18 @@
 			' 				</div>                                                                                                    ' +
 			' 				</div>                                                                                                    ' +
 			' 			</div>                                                                                                        ' +
-			'          </div>                                                                                                        ';
-function quchong(arr){
-			var b=[];
+			'          </div> ';
+		//			去重函数
+		function quchong(arr) {
+			var b = [];
 			for(var k in arr) {
-				if(b.indexOf(arr[k].series)== -1){
-					 b.push(arr[k].series);
-               
+				if(b.indexOf(arr[k].series) == -1) {
+					b.push(arr[k].series);
 				}
-				
 			}
 			return b;
 		}
-		 var formSelects = layui.formSelects;
+		var formSelects = layui.formSelects;
 		layui.config({
 			base: "js/"
 		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
@@ -752,34 +748,33 @@ function quchong(arr){
 				}
 			});
 			form.render('select');
-			         form.on('select(province)', function(data) {
-							   var now_province = data.value;
-								$("#city").html('<option value="">请选择车系</option>');
-								$("#displacement").html('<option value="">请选择排量</option>');
-								$("#production").html('<option value="">请选择年产</option>');
-								formSelects.render();
-//								quchong(times_id[now_province])/;
-								var num=0;
-								var tim_id=quchong(times_id[now_province]);
-								var displacemen_id=quchong(displacements_id[now_province]);
-								var year_id=quchong(years_id[now_province]);
-								for(var k in tim_id) {
-									var now_city = tim_id[k];
-									$("#city").append('<option value="' + now_city + '">' + now_city + '</option>');
-								
-								}
-								for(var k in displacemen_id) {
-									var now_displacement = displacemen_id[k];
-									$("#displacement").append('<option value="' + now_displacement + '">' + now_displacement + '</option>');
-								}
-								for(var k in year_id) {
-									var now_production = year_id[k];
-									$("#production").append('<option value="' + now_production + '">' + now_production + '</option>');
-								}
-								formSelects.render();
-								
-							});
-		
+			form.on('select(province)', function(data) {
+				var now_province = data.value;
+				$("#city").html('<option value="">请选择车系</option>');
+				$("#displacement").html('<option value="">请选择排量</option>');
+				$("#production").html('<option value="">请选择年产</option>');
+				formSelects.render();
+				//								quchong(times_id[now_province])/;
+				var num = 0;
+				var tim_id = quchong(times_id[now_province]);
+				var displacemen_id = quchong(displacements_id[now_province]);
+				var year_id = quchong(years_id[now_province]);
+				for(var k in tim_id) {
+					var now_city = tim_id[k];
+					$("#city").append('<option value="' + now_city + '">' + now_city + '</option>');
+
+				}
+				for(var k in displacemen_id) {
+					var now_displacement = displacemen_id[k];
+					$("#displacement").append('<option value="' + now_displacement + '">' + now_displacement + '</option>');
+				}
+				for(var k in year_id) {
+					var now_production = year_id[k];
+					$("#production").append('<option value="' + now_production + '">' + now_production + '</option>');
+				}
+				formSelects.render();
+
+			});
 
 			// 点击添加页面
 			$(".add-sevice").click(function() {
@@ -889,13 +884,13 @@ function quchong(arr){
 						"goods_name": text
 					},
 					success: function(data) {
-					
+
 						var data = eval('(' + data + ')');
 						layer.msg(data.info);
-						if(data.info=="成功"){
-						var dhtmls = '<option value="' + text + '">' + text + '</option> ';
-						$(".universal_standard_name").append(dhtmls);
-						form.render('select');
+						if(data.info == "成功") {
+							var dhtmls = '<option value="' + text + '">' + text + '</option> ';
+							$(".universal_standard_name").append(dhtmls);
+							form.render('select');
 						}
 					},
 					error: function(data) {
@@ -916,10 +911,10 @@ function quchong(arr){
 					success: function(data) {
 						var data = eval('(' + data + ')');
 						layer.msg(data.info);
-						if(data.info=="成功"){
-						var dhtmls = '<option value="' + text + '">' + text + '</option> ';
-						$(".universal_standard_name").append(dhtmls);
-						form.render('select');
+						if(data.info == "成功") {
+							var dhtmls = '<option value="' + text + '">' + text + '</option> ';
+							$(".universal_standard_name").append(dhtmls);
+							form.render('select');
 						}
 					},
 					error: function(data) {
@@ -937,16 +932,16 @@ function quchong(arr){
 						"property_name": text
 					},
 					success: function(data) {
-//						layer.msg(data.info);
+						//						layer.msg(data.info);
 						var data = eval('(' + data + ')');
 						console.log(data)
 						layer.msg(data.info);
-						if(data.info=="成功"){
-							var dhtmls = '<option value="' + data.data[0].property_name+ '">' + data.data[0].property_name + '</option> ';
+						if(data.info == "成功") {
+							var dhtmls = '<option value="' + data.data[0].property_name + '">' + data.data[0].property_name + '</option> ';
 							$(".dedicated_property").append(dhtmls);
 							form.render('select');
 						}
-						
+
 					},
 					error: function(data) {
 						console.log(data)
@@ -957,95 +952,92 @@ function quchong(arr){
 			$.ajax({
 				type: "POST",
 				url: "{:url('admin/Goods/property_show')}",
-				data: {
-				},
+				data: {},
 				success: function(data) {
-//						layer.msg(data.info);
+					//						layer.msg(data.info);
 					var data = eval('(' + data + ')');
 					console.log(data.data);
-					for(var i=0;i<data.data.length;i++){
-						var dhtmls = '<option value="' + data.data[i].property_name+ '">' + data.data[i].property_name + '</option> ';
+					for(var i = 0; i < data.data.length; i++) {
+						var dhtmls = '<option value="' + data.data[i].property_name + '">' + data.data[i].property_name + '</option> ';
 						$(".dedicated_property").append(dhtmls);
-						
+
 					}
 					form.render('select');
-					
+
 				},
 				error: function(data) {
 					console.log(data)
 				}
 			});
-          $.ajax({
-					type: "POST",
-					url: "{:url('admin/Goods/standard_name')}",
-					data: {},
-					success: function(data) {
-						var data = eval('(' + data + ')');
-						for(var i = 0; i < data.data.length; i++) {
-							var dhtml = "";
-							dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
-							$(".universal_standard_name").append(dhtml);
-						}
-
-						form.render('select');
-					},
-					error: function(data) {
-						console.log(data)
+			$.ajax({
+				type: "POST",
+				url: "{:url('admin/Goods/standard_name')}",
+				data: {},
+				success: function(data) {
+					var data = eval('(' + data + ')');
+					for(var i = 0; i < data.data.length; i++) {
+						var dhtml = "";
+						dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
+						$(".universal_standard_name").append(dhtml);
 					}
-				});
-				form.render('select');
+
+					form.render('select');
+				},
+				error: function(data) {
+					console.log(data)
+				}
+			});
+			form.render('select');
 			// end商品规格变化
 		})
 	</script>
-<script type="text/javascript">
-		   var times_id = new Array();
-				var displacements_id = new Array();
-				var years_id = new Array();
-				$.ajax({
-					type: "POST",
-					url: "{:url('admin/Goods/add')}",
-					data: {},
-					dataType: "json",
-					success: function(data) {
-						console.log(data);
-						var datas = data.data
-						for(var i = 0; i < datas.car_series.length; i++) {
-							var series = new Array();
-							var displacement = new Array();
-							var year = new Array();
-							for(var j = 0; j < datas.car_brand.length; j++) {
-								if(datas.car_brand[j].brand == datas.car_series[i].brand) {
-									series.push({
-										"series": datas.car_brand[j].series
-									});
-									displacement.push({
-										"series": datas.car_brand[j].displacement
-									});
-									year.push({
-										"series": datas.car_brand[j].year
-									});
-								}
-
-							}
-							times_id[datas.car_series[i].brand] = series;
-							
-							displacements_id[datas.car_series[i].brand] = displacement;
-							years_id[datas.car_series[i].brand] = year;
+	<script type="text/javascript">
+		var times_id = new Array();
+		var displacements_id = new Array();
+		var years_id = new Array();
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Goods/add')}",
+			data: {},
+			dataType: "json",
+			success: function(data) {
+				var datas = data.data
+				for(var i = 0; i < datas.car_series.length; i++) {
+					var series = new Array();
+					var displacement = new Array();
+					var year = new Array();
+					for(var j = 0; j < datas.car_brand.length; j++) {
+						if(datas.car_brand[j].brand == datas.car_series[i].brand) {
+							series.push({
+								"series": datas.car_brand[j].series
+							});
+							displacement.push({
+								"series": datas.car_brand[j].displacement
+							});
+							year.push({
+								"series": datas.car_brand[j].year
+							});
 						}
-							
-						var city_obj = times_id;
-						for(var key in city_obj) {
-							$("#province").append("<option value='" + key + "'>" + key + "</option>");
-						}
-						
-						
 
-					},
-					error: function(data) {
-						console.log("错误");
 					}
-				});
-		
+					times_id[datas.car_series[i].brand] = series;
+					displacements_id[datas.car_series[i].brand] = displacement;
+					years_id[datas.car_series[i].brand] = year;
+				}
+
+				var city_obj = times_id;
+//				$("#province").append("<option value='请选择'>请选择 </option>");
+				for(var key in city_obj) {
+//					$("#province").append("<option value='" + key + "'>" + key + "</option>");
+				}
+				
+				
+
+			},
+			error: function(data) {
+				console.log("错误");
+			}
+		});
 	</script>
 	<script type="text/javascript">
 		setTimeout(insertHtml, 1000);
@@ -1097,12 +1089,7 @@ function quchong(arr){
 			}
 			// 		
 		});
-
-
 	</script>
-	
-
-
 
 	{/block}
 
