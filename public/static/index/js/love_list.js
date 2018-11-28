@@ -21,15 +21,46 @@ $.ajax({
     dataType: 'JSON',
     success: function(res){
         console.log(res);
+        var str = '';
+        $.each(res.data, function(idx, val){
+            str += `<div class="car-box">
+                        <div class="car-info-top">
+                            <div class="logo"><img src="static/index/image/aodi.png"></div>
+                            <div class="car-info">
+                                <p>`+val.brand+` `+val.series+`</p>
+                                <p>`+val.displacement+` `+val.production_time+`</p>
+                            </div>
+                        </div>
+                        <div class="car-btn-bot">
+                            <button class="set-default" id="`+val.id+`">设为默认</button>
+                            <button class="delete-btn">删除</button>
+                        </div>
+                    </div>`
+        })
+        $('.box-wrap').append(str);
+        $('.set-default').click(function(){
+            var id = $(this)[0].id;
+            $.ajax({
+                url: 'love_status',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': id,
+                    'status': 1
+                },
+                success: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
     },
     error: function(){
         console.log('error');
     }
     
     
-})
-
-$('.car-info-top').click(function(){
-
 })
 
