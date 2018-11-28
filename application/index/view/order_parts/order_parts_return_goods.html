@@ -1,10 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/order_parts/order_parts_return_goods.css">
+    <title>配件商-退货</title>
 </head>
 <body>
-服务商订单待付款
-</body>
+    <div class="wrapper" id="app">
+        <header class="header">
+            <a href="javascript:;" class="spr icon-back"></a>
+            <h3 class="parts-title active">商品订单</h3>
+            <h3 class="service-title">预约订单</h3>
+        </header>
+        <div class="tabs">
+            <button class="tab">全部</button>
+            <button class="tab">待付款</button>
+            <button class="tab">待收货</button>
+            <button class="tab">待评价</button>
+            <button class="tab tab-on">退货</button>
+        </div>
+        <div class="shops-goods-wrap">
+            <!-- 待付款 -->
+            <div class="single-shop-box">
+                <div class="shop-name-box">
+                    <div class="name-txt-div">
+                        <i class="spr icon-shop"></i>
+                        <span class="name-txt-span">北方轮胎旗舰店</span>
+                    </div>
+                    <p class="status-txt-p">等待付款</p>
+                </div>
+                <div class="all-goods-box">
+                    <div class="single-goods-box single-goods-box-border">
+                        <div class="shop-img-box">
+                            <img src="__STATIC__/index/image/14.png">
+                        </div>
+                        <div class="order-info-box">
+                            <p class="goods-name-p txt-hid-two">宝马轮胎宝马轮胎胎宝马轮胎</p>
+                            <p class="goods-selling-point txt-hid-two">这个是商品卖点这个是商品卖点</p>
+                            <div class="unit-price-quantity">
+                                <p class="unit-price-p">￥0.1</p>
+                                <p class="quantity-p">×1</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-button-box">
+                    <p class="total-p">共计1件商品 合计：￥0.1</p>
+                    <div class="button-box">
+                        <button class="cancel-order-btn">取消订单</button>
+                        <button class="to-payment-btn">去付款</button>
+                        <button class="del-order-btn" style="display:none;">删除订单</button>
+                        <button class="check-logistics-btn" style="display:none;">查看物流</button>
+                        <button class="conf-receipt-btn" style="display:none;">确认收货</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/plugin/vue.js"></script>
+    <script src="__STATIC__/index/js/order_parts/order_parts_return_goods.js"></script>
 </html>
