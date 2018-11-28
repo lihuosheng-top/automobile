@@ -4,17 +4,15 @@
 	body {
 		background: #fff;
 	}
-	.layui-form  {
+	
+	.layui-form {
 		width: 90%;
 		margin: 20px auto;
 	}
+	
 	.layui-form label {
-		width: 17%;
 		text-align: left;
 	}
-	
-
-
 </style>
 
 {/block}
@@ -25,65 +23,96 @@
 	<div class="open">
 
 	</div>
-	<form class="layui-form" action="">
-	
+	<form class="layui-form" action="{:url('admin/platform_advertisement/platform_business_save')}" method="post" enctype="multipart/form-data">
+
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 广告名称：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">广告位置：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="location" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">开始时间：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<span class="time">
+					<input name="date_min" type="text" class="text datetimepicker" readonly="readonly" id="beginsTime" value=""style="width: 316px;height: 38px;padding-left: 10px; font-size: 13px;">
+				</span> 
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">结束时间：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<span class="time">
+					<input name="date_min" type="text" class="text datetimepicker" readonly="readonly" id="endsTime" value=""style="width: 316px;height: 38px;padding-left: 10px; font-size: 13px;">
+				</span> 
 			</div>
 		</div>
-<div class="layui-form-item">
+		<div class="layui-form-item">
 			<label class="layui-form-label">广告链接：</label>
 			<div class="layui-input-block">
-			<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			
+				<input type="text" name="url" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+
 			</div>
 		</div>
-	
-	<div class="layui-form-item">
-		<label class="layui-form-label">上传广告图片：</label>
-		<div class="layui-input-block">
-         <img src="" > 
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">上传广告图片</label>
+			<div class="layui-input-block">
+				<div class="img-box full">
+					<section class=" img-section">
+						<div class="z_photo upimg-div clear">
+							<section class="z_file fl">
+								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+								<input type="file" name="advert_picture" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="1" />
+							</section>
+						</div>
+					</section>
+				</div>
+				<aside class="mask works-mask">
+					<div class="mask-content">
+						<p class="del-p ">您确定要删除作品图片吗？</p>
+						<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+					</div>
+				</aside>
+			</div>
 		</div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">或图片网址：</label>
-		<div class="layui-input-block">
-			<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			
+		<div class="layui-form-item">
+			<label class="layui-form-label">或图片网址：</label>
+			<div class="layui-input-block">
+				<input type="text" name="url" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+
+			</div>
 		</div>
-	</div>
-	
+		<div class="layui-form-item">
+			<label class="layui-form-label">当前可操作：</label>
+			<div class="layui-input-block">
+				<input type="radio" name="status" value="1" title="同意" checked="">
+				<input type="radio" name="status" value="0" title="拒绝">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">操作员备注：</label>
+			<div class="layui-input-block">
+				<textarea name="remarks" rows="10" cols="60"></textarea>
+			</div>
+		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-				
-				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit" >立即申请</button>
-			   
+
+				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit">保存</button>
+
 			</div>
 		</div>
 
 	</form>
-	
+
 	{/block}
 
 	<!--_footer 作为公共模版分离出去-->
@@ -92,8 +121,27 @@
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
-	
+
 	<script type="text/javascript">
+		$('#endsTime').datetimepicker({
+				onGenerate:function( ct ){
+					$(this).find('.xdsoft_date')
+						.toggleClass('xdsoft_disabled');
+				},
+				minDate:'-1970/01/2',
+				maxDate:'+1970/01/2',
+				timepicker:false
+			});
+				$('#beginsTime').datetimepicker({
+				onGenerate:function( ct ){
+					$(this).find('.xdsoft_date')
+						.toggleClass('xdsoft_disabled');
+				},
+				minDate:'-1970/01/2',
+				maxDate:'+1970/01/2',
+				timepicker:false
+			});
+			
 		layui.config({
 			base: "js/"
 		}).use(['form', 'layer', 'jquery', 'laypage'], function() {
@@ -102,11 +150,8 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 
-			
 		})
 	</script>
-
-	
 
 	{/block}
 
