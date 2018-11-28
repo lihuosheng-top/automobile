@@ -187,6 +187,7 @@ body,html{
 .discount_wrap .dis span{
     font-size: .24rem;
 }
+/* 支付弹窗 start */
 .alipay-pop{
     position: fixed;
     left: 0;
@@ -270,6 +271,7 @@ body,html{
 	border-radius: 5px;
 	border: 1px solid #2e8ffd;
 }
+/* 支付弹窗 end */
 .mask{
     position: absolute;
     left: 0;
