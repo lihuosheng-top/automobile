@@ -212,6 +212,7 @@ Route::group("admin",[
     "goods_property_show"=>"admin/Goods/property_show",                                       //专用属性显示
     "goods_alipay"=>"admin/Goods/alipay",                                       //支付
     "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付后调
+    "goods_edit_show"=>"admin/Goods/edit_show",                                       //专用适用车型编辑显示
 
 
 
