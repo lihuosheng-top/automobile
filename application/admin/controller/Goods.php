@@ -636,8 +636,11 @@ class Goods extends Controller{
     }
 
 
-
-
+    /**
+     * 回调地址
+     * 陈绪
+     * @param Request $request
+     */
     public function pay_code(Request $request){
 
         if($request->isGet()){
@@ -652,6 +655,34 @@ class Goods extends Controller{
                 $this->error("上架失败",url("admin/Goods/index"));
             }
         }
+    }
+
+
+
+
+    /**
+     * 专用适用车型编辑显示
+     * 陈绪
+     */
+    public function edit_show(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $goods = db("goods")->where("id",$id)->field("dedicated_vehicle,goods_car_year,goods_car_displacement,goods_car_series")->select();
+            foreach ($goods as $key=>$value){
+
+                $goods[$key]["goods_car_year"] = explode(",",$value["goods_car_year"]);
+                $goods[$key]["goods_car_displacement"] = explode(",",$value["goods_car_displacement"]);
+                $goods[$key]["goods_car_series"] = explode(",",$value["goods_car_series"]);
+
+            }
+            if($goods){
+                return ajax_success("获取成功",$goods);
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
+
     }
 
 
