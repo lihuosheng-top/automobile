@@ -60,13 +60,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">开始时间：</label>
             <div class="layui-input-block">
-                <input type="text" name="start_time" value="{$value.start_time}" lay-verify="title" class="layui-input" disabled="disabled">
+                <input type="text" name="start_time" value="{$value.start_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input" disabled="disabled">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">结束时间：</label>
             <div class="layui-input-block">
-                <input type="text" name="end_time" value="{$value.end_time}" lay-verify="title" class="layui-input" disabled="disabled">
+                <input type="text" name="end_time" value="{$value.end_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input" disabled="disabled">
             </div>
         </div>
         <div class="layui-form-item">
