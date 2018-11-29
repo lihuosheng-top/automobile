@@ -48,7 +48,12 @@ class Classify extends Controller
 
         if($request->isPost()){
             $goods_type_id = $request->only(["id"])["id"];
-            $goods = db("goods")->where("goods_type_id",$goods_type_id)->where("goods_status",1)->select();
+            $goods = db("goods")->where("goods_type_id",$goods_type_id)->whereOr("goods_brand_id",$goods_type_id)->select();
+            foreach ($goods as $kye=>$value){
+                if($value["goods_status"] == 0){
+                    unset($goods[$kye]);
+                }
+            }
             if($goods){
                 return ajax_success("获取成功",$goods);
             }else{

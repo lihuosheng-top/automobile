@@ -81,7 +81,7 @@ class  Advertisement extends  Controller{
      * [汽车平台广告更新]
      * 郭杨
      * @param Request $request
-     * @param $id
+     * 
      */
     public function accessories_business_updata(Request $request)
     {
