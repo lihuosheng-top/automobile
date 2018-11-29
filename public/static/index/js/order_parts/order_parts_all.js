@@ -3,19 +3,27 @@ var app = new Vue({
     el: '#app',
     data: {
         allDatas: '',
+        allStatus: [],
     },
     created(){
-        this.getData()
+        this.getData();
+        // this.getStatus();
     },
     methods: {
         getData(){
             this.$http.post('ios_api_order_parts_all')
             .then(res => {
                 this.allDatas = eval("(" + res.body + ")").data;
+                console.log(eval("(" + res.body + ")"));
             }).catch(res => {
                 console.error('error');
             })
-        }
+        },
+        // getStatus(){
+        //     this.allDatas.forEach(function(val){
+        //         console.log(val)
+        //     })
+        // }
     }
 })
 
