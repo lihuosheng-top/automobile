@@ -55,17 +55,18 @@ $.ajax({
     }
 })
 
+
 // 支付
-// $('#buy').click(function(){
-//     $('.mask').show();
-//     $('.alipay-pop').animate({'bottom': '0'});
-//     $('html').css('overflow', 'hidden');
-// })
-// $('.close-alipay').click(function(){
-//     $('.mask').hide();
-//     $('.alipay-pop').animate({'bottom': '-100%'});
-//     $('html').css('overflow', 'auto');
-// })
+$('#order-buy').click(function(){
+    $('.mask').show();
+    $('.alipay-pop').animate({'bottom': '0'});
+    $('html').css('overflow', 'hidden');
+})
+$('.close-alipay').click(function(){
+    $('.mask').hide();
+    $('.alipay-pop').animate({'bottom': '-100%'});
+    $('html').css('overflow', 'auto');
+})
 // 产品参数
 $('.product-parameter').click(function(){
     $('.product-parameter-pop').animate({'bottom': '0'});
@@ -188,10 +189,45 @@ $('.detail-back').click(function(){
 })
 
 // 选择服务
-$('.ser-type').click(function(){
+$('.ser-type').add('#buy').click(function(){
     $('html').css('overflow','hidden');
     $('.mask').show();
     $('.select-ser-pop').addClass('select-ser-easeout');
+})
+// 立即购买 弹窗
+$('.select-buy').click(function(){
+    $('.select-ser-pop').removeClass('select-ser-easeout');
+    $('.place-order-pop').show();
+    $('.wrapper').hide();
+    $('.mask').hide();
+})
+$('.place-order-back').click(function(){
+    $('.place-order-pop').hide();
+    $('html').css('overflow','auto');
+    $('.wrapper').show();
+})
+// 购买弹窗  加入购物车
+$('.select-add-cart').click(function(){
+    $('.select-ser-pop').removeClass('select-ser-easeout');
+    $('.mask').hide();
+    layer.open({
+        style: 'bottom:100px;',
+        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+        skin: 'msg',
+        content: '加入购物车成功',
+        time: 1.5
+    })
+    
+})
+// 加入购物车
+$('.add-cart').click(function(){
+    layer.open({
+        style: 'bottom:100px;',
+        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+        skin: 'msg',
+        content: '加入购物车成功',
+        time: 1.5
+    })
 })
 // 关闭选择服务 弹窗
 $('.close-select-pop').click(function(){
