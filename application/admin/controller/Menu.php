@@ -5,6 +5,8 @@ use think\Controller;
 use think\Request;
 class Menu extends Controller
 {
+
+
    protected $status = ["禁用","启用"];
     /**
      * [节点显示]

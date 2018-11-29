@@ -63,7 +63,7 @@ class OrderParts extends Controller{
 //                        dump($values);
                         foreach ($values as $ke=>$item){
 //                            $newArr =[];
-                           $newArr[$keys][$item['store_id']][] = $item;
+                           $newArr[$keys][$item['store_name']][] = $item;
                         }
                     }
 //                    dump($newArr);
@@ -379,8 +379,6 @@ class OrderParts extends Controller{
             }
         }
     }
-
-
 
 
 }
