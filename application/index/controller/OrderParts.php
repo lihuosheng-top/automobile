@@ -46,6 +46,7 @@ class OrderParts extends Controller{
                         ->order('order_create_time', 'desc')
                         ->group('parts_order_number')
                         ->select();
+                    dump($data);
                     foreach ($data as $key => $value) {
                         if (strpos($value['order_parts_id'], ',')) {
                             $order_id = explode(',', $value['order_parts_id']);
@@ -80,11 +81,13 @@ class OrderParts extends Controller{
                                     $end_info[$key][$i]['status'] = $j;
                                 }
                             }
-                        } else {
+                        }
+                        else{
                             $return_data = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+
+                            $end_info[$key]['store_name'] = $return_data['store_name'];
+                            $end_info[$key]['status'] = $return_data['status'];
                             $end_info[$key]['info'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
-                            $end_info[$key]['store_name'][] = $return_data['store_name'];
-                            $end_info[$key]['status'][] = $return_data['status'];
                         }
                     };
                     if (!empty($order_undate)) {
@@ -97,10 +100,7 @@ class OrderParts extends Controller{
                         foreach ($order_undate['status'] as $i => $j) {
                             $end_info[$i]['status'] = $j;
                         }
-//                }
-//                dump($end_info);
-
-
+                    }
                         if (!empty($end_info)) {
                             return ajax_success('数据', $end_info);
                         } else {
@@ -138,8 +138,7 @@ class OrderParts extends Controller{
 //                }
 
 
-                    }
-                } else {
+                    } else {
                     return ajax_error('请登录', ['status' => 0]);
                 }
             }
