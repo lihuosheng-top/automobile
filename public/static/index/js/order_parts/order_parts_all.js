@@ -1,3 +1,26 @@
+
+var app = new Vue({
+    el: '#app',
+    data: {
+        allDatas: '',
+    },
+    created(){
+        this.getData()
+    },
+    methods: {
+        getData(){
+            this.$http.post('ios_api_order_parts_all')
+            .then(res => {
+                this.allDatas = eval("(" + res.body + ")").data;
+            }).catch(res => {
+                console.error('error');
+            })
+        }
+    }
+})
+
+
+
 $('.tabs button').click(function(){
     var $index = $(this).index();
     switch($index){
@@ -16,20 +39,20 @@ $('.icon-back').click(function(){
     location.href = 'my_index';
 })
 
-$.ajax({
-    url: 'ios_api_order_parts_all',
-    type: 'POST',
-    dataType: 'JSON',
-    success: function(res){
-        console.log(res);
-        // $.each(res.data, function(idx, val){
-        //     // console.log(val);
-        //     $.each(val, function(idx, val){
-        //         console.log(val)
-        //     })
-        // })
-    },
-    error: function(){
-        console.log('error');
-    }
-})
+// $.ajax({
+//     url: 'ios_api_order_parts_all',
+//     type: 'POST',
+//     dataType: 'JSON',
+//     success: function(res){
+//         console.log(res);
+//         $.each(res.data, function(idx, val){
+//             // console.log(val);
+//             $.each(val, function(idx, val){
+//                 console.log(val)
+//             })
+//         })
+//     },
+//     error: function(){
+//         console.log('error');
+//     }
+// })

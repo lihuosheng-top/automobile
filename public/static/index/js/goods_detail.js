@@ -56,17 +56,23 @@ $.ajax({
 })
 
 // 支付
-$('#buy').click(function(){
-    $('.mask').show();
-    $('.alipay-pop').animate({'bottom': '0'});
-    $('html').css('overflow', 'hidden');
+// $('#buy').click(function(){
+//     $('.mask').show();
+//     $('.alipay-pop').animate({'bottom': '0'});
+//     $('html').css('overflow', 'hidden');
+// })
+// $('.close-alipay').click(function(){
+//     $('.mask').hide();
+//     $('.alipay-pop').animate({'bottom': '-100%'});
+//     $('html').css('overflow', 'auto');
+// })
+// 产品参数
+$('.product-parameter').click(function(){
+    $('.product-parameter-pop').animate({'bottom': '0'});
 })
-$('.close-alipay').click(function(){
-    $('.mask').hide();
-    $('.alipay-pop').animate({'bottom': '-100%'});
-    $('html').css('overflow', 'auto');
+$('.parameter-btn').click(function(){
+    $('.product-parameter-pop').animate({'bottom': '-100%'});
 })
-
 
 
 
