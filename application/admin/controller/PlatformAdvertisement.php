@@ -33,9 +33,16 @@ class  PlatformAdvertisement extends  Controller{
 
 
 
+    /**
+     * [汽车平台广告编辑]
+     * 郭杨
+     */
+    public function platform_business_edit($id){
 
-    public function platform_business_edit(){
-        return view('platform_business_edit');
+        $plat = db("platform")->where("id",$id)->select();
+        //dump($plat);
+
+        return view('platform_business_edit',['plat'=>$plat]);
     }
 
 
@@ -55,6 +62,8 @@ class  PlatformAdvertisement extends  Controller{
                 $data["forms"] = $str[1];
             }
 
+            $data["start_time"] = strtotime($data["start_time"]);
+            $data["end_time"] = strtotime($data["end_time"]);
             $bool = db("platform")->insert($data);
             if ($bool) {
                 $this->success("添加成功", url("admin/platform_advertisement/platform_business_index"));
@@ -66,13 +75,59 @@ class  PlatformAdvertisement extends  Controller{
 
 
     /**
-     * 平台广告删除
-     * 陈绪
+     * [汽车平台广告更新]
+     * 郭杨
+     * @param Request $request
+     * @param $id
      */
-    public function del(){
+    public function platform_business_updata(Request $request)
+    {
+        if ($request->isPost()) {
+            $data = $request->param();
+
+            $bool = db("platform")->where('id', $request->only(["id"])["id"])->update($data);
+
+            if ($bool) {
+                $this->success("编辑成功", url("admin/platform_advertisement/platform_business_index"));
+            } else {
+                $this->error("编辑失败", url("admin/platform_advertisement/platform_business_edit"));
+            }
+        }
+    }
+  
+    
+    /**
+     * 平台广告删除
+     * 郭杨
+     */
+    public function platform_business_del($id){
+
+        $bool = db("platform")->where("id", $id)->delete();
+        if ($bool) {
+            $this->success("删除成功", url("admin/platform_advertisement/platform_business_index"));
+        } else {
+            $this->error("删除失败", url("admin/platform_advertisement/platform_business_index"));
+        }
+
+    }
 
 
+    /**
+     * 平台广告模糊搜索
+     * 郭杨
+     */
+    public function platform_business_search(){
+        $ppd = input('key');          //广告名称
+        $interest = input('keys');    //广告位置
 
+        if ((!empty($ppd)) || (!empty($interest))) {
+            $activ = db("platform")->where("name", "like", "%" . $ppd . "%")->where("location", "like", "%" . $interest . "%")->paginate(2);    
+        }else{
+            $activ = db("platform")->paginate(2);
+        }
+        if(!empty($activ)){
+            return view('platform_business_index',['platform'=>$activ]);
+        }
     }
 
 }
