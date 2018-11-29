@@ -85,13 +85,12 @@ html{
     width: 100%;
     padding: 0 .1rem;
     box-sizing: border-box;
-    background-color: #fff;
 }
 .list_cont li{
     float: left;
-    width: 3.6rem;
+    width: 3.55rem;
     height: 5.3rem;
-    margin-right: .08rem;
+    margin-right: .2rem;
     background-color: #fff;
     margin-bottom: .3rem;
 }
