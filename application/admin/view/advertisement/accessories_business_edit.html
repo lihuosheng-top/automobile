@@ -48,31 +48,31 @@
         <div class="layui-form-item">
             <label class="layui-form-label"> 广告名称：</label>
             <div class="layui-input-block">
-                <input type="text" name="name" value="{$value.name}" lay-verify="title" class="layui-input" disabled="disabled">
+                <input type="text" name="name" value="{$value.name}" lay-verify="title" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">广告位置：</label>
             <div class="layui-input-block">
-                <input type="text" name="location" value="{$value.location}" lay-verify="title" class="layui-input" disabled="disabled">
+                <input type="text" name="location" value="{$value.location}" lay-verify="title" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">开始时间：</label>
             <div class="layui-input-block">
-                <input type="text" name="start_time" value="{$value.start_time}" lay-verify="title" class="layui-input" disabled="disabled">
+                <input type="text" name="start_time" value="{$value.start_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">结束时间：</label>
             <div class="layui-input-block">
-                <input type="text" name="end_time" value="{$value.end_time}" lay-verify="title" class="layui-input" disabled="disabled">
+                <input type="text" name="end_time" value="{$value.end_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">广告链接：</label>
             <div class="layui-input-block">
-                <input type="text" name="url" value="{$value.url}" lay-verify="title" class="layui-input" disabled="disabled">
+                <input type="text" name="url" value="{$value.url}" lay-verify="title" class="layui-input" >
 
             </div>
         </div>
@@ -102,35 +102,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label">或图片网址:</label>
             <div class="layui-input-block">
-                <input type="text" name="picture_url" value="{$value.picture_url}" lay-verify="title" class="layui-input" disabled="disabled">
+                <input type="text" name="picture_url" value="{$value.picture_url}" lay-verify="title" class="layui-input" >
             </div>
         </div>
-
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">当前可操作：</label>
-            <div class="layui-input-block">
-                {if $value.status == 1}
-                <input type="radio" name="status" value="1" title="同意" checked="">
-                <input type="radio" name="status" value="0" title="拒绝"> {else}
-                <input type="radio" name="status" value="1" title="同意">
-                <input type="radio" name="status" value="0" title="拒绝" checked="">{/if}
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">操作员备注：</label>
-            <div class="layui-input-block">
-                <textarea name="remarks" value="{$value.remarks}" rows="10" cols="60"></textarea>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-
-                <button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit">保存</button>
-
-            </div>
-        </div>
+	<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn submit_btn" lay-submit="" lay-filter="demo1" type="submit">保存</button>
+				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
+			</div>
+		</div>
         {/volist} {/if}
     </form>
 
