@@ -35,6 +35,11 @@ class Store extends Controller{
             $user_id = Session::get("user");
             $user = db("user")->where("id",$user_id)->field("phone_num,sex,real_name")->select();
             $roles = db("role")->where("status","1")->field("id,name")->select();
+            foreach ($roles as $key=>$value){
+                if($value["id"] == 2){
+                    unset($roles[$key]);
+                }
+            }
             if($roles){
                 return ajax_success("获取成功",array("user"=>$user,"roles"=>$roles));
             }else{
