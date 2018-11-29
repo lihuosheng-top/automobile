@@ -26,6 +26,7 @@ class Menu extends Controller
         return view("save",["menu_list"=>$menu_list]);
     }
 
+
     /**
      * [节点添加入库]
      * 陈绪
