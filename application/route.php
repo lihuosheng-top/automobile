@@ -18,7 +18,8 @@ use think\Route;
  */
 Route::group("",[
     /*首页*/
-    "/$"=>"index/index/index",
+    "/$"=>"index/index/home",
+    "index"=>"index/index/index",
 
 
 
