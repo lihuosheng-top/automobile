@@ -18,7 +18,8 @@ use think\Route;
  */
 Route::group("",[
     /*首页*/
-    "/$"=>"index/index/index",
+    "/$"=>"index/index/home",
+    "index"=>"index/index/index",
 
 
 
@@ -48,30 +49,39 @@ Route::group("",[
     'index_aliPay'=>"index/Apppay/index_aliPay",
     'index_pay_code'=>"index/Apppay/index_pay_code",
     /*TODO:服务商订单结束*/
+
     /*TODO:配件商订单开始*/
 //    "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
-    "ios_api_order_parts_button"=>"index/OrderService/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
+    "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
 //    "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
 //    "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
 //    'index_aliPay'=>"index/Apppay/index_aliPay",
 //    'index_pay_code'=>"index/Apppay/index_pay_code",
     /*TODO:配件商订单结束*/
 
+    /*TODO：登录开始*/
+    'Dolog'=>"index/Login/Dolog", /*登录操作*/
+    "logout"=>"index/Login/logout",/*退出登录*/
+    "my_index"=>"index/My/my_index",  // 我的
+    "my_message"=>"index/My/message", //我的个人信息
+    "login"=>"index/My/login",//登录
+    "isLogin"=>"index/My/isLogin", //是否登录判断
+    /*TODO:登录结束*/
 
 
+    "setting"=>"index/My/setting",//设置
 
-    /*登录页面*/
-    'Dolog'=>"index/Login/Dolog",
-    /*退出登录*/
-    "logout"=>"index/Login/logout",
-
-
-
-    /*注册页面*/
+    /*TODO:注册开始*/
     "register"=>"index/Register/index",//注册页面
     "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
+    /*TODO:注册结束*/
 
+    /*TODO:找回密码验证码开始*/
+    'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
+    'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
+    'update_password'=>"index/findpwd/update_password",//修改密码
+    /*TODO:找回密码验证码结束*/
 
     /*店铺*/
     "store_index"=>"index/Store/index",             //店铺首页
@@ -79,12 +89,8 @@ Route::group("",[
     "store_verify"=>"index/Store/verify",           //身份验证
 
 
-    /*判断是否登录*/
-    "isLogin"=>"index/My/isLogin", //是否登录判断
-    /*找回密码验证码*/
-    'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
-    'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
-    'update_password'=>"index/findpwd/update_password",//修改密码
+
+
 
 
 
@@ -121,7 +127,6 @@ Route::group("",[
     "ios_api_order_wait_evaluate"=>"index/OrderParts/ios_api_order_wait_evaluate", //待评价接口（ajax）
     "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货页面
     "ios_api_order_parts_return_goods"=>"index/OrderParts/ios_api_order_parts_return_goods",//退货接口ajax
-
     /*TODO:配件商订单状态结束*/
 
     /*TODO:服务商订单状态开始*/
@@ -138,14 +143,7 @@ Route::group("",[
     /*TODO:服务商订单状态结束*/
 
 
-    // 我的
-    "my_index"=>"index/My/my_index",
-    "my_message"=>"index/My/message",                //我的个人信息
 
-
-
-    "login"=>"index/My/login",//登录
-    "setting"=>"index/My/setting",//设置
     
 ]);
 
@@ -279,10 +277,13 @@ Route::group("admin",[
 
 
     /*配件商广告*/
-    "accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising",
-    "accessories_business_add"=>"admin/Advertisement/accessories_business_add",
-    "accessories_business_edit"=>"admin/Advertisement/accessories_business_edit",
-    "accessories_business_del"=>"admin/Advertisement/del",
+    "accessories_business_advertising"=>"admin/Advertisement/accessories_business_advertising", //汽车配件商广告显示
+    "accessories_business_add"=>"admin/Advertisement/accessories_business_add",                 //汽车配件商广告添加
+    "accessories_business_edit"=>"admin/Advertisement/accessories_business_edit",               //汽车配件商广告编辑
+    "accessories_business_save"=>"admin/Advertisement/accessories_business_save",               //汽车配件商广告保存
+    "accessories_business_updata"=>"admin/Advertisement/accessories_business_updata",           //汽车配件商广告更新
+    "accessories_business_del"=>"admin/Advertisement/accessories_business_del",                 //汽车配件商广告删除
+    "accessories_business_search"=>"admin/Advertisement/accessories_business_search",           //汽车配件商广告模糊搜索
 
 
 
@@ -297,30 +298,12 @@ Route::group("admin",[
     /*平台广告*/
     "platform_business_index"=>"admin/platform_advertisement/platform_business_index",  //汽车平台广告显示
     "platform_business_add"=>"admin/platform_advertisement/platform_business_add",      //汽车平台广告添加
-    "platform_business_save"=>"admin/platform_advertisement/platform_business_save",      //汽车平台广告保存
-    "platform_business_edit"=>"admin/platform_advertisement/platform_business_edit",
-    "platform_business_del"=>"admin/platform_advertisement/del",
+    "platform_business_save"=>"admin/platform_advertisement/platform_business_save",    //汽车平台广告保存
+    "platform_business_edit"=>"admin/platform_advertisement/platform_business_edit",    //汽车平台广告编辑
+    "platform_business_updata"=>"admin/platform_advertisement/platform_business_updata",//汽车平台广告更新
+    "platform_business_del"=>"admin/platform_advertisement/platform_business_del",      //汽车平台广告删除  
+    "platform_business_search"=>"admin/platform_advertisement/platform_business_search",//汽车平台广告模糊搜索
 
-
-
-
-    /*优惠券*/
-    "discount_index"=>"admin/Discount/index",
-    "discount_add"=>"admin/Discount/add",
-    "discount_save"=>"admin/Discount/save",
-    "discount_edit"=>"admin/Discount/edit",
-    "discount_updata"=>"admin/Discount/updata",
-    "discount_del"=>"admin/Discount/del",
-    "discount_batches"=>"admin/Discount/batches",
-
-
-    /*代理*/
-    "agency_index"=>"admin/Agency/index",
-    "agency_add"=>"admin/Agency/add",
-    "agency_save"=>"admin/Agency/save",
-    "agency_edit"=>"admin/Agency/edit",
-    "agency_updata"=>"admin/Agency/updata",
-    "agency_del"=>"admin/Agency/del",
 
 
 
@@ -401,39 +384,10 @@ Route::group("admin",[
     "admin_chat_push"=>"admin/Chat/admin_chat_push",
 
 
-    /*内容管理*/
-    "content_index"=>"admin/Content/index",
-    "content_add"=>"admin/Content/add",
-    "content_save"=>"admin/Content/save",
-    "content_edit"=>"admin/Content/edit",
-    "content_del"=>"admin/Content/del",
-    "content_updata"=>"admin/Content/updata",
-
-
-    /*常见问题*/
-    "issue_index"=>"admin/Issue/index",
-    "issue_add"=>"admin/Issue/add",
-    "issue_save"=>"admin/Issue/save",
-    "issue_edit"=>"admin/Issue/edit",
-    "issue_del"=>"admin/Issue/del",
-    "issue_updata"=>"admin/Issue/updata",
-    "issue_status"=>"admin/Issue/status",
-    "issue_putaway"=>"admin/Issue/putaway",
-
 
     /*客户中心*/
     "client_index"=>"admin/Client/index",
 
-
-
-    /*广告管理*/
-    "advertising_index"=>"admin/Advertising/index",
-    "advertising_add"=>"admin/Advertising/add",
-    "advertising_save"=>"admin/Advertising/save",
-    "advertising_del"=>"admin/Advertising/del",
-    "advertising_edit"=>"admin/Advertising/edit",
-    "advertising_updata"=>"admin/Advertising/updata",
-    "advertising_images"=>"admin/Advertising/images",
 
 
     /*设置*/
