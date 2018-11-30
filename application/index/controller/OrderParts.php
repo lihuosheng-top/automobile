@@ -99,13 +99,13 @@ class OrderParts extends Controller{
                     if(!empty($data_infomation)){
                         $coutn =count($order_undate['info']);
                         foreach ($data_infomation['name'] as $a=>$b){
-                            $end_info[$a+$coutn]['info'] = $b;
+                            $end_info[$a+$coutn]['name'] = $b;
                         }
                         foreach ($data_infomation['status'] as $a=>$b){
                             $end_info[$a+$coutn]['status'] = $b;
                         }
                         foreach ($data_infomation['all'] as $a=>$b){
-                            $end_info[$a+$coutn]['info'] = $b;
+                            $end_info[$a+$coutn]['info'][] = $b;
                         }
                     }
                         if (!empty($end_info)) {
@@ -210,13 +210,13 @@ class OrderParts extends Controller{
                     if(!empty($data_infomation)){
                         $coutn =count($order_undate['info']);
                         foreach ($data_infomation['name'] as $a=>$b){
-                            $end_info[$a+$coutn]['info'] = $b;
+                            $end_info[$a+$coutn]['name'] = $b;
                         }
                         foreach ($data_infomation['status'] as $a=>$b){
                             $end_info[$a+$coutn]['status'] = $b;
                         }
                         foreach ($data_infomation['all'] as $a=>$b){
-                            $end_info[$a+$coutn]['info'] = $b;
+                            $end_info[$a+$coutn]['info'][] = $b;
                         }
                     }
                     if (!empty($end_info)) {
@@ -316,16 +316,18 @@ class OrderParts extends Controller{
                             $end_info[$i]['status'] = $j;
                         }
                     }
+
+
                     if(!empty($data_infomation)){
                         $coutn =count($order_undate['info']);
                         foreach ($data_infomation['name'] as $a=>$b){
-                            $end_info[$a+$coutn]['info'] = $b;
+                            $end_info[$a+$coutn]['name'] = $b;
                         }
                         foreach ($data_infomation['status'] as $a=>$b){
                             $end_info[$a+$coutn]['status'] = $b;
                         }
                         foreach ($data_infomation['all'] as $a=>$b){
-                            $end_info[$a+$coutn]['info'] = $b;
+                            $end_info[$a+$coutn]['info'][] = $b;
                         }
                     }
                     if (!empty($end_info)) {
@@ -430,13 +432,13 @@ class OrderParts extends Controller{
                     if(!empty($data_infomation)){
                         $coutn =count($order_undate['info']);
                         foreach ($data_infomation['name'] as $a=>$b){
-                            $end_info[$a+$coutn]['info'] = $b;
+                            $end_info[$a+$coutn]['name'] = $b;
                         }
                         foreach ($data_infomation['status'] as $a=>$b){
                             $end_info[$a+$coutn]['status'] = $b;
                         }
                         foreach ($data_infomation['all'] as $a=>$b){
-                            $end_info[$a+$coutn]['info'] = $b;
+                            $end_info[$a+$coutn]['info'][] = $b;
                         }
                     }
                     if (!empty($end_info)) {
@@ -537,13 +539,13 @@ class OrderParts extends Controller{
                     if(!empty($data_infomation)){
                         $coutn =count($order_undate['info']);
                         foreach ($data_infomation['name'] as $a=>$b){
-                            $end_info[$a+$coutn]['info'] = $b;
+                            $end_info[$a+$coutn]['name'] = $b;
                         }
                         foreach ($data_infomation['status'] as $a=>$b){
                             $end_info[$a+$coutn]['status'] = $b;
                         }
                         foreach ($data_infomation['all'] as $a=>$b){
-                            $end_info[$a+$coutn]['info'] = $b;
+                            $end_info[$a+$coutn]['info'][] = $b;
                         }
                     }
                     if (!empty($end_info)) {
