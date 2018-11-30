@@ -434,6 +434,7 @@ body {
                     <tr>
                         <th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
                         <th>订单编号</th>
+                        <th>店铺名称</th>
                         <th>商品图片</th>
                         <th>商品名称</th>
                         <th>订单数量</th>
@@ -450,6 +451,7 @@ body {
                     <tr>
                         <td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$vo.id}"></td>
                         <td>{$vo.parts_order_number}</td>
+                        <td>{$vo.store_name}</td>
                         <td style="width: 40px; height: 40px;"><img src="__UPLOADS__/{$vo.gimages}" /></td>
                         <td>{$vo.parts_goods_name}</td>
                         <td>{$vo.order_quantity}</td>

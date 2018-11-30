@@ -64,7 +64,6 @@ class OrderParts extends Controller{
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
                                 $order_undate['status'][] = $names['status'];
-
                             }
                         }
                         else{
@@ -76,24 +75,22 @@ class OrderParts extends Controller{
                     };
                     if (!empty($order_undate)) {
                         foreach ($order_undate['info'] as $i => $j) {
-                            $end_info[$i]['info'] = $j;
+                            if(!empty($j)){
+                                $end_info[$i]['info'] = $j;
+                            }
+
                         }
                         foreach ($order_undate['store_name'] as $i => $j) {
-                            $end_info[$i]['store_name'] = $j;
+                            if(!empty($j)){
+                                $end_info[$i]['store_name'] = $j;
+                            }
+
                         }
                         foreach ($order_undate['status'] as $i => $j) {
-                            $end_info[$i]['status'] = $j;
-                        }
-                    }
-                    if (!empty($order_undate)) {
-                        foreach ($order_undate['info'] as $i => $j) {
-                            $end_info[$i]['info'] = $j;
-                        }
-                        foreach ($order_undate['store_name'] as $i => $j) {
-                            $end_info[$i]['store_name'] = $j;
-                        }
-                        foreach ($order_undate['status'] as $i => $j) {
-                            $end_info[$i]['status'] = $j;
+                            if(!empty($j)){
+                                $end_info[$i]['status'] = $j;
+                            }
+
                         }
                     }
                     if(!empty($data_infomation)){
@@ -187,24 +184,13 @@ class OrderParts extends Controller{
                     };
                     if (!empty($order_undate)) {
                         foreach ($order_undate['info'] as $i => $j) {
-                            $end_info[$i]['info'] = $j;
+                                $end_info[$i]['info'] = $j;
                         }
                         foreach ($order_undate['store_name'] as $i => $j) {
-                            $end_info[$i]['store_name'] = $j;
+                                $end_info[$i]['store_name'] = $j;
                         }
                         foreach ($order_undate['status'] as $i => $j) {
-                            $end_info[$i]['status'] = $j;
-                        }
-                    }
-                    if (!empty($order_undate)) {
-                        foreach ($order_undate['info'] as $i => $j) {
-                            $end_info[$i]['info'] = $j;
-                        }
-                        foreach ($order_undate['store_name'] as $i => $j) {
-                            $end_info[$i]['store_name'] = $j;
-                        }
-                        foreach ($order_undate['status'] as $i => $j) {
-                            $end_info[$i]['status'] = $j;
+                                $end_info[$i]['status'] = $j;
                         }
                     }
                     if(!empty($data_infomation)){
@@ -294,26 +280,16 @@ class OrderParts extends Controller{
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
+
                     if (!empty($order_undate)) {
                         foreach ($order_undate['info'] as $i => $j) {
-                            $end_info[$i]['info'] = $j;
+                                $end_info[$i]['info'] = $j;
                         }
                         foreach ($order_undate['store_name'] as $i => $j) {
-                            $end_info[$i]['store_name'] = $j;
+                                $end_info[$i]['store_name'] = $j;
                         }
                         foreach ($order_undate['status'] as $i => $j) {
-                            $end_info[$i]['status'] = $j;
-                        }
-                    }
-                    if (!empty($order_undate)) {
-                        foreach ($order_undate['info'] as $i => $j) {
-                            $end_info[$i]['info'] = $j;
-                        }
-                        foreach ($order_undate['store_name'] as $i => $j) {
-                            $end_info[$i]['store_name'] = $j;
-                        }
-                        foreach ($order_undate['status'] as $i => $j) {
-                            $end_info[$i]['status'] = $j;
+                                $end_info[$i]['status'] = $j;
                         }
                     }
 
@@ -409,24 +385,13 @@ class OrderParts extends Controller{
                     };
                     if (!empty($order_undate)) {
                         foreach ($order_undate['info'] as $i => $j) {
-                            $end_info[$i]['info'] = $j;
+                                $end_info[$i]['info'] = $j;
                         }
                         foreach ($order_undate['store_name'] as $i => $j) {
-                            $end_info[$i]['store_name'] = $j;
+                                $end_info[$i]['store_name'] = $j;
                         }
                         foreach ($order_undate['status'] as $i => $j) {
-                            $end_info[$i]['status'] = $j;
-                        }
-                    }
-                    if (!empty($order_undate)) {
-                        foreach ($order_undate['info'] as $i => $j) {
-                            $end_info[$i]['info'] = $j;
-                        }
-                        foreach ($order_undate['store_name'] as $i => $j) {
-                            $end_info[$i]['store_name'] = $j;
-                        }
-                        foreach ($order_undate['status'] as $i => $j) {
-                            $end_info[$i]['status'] = $j;
+                                $end_info[$i]['status'] = $j;
                         }
                     }
                     if(!empty($data_infomation)){
@@ -525,17 +490,7 @@ class OrderParts extends Controller{
                             $end_info[$i]['status'] = $j;
                         }
                     }
-                    if (!empty($order_undate)) {
-                        foreach ($order_undate['info'] as $i => $j) {
-                            $end_info[$i]['info'] = $j;
-                        }
-                        foreach ($order_undate['store_name'] as $i => $j) {
-                            $end_info[$i]['store_name'] = $j;
-                        }
-                        foreach ($order_undate['status'] as $i => $j) {
-                            $end_info[$i]['status'] = $j;
-                        }
-                    }
+
                     if(!empty($data_infomation)){
                         $coutn =count($order_undate['info']);
                         foreach ($data_infomation['name'] as $a=>$b){
@@ -559,6 +514,63 @@ class OrderParts extends Controller{
             }
         }
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单状态修改（未付款买家取消订单）
+     **************************************
+     * @param Request $request
+     */
+    public function ios_api_order_parts_no_pay_cancel(Request $request){
+        if($request->isPost()){
+            $order_id =$_POST['order_id'];
+            if(is_array($order_id)){
+                $where ='id in('.implode(',',$order_id).')';
+            }else{
+                $where ='id='.$order_id;
+            }
+            if(!empty($order_id)){
+                $res =Db::name('order_parts')->where($where)->update(['status'=>9]);
+                if($res){
+                    return ajax_success('订单取消成功',['status'=>1]);
+                }else{
+                    return ajax_error('订单取消失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单状态修改（买家确认收货）
+     **************************************
+     * @param Request $request
+     */
+    public function ios_api_order_parts_collect_goods(Request $request){
+        if($request->isPost()){
+            $order_id =$_POST['order_id'];
+            if(is_array($order_id)){
+                $where ='id in('.implode(',',$order_id).')';
+            }else{
+                $where ='id='.$order_id;
+            }
+            if(!empty($order_id)){
+                $res =Db::name('order_parts')->where($where)->update(['status'=>7]);
+                if($res){
+                    return ajax_success('确认收货成功',['status'=>1]);
+                }else{
+                    return ajax_error('确认收货失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
+
+
+
+
 
     /**
      **************李火生*******************
@@ -604,6 +616,7 @@ class OrderParts extends Controller{
             }
         }
     }
+
 
 
 }

@@ -130,6 +130,8 @@ Route::group("",[
     "ios_api_order_wait_evaluate"=>"index/OrderParts/ios_api_order_wait_evaluate", //待评价接口（ajax）
     "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货页面
     "ios_api_order_parts_return_goods"=>"index/OrderParts/ios_api_order_parts_return_goods",//退货接口ajax
+    "ios_api_order_parts_no_pay_cancel"=>"index/OrderParts/ios_api_order_parts_no_pay_cancel",//买家未付款取消订单接口(ajax)
+    "ios_api_order_parts_collect_goods"=>"index/OrderParts/ios_api_order_parts_collect_goods",//配件商订单状态修改（买家确认收货）（ajax）
     /*TODO:配件商订单状态结束*/
 
     /*TODO:服务商订单状态开始*/
@@ -143,6 +145,12 @@ Route::group("",[
     "ios_api_order_service_wait_evaluate"=>"index/OrderService/ios_api_order_service_wait_evaluate", //待评价接口（ajax）
     "order_service_return_goods"=>"index/OrderService/order_service_return_goods",//退货页面
     "ios_api_order_service_return_goods"=>"index/OrderService/ios_api_order_service_return_goods",//退货页面接口（ajax）
+    /*修改状态值*/
+    "ios_api_order_service_no_pay_cancel"=>"index/OrderService/ios_api_order_service_no_pay_cancel",//买家未付款取消订单接口(ajax)
+    "ios_api_order_service_already_served"=>"index/OrderService/ios_api_order_service_already_served",//买家服务商订单买家确认服务（ajax）
+
+
+
     /*TODO:服务商订单状态结束*/
 
 
@@ -421,13 +429,19 @@ Route::group("admin",[
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",
-    "express_index"=>"admin/Install/express_index",
-    "express_add"=>"admin/Install/express_add",
-    "express_edit"=>"admin/Install/express_edit",
-    "express_save"=>"admin/Install/express_save",
 
 
+     /*快递员列表*/
+    "express_index"=>"admin/Install/express_index",   //快递员列表显示
+    "express_add"=>"admin/Install/express_add",       //添加快递员列表
+    "express_edit"=>"admin/Install/express_edit",     //快递员列表组编辑
+    "express_save"=>"admin/Install/express_save",     //快递员组保存入库
+    "express_updata"=>"admin/Install/express_updata", //快递员列表组更新
+    "express_delete"=>"admin/Install/express_delete", //快递员列表组删除
+    "express_search"=>"admin/Install/express_search", //快递员列表组搜索
+    "express_dels"=>"admin/Install/express_dels",     //快递员列表组批量删除
 
+    
     /*商品品牌*/
     "brand_index"=>"admin/Brand/index",
     "brand_add"=>"admin/Brand/add",
