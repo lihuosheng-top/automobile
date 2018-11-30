@@ -34,9 +34,6 @@ class OrderParts extends Controller{
     {
         if ($request->isPost()) {
             $datas = session('member');
-//        $datas =[
-//            'phone_num'=>'18998906797'
-//        ];
             if (!empty($datas)) {
                 $member_id = Db::name('user')->field('id')->where('phone_num', $datas['phone_num'])->find();
                 if (!empty($datas)) {
@@ -46,7 +43,6 @@ class OrderParts extends Controller{
                         ->order('order_create_time', 'desc')
                         ->group('parts_order_number')
                         ->select();
-                    dump($data);
                     foreach ($data as $key => $value) {
                         if (strpos($value['order_parts_id'], ',')) {
                             $order_id = explode(',', $value['order_parts_id']);
@@ -58,7 +54,7 @@ class OrderParts extends Controller{
                             }
                             $da_store_id = array_unique($order_store_id); //去重之后的商户
                             foreach ($da_store_id as $da_k => $da_v) {
-                                $order_undate['info'][$da_k] = Db::name('order_parts')
+                                $order_undate['info'][] = Db::name('order_parts')
                                     ->where('store_id', $da_v)
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->select();
@@ -66,28 +62,16 @@ class OrderParts extends Controller{
                                     ->where('store_id', $da_v)
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
-                                $order_undate['store_name'][$da_k] = $names['store_name'];
-                                $order_undate['status'][$da_k] = $names['status'];
+                                $order_undate['store_name'][] = $names['store_name'];
+                                $order_undate['status'][] = $names['status'];
 
-                            }
-                            if (!empty($order_undate)) {
-                                foreach ($order_undate['info'] as $i => $j) {
-                                    $end_info[$key][$i]['info'] = $j;
-                                }
-                                foreach ($order_undate['store_name'] as $i => $j) {
-                                    $end_info[$key][$i]['store_name'] = $j;
-                                }
-                                foreach ($order_undate['status'] as $i => $j) {
-                                    $end_info[$key][$i]['status'] = $j;
-                                }
                             }
                         }
                         else{
-                            $return_data = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
-
-                            $end_info[$key]['store_name'] = $return_data['store_name'];
-                            $end_info[$key]['status'] = $return_data['status'];
-                            $end_info[$key]['info'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $data_infomation['name'][]= $return_datas['store_name'];
+                            $data_infomation['status'][] = $return_datas['status'];
+                            $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
                     if (!empty($order_undate)) {
@@ -101,43 +85,34 @@ class OrderParts extends Controller{
                             $end_info[$i]['status'] = $j;
                         }
                     }
+                    if (!empty($order_undate)) {
+                        foreach ($order_undate['info'] as $i => $j) {
+                            $end_info[$i]['info'] = $j;
+                        }
+                        foreach ($order_undate['store_name'] as $i => $j) {
+                            $end_info[$i]['store_name'] = $j;
+                        }
+                        foreach ($order_undate['status'] as $i => $j) {
+                            $end_info[$i]['status'] = $j;
+                        }
+                    }
+                    if(!empty($data_infomation)){
+                        $coutn =count($order_undate['info']);
+                        foreach ($data_infomation['name'] as $a=>$b){
+                            $end_info[$a+$coutn]['info'] = $b;
+                        }
+                        foreach ($data_infomation['status'] as $a=>$b){
+                            $end_info[$a+$coutn]['status'] = $b;
+                        }
+                        foreach ($data_infomation['all'] as $a=>$b){
+                            $end_info[$a+$coutn]['info'] = $b;
+                        }
+                    }
                         if (!empty($end_info)) {
                             return ajax_success('数据', $end_info);
                         } else {
                             return ajax_error('没数据');
                         }
-//                if(!empty($data)){
-//                    foreach ($data as $k=>$v){
-//                        $all_id[] =$v['order_parts_id'];
-//                    }
-//                    foreach ($all_id as $key=>$value){
-//                        if(strpos($value,',')){
-//                            $result =explode(',',$value);
-//                            foreach ($result as $ks=>$vs){
-//                                $data_return[$key][] =Db::name('order_parts')->where('id',$vs)->find();
-//                            }
-//                        }else{
-//                            $data_return[$key][] =Db::name('order_parts')->where('id',$value)->find();
-//                        }
-//                    }
-//                    foreach ($data_return as $keys=>$values){
-////                        dump($values);
-//                        foreach ($values as $ke=>$item){
-////                            $newArr =[];
-//                           $newArr[$keys][$item['store_name']][] = $item;
-//                        }
-//                    }
-////                    dump($newArr);
-//                    if(!empty($newArr)){
-//                        return ajax_success('全部信息返回成功',$newArr);
-//                    }else{
-//                        return ajax_error('没有订单',['status'=>0]);
-//                    }
-//                }else{
-//                    return ajax_error('没有订单',['status'=>0]);
-//                }
-
-
                     } else {
                     return ajax_error('请登录', ['status' => 0]);
                 }
@@ -166,45 +141,92 @@ class OrderParts extends Controller{
      * @param Request $request
      */
     public function   ios_api_order_parts_wait_pay(Request $request){
-        if($request->isPost()){
-            $datas =session('member');
-            if(!empty($datas)){
-                $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
-                if(!empty($datas)){
-                    $data =Db::name('order_parts')
+
+        if ($request->isPost()) {
+            $datas = session('member');
+            if (!empty($datas)) {
+                $member_id = Db::name('user')->field('id')->where('phone_num', $datas['phone_num'])->find();
+                if (!empty($datas)) {
+                    $data = Db::name('order_parts')
                         ->field('parts_order_number,group_concat(id) order_parts_id')
-                        ->where('user_id',$member_id['id'])
+                        ->where('user_id', $member_id['id'])
                         ->where('status',1)
-                        ->order('order_create_time','desc')
+                        ->order('order_create_time', 'desc')
                         ->group('parts_order_number')
                         ->select();
-                    if(!empty($data)){
-                        foreach ($data as $k=>$v){
-                            $all_id[] =$v['order_parts_id'];
-                        }
-                        foreach ($all_id as $key=>$value){
-                            if(strpos($value,',')){
-                                $result =explode(',',$value);
-                                foreach ($result as $ks=>$vs){
-                                    $data_return[$key][] =Db::name('order_parts')->where('id',$vs)->find();
-                                }
-                            }else{
-                                $data_return[$key][] =Db::name('order_parts')->where('id',$value)->find();
+                    foreach ($data as $key => $value) {
+                        if (strpos($value['order_parts_id'], ',')) {
+                            $order_id = explode(',', $value['order_parts_id']);
+                            foreach ($order_id as $k => $v) {
+                                $return_data[] = Db::name('order_parts')->where('id', $v)->find();
+                            }
+                            foreach ($return_data as $ke => $item) {
+                                $order_store_id[] = $item['store_id'];
+                            }
+                            $da_store_id = array_unique($order_store_id); //去重之后的商户
+                            foreach ($da_store_id as $da_k => $da_v) {
+                                $order_undate['info'][] = Db::name('order_parts')
+                                    ->where('store_id', $da_v)
+                                    ->where('parts_order_number', $value['parts_order_number'])
+                                    ->select();
+                                $names = Db::name('order_parts')
+                                    ->where('store_id', $da_v)
+                                    ->where('parts_order_number', $value['parts_order_number'])
+                                    ->find();
+                                $order_undate['store_name'][] = $names['store_name'];
+                                $order_undate['status'][] = $names['status'];
+
                             }
                         }
-                        if(!empty($data_return)){
-                            return ajax_success('全部信息返回成功',$data_return);
-                        }else{
-                            return ajax_error('没有订单',['status'=>0]);
+                        else{
+                            $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $data_infomation['name'][]= $return_datas['store_name'];
+                            $data_infomation['status'][] = $return_datas['status'];
+                            $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
-                    }else{
-                        return ajax_error('没有订单',['status'=>0]);
+                    };
+                    if (!empty($order_undate)) {
+                        foreach ($order_undate['info'] as $i => $j) {
+                            $end_info[$i]['info'] = $j;
+                        }
+                        foreach ($order_undate['store_name'] as $i => $j) {
+                            $end_info[$i]['store_name'] = $j;
+                        }
+                        foreach ($order_undate['status'] as $i => $j) {
+                            $end_info[$i]['status'] = $j;
+                        }
                     }
-
-
+                    if (!empty($order_undate)) {
+                        foreach ($order_undate['info'] as $i => $j) {
+                            $end_info[$i]['info'] = $j;
+                        }
+                        foreach ($order_undate['store_name'] as $i => $j) {
+                            $end_info[$i]['store_name'] = $j;
+                        }
+                        foreach ($order_undate['status'] as $i => $j) {
+                            $end_info[$i]['status'] = $j;
+                        }
+                    }
+                    if(!empty($data_infomation)){
+                        $coutn =count($order_undate['info']);
+                        foreach ($data_infomation['name'] as $a=>$b){
+                            $end_info[$a+$coutn]['info'] = $b;
+                        }
+                        foreach ($data_infomation['status'] as $a=>$b){
+                            $end_info[$a+$coutn]['status'] = $b;
+                        }
+                        foreach ($data_infomation['all'] as $a=>$b){
+                            $end_info[$a+$coutn]['info'] = $b;
+                        }
+                    }
+                    if (!empty($end_info)) {
+                        return ajax_success('数据', $end_info);
+                    } else {
+                        return ajax_error('没数据');
+                    }
+                } else {
+                    return ajax_error('请登录', ['status' => 0]);
                 }
-            }else{
-                return ajax_error('请登录',['status'=>0]);
             }
         }
     }
@@ -228,45 +250,92 @@ class OrderParts extends Controller{
      * @param Request $request
      */
     public function   ios_api_order_wait_deliver(Request $request){
-        if($request->isPost()){
-            $datas =session('member');
-            if(!empty($datas)){
-                $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
-                if(!empty($datas)){
+        if ($request->isPost()) {
+            $datas = session('member');
+            if (!empty($datas)) {
+                $member_id = Db::name('user')->field('id')->where('phone_num', $datas['phone_num'])->find();
+                if (!empty($datas)) {
                     $condition ="`status` = '2' or `status` = '3' or `status` = '4' or `status` = '5' ";
-                    $data =Db::name('order_parts')
+                    $data = Db::name('order_parts')
                         ->field('parts_order_number,group_concat(id) order_parts_id')
-                        ->where('user_id',$member_id['id'])
+                        ->where('user_id', $member_id['id'])
                         ->where($condition)
-                        ->order('order_create_time','desc')
+                        ->order('order_create_time', 'desc')
                         ->group('parts_order_number')
                         ->select();
-                    if(!empty($data)){
-                        foreach ($data as $k=>$v){
-                            $all_id[] =$v['order_parts_id'];
-                        }
-                        foreach ($all_id as $key=>$value){
-                            if(strpos($value,',')){
-                                $result =explode(',',$value);
-                                foreach ($result as $ks=>$vs){
-                                    $data_return[$key][] =Db::name('order_parts')->where('id',$vs)->find();
-                                }
-                            }else{
-                                $data_return[$key][] =Db::name('order_parts')->where('id',$value)->find();
+                    foreach ($data as $key => $value) {
+                        if (strpos($value['order_parts_id'], ',')) {
+                            $order_id = explode(',', $value['order_parts_id']);
+                            foreach ($order_id as $k => $v) {
+                                $return_data[] = Db::name('order_parts')->where('id', $v)->find();
+                            }
+                            foreach ($return_data as $ke => $item) {
+                                $order_store_id[] = $item['store_id'];
+                            }
+                            $da_store_id = array_unique($order_store_id); //去重之后的商户
+                            foreach ($da_store_id as $da_k => $da_v) {
+                                $order_undate['info'][] = Db::name('order_parts')
+                                    ->where('store_id', $da_v)
+                                    ->where('parts_order_number', $value['parts_order_number'])
+                                    ->select();
+                                $names = Db::name('order_parts')
+                                    ->where('store_id', $da_v)
+                                    ->where('parts_order_number', $value['parts_order_number'])
+                                    ->find();
+                                $order_undate['store_name'][] = $names['store_name'];
+                                $order_undate['status'][] = $names['status'];
+
                             }
                         }
-                        if(!empty($data_return)){
-                            return ajax_success('全部信息返回成功',$data_return);
-                        }else{
-                            return ajax_error('没有订单',['status'=>0]);
+                        else{
+                            $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $data_infomation['name'][]= $return_datas['store_name'];
+                            $data_infomation['status'][] = $return_datas['status'];
+                            $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
-                    }else{
-                        return ajax_error('没有订单',['status'=>0]);
+                    };
+                    if (!empty($order_undate)) {
+                        foreach ($order_undate['info'] as $i => $j) {
+                            $end_info[$i]['info'] = $j;
+                        }
+                        foreach ($order_undate['store_name'] as $i => $j) {
+                            $end_info[$i]['store_name'] = $j;
+                        }
+                        foreach ($order_undate['status'] as $i => $j) {
+                            $end_info[$i]['status'] = $j;
+                        }
                     }
-
+                    if (!empty($order_undate)) {
+                        foreach ($order_undate['info'] as $i => $j) {
+                            $end_info[$i]['info'] = $j;
+                        }
+                        foreach ($order_undate['store_name'] as $i => $j) {
+                            $end_info[$i]['store_name'] = $j;
+                        }
+                        foreach ($order_undate['status'] as $i => $j) {
+                            $end_info[$i]['status'] = $j;
+                        }
+                    }
+                    if(!empty($data_infomation)){
+                        $coutn =count($order_undate['info']);
+                        foreach ($data_infomation['name'] as $a=>$b){
+                            $end_info[$a+$coutn]['info'] = $b;
+                        }
+                        foreach ($data_infomation['status'] as $a=>$b){
+                            $end_info[$a+$coutn]['status'] = $b;
+                        }
+                        foreach ($data_infomation['all'] as $a=>$b){
+                            $end_info[$a+$coutn]['info'] = $b;
+                        }
+                    }
+                    if (!empty($end_info)) {
+                        return ajax_success('数据', $end_info);
+                    } else {
+                        return ajax_error('没数据');
+                    }
+                } else {
+                    return ajax_error('请登录', ['status' => 0]);
                 }
-            }else{
-                return ajax_error('请登录',['status'=>0]);
             }
         }
     }
@@ -292,45 +361,92 @@ class OrderParts extends Controller{
      * @param Request $request
      */
     public function   ios_api_order_wait_evaluate(Request $request){
-        if($request->isPost()){
-            $datas =session('member');
-            if(!empty($datas)){
-                $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
-                if(!empty($datas)){
+        if ($request->isPost()) {
+            $datas = session('member');
+            if (!empty($datas)) {
+                $member_id = Db::name('user')->field('id')->where('phone_num', $datas['phone_num'])->find();
+                if (!empty($datas)) {
                     $condition ="`status` = '6' or `status` = '7'";
-                    $data =Db::name('order_parts')
+                    $data = Db::name('order_parts')
                         ->field('parts_order_number,group_concat(id) order_parts_id')
-                        ->where('user_id',$member_id['id'])
+                        ->where('user_id', $member_id['id'])
                         ->where($condition)
-                        ->order('order_create_time','desc')
+                        ->order('order_create_time', 'desc')
                         ->group('parts_order_number')
                         ->select();
-                    if(!empty($data)){
-                        foreach ($data as $k=>$v){
-                            $all_id[] =$v['order_parts_id'];
-                        }
-                        foreach ($all_id as $key=>$value){
-                            if(strpos($value,',')){
-                                $result =explode(',',$value);
-                                foreach ($result as $ks=>$vs){
-                                    $data_return[$key][] =Db::name('order_parts')->where('id',$vs)->find();
-                                }
-                            }else{
-                                $data_return[$key][] =Db::name('order_parts')->where('id',$value)->find();
+                    foreach ($data as $key => $value) {
+                        if (strpos($value['order_parts_id'], ',')) {
+                            $order_id = explode(',', $value['order_parts_id']);
+                            foreach ($order_id as $k => $v) {
+                                $return_data[] = Db::name('order_parts')->where('id', $v)->find();
+                            }
+                            foreach ($return_data as $ke => $item) {
+                                $order_store_id[] = $item['store_id'];
+                            }
+                            $da_store_id = array_unique($order_store_id); //去重之后的商户
+                            foreach ($da_store_id as $da_k => $da_v) {
+                                $order_undate['info'][] = Db::name('order_parts')
+                                    ->where('store_id', $da_v)
+                                    ->where('parts_order_number', $value['parts_order_number'])
+                                    ->select();
+                                $names = Db::name('order_parts')
+                                    ->where('store_id', $da_v)
+                                    ->where('parts_order_number', $value['parts_order_number'])
+                                    ->find();
+                                $order_undate['store_name'][] = $names['store_name'];
+                                $order_undate['status'][] = $names['status'];
+
                             }
                         }
-                        if(!empty($data_return)){
-                            return ajax_success('全部信息返回成功',$data_return);
-                        }else{
-                            return ajax_error('没有订单',['status'=>0]);
+                        else{
+                            $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $data_infomation['name'][]= $return_datas['store_name'];
+                            $data_infomation['status'][] = $return_datas['status'];
+                            $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
-                    }else{
-                        return ajax_error('没有订单',['status'=>0]);
+                    };
+                    if (!empty($order_undate)) {
+                        foreach ($order_undate['info'] as $i => $j) {
+                            $end_info[$i]['info'] = $j;
+                        }
+                        foreach ($order_undate['store_name'] as $i => $j) {
+                            $end_info[$i]['store_name'] = $j;
+                        }
+                        foreach ($order_undate['status'] as $i => $j) {
+                            $end_info[$i]['status'] = $j;
+                        }
                     }
-
+                    if (!empty($order_undate)) {
+                        foreach ($order_undate['info'] as $i => $j) {
+                            $end_info[$i]['info'] = $j;
+                        }
+                        foreach ($order_undate['store_name'] as $i => $j) {
+                            $end_info[$i]['store_name'] = $j;
+                        }
+                        foreach ($order_undate['status'] as $i => $j) {
+                            $end_info[$i]['status'] = $j;
+                        }
+                    }
+                    if(!empty($data_infomation)){
+                        $coutn =count($order_undate['info']);
+                        foreach ($data_infomation['name'] as $a=>$b){
+                            $end_info[$a+$coutn]['info'] = $b;
+                        }
+                        foreach ($data_infomation['status'] as $a=>$b){
+                            $end_info[$a+$coutn]['status'] = $b;
+                        }
+                        foreach ($data_infomation['all'] as $a=>$b){
+                            $end_info[$a+$coutn]['info'] = $b;
+                        }
+                    }
+                    if (!empty($end_info)) {
+                        return ajax_success('数据', $end_info);
+                    } else {
+                        return ajax_error('没数据');
+                    }
+                } else {
+                    return ajax_error('请登录', ['status' => 0]);
                 }
-            }else{
-                return ajax_error('请登录',['status'=>0]);
             }
         }
     }
@@ -353,45 +469,91 @@ class OrderParts extends Controller{
      * @param Request $request
      */
     public function ios_api_order_parts_return_goods(Request $request){
-        if($request->isPost()){
-            $datas =session('member');
-            if(!empty($datas)){
-                $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
-                if(!empty($datas)){
-                    $data =Db::name('order_parts')
+        if ($request->isPost()) {
+            $datas = session('member');
+            if (!empty($datas)) {
+                $member_id = Db::name('user')->field('id')->where('phone_num', $datas['phone_num'])->find();
+                if (!empty($datas)) {
+                    $data = Db::name('order_parts')
                         ->field('parts_order_number,group_concat(id) order_parts_id')
-                        ->where('user_id',$member_id['id'])
+                        ->where('user_id', $member_id['id'])
                         ->where('status',11)
-                        ->order('order_create_time','desc')
+                        ->order('order_create_time', 'desc')
                         ->group('parts_order_number')
                         ->select();
-                    if(!empty($data)){
-                        foreach ($data as $k=>$v){
-                            $all_id[] =$v['order_parts_id'];
-                        }
-                        foreach ($all_id as $key=>$value){
-                            if(strpos($value,',')){
-                                $result =explode(',',$value);
-                                foreach ($result as $ks=>$vs){
-                                    $data_return[$key][] =Db::name('order_parts')->where('id',$vs)->find();
-                                }
-                            }else{
-                                $data_return[$key][] =Db::name('order_parts')->where('id',$value)->find();
+                    foreach ($data as $key => $value) {
+                        if (strpos($value['order_parts_id'], ',')) {
+                            $order_id = explode(',', $value['order_parts_id']);
+                            foreach ($order_id as $k => $v) {
+                                $return_data[] = Db::name('order_parts')->where('id', $v)->find();
+                            }
+                            foreach ($return_data as $ke => $item) {
+                                $order_store_id[] = $item['store_id'];
+                            }
+                            $da_store_id = array_unique($order_store_id); //去重之后的商户
+                            foreach ($da_store_id as $da_k => $da_v) {
+                                $order_undate['info'][] = Db::name('order_parts')
+                                    ->where('store_id', $da_v)
+                                    ->where('parts_order_number', $value['parts_order_number'])
+                                    ->select();
+                                $names = Db::name('order_parts')
+                                    ->where('store_id', $da_v)
+                                    ->where('parts_order_number', $value['parts_order_number'])
+                                    ->find();
+                                $order_undate['store_name'][] = $names['store_name'];
+                                $order_undate['status'][] = $names['status'];
+
                             }
                         }
-                        if(!empty($data_return)){
-                            return ajax_success('全部信息返回成功',$data_return);
-                        }else{
-                            return ajax_error('没有订单',['status'=>0]);
+                        else{
+                            $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $data_infomation['name'][]= $return_datas['store_name'];
+                            $data_infomation['status'][] = $return_datas['status'];
+                            $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
-                    }else{
-                        return ajax_error('没有订单',['status'=>0]);
+                    };
+                    if (!empty($order_undate)) {
+                        foreach ($order_undate['info'] as $i => $j) {
+                            $end_info[$i]['info'] = $j;
+                        }
+                        foreach ($order_undate['store_name'] as $i => $j) {
+                            $end_info[$i]['store_name'] = $j;
+                        }
+                        foreach ($order_undate['status'] as $i => $j) {
+                            $end_info[$i]['status'] = $j;
+                        }
                     }
-
-
+                    if (!empty($order_undate)) {
+                        foreach ($order_undate['info'] as $i => $j) {
+                            $end_info[$i]['info'] = $j;
+                        }
+                        foreach ($order_undate['store_name'] as $i => $j) {
+                            $end_info[$i]['store_name'] = $j;
+                        }
+                        foreach ($order_undate['status'] as $i => $j) {
+                            $end_info[$i]['status'] = $j;
+                        }
+                    }
+                    if(!empty($data_infomation)){
+                        $coutn =count($order_undate['info']);
+                        foreach ($data_infomation['name'] as $a=>$b){
+                            $end_info[$a+$coutn]['info'] = $b;
+                        }
+                        foreach ($data_infomation['status'] as $a=>$b){
+                            $end_info[$a+$coutn]['status'] = $b;
+                        }
+                        foreach ($data_infomation['all'] as $a=>$b){
+                            $end_info[$a+$coutn]['info'] = $b;
+                        }
+                    }
+                    if (!empty($end_info)) {
+                        return ajax_success('数据', $end_info);
+                    } else {
+                        return ajax_error('没数据');
+                    }
+                } else {
+                    return ajax_error('请登录', ['status' => 0]);
                 }
-            }else{
-                return ajax_error('请登录',['status'=>0]);
             }
         }
     }
