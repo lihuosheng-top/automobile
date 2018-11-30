@@ -237,7 +237,8 @@ class OrderService extends Controller{
      * service_money                //服务金额
      **************************************
      */
-    public function  ios_api_order_service_button(Request $request){
+    public function  ios_api_order_service_button(Request $request)
+    {
         if ($request->isPost()) {
             $data = $_POST;
             $member_data = session('member');
@@ -248,7 +249,7 @@ class OrderService extends Controller{
                 $create_time = time();
                 if (!empty($data)) {
                     $datas = [
-                        'service_goods_id'=>$goods_data['id'],//服务项目ID
+                        'service_goods_id' => $goods_data['id'],//服务项目ID
                         'service_goods_name' => $goods_data['vehicle_model'], //车型
                         'service_order_quantitative' => $data['service_order_quantitative'],      //订单数量
 //                        'service_order_quantitative' => 1,      //订单数量

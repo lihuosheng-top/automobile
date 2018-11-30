@@ -41,6 +41,7 @@ Route::group("",[
     /*服务订单*/
     "shop_order"=>"index/OrderService/shop_order",//预约服务 详情
 
+
     /*TODO:服务商订单开始*/
     "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_order_service_button"=>"index/OrderService/ios_api_order_service_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
@@ -70,6 +71,7 @@ Route::group("",[
 
 
     "setting"=>"index/My/setting",//设置
+
 
     /*TODO:注册开始*/
     "register"=>"index/Register/index",//注册页面
