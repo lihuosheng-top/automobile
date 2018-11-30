@@ -25,7 +25,7 @@ class Order extends Controller{
      **************************************
      */
     public function index(){
-
+        get_user_id_by_session();
         $order_parts_data =Db::table('tb_order_parts')
             ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
             ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
