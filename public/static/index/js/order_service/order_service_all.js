@@ -9,7 +9,8 @@ var app = new Vue({
 $('.tabs button').click(function(){
     var $index = $(this).index();
     switch($index){
-        case 0:break;
+        case 0:
+            location.href = 'order_service_all';break;
         case 1:
             location.href = 'order_service_wait_pay';break;
         case 2:
