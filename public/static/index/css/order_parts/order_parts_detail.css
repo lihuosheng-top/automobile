@@ -1,0 +1,217 @@
+.place-order-pop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #f4f4f4;
+    z-index: 2;
+}
+.place-order-header{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    z-index: 2;
+}
+.place-order-header .place-order-back{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    width: .25rem;
+    height: .43rem;
+    margin-top: -.22rem;
+    background-position: -.5rem -.5rem;
+}
+.place-order-header .place-order-title{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    text-align: center;
+    font-size: .36rem;
+    font-weight: normal;
+}
+.order-detail-box{
+    height: 100%;
+    padding: .89rem 0 1.2rem;
+    box-sizing: border-box;
+    overflow: auto;
+}
+.order-detail-box .order-detail-bg{
+    width: 100%;
+    height: 2.2rem;
+    background: url(../../image/my_bg4.png) no-repeat;
+    background-size: 100% 100%;
+    padding: 0 .3rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+.order-detail-box .order-detail-bg div{
+    color: #fff;
+    font-size: .32rem;
+    margin-top: .4rem;
+}
+.order-detail-box .user-info-box{
+    width: 96%;
+    background-color: #fff;
+    border-radius: .2rem;
+    box-shadow: 0 2px 10px rgba(200, 200, 200, 1);
+    padding: .45rem .42rem;
+    box-sizing: border-box;
+    margin: -.8rem auto 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    color: #333;
+}
+.user-info-box .user-name-phone,
+.user-info-box .user-address{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: .26rem;
+    color: #333333;
+}
+.user-info-box .user-address .address-txt{
+    flex: 1;
+    line-height: normal;
+}
+.order-goods-info{
+    width: 96%;
+    padding: .45rem .42rem;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: .2rem;
+    margin: .3rem auto 0;
+    box-shadow: 0 2px 10px rgba(200, 200, 200, 1);
+}
+.order-goods-info .order-shop-box{
+    margin-bottom: .1rem;
+}
+.order-goods-info .icon-shop{
+    display: inline-block;
+    width: .3rem;
+    height: .29rem;
+    background-position: -5.6rem -1rem;
+    vertical-align: text-bottom;
+}
+.order-goods-info .order-goods-detail{
+    display: flex;
+    margin-bottom: .3rem;
+}
+.order-goods-detail .order-goods-img{
+    width: 2.2rem;
+    height: 2.4rem;
+    margin-right: .2rem;
+}
+.order-goods-detail .order-goods-img img{
+    width: 100%;
+    height: 100%;
+}
+.order-goods-detail .order-info-box{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    line-height: normal;
+    font-size: .28rem;
+}
+.order-goods-detail .order-info-box .order-selling-point{
+    font-size: .24rem;
+}
+.order-goods-detail .order-info-box .unit-price-quantity{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.order-info-box .unit-price-quantity .unit-price-p{
+    font-size: .32rem;
+    color: #f00;
+}
+.sundry{
+    width: 96%;
+    margin: .3rem auto 0;
+    background-color: #fff;
+    border-radius: .2rem;
+    box-shadow: 0 2px 10px rgba(200, 200, 200, 1);
+    box-sizing: border-box;
+    padding: .45rem .42rem;
+}
+.sundry .create-time,
+.sundry .pay-time{
+    font-size: .24rem;
+    color: #999;
+    margin: .1rem 0;
+}
+.sundry .contact-seller{
+    text-align: center;
+    color: #666;
+    font-size: .24rem;
+    border-top: 1px solid #eee;
+    padding-top: .25rem;
+}
+.sundry .contact-seller .icon-phone{
+    display: inline-block;
+    width: .37rem;
+    height: .38rem;
+    background-position: -3.7rem -2.45rem;
+    vertical-align: middle;
+}
+.order-payment-box{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(200, 200, 200, 1);
+    padding-right: .3rem;
+    box-sizing: border-box;
+    text-align: right;
+}
+.order-payment-box .order-cancel-btn,
+.order-payment-box .order-payment-btn{
+    width: 1.8rem;
+    height: .6rem;
+    border: 0;
+    background-color: #504cfb;
+    color: #fff;
+    font-size: .2rem;
+    outline: none;
+    border-radius: .3rem;
+}
+.order-payment-box .order-cancel-btn{
+    background-color: #fff;
+    border: 1px solid #999999;
+    color: #999999;
+}
+.cal-price-box{
+    border-bottom: 1px solid #eee;
+}
+.cal-price-box div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #999999;
+    font-size: .26rem;
+    height: .6rem;
+}
+.pay-amount{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: .2rem;
+}
+.pay-amount .pay-amount-span{
+    font-size: .3rem;
+    color: #f00;
+}

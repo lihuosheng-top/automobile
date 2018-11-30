@@ -22,6 +22,9 @@ class OrderParts extends Controller{
     public function order_parts_all(){
         return view('order_parts_all');
     }
+    public function order_parts_detail(){
+        return view('order_parts_detail');
+    }
 
     /**
      **************李火生*******************

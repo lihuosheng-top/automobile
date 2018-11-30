@@ -120,6 +120,7 @@ Route::group("",[
 
 
     /*TODO:配件商订单状态开始*/
+    "order_parts_detail"=>"index/OrderParts/order_parts_detail",//订单详情
     "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单页面
     "ios_api_order_parts_all"=>"index/OrderParts/ios_api_order_parts_all",//全部订单接口（ajax）
     "order_parts_wait_pay"=>"index/OrderParts/order_parts_wait_pay",//待付款页面
@@ -135,6 +136,7 @@ Route::group("",[
     /*TODO:配件商订单状态结束*/
 
     /*TODO:服务商订单状态开始*/
+    "order_service_detail"=>"index/OrderService/order_service_detail",//订单详情
     "order_service_all"=>"index/OrderService/order_service_all",//全部订单页面
     "ios_api_order_service_all"=>"index/OrderService/ios_api_order_service_all",//全部订单接口（ajax）
     "order_service_wait_pay"=>"index/OrderService/order_service_wait_pay",//待付款页面
