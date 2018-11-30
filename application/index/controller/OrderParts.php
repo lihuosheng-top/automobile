@@ -99,7 +99,7 @@ class OrderParts extends Controller{
                     if(!empty($data_infomation)){
                         $coutn =count($order_undate['info']);
                         foreach ($data_infomation['name'] as $a=>$b){
-                            $end_info[$a+$coutn]['name'] = $b;
+                            $end_info[$a+$coutn]['store_name'] = $b;
                         }
                         foreach ($data_infomation['status'] as $a=>$b){
                             $end_info[$a+$coutn]['status'] = $b;
@@ -210,7 +210,7 @@ class OrderParts extends Controller{
                     if(!empty($data_infomation)){
                         $coutn =count($order_undate['info']);
                         foreach ($data_infomation['name'] as $a=>$b){
-                            $end_info[$a+$coutn]['name'] = $b;
+                            $end_info[$a+$coutn]['store_name'] = $b;
                         }
                         foreach ($data_infomation['status'] as $a=>$b){
                             $end_info[$a+$coutn]['status'] = $b;
@@ -321,7 +321,7 @@ class OrderParts extends Controller{
                     if(!empty($data_infomation)){
                         $coutn =count($order_undate['info']);
                         foreach ($data_infomation['name'] as $a=>$b){
-                            $end_info[$a+$coutn]['name'] = $b;
+                            $end_info[$a+$coutn]['store_name'] = $b;
                         }
                         foreach ($data_infomation['status'] as $a=>$b){
                             $end_info[$a+$coutn]['status'] = $b;
@@ -432,7 +432,7 @@ class OrderParts extends Controller{
                     if(!empty($data_infomation)){
                         $coutn =count($order_undate['info']);
                         foreach ($data_infomation['name'] as $a=>$b){
-                            $end_info[$a+$coutn]['name'] = $b;
+                            $end_info[$a+$coutn]['store_name'] = $b;
                         }
                         foreach ($data_infomation['status'] as $a=>$b){
                             $end_info[$a+$coutn]['status'] = $b;
@@ -539,7 +539,7 @@ class OrderParts extends Controller{
                     if(!empty($data_infomation)){
                         $coutn =count($order_undate['info']);
                         foreach ($data_infomation['name'] as $a=>$b){
-                            $end_info[$a+$coutn]['name'] = $b;
+                            $end_info[$a+$coutn]['store_name'] = $b;
                         }
                         foreach ($data_infomation['status'] as $a=>$b){
                             $end_info[$a+$coutn]['status'] = $b;
