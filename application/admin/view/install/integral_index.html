@@ -1,3 +1,38 @@
+<<<<<<< HEAD
+{include file="template/_meta" /} {block name="css"}
+<style type="text/css">
+    body {
+        background: #fff;
+    }
+    
+    input {
+        width: 40px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    
+    div {
+        text-align: center;
+        margin-top: 10px;
+    }
+    
+    .text {
+        top: 2px;
+        width: 487px;
+        margin: 20px auto;
+        position: relative;
+    }
+    
+    .layui-icon {
+        position: absolute;
+        right: 0;
+        top: -9px;
+    }
+</style>
+
+{/block} {block name="content"}
+<h4 style="padding: 10px;">积分抵扣设置：</h4>
+=======
 
 {include file="template/_meta" /}
 
@@ -36,6 +71,7 @@ div {
 {block name="content"}
 <h4 style="padding: 10px;">积分抵扣设置：</h4>
 
+>>>>>>> a36139be17728de002d9a730e85b424e4010d1d9
 <div class="content">
     {if !empty($integral_data)} {volist name="integral_data" id="vo"}
     <div style="" class="text">消费满<input type="text" name="" id="" value="{$vo.consumption_full}" disabled="disabled" />元可使用<input type="text" name="" id="" value="{$vo.integral_can_be_used}" disabled="disabled" />积分，<input type="text" name="" id="" value="{$vo.integral_full}"

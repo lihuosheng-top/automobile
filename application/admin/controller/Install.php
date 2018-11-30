@@ -49,6 +49,7 @@ class Install extends Controller{
         return view("recommend_index",['recommend_data'=>$recommend_data]);
     }
 
+
     /**
      * 推荐奖励积分设置更新
      ***** GY *****
@@ -56,19 +57,16 @@ class Install extends Controller{
      */
     public function recommend_update(Request $request)
     {
-        if($request->isPost()){
-            $recommend_peoples = input("recommend_peoples");
-            $recommend_integral = input("recommend_integral");
-            $recommend_id = input("recommend_id");
-            if(!empty($recommend_id)){
-                $data_bool =Db::name('recommend_integral')->where('recommend_id',$recommend_id)->update(["number_peoples"=>$recommend_peoples,"recommend_integral"=>$recommend_integral]);
-                if($data_bool){
-                    return ajax_success('更新成功',['status'=>1]);
-                }else{
-                    return ajax_error('更新失败',['status'=>0]);
-                }
-            }else{
-                return ajax_error('没有这条数据',['status'=>0]);
+        if($request->isPost())
+        {
+            $data = $request -> param();
+
+            $bool = db("recommend_integral") -> where('id',1) -> update($data);
+
+            if ($bool) {
+                $this->success("编辑成功", url("admin/Install/recommend"));
+            } else {
+                $this->error("编辑失败", url("admin/Install/recommend"));
             }
         }
 
@@ -563,7 +561,40 @@ class Install extends Controller{
                 return ajax_error('删除失败', ['status' => 0]);
             }
         }
-    } 
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:订单设置更新
+     **************************************
+     * @param Request $request
+     */
+    public function order_setting_update(Request $request){
+        if ($request->isPost())
+        {
+            $spike_time =$request->only(['spike'])['spike']; //秒杀
+            $normal_time =$request->only(['normal'])['normal']; //正常订单
+            $deliver_goods_time =$request->only(['deliver_goods'])['deliver_goods']; //发货超时
+            $after_sale_time =$request->only(['after_sale'])['after_sale']; //售后
+            $start_evaluate_time =$request->only(['start_evaluate'])['start_evaluate']; //自动好评
+            $time =time();
+            $data =[
+                'spike_time'=>$spike_time,
+                'normal_time'=>$normal_time,
+                'deliver_goods_time'=>$deliver_goods_time,
+                'after_sale_time'=>$after_sale_time,
+                'start_evaluate_time'=>$start_evaluate_time,
+                'update_time'=>$time
+            ];
+            $bool =Db::name('order_parts_setting')->where('order_setting_id',1)->update($data);
+            if($bool){
+                $this->success('更新成功');
+            }else{
+                $this->error('更新失败');
+            }
+        }
+    }
  
     
 }

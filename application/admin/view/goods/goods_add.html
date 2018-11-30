@@ -221,7 +221,8 @@
 		<div class="layui-form-item" style="min-width: 62% !important;">
 			<label class="layui-form-label">商品分组：</label>
 			<div class="layui-input-inline" style="margin-left: 30px;">
-				<select name="goods_type_id" id="goods_type_id">
+				<select name="goods_type_id" id="goods_type_id" lay-filter="goods_type_id">
+					<option value="请选择" check>请选择</option>
 					{volist name="goods_list" id="value"}
 					<option value="{$value.id}">{$value.name}</option>
 					{/volist}
@@ -234,7 +235,8 @@
 		<div class="layui-form-item " style="min-width: 62% !important;">
 			<label class="layui-form-label"><span>*</span>商品品牌:</label>
 			<div class="layui-input-inline" style="margin-left: 30px;">
-				<select name="goods_brand_id">
+				<select name="goods_brand_id" lay-filter="goods_brand_id" id="goods_brand_id">
+					<option value="请选择" check>请选择</option>
 					{volist name="goods_brand" id="val"}
 					<option value="{$val.id}">{$val.name}</option>
 					{/volist}
@@ -299,7 +301,7 @@
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_series" id="city"  xm-select-show-count="1" xm-select="city" multiple="multiple">
+							<select name="goods_car_series" id="city" xm-select-show-count="1" xm-select="city" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -309,7 +311,7 @@
 							</select>
 						</div>
 						<div class="layui-input-inline">
-							<select name="goods_car_year" id="production"  xm-select-show-count="1" xm-select="production" multiple="multiple">
+							<select name="goods_car_year" id="production" xm-select-show-count="1" xm-select="production" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -515,69 +517,66 @@
 			'          </div>                                                                                                        ';
 	</script>
 	<script type="text/javascript">
-		   var times_id = new Array();
-				var displacements_id = new Array();
-				var years_id = new Array();
-				$.ajax({
-					type: "POST",
-					url: "{:url('admin/Goods/add')}",
-					data: {},
-					dataType: "json",
-					success: function(data) {
-						console.log(data);
-						var datas = data.data
-						for(var i = 0; i < datas.car_series.length; i++) {
-							var series = new Array();
-							var displacement = new Array();
-							var year = new Array();
-							for(var j = 0; j < datas.car_brand.length; j++) {
-								if(datas.car_brand[j].brand == datas.car_series[i].brand) {
-									series.push({
-										"series": datas.car_brand[j].series
-									});
-									displacement.push({
-										"series": datas.car_brand[j].displacement
-									});
-									year.push({
-										"series": datas.car_brand[j].year
-									});
-								}
-
-							}
-							times_id[datas.car_series[i].brand] = series;
-							
-							displacements_id[datas.car_series[i].brand] = displacement;
-							years_id[datas.car_series[i].brand] = year;
+		// TODO获取车牌Ajax
+		var times_id = new Array();
+		var displacements_id = new Array();
+		var years_id = new Array();
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Goods/add')}",
+			data: {},
+			dataType: "json",
+			success: function(data) {
+				console.log(data);
+				var datas = data.data
+				for(var i = 0; i < datas.car_series.length; i++) {
+					var series = new Array();
+					var displacement = new Array();
+					var year = new Array();
+					for(var j = 0; j < datas.car_brand.length; j++) {
+						if(datas.car_brand[j].brand == datas.car_series[i].brand) {
+							series.push({
+								"series": datas.car_brand[j].series
+							});
+							displacement.push({
+								"series": datas.car_brand[j].displacement
+							});
+							year.push({
+								"series": datas.car_brand[j].year
+							});
 						}
-							
-						var city_obj = times_id;
-						for(var key in city_obj) {
-							$("#province").append("<option value='" + key + "'>" + key + "</option>");
-						}
-						
-						
 
-					},
-					error: function(data) {
-						console.log("错误");
 					}
-				});
-		
+					times_id[datas.car_series[i].brand] = series;
+
+					displacements_id[datas.car_series[i].brand] = displacement;
+					years_id[datas.car_series[i].brand] = year;
+				}
+
+				var city_obj = times_id;
+				for(var key in city_obj) {
+					$("#province").append("<option value='" + key + "'>" + key + "</option>");
+				}
+
+			},
+			error: function(data) {
+				console.log("错误");
+			}
+		});
 	</script>
 
 	<script type="text/javascript">
-		function quchong(arr){
-			var b=[];
+		// TODO车牌去重函数
+		function quchong(arr) {
+			var b = [];
 			for(var k in arr) {
-				if(b.indexOf(arr[k].series)== -1){
-					 b.push(arr[k].series);
-               
+				if(b.indexOf(arr[k].series) == -1) {
+					b.push(arr[k].series);
 				}
-				
 			}
 			return b;
 		}
-		 var formSelects = layui.formSelects;
+		var formSelects = layui.formSelects;
 		layui.config({
 			base: "js/"
 		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
@@ -587,34 +586,51 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 			layedit.build('demo');
-	                form.on('select(province)', function(data) {
-							   var now_province = data.value;
-								$("#city").html('<option value="">请选择车系</option>');
-								$("#displacement").html('<option value="">请选择排量</option>');
-								$("#production").html('<option value="">请选择年产</option>');
-								formSelects.render();
-//								quchong(times_id[now_province])/;
-								var num=0;
-								var tim_id=quchong(times_id[now_province]);
-								var displacemen_id=quchong(displacements_id[now_province]);
-								var year_id=quchong(years_id[now_province]);
-								for(var k in tim_id) {
-									var now_city = tim_id[k];
-									$("#city").append('<option value="' + now_city + '">' + now_city + '</option>');
-								
-								}
-								for(var k in displacemen_id) {
-									var now_displacement = displacemen_id[k];
-									$("#displacement").append('<option value="' + now_displacement + '">' + now_displacement + '</option>');
-								}
-								for(var k in year_id) {
-									var now_production = year_id[k];
-									$("#production").append('<option value="' + now_production + '">' + now_production + '</option>');
-								}
-								formSelects.render();
-								
-							});
-			// 点击添加页面
+
+			// TODO限制分组和品牌
+                 form.on('select(goods_type_id)', function(data) {
+                 	var value=data.elem.selectedOptions[0].text;
+                 	value=$.trim(value);
+                 	console.log(value);
+                 	if(value!="请选择"){
+                 		$("#goods_brand_id").attr("disabled","false"); 
+                 		form.render();
+                 	}
+                 	else{
+                 		$("#goods_brand_id").attr("disabled","false"); 
+                 		form.render();
+                 	}
+
+                 });
+			//TODO监听车牌变化时间
+			form.on('select(province)', function(data) {
+				var now_province = data.value;
+				$("#city").html('<option value="">请选择车系</option>');
+				$("#displacement").html('<option value="">请选择排量</option>');
+				$("#production").html('<option value="">请选择年产</option>');
+				formSelects.render();
+				//								quchong(times_id[now_province])/;
+				var num = 0;
+				var tim_id = quchong(times_id[now_province]);
+				var displacemen_id = quchong(displacements_id[now_province]);
+				var year_id = quchong(years_id[now_province]);
+				for(var k in tim_id) {
+					var now_city = tim_id[k];
+					$("#city").append('<option value="' + now_city + '">' + now_city + '</option>');
+
+				}
+				for(var k in displacemen_id) {
+					var now_displacement = displacemen_id[k];
+					$("#displacement").append('<option value="' + now_displacement + '">' + now_displacement + '</option>');
+				}
+				for(var k in year_id) {
+					var now_production = year_id[k];
+					$("#production").append('<option value="' + now_production + '">' + now_production + '</option>');
+				}
+				formSelects.render();
+
+			});
+			// TODO点击添加页面
 			$(".add-sevice").click(function() {
 				layer.open({
 					type: 1,
@@ -624,7 +640,7 @@
 				});
 			})
 
-			// 商品规格变化
+			// TODO商品规格变化
 			form.on('radio(guige)', function(data) {
 				var checkval = data.value;
 				if(checkval == "通用") {
@@ -636,7 +652,7 @@
 				}
 
 			});
-			//      点击专用添加规格项目添加页面
+			//TODO点击专用添加规格项目添加页面
 			$(".special_buts").click(function() {
 				$("#special_content").append(dhtml);
 				$.ajax({
@@ -661,7 +677,7 @@
 				form.render('select');
 
 			});
-			//      点击通用添加规格项目添加页面
+			//TODO点击通用添加规格项目添加页面
 			$(".general_buts").click(function() {
 				$("#general_content").append(dhtml);
 				$.ajax({
@@ -687,13 +703,13 @@
 
 			});
 
-			//	点击添加属性
+			//TODO点击添加属性
 			$(".add-attribute").on('click', function() {
 
 				$(this).addClass("noshow");
 				$(this).siblings(".add-attributes").removeClass("noshow");
 			});
-			//	点击添加添加规格名
+			//	TODO点击添加添加规格名
 			$("#general_content").on('click', ".add-name", function() {
 				$(this).addClass("noshow");
 				$(this).siblings(".add-names").removeClass("noshow");
@@ -702,7 +718,7 @@
 				$(this).addClass("noshow");
 				$(this).siblings(".add-names").removeClass("noshow");
 			});
-			//	点击取消按钮
+			//TODO点击取消按钮
 			$("#general_content").on('click', ".btu-cancel", function() {
 				$(this).parent(".add-names").addClass("noshow");
 				$(this).parent().siblings(".add-names").addClass("noshow");
@@ -712,7 +728,7 @@
 				$(this).addClass("noshow");
 				$(this).siblings(".add-names").removeClass("noshow");
 			});
-			// 通用点击添加按钮
+			// TODO通用点击添加按钮
 			$("#general_content").on('click', ".guibtu-add", function() {
 				var text = $(this).parent().siblings(".add-names").children("input").val();
 				$.ajax({
@@ -734,6 +750,7 @@
 				});
 
 			});
+			//TODO专用点击添加按钮
 			$("#special_content").on('click', ".guibtu-add", function() {
 				var text = $(this).parent().siblings(".add-names").children("input").val();
 				$.ajax({
@@ -755,34 +772,14 @@
 				});
 
 			});
-			// 属性
-			// 				$("#special_content").on('click', "shuxingbtu-add", function() {
-			// 				var text=$(this).parent().siblings(".add-names").children("input").val();
-			// 					$.ajax({
-			// 						type: "POST",
-			// 				   		url : "{:url('admin/Goods/name')}",
-			// 						data: {"goods_name":text},
-			// 						success: function(data){
-			// 							var data= eval('(' + data + ')');
-			// 							var dhtmls='<option value="'+data.data+'">'+data.data+'</option> ';
-			// 							$(".dedicated_property").append(dhtmls);
-			// 							form.render('select');
-			// 						},
-			// 						error:function (data) {
-			// 							console.log(data)
-			// 						}
-			// 					});
-			// 				
-			// 			});
 
 			// end商品规格变化
-
+			// TODO获取车牌Ajax
 			$.ajax({
 				type: "POST",
 				url: "{:url('admin/Goods/property_show')}",
 				data: {},
 				success: function(data) {
-					//						layer.msg(data.info);
 					var data = eval('(' + data + ')');
 					for(var i = 0; i < data.data.length; i++) {
 						var dhtmls = '<option value="' + data.data[i].property_name + '">' + data.data[i].property_name + '</option> ';
@@ -804,10 +801,7 @@
 		//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
 		var ue = UE.getEditor('editor');
 	</script>
-<!--<script type="text/javascript">
-    var formSelects = layui.formSelects;
-     formSelects.value('city', [2, 4], false); 
-</script>-->
+
 	{/block}
 
 </body>

@@ -442,6 +442,7 @@ Route::group("admin",[
     "express_delete"=>"admin/Install/express_delete", //快递员列表组删除
     "express_search"=>"admin/Install/express_search", //快递员列表组搜索
     "express_dels"=>"admin/Install/express_dels",     //快递员列表组批量删除
+    "order_setting_update"=>"admin/Install/order_setting_update",//订单设置
 
     
     /*商品品牌*/
