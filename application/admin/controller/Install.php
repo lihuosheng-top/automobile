@@ -49,6 +49,7 @@ class Install extends Controller{
         return view("recommend_index",['recommend_data'=>$recommend_data]);
     }
 
+
     /**
      * 推荐奖励积分设置更新
      ***** GY *****
@@ -56,19 +57,16 @@ class Install extends Controller{
      */
     public function recommend_update(Request $request)
     {
-        if($request->isPost()){
-            $recommend_peoples = input("recommend_peoples");
-            $recommend_integral = input("recommend_integral");
-            $recommend_id = input("recommend_id");
-            if(!empty($recommend_id)){
-                $data_bool =Db::name('recommend_integral')->where('recommend_id',$recommend_id)->update(["number_peoples"=>$recommend_peoples,"recommend_integral"=>$recommend_integral]);
-                if($data_bool){
-                    return ajax_success('更新成功',['status'=>1]);
-                }else{
-                    return ajax_error('更新失败',['status'=>0]);
-                }
-            }else{
-                return ajax_error('没有这条数据',['status'=>0]);
+        if($request->isPost())
+        {
+            $data = $request -> param();
+
+            $bool = db("recommend_integral") -> where('id',1) -> update($data);
+
+            if ($bool) {
+                $this->success("编辑成功", url("admin/Install/recommend"));
+            } else {
+                $this->error("编辑失败", url("admin/Install/recommend"));
             }
         }
 
