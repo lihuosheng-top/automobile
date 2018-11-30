@@ -81,15 +81,16 @@ class OrderParts extends Controller{
 
                         }
                         foreach ($order_undate['store_name'] as $i => $j) {
-                            if(!empty($j)) {
+                            if(!empty($j)){
                                 $end_info[$i]['store_name'] = $j;
                             }
 
                         }
                         foreach ($order_undate['status'] as $i => $j) {
-                            if(!empty($j)) {
+                            if(!empty($j)){
                                 $end_info[$i]['status'] = $j;
                             }
+
                         }
                     }
                     if(!empty($data_infomation)){
