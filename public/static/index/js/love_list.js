@@ -54,6 +54,7 @@ $.ajax({
             }
         })
         $('.box-wrap').append(str);
+        // 设为默认
         $('.set-default').click(function(){
             var id = $(this)[0].id;
             $('.box-wrap').find('.set-default').removeClass('on-default');
@@ -91,7 +92,6 @@ $.ajax({
                 }
             })
         })
-
         // 删除
         $('.delete-btn').click(function(){
             var id = $(this).siblings()[0].id;
@@ -104,7 +104,7 @@ $.ajax({
                 },
                 success: function(res){
                     console.log(res);
-                    if(res.status === 1){
+                    if(res.status == 1){
                         layer.open({
                             style: 'bottom:100px;',
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
@@ -112,10 +112,9 @@ $.ajax({
                             content: res.info,
                             time: 1.5
                         })
-                        alert(111)
                         setTimeout(function(){
                             window.location.reload();
-                        }, 2000);
+                        }, 1500);
                     }else{
                         layer.open({
                             style: 'bottom:100px;',
@@ -131,11 +130,22 @@ $.ajax({
                 }
             })
         })
+        // 查看详细信息
+        $('.car-info-top').click(function(){
+            $('.wrapper').hide();
+            $('.car-detail-pop').show();
+        })
+        // 隐藏弹窗
+        $('.detail-back').click(function(){
+            $('.wrapper').show();
+            $('.car-detail-pop').hide();
+        })
+        $('.add-car-btn').click(function(){
+            location.href = 'index';
+        })
     },
     error: function(){
         console.log('error');
     }
-    
-    
 })
 
