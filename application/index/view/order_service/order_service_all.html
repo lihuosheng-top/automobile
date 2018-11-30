@@ -1,10 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/order_service/order_service_all.css">
+    <title>服务商-全部</title>
 </head>
 <body>
-服务商订单我的所有订单
-</body>
+    <div class="wrapper" id="app">
+        <header class="header">
+            <a href="my_index" class="spr icon-back"></a>
+            <a href="order_parts_all" class="parts-title">商品订单</a>
+            <a href="javascript:;" class="service-title active">预约订单</a>
+        </header>
+        <div class="tabs">
+            <button class="tab tab-on">全部</button>
+            <button class="tab">待付款</button>
+            <button class="tab">待收货</button>
+            <button class="tab">待评价</button>
+            <button class="tab">退货</button>
+        </div>
+        <div class="reservation-tab">
+            <div class="order-num-status">
+                <div class="order-num">
+                    <i class="spr icon-order-num"></i>订单编号：20181129145
+                </div>
+                <span class="status">等待付款</span>
+            </div>
+            <p class="order-time">
+                <i class="spr icon-time"></i>11月29日 星期四 19:30
+            </p>
+            <p class="order-shop-name">
+                <i class="spr icon-shop"></i>深圳福田德鹏汽车保养店
+            </p>
+            <div class="order-item">
+                <span></span>预约洗车
+            </div>
+            <div class="button-box">
+                <button class="cancel-order-btn">取消订单</button>
+                <button class="to-payment-btn">去付款</button>
+                <button class="del-order-btn" style="display:none;">删除订单</button>
+                <button class="check-logistics-btn" style="display:none;">查看物流</button>
+                <button class="conf-receipt-btn" style="display:none;">确认收货</button>
+                <button class="evaluation-btn" style="display:none;">去评价</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/vue.js"></script>
+    <script src="__STATIC__/index/js/plugin/vue.resource.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/order_service/order_service_all.js"></script>
 </html>

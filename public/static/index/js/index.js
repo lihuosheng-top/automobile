@@ -349,6 +349,23 @@ function unique(arr){
     return result;
 }
 
+// 我的爱车显示
+$.ajax({
+    url: 'index',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+        if(res.status == 1){
+            var res = res.data[0];
+            $('.txt-div p').html(res.brand);
+            $('.txt-div span').html(res.series + ' ' + res.displacement + ' ' + res.production_time);
+        }
+    },
+    error: function(){
+        console.log('爱车显示：error')
+    }
+})
 
 
 

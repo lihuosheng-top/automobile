@@ -29,6 +29,7 @@ Route::group("",[
     "love_save"=>"index/LoveCar/love_save",                         //我的爱车入库
     "love_status"=>"index/LoveCar/love_status",                         //我的爱车状态修改
     "love_del"=>"index/LoveCar/love_del",                         //我的爱车列表删除
+    "love_list_save"=>"index/LoveCar/love_list_save",                         //我的车辆信息添加，修改
 
 
     /*服务商品*/
@@ -40,6 +41,7 @@ Route::group("",[
 
     /*服务订单*/
     "shop_order"=>"index/OrderService/shop_order",//预约服务 详情
+
 
     /*TODO:服务商订单开始*/
     "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
@@ -70,6 +72,7 @@ Route::group("",[
 
 
     "setting"=>"index/My/setting",//设置
+
 
     /*TODO:注册开始*/
     "register"=>"index/Register/index",//注册页面
@@ -127,6 +130,8 @@ Route::group("",[
     "ios_api_order_wait_evaluate"=>"index/OrderParts/ios_api_order_wait_evaluate", //待评价接口（ajax）
     "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货页面
     "ios_api_order_parts_return_goods"=>"index/OrderParts/ios_api_order_parts_return_goods",//退货接口ajax
+    "ios_api_order_parts_no_pay_cancel"=>"index/OrderParts/ios_api_order_parts_no_pay_cancel",//买家未付款取消订单接口(ajax)
+    "ios_api_order_parts_collect_goods"=>"index/OrderParts/ios_api_order_parts_collect_goods",//配件商订单状态修改（买家确认收货）（ajax）
     /*TODO:配件商订单状态结束*/
 
     /*TODO:服务商订单状态开始*/
@@ -140,6 +145,12 @@ Route::group("",[
     "ios_api_order_service_wait_evaluate"=>"index/OrderService/ios_api_order_service_wait_evaluate", //待评价接口（ajax）
     "order_service_return_goods"=>"index/OrderService/order_service_return_goods",//退货页面
     "ios_api_order_service_return_goods"=>"index/OrderService/ios_api_order_service_return_goods",//退货页面接口（ajax）
+    /*修改状态值*/
+    "ios_api_order_service_no_pay_cancel"=>"index/OrderService/ios_api_order_service_no_pay_cancel",//买家未付款取消订单接口(ajax)
+    "ios_api_order_service_already_served"=>"index/OrderService/ios_api_order_service_already_served",//买家服务商订单买家确认服务（ajax）
+
+
+
     /*TODO:服务商订单状态结束*/
 
 
@@ -221,6 +232,7 @@ Route::group("admin",[
     "goods_alipay"=>"admin/Goods/alipay",                                       //支付
     "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付后调
     "goods_edit_show"=>"admin/Goods/edit_show",                                       //专用适用车型编辑显示
+    "goods_seach"=>"admin/Goods/seach",                                                //商品模糊搜索
 
 
 

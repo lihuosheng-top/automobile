@@ -229,6 +229,57 @@ class OrderService extends Controller{
         }
     }
 
+
+
+    /*************************************修改状态
+     *************************************************************/
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单未付款 取消订单
+     **************************************
+     */
+    public function ios_api_order_service_no_pay_cancel(Request $request){
+        if($request->isPost()){
+            $order_id =$_POST['order_id'];
+            if(!empty($order_id)){
+                $res =Db::name('order_service')->where('id',$order_id)->update(['status'=>9]);
+                if($res){
+                    return ajax_success('订单取消成功',['status'=>1]);
+                }else{
+                    return ajax_error('订单取消失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单买家确认服务（确认收货）
+     **************************************
+     * @param Request $request
+     */
+    public function ios_api_order_service_already_served(Request $request){
+        if($request->isPost()){
+            $order_id =$_POST['order_id'];
+            if(!empty($order_id)){
+                $res =Db::name('order_service')->where('id',$order_id)->update(['status'=>5]);
+                if($res){
+                    return ajax_success('确认服务成功',['status'=>1]);
+                }else{
+                    return ajax_error('确认服务失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
     /**
      **************李火生*******************
      * ios提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
@@ -237,7 +288,8 @@ class OrderService extends Controller{
      * service_money                //服务金额
      **************************************
      */
-    public function  ios_api_order_service_button(Request $request){
+    public function  ios_api_order_service_button(Request $request)
+    {
         if ($request->isPost()) {
             $data = $_POST;
             $member_data = session('member');
@@ -248,7 +300,7 @@ class OrderService extends Controller{
                 $create_time = time();
                 if (!empty($data)) {
                     $datas = [
-                        'service_goods_id'=>$goods_data['id'],//服务项目ID
+                        'service_goods_id' => $goods_data['id'],//服务项目ID
                         'service_goods_name' => $goods_data['vehicle_model'], //车型
                         'service_order_quantitative' => $data['service_order_quantitative'],      //订单数量
 //                        'service_order_quantitative' => 1,      //订单数量
@@ -335,7 +387,7 @@ class OrderService extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:
+     * Notes:生成订单(未用)
      **************************************
      * @param Request $request
      */

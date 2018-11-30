@@ -7,23 +7,29 @@ var app = new Vue({
     },
     created(){
         this.getData();
-        // this.getStatus();
+    },
+    computed: {
+        returnStatusTxt(){
+
+        }
     },
     methods: {
         getData(){
             this.$http.post('ios_api_order_parts_all')
             .then(res => {
                 this.allDatas = eval("(" + res.body + ")").data;
-                console.log(eval("(" + res.body + ")"));
+                console.log(eval("(" + res.body + ")").data);
+                this.getStatus();
             }).catch(res => {
                 console.error('error');
             })
         },
-        // getStatus(){
-        //     this.allDatas.forEach(function(val){
-        //         console.log(val)
-        //     })
-        // }
+        getStatus(){
+            this.allDatas.forEach(element => {
+                this.allStatus.push(element.status);
+            })
+            // console.log(this.allStatus);
+        }
     }
 })
 
@@ -43,24 +49,4 @@ $('.tabs button').click(function(){
             location.href = 'order_parts_return_goods';break;
     }
 })
-$('.icon-back').click(function(){
-    location.href = 'my_index';
-})
 
-// $.ajax({
-//     url: 'ios_api_order_parts_all',
-//     type: 'POST',
-//     dataType: 'JSON',
-//     success: function(res){
-//         console.log(res);
-//         $.each(res.data, function(idx, val){
-//             // console.log(val);
-//             $.each(val, function(idx, val){
-//                 console.log(val)
-//             })
-//         })
-//     },
-//     error: function(){
-//         console.log('error');
-//     }
-// })
