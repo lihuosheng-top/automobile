@@ -563,7 +563,40 @@ class Install extends Controller{
                 return ajax_error('删除失败', ['status' => 0]);
             }
         }
-    } 
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:订单设置更新
+     **************************************
+     * @param Request $request
+     */
+    public function order_setting_update(Request $request){
+        if ($request->isPost())
+        {
+            $spike_time =$request->only(['spike'])['spike']; //秒杀
+            $normal_time =$request->only(['normal'])['normal']; //正常订单
+            $deliver_goods_time =$request->only(['deliver_goods'])['deliver_goods']; //发货超时
+            $after_sale_time =$request->only(['after_sale'])['after_sale']; //售后
+            $start_evaluate_time =$request->only(['start_evaluate'])['start_evaluate']; //自动好评
+            $time =time();
+            $data =[
+                'spike_time'=>$spike_time,
+                'normal_time'=>$normal_time,
+                'deliver_goods_time'=>$deliver_goods_time,
+                'after_sale_time'=>$after_sale_time,
+                'start_evaluate_time'=>$start_evaluate_time,
+                'update_time'=>$time
+            ];
+            $bool =Db::name('order_parts_setting')->where('order_setting_id',1)->update($data);
+            if($bool){
+                $this->success('更新成功');
+            }else{
+                $this->error('更新失败');
+            }
+        }
+    }
  
     
 }
