@@ -3,15 +3,9 @@ var app = new Vue({
     el: '#app',
     data: {
         allDatas: '',
-        allStatus: [],
     },
     created(){
         this.getData();
-    },
-    computed: {
-        returnStatusTxt(){
-
-        }
     },
     methods: {
         getData(){
@@ -19,16 +13,24 @@ var app = new Vue({
             .then(res => {
                 this.allDatas = eval("(" + res.body + ")").data;
                 console.log(eval("(" + res.body + ")").data);
-                this.getStatus();
             }).catch(res => {
                 console.error('error');
             })
         },
-        getStatus(){
-            this.allDatas.forEach(element => {
-                this.allStatus.push(element.status);
-            })
-            // console.log(this.allStatus);
+        returnStatusTxt(status){
+            if(status === 1){
+                return `待付款`;
+            }else if(status === 2 || status === 3 || status === 4 || status === 5){
+                return `待收货`;
+            }else if(status === 6 || status === 7){
+                return `待评价`;
+            }else if(status === 8){
+                return `已完成`;
+            }else if(status === 9 || status === 10){
+                return `已取消`;
+            }else if(status === 11){
+                return `退货`;
+            }
         }
     }
 })

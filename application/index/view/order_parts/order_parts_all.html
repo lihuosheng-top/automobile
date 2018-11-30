@@ -32,19 +32,19 @@
                         <i class="spr icon-shop"></i>
                         <span class="name-txt-span">{{allData.store_name}}</span>
                     </div>
-                    <p class="status-txt-p">等待付款</p>
+                    <p class="status-txt-p">{{returnStatusTxt(allData.status)}}</p>
                 </div>
                 <div class="all-goods-box">
                     <div class="single-goods-box single-goods-box-border" v-for="goods in allData.info">
                         <div class="shop-img-box">
-                            <img src="__STATIC__/index/image/14.png">
+                            <img :src="`uploads/`+goods.goods_image">
                         </div>
                         <div class="order-info-box">
-                            <p class="goods-name-p txt-hid-two"></p>
+                            <p class="goods-name-p txt-hid-two">{{goods.parts_goods_name}}</p>
                             <p class="goods-selling-point txt-hid-two">这个是商品卖点这个是商品卖点</p>
                             <div class="unit-price-quantity">
-                                <p class="unit-price-p">￥</p>
-                                <p class="quantity-p">×</p>
+                                <p class="unit-price-p">￥{{goods.goods_money}}</p>
+                                <p class="quantity-p">×{{goods.order_quantity}}</p>
                             </div>
                         </div>
                     </div>
