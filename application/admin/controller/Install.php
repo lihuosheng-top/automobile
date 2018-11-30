@@ -387,11 +387,13 @@ class Install extends Controller{
 
     /**
      * 快递员列表
-     * 陈绪
+     * GY
      */
-    public function express_index(){
-
-        return view("express_index");
+    public function express_index()
+    {
+     
+        $express = db("delivery")->paginate(4);
+        return view("express_index",['express' => $express]);
 
     }
 
@@ -400,9 +402,10 @@ class Install extends Controller{
 
     /**
      * 快递员添加
-     * 陈绪
+     * GY
      */
-    public function express_add(){
+    public function express_add()
+    {
 
         return view("express_add");
 
@@ -413,10 +416,32 @@ class Install extends Controller{
 
     /**
      * 快递员入库
-     * 陈绪
+     * GY
      */
-    public function express_save(){
+    public function express_save(Request $request)
+    {
 
+        if($request -> isPost())
+        {
+            $express_data = $request -> param();
+            $express_data['creatime'] = time();
+            $addressed = [$express_data["economize"], $express_data["market"], $express_data["distinguish"]];
+            $express_data["areas"] = implode("", $addressed);
+            $express_data["area"] = implode(",", $addressed);
+
+            foreach ($express_data as $k => $v) {
+                if (in_array($v, $addressed)) {
+                    unset($express_data[$k]);
+                }
+            }
+            
+            $bool = db("delivery") -> insert($express_data);
+            if ($bool) {
+                $this->success("添加成功", url("admin/Install/express_index"));
+            } else {
+                $this->error("添加失败", url("admin/Install/express_add"));
+            }
+        }
 
 
     }
@@ -424,12 +449,87 @@ class Install extends Controller{
 
 
     /**
-     * 快递员添加
-     * 陈绪
+     * 快递员列表编辑
+     * GY
      */
-    public function express_edit(){
+    public function express_edit($id)
+    {
 
-        return view("express_edit");
+        $expressd = db("delivery") -> where("id", $id) -> select();
+        $address = explode(",", $expressd[0]["area"]);
 
+        return view("express_edit", ["expressd" => $expressd, "address" => $address]);
+ 
     }
+   
+  
+    /**
+     * 快递员列表更新
+     * GY
+     */
+    public function express_updata(Request $request){
+
+        if($request -> isPost())
+        {
+            $data = $request -> param();
+            $id = $request->only(["id"])["id"];
+
+            $addressed = [$data["economize"], $data["market"], $data["distinguish"]];
+            $data["areas"] = implode("", $addressed);
+            $data["area"] = implode(",", $addressed);
+
+            foreach ($data as $k => $v) {
+                if (in_array($v, $addressed)) {
+                    unset($data[$k]);
+                }
+            }
+
+            $bool = db("delivery") -> where('id', $id) ->update($data);
+            if ($bool) {
+                $this->success("编辑成功", url("admin/Install/express_index"));
+            } else {
+                $this->error("编辑失败", url("admin/Install/express_index"));
+            }
+        } 
+    }   
+
+
+    /**
+     * 快递员列表删除
+     * GY
+     */
+    public function express_delete($id)
+    {
+
+        $bool = db("delivery") -> where("id", $id) -> delete();
+        if ($bool) {
+            $this->success("删除成功", url("admin/Install/express_index"));
+        } else {
+            $this->error("删除失败", url("admin/Install/express_index"));
+        }
+ 
+    }
+
+
+
+    /**
+     * 快递员列表搜索
+     * GY
+     */
+    public function express_search()
+    {
+        $number = input('iphone_number'); //快递员手机号
+        $name = input('goods_name');      //快递员姓名
+
+        if( (!empty($number)) || (!empty($name)) )
+        {
+            $seach = db("delivery") -> where("number", "like", "%" . $number . "%") -> where("name", "like", "%" . $name . "%") -> paginate(4); 
+        } else {
+            $seach = db("delivery")->paginate(4);     
+        }
+
+        return view("express_index",['express' => $seach]);
+ 
+    }
+
 }

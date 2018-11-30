@@ -126,7 +126,7 @@ class LoveCar extends Controller{
 
 
     /**
-     * 车辆信息添加
+     * 车辆信息添加,修改
      * 陈绪
      */
     public function love_list_save(Request $request){

@@ -27,55 +27,56 @@ class Goods extends Controller{
      * 陈绪
      */
     public function index(Request $request){
-        $datemins = $request->param("datemin");
-        $datemaxs = $request->param("datemax");
+        $goods = db("goods")->order("id desc")->paginate(10);
+        $goods_year = db("goods")->field("goods_year_id,id")->select();
+        $time = date("Y-m-d");
+        foreach ($goods_year as $key=>$value){
+            $year = db("year")->where("id",$value["goods_year_id"])->value("year");
+            $date = date("Y-m-d",strtotime("+$year year"));
+            if($time == $date){
+                $bool = db("goods")->where("id",$value["id"])->update(["goods_status"=>0,"putaway_status"=>null]);
+            }
+        }
+        $goods_money = db("goods")->field("goods_new_money,id")->select();
+        foreach ($goods_money as $k=>$val){
+            $goods_ratio[] = db("goods_ratio")->where("min_money","<=",$val["goods_new_money"])->where("max_money",">=",$val["goods_new_money"])->field("ratio")->find();
+            $goods_adjusted_money[] = $val["goods_new_money"]+($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
+            db("goods")->where("id",$val["id"])->update(["goods_adjusted_money"=>$goods_adjusted_money[$k]]);
+        }
+
+        $year = db("year")->select();
+        $user_id = Session::get("user_id");
+        $role_name = db("admin")->where("id",$user_id)->select();
+        return view("goods_index",["goods"=>$goods,"year"=>$year,"role_name"=>$role_name]);
+
+
+    }
+
+
+
+    /**
+     * 模糊查询
+     * 陈绪
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
+     */
+    public function seach(Request $request){
         $search_keys = $request->param("search_key");
         $search_bts = $request->param("search_bt");
-        $datemin = isset($datemins) ? $datemins : false;
-        $datemax = isset($datemaxs) ? $datemaxs : false;
+
         $search_key = isset($search_keys) ? $search_keys : '%';
         $search_bt = isset($search_bts) ? $search_bts : false;
-        if($request->isPost()) {
-            if ($datemin && $datemax) {
-               $good = db("goods")->where('create_time','>',strtotime($datemin))->where('create_time','<',strtotime($datemax))->paginate(5);
-            }
 
-            if ($search_key) {
-                $good = db("goods")->where("goods_name","like","%".$search_key."%")->paginate(5);
-
-            }else {
-                $good = db("goods")->paginate(5);
-            }
-
-            return view("goods_index", [
-                'good' => $good,
-                'search_key' => $search_key,
-                'datemax' => $datemax,
-                'datemin' => $datemin
-            ]);
-        }else{
-            $goods = db("goods")->order("id desc")->paginate(10);
-            $goods_year = db("goods")->field("goods_year_id,id")->select();
-            $time = date("Y-m-d");
-            foreach ($goods_year as $key=>$value){
-                $year = db("year")->where("id",$value["goods_year_id"])->value("year");
-                $date = date("Y-m-d",strtotime("+$year year"));
-                if($time == $date){
-                    $bool = db("goods")->where("id",$value["id"])->update(["goods_status"=>0,"putaway_status"=>null]);
-                }
-            }
-            $goods_money = db("goods")->field("goods_new_money,id")->select();
-            foreach ($goods_money as $k=>$val){
-                $goods_ratio[] = db("goods_ratio")->where("min_money","<=",$val["goods_new_money"])->where("max_money",">=",$val["goods_new_money"])->field("ratio")->find();
-                $goods_adjusted_money[] = $val["goods_new_money"]+($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
-                db("goods")->where("id",$val["id"])->update(["goods_adjusted_money"=>$goods_adjusted_money[$k]]);
-            }
-
-            $year = db("year")->select();
-            $user_id = Session::get("user_id");
-            $role_name = db("admin")->where("id",$user_id)->select();
-            return view("goods_index",["goods"=>$goods,"year"=>$year,"role_name"=>$role_name]);
+        if ($search_key) {
+            $good = db("goods")->where("goods_name", "like", "%" . $search_key . "%")->paginate(5, false,['query' => request()->param()]);
+        } else {
+            $good = db("goods")->paginate(5,false,['query' => request()->param()]);
+            $this->assign("good", $good);
         }
+        return view("goods_index", [
+            'good' => $good,
+            'search_key' => $search_key,
+        ]);
 
     }
 
