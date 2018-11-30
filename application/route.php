@@ -429,13 +429,19 @@ Route::group("admin",[
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",
-    "express_index"=>"admin/Install/express_index",
-    "express_add"=>"admin/Install/express_add",
-    "express_edit"=>"admin/Install/express_edit",
-    "express_save"=>"admin/Install/express_save",
 
 
+     /*快递员列表*/
+    "express_index"=>"admin/Install/express_index",   //快递员列表显示
+    "express_add"=>"admin/Install/express_add",       //添加快递员列表
+    "express_edit"=>"admin/Install/express_edit",     //快递员列表组编辑
+    "express_save"=>"admin/Install/express_save",     //快递员组保存入库
+    "express_updata"=>"admin/Install/express_updata", //快递员列表组更新
+    "express_delete"=>"admin/Install/express_delete", //快递员列表组删除
+    "express_search"=>"admin/Install/express_search", //快递员列表组搜索
+    "express_dels"=>"admin/Install/express_dels",     //快递员列表组批量删除
 
+    
     /*商品品牌*/
     "brand_index"=>"admin/Brand/index",
     "brand_add"=>"admin/Brand/add",
