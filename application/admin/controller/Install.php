@@ -98,11 +98,18 @@ class Install extends Controller{
     public function  integral_setting_add(Request $request){
         if($request->isPost()){
             $data =input();
-            if(empty($data)){
+//            $consumption_full =$request->only(['consumption_full'])['consumption_full'];
+//            $integral_can_be_used =$request->only(['integral_can_be_used'])['integral_can_be_used'];
+//            $integral_full =$request->only(['integral_full'])['integral_full'];
+//            $deductible_money =$request->only(['deductible_money'])['deductible_money'];
+//            $setting_describe ='消费满'.$consumption_full.'元可使用'.$integral_can_be_used.'积分，'.$integral_full.'积分抵'.$deductible_money.'元';
+
+            if(empty($consumption_full) ||empty($integral_can_be_used) ||empty($integral_full)||empty($deductible_money) ){
                 $this->error('所添加的值不能为空');
             }
                 $settings_table= new IntegralDiscountSettings();
-                $datas =$settings_table->isUpdate(false)->save($data);
+                $datas =$settings_table->isUpdate(false)->insert($data);
+
             if(!empty($datas)){
                 $this->success('添加成功');
             }else{
