@@ -95,20 +95,25 @@ class Install extends Controller{
      */
     public function  integral_setting_add(Request $request){
         if($request->isPost()){
-            $data =input();
-//            $consumption_full =$request->only(['consumption_full'])['consumption_full'];
-//            $integral_can_be_used =$request->only(['integral_can_be_used'])['integral_can_be_used'];
-//            $integral_full =$request->only(['integral_full'])['integral_full'];
-//            $deductible_money =$request->only(['deductible_money'])['deductible_money'];
-//            $setting_describe ='消费满'.$consumption_full.'元可使用'.$integral_can_be_used.'积分，'.$integral_full.'积分抵'.$deductible_money.'元';
-
+            $consumption_full =$request->only(['consumption_full'])['consumption_full'];
+            $integral_can_be_used =$request->only(['integral_can_be_used'])['integral_can_be_used'];
+            $integral_full =$request->only(['integral_full'])['integral_full'];
+            $deductible_money =$request->only(['deductible_money'])['deductible_money'];
             if(empty($consumption_full) ||empty($integral_can_be_used) ||empty($integral_full)||empty($deductible_money) ){
                 $this->error('所添加的值不能为空');
             }
-                $settings_table= new IntegralDiscountSettings();
-                $datas =$settings_table->isUpdate(false)->insert($data);
-
-            if(!empty($datas)){
+            $settings_table= new IntegralDiscountSettings();
+            foreach ($consumption_full as $key => $value) {
+                $bool = $settings_table->insert(
+                    [   "consumption_full" => $value,
+                        "integral_can_be_used" => $integral_can_be_used[$key],
+                        "integral_full" => $integral_full[$key],
+                        "deductible_money" => $deductible_money[$key],
+                        'setting_describe' =>'消费满'.$value.'元可使用'.$integral_can_be_used[$key].'积分，'.$integral_full[$key].'积分抵'.$deductible_money[$key].'元'
+                    ]
+                );
+            }
+            if($bool){
                 $this->success('添加成功');
             }else{
                 $this->success('添加失败');
@@ -184,13 +189,21 @@ class Install extends Controller{
      */
     public function  recharge_setting_add(Request $request){
         if($request->isPost()){
-            $data =input();
-            if(empty($data)){
+            $recharge_full =$request->only(['recharge_full'])['recharge_full'];
+            $send_money =$request->only(['send_money'])['send_money'];
+            if(empty($recharge_full) ||empty($send_money) ){
                 $this->error('所添加的值不能为空');
             }
-            $settings_table= new RechargeSetting();
-            $datas =$settings_table->isUpdate(false)->save($data);
-            if(!empty($datas)){
+            $settings_table = new RechargeSetting();
+            foreach ($recharge_full as $key => $value) {
+                $bool = $settings_table->insert(
+                    [   "recharge_full" => $value,
+                        "send_money" => $send_money[$key],
+                        'setting_content' =>'充'.$value.'元送'.$send_money[$key].'元'
+                    ]
+                );
+            }
+            if($bool){
                 $this->success('添加成功');
             }else{
                 $this->success('添加失败');
