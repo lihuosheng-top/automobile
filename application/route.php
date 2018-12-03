@@ -72,6 +72,7 @@ Route::group("",[
     "true_name"=>"index/My/true_name",          //真实姓名
     "my_integral"=>"index/My/integral",            //我的积分
     "setting"=>"index/My/setting",              //设置
+    "my_nickname"=>"index/My/nickname",         //昵称
     /*TODO:登录结束*/
 
 

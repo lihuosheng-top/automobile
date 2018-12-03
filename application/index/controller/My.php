@@ -110,4 +110,16 @@ class My extends Controller
         return view("true_name");
 
     }
+
+
+
+    /**
+     * 昵称
+     * 陈绪
+     */
+    public function nickname(){
+
+        return view("my_nickname");
+
+    }
 }
