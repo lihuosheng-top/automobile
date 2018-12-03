@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/my/my_message.css">
+    <title>个人信息</title>
 </head>
 <body>
-        我的个人信息
+    <div class="wrapper">
+        <header class="header">
+            <a href="my_index" class="spr icon-back"></a>
+            <h3>个人信息</h3>
+        </header>
+        <div class="personal-info">
+            <ul class="info-ul">
+                <li class="info-li">
+                    <p class="list-title-p">头像</p>
+                    <a href="javascript:;" class="spr icon-more"></a>
+                    <img src="__STATIC__/index/image/icon6.png" class="user-img" id="user-img">
+                    <input type="file" class="file-input upload-input" id="upload-input">
+                </li>
+                <li class="info-li">
+                    <p class="list-title-p">真实姓名</p>
+                    <a href="javascript:;" class="spr icon-more"></a>
+                </li>
+                <li class="info-li">
+                    <p class="list-title-p">手机号</p>
+                    <a href="javascript:;" class="spr icon-more"></a>
+                </li>
+                <li class="info-li">
+                    <p class="list-title-p">昵称</p>
+                    <a href="javascript:;" class="spr icon-more"></a>
+                </li>
+                <li class="info-li">
+                    <p class="list-title-p">性别</p>
+                    <a href="javascript:;" class="spr icon-more"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        // 上传图片 https://blog.csdn.net/scrat_kong/article/details/79230329
+        function uploadImg(input,img){
+            var input = document.getElementById(input);
+            var img = document.getElementById(img);
+            var reader = new FileReader();//创建fileReader实例
+            reader.readAsDataURL(input.files[0]);//发起异步请求
+            reader.onload = function(){
+                //读取完成后，数据保存在对象的result属性中
+                img.src = this.result;
+            }
+        }
+        $('.upload-input').change(function(){
+            uploadImg('upload-input', 'user-img');
+        })
+    </script>
 </body>
 </html>

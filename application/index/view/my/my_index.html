@@ -133,8 +133,6 @@
                 </li>
             </ul>
         </div>
-        
-
         <!-- footer 样式分离到common.css -->
 		<div class="footer">
             <ul>
@@ -165,10 +163,8 @@
             </ul>
         </div>
     </div>
-    <script src="__STATIC__/index/js/plugin/zepto.js"></script>
-    <script src="__STATIC__/index/js/plugin/touch.js"></script>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
-    <!-- <script src="__STATIC__/index/js/plugin/jquery.js"></script> -->
     <!-- 限制访问（没有登录） -->
     <script>
         var islogin;
@@ -177,7 +173,6 @@
             type: 'POST',
             dataType: 'JSON',
             success: function(data){
-                var data = JSON.parse(data);
                 console.log(data);
                 var str = '';
                 islogin = data.status;
@@ -282,6 +277,15 @@
         $('.set').click(function(){
             if(islogin == 1){
                 location.href = 'setting';
+            }else{
+                isLoginFun();
+            }
+        })
+
+        // 编辑个人信息
+        $('.user_headimg').click(function(){
+            if(islogin == 1){
+                location.href = 'my_message';
             }else{
                 isLoginFun();
             }
