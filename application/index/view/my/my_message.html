@@ -26,35 +26,38 @@
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">真实姓名</p>
-                    <a href="javascript:;" class="spr icon-more"></a>
+                    <i class="spr icon-more"></i>
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">手机号</p>
-                    <a href="javascript:;" class="spr icon-more"></a>
+                    <i class="spr icon-more"></i>
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">昵称</p>
-                    <a href="javascript:;" class="spr icon-more"></a>
+                    <i class="spr icon-more"></i>
                 </li>
                 <li class="info-li sex-li">
                     <p class="list-title-p">性别</p>
-                    <a href="javascript:;" class="spr icon-more"></a>
+                    <i class="spr icon-more"></i>
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">会员等级</p>
-                    <a href="javascript:;" class="spr icon-more"></a>
+                    <i class="spr icon-more"></i>
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">我的积分</p>
-                    <a href="javascript:;" class="spr icon-more"></a>
+                    <i class="spr icon-more"></i>
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">钱包</p>
-                    <a href="javascript:;" class="spr icon-more"></a>
+                    <i class="spr icon-more"></i>
                 </li>
             </ul>
         </div>
     </div>
+
+
+
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
@@ -71,6 +74,17 @@
         }
         $('.upload-input').change(function(){
             uploadImg('upload-input', 'user-img');
+        })
+
+        $('.info-ul info-li').click(function(){
+            var $index = $(this).index();
+            switch($index){
+                case 1:location.href = 'true_name';break;
+                case 2:location.href = 'phone_edit';break;
+                case 3:location.href = 'true_name';break;
+                case 6:location.href = 'true_name';break;
+                case 7:location.href = 'true_name';break;
+            }
         })
     </script>
 </body>
