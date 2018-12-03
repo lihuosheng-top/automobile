@@ -22,6 +22,14 @@ class OrderParts extends Controller{
     public function order_parts_all(){
         return view('order_parts_all');
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单详情页面
+     **************************************
+     * @return \think\response\View
+     */
     public function order_parts_detail(){
         return view('order_parts_detail');
     }
@@ -33,6 +41,7 @@ class OrderParts extends Controller{
      **************************************
      * @param Request $request
      */
+
     public function   ios_api_order_parts_all(Request $request)
     {
         if ($request->isPost()) {
@@ -50,7 +59,7 @@ class OrderParts extends Controller{
                         if (strpos($value['order_parts_id'], ',')) {
                             $order_id = explode(',', $value['order_parts_id']);
                             foreach ($order_id as $k => $v) {
-                                $return_data[] = Db::name('order_parts')->where('id', $v)->find();
+                                $return_data[] = Db::name('order_parts')->where('id', $v) ->where('user_id', $member_id['id'])->find();
                             }
                             foreach ($return_data as $ke => $item) {
                                 $order_store_id[] = $item['store_id'];
@@ -59,10 +68,12 @@ class OrderParts extends Controller{
                             foreach ($da_store_id as $da_k => $da_v) {
                                 $order_undate['info'][] = Db::name('order_parts')
                                     ->where('store_id', $da_v)
+                                    ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->select();
                                 $names = Db::name('order_parts')
                                     ->where('store_id', $da_v)
+                                    ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
@@ -76,28 +87,40 @@ class OrderParts extends Controller{
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
+
                     if (!empty($order_undate)) {
                         foreach ($order_undate['info'] as $i => $j) {
                             if(!empty($j)){
-                                $end_info[$i]['info'] = $j;
+                                $new_arr[] =$j;
                             }
-
+                        }
+                        foreach ($new_arr as $i=>$j){
+                            $end_info[$i]['info'] = $j;
                         }
                         foreach ($order_undate['store_name'] as $i => $j) {
                             if(!empty($j)){
-                                $end_info[$i]['store_name'] = $j;
+                                $new_arr_name[] =$j;
                             }
-
                         }
+                        foreach ($new_arr_name as $i=>$j){
+                            $end_info[$i]['store_name'] = $j;
+                        }
+
                         foreach ($order_undate['status'] as $i => $j) {
                             if(!empty($j)){
-                                $end_info[$i]['status'] = $j;
+                                $new_arr_status[] = $j;
                             }
-
+                        }
+                        foreach ($new_arr_status as $i=>$j){
+                            $end_info[$i]['status'] = $j;
                         }
                     }
                     if(!empty($data_infomation)){
-                        $coutn =count($order_undate['info']);
+                        if(!empty($new_arr)){
+                            $coutn =count($new_arr);
+                        }else{
+                            $coutn =0;
+                        }
                         foreach ($data_infomation['name'] as $a=>$b){
                             $end_info[$a+$coutn]['store_name'] = $b;
                         }
@@ -108,19 +131,18 @@ class OrderParts extends Controller{
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
                     }
-                        if (!empty($end_info)) {
-                            return ajax_success('数据', $end_info);
-                        } else {
-                            return ajax_error('没数据');
-                        }
+
+                    if (!empty($end_info)) {
+                        return ajax_success('数据', $end_info);
                     } else {
+                        return ajax_error('没数据');
+                    }
+                } else {
                     return ajax_error('请登录', ['status' => 0]);
                 }
             }
         }
     }
-
-
 
     /**
      **************李火生*******************
@@ -141,7 +163,6 @@ class OrderParts extends Controller{
      * @param Request $request
      */
     public function   ios_api_order_parts_wait_pay(Request $request){
-
         if ($request->isPost()) {
             $datas = session('member');
             if (!empty($datas)) {
@@ -158,7 +179,7 @@ class OrderParts extends Controller{
                         if (strpos($value['order_parts_id'], ',')) {
                             $order_id = explode(',', $value['order_parts_id']);
                             foreach ($order_id as $k => $v) {
-                                $return_data[] = Db::name('order_parts')->where('id', $v)->find();
+                                $return_data[] = Db::name('order_parts')->where('id', $v) ->where('user_id', $member_id['id'])->find();
                             }
                             foreach ($return_data as $ke => $item) {
                                 $order_store_id[] = $item['store_id'];
@@ -167,15 +188,16 @@ class OrderParts extends Controller{
                             foreach ($da_store_id as $da_k => $da_v) {
                                 $order_undate['info'][] = Db::name('order_parts')
                                     ->where('store_id', $da_v)
+                                    ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->select();
                                 $names = Db::name('order_parts')
                                     ->where('store_id', $da_v)
+                                    ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
                                 $order_undate['status'][] = $names['status'];
-
                             }
                         }
                         else{
@@ -185,19 +207,40 @@ class OrderParts extends Controller{
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
+
                     if (!empty($order_undate)) {
                         foreach ($order_undate['info'] as $i => $j) {
-                                $end_info[$i]['info'] = $j;
+                            if(!empty($j)){
+                                $new_arr[] =$j;
+                            }
+                        }
+                        foreach ($new_arr as $i=>$j){
+                            $end_info[$i]['info'] = $j;
                         }
                         foreach ($order_undate['store_name'] as $i => $j) {
-                                $end_info[$i]['store_name'] = $j;
+                            if(!empty($j)){
+                                $new_arr_name[] =$j;
+                            }
                         }
+                        foreach ($new_arr_name as $i=>$j){
+                            $end_info[$i]['store_name'] = $j;
+                        }
+
                         foreach ($order_undate['status'] as $i => $j) {
-                                $end_info[$i]['status'] = $j;
+                            if(!empty($j)){
+                                $new_arr_status[] = $j;
+                            }
+                        }
+                        foreach ($new_arr_status as $i=>$j){
+                            $end_info[$i]['status'] = $j;
                         }
                     }
                     if(!empty($data_infomation)){
-                        $coutn =count($order_undate['info']);
+                        if(!empty($new_arr)){
+                            $coutn =count($new_arr);
+                        }else{
+                            $coutn =0;
+                        }
                         foreach ($data_infomation['name'] as $a=>$b){
                             $end_info[$a+$coutn]['store_name'] = $b;
                         }
@@ -208,6 +251,7 @@ class OrderParts extends Controller{
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
                     }
+
                     if (!empty($end_info)) {
                         return ajax_success('数据', $end_info);
                     } else {
@@ -218,6 +262,7 @@ class OrderParts extends Controller{
                 }
             }
         }
+
     }
 
     /**
@@ -256,7 +301,7 @@ class OrderParts extends Controller{
                         if (strpos($value['order_parts_id'], ',')) {
                             $order_id = explode(',', $value['order_parts_id']);
                             foreach ($order_id as $k => $v) {
-                                $return_data[] = Db::name('order_parts')->where('id', $v)->find();
+                                $return_data[] = Db::name('order_parts')->where('id', $v) ->where('user_id', $member_id['id'])->find();
                             }
                             foreach ($return_data as $ke => $item) {
                                 $order_store_id[] = $item['store_id'];
@@ -265,15 +310,16 @@ class OrderParts extends Controller{
                             foreach ($da_store_id as $da_k => $da_v) {
                                 $order_undate['info'][] = Db::name('order_parts')
                                     ->where('store_id', $da_v)
+                                    ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->select();
                                 $names = Db::name('order_parts')
                                     ->where('store_id', $da_v)
+                                    ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
                                 $order_undate['status'][] = $names['status'];
-
                             }
                         }
                         else{
@@ -286,19 +332,37 @@ class OrderParts extends Controller{
 
                     if (!empty($order_undate)) {
                         foreach ($order_undate['info'] as $i => $j) {
-                                $end_info[$i]['info'] = $j;
+                            if(!empty($j)){
+                                $new_arr[] =$j;
+                            }
+                        }
+                        foreach ($new_arr as $i=>$j){
+                            $end_info[$i]['info'] = $j;
                         }
                         foreach ($order_undate['store_name'] as $i => $j) {
-                                $end_info[$i]['store_name'] = $j;
+                            if(!empty($j)){
+                                $new_arr_name[] =$j;
+                            }
                         }
+                        foreach ($new_arr_name as $i=>$j){
+                            $end_info[$i]['store_name'] = $j;
+                        }
+
                         foreach ($order_undate['status'] as $i => $j) {
-                                $end_info[$i]['status'] = $j;
+                            if(!empty($j)){
+                                $new_arr_status[] = $j;
+                            }
+                        }
+                        foreach ($new_arr_status as $i=>$j){
+                            $end_info[$i]['status'] = $j;
                         }
                     }
-
-
                     if(!empty($data_infomation)){
-                        $coutn =count($order_undate['info']);
+                        if(!empty($new_arr)){
+                            $coutn =count($new_arr);
+                        }else{
+                            $coutn =0;
+                        }
                         foreach ($data_infomation['name'] as $a=>$b){
                             $end_info[$a+$coutn]['store_name'] = $b;
                         }
@@ -309,6 +373,7 @@ class OrderParts extends Controller{
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
                     }
+
                     if (!empty($end_info)) {
                         return ajax_success('数据', $end_info);
                     } else {
@@ -359,7 +424,7 @@ class OrderParts extends Controller{
                         if (strpos($value['order_parts_id'], ',')) {
                             $order_id = explode(',', $value['order_parts_id']);
                             foreach ($order_id as $k => $v) {
-                                $return_data[] = Db::name('order_parts')->where('id', $v)->find();
+                                $return_data[] = Db::name('order_parts')->where('id', $v) ->where('user_id', $member_id['id'])->find();
                             }
                             foreach ($return_data as $ke => $item) {
                                 $order_store_id[] = $item['store_id'];
@@ -368,15 +433,16 @@ class OrderParts extends Controller{
                             foreach ($da_store_id as $da_k => $da_v) {
                                 $order_undate['info'][] = Db::name('order_parts')
                                     ->where('store_id', $da_v)
+                                    ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->select();
                                 $names = Db::name('order_parts')
                                     ->where('store_id', $da_v)
+                                    ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
                                 $order_undate['status'][] = $names['status'];
-
                             }
                         }
                         else{
@@ -386,19 +452,40 @@ class OrderParts extends Controller{
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
+
                     if (!empty($order_undate)) {
                         foreach ($order_undate['info'] as $i => $j) {
-                                $end_info[$i]['info'] = $j;
+                            if(!empty($j)){
+                                $new_arr[] =$j;
+                            }
+                        }
+                        foreach ($new_arr as $i=>$j){
+                            $end_info[$i]['info'] = $j;
                         }
                         foreach ($order_undate['store_name'] as $i => $j) {
-                                $end_info[$i]['store_name'] = $j;
+                            if(!empty($j)){
+                                $new_arr_name[] =$j;
+                            }
                         }
+                        foreach ($new_arr_name as $i=>$j){
+                            $end_info[$i]['store_name'] = $j;
+                        }
+
                         foreach ($order_undate['status'] as $i => $j) {
-                                $end_info[$i]['status'] = $j;
+                            if(!empty($j)){
+                                $new_arr_status[] = $j;
+                            }
+                        }
+                        foreach ($new_arr_status as $i=>$j){
+                            $end_info[$i]['status'] = $j;
                         }
                     }
                     if(!empty($data_infomation)){
-                        $coutn =count($order_undate['info']);
+                        if(!empty($new_arr)){
+                            $coutn =count($new_arr);
+                        }else{
+                            $coutn =0;
+                        }
                         foreach ($data_infomation['name'] as $a=>$b){
                             $end_info[$a+$coutn]['store_name'] = $b;
                         }
@@ -409,6 +496,7 @@ class OrderParts extends Controller{
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
                     }
+
                     if (!empty($end_info)) {
                         return ajax_success('数据', $end_info);
                     } else {
@@ -455,7 +543,7 @@ class OrderParts extends Controller{
                         if (strpos($value['order_parts_id'], ',')) {
                             $order_id = explode(',', $value['order_parts_id']);
                             foreach ($order_id as $k => $v) {
-                                $return_data[] = Db::name('order_parts')->where('id', $v)->find();
+                                $return_data[] = Db::name('order_parts')->where('id', $v) ->where('user_id', $member_id['id'])->find();
                             }
                             foreach ($return_data as $ke => $item) {
                                 $order_store_id[] = $item['store_id'];
@@ -464,15 +552,16 @@ class OrderParts extends Controller{
                             foreach ($da_store_id as $da_k => $da_v) {
                                 $order_undate['info'][] = Db::name('order_parts')
                                     ->where('store_id', $da_v)
+                                    ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->select();
                                 $names = Db::name('order_parts')
                                     ->where('store_id', $da_v)
+                                    ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
                                 $order_undate['status'][] = $names['status'];
-
                             }
                         }
                         else{
@@ -482,20 +571,40 @@ class OrderParts extends Controller{
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
+
                     if (!empty($order_undate)) {
                         foreach ($order_undate['info'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr[] =$j;
+                            }
+                        }
+                        foreach ($new_arr as $i=>$j){
                             $end_info[$i]['info'] = $j;
                         }
                         foreach ($order_undate['store_name'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_name[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_name as $i=>$j){
                             $end_info[$i]['store_name'] = $j;
                         }
+
                         foreach ($order_undate['status'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_status[] = $j;
+                            }
+                        }
+                        foreach ($new_arr_status as $i=>$j){
                             $end_info[$i]['status'] = $j;
                         }
                     }
-
                     if(!empty($data_infomation)){
-                        $coutn =count($order_undate['info']);
+                        if(!empty($new_arr)){
+                            $coutn =count($new_arr);
+                        }else{
+                            $coutn =0;
+                        }
                         foreach ($data_infomation['name'] as $a=>$b){
                             $end_info[$a+$coutn]['store_name'] = $b;
                         }
@@ -506,6 +615,7 @@ class OrderParts extends Controller{
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
                     }
+
                     if (!empty($end_info)) {
                         return ajax_success('数据', $end_info);
                     } else {
