@@ -128,7 +128,11 @@
 						<td>{$user_val.phone_num}</td>
 						<td>{$user_val.user_name}</td>
 						<td>
+							{if !empty($user_val.user_img)}
 							<div class="img_show"><img src="__USERIMG__/{$user_val.user_img}"></div>
+							{else}
+							<div class="img_show">无</div>
+							{/if}
 						</td>
 						<td>{$user_val.type|show_user_type}</td>
 						<td>{$user_val.harvester_real_address} </td>

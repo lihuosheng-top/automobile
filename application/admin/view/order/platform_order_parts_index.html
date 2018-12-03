@@ -503,7 +503,11 @@
                         <td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$vo.id}"></td>
                         <td>{$vo.parts_order_number}</td>
                         <td>{$vo.store_name}</td>
-                        <td style="width: 40px; height: 40px;"><img src="__UPLOADS__/{$vo.gimages}" /></td>
+                        {if !empty($vo.goods_image)}
+                        <td style="width: 40px; height: 40px;"><img src="__UPLOADS__/{$vo.goods_image}" /></td>
+                        {else}
+                        <td style="width: 40px; height: 40px;">无</td>
+                        {/if}
                         <td>{$vo.parts_goods_name}</td>
                         <td>{$vo.order_quantity}</td>
                         <td>{$vo.order_amount}</td>
