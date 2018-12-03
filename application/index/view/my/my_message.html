@@ -76,14 +76,19 @@
             uploadImg('upload-input', 'user-img');
         })
 
-        $('.info-ul info-li').click(function(){
+        $('.info-ul .info-li').click(function(){
             var $index = $(this).index();
             switch($index){
-                case 1:location.href = 'true_name';break;
-                case 2:location.href = 'phone_edit';break;
-                case 3:location.href = 'true_name';break;
-                case 6:location.href = 'true_name';break;
-                case 7:location.href = 'true_name';break;
+                case 1:
+                    location.href = 'true_name';break;
+                case 2:
+                    location.href = 'phone_edit';break;
+                case 3:
+                    location.href = 'true_name';break;
+                case 6:
+                    location.href = 'my_integral';break;
+                case 7:
+                    location.href = 'wallet_index';break;
             }
         })
     </script>
