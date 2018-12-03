@@ -55,8 +55,13 @@
             </ul>
         </div>
     </div>
-
-
+    <div class="mask" style="display: none;"></div>
+    <!-- 性别弹窗 -->
+    <div class="sex-pop">
+        <button class="sex-pop-male">男</button>
+        <button class="sex-pop-female">女</button>
+        <button class="sex-pop-btn">取消</button>
+    </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
@@ -84,12 +89,22 @@
                 case 2:
                     location.href = 'phone_edit';break;
                 case 3:
-                    location.href = 'true_name';break;
+                    location.href = 'my_nickname';break;
                 case 6:
                     location.href = 'my_integral';break;
                 case 7:
                     location.href = 'wallet_index';break;
             }
+        })
+
+        // 性别弹窗
+        $('.sex-li').click(function(){
+            $('.mask').show();
+            $('.sex-pop').animate({'bottom': '0'});
+        })
+        $('.sex-pop-btn').click(function(){
+            $('.mask').hide(0);
+            $('.sex-pop').animate({'bottom': '-100%'});
         })
     </script>
 </body>

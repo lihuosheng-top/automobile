@@ -122,4 +122,15 @@ class My extends Controller
         return view("my_nickname");
 
     }
+    
+    
+    /**
+     * 昵称
+     * 陈绪
+     */
+    public function integral(){
+
+        return view("my_integral");
+
+    }
 }
