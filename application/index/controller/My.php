@@ -86,4 +86,28 @@ class My extends Controller
 
     }
 
+
+
+
+    /**
+     * 修改手机号码
+     * 陈绪
+     */
+    public function phone_edit(){
+
+        return view("phone_edit");
+
+    }
+
+
+
+    /**
+     * 真实姓名
+     * 陈绪
+     */
+    public function true_name(){
+
+        return view("true_name");
+
+    }
 }

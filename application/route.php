@@ -68,6 +68,8 @@ Route::group("",[
     "my_message"=>"index/My/message", //我的个人信息
     "login"=>"index/My/login",//登录
     "isLogin"=>"index/My/isLogin", //是否登录判断
+    "phone_edit"=>"index/My/phone_edit",        //手机号码修改
+    "true_name"=>"index/My/true_name",          //真实姓名
     /*TODO:登录结束*/
 
 
@@ -86,7 +88,11 @@ Route::group("",[
     'update_password'=>"index/findpwd/update_password",//修改密码
     /*TODO:找回密码验证码结束*/
 
-    /*店铺*/
+
+    /**
+     * 店铺
+     * 陈绪
+     */
     "store_index"=>"index/Store/index",             //店铺首页
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
