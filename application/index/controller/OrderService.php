@@ -38,6 +38,9 @@ class OrderService extends Controller{
     public function order_service_all(){
         return view('order_service_all');
     }
+    public function order_service_detail(){
+        return view('order_service_detail');
+    }
 
     /**
      **************李火生*******************
@@ -229,6 +232,57 @@ class OrderService extends Controller{
         }
     }
 
+
+
+    /*************************************修改状态
+     *************************************************************/
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单未付款 取消订单
+     **************************************
+     */
+    public function ios_api_order_service_no_pay_cancel(Request $request){
+        if($request->isPost()){
+            $order_id =$_POST['order_id'];
+            if(!empty($order_id)){
+                $res =Db::name('order_service')->where('id',$order_id)->update(['status'=>9]);
+                if($res){
+                    return ajax_success('订单取消成功',['status'=>1]);
+                }else{
+                    return ajax_error('订单取消失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单买家确认服务（确认收货）
+     **************************************
+     * @param Request $request
+     */
+    public function ios_api_order_service_already_served(Request $request){
+        if($request->isPost()){
+            $order_id =$_POST['order_id'];
+            if(!empty($order_id)){
+                $res =Db::name('order_service')->where('id',$order_id)->update(['status'=>5]);
+                if($res){
+                    return ajax_success('确认服务成功',['status'=>1]);
+                }else{
+                    return ajax_error('确认服务失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
     /**
      **************李火生*******************
      * ios提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
@@ -336,7 +390,7 @@ class OrderService extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:
+     * Notes:生成订单(未用)
      **************************************
      * @param Request $request
      */

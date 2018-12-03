@@ -111,11 +111,17 @@
 						</div>
 					</div>
 					<div class="layui-inline">
-						<label class="layui-form-label">商品分类</label>
+						<label class="layui-form-label">商品名称</label>
+						<div class="layui-input-inline">
+							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">商品付费</label>
 						<div class="layui-input-inline">
 							<select name="interest" id="admin_status">
-								<option value="1" selected="">启用</option>
-								<option value="2">禁用</option>
+								<option value="1" selected="">已付费</option>
+								<option value="2">未付费</option>
 							</select>
 						</div>
 					</div>
