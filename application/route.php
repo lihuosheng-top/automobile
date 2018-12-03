@@ -71,6 +71,7 @@ Route::group("",[
     "phone_edit"=>"index/My/phone_edit",        //手机号码修改
     "true_name"=>"index/My/true_name",          //真实姓名
     "my_integral"=>"index/My/integral",            //我的积分
+    "setting"=>"index/My/setting",              //设置
     /*TODO:登录结束*/
 
 
@@ -83,10 +84,6 @@ Route::group("",[
     "wallet_index"=>"index/Wallet/index",           //钱包首页
     "wallet_recharge"=>"index/Wallet/recharge",     //钱包充值
 
-
-
-
-    "setting"=>"index/My/setting",//设置
 
 
     /*TODO:注册开始*/
