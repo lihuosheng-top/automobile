@@ -70,7 +70,20 @@ Route::group("",[
     "isLogin"=>"index/My/isLogin", //是否登录判断
     "phone_edit"=>"index/My/phone_edit",        //手机号码修改
     "true_name"=>"index/My/true_name",          //真实姓名
+    "my_integral"=>"index/My/integral",            //我的积分
     /*TODO:登录结束*/
+
+
+
+
+    /**
+     * 钱包
+     * 陈绪
+     */
+    "wallet_index"=>"index/Wallet/index",           //钱包首页
+    "wallet_recharge"=>"index/Wallet/recharge",     //钱包充值
+
+
 
 
     "setting"=>"index/My/setting",//设置
@@ -286,6 +299,8 @@ Route::group("admin",[
     /*资金管理*/
     "capital_index"=>"admin/Capital/index",  //资金管理界面
     "capital_search"=>"admin/Capital/search",  //资金管理搜索功能
+
+
     /*积分中心*/
     "integral_center"=>"admin/Integral/index", //积分中心
     "integral_detail"=>"admin/Integral/detail", //积分详情
