@@ -32,4 +32,28 @@ class Wallet extends Controller{
         return view("wallet_recharge");
         
     }
+
+
+
+    /**
+     * 添加银行卡
+     * 陈绪
+     */
+    public function block(){
+
+        return view("wallet_block");
+
+    }
+
+
+
+    /**
+     * 验证银行卡信息
+     * 陈绪
+     */
+    public function verification(){
+
+        return view("wallet_verification");
+
+    }
 }
