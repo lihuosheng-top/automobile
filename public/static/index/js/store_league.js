@@ -68,7 +68,7 @@ $.ajax({
                 $('.business-li').hide();
             }
         })
-        // 经营范围弹窗
+        // 经营范围弹窗数据
         var businessRangeStr = '';
         $.each(data.service_setting_info, function(idx, val){
             businessRangeStr += '<li class="business-range-li">\
@@ -79,30 +79,152 @@ $.ajax({
         $('.business-range-ul').append(businessRangeStr);
 
         // 下一步
+        var service_setting_id = []; //经营范围
         $('.next-button').click(function(){
-            $.ajax({
-                url: 'store_add',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
+            var store_name,
+                real_name,
+                phone_num,
+                store_owner_seat_num = $('.seat-phone').val(),
+                sex,
+                store_logo_images,
+                store_do_bussiness_time = $('.bussi-time').val(),  //营业时间
+                store_city_address,
+                store_street_address,
+                store_information = $('.shop-info').val(),
+                store_owner_email = $('.email').val(),
+                store_owner_wechat = $('.wechat').val(),
+                role_id;
+            // 店铺名称
+            if($('.shop-name').val() !== ''){
+                store_name = $('.shop-name').val();
+            }else{
+                mustFill();
+            }
+            // 负责人姓名
+            if($('.name').val() !== ''){
+                real_name = $('.name').val();
+            }else{
+                mustFill();
+            }
+            // 手机号
+            if($('.phone').val() !== ''){
+                phone_num = $('.phone').val();
+            }else{
+                mustFill();
+            }
+            // 性别
+            if($('#male')[0].checked === true){
+                sex = '男';
+            }else{
+                sex = '女';
+            }
+            // 店铺logo
+            if($('#upload-input')[0].files.length !== 0){
+                store_logo_images = $('#upload-input')[0].files[0];
+            }else{
+                layer.open({
+                    style: 'bottom:100px;',
+                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                    skin: 'msg',
+                    content: '请上传店铺logo',
+                    time: 1.5
+                })
+            }
+            // 店铺所在区域
+            if($('#area-li').val() !== ''){
+                store_city_address = $('#area-li').val();
+            }else{
+                layer.open({
+                    style: 'bottom:100px;',
+                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                    skin: 'msg',
+                    content: '请选择店铺所在区域',
+                    time: 1.5
+                })
+            }
+            // 店铺详细地址
+            if($('.detail-addr').val() !== ''){
+                store_street_address = $('.detail-addr').val();
+            }else{
+                mustFill();
+            }
 
-                },
-                success: function(res){
-                    console.log(res);
-                },
-                error: function(){
-                    console.error('error');
+            // 我要加盟 id
+            var leagueArr = $('.league-box').find('input');
+            for(var i = 0, l = leagueArr.length; i < l; i++){
+                if(leagueArr[i].checked){
+                    role_id = leagueArr[i].id;
                 }
-            })
+            }
+            if(store_name !== undefined && real_name !== undefined &&
+            store_logo_images !== undefined && store_city_address !== undefined &&
+            store_street_address !== undefined && role_id !== undefined){
+                var formData = new FormData();
+                formData.append('store_name', store_name);
+                formData.append('real_name', real_name);
+                formData.append('phone_num', phone_num);
+                formData.append('store_owner_seat_num', store_owner_seat_num);
+                formData.append('sex', sex);
+                formData.append('store_logo_images', store_logo_images);
+                formData.append('store_do_bussiness_time', store_do_bussiness_time);
+                formData.append('store_city_address', store_city_address);
+                formData.append('store_street_address', store_street_address);
+                formData.append('store_information', store_information);
+                formData.append('store_owner_email', store_owner_email);
+                formData.append('store_owner_wechat', store_owner_wechat);
+                formData.append('role_id', role_id);
+                $.ajax({
+                    url: 'store_add',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function(res){
+                        console.log(res);
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }
         })
+        // 存储 经营方位 ID
+        $('.business-btn-confirm').click(function(){
+            var allCheckInput = $('.business-range-ul').find('.checkbox-input');
+            for(var i = 0, l = allCheckInput.length; i < l; i++){
+                if(allCheckInput[i].checked){
+                    service_setting_id.push(allCheckInput[i].id.split('-')[1]);
+                }
+            }
+            $('.mask').hide();
+            $('.business-pop').animate({'bottom': '-100%'}, 100);
+            $('html').css('overflow', 'auto');
+        })
+
     },
     error: function(){
         console.error('error');
     }
 })
-
+// 经营范围
 $('.business-li').click(function(){
     $('.mask').show();
-    $('.business-pop').animate({'bottom': '0'});
+    $('.business-pop').animate({'bottom': '0'}, 100);
     $('html').css('overflow', 'hidden');
 })
+$('.business-btn-cancel').click(function(){
+    $('.mask').hide();
+    $('.business-pop').animate({'bottom': '-100%'}, 100);
+    $('html').css('overflow', 'auto');
+})
+
+function mustFill(){
+    layer.open({
+        style: 'bottom:100px;',
+        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+        skin: 'msg',
+        content: '带星号信息需填写完整',
+        time: 1.5
+    })
+}
