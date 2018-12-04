@@ -133,4 +133,16 @@ class My extends Controller
         return view("my_integral");
 
     }
+
+
+
+    /**
+     * 消费详情
+     * 陈绪
+     */
+    public function consume_message(){
+
+        return view("consume_message");
+
+    }
 }
