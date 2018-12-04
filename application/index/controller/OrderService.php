@@ -38,6 +38,9 @@ class OrderService extends Controller{
     public function order_service_all(){
         return view('order_service_all');
     }
+    public function order_service_detail(){
+        return view('order_service_detail');
+    }
 
     /**
      **************李火生*******************
@@ -273,6 +276,8 @@ class OrderService extends Controller{
             }
         }
     }
+
+
 
 
 

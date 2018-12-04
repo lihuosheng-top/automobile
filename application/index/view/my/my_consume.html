@@ -1,10 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>我的消费</title>
+    <style>
+        html, body, .wrapper{background-color: #f2f2f2;}
+        .header{position: relative;width: 100%;height: .88rem;background-color: #fff;}
+        .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
+        .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .search-box{background-color: #fff;position: relative;}
+        .search-box input{width: 75%;height: .7rem;background-color: rgba(0, 0, 0, .08);border-radius: .4rem;padding-left: .6rem;box-sizing: border-box;outline: none;margin: .2rem .3rem;}
+        .search-box .icon-search{position: absolute;left: .45rem;top: 50%;width: .32rem;height: .33rem;margin-top: -.17rem;background-position: 0 0;}
+        .search-btn{background-color: transparent; color: #999; font-size: .3rem; border: 0; outline: none;}
+        .cost-li{background-color: #fff; border-bottom: 1px solid #eee; padding: .2rem .3rem;display: flex; align-items: center; justify-content: space-between;}
+        .cost-li .cost-method{width: .96rem; height: .96rem;}
+        .cost-li .cost-method img{width: 100%; height: 100%;}
+        .cost-li .cost-info{flex-basis: 60%; line-height: normal;}
+        .cost-li .cost-info p{font-size: .3rem; color: #333;}
+        .cost-li .cost-info span{font-size: .24rem; color: #999;}
+        .cost-li .cost-money{font-size: .34rem;}
+        .month-tit{padding: .15rem 0 .15rem .3rem;}
+        
+    </style>
 </head>
 <body>
-        我的消费
+    <div class="wrapper">
+        <header class="header">
+            <a href="my_index" class="spr icon-back"></a>
+            <h3>我的消费</h3>
+        </header>
+        <div class="search-box">
+            <i class="spr icon-search"></i>
+            <input type="text" placeholder="输入账单相关信息">
+            <button class="search-btn">搜索</button>
+        </div>
+        <div class="cost-detail">
+            <h3 class="month-tit">10月</h3>
+            <ul class="cost-ul">
+                <li class="cost-li">
+                    <div class="cost-method">
+                        <img src="__STATIC__/index/image/wechat.png">
+                    </div>
+                    <div class="cost-info">
+                        <p class="txt-hid-one">米其林轮胎车模清洁套装</p>
+                        <span>12月04日 9:45</span>
+                    </div>
+                    <div class="cost-money">
+                        -199.00
+                    </div>
+                </li>
+                <li class="cost-li">
+                    <div class="cost-method">
+                        <img src="__STATIC__/index/image/alipay.png">
+                    </div>
+                    <div class="cost-info">
+                        <p class="txt-hid-one">米其林轮胎车模清洁套装</p>
+                        <span>12月04日 9:45</span>
+                    </div>
+                    <div class="cost-money">
+                        -199.00
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $('.cost-li').click(function(){
+            location.href = 'consume_message';
+        })
+    </script>
 </body>
 </html>

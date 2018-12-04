@@ -820,9 +820,6 @@ class Order extends Controller{
     }
 
 
-
-
-
     /**
      **************李火生*******************
      * @return \think\response\View
@@ -830,8 +827,11 @@ class Order extends Controller{
      **************************************
      */
     public function platform_order_set_up(){
-        return view('platform_order_set_up');
+        $data =Db::name('order_parts_setting')->find();
+        return view('platform_order_set_up',['data'=>$data]);
     }
+
+
 
 
 

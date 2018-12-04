@@ -35,9 +35,13 @@ class Index extends Controller
     }
 
 
-
-
-
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:首页目的不让直接进入前台页面
+     **************************************
+     * @return \think\response\View
+     */
     public function home()
     {
         return view("home");

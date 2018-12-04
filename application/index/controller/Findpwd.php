@@ -110,9 +110,14 @@ class Findpwd extends Controller{
     public function update_password(Request $request){
         if($request->isPost()){
             $password =$request->only(['password'])['password'];
+            $passwords =password_hash(trim($password),PASSWORD_DEFAULT);
             $member =session('member');
             if(!empty(trim($password))){
-                $bool =Db::name('user')->where('phone_num',$member['phone'])->update(['password'=>trim($password)]);
+                $is_admin =Db::name('admin')->where('phone',$member['phone'])->find();
+                if(!empty($is_admin)){
+                    Db::name('admin')->where('phone',$member['phone'])->update(['password'=>$passwords]);
+                }
+                $bool =Db::name('user')->where('phone_num',$member['phone'])->update(['password'=>$passwords]);
                 if($bool){
                     return ajax_success('修改成功',['status'=>1]);
                 }else{

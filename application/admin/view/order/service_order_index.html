@@ -495,7 +495,11 @@
 					<tr>
 						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$vo.id}"></td>
 						<td>{$vo.service_order_number}</td>
+						{if !empty($vo.service_goods_image)}
 						<td style="width: 40px; height: 40px;"><img width="100%" src="__UPLOADS__/{$vo.service_goods_image}" /></td>
+						{else}
+						<td style="width: 40px; height: 40px;">无</td>
+						{/if}
 						<td>{$vo.service_order_amount}</td>
 						<td>{$vo.service_reservations}</td>
 						<td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>

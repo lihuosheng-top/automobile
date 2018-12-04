@@ -68,10 +68,27 @@ Route::group("",[
     "my_message"=>"index/My/message", //我的个人信息
     "login"=>"index/My/login",//登录
     "isLogin"=>"index/My/isLogin", //是否登录判断
+    "phone_edit"=>"index/My/phone_edit",        //手机号码修改
+    "true_name"=>"index/My/true_name",          //真实姓名
+    "my_integral"=>"index/My/integral",            //我的积分
+    "setting"=>"index/My/setting",              //设置
+    "my_nickname"=>"index/My/nickname",         //昵称
+    "my_consume"=>"index/My/consume",         //我的消费
+    "consume_message"=>"index/My/consume_message",       //消费详情
     /*TODO:登录结束*/
 
 
-    "setting"=>"index/My/setting",//设置
+
+
+    /**
+     * 钱包
+     * 陈绪
+     */
+    "wallet_index"=>"index/Wallet/index",           //钱包首页
+    "wallet_recharge"=>"index/Wallet/recharge",     //钱包充值
+    "wallet_block"=>"index/Wallet/block",           //添加银行卡
+    "wallet_verification"=>"index/Wallet/verification",   //银行卡验证
+
 
 
     /*TODO:注册开始*/
@@ -86,7 +103,30 @@ Route::group("",[
     'update_password'=>"index/findpwd/update_password",//修改密码
     /*TODO:找回密码验证码结束*/
 
-    /*店铺*/
+    /*TODO:我的页面开始*/
+    "member_equity"=>"index/member/member_equity",//会员权益
+    "member_address"=>"index/member/member_address",//地址管理
+    "member_address_add"=>"index/member/member_address_add",//地址管理添加
+    "member_collection"=>"index/member/member_collection",//我的收藏
+    /*TODO:我的页面结束*/
+    /*TODO:消息开始*/
+    "information_index"=>"index/Information/index",//消息页面
+    "information_details"=>"index/Information/information_details",//订单助手消息页面详情
+    "information_system"=>"index/Information/information_system",//系统消息页面详情
+    "about_index"=>"index/About/index",//关于我们
+    /*TODO:消息结束*/
+    /*TODO:投诉开始*/
+    "complaint_index"=>"index/Complaint/index",//投诉中心
+    "complaint_detail"=>"index/Complaint/detail",//投诉记录
+    /*TODO:投诉结束*/
+
+
+
+
+    /**
+     * 店铺
+     * 陈绪
+     */
     "store_index"=>"index/Store/index",             //店铺首页
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
@@ -120,6 +160,7 @@ Route::group("",[
 
 
     /*TODO:配件商订单状态开始*/
+    "order_parts_detail"=>"index/OrderParts/order_parts_detail",//订单详情
     "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单页面
     "ios_api_order_parts_all"=>"index/OrderParts/ios_api_order_parts_all",//全部订单接口（ajax）
     "order_parts_wait_pay"=>"index/OrderParts/order_parts_wait_pay",//待付款页面
@@ -135,6 +176,7 @@ Route::group("",[
     /*TODO:配件商订单状态结束*/
 
     /*TODO:服务商订单状态开始*/
+    "order_service_detail"=>"index/OrderService/order_service_detail",//订单详情
     "order_service_all"=>"index/OrderService/order_service_all",//全部订单页面
     "ios_api_order_service_all"=>"index/OrderService/ios_api_order_service_all",//全部订单接口（ajax）
     "order_service_wait_pay"=>"index/OrderService/order_service_wait_pay",//待付款页面
@@ -278,6 +320,8 @@ Route::group("admin",[
     /*资金管理*/
     "capital_index"=>"admin/Capital/index",  //资金管理界面
     "capital_search"=>"admin/Capital/search",  //资金管理搜索功能
+
+
     /*积分中心*/
     "integral_center"=>"admin/Integral/index", //积分中心
     "integral_detail"=>"admin/Integral/detail", //积分详情
@@ -440,6 +484,7 @@ Route::group("admin",[
     "express_delete"=>"admin/Install/express_delete", //快递员列表组删除
     "express_search"=>"admin/Install/express_search", //快递员列表组搜索
     "express_dels"=>"admin/Install/express_dels",     //快递员列表组批量删除
+    "order_setting_update"=>"admin/Install/order_setting_update",//订单设置
 
     
     /*商品品牌*/

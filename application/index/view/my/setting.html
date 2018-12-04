@@ -94,11 +94,10 @@
         <button class="change-role-btn">确定</button>
     </div>
 
-    <script src="__STATIC__/index/js/plugin/zepto.js"></script>
-    <script src="__STATIC__/index/js/plugin/touch.js"></script>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <!-- 退出登录 -->
     <script>
-        $('.exit').on('tap', function(){
+        $('.exit').click(function(){
             $.ajax({
                 url: 'logout',
                 type: 'POST',
@@ -134,11 +133,11 @@
     <!-- 修改登录密码 -->
     <script>
         // 显示修改登录密码 弹窗
-        $('.reset-password-li').on('tap', function(){
+        $('.reset-password-li').click(function(){
             $('.reset-pwd-pop').show();
             $('.wrapper').hide();
         })
-        $('.reset-pwd-back').on('tap', function(){
+        $('.reset-pwd-back').click(function(){
             $('.reset-pwd-pop').hide();
             $('.wrapper').show();
         })
@@ -146,11 +145,11 @@
     <!-- 修改支付密码 -->
     <script>
         // 显示修改支付密码 弹窗
-        $('.reset-payment-li').on('tap', function(){
+        $('.reset-payment-li').click(function(){
             $('.reset-payment-pop').show();
             $('.wrapper').hide();
         })
-        $('.reset-payment-back').on('tap', function(){
+        $('.reset-payment-back').click(function(){
             $('.reset-payment-pop').hide();
             $('.wrapper').show();
         })
@@ -158,11 +157,11 @@
     <!-- 选择角色 -->
     <script>
         // 显示修改支付密码 弹窗
-        $('.change-role-li').on('tap', function(){
+        $('.change-role-li').click(function(){
             $('.change-role-pop').show();
             $('.wrapper').hide();
         })
-        $('.change-role-back').on('tap', function(){
+        $('.change-role-back').click(function(){
             $('.change-role-pop').hide();
             $('.wrapper').show();
         })
