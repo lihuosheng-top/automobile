@@ -21,23 +21,23 @@
         <div class="info-list-box">
             <ul class="list-ul">
                 <li class="list-li">
-                    <p class="list-title-p">店铺名称</p>
+                    <p class="list-title-p"><i class="must">*</i>店铺名称</p>
                     <input type="text" placeholder="请输入店铺名称" class="text-input">
                 </li>
                 <li class="list-li">
-                    <p class="list-title-p">负责人姓名</p>
-                    <input type="text" placeholder="请输入负责人姓名" class="text-input">
+                    <p class="list-title-p"><i class="must">*</i>负责人姓名</p>
+                    <input type="text" placeholder="请输入负责人姓名" class="text-input name">
                 </li>
                 <li class="list-li">
-                    <p class="list-title-p">手机号</p>
-                    <input type="text" placeholder="请输入手机号" class="text-input">
+                    <p class="list-title-p"><i class="must">*</i>手机号</p>
+                    <input type="text" placeholder="请输入手机号" class="text-input phone">
                 </li>
                 <li class="list-li">
                     <p class="list-title-p">座机号码</p>
                     <input type="text" placeholder="请输入座机号码" class="text-input">
                 </li>
                 <li class="list-li sex-li">
-                    <p class="list-title-p">性别</p>
+                    <p class="list-title-p"><i class="must">*</i>性别</p>
                     <div class="sex-box">
                         <input type="radio" name="sex" id="male" checked class="radio-input">
                         <label for="male" class="male-label">男</label>
@@ -46,27 +46,27 @@
                     </div>
                 </li>
                 <li class="list-li">
-                    <p class="list-title-p">店铺logo</p>
+                    <p class="list-title-p"><i class="must">*</i>店铺logo</p>
                     <a href="javascript:;" class="spr icon-more"></a>
                     <img src="__STATIC__/index/image/icon6.png" class="logo-img" id="logo-img">
                     <input type="file" class="file-input upload-input" id="upload-input">
                 </li>
                 <li class="list-li">
-                    <p class="list-title-p">营业时间</p>
+                    <p class="list-title-p"><i class="must">*</i>营业时间</p>
                     <input type="text" value="00:00 -- 24:00" readonly class="text-input">
                 </li>
-                <li class="list-li business-li">
+                <li class="list-li business-li" style="display:none;">
                     <p class="list-title-p">经营范围</p>
                     <a href="javascript:;" class="spr icon-more"></a>
                 </li>
-                <li class="list-li">
-                    <p class="list-title-p">店铺所在区域</p>
+                <li class="list-li business-area">
+                    <p class="list-title-p"><i class="must">*</i>店铺所在区域</p>
                     <a href="javascript:;" class="spr icon-more"></a>
                     <input type="text" id="area-li" readonly class="text-input">
                     <input type="hidden" id="value1">
                 </li>
                 <li class="list-li">
-                    <p class="list-title-p">店铺详细地址</p>
+                    <p class="list-title-p"><i class="must">*</i>店铺详细地址</p>
                     <input type="text" placeholder="请输入详细地址" class="text-input">
                 </li>
                 <li class="list-li">
@@ -82,11 +82,16 @@
                     <a href="javascript:;" class="spr icon-more"></a>
                 </li>
                 <li class="list-li">
-                    <p class="list-title-p">我要加盟</p>
+                    <p class="list-title-p"><i class="must">*</i>我要加盟</p>
                     <div class="league-box">
                         <!-- <input type="radio" name="league" id="accessory-dealer" checked class="radio-input">
                         <label for="accessory-dealer" class="accessory-dealer-label">配件商</label> -->
                     </div>
+                </li>
+                <li class="list-li">
+                    <p class="list-title-p">店铺信息</p>
+                    <p class="shop-describe txt-hid-one">本店经营各种配件，日用商品，价格便宜</p>
+                    <a href="javascript:;" class="spr icon-more"></a>
                 </li>
             </ul>
             <button class="next-button">下一步</button>
@@ -100,35 +105,15 @@
             <p class="business-tips">(说明：该项为多选项可多选)</p>
             <div class="business-range-box">
                 <ul class="business-range-ul">
-                    <li class="business-range-li">
+                    <!-- <li class="business-range-li">
                         <input type="checkbox" class="checkbox-input" id="checkbox-input1">
                         <label for="checkbox-input1">洗车</label>
-                    </li>
-                    <li class="business-range-li">
-                        <input type="checkbox" class="checkbox-input" id="checkbox-input2">
-                        <label for="checkbox-input2">修车</label>
-                    </li>
-                    <li class="business-range-li">
-                        <input type="checkbox" class="checkbox-input" id="checkbox-input3">
-                        <label for="checkbox-input3">保养</label>
-                    </li>
-                    <li class="business-range-li">
-                        <input type="checkbox" class="checkbox-input" id="checkbox-input4">
-                        <label for="checkbox-input4">洗车</label>
-                    </li>
-                    <li class="business-range-li">
-                        <input type="checkbox" class="checkbox-input" id="checkbox-input5">
-                        <label for="checkbox-input5">洗车</label>
-                    </li>
-                    <li class="business-range-li">
-                        <input type="checkbox" class="checkbox-input" id="checkbox-input6">
-                        <label for="checkbox-input6">洗车</label>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div class="business-btn-box">
-                <button class="business-btn business-btn-cancel" @click="hideBusinessPop">取消</button>
-                <button class="business-btn business-btn-confirm" @click="hideBusinessPop">确定</button>
+                <button class="business-btn business-btn-cancel">取消</button>
+                <button class="business-btn business-btn-confirm">确定</button>
             </div>
         </div>
     </div>

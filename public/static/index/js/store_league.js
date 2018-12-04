@@ -35,14 +35,74 @@ $.ajax({
     success: function(res) {
         var data = res.data;
         console.log(data);
-        // var leagueStr = '';
-        // for(var i = 0, l = data.roles.length; i < l; i++){
-        //     leagueStr += '<input type="radio" name="league" id="'+data.roles[i].id+'" checked class="radio-input">\
-        //                 <label for="'+data.roles[i].id+'" class="accessory-dealer-label">'+data.roles[i].name+'</label>';
-        // }
-        // $('.league-box').append(leagueStr);
+        var leagueStr = '';
+        for(var i = 0, l = data.roles.length; i < l; i++){
+            if(i === 0){
+                leagueStr += '<input type="radio" name="league" checked id="'+data.roles[i].id+'" class="radio-input">\
+                        <label for="'+data.roles[i].id+'" class="accessory-dealer-label">'+data.roles[i].name+'</label>';
+            }else{
+                leagueStr += '<input type="radio" name="league" id="'+data.roles[i].id+'" class="radio-input">\
+                        <label for="'+data.roles[i].id+'" class="accessory-dealer-label">'+data.roles[i].name+'</label>';
+            }
+        }
+        $('.league-box').append(leagueStr);
+        // 电话
+        $('.phone').val(data.user[0].phone_num);
+        // 性别
+        var sex = data.user[0].sex;
+        if(sex === '男'){
+            $('#male')[0].checked = true;
+        }else if(sex === '女'){
+            $('#female')[0].checked = true;
+        }
+        // 真实姓名
+        var realName = data.user[0].real_name;
+        if(realName !== null){
+            $('.name').val(realName);
+        }
+        // 选中服务商，经营范围显示
+        $('.league-box input').change(function(){
+            if($(this)[0].id == 13){
+                $('.business-li').show();
+            }else{
+                $('.business-li').hide();
+            }
+        })
+        // 经营范围弹窗
+        var businessRangeStr = '';
+        $.each(data.service_setting_info, function(idx, val){
+            businessRangeStr += '<li class="business-range-li">\
+                                    <input type="checkbox" class="checkbox-input" id="range-'+val.service_setting_id+'">\
+                                    <label for="range-'+val.service_setting_id+'">'+val.service_setting_name+'</label>\
+                                </li>'
+        })
+        $('.business-range-ul').append(businessRangeStr);
+
+        // 下一步
+        $('.next-button').click(function(){
+            $.ajax({
+                url: 'store_add',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+
+                },
+                success: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.error('error');
+                }
+            })
+        })
     },
     error: function(){
         console.error('error');
     }
+})
+
+$('.business-li').click(function(){
+    $('.mask').show();
+    $('.business-pop').animate({'bottom': '0'});
+    $('html').css('overflow', 'hidden');
 })

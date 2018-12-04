@@ -79,9 +79,11 @@ html,body{
 .league-box label{
     font-size: .3rem;
 }
-.sex-li,
-.business-li{
+.sex-li{
     margin-bottom: .1rem;
+}
+.business-area{
+    margin-top: .1rem;
 }
 .logo-img{
     width: .7rem;
@@ -142,9 +144,6 @@ html,body{
     background-color: #fff;
     transition: all .3s ease-in;
 }
-.popEaseIn{
-    bottom: 0;
-}
 .business-header{
     width: 100%;
     height: .88rem;
@@ -177,7 +176,7 @@ html,body{
 }
 .business-range-ul .business-range-li{
     flex-basis: 33%;
-    text-align: center;
+    text-align: left;
     margin-bottom: .5rem;
 }
 .business-range-ul .business-range-li .checkbox-input{
@@ -215,4 +214,13 @@ html,body{
 }
 .league-box .accessory-dealer-label{
     margin-right: .5rem;
+}
+.must{
+    color: #f00;
+}
+.shop-describe{
+    flex: 1;
+    font-size: .26rem;
+    color: #999;
+    margin-right: .3rem;
 }
