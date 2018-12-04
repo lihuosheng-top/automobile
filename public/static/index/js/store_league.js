@@ -35,12 +35,12 @@ $.ajax({
     success: function(res) {
         var data = res.data;
         console.log(data);
-        var leagueStr = '';
-        for(var i = 0, l = data.roles.length; i < l; i++){
-            leagueStr += '<input type="radio" name="league" id="'+data.roles[i].id+'" checked class="radio-input">\
-                        <label for="'+data.roles[i].id+'" class="accessory-dealer-label">'+data.roles[i].name+'</label>';
-        }
-        $('.league-box').append(leagueStr);
+        // var leagueStr = '';
+        // for(var i = 0, l = data.roles.length; i < l; i++){
+        //     leagueStr += '<input type="radio" name="league" id="'+data.roles[i].id+'" checked class="radio-input">\
+        //                 <label for="'+data.roles[i].id+'" class="accessory-dealer-label">'+data.roles[i].name+'</label>';
+        // }
+        // $('.league-box').append(leagueStr);
     },
     error: function(){
         console.error('error');
