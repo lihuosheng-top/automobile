@@ -94,7 +94,7 @@ class Store extends Controller{
 //            $store_logo_images =trim($input_data['store_logo_images']);//图片
             $store_do_bussiness_time =trim($input_data['store_do_bussiness_time']); //营业时间
             $service_setting_id =trim($input_data['service_setting_id']);
-            $store_city_address =trim($input_data['tore_city_address']);
+            $store_city_address =trim($input_data['store_city_address']);
             $store_street_address =trim($input_data['store_street_address']);
             $store_information =trim($input_data['store_information']);
             $store_owner_email =trim($input_data['store_owner_email']);
@@ -118,7 +118,7 @@ class Store extends Controller{
                        'store_examine_status'=>0, //平台审核状态（-1为未通过，0为待审核，1为审核通过）
                        'store_logo_images'=>$evaluation_images,
                        'store_do_bussiness_time'=>$store_do_bussiness_time,
-                       'service_setting_id'=>$service_setting_id,
+//                       'service_setting_id'=>$service_setting_id,
                        'store_street_address'=>$store_street_address,
                        'store_city_address'=>$store_city_address,
                        'store_owner_email'=>$store_owner_email,
