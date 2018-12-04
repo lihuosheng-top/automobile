@@ -30,23 +30,25 @@ class Store extends Controller{
      * 陈绪
      */
     public function league(Request $request){
-
         if($request->isPost()) {
             $user_id = Session::get("user");
             $user = db("user")->where("id", $user_id)->field("phone_num,sex,real_name")->select();
             $roles = db("role")->where("status", "1")->field("id,name")->select();
             foreach ($roles as $key => $value) {
-                if ($value["id"] == 2) {
-                    unset($roles[$key]);
+                 if($value["id"] != 2){
+                    $role[] =$value;
                 }
             }
+            $service_setting_info =db("service_setting")
+                ->field("service_setting_id,service_setting_name")
+                ->where("service_setting_status",1)
+                ->select();
             if ($roles) {
-                return ajax_success("获取成功", array("user" => $user, "roles" => $roles));
+                return ajax_success("获取成功", array("user" => $user, "roles" => $role,"service_setting_info"=>$service_setting_info));
             } else {
                 return ajax_error("获取失败");
             }
         }
-
         return view("store_league");
     }
 

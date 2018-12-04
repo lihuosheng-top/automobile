@@ -126,6 +126,8 @@ class Admin extends Controller
      * 陈绪
      */
     public function passwd(Request $request){
+        $old_password =$request->only(['old_password'])['old_password'];
+        $second_passwd =$request->only(['second_passwd'])['second_passwd'];
         $id = $request->only(['id'])['id'];
         $passwd = $request->only(["passwd"])["passwd"];
         $passwords =password_hash(trim($passwd),PASSWORD_DEFAULT);
