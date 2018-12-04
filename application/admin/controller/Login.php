@@ -60,7 +60,6 @@ class Login extends Controller{
             if (password_verify($passwd , $userInfo[0]["passwd"])) {
                 Session("user_id", $userInfo[0]["id"]);
                 unset($userInfo->user_passwd);
-//                Session("admin_user_name", $userInfo);
                 Session("user_info", $userInfo);
                 // $this->redirect(url("admin/index/index"));
                 $this->success("登录成功",url("admin/Index/index"));
