@@ -103,6 +103,25 @@ Route::group("",[
     'update_password'=>"index/findpwd/update_password",//修改密码
     /*TODO:找回密码验证码结束*/
 
+    /*TODO:我的页面开始*/
+    "member_equity"=>"index/member/member_equity",//会员权益
+    "member_address"=>"index/member/member_address",//地址管理
+    "member_address_add"=>"index/member/member_address_add",//地址管理添加
+    "member_collection"=>"index/member/member_collection",//我的收藏
+    /*TODO:我的页面结束*/
+    /*TODO:消息开始*/
+    "information_index"=>"index/Information/index",//消息页面
+    "information_details"=>"index/Information/information_details",//订单助手消息页面详情
+    "information_system"=>"index/Information/information_system",//系统消息页面详情
+    "about_index"=>"index/About/index",//关于我们
+    /*TODO:消息结束*/
+    /*TODO:投诉开始*/
+    "complaint_index"=>"index/Complaint/index",//投诉中心
+    "complaint_detail"=>"index/Complaint/detail",//投诉记录
+    /*TODO:投诉结束*/
+
+
+
 
     /**
      * 店铺
