@@ -13,7 +13,7 @@
     <title>我要加盟</title>
 </head>
 <body>
-    <div v-cloak class="wrapper" id="app">
+    <div class="wrapper">
         <header class="header">
             <a href="my_index" class="spr icon-back"></a>
             <h3 class="header-title">加盟信息</h3>
@@ -48,14 +48,14 @@
                 <li class="list-li">
                     <p class="list-title-p">店铺logo</p>
                     <a href="javascript:;" class="spr icon-more"></a>
-                    <img :src="imageUrl" class="logo-img">
-                    <input type="file" class="file-input upload-input" @change="uploadImg">
+                    <img src="__STATIC__/index/image/icon6.png" class="logo-img" id="logo-img">
+                    <input type="file" class="file-input upload-input" id="upload-input">
                 </li>
                 <li class="list-li">
                     <p class="list-title-p">营业时间</p>
                     <input type="text" value="00:00 -- 24:00" readonly class="text-input">
                 </li>
-                <li class="list-li business-li" @click="showBusinessPop">
+                <li class="list-li business-li">
                     <p class="list-title-p">经营范围</p>
                     <a href="javascript:;" class="spr icon-more"></a>
                 </li>
@@ -84,18 +84,16 @@
                 <li class="list-li">
                     <p class="list-title-p">我要加盟</p>
                     <div class="league-box">
-                        <input type="radio" name="league" id="accessory-dealer" checked class="radio-input">
-                        <label for="accessory-dealer" class="accessory-dealer-label">配件商</label>
-                        <input type="radio" name="league" id="facilitator" class="radio-input">
-                        <label for="facilitator" class="facilitator-label">服务商</label>
+                        <!-- <input type="radio" name="league" id="accessory-dealer" checked class="radio-input">
+                        <label for="accessory-dealer" class="accessory-dealer-label">配件商</label> -->
                     </div>
                 </li>
             </ul>
-            <button class="next-button" @click="nextButton">下一步</button>
+            <button class="next-button">下一步</button>
         </div>
-        <div class="mask" @click="hideBusinessPop" @touchmove.prevent v-show="businessPopFlag"></div>
+        <div class="mask" style="display: none;"></div>
         <!-- 经营范围弹窗 -->
-        <div class="business-pop" :class="{popEaseIn: businessPopFlag}" @touchmove.prevent>
+        <div class="business-pop">
             <header class="business-header">
                 <h3 class="business-title">选择经营范围</h3>
             </header>
@@ -134,8 +132,7 @@
             </div>
         </div>
     </div>
-    <script src="__STATIC__/index/js/plugin/vue.js"></script>
-    <!-- <script src="__STATIC__/index/js/plugin/jquery.js"></script> -->
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <!-- 三级城市脚本 start -->
     <script src="__STATIC__/index/js/plugin/LAreaData1.js"></script>
     <script src="__STATIC__/index/js/plugin/LAreaData2.js"></script>
