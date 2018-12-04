@@ -30,7 +30,6 @@ class Store extends Controller{
      * 陈绪
      */
     public function league(Request $request){
-
         if($request->isPost()) {
             $user_id = Session::get("user");
             $user = db("user")->where("id", $user_id)->field("phone_num,sex,real_name")->select();
@@ -46,7 +45,6 @@ class Store extends Controller{
                 return ajax_error("获取失败");
             }
         }
-
         return view("store_league");
     }
 

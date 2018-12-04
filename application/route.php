@@ -131,6 +131,8 @@ Route::group("",[
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
 
+    "store_add"=>"index/Store/add",                 //店铺添加
+
 
 
 
