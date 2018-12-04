@@ -1,10 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/wallet/wallet_recharge.css">
+    <title>充值</title>
 </head>
 <body>
-        钱包充值
+    <div class="wrapper">
+        <header class="header">
+            <a href="wallet_index" class="spr icon-back"></a>
+            <h3>充值</h3>
+        </header>
+        <div class="recharge-box">
+            <p class="recharge-title">充值金额</p>
+            <i class="icon-money">￥</i><input type="number">
+        </div>
+        <button class="recharge-next">下一步</button>
+    </div>
+
+    <div class="mask" style="display: none;"></div>
+    <!-- 支付弹窗 -->
+    <form name=alipayment action="{:url('index/Apppay/index_aliPay')}" method="post">
+        <div class="alipay-pop">
+            <header>
+                <a href="javascript:;" class="close-alipay">×</a>
+                <h3 class="alipay-title">确认付款</h3>
+            </header>
+            <div class="middle_box">
+                <div class="price-box">
+                    <span>￥</span>
+                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="" readonly>
+                </div>
+                <ul class="content">
+                    <li>
+                        订单信息: <input id="WIDout_trade_no" name="WIDout_trade_no" value="充值" readonly>
+                    </li>
+                    <li>
+                        付款方式: <input id="WIDsubject" name="WIDsubject" value="中国银行(1234)" readonly><i class="spr icon-more"></i>
+                    </li>
+                </ul>
+            </div>
+            <button type="submit" class="alipay-submit">立即付款</button>
+        </div>
+    </form>
+
+    <!-- 选择支付方式 -->
+    <div class="chose-payment">
+        <header>
+            <a href="javascript:;" class="spr chose-payment-back"></a>
+            <h3 class="chose-title">选择支付方式</h3>
+        </header>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/bank1.png">
+            </div>
+            <p>中国工商银行储蓄卡(1234)</p>
+            <a href="javascript:;" class="spr check-a"></a>
+        </div>
+        <div class="add-bank-card">
+            <div class="icon-div"></div>
+            <div class="add-txt-box">
+                <p class="add-txt1">添加银行卡付款</p>
+                <p class="add-txt2">该交易仅支持储蓄卡</p>
+            </div>
+            <a href="javascript:;" class="spr icon-more"></a>
+        </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/wechat.png">
+            </div>
+            <p>微信支付</p>
+            <a href="javascript:;" class="spr check-a icon-check"></a>
+        </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/alipay.png">
+            </div>
+            <p>支付宝支付</p>
+            <a href="javascript:;" class="spr check-a"></a>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        // 充值 （下一步按钮）
+        $('.recharge-next').click(function(){
+            if($('.recharge-box input').val() !== ''){
+                $('.mask').show();
+                $('.alipay-pop').animate({'bottom': '0'});
+                var rechargeAmount = $('.recharge-box input').val();
+                $('#WIDtotal_amount').val(rechargeAmount);
+            }else{
+                layer.open({
+                    style: 'bottom:100px;',
+                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                    skin: 'msg',
+                    content: '请填写充值金额',
+                    time: 1.5
+                })
+            }
+        })
+        
+        $('.close-alipay').click(function(e){
+            e.preventDefault();
+            $('.mask').hide();
+            $('.alipay-pop').animate({'bottom': '-100%'});
+        })
+        $('#WIDsubject').click(function(){
+            $('.alipay-pop').animate({'bottom': '-100%'});
+            $('.chose-payment').animate({'bottom': '0'});
+        })
+
+        // 选择支付方式
+        function backMethod(){
+            $('.alipay-pop').animate({'bottom': '0'});
+            $('.chose-payment').animate({'bottom': '-100%'});
+        }
+        $('.method-div').click(function(){
+            $(this).siblings().find('.check-a').removeClass('icon-check');
+            $(this).find('.check-a').addClass('icon-check');
+            var paymentMethod = $(this).find('p').text();
+            $('#WIDsubject').val(paymentMethod);
+            backMethod();
+        })
+        $('.chose-payment-back').click(function(){
+            backMethod();
+        })
+
+        // 添加银行卡付款
+        $('.add-bank-card').click(function(){
+            location.href = 'wallet_block';
+        })
+    </script>
 </body>
 </html>

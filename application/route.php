@@ -73,7 +73,8 @@ Route::group("",[
     "my_integral"=>"index/My/integral",            //我的积分
     "setting"=>"index/My/setting",              //设置
     "my_nickname"=>"index/My/nickname",         //昵称
-    
+    "my_consume"=>"index/My/consume",         //我的消费
+    "consume_message"=>"index/My/consume_message",       //消费详情
     /*TODO:登录结束*/
 
 
