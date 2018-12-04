@@ -13,11 +13,16 @@
         .header{position: relative;width: 100%;height: .88rem;background-color: #fff; border-bottom: 1px solid #eee;}
         .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
         .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
-        .address-div{background-color: #fff; padding: .32rem;}
+        .address-div{background-color: #fff; padding: .32rem; border-bottom: 1px solid #eee;}
         .edit-box{display: flex; align-items: center;}
-        .edit-box button{background-color: transparent; border: 0; outline: 0; color: #999; font-size: .26rem;}
-        .set-default{flex: 1;}
-        .set-default .icon-default{display: inline-block; width: .38rem; height: .38rem; background-position: -2.05rem -.85rem; vertical-align: middle;}
+        .edit-box button{background-color: transparent; border: 0; outline: 0; color: #999; font-size: .3rem;}
+        .set-default{flex: 1; display: flex; align-items: center;}
+        .set-default .icon-default{display: inline-block; width: .38rem; height: .38rem; background-position: -2.05rem -.85rem;}
+        .set-default .default-on{background-position: -2.05rem -1.25rem;}
+        .set-default .set-default-btn{color: #333;}
+        .consignee{font-size: .3rem; color: #333; margin-top: .15rem;}
+        .consignee .name{margin-right: .5rem;}
+        .consignee-addr{font-size: .28rem; color: #999; line-height: normal;}
     </style>
 </head>
 <body>
@@ -26,24 +31,50 @@
             <a href="my_index" class="spr icon-back"></a>
             <h3>管理收货地址</h3>
         </header>
-        <div class="address-div">
-            <div class="edit-box">
-                <div class="set-default">
-                    <i class="spr icon-default"></i>
-                    <button class="set-default-btn">设为默认</button>
+        <div class="addr-wrap">
+            <div class="address-div">
+                <div class="edit-box">
+                    <div class="set-default">
+                        <i class="spr icon-default default-on"></i>
+                        <button class="set-default-btn">设为默认</button>
+                    </div>
+                    <button class="edit-btn">编辑</button>
+                    <button class="del-btn">删除</button>
                 </div>
-                <button class="edit-btn">编辑</button>
-                <button class="del-btn">删除</button>
+                <div class="consignee">
+                    <span class="name">朱元璋</span>
+                    <span class="phone">13691853011</span>
+                </div>
+                <div class="consignee-addr">广东省深圳市福田区新闻路中电信息大厦动作1518</div>
             </div>
-            <div class="consignee">
-                <span class="name">小件货</span>
-                <span class="phone">13691853011</span>
+            <div class="address-div">
+                <div class="edit-box">
+                    <div class="set-default">
+                        <i class="spr icon-default"></i>
+                        <button class="set-default-btn">设为默认</button>
+                    </div>
+                    <button class="edit-btn">编辑</button>
+                    <button class="del-btn">删除</button>
+                </div>
+                <div class="consignee">
+                    <span class="name">朱元璋</span>
+                    <span class="phone">13691853011</span>
+                </div>
+                <div class="consignee-addr">广东省深圳市福田区新闻路中电信息大厦动作1518</div>
             </div>
-            <div class="consignee-addr">广东省深圳市福田区新闻路中电信息大厦动作1518</div>
         </div>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $('.set-default-btn').click(function(){
+            $('.addr-wrap').find('.icon-default').removeClass('default-on');
+            $(this).siblings().addClass('default-on');
+        })
+        $('.del-btn').click(function(){
+            layer.msg('这是最常用的吧');
+        })
+    </script>
 </body>
 </html>
