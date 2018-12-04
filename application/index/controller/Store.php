@@ -84,6 +84,7 @@ class Store extends Controller{
     public function add(Request $request){
         if($request->isPost()){
             $user_id = Session::get("user");
+            dump($user_id);
             $input_data = $_POST;
             $store_name =trim($input_data['store_name']);
             $real_name =trim($input_data['real_name']);
