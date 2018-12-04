@@ -9,6 +9,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Request;
 use think\Session;
+use think\Db;
 
 class Store extends Controller{
 
@@ -84,7 +85,6 @@ class Store extends Controller{
     public function add(Request $request){
         if($request->isPost()){
             $user_id = Session::get("user");
-            dump($user_id);
             $input_data = $_POST;
             $store_name =trim($input_data['store_name']);
             $real_name =trim($input_data['real_name']);
@@ -138,6 +138,110 @@ class Store extends Controller{
                }
            }
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:店铺编辑更新(也是第二页完善店铺信息)
+     **************************************
+     * @param Request $request
+     */
+    public function update(Request $request){
+        if($request->isPost()){
+            //身份证正面
+            $store_identity_card_file = $request->file('store_identity_card');
+            if(!empty($store_identity_card_file)){
+                $info = $store_identity_card_file->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $store_identity_card = str_replace("\\","/",$info->getSaveName());
+                $data['store_identity_card'] =$store_identity_card;
+            }
+            //身份证反面
+            $store_reverse_images_file = $request->file('store_reverse_images');
+            if(!empty($store_reverse_images_file)){
+                $info = $store_reverse_images_file->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $store_reverse_images = str_replace("\\","/",$info->getSaveName());
+                $data['store_reverse_images'] =$store_reverse_images;
+            }
+            //营业执照正面
+            $store_do_bussiness_positive_img_file = $request->file('store_do_bussiness_positive_img');
+            if(!empty($store_do_bussiness_positive_img_file)){
+                $info = $store_do_bussiness_positive_img_file->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $store_do_bussiness_positive_img = str_replace("\\","/",$info->getSaveName());
+                $data['store_do_bussiness_positive_img'] =$store_do_bussiness_positive_img;
+            }
+            //营业执照反面
+            $store_do_bussiness_side_img_file = $request->file('store_do_bussiness_side_img');
+            if(!empty($store_do_bussiness_side_img_file)){
+                $info = $store_do_bussiness_side_img_file->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $store_do_bussiness_side_img= str_replace("\\","/",$info->getSaveName());
+                $data['store_do_bussiness_side_img'] =$store_do_bussiness_side_img;
+            }
+            //验证实体店面第一张
+            $verifying_physical_storefront_one_file = $request->file('verifying_physical_storefront_one');
+            if(!empty($verifying_physical_storefront_one_file)){
+                $info = $verifying_physical_storefront_one_file->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $verifying_physical_storefront_one = str_replace("\\","/",$info->getSaveName());
+                $data['verifying_physical_storefront_one'] =$verifying_physical_storefront_one;
+            }
+            //验证实体店面第二张
+            $verifying_physical_storefront_two_file = $request->file('verifying_physical_storefront_two');
+            if(!empty($verifying_physical_storefront_two_file)){
+                $info = $verifying_physical_storefront_two_file->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $verifying_physical_storefront_two= str_replace("\\","/",$info->getSaveName());
+                $data['verifying_physical_storefront_two'] =$verifying_physical_storefront_two;
+            }
+            //验证实体店面第三张
+            $verifying_physical_storefront_three_file = $request->file('verifying_physical_storefront_three');
+            if(!empty($verifying_physical_storefront_three_file)){
+                $info = $verifying_physical_storefront_three_file->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $verifying_physical_storefront_three = str_replace("\\","/",$info->getSaveName());
+                $data['verifying_physical_storefront_three'] =$verifying_physical_storefront_three;
+            }
+            //验证实体店面第四张
+            $verifying_physical_storefront_four_file = $request->file('verifying_physical_storefront_four');
+            if(!empty($verifying_physical_storefront_four_file)){
+                $info = $verifying_physical_storefront_four_file->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $verifying_physical_storefront_four = str_replace("\\","/",$info->getSaveName());
+                $data['verifying_physical_storefront_four'] =$verifying_physical_storefront_four;
+            }
+            $user_id = Session::get("user");
+            $bool =Db::name("store")->where('user_id',$user_id)->update($data);
+            if($bool){
+                $time=date("Y-m-d",time());
+                $v=explode('-',$time);
+                $time_second=date("H:i:s",time());
+                $vs=explode(':',$time_second);
+                $store_pay_num =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].$user_id;
+                return ajax_success('更新成功',['store_pay_num'=>$store_pay_num]);
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:返回店铺信息
+     **************************************
+     */
+    public function return_store_information(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            if(!empty($user_id)){
+                $data =Db::name('store')
+                    ->where('user_id',$user_id)
+                    ->find();
+                if(!empty($data)){
+                    return ajax_success('成功获取数据',$data);
+                }else{
+                    return ajax_error('获取数据失败',['status'=>0]);
+                }
+            }else{
+                return ajax_error('未登录',['status'=>0]);
+            }
+        }
+    }
+
+
 
 
 

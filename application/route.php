@@ -131,7 +131,9 @@ Route::group("",[
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
 
-    "store_add"=>"index/Store/add",                 //店铺添加
+    "store_add"=>"index/Store/add",                 //店铺添加(第一页加盟添加)
+    "store_update"=>"index/Store/update",           //店铺编辑更新(也是第二页完善店铺信息)
+    "return_store_information"=>"index/Store/return_store_information",    //店铺信息
 
 
 

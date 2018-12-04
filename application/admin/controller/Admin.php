@@ -126,24 +126,32 @@ class Admin extends Controller
      * 陈绪
      */
     public function passwd(Request $request){
-        $old_password =$request->only(['old_password'])['old_password'];
-        $second_passwd =$request->only(['second_passwd'])['second_passwd'];
         $id = $request->only(['id'])['id'];
+        $second_passwd =$request->only(['second_passwd'])['second_passwd'];
         $passwd = $request->only(["passwd"])["passwd"];
-        $passwords =password_hash(trim($passwd),PASSWORD_DEFAULT);
-        $admin_phone =db('admin')->field('phone')->where('id',$id)->find();
-        if(!empty($admin_phone)){
-            $user_phone =db('user')->where('phone_num',$admin_phone['phone'])->find();
-            if(!empty($user_phone)){
-                db('user')->where('phone_num',$admin_phone['phone'])->update(['password'=>$passwords]);
+        $old_password =$request->only(['old_password'])['old_password'];
+        if(!empty($old_password)){
+            $userInfo = db("admin")->field('passwd')->where("id",$id)->select();
+            if (password_verify($old_password , $userInfo[0]["passwd"])) {
+                if($second_passwd !=$passwd){
+                    $this->error('两次密码不相同');
+                }
+                $passwords =password_hash(trim($passwd),PASSWORD_DEFAULT);
+                $admin_phone =db('admin')->field('phone')->where('id',$id)->find();
+                if(!empty($admin_phone)){
+                    $user_phone =db('user')->where('phone_num',$admin_phone['phone'])->find();
+                    if(!empty($user_phone)){
+                        db('user')->where('phone_num',$admin_phone['phone'])->update(['password'=>$passwords]);
+                    }
+                }
+                $bool = db("Admin")->where("id",$id)->update(["passwd"=>$passwords]);
+                if($bool){
+                    $this->success("修改成功，请重新登录", url("admin/Login/index"));
+                }
+            }else{
+                $this->error('原密码不正确');
             }
         }
-        $bool = db("Admin")->where("id",$id)->update(["passwd"=>$passwords]);
-        if($bool){
-            $this->success("修改成功，请重新登录", url("admin/Login/index"));
-        }
     }
-
-
 
 }
