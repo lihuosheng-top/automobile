@@ -127,8 +127,16 @@ class Admin extends Controller
      */
     public function passwd(Request $request){
         $id = $request->only(['id'])['id'];
-        $passwd = md5($request->only(["passwd"])["passwd"]);
-        $bool = db("Admin")->where("id",$id)->update(["passwd"=>$passwd]);
+        $passwd = $request->only(["passwd"])["passwd"];
+        $passwords =password_hash(trim($passwd),PASSWORD_DEFAULT);
+        $admin_phone =db('admin')->field('phone')->where('id',$id)->find();
+        if(!empty($admin_phone)){
+            $user_phone =db('user')->where('phone_num',$admin_phone['phone'])->find();
+            if(!empty($user_phone)){
+                db('user')->where('phone_num',$admin_phone['phone'])->update(['password'=>$passwords]);
+            }
+        }
+        $bool = db("Admin")->where("id",$id)->update(["passwd"=>$passwords]);
         if($bool){
             $this->success("修改成功，请重新登录", url("admin/Login/index"));
         }
