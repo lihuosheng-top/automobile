@@ -212,14 +212,20 @@ class Store extends Controller{
                 $data['verifying_physical_storefront_four'] =$verifying_physical_storefront_four;
             }
             $user_id = Session::get("user");
+
+            $time=date("Y-m-d",time());
+            $v=explode('-',$time);
+            $time_second=date("H:i:s",time());
+            $vs=explode(':',$time_second);
+            $store_pay_num =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id;
+            $data['store_pay_num'] =$store_pay_num;//订单号
+            $data['operation_status'] =0;  //当前可操作（0待审核，1通过，-1拒绝）
+            
             $bool =Db::name("store")->where('user_id',$user_id)->update($data);
             if($bool){
-                $time=date("Y-m-d",time());
-                $v=explode('-',$time);
-                $time_second=date("H:i:s",time());
-                $vs=explode(':',$time_second);
-                $store_pay_num =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].$user_id;
                 return ajax_success('更新成功',['store_pay_num'=>$store_pay_num]);
+            }else{
+                return ajax_error('更新失败',['status'=>0]);
             }
         }
     }
