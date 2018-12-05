@@ -139,17 +139,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">服务范围：</label>
             <div class="layui-input-block">
-                {volist name="service_setting_data" id="service_val"}
                 {volist name="service_setting_id" id ="item"}
-                {:dump($item)}
-                {if in_array($item,$service_val['service_setting_id'])}
+                {volist name="service_setting_data" id="service_val"}
+                {if condition="$item == $service_val['service_setting_id']" }
                 <input value="{$service_val['service_setting_id']}" type="checkbox" name="like1[write]" lay-skin="primary" title="" checked="" disabled="disabled">
-                {$service_val['service_setting_name']}
-                {else}
-                <input value="{$service_val['service_setting_id']}" type="checkbox" name="like1[write]" lay-skin="primary" title=""  disabled="disabled">
                 {$service_val['service_setting_name']}
                 {/if}
                 {/volist}
+
                 {/volist}
             </div>
         </div>
