@@ -65,6 +65,7 @@ $.ajax({
             if($(this)[0].id == 13){
                 $('.business-li').show();
             }else{
+                service_setting_id = [];
                 $('.business-li').hide();
             }
         })
@@ -80,6 +81,20 @@ $.ajax({
 
         
         var service_setting_id = []; //经营范围
+        // 存储 经营范围 ID
+        $('.business-btn-confirm').click(function(){
+            var allCheckInput = $('.business-range-ul').find('.checkbox-input');
+            for(var i = 0, l = allCheckInput.length; i < l; i++){
+                if(allCheckInput[i].checked){
+                    service_setting_id.push(allCheckInput[i].id.split('-')[1]);
+                }
+            }
+
+            $('.mask').hide();
+            $('.business-pop').animate({'bottom': '-100%'}, 100);
+            $('html').css('overflow', 'auto');
+        })
+
         // 下一步按钮
         $('.next-button').click(function(){
             var store_name,
@@ -125,6 +140,7 @@ $.ajax({
             }else{
                 store_logo_images = null;
             }
+            
 
             // 店铺所在区域
             if($('#area-li').val() !== ''){
@@ -171,71 +187,220 @@ $.ajax({
                 formData.append('store_owner_wechat', store_owner_wechat);
                 formData.append('role_id', role_id);
                 formData.append('service_setting_id', service_setting_id);
-                if($('.next-button').text() === '下一步'){
-                    $.ajax({
-                        url: 'store_add',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        processData: false,
-                        contentType: false,
-                        data: formData,
-                        success: function(res){
-                            console.log(res);
-                            if(res.status == 1){
-                                layer.open({
-                                    style: 'bottom:100px;',
-                                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
-                                    skin: 'msg',
-                                    content: res.info,
-                                    time: 1.5
-                                })
-                                setTimeout(function(){
-                                    location.href = 'store_verify';
-                                }, 1700)
-                            }else if(res.status == 0){
-                                layer.open({
-                                    style: 'bottom:100px;',
-                                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
-                                    skin: 'msg',
-                                    content: res.info,
-                                    time: 1.5
-                                })
+
+                // 如果选择服务商， 需要选择经营范围
+                if($('.business-li').css('display') === 'flex'){//服务商
+                    if(service_setting_id.length !== 0){
+                        if($('.next-button').text() === '下一步'){
+                            $.ajax({
+                                url: 'store_add',
+                                type: 'POST',
+                                dataType: 'JSON',
+                                processData: false,
+                                contentType: false,
+                                data: formData,
+                                success: function(res){
+                                    console.log(res);
+                                    if(res.status == 1){
+                                        layer.open({
+                                            style: 'bottom:100px;',
+                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                            skin: 'msg',
+                                            content: res.info,
+                                            time: 1.5
+                                        })
+                                        setTimeout(function(){
+                                            location.href = 'store_verify';
+                                        }, 1700)
+                                    }else if(res.status == 0){
+                                        layer.open({
+                                            style: 'bottom:100px;',
+                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                            skin: 'msg',
+                                            content: res.info,
+                                            time: 1.5
+                                        })
+                                    }
+                                },
+                                error: function(){
+                                    console.log('error');
+                                }
+                            })
+                        }else if($('.next-button').text() === '更新'){
+                            $.ajax({
+                                url: 'store_save',
+                                type: 'POST',
+                                dataType: 'JSON',
+                                processData: false,
+                                contentType: false,
+                                data: formData,
+                                success: function(res){
+                                    console.log(res);
+                                    if(res.status === '0'){
+                                        layer.open({
+                                            style: 'bottom:100px;',
+                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                            skin: 'msg',
+                                            content: res.info,
+                                            time: 1.5
+                                        })
+                                        setTimeout(function(){
+                                            location.href = 'store_verify';
+                                        }, 1700)
+                                    }else{
+                                        layer.open({
+                                            style: 'bottom:100px;',
+                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                            skin: 'msg',
+                                            content: res.info,
+                                            time: 1.5
+                                        })
+                                        setTimeout(function(){
+                                            location.href = 'store_verify';
+                                        }, 1700)
+                                    }
+                                },
+                                error: function(){
+                                    console.log('error');
+                                }
+                            })
+                        }
+                    }else{
+                        layer.open({
+                            style: 'bottom:100px;',
+                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            skin: 'msg',
+                            content: '服务商需选择服务范围',
+                            time: 1.5
+                        })
+                    }
+                }else{//配件商
+                    if($('.next-button').text() === '下一步'){
+                        $.ajax({
+                            url: 'store_add',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            success: function(res){
+                                console.log(res);
+                                if(res.status == 1){
+                                    layer.open({
+                                        style: 'bottom:100px;',
+                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                        skin: 'msg',
+                                        content: res.info,
+                                        time: 1.5
+                                    })
+                                    setTimeout(function(){
+                                        location.href = 'store_verify';
+                                    }, 1700)
+                                }else if(res.status == 0){
+                                    layer.open({
+                                        style: 'bottom:100px;',
+                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                        skin: 'msg',
+                                        content: res.info,
+                                        time: 1.5
+                                    })
+                                }
+                            },
+                            error: function(){
+                                console.log('error');
                             }
-                        },
-                        error: function(){
-                            console.log('error');
-                        }
-                    })
-                }else if($('.next-button').text() === '更新'){
-                    $.ajax({
-                        url: 'store_save',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        processData: false,
-                        contentType: false,
-                        data: formData,
-                        success: function(res){
-                            console.log(res);
-                        },
-                        error: function(){
-                            console.log('error');
-                        }
-                    })
+                        })
+                    }else if($('.next-button').text() === '更新'){
+                        $.ajax({
+                            url: 'store_save',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            success: function(res){
+                                console.log(res);
+                                if(res.status === '0'){
+                                    layer.open({
+                                        style: 'bottom:100px;',
+                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                        skin: 'msg',
+                                        content: res.info,
+                                        time: 1.5
+                                    })
+                                    setTimeout(function(){
+                                        location.href = 'store_verify';
+                                    }, 1700)
+                                }else{
+                                    layer.open({
+                                        style: 'bottom:100px;',
+                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                        skin: 'msg',
+                                        content: res.info,
+                                        time: 1.5
+                                    })
+                                    setTimeout(function(){
+                                        location.href = 'store_verify';
+                                    }, 1700)
+                                }
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
+                        })
+                    }
                 }
-                
             }  
         })
-        // 存储 经营方位 ID
-        $('.business-btn-confirm').click(function(){
-            var allCheckInput = $('.business-range-ul').find('.checkbox-input');
-            for(var i = 0, l = allCheckInput.length; i < l; i++){
-                if(allCheckInput[i].checked){
-                    service_setting_id.push(allCheckInput[i].id.split('-')[1]);
+
+
+        // 更新信息返回
+        $.ajax({
+            url: 'return_store_information',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    var data = res.data;
+                    $('.shop-name').val(data.store_name);
+                    // $('.name').val()
+                    $('.seat-phone').val(data.store_owner_seat_num);
+                    $('#logo-img')[0].src = 'uploads/'+data.store_logo_images;
+                    // 经营范围
+                    if(data.service_setting_id !== null){
+                        $('.business-li').show();
+                        var myArr = data.service_setting_id.split(',');
+                        $.each(myArr, function(idx, val){
+                            $('#range-'+val+'').attr('checked', 'checked');
+                        })
+                    }
+                    // 店铺所在区域
+                    $('#area-li').val(data.store_city_address);
+                    // 店铺详细地址
+                    $('.detail-addr').val(data.store_street_address);
+                    // 店铺信息
+                    if(data.store_information !== null){
+                        $('.shop-info').val(data.store_information);
+                    }
+                    // 邮箱
+                    if(data.store_owner_email !== null){
+                        $('.email').val(data.store_owner_email);
+                    }
+                    // 绑定微信
+                    if(data.store_owner_wechat !== null){
+                        $('.wechat').val(data.store_owner_wechat);
+                    }
+                    // 我要加盟
+                    $('#'+data.role_id+'').attr('checked', 'checked');
+                    $('.next-button').text('更新');
+                }else if(res.status == 0){
+                    $('.next-button').text('下一步');
                 }
+            },
+            error: function(){
+                console.error('error');
             }
-            $('.mask').hide();
-            $('.business-pop').animate({'bottom': '-100%'}, 100);
-            $('html').css('overflow', 'auto');
         })
 
     },
@@ -265,51 +430,3 @@ function mustFill(){
     })
 }
 
-
-$.ajax({
-    url: 'return_store_information',
-    type: 'POST',
-    dataType: 'JSON',
-    success: function(res){
-        console.log(res);
-        if(res.status == 1){
-            var data = res.data;
-            $('.shop-name').val(data.store_name);
-            // $('.name').val()
-            $('.seat-phone').val(data.store_owner_seat_num);
-            $('#logo-img')[0].src = 'uploads/'+data.store_logo_images;
-            // 经营范围
-            if(data.service_setting_id !== null){
-                $('.business-li').show();
-                var myArr = data.service_setting_id.split(',');
-                $.each(myArr, function(idx, val){
-                    $('#range-'+val+'').attr('checked', 'checked');
-                })
-            }
-            // 店铺所在区域
-            $('#area-li').val(data.store_city_address);
-            // 店铺详细地址
-            $('.detail-addr').val(data.store_street_address);
-            // 店铺信息
-            if(data.store_information !== null){
-                $('.shop-info').val(data.store_information);
-            }
-            // 邮箱
-            if(data.store_owner_email !== null){
-                $('.email').val(data.store_owner_email);
-            }
-            // 绑定微信
-            if(data.store_owner_wechat !== null){
-                $('.wechat').val(data.store_owner_wechat);
-            }
-            // 我要加盟
-            $('#'+data.role_id+'').attr('checked', 'checked');
-            $('.next-button').text('更新');
-        }else if(res.status == 0){
-            $('.next-button').text('下一步');
-        }
-    },
-    error: function(){
-        console.error('error');
-    }
-})
