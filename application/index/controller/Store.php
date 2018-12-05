@@ -252,6 +252,9 @@ class Store extends Controller{
         if($request->isPost()){
             //身份证正面
             $store_identity_card_file = $request->file('store_identity_card');
+//            if(empty($store_identity_card_file)){
+//                return ajax_error('身份证正面照未上传',['status'=>0]);
+//            }
             if(!empty($store_identity_card_file)){
                 $info = $store_identity_card_file->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $store_identity_card = str_replace("\\","/",$info->getSaveName());
