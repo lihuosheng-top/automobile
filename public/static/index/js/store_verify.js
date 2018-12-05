@@ -88,7 +88,7 @@ var app = new Vue({
             var reader = new FileReader();
             let $target = e.target || e.srcElement;
             let img = $target.files[0];
-            if(this.images.storeFront.innerImgs.length < 3){
+            if(this.images.storeFront.innerImgs.length < 20){
                 reader.onload = (data) => {
                     let res = data.target || data.srcElement;
                     this.images.storeFront.innerImgs.push(res.result);
@@ -100,7 +100,7 @@ var app = new Vue({
                     style: 'bottom:100px;',
                     type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                     skin: 'msg',
-                    content: '上传图片不超过3张',
+                    content: '上传图片不超过20张',
                     time: 1
                 })
             }
