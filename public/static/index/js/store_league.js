@@ -122,14 +122,16 @@ $.ajax({
             if($('#upload-input')[0].files.length !== 0){
                 store_logo_images = $('#upload-input')[0].files[0];
             }else{
-                layer.open({
-                    style: 'bottom:100px;',
-                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
-                    skin: 'msg',
-                    content: '请上传店铺logo',
-                    time: 1.5
-                })
+                store_logo_images = null;
+                // layer.open({
+                //     style: 'bottom:100px;',
+                //     type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                //     skin: 'msg',
+                //     content: '请上传店铺logo',
+                //     time: 1.5
+                // })
             }
+
             // 店铺所在区域
             if($('#area-li').val() !== ''){
                 store_city_address = $('#area-li').val();
@@ -175,32 +177,58 @@ $.ajax({
                 formData.append('store_owner_wechat', store_owner_wechat);
                 formData.append('role_id', role_id);
                 formData.append('service_setting_id', service_setting_id);
-                $.ajax({
-                    url: 'store_add',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    processData: false,
-                    contentType: false,
-                    data: formData,
-                    success: function(res){
-                        console.log(res);
-                        if(res.status == 1){
-                            layer.open({
-                                style: 'bottom:100px;',
-                                type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
-                                skin: 'msg',
-                                content: res.info,
-                                time: 1.5
-                            })
-                            setTimeout(function(){
-                                location.href = 'store_verify';
-                            }, 1700)
+                if($('.next-button').text() === '下一步'){
+                    $.ajax({
+                        url: 'store_add',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(res){
+                            console.log(res);
+                            if(res.status == 1){
+                                layer.open({
+                                    style: 'bottom:100px;',
+                                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                    skin: 'msg',
+                                    content: res.info,
+                                    time: 1.5
+                                })
+                                setTimeout(function(){
+                                    location.href = 'store_verify';
+                                }, 1700)
+                            }else if(res.status == 0){
+                                layer.open({
+                                    style: 'bottom:100px;',
+                                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                    skin: 'msg',
+                                    content: res.info,
+                                    time: 1.5
+                                })
+                            }
+                        },
+                        error: function(){
+                            console.log('error');
                         }
-                    },
-                    error: function(){
-                        console.log('error');
-                    }
-                })
+                    })
+                }else if($('.next-button').text() === '更新'){
+                    $.ajax({
+                        url: 'store_save',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(res){
+                            console.log(res);
+                        },
+                        error: function(){
+                            console.log('error');
+                        }
+                    })
+                }
+                
             }  
         })
         // 存储 经营方位 ID
@@ -282,6 +310,9 @@ $.ajax({
             }
             // 我要加盟
             $('#'+data.role_id+'').attr('checked', 'checked');
+            $('.next-button').text('更新');
+        }else if(data.status == 0){
+            $('.next-button').text('下一步');
         }
     },
     error: function(){
