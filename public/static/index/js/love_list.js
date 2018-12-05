@@ -25,32 +25,32 @@ $.ajax({
         $.each(res.data, function(idx, val){
             if(val.status !== 1){
                 str += `<div class="car-box">
-                        <div class="car-info-top">
-                            <div class="logo"><img src="static/index/image/aodi.png"></div>
-                            <div class="car-info">
-                                <p>`+val.brand+` `+val.series+`</p>
-                                <p>`+val.displacement+` `+val.production_time+`</p>
+                            <div class="car-info-top">
+                                <div class="logo"><img src="static/index/image/aodi.png"></div>
+                                <div class="car-info">
+                                    <p>`+val.brand+` `+val.series+`</p>
+                                    <p>`+val.displacement+` `+val.production_time+`</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="car-btn-bot">
-                            <button class="set-default" id="`+val.id+`">设为默认</button>
-                            <button class="delete-btn">删除</button>
-                        </div>
-                    </div>`
+                            <div class="car-btn-bot">
+                                <button class="set-default" id="`+val.id+`">设为默认</button>
+                                <button class="delete-btn">删除</button>
+                            </div>
+                        </div>`
             }else{
                 str += `<div class="car-box">
-                        <div class="car-info-top">
-                            <div class="logo"><img src="static/index/image/aodi.png"></div>
-                            <div class="car-info">
-                                <p>`+val.brand+` `+val.series+`</p>
-                                <p>`+val.displacement+` `+val.production_time+`</p>
+                            <div class="car-info-top">
+                                <div class="logo"><img src="static/index/image/aodi.png"></div>
+                                <div class="car-info">
+                                    <p>`+val.brand+` `+val.series+`</p>
+                                    <p>`+val.displacement+` `+val.production_time+`</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="car-btn-bot">
-                            <button class="set-default on-default" id="`+val.id+`">设为默认</button>
-                            <button class="delete-btn">删除</button>
-                        </div>
-                    </div>`
+                            <div class="car-btn-bot">
+                                <button class="set-default on-default" id="`+val.id+`">设为默认</button>
+                                <button class="delete-btn">删除</button>
+                            </div>
+                        </div>`
             }
         })
         $('.box-wrap').append(str);

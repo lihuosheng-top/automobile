@@ -119,6 +119,7 @@ html,body{
 .id-card-emblem img,
 .id-card-portrait img,
 .business-license img,
+.license img,
 .store-front-face img,
 .store-front-inner img{
     width: 100%;
@@ -127,6 +128,7 @@ html,body{
 .id-card-emblem input,
 .id-card-portrait input,
 .business-license input,
+.license input,
 .store-front-face input,
 .store-front-inner input{
     position: absolute;
@@ -175,14 +177,16 @@ html,body{
 .licenseEaseOut{
     right: 0;
 }
-.business-license{
+.business-license,
+.license{
     position: relative;
     width: 4.11rem;
     height: 2.59rem;
     margin: 0 auto 1rem;
     box-shadow: 0 4px 20px rgba(230, 230, 230, 1);
 }
-.business-license-tips{
+.business-license-tips,
+.license-tips{
     width: 100%;
     margin: 1.2rem 0 .8rem;
     text-align: center;

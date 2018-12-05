@@ -31,7 +31,7 @@
 <body>
     <div class="wrapper">
         <header class="header">
-            <a href="my_message" class="spr icon-back"></a>
+            <a href="my_index" class="spr icon-back"></a>
             <h3>我的消费</h3>
         </header>
         <div class="search-box">
@@ -72,5 +72,10 @@
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $('.cost-li').click(function(){
+            location.href = 'consume_message';
+        })
+    </script>
 </body>
 </html>
