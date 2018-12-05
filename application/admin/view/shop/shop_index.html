@@ -103,10 +103,10 @@
                     <tr>
                         <td><input type="checkbox" name="" lay-skin="primary" lay-filter="choose" data-id="{$vo.store_id}"></td>
                         <td>{$vo.store_name}</td>
-                        <td></td>
+                        <td>{$vo.real_name}</td>
                         <td>{$vo.store_detailed_address}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{$vo.phone_num}</td>
+                        <td>{$vo.role_name}</td>
                         <td>
                             {$vo.store_is_pay|store_is_pay}
                             <!--<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"-->
@@ -117,11 +117,9 @@
                         <td>
                             {$vo.operation_status|operation_status}
                         </td>
-
                         <td>
                             <a class="layui-btn layui-btn-mini edit" href="{:url('admin/Shop/add',['id'=>$vo.store_id])}"><i class="iconfont icon-edit"></i> 编辑</a>
                             <a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
-
                         </td>
                     </tr>
                     {/volist} {/if}
@@ -132,7 +130,6 @@
 
             <select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
 				<option value="">批量删除</option>
-
 			</select>
             <button type="button" class="up-button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定
 			</button>

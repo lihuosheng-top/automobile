@@ -21,6 +21,8 @@ Route::group("",[
     "/$"=>"index/index/home",
     "index"=>"index/index/index",
 
+    "indexs"=>"index/Indexs/index",
+
 
 
     /*我的爱车*/
@@ -315,6 +317,19 @@ Route::group("admin",[
     "user_del"=>"admin/User/del", //会员删除
     "user_dels"=>"admin/User/dels", //会员批量删除
     "user_search"=>"admin/User/search", //会员搜索
+
+
+    /**
+     * 汽车品牌
+     * 陈绪
+     */
+    "car_index"=>"admin/Car/index",
+    "car_add"=>"admin/Car/add",
+    "car_save"=>"admin/Car/save",
+    "car_edit"=>"admin/Car/edit",
+    "car_updata"=>"admin/Car/updata",
+
+
     /*充值和提现*/
     "recharge_list"=>"admin/Recharge/index", //充值和提现首页
     "recharge_edit"=>"admin/Recharge/edit",   //充值和提现编辑
@@ -512,7 +527,6 @@ Route::group("admin",[
     "shop_del"=>"admin/Shop/del",//店铺列表删除
     "shop_dels"=>"admin/Shop/dels",//店铺列表批量删除
     "shop_search"=>"admin/Shop/search",//店铺列表模糊查询
-
     /*TODO:店铺管理结束*/
 
 ]);

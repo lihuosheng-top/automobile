@@ -136,6 +136,22 @@ class Store extends Controller{
                    ];
                    $bool = db("store")->insertGetId($data);
                    if($bool > 0){
+                       $store_data =Db::name('store')->where('store_id',$bool)->find();
+                       $departmemt =Db::name("role")->field('name')->where('id',$store_data['role_id'])->find();
+                       $user_informations =Db::name('user')->field("phone_num,password,sex,real_name")->where('id',$user_id)->find();
+                       $role_datas =[
+                           "account"=>$user_informations["phone_num"],
+                           "passwd"=>$user_informations["password"],
+                           "sex"=>$user_informations["sex"],
+                           "stime"=>date('Y-m:d H:i:s'),
+                           "role_id"=>$store_data['role_id'],
+                           "email"=>$store_data["store_owner_email"],
+                           "phone"=>$user_informations["phone_num"],
+                           "status"=>0,
+                           "department"=>$departmemt['name'],
+                           "name"=>$user_informations["real_name"],
+                       ];
+                       Db::name("admin")->insert($role_datas);
                        return ajax_success('添加成功',['store_id'=>$bool]);
                    }else{
                        return ajax_error('添加失败',['status'=>0]);
@@ -252,9 +268,6 @@ class Store extends Controller{
         if($request->isPost()){
             //身份证正面
             $store_identity_card_file = $request->file('store_identity_card');
-//            if(empty($store_identity_card_file)){
-//                return ajax_error('身份证正面照未上传',['status'=>0]);
-//            }
             if(!empty($store_identity_card_file)){
                 $info = $store_identity_card_file->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $store_identity_card = str_replace("\\","/",$info->getSaveName());
@@ -289,25 +302,14 @@ class Store extends Controller{
                 $data['verifying_physical_storefront_one'] =$verifying_physical_storefront_one;
             }
             //验证实体店面第二张
+            $verifying_physical_storefront_two = [];
             $verifying_physical_storefront_two_file = $request->file('verifying_physical_storefront_two');
             if(!empty($verifying_physical_storefront_two_file)){
-                $info = $verifying_physical_storefront_two_file->move(ROOT_PATH . 'public' . DS . 'uploads');
-                $verifying_physical_storefront_two= str_replace("\\","/",$info->getSaveName());
-                $data['verifying_physical_storefront_two'] =$verifying_physical_storefront_two;
-            }
-            //验证实体店面第三张
-            $verifying_physical_storefront_three_file = $request->file('verifying_physical_storefront_three');
-            if(!empty($verifying_physical_storefront_three_file)){
-                $info = $verifying_physical_storefront_three_file->move(ROOT_PATH . 'public' . DS . 'uploads');
-                $verifying_physical_storefront_three = str_replace("\\","/",$info->getSaveName());
-                $data['verifying_physical_storefront_three'] =$verifying_physical_storefront_three;
-            }
-            //验证实体店面第四张
-            $verifying_physical_storefront_four_file = $request->file('verifying_physical_storefront_four');
-            if(!empty($verifying_physical_storefront_four_file)){
-                $info = $verifying_physical_storefront_four_file->move(ROOT_PATH . 'public' . DS . 'uploads');
-                $verifying_physical_storefront_four = str_replace("\\","/",$info->getSaveName());
-                $data['verifying_physical_storefront_four'] =$verifying_physical_storefront_four;
+                foreach ($verifying_physical_storefront_two_file as $k=>$v) {
+                    $info = $v->move(ROOT_PATH . 'public' . DS . 'uploads');
+                    $verifying_physical_storefront_two[] = str_replace("\\", "/", $info->getSaveName());
+                }
+                    $data['verifying_physical_storefront_two'] =implode(',',$verifying_physical_storefront_two);
             }
             $user_id = Session::get("user");
             $time=date("Y-m-d",time());
@@ -319,6 +321,10 @@ class Store extends Controller{
             $data['operation_status'] =0;  //当前可操作（0待审核，1通过，-1拒绝）
             $bool =Db::name("store")->where('user_id',$user_id)->update($data);
             if($bool){
+                //删除图片
+//                if($image_url['store_logo_images'] != null){
+//                    unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$image_url['store_logo_images']);
+//                }
                 return ajax_success('更新成功',['store_pay_num'=>$store_pay_num]);
             }else{
                 return ajax_error('更新失败',['status'=>0]);
