@@ -18,3 +18,5 @@ function get_user_id_by_session(){
     $session_user_id =session('user_id');
     dump($session_user_id);
 }
+
+

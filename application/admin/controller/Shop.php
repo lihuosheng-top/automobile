@@ -9,6 +9,7 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Db;
 use think\Request;
+use think\paginator\driver\Bootstrap;
 
 class Shop extends Controller{
 
@@ -22,13 +23,30 @@ class Shop extends Controller{
     public function index(){
         $store_data  =Db::name('store')->where("store_is_button",1)->select();
        foreach ($store_data as $k=>$v){
-           $store_datas[$k] =$v;
+           $store_datas[$k]['store_id'] =$v['store_id'];
+           $store_datas[$k]['store_name'] =$v['store_name'];
+           $store_datas[$k]['store_detailed_address'] =$v['store_detailed_address'];
+           $store_datas[$k]['store_is_pay'] =$v['store_is_pay'];
+           $store_datas[$k]['operation_status'] =$v['operation_status'];
            $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
            $store_datas[$k]['real_name']=$user_data['real_name'];
            $store_datas[$k]['phone_num']=$user_data['phone_num'];
            $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
            $store_datas[$k]['role_name']=$role_datas['name'];
        }
+
+        $all_idents =$store_data ;//这里是需要分页的数据
+        $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
+        $listRow = 3;//每页3行记录
+        $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
+        $store_data = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
+            'var_page' => 'page',
+            'path'     => url('admin/Shop/index'),//这里根据需要修改url
+            'query'    =>  [],
+            'fragment' => '',
+        ]);
+        $store_data->appends($_GET);
+        $this->assign('listpage', $store_data->render());
         return view("shop_index",['store_data'=>$store_datas]);
 
     }
@@ -44,7 +62,7 @@ class Shop extends Controller{
      * @return \think\response\View
      */
     public function add($id){
-        $store_data  =Db::name('store')->where('id',$id)->find();
+        $store_data  =Db::name('store')->where('store_id',$id)->select();
         foreach ($store_data as $k=>$v){
             $store_datas[$k] =$v;
             $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
@@ -52,8 +70,20 @@ class Shop extends Controller{
             $store_datas[$k]['phone_num']=$user_data['phone_num'];
             $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
             $store_datas[$k]['role_name']=$role_datas['name'];
+            $address =explode(',',$v['store_city_address']);
+            if(!empty($v['service_setting_id'])){
+                if(strpos($v['service_setting_id'],',')){
+                    $service_setting_id =explode(',',$v['service_setting_id']);
+                }else{
+                    $service_setting_id[0] =$v['service_setting_id'];
+                }
+            }else{
+                $service_setting_id =null;
+            }
         }
-        return view("shop_add");
+        $service_setting_data =Db::name('service_setting')->where('service_setting_status',1)->select();
+        dump($store_datas);
+        return view("shop_add",['data'=>$store_datas,'service_setting_data'=>$service_setting_data,'address'=>$address,'service_setting_id'=>$service_setting_id]);
     }
 
 
