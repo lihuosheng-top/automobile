@@ -177,6 +177,7 @@ class Store extends Controller{
             if(!empty($file)){
                 $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $evaluation_images = str_replace("\\","/",$info->getSaveName()); //图片
+                $image_url = db("store")->where("user_id",$user_id)->field("store_logo_images")->find();
                 $ex_address =explode(',',$store_city_address);
                 foreach ($ex_address as $k=>$v){
                     $explode_data[] =$v;
@@ -200,6 +201,10 @@ class Store extends Controller{
                 $bool = db("store")->where('user_id',$user_id)->update($data);
                 $store_id =db("store")->field('store_id')->where('user_id',$user_id)->find();
                 if($bool > 0){
+                    //删除图片
+                    if($image_url['store_logo_images'] != null){
+                        unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$image_url['store_logo_images']);
+                    }
                     return ajax_success('编辑成功',['store_id'=>$store_id['store_id']]);
                 }else{
                     return ajax_error('编辑失败',['status'=>0]);
@@ -229,7 +234,7 @@ class Store extends Controller{
                 if($bool > 0){
                     return ajax_success('编辑成功',['store_id'=>$store_id['store_id']]);
                 }else{
-                    return ajax_error('编辑失败',['status'=>0]);
+                    return ajax_error('没有数据改变',['status'=>0]);
                 }
             }
 
