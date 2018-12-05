@@ -1,4 +1,5 @@
 
+const formData = new FormData();
 var app = new Vue({
     el: '#app',
     data: {
@@ -36,7 +37,7 @@ var app = new Vue({
         emblem(e){
             var img = e.target.files[0];
             this.images.emblemFile = img;
-            // console.log(this.images.emblemFile);
+            console.log(this.images.emblemFile);
             var reader = new FileReader();
             var $this = this;
             reader.readAsDataURL(img);
@@ -52,7 +53,7 @@ var app = new Vue({
             var reader = new FileReader();
             var $this = this;
             reader.readAsDataURL(img);
-            reader.onload = function(e){
+            reader.onload = function(){
                 $this.images.portrait = this.result;
             }
         },
@@ -64,7 +65,7 @@ var app = new Vue({
             var reader = new FileReader();
             var $this = this;
             reader.readAsDataURL(img);
-            reader.onload = function(e){
+            reader.onload = function(){
                 $this.images.businessLicense = this.result;
             }
         },
@@ -76,7 +77,7 @@ var app = new Vue({
             var reader = new FileReader();
             var $this = this;
             reader.readAsDataURL(img);
-            reader.onload = function(e){
+            reader.onload = function(){
                 $this.images.license = this.result;
             }
         },
@@ -88,7 +89,7 @@ var app = new Vue({
             var reader = new FileReader();
             var $this = this;
             reader.readAsDataURL(img);
-            reader.onload = function(e){
+            reader.onload = function(){
                 $this.images.storeFront.faceImg = this.result;
             }
         },
@@ -97,14 +98,11 @@ var app = new Vue({
             // console.log(e.target.files)
             var imgArr = e.target.files;
             // console.log(imgArr)
-            var innerImgs = this.images.storeFront.innerImgs;
             var innerImgsFile = this.images.storeFront.innerImgsFile;
-            var hasInnerImg = this.images.storeFront.hasInnerImg;
-            var reader = new FileReader();
-            var $this = this;
             for(var i = 0, len = imgArr.length; i < len; i++){
                 if(innerImgsFile.length < 20){
                     innerImgsFile.push(imgArr[i]);
+                    formData.append('verifying_physical_storefront_two[]', imgArr[i]);
                     this.imagesAdd(imgArr[i]);
                 }else{
                     layer.open({
@@ -117,7 +115,7 @@ var app = new Vue({
                 }
             }
         },
-        // 图片
+        // 多图
         imagesAdd(images){
             var reader = new FileReader();
             var innerImgs = this.images.storeFront.innerImgs;
@@ -146,17 +144,14 @@ var app = new Vue({
             var $images = this.images;
             if($images.emblemFile !== '' && $images.portraitFile !== '' && $images.businessLicenseFile !== ''
                 && $images.licenseFile !== '' && $images.storeFront.innerImgsFile.length !== 0){
-                
-                var data = new FormData();
-                data.append('store_identity_card', $images.emblemFile);
-                data.append('store_reverse_images', $images.portraitFile);
-                data.append('store_do_bussiness_positive_img', $images.businessLicenseFile);
-                data.append('store_do_bussiness_side_img', $images.licenseFile);
-                data.append('verifying_physical_storefront_one', $images.storeFront.faceImgFile);
-                data.append('verifying_physical_storefront_two[]', $images.storeFront.innerImgsFile);
+                formData.append('store_identity_card', $images.emblemFile);
+                formData.append('store_reverse_images', $images.portraitFile);
+                formData.append('store_do_bussiness_positive_img', $images.businessLicenseFile);
+                formData.append('store_do_bussiness_side_img', $images.licenseFile);
+                formData.append('verifying_physical_storefront_one', $images.storeFront.faceImgFile);
                 console.log($images.emblemFile);
                 console.log($images.storeFront.innerImgsFile);
-                this.$http.post('store_update', data)
+                this.$http.post('store_update', formData)
                 .then(res => {
                     console.log(eval('('+ res.data +')'));
                 }).catch(err => {
