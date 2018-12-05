@@ -116,7 +116,7 @@ class Store extends Controller{
                            $explode_data[] =$v;
                        }
                     $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
-                   db("user")->where('id',$user_id)->update(['real_name'=>$real_name]);
+                   db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
                    $data =[
                        'store_name'=>$store_name,
                        'store_detailed_address'=>$store_detailed_address,//店铺具体地址
@@ -212,7 +212,6 @@ class Store extends Controller{
                 $data['verifying_physical_storefront_four'] =$verifying_physical_storefront_four;
             }
             $user_id = Session::get("user");
-
             $time=date("Y-m-d",time());
             $v=explode('-',$time);
             $time_second=date("H:i:s",time());
@@ -220,7 +219,6 @@ class Store extends Controller{
             $store_pay_num =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id;
             $data['store_pay_num'] =$store_pay_num;//订单号
             $data['operation_status'] =0;  //当前可操作（0待审核，1通过，-1拒绝）
-            
             $bool =Db::name("store")->where('user_id',$user_id)->update($data);
             if($bool){
                 return ajax_success('更新成功',['store_pay_num'=>$store_pay_num]);
@@ -244,8 +242,10 @@ class Store extends Controller{
                     ->where('user_id',$user_id)
                     ->find();
                 if(!empty($data)){
-                    $real_name = db("user")->field('real_name')->where('id',$user_id)->find();
+                    $real_name = db("user")->field('real_name,phone_num,sex')->where('id',$user_id)->find();
                     $data['real_name'] =$real_name['real_name'];
+                    $data['phone_num'] =$real_name['phone_num'];
+                    $data['sex'] =$real_name['sex'];
                     return ajax_success('成功获取数据',$data);
                 }else{
                     return ajax_error('获取数据失败',['status'=>0]);
