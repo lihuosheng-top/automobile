@@ -29,25 +29,6 @@ $('.upload-input').change(function(){
 })
 
 $.ajax({
-    url: 'return_store_information',
-    type: 'POST',
-    dataType: 'JSON',
-    success: function(res){
-        console.log(res);
-        if(res.status == 1){
-
-        }
-    },
-    error: function(){
-        console.error('error');
-    }
-})
-
-
-
-
-
-$.ajax({
     url: 'store_league',
     type: 'POST',
     dataType: 'JSON',
@@ -261,3 +242,47 @@ function mustFill(){
         time: 1.5
     })
 }
+
+
+$.ajax({
+    url: 'return_store_information',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+        if(res.status == 1){
+            var data = res.data;
+            $('.shop-name').val(data.store_name);
+            // $('.name').val()
+            $('.seat-phone').val(data.store_owner_seat_num);
+            $('#logo-img')[0].src = 'uploads/'+data.store_logo_images;
+            // 经营范围
+            if(data.service_setting_id != ''){
+                $('.business-li').show();
+                var myArr = data.service_setting_id.split(',');
+                $.each(myArr, function(idx, val){
+                    $('#range-'+val+'').attr('checked', 'checked');
+                })
+            }
+            // 店铺所在区域
+            $('#area-li').val(data.store_city_address);
+            // 店铺详细地址
+            $('.detail-addr').val(data.store_street_address);
+            // 店铺信息
+            if(data.store_information != ''){
+                $('.shop-info').val(data.store_information);
+            }
+            // 邮箱
+            if(data.store_owner_email != ''){
+                $('.email').val(data.store_owner_email);
+            }
+            // 绑定微信
+            if(data.store_owner_wechat != ''){
+                $('.wechat').val(data.store_owner_wechat);
+            }
+        }
+    },
+    error: function(){
+        console.error('error');
+    }
+})
