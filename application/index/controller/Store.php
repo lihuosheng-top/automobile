@@ -302,20 +302,15 @@ class Store extends Controller{
                 $data['verifying_physical_storefront_one'] =$verifying_physical_storefront_one;
             }
             //验证实体店面第二张
-            $verifying_images = [];
             $verifying_physical_storefront_two = [];
             $verifying_physical_storefront_two_file = $request->file('verifying_physical_storefront_two');
-            dump( $verifying_physical_storefront_two_file);
             if(!empty($verifying_physical_storefront_two_file)){
                 foreach ($verifying_physical_storefront_two_file as $k=>$v) {
                     $info = $v->move(ROOT_PATH . 'public' . DS . 'uploads');
                     $verifying_physical_storefront_two[] = str_replace("\\", "/", $info->getSaveName());
-//                    $evaluation_images[] = $verifying_physical_storefront_two;
-//                    $data['verifying_physical_storefront_two'] = $verifying_physical_storefront_two;
                 }
+                    $data['verifying_physical_storefront_two'] =implode(',',$verifying_physical_storefront_two);
             }
-
-           exit();
             $user_id = Session::get("user");
             $time=date("Y-m-d",time());
             $v=explode('-',$time);
@@ -326,6 +321,10 @@ class Store extends Controller{
             $data['operation_status'] =0;  //当前可操作（0待审核，1通过，-1拒绝）
             $bool =Db::name("store")->where('user_id',$user_id)->update($data);
             if($bool){
+                //删除图片
+//                if($image_url['store_logo_images'] != null){
+//                    unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$image_url['store_logo_images']);
+//                }
                 return ajax_success('更新成功',['store_pay_num'=>$store_pay_num]);
             }else{
                 return ajax_error('更新失败',['status'=>0]);
