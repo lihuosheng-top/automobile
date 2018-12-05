@@ -145,6 +145,71 @@ class Store extends Controller{
                }
            }
     }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:店铺编辑更新(也是第二页完善店铺信息)
+     **************************************
+     * @param Request $request
+     */
+    public function save(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $input_data = $_POST;
+            $store_name =trim($input_data['store_name']);
+            $real_name =trim($input_data['real_name']);
+            $phone_num =trim($input_data['phone_num']);
+            $store_owner_seat_num =trim($input_data['store_owner_seat_num']);
+            $sex =trim($input_data['sex']);
+            $store_do_bussiness_time =trim($input_data['store_do_bussiness_time']); //营业时间
+            if(!empty($input_data['service_setting_id'])){
+                $service_setting_id =trim($input_data['service_setting_id']);
+            }else{
+                $service_setting_id =null;
+            }
+            $store_city_address =trim($input_data['store_city_address']);
+            $store_street_address =trim($input_data['store_street_address']);
+            $store_information =trim($input_data['store_information']);
+            $store_owner_email =trim($input_data['store_owner_email']);
+            $store_owner_wechat =trim($input_data['store_owner_wechat']);
+            $role_id =trim($input_data['role_id']);
+            $store_id =trim($input_data['store_id']);
+            $file = $request->file('store_logo_images');
+            if(!empty($file)){
+                $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $evaluation_images = str_replace("\\","/",$info->getSaveName()); //图片
+                $ex_address =explode(',',$store_city_address);
+                foreach ($ex_address as $k=>$v){
+                    $explode_data[] =$v;
+                }
+                $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
+                $data =[
+                    'store_name'=>$store_name,
+                    'store_detailed_address'=>$store_detailed_address,//店铺具体地址
+                    'store_owner_seat_num'=>$store_owner_seat_num,
+                    'store_logo_images'=>$evaluation_images,
+                    'store_do_bussiness_time'=>$store_do_bussiness_time,
+                    'service_setting_id'=>$service_setting_id,
+                    'store_street_address'=>$store_street_address,
+                    'store_city_address'=>$store_city_address,
+                    'store_owner_email'=>$store_owner_email,
+                    'store_owner_wechat'=>$store_owner_wechat,
+                    'store_information'=>$store_information,
+                    'role_id'=>$role_id,
+                    'store_id'=>$store_id
+                ];
+                $bool = db("store")->where('user_id',$user_id)->update($data);
+                if($bool > 0){
+                    return ajax_success('编辑成功',['store_id'=>$bool]);
+                }else{
+                    return ajax_error('编辑失败',['status'=>0]);
+                }
+            }else{
+                return ajax_error('请上传店铺logo',['status'=>0]);
+            }
+        }
+    }
 
     /**
      **************李火生*******************
