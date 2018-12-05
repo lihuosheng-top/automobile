@@ -159,6 +159,8 @@ $.ajax({
             if(store_name !== undefined && real_name !== undefined &&
             store_logo_images !== undefined && store_city_address !== undefined &&
             store_street_address !== undefined && role_id !== undefined){
+
+                console.log();
                 var formData = new FormData();
                 formData.append('store_name', store_name);
                 formData.append('real_name', real_name);
@@ -173,6 +175,7 @@ $.ajax({
                 formData.append('store_owner_email', store_owner_email);
                 formData.append('store_owner_wechat', store_owner_wechat);
                 formData.append('role_id', role_id);
+                formData.append('service_setting_id', service_setting_id);
                 $.ajax({
                     url: 'store_add',
                     type: 'POST',
