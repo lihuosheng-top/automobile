@@ -91,15 +91,12 @@ class Store extends Controller{
             $phone_num =trim($input_data['phone_num']);
             $store_owner_seat_num =trim($input_data['store_owner_seat_num']);
             $sex =trim($input_data['sex']);
-//            $store_logo_images =trim($input_data['store_logo_images']);//图片
             $store_do_bussiness_time =trim($input_data['store_do_bussiness_time']); //营业时间
             if(!empty($input_data['service_setting_id'])){
-                dump($input_data['service_setting_id']);
                 $service_setting_id =trim($input_data['service_setting_id']);
             }else{
                 $service_setting_id =null;
             }
-
             $store_city_address =trim($input_data['store_city_address']);
             $store_street_address =trim($input_data['store_street_address']);
             $store_information =trim($input_data['store_information']);
@@ -109,8 +106,7 @@ class Store extends Controller{
                $file = $request->file('store_logo_images');
                if(!empty($file)){
                        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
-                       $evaluation_images = str_replace("\\","/",$info->getSaveName());
-//                       $evaluation_images = ["store_img_url"=>$store_img_url];
+                       $evaluation_images = str_replace("\\","/",$info->getSaveName()); //图片
 
                        $ex_address =explode(',',$store_city_address);
                        foreach ($ex_address as $k=>$v){
@@ -136,7 +132,7 @@ class Store extends Controller{
                    ];
                    $bool = db("store")->insertGetId($data);
                    if($bool > 0){
-                       return ajax_success('添加成功',$bool);
+                       return ajax_success('添加成功',['store_id'=>$bool]);
                    }else{
                        return ajax_error('添加失败',['status'=>0]);
                    }
