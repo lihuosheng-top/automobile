@@ -136,6 +136,24 @@ class Store extends Controller{
                    ];
                    $bool = db("store")->insertGetId($data);
                    if($bool > 0){
+//                       $store_data =Db::name('store')->where('id',$bool)->find();
+//                       halt($store_data);
+//                       $departmemt =Db::name("role")->field('name')->where('id',$store_data['role_id'])->find();
+//                       $user_informations =Db::name('user')->field("phone_num,password,sex,real_name")->where('id',$user_id)->find();
+//                       $role_datas =[
+//                           "account"=>$user_informations["phone_num"],
+//                           "password"=>$user_informations["password"],
+//                           "sex"=>$user_informations["sex"],
+//                           "stime"=>date('Y-m:d H:i:s'),
+//                           "role_id"=>$store_data['role_id'],
+//                           "email"=>$store_data["store_owner_email"],
+//                           "phone_num"=>$store_data["phone_num"],
+//                           "status"=>0,
+//                           "departmemt"=>$departmemt['name'],
+//                           "name"=>$user_informations["real_name"],
+//                       ];
+//                       dump($role_datas);
+//                       Db::name("admin")->insert($role_datas);
                        return ajax_success('添加成功',['store_id'=>$bool]);
                    }else{
                        return ajax_error('添加失败',['status'=>0]);
@@ -289,26 +307,20 @@ class Store extends Controller{
                 $data['verifying_physical_storefront_one'] =$verifying_physical_storefront_one;
             }
             //验证实体店面第二张
+            $verifying_images = [];
             $verifying_physical_storefront_two_file = $request->file('verifying_physical_storefront_two');
             if(!empty($verifying_physical_storefront_two_file)){
-                $info = $verifying_physical_storefront_two_file->move(ROOT_PATH . 'public' . DS . 'uploads');
-                $verifying_physical_storefront_two= str_replace("\\","/",$info->getSaveName());
-                $data['verifying_physical_storefront_two'] =$verifying_physical_storefront_two;
+                foreach ($verifying_physical_storefront_two_file as $k=>$v) {
+                    $info = $v->move(ROOT_PATH . 'public' . DS . 'uploads');
+                    $verifying_physical_storefront_two = str_replace("\\", "/", $info->getSaveName());
+                    $evaluation_images[] = $verifying_physical_storefront_two;
+//                    $data['verifying_physical_storefront_two'] = $verifying_physical_storefront_two;
+                }
+                
             }
-            //验证实体店面第三张
-            $verifying_physical_storefront_three_file = $request->file('verifying_physical_storefront_three');
-            if(!empty($verifying_physical_storefront_three_file)){
-                $info = $verifying_physical_storefront_three_file->move(ROOT_PATH . 'public' . DS . 'uploads');
-                $verifying_physical_storefront_three = str_replace("\\","/",$info->getSaveName());
-                $data['verifying_physical_storefront_three'] =$verifying_physical_storefront_three;
-            }
-            //验证实体店面第四张
-            $verifying_physical_storefront_four_file = $request->file('verifying_physical_storefront_four');
-            if(!empty($verifying_physical_storefront_four_file)){
-                $info = $verifying_physical_storefront_four_file->move(ROOT_PATH . 'public' . DS . 'uploads');
-                $verifying_physical_storefront_four = str_replace("\\","/",$info->getSaveName());
-                $data['verifying_physical_storefront_four'] =$verifying_physical_storefront_four;
-            }
+
+
+
             $user_id = Session::get("user");
             $time=date("Y-m-d",time());
             $v=explode('-',$time);

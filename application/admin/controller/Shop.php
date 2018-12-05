@@ -20,8 +20,16 @@ class Shop extends Controller{
      **************************************
      */
     public function index(){
-        $store_data  =Db::name('store')->paginate(3);
-        return view("shop_index",['store_data'=>$store_data]);
+        $store_data  =Db::name('store')->where("store_is_button",1)->select();
+       foreach ($store_data as $k=>$v){
+           $store_datas[$k] =$v;
+           $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
+           $store_datas[$k]['real_name']=$user_data['real_name'];
+           $store_datas[$k]['phone_num']=$user_data['phone_num'];
+           $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
+           $store_datas[$k]['role_name']=$role_datas['name'];
+       }
+        return view("shop_index",['store_data'=>$store_datas]);
 
     }
 
@@ -35,7 +43,16 @@ class Shop extends Controller{
      * @param $id
      * @return \think\response\View
      */
-    public function add(){
+    public function add($id){
+        $store_data  =Db::name('store')->where('id',$id)->find();
+        foreach ($store_data as $k=>$v){
+            $store_datas[$k] =$v;
+            $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
+            $store_datas[$k]['real_name']=$user_data['real_name'];
+            $store_datas[$k]['phone_num']=$user_data['phone_num'];
+            $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
+            $store_datas[$k]['role_name']=$role_datas['name'];
+        }
         return view("shop_add");
     }
 
