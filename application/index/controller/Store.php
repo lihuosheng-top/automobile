@@ -197,11 +197,11 @@ class Store extends Controller{
                     'store_owner_wechat'=>$store_owner_wechat,
                     'store_information'=>$store_information,
                     'role_id'=>$role_id,
-                    'store_id'=>$store_id
                 ];
                 $bool = db("store")->where('user_id',$user_id)->update($data);
+                $store_id =db("store")->field('store_id')->where('user_id',$user_id)->find();
                 if($bool > 0){
-                    return ajax_success('编辑成功',['store_id'=>$bool]);
+                    return ajax_success('编辑成功',['store_id'=>$store_id['store_id']]);
                 }else{
                     return ajax_error('编辑失败',['status'=>0]);
                 }
