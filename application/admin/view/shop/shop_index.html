@@ -51,7 +51,7 @@
 
 <body>
 
-<<<<<<< HEAD
+
     {block name="content"}
 
     <div class="childrenBody">
@@ -131,89 +131,6 @@
         <div id="page">
 
             <select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-=======
-	{block name="content"}
-
-	<div class="childrenBody">
-		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="{:url('admin/Shop/search')}" method="post">
-				<div class="layui-form-item">
-					<div class="layui-inline">
-						<label class="layui-form-label">门店名称：</label>
-						<div class="layui-input-inline">
-							<input type="text" name="store_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-						</div>
-					</div>
-					<div class="layui-inline">
-						<label class="layui-form-label">负责人：</label>
-						<div class="layui-input-inline">
-							<input type="text" name="store_owner" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-
-						</div>
-					</div>
-					<div class="layui-inline">
-						<button type="submit" class="layui-btn search_btn">搜索</button>
-					</div>
-				</div>
-
-			</form>
-
-		</blockquote>
-
-
-		<div class="layui-form news_list">
-			<table class="layui-table">
-			
-				<thead>
-					<tr>
-						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-						<th>店铺名称</th>
-						<th>门店负责人</th>
-						<th>门店地址</th>
-						<th>联系电话</th>
-						<th>店铺类型</th>
-						<th>是否付费上架</th>
-						<th>平台审核状态</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody class="news_content">
-				{if !empty($store_data)}
-				{volist name="store_data" id="vo"}
-					<tr>
-						<td><input type="checkbox" name="" lay-skin="primary" lay-filter="choose" data-id="{$vo.store_id}"></td>
-						<td>{$vo.store_name}</td>
-						<td></td>
-						<td>{$vo.store_detailed_address}</td>
-						<td></td>
-						<td></td>
-						<td>
-							{$vo.store_is_pay|store_is_pay}
-							<!--<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"-->
-							<!--checked="" data-id="{$vo.store_id}">-->
-							<!--<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"-->
-								    <!--data-id="{$vo.store_id}">-->
-						</td>
-						<td>
-							{$vo.operation_status|operation_status}
-						</td>
-
-						<td>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Shop/add',['id'=>$vo.store_id])}"><i class="iconfont icon-edit"></i> 编辑</a>
-							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
-							 data-id="undefined"><i class="layui-icon"></i> 删除</a>
-
-						</td>
-					</tr>
-				{/volist}
-				{/if}
-				</tbody>
-			</table>
-		</div>
-		<div id="page">
-
-			<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
->>>>>>> 19681675d2310f27ab8c51bf948201a9e193eeaa
 				<option value="">批量删除</option>
 
 			</select>

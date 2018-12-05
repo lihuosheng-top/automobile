@@ -64,7 +64,6 @@
 
 <body>
 
-<<<<<<< HEAD
     {block name="content"} {if !empty($data)}
     <form class="layui-form" action="{:url('admin/admin/updata')}" method="post">
 
@@ -93,7 +92,6 @@
                 <input type="text" name="name" value="{$data.store_owner_seat_num}" placeholder="" class="layui-input" id="name" disabled="disabled">
             </div>
         </div>
-=======
 	{block name="content"}
 
 	<form class="layui-form" action="" method="post">
@@ -123,9 +121,6 @@
 				<input type="text" name="store_owner_seat_num" value="" placeholder="" class="layui-input" id="name" disabled="disabled">
 			</div>
 		</div>
->>>>>>> 19681675d2310f27ab8c51bf948201a9e193eeaa
-
-<<<<<<< HEAD
         <div class="layui-form-item">
             <label class="layui-form-label">店铺logo：</label>
             <div class="layui-input-block">
@@ -156,7 +151,7 @@
             </div>
         </div>
 
-<<<<<<< HEAD
+
         <div class="layui-form-item">
             <label class="layui-form-label">店铺详细地址</label>
             <div class="layui-input-block">
@@ -166,7 +161,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">营业时间：</label>
             <div class="layui-input-block">
-                <input type="text" placeholder="" class="layui-input" id="repassword" disabled="disabled" value="{$data.store_do_bussiness_time|date=' H:i:s',###}--{$data.store_do_bussiness_end_time|date=' H:i:s',###}">
+                <input type="text" placeholder="" class="layui-input" id="repassword" disabled="disabled" value="{$data.store_do_bussiness_time}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -189,7 +184,7 @@
                 <input type="text" name="email" value="{$data.store_owner_wechat}" placeholder="" class="layui-input" id="email" disabled="disabled">
             </div>
         </div>
-=======
+
 		<div class="layui-form-item">
 			<label class="layui-form-label">店铺logo：</label>
 			<div class="layui-input-block">
@@ -219,13 +214,7 @@
 				</div>
 			</div>
 		</div>
->>>>>>> a6d0bf47c2f33c104ee1e26e8a01fdfcdd55c904
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">我要加盟为：</label>
-            <div class="layui-input-block">
-                <select name="interest" lay-filter="aihao">
-=======
 		<div class="layui-form-item">
 			<label class="layui-form-label">店铺详细地址</label>
 			<div class="layui-input-block">
@@ -264,19 +253,14 @@
 			<label class="layui-form-label">我要加盟为：</label>
 			<div class="layui-input-block">
 				<select name="" lay-filter="aihao">
-<<<<<<< HEAD
->>>>>>> 19681675d2310f27ab8c51bf948201a9e193eeaa
 					<option value="{$data.store_type|show_user_type}" selected="" disabled>{$data.store_type|show_user_type}</option>
-=======
-					<option value="" selected="" disabled>{$data.store_type|show_user_type}</option>
->>>>>>> a6d0bf47c2f33c104ee1e26e8a01fdfcdd55c904
 					<!--<option value="0">写作</option>-->
 					<!--<option value="1" selected="">阅读</option>-->
 					<!--<option value="2">游戏</option>-->
 					<!--<option value="3">音乐</option>-->
 					<!--<option value="4">旅行</option>-->
 				</select>
-<<<<<<< HEAD
+
             </div>
         </div>
         <div class="layui-form-item">
@@ -366,104 +350,7 @@
     {/if} {/block}
     <!--_footer 作为公共模版分离出去-->
     {include file="template/_footer" /}
-=======
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">店铺信息：</label>
-			<div class="layui-input-block">
-				<textarea rows="10" cols="60" disabled="disabled"></textarea>
-			</div>
-		</div>
-		<p class="title">身份认证</p>
-		<div class="layui-form-item" style="width: 570px !important;">
-			<label class="layui-form-label">验证身份证：</label>
-			<div class="layui-input-inline">
-				<img src="" width="100%">
-			</div>
-			<div class="layui-input-inline">
-				<img src="" width="100%">
-			</div>
-		</div>
-		<div class="layui-form-item" style="width: 570px !important;">
-			<label class="layui-form-label">验证营业执照：</label>
-			<div class="layui-input-inline">
-				<img src="" width="100%">
-			</div>
-			<div class="layui-input-inline">
-				<img src="" width="100%">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">验证真实地址：</label>
-			<div class="layui-input-block">
-				<input type="text" name="store_detailed_address" value="" placeholder="" class="layui-input" disabled="disabled">
-			</div>
-		</div>
-		<div class="layui-form-item" style="width: 570px !important;">
-			<label class="layui-form-label">验证实体店面：</label>
-			<div class="layui-input-inline">
-				<img src="" width="100%" style="margin-bottom: 10px;">
-			</div>
-			<div class="layui-input-inline">
-				<img src="" width="100%" style="margin-bottom: 10px;">
-			</div>
-			<div class="layui-input-inline" style="margin-left: 20%;">
-				<img src="" width="100%" style="margin-bottom: 10px;">
-			</div>
-			<div class="layui-input-inline">
-				<img src="" width="100%" style="margin-bottom: 10px;">
-			</div>
-		</div>
-		<p class="title">身份认证</p>
-		<div class="layui-form-item">
-			<label class="layui-form-label">是否付费上架：</label>
-			<div class="layui-input-block">
-				{if $data.store_is_pay==1}
-				<input type="radio" name="store_is_pay" title="付费上架" value="{$data.store_is_pay}" checked="">
-				{elseif $data.store_is_pay==-1}
-				<input type="radio" name="store_is_pay" title="不付费上架" value="{$data.store_is_pay}" checked="">
-				{elseif $data.store_is_pay!=1 && $data.store_is_pay!=-1 }
-				<input type="radio" name="store_is_pay" title="付费上架" value="1" checked="">
-				<input type="radio" name="store_is_pay" value="-1" title="不付费上架">
-				{/if}
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">当前可操作：</label>
-			<div class="layui-input-block">
-				{if $data.operation_status == 1}
-				<input type="radio" name="operation_status" value="{$data.operation_status}" title=" 通过" checked="">
-				{elseif $data.operation_status == -1}
-				<input type="radio" name="operation_status" value="{$data.operation_status}" title="拒绝" checked="">
-				{elseif $data.operation_status != 1 && $data.operation_status != -1}
-				<input type="radio" name="operation_status" value="1" title=" 通过" checked="">
-				<input type="radio" name="operation_status" value="-1" title="拒绝">
-				{/if}
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">操作员备注：：</label>
-			<div class="layui-input-block">
-				{if !empty($data.operation_remarks)}
-				<textarea rows="10" cols="60" name="operation_remarks">{$data.operation_remarks}</textarea>
-				{else}
-				<textarea rows="10" cols="60" name="operation_remarks"></textarea>
-				{/if}
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<div class="layui-input-block">
-				<!--<input type="hidden" name="id" value="">-->
-				<button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-				<button class="layui-btn" type="submit" id="submits">保存</button>
-			</div>
-		</div>
-	</form>
-	{/block}
-	<!--_footer 作为公共模版分离出去-->
-	{include file="template/_footer" /}
->>>>>>> 19681675d2310f27ab8c51bf948201a9e193eeaa
+
 
     <!--/_footer 作为公共模版分离出去-->
     <!--请在下方写此页面业务相关的脚本-->
