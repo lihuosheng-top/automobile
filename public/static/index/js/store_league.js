@@ -257,7 +257,7 @@ $.ajax({
             $('.seat-phone').val(data.store_owner_seat_num);
             $('#logo-img')[0].src = 'uploads/'+data.store_logo_images;
             // 经营范围
-            if(data.service_setting_id != ''){
+            if(data.service_setting_id !== null){
                 $('.business-li').show();
                 var myArr = data.service_setting_id.split(',');
                 $.each(myArr, function(idx, val){
@@ -269,17 +269,19 @@ $.ajax({
             // 店铺详细地址
             $('.detail-addr').val(data.store_street_address);
             // 店铺信息
-            if(data.store_information != ''){
+            if(data.store_information !== null){
                 $('.shop-info').val(data.store_information);
             }
             // 邮箱
-            if(data.store_owner_email != ''){
+            if(data.store_owner_email !== null){
                 $('.email').val(data.store_owner_email);
             }
             // 绑定微信
-            if(data.store_owner_wechat != ''){
+            if(data.store_owner_wechat !== null){
                 $('.wechat').val(data.store_owner_wechat);
             }
+            // 我要加盟
+            $('#'+data.role_id+'').attr('checked', 'checked');
         }
     },
     error: function(){
