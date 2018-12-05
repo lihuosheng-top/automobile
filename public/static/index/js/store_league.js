@@ -185,7 +185,18 @@ $.ajax({
                     data: formData,
                     success: function(res){
                         console.log(res);
-                        
+                        if(res.status == 1){
+                            layer.open({
+                                style: 'bottom:100px;',
+                                type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                skin: 'msg',
+                                content: res.info,
+                                time: 1.5
+                            })
+                            setTimeout(function(){
+                                location.href = 'store_verify';
+                            }, 1700)
+                        }
                     },
                     error: function(){
                         console.log('error');
