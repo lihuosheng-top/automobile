@@ -34,6 +34,9 @@ $.ajax({
     dataType: 'JSON',
     success: function(res){
         console.log(res);
+        if(res.status == 1){
+
+        }
     },
     error: function(){
         console.error('error');
@@ -176,7 +179,6 @@ $.ajax({
             store_logo_images !== undefined && store_city_address !== undefined &&
             store_street_address !== undefined && role_id !== undefined){
 
-                console.log();
                 var formData = new FormData();
                 formData.append('store_name', store_name);
                 formData.append('real_name', real_name);
