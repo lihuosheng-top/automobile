@@ -136,24 +136,22 @@ class Store extends Controller{
                    ];
                    $bool = db("store")->insertGetId($data);
                    if($bool > 0){
-//                       $store_data =Db::name('store')->where('id',$bool)->find();
-//                       halt($store_data);
-//                       $departmemt =Db::name("role")->field('name')->where('id',$store_data['role_id'])->find();
-//                       $user_informations =Db::name('user')->field("phone_num,password,sex,real_name")->where('id',$user_id)->find();
-//                       $role_datas =[
-//                           "account"=>$user_informations["phone_num"],
-//                           "password"=>$user_informations["password"],
-//                           "sex"=>$user_informations["sex"],
-//                           "stime"=>date('Y-m:d H:i:s'),
-//                           "role_id"=>$store_data['role_id'],
-//                           "email"=>$store_data["store_owner_email"],
-//                           "phone_num"=>$store_data["phone_num"],
-//                           "status"=>0,
-//                           "departmemt"=>$departmemt['name'],
-//                           "name"=>$user_informations["real_name"],
-//                       ];
-//                       dump($role_datas);
-//                       Db::name("admin")->insert($role_datas);
+                       $store_data =Db::name('store')->where('store_id',$bool)->find();
+                       $departmemt =Db::name("role")->field('name')->where('id',$store_data['role_id'])->find();
+                       $user_informations =Db::name('user')->field("phone_num,password,sex,real_name")->where('id',$user_id)->find();
+                       $role_datas =[
+                           "account"=>$user_informations["phone_num"],
+                           "passwd"=>$user_informations["password"],
+                           "sex"=>$user_informations["sex"],
+                           "stime"=>date('Y-m:d H:i:s'),
+                           "role_id"=>$store_data['role_id'],
+                           "email"=>$store_data["store_owner_email"],
+                           "phone"=>$user_informations["phone_num"],
+                           "status"=>0,
+                           "department"=>$departmemt['name'],
+                           "name"=>$user_informations["real_name"],
+                       ];
+                       Db::name("admin")->insert($role_datas);
                        return ajax_success('添加成功',['store_id'=>$bool]);
                    }else{
                        return ajax_error('添加失败',['status'=>0]);
@@ -270,9 +268,6 @@ class Store extends Controller{
         if($request->isPost()){
             //身份证正面
             $store_identity_card_file = $request->file('store_identity_card');
-//            if(empty($store_identity_card_file)){
-//                return ajax_error('身份证正面照未上传',['status'=>0]);
-//            }
             if(!empty($store_identity_card_file)){
                 $info = $store_identity_card_file->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $store_identity_card = str_replace("\\","/",$info->getSaveName());
@@ -308,19 +303,19 @@ class Store extends Controller{
             }
             //验证实体店面第二张
             $verifying_images = [];
+            $verifying_physical_storefront_two = [];
             $verifying_physical_storefront_two_file = $request->file('verifying_physical_storefront_two');
+            dump( $verifying_physical_storefront_two_file);
             if(!empty($verifying_physical_storefront_two_file)){
                 foreach ($verifying_physical_storefront_two_file as $k=>$v) {
                     $info = $v->move(ROOT_PATH . 'public' . DS . 'uploads');
-                    $verifying_physical_storefront_two = str_replace("\\", "/", $info->getSaveName());
-                    $evaluation_images[] = $verifying_physical_storefront_two;
+                    $verifying_physical_storefront_two[] = str_replace("\\", "/", $info->getSaveName());
+//                    $evaluation_images[] = $verifying_physical_storefront_two;
 //                    $data['verifying_physical_storefront_two'] = $verifying_physical_storefront_two;
                 }
-                
             }
 
-
-
+           exit();
             $user_id = Session::get("user");
             $time=date("Y-m-d",time());
             $v=explode('-',$time);

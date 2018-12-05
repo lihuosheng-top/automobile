@@ -153,7 +153,7 @@ var app = new Vue({
                 data.append('store_do_bussiness_positive_img', $images.businessLicenseFile);
                 data.append('store_do_bussiness_side_img', $images.licenseFile);
                 data.append('verifying_physical_storefront_one', $images.storeFront.faceImgFile);
-                data.append('verifying_physical_storefront_two[]', $images.storeFront.innerImgsFile);
+                data.append('verifying_physical_storefront_two', $images.storeFront.innerImgsFile);
                 console.log($images.emblemFile);
                 console.log($images.storeFront.innerImgsFile);
                 this.$http.post('store_update', data)
