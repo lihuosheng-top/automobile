@@ -205,8 +205,34 @@ class Store extends Controller{
                     return ajax_error('编辑失败',['status'=>0]);
                 }
             }else{
-                return ajax_error('请上传店铺logo',['status'=>0]);
+                $ex_address =explode(',',$store_city_address);
+                foreach ($ex_address as $k=>$v){
+                    $explode_data[] =$v;
+                }
+                $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
+                $data =[
+                    'store_name'=>$store_name,
+                    'store_detailed_address'=>$store_detailed_address,//店铺具体地址
+                    'store_owner_seat_num'=>$store_owner_seat_num,
+                    'store_do_bussiness_time'=>$store_do_bussiness_time,
+                    'service_setting_id'=>$service_setting_id,
+                    'store_street_address'=>$store_street_address,
+                    'store_city_address'=>$store_city_address,
+                    'store_owner_email'=>$store_owner_email,
+                    'store_owner_wechat'=>$store_owner_wechat,
+                    'store_information'=>$store_information,
+                    'role_id'=>$role_id,
+                ];
+                $bool = db("store")->where('user_id',$user_id)->update($data);
+                $store_id =db("store")->field('store_id')->where('user_id',$user_id)->find();
+                if($bool > 0){
+                    return ajax_success('编辑成功',['store_id'=>$store_id['store_id']]);
+                }else{
+                    return ajax_error('编辑失败',['status'=>0]);
+                }
             }
+
         }
     }
 
