@@ -116,6 +116,7 @@ class Store extends Controller{
                            $explode_data[] =$v;
                        }
                     $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                   db("user")->where('id',$user_id)->update(['real_name'=>$real_name]);
                    $data =[
                        'store_name'=>$store_name,
                        'store_detailed_address'=>$store_detailed_address,//店铺具体地址
@@ -237,6 +238,8 @@ class Store extends Controller{
                     ->where('user_id',$user_id)
                     ->find();
                 if(!empty($data)){
+                    $real_name = db("user")->field('real_name')->where('id',$user_id)->find();
+                    $data['real_name'] =$real_name['real_name'];
                     return ajax_success('成功获取数据',$data);
                 }else{
                     return ajax_error('获取数据失败',['status'=>0]);
