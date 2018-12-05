@@ -173,7 +173,6 @@ class Store extends Controller{
             $store_owner_email =trim($input_data['store_owner_email']);
             $store_owner_wechat =trim($input_data['store_owner_wechat']);
             $role_id =trim($input_data['role_id']);
-            $store_id =trim($input_data['store_id']);
             $file = $request->file('store_logo_images');
             if(!empty($file)){
                 $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
