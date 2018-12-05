@@ -311,7 +311,7 @@ $.ajax({
             // 我要加盟
             $('#'+data.role_id+'').attr('checked', 'checked');
             $('.next-button').text('更新');
-        }else if(data.status == 0){
+        }else if(res.status == 0){
             $('.next-button').text('下一步');
         }
     },
