@@ -29,6 +29,25 @@ $('.upload-input').change(function(){
 })
 
 $.ajax({
+    url: 'return_store_information',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+        if(res.status == 1){
+
+        }
+    },
+    error: function(){
+        console.error('error');
+    }
+})
+
+
+
+
+
+$.ajax({
     url: 'store_league',
     type: 'POST',
     dataType: 'JSON',
@@ -160,7 +179,6 @@ $.ajax({
             store_logo_images !== undefined && store_city_address !== undefined &&
             store_street_address !== undefined && role_id !== undefined){
 
-                console.log();
                 var formData = new FormData();
                 formData.append('store_name', store_name);
                 formData.append('real_name', real_name);
@@ -185,12 +203,24 @@ $.ajax({
                     data: formData,
                     success: function(res){
                         console.log(res);
+                        if(res.status == 1){
+                            layer.open({
+                                style: 'bottom:100px;',
+                                type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                                skin: 'msg',
+                                content: res.info,
+                                time: 1.5
+                            })
+                            setTimeout(function(){
+                                location.href = 'store_verify';
+                            }, 1700)
+                        }
                     },
                     error: function(){
                         console.log('error');
                     }
                 })
-            }
+            }  
         })
         // 存储 经营方位 ID
         $('.business-btn-confirm').click(function(){
