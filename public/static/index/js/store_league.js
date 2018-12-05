@@ -182,12 +182,13 @@ $.ajax({
                     data: formData,
                     success: function(res){
                         console.log(res);
+                        
                     },
                     error: function(){
                         console.log('error');
                     }
                 })
-            }
+            }  
         })
         // 存储 经营方位 ID
         $('.business-btn-confirm').click(function(){
