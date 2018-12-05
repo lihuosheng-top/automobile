@@ -94,9 +94,10 @@ class Store extends Controller{
 //            $store_logo_images =trim($input_data['store_logo_images']);//图片
             $store_do_bussiness_time =trim($input_data['store_do_bussiness_time']); //营业时间
             if(!empty($input_data['service_setting_id'])){
+                dump($input_data['service_setting_id']);
                 $service_setting_id =trim($input_data['service_setting_id']);
             }else{
-                $service_setting_id =0;
+                $service_setting_id =null;
             }
 
             $store_city_address =trim($input_data['store_city_address']);
@@ -108,8 +109,9 @@ class Store extends Controller{
                $file = $request->file('store_logo_images');
                if(!empty($file)){
                        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
-                       $store_img_url = str_replace("\\","/",$info->getSaveName());
-                       $evaluation_images = ["store_img_url"=>$store_img_url];
+                       $evaluation_images = str_replace("\\","/",$info->getSaveName());
+//                       $evaluation_images = ["store_img_url"=>$store_img_url];
+
                        $ex_address =explode(',',$store_city_address);
                        foreach ($ex_address as $k=>$v){
                            $explode_data[] =$v;
