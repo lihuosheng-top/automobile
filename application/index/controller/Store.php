@@ -53,7 +53,6 @@ class Store extends Controller{
         return view("store_league");
     }
 
-
     /**
      * 身份验证
      * 陈绪
@@ -61,7 +60,6 @@ class Store extends Controller{
     public function verify(){
         return view("store_verify");
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -85,6 +83,11 @@ class Store extends Controller{
     public function add(Request $request){
         if($request->isPost()){
             $user_id = Session::get("user");
+            $is_store =Db::name('store')->field('store_id,role_id')->where('user_id',$user_id)->find();
+            if(!empty($is_store)){
+                $store_type =Db::name("role")->field('name')->where('id',$is_store['role_id'])->find();
+                return ajax_success('此用户已经加盟过'.$store_type['name'],['store_id'=>$is_store['store_id']]);
+            }
             $input_data = $_POST;
             $store_name =trim($input_data['store_name']);
             $real_name =trim($input_data['real_name']);
