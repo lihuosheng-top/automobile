@@ -78,8 +78,9 @@ $.ajax({
         })
         $('.business-range-ul').append(businessRangeStr);
 
-        // 下一步
+        
         var service_setting_id = []; //经营范围
+        // 下一步按钮
         $('.next-button').click(function(){
             var store_name,
                 real_name,
@@ -123,13 +124,6 @@ $.ajax({
                 store_logo_images = $('#upload-input')[0].files[0];
             }else{
                 store_logo_images = null;
-                // layer.open({
-                //     style: 'bottom:100px;',
-                //     type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
-                //     skin: 'msg',
-                //     content: '请上传店铺logo',
-                //     time: 1.5
-                // })
             }
 
             // 店铺所在区域

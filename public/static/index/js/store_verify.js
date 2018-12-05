@@ -86,6 +86,8 @@ var app = new Vue({
             }
         },
         idCardPop(){
+            // console.log(this.images.emblem)
+            // console.log(this.images.portrait)
             return this.idCardPopFlag = !this.idCardPopFlag;
         },
         businessLicensePop(){
