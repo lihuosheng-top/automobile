@@ -29,6 +29,22 @@ $('.upload-input').change(function(){
 })
 
 $.ajax({
+    url: 'return_store_information',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+    },
+    error: function(){
+        console.error('error');
+    }
+})
+
+
+
+
+
+$.ajax({
     url: 'store_league',
     type: 'POST',
     dataType: 'JSON',

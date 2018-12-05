@@ -33,26 +33,6 @@ var app = new Vue({
                 this.images.emblem = res.result;
             }
             reader.readAsDataURL(img);
-            
-            // var imgType=img.type;//文件的类型，判断是否是图片
-            // var imgSize=img.size;//文件的大小，判断图片的大小
-            // if(this.imageAccept.accept.indexOf(imgType) == -1){
-            //     layer.open({
-            //         style: 'bottom:100px;',
-            //         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
-            //         skin: 'msg',
-            //         content: '图片上传格式不正确',
-            //         time: 1
-            //     })
-            // }else if(imgSize > 3145728){
-            //     layer.open({
-            //         style: 'bottom:100px;',
-            //         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
-            //         skin: 'msg',
-            //         content: '上传图片需小于3M',
-            //         time: 1.5
-            //     })
-            // }
         },
         portrait(e){
             var reader = new FileReader();
@@ -114,6 +94,5 @@ var app = new Vue({
         storeFrontPop(){
             return this.storeFrontFlag = !this.storeFrontFlag;
         },
-
     }
 })
