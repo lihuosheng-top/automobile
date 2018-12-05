@@ -214,7 +214,7 @@ $.ajax({
                     })
                 }else if($('.next-button').text() === '更新'){
                     $.ajax({
-                        url: 'store_add',
+                        url: 'store_save',
                         type: 'POST',
                         dataType: 'JSON',
                         processData: false,
