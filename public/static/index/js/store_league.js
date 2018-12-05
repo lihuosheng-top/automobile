@@ -222,7 +222,6 @@ $.ajax({
                         data: formData,
                         success: function(res){
                             console.log(res);
-                            
                         },
                         error: function(){
                             console.log('error');
@@ -312,6 +311,8 @@ $.ajax({
             // 我要加盟
             $('#'+data.role_id+'').attr('checked', 'checked');
             $('.next-button').text('更新');
+        }else if(data.status == 0){
+            $('.next-button').text('下一步');
         }
     },
     error: function(){
