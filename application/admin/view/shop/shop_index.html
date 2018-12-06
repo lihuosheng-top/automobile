@@ -56,24 +56,23 @@
 
     <div class="childrenBody">
         <blockquote class="layui-elem-quote news_search">
-            <form class="layui-form" action="">
+            <form class="layui-form" action="{:url('admin/Shop/search')}">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">门店名称：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" name="store_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">负责人：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-
+                            <input type="text" name="store_owner" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <a class="layui-btn search_btn">搜索</a>
+                        <button class="layui-btn search_btn" type="submit">搜索</button>
                     </div>
                 </div>
 
