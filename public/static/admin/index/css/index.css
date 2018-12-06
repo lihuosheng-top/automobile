@@ -8,6 +8,11 @@
     url('../font/iconfont1/iconfont.svg#uxiconfont') format('svg'); /* iOS 4.1- */
 }
 /*修改layui样式*/
+.tdimg{
+	width: 50px;
+	height: 50px;
+	margin: 0 auto;
+}
 .layui-table th{
     padding: 9px 14px;	
 }
@@ -26,6 +31,63 @@ white-space: normal !important;
 
 	
 }
+.layui-inline{
+	line-height: 43px;
+}
+.line{
+	display: flex;
+	align-items: center;
+}
+.line input{
+	width: 200px;
+	margin-right: 20px;
+}
+/*搜索样式*/
+	.seach{
+		display: flex;
+		 flex-wrap: wrap;
+		 align-items: center;
+	}
+	.seach_list{
+		display: flex;
+		align-items: center;
+	    padding: 4px;
+	}
+	.seach_laber{
+		font-size: 13px;
+	    width: 80px;
+	    text-align: center;
+	    color: #333;
+	}
+	.seach_input{
+		width: 208px;
+		font-size: 16px;
+	}
+	.seach .layui-btn{
+		width: 100px;
+	}
+/*搜索样式*/
+/*保存列表页面样式*/
+   .layui-form-lists{
+   	padding: 11px;
+   }
+   .form-item{
+   	display: flex;
+   	padding: 6px;
+   }
+   .form-label{
+   	width: 100px;
+   	text-align: center;
+   	color: #999999;
+   }
+   .form-input{
+   	width: 734px;
+   }
+   .layui-form-lists .layui-btn{
+   	width: 100px;
+   }
+   /*保存列表页面样式*/
+
 
 /*修改layui样式*/
 .iconfont1{
