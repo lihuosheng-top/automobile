@@ -113,27 +113,29 @@
 <body>
 
 	{block name="content"}
+
 	<div class="open">
 
 	</div>
 	<form class="layui-form" action="">
-	
+	{if !empty($info)}
+
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span style="color: red;">*</span>商品项目名称：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$info.service_setting_name}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label"> <span style="color: red;">*</span>菜单排序：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$info.service_order_id}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">添加日期：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$info.service_setting_time|date='Y-m-d H:i:s',###}">
 			</div>
 		</div>
 <div class="layui-form-item">
@@ -143,7 +145,7 @@
 					<section class=" img-section">
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
-								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+								<img src="__USERIMG__/{$info.service_setting_calss_img}" class="add-img">
 								<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
 							</section>
 						</div>
@@ -165,6 +167,9 @@
 			<input type="radio" name="sex" value="禁用" title="否">
 		</div>
 	</div>
+
+		{/if}
+
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>

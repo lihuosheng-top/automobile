@@ -8,6 +8,8 @@
 namespace  app\admin\controller;
 
 use think\Controller;
+use think\Session;
+use think\Config;
 
 class Home extends Controller{
     /**
@@ -17,7 +19,9 @@ class Home extends Controller{
      **************************************
      */
     public function index(){
-        return view('index');
+
+        $admin = Config::get("admin");
+        return view('index',["admin"=>$admin]);
     }
 
     

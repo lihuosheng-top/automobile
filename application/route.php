@@ -30,14 +30,14 @@ Route::group("",[
     'Dolog'=>"index/Login/Dolog",
     /*退出登录*/
     "logout"=>"index/Login/logout",
-    /*验证码*/
-//    "login_captcha"=>"index/Login/captchas",
+
 
 
     /*注册页面*/
     "register"=>"index/Register/index",//注册页面
     "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
+
 
     /*判断是否登录*/
     "isLogin"=>"index/My/isLogin", //是否登录判断
@@ -46,17 +46,30 @@ Route::group("",[
     'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
     'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
 
-    // 分类
+
+
+    // 商品分类   商品品牌分类
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
+
+
+
+
+
+    /*商品*/
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
 
     // 购物车
     "cart_index"=>"index/Cart/cart_index",
+
+
+
     // 我的
     "my_index"=>"index/My/my_index",
+    "my_car"=>"index/My/my_car",//我的爱车
+
     "login"=>"index/My/login",//登录
     "setting"=>"index/My/setting",//设置
     
@@ -130,7 +143,11 @@ Route::group("admin",[
 	"goods_look"=>"admin/Goods/look",                                                //商品查看详情
     "goods_name"=>"admin/Goods/name",                                                   //商品规格名添加
     "goods_standard_name"=>"admin/Goods/standard_name",                                       //商品规格名显示
-
+    "goods_role_name"=>"admin/Goods/role_name",                                       //商品角色检测
+    "goods_property_name"=>"admin/Goods/property_name",                                       //专用属性入库
+    "goods_property_show"=>"admin/Goods/property_show",                                       //专用属性显示
+    "goods_alipay"=>"admin/Goods/alipay",                                       //支付
+    "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付后调
 
 
 
@@ -232,10 +249,15 @@ Route::group("admin",[
     "order_processing"=>"admin/Order/order_processing", //配件商订单列表弹窗接口
     "order_search"=>"admin/Order/search", //配件商订单列表模糊搜索
     "order_dels"=>"admin/Order/dels", //配件商订单列表
-    "order_edit"=>"admin/Order/edit", //*********配件商订单设置
+    "order_edit"=>"admin/Order/edit", //*********配件商订单设置（未做）
 
     "order_evaluate"=>"admin/Order/evaluate",   //配件商订单评价
     "order_evaluate_details"=>"admin/Order/evaluate_details", //******配件商订单评价详情
+    "order_evaluate_status"=>"admin/Order/evaluate_status", //******配件商订单评价状态值修改
+    "order_evaluate_del"=>"admin/Order/evaluate_del", //******配件商订单评价删除
+    "order_evaluate_dels"=>"admin/Order/evaluate_dels", //******配件商订单评价批量删除
+    "order_evaluate_search"=>"admin/Order/evaluate_search", //******配件商订单评价列表模糊查询
+    "order_evaluate_repay"=>"admin/Order/evaluate_repay", //******配件商订单评价回复操作
 
     "order_after_sale"=>"admin/Order/after_sale", //配件商订单维修售后
 
@@ -243,9 +265,13 @@ Route::group("admin",[
     "order_invoice_edit"=>"admin/Order/invoice_edit", //****配件商发票信息
     /*订单管理：TODO:配件商订单结束*/
 
+
     /*订单管理：TODO:平台商订单开始*/
     "platform_order_service_index"=>"admin/Order/platform_order_service_index", //平台商服务商订单列表
     "platform_order_parts_index"=>"admin/Order/platform_order_parts_index", //平台商配件商订单列表
+    "platform_order_parts_search"=>"admin/Order/platform_order_parts_search", //平台商配件商订单列表模糊搜索
+    "platform_order_parts_dels"=>"admin/Order/platform_order_parts_dels", //平台商配件商订单列表批量删除
+
     "platform_after_sale"=>"admin/Order/platform_after_sale", //平台商售后服务
     "platform_invoice_index"=>"admin/Order/platform_invoice_index", //平台商发票列表
     "platform_invoice_details"=>"admin/Order/platform_invoice_details", //平台商发票详情
@@ -322,10 +348,19 @@ Route::group("admin",[
 
     /*设置*/
     "install_index"=>"admin/Install/index",
-    "recommend_index"=>"admin/Install/recommend",
-    "integral_index"=>"admin/Install/integral",
+    "recommend_index"=>"admin/Install/recommend",//推荐奖励积分设置
+    "recommend_update"=>"admin/Install/recommend_update",//推荐奖励积分设置更新
+
+    "integral_index"=>"admin/Install/integral",//积分折扣设置
+    "integral_setting_add"=>"admin/Install/integral_setting_add",//积分折扣设置添加功能
+    "integral_setting_del"=>"admin/Install/integral_setting_del",//积分折扣设置删除功能
+
     "putaway_index"=>"admin/Install/putaway",
-    "recharge_index"=>"admin/Install/recharge",
+
+    "recharge_index"=>"admin/Install/recharge",//设置之充值设置
+    "recharge_setting_add"=>"admin/Install/recharge_setting_add",//设置之充值设置添加数据
+    "recharge_setting_del"=>"admin/Install/recharge_setting_del",//设置之充值设置删除数据
+
     "service_index"=>"admin/Install/service_index",
     "service_add"=>"admin/Install/service_add",
     "service_save"=>"admin/Install/service_save",
@@ -335,7 +370,10 @@ Route::group("admin",[
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",
-
+    "express_index"=>"admin/Install/express_index",
+    "express_add"=>"admin/Install/express_add",
+    "express_edit"=>"admin/Install/express_edit",
+    "express_save"=>"admin/Install/express_save",
 
 
 

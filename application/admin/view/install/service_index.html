@@ -35,15 +35,21 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>
-						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
-						<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
-						 data-id="undefined"><i class="layui-icon"></i> 删除</a>
-					</td>
+				{if !empty($service_data)}
+				{volist name="service_data" id="vo"}
+					<tr>
+						<td>{$vo.service_order_id}</td>
+						<td>{$vo.service_setting_name}</td>
+						<td>{$vo.service_setting_time|date="Y-m-d H:i:s",###}</td>
+						<td>
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Install/service_edit',['id'=>$vo.service_setting_id])}"><i class="iconfont icon-edit"></i> 编辑</a>
+							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"
+							 data-id="undefined"><i class="layui-icon"></i> 删除</a>
+						</td>
 					</tr>
+				{/volist}
+
+				{/if}
 				</tbody>
 			</table>
 		</div>
