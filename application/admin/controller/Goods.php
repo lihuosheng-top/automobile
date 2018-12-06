@@ -47,7 +47,8 @@ class Goods extends Controller{
         $year = db("year")->select();
         $user_id = Session::get("user_id");
         $role_name = db("admin")->where("id",$user_id)->select();
-        return view("goods_index",["goods"=>$goods,"year"=>$year,"role_name"=>$role_name]);
+        $store = db("store")->select();
+        return view("goods_index",["store"=>$store,"goods"=>$goods,"year"=>$year,"role_name"=>$role_name]);
 
 
     }
@@ -136,6 +137,11 @@ class Goods extends Controller{
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
             }
+            $admin_id = Session::get("user_id");
+            $admin_phone = db("admin")->where("id",$admin_id)->value("phone");
+            $user_id = db("user")->where("phone_num",$admin_phone)->value("id");
+            $store_id = db("store")->where("user_id",$user_id)->value("store_id");
+            $goods_data["store_id"] = $store_id;
             $bool = db("goods")->insert($goods_data);
             if ($bool) {
                 //取出图片在存到数据库
@@ -290,6 +296,11 @@ class Goods extends Controller{
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
             }
+            $admin_id = Session::get("user_id");
+            $admin_phone = db("admin")->where("id",$admin_id)->value("phone");
+            $user_id = db("user")->where("phone_num",$admin_phone)->value("id");
+            $store_id = db("store")->where("user_id",$user_id)->value("store_id");
+            $goods_data["store_id"] = $store_id;
             $bool = db("goods")->where("id",$id)->update($goods_data);
             if ($bool) {
                 //取出图片在存到数据库

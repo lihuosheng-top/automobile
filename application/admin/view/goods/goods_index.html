@@ -175,7 +175,11 @@
 						{/if}
 						{/volist}
 						<td>{$value.id}</td>
-						<td>店铺还没有添加</td>
+						{volist name="store" id="shop"}
+						{if $value.store_id == $shop.store_id}
+						<td>{$shop.store_name}</td>
+						{/if}
+						{/volist}
 						<td style="width: 50px; height: 50px;"><img src="__UPLOADS__/{$value.goods_show_images}" /></td>
 						<td ><div class="overflow" >
 							{$value.goods_name}

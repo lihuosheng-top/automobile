@@ -8,6 +8,7 @@
 namespace app\admin\controller;
 use think\Controller;
 use think\Request;
+use think\Session;
 
 class Serve extends Controller{
 
@@ -23,7 +24,8 @@ class Serve extends Controller{
         foreach ($serve_goods as $key=>$value){
             $serve_goods[$key]["serve_goods_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
         }
-        return view("serve_index",["serve_goods"=>$serve_goods]);
+        $store = db("store")->select();
+        return view("serve_index",["store"=>$store,"serve_goods"=>$serve_goods]);
 
     }
 
@@ -85,6 +87,11 @@ class Serve extends Controller{
     public function save(Request $request){
 
         $serve_goods = $request->param();
+        $admin_id = Session::get("user_id");
+        $admin_phone = db("admin")->where("id",$admin_id)->value("phone");
+        $user_id = db("user")->where("phone_num",$admin_phone)->value("id");
+        $store_id = db("store")->where("user_id",$user_id)->value("store_id");
+        $serve_goods["store_id"] = $store_id;
         $bool = db("serve_goods")->insert($serve_goods);
         if($bool){
             $this->success("保存成功",url("admin/Serve/index"));
@@ -130,6 +137,11 @@ class Serve extends Controller{
 
         $id = $request->only(["id"])["id"];
         $serve_goods = $request->param();
+        $admin_id = Session::get("user_id");
+        $admin_phone = db("admin")->where("id",$admin_id)->value("phone");
+        $user_id = db("user")->where("phone_num",$admin_phone)->value("id");
+        $store_id = db("store")->where("user_id",$user_id)->value("store_id");
+        $serve_goods["store_id"] = $store_id;
         $bool = db("serve_goods")->where("id",$id)->update($serve_goods);
         if($bool){
             $this->success("更新成功",url("admin/Serve/index"));
