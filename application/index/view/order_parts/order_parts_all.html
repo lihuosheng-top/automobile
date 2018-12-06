@@ -26,18 +26,18 @@
         </div>
         <div class="shops-goods-wrap">
             <!-- 待付款 -->
-            <div class="single-shop-box" v-for="allData in allDatas">
+            <div class="single-shop-box" v-for="(allData, idx) in allDatas">
                 <div class="shop-name-box">
                     <div class="name-txt-div">
                         <i class="spr icon-shop"></i>
                         <span class="name-txt-span">{{allData.store_name}}</span>
                     </div>
-                    <p class="status-txt-p">等待付款</p>
+                    <p class="status-txt-p">{{returnStatusTxt(allData.status)}}</p>
                 </div>
                 <div class="all-goods-box">
                     <div class="single-goods-box single-goods-box-border" v-for="goods in allData.info">
                         <div class="shop-img-box">
-                            <img src="__STATIC__/index/image/14.png">
+                            <img :src="`uploads/`+goods.goods_image">
                         </div>
                         <div class="order-info-box">
                             <p class="goods-name-p txt-hid-two">{{goods.parts_goods_name}}</p>

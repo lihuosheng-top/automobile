@@ -86,4 +86,63 @@ class My extends Controller
 
     }
 
+
+
+
+    /**
+     * 修改手机号码
+     * 陈绪
+     */
+    public function phone_edit(){
+
+        return view("phone_edit");
+
+    }
+
+
+
+    /**
+     * 真实姓名
+     * 陈绪
+     */
+    public function true_name(){
+
+        return view("true_name");
+
+    }
+
+
+
+    /**
+     * 昵称
+     * 陈绪
+     */
+    public function nickname(){
+
+        return view("my_nickname");
+
+    }
+    
+    
+    /**
+     * 昵称
+     * 陈绪
+     */
+    public function integral(){
+
+        return view("my_integral");
+
+    }
+
+
+
+    /**
+     * 消费详情
+     * 陈绪
+     */
+    public function consume_message(){
+
+        return view("consume_message");
+
+    }
 }

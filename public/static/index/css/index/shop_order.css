@@ -281,5 +281,17 @@ body,html{
     width: 100%;
     height: 100vh;
 }
+.pay-amount{
+    margin: .1rem .3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .26rem;
+    color: #999;
+}
+.pay-amount .pay-amount-span{
+    font-size: .3rem;
+    color: #f00;
+}
 
 

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/plugin/swiper-4.3.5.min.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/order_service/order_service_detail.css">
+    <title>配件商-商品详情</title>
+</head>
+<body>
+    <div v-cloak id="app">
+        <div class="place-order-pop">
+            <header class="place-order-header">
+                <a href="javascript:history.back(-1);" class="spr place-order-back"></a>
+                <h3 class="place-order-title">订单详情</h3>
+            </header>
+            <div class="order-detail-box">
+                <div class="order-detail-bg">
+                    <div class="status">待付款</div>
+                    <div class="time-count-down">剩0小时56分自动关闭</div>
+                </div>
+                <div class="user-info-box">
+                    <div class="order-num">订单编号：20181130412</div>
+                    <div class="user-name-phone">
+                        <span class="user-name">收货人：叶问</span>
+                        <span class="user-phone">13691853045</span>
+                    </div>
+                    <div class="service-car">
+                        <span class="address-title">到店车辆：粤B66666</span>
+                    </div>
+                    <div class="car-info">宝骏 560 1.8L 2015年产</div>
+                </div>
+    
+                <div class="order-shop">
+                    <p>服务门店</p>
+                    <p class="shop-address">深圳福田区得朋汽车服务中心</p>
+                    <p class="service-time">到店时间：<span>2018-11-30 星期五 20:00-21:00</span></p>
+                    <!-- <div class="contact-seller">
+                        <div class="call-phone">
+                            <a href="javascript:;" class="spr icon-phone"></a>
+                            拨打电话
+                        </div>
+                        <div>
+                            <a href="javascript:;" class="spr icon-map"></a>
+                            导航路线
+                        </div>
+                    </div> -->
+                </div>
+                <div class="service-item-box">
+                    <p class="service-item-title">服务项目</p>
+                    <div class="service-item">
+                        <span>预约洗车</span>
+                        <span class="service-item-price">￥0.01</span>
+                    </div>
+                    <div class="service-item-amount">
+                        <div class="service-total-sum">
+                            <span>服务总价值</span>
+                            <span>￥0.01</span>
+                        </div>
+                        <div class="discount-amount">
+                            <span>积分抵扣</span>
+                            <span class="discount-amount-span">-￥0</span>
+                            <i class="spr icon-select"></i>
+                        </div>
+                        <div class="pay-amount">
+                            <span>实付款</span>
+                            <span>￥0.01</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-payment-box">
+                    <button class="order-cancel-btn" @click="cancelOrder">取消订单</button>
+                    <button class="order-payment-btn" @click="alipayPopFn">立即付款</button>
+                </div>
+            </div>
+        </div>
+        <div class="mask" v-show="maskPopFlag"></div>
+        <!-- 取消订单弹窗 -->
+        <div class="cancel-order-pop" :class="{showCancelPop: cancelPopFlag}">
+            <header class="cancel-order-header">
+                取消订单
+                <a href="#" class="spr close-cancel-order" @click.prevent="cancelOrder"></a>
+            </header>
+            <p class="reason-title">请选择取消订单原因：</p>
+            <ul class="reason-list">
+                <li class="reason-li"><i class="spr icon-reason reason-selected"></i> 操作有误</li>
+                <li class="reason-li"><i class="spr icon-reason"></i> 暂时不需要</li>
+                <li class="reason-li"><i class="spr icon-reason"></i> 选错商品</li>
+                <li class="reason-li"><i class="spr icon-reason"></i> 预约时间有误</li>
+                <li class="reason-li"><i class="spr icon-reason"></i> 其他原因</li>
+            </ul>
+            <button class="select-reason-btn" @click.prevent="cancelOrder">确定</button>
+        </div>
+        <!-- 支付弹窗 -->
+        <form name=alipayment action="{:url('index/Apppay/index_aliPay')}" method="post">
+            <div class="alipay-pop" :class="{showAlipayPop: alipayPopFlag}">
+                <header>
+                    <a href="#" @click.prevent="alipayPopFn" class="close-alipay">×</a>
+                    <h3 class="alipay-title">确认付款</h3>
+                </header>
+                <div class="middle_box">
+                    <div class="price-box">
+                        <span>￥</span>
+                        <input id="WIDtotal_amount" name="WIDtotal_amount" value="0.01" readonly>
+                    </div>
+                    <ul class="content">
+                        <li>
+                            商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="15428821121021" readonly>
+                        </li>
+                        <li>
+                            订单名称: <input id="WIDsubject" name="WIDsubject" value="汽车贴膜" readonly>
+                        </li>
+                        <li>
+                            商品描述: <input id="WIDbody" name="WIDbody" value="汽车贴膜" readonly>
+                        </li>
+                    </ul>
+                </div>
+                <button type="submit" class="alipay-submit">立即付款</button>
+            </div>
+        </form>
+    </div>
+    
+    <script src="__STATIC__/index/js/plugin/vue.js"></script>
+    <script src="__STATIC__/index/js/plugin/vue.resource.js"></script>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
+    <script src="__STATIC__/index/js/order_service/order_service_detail.js"></script>
+</body>
+</html>

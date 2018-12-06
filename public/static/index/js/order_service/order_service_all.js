@@ -1,9 +1,4 @@
 
-var app = new Vue({
-    el: '#app',
-    
-})
-
 
 
 $('.tabs button').click(function(){
@@ -22,3 +17,6 @@ $('.tabs button').click(function(){
     }
 })
 
+$('.reservation-tab').click(function(){
+    location.href = 'order_service_detail';
+})
