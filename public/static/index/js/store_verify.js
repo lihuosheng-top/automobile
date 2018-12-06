@@ -145,9 +145,41 @@ $('.submit-button').click(function(){
             })
         }
     }else if($(this).text() === '提交更新'){
-        // if(emblemInput.length !== 0){
-            
-        // }
+        if(emblemInput.length !== 0){
+            formData.append('store_identity_card', emblemInput[0]);
+        }
+        if(portraitInput.length !== 0){
+            formData.append('store_reverse_images', portraitInput[0]);
+        }
+        if(businessLicense.length !== 0){
+            console.log(businessLicense[0])
+            formData.append('store_do_bussiness_positive_img', businessLicense[0]);
+        }
+        if(license.length !== 0){
+            formData.append('store_do_bussiness_side_img', license[0]);
+        }
+        if(faceInput.length !== 0){
+            formData.append('verifying_physical_storefront_one', faceInput[0]);
+        }
+        if(innerInput !== 0){
+            $.each(imagesFileArr, function(idx, val){
+                formData.append('verifying_physical_storefront_two[]', val);
+            })
+        }
+        $.ajax({
+            url: 'store_update',
+            type: 'POST',
+            dataType: 'JSON',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function(data){
+                console.log(data);
+            },
+            error: function(){
+                console.log('error');
+            }
+        }) 
     }
 })
 var updateImages = [];
