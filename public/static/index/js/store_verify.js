@@ -128,8 +128,28 @@ $('.submit-button').click(function(){
                 processData: false,
                 contentType: false,
                 data: formData,
-                success: function(data){
-                    console.log(data);
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        layer.open({
+                            style: 'bottom:100px;',
+                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1.2
+                        })
+                        setTimeout(function(){
+                            location.href = 'my_index';
+                        }, 1400);
+                    }else{
+                        layer.open({
+                            style: 'bottom:100px;',
+                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1.2
+                        })
+                    }
                 },
                 error: function(){
                     console.log('error');
@@ -173,8 +193,28 @@ $('.submit-button').click(function(){
             processData: false,
             contentType: false,
             data: formData,
-            success: function(data){
-                console.log(data);
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    layer.open({
+                        style: 'bottom:100px;',
+                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                        skin: 'msg',
+                        content: res.info,
+                        time: 1.2
+                    })
+                    setTimeout(function(){
+                        location.href = 'my_index';
+                    }, 1400);
+                }else{
+                    layer.open({
+                        style: 'bottom:100px;',
+                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                        skin: 'msg',
+                        content: res.info,
+                        time: 1.2
+                    })
+                }
             },
             error: function(){
                 console.log('error');
