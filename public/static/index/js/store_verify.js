@@ -145,10 +145,12 @@ $('.submit-button').click(function(){
             })
         }
     }else if($(this).text() === '提交更新'){
-        
+        // if(emblemInput.length !== 0){
+            
+        // }
     }
 })
-
+var updateImages = [];
 // 返回数据
 $.ajax({
     url: 'return_store_information',
@@ -161,6 +163,7 @@ $.ajax({
             data.store_do_bussiness_positive_img !== null && data.store_do_bussiness_side_img !== null &&
             data.verifying_physical_storefront_one !== null){
             var str = '';
+            updateImages = data.imgs;
             $('#emblem-img')[0].src = 'uploads/' + data.store_identity_card;
             $('#portrait-img')[0].src =  'uploads/' + data.store_reverse_images;
             $('#business-license-img')[0].src = 'uploads/' + data.store_do_bussiness_positive_img;
@@ -174,14 +177,28 @@ $.ajax({
             })
             $('.mul-img').append(str);
             $('.submit-button').text('提交更新');
-
             // 删除图片
             $('.store-inner-imgbox').on('click', '.close', function(){
                 var $index = $('.close').index($(this));
                 console.log($index);
-                // imagesFileArr.splice($index, 1);
-                console.log(imagesFileArr)
+                var userDel = updateImages.slice($index, $index+1)[0];
+                console.log(userDel);
                 $(this).parent().remove();
+                $.ajax({
+                    url: 'url_img_del',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'image_del': userDel
+                    },
+                    success: function(res){
+                        console.log(res);
+                    },
+                    error: function(err){
+                        console.error(err);
+                    }
+                })
+
             })
         }else{
             $('.submit-button').text('提交申请');
