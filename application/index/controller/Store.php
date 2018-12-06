@@ -336,22 +336,22 @@ class Store extends Controller{
             $bool =Db::name("store")->where('user_id',$user_id)->update($data);
             if($bool){
                 //删除图片
-                if($del_img_url_1['store_identity_card'] != null){
+                if(!empty($del_img_url_1['store_identity_card'])){
                     unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_img_url_1['store_identity_card']);
                 }
-                if($del_img_url_2['store_reverse_images'] != null){
+                if(!empty($del_img_url_2['store_reverse_images'])){
                     unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_img_url_2['store_reverse_images']);
                 }
-                if($del_img_url_3['store_do_bussiness_positive_img'] != null){
+                if(!empty($del_img_url_3['store_do_bussiness_positive_img'])){
                     unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_img_url_3['store_do_bussiness_positive_img']);
                 }
-                if($del_img_url_4['store_do_bussiness_side_img'] != null){
+                if(!empty($del_img_url_4['store_do_bussiness_side_img'] )){
                     unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_img_url_4['store_do_bussiness_side_img']);
                 }
-                if($del_img_url_5['verifying_physical_storefront_one'] != null){
+                if(!empty($del_img_url_5['verifying_physical_storefront_one'] )){
                     unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_img_url_5['verifying_physical_storefront_one']);
                 }
-                if($del_img_url_6["verifying_physical_storefront_two"] != null){
+                if(!empty($del_img_url_6["verifying_physical_storefront_two"] )){
                     if (strpos($del_img_url_6["verifying_physical_storefront_two"], ',')){
                         $all_img_url =explode(',',$del_img_url_6["verifying_physical_storefront_two"]);
                         foreach ($all_img_url as $ks=>$vs){
