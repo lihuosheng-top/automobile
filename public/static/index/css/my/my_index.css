@@ -193,7 +193,7 @@ html{
     background-position: -4.15rem -1.75rem;
 }
 .order_step .order_step_text{
-    font-size: .22rem;
+    font-size: .28rem;
     color: #666;
 }
 .function_list{
@@ -216,7 +216,7 @@ html{
     height: 100%;
 }
 .function_list li span{
-    font-size: .22rem;
+    font-size: .28rem;
     color: #333;
 }
 .function_list li .spr{
