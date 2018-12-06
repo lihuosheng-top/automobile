@@ -136,7 +136,7 @@ Route::group("",[
     "store_add"=>"index/Store/add",                 //店铺添加(第一页加盟添加)
     "store_save"=>"index/Store/save",                 //店铺编辑(第一页加盟编辑)
     "store_update"=>"index/Store/update",           //店铺编辑更新(也是第二页完善店铺信息)
-    "store_url_img_del"=>"index/Store/url_img_del",           //店铺编辑更新(也是第二页信息多图的删除)
+    "url_img_del"=>"index/Store/url_img_del",           //店铺编辑更新(也是第二页信息多图的删除)
     "return_store_information"=>"index/Store/return_store_information",    //店铺信息
 
 
