@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>验证银行卡信息</title>
+    <style>
+        html, body, .wrapper{
+            background-color: #f2f2f2;
+        }
+        .header{
+            position: relative;
+            width: 100%;
+            height: .88rem;
+            background-color: #fff;
+        }
+        .header h3{
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: .88rem;
+            font-size: .36rem;
+            color: #333;
+            font-weight: normal;
+        }
+        .header .icon-back{
+            position: absolute;
+            left: .2rem;
+            top: 50%;
+            width: .25rem;
+            height: .43rem;
+            margin-top: -.22rem;
+            background-position: -.5rem -.5rem;
+        }
+        .bank-info{
+            background-color: #fff;
+            padding: .3rem .4rem;
+            font-size: .3rem;
+            color: #999;
+        }
+        .bank-info span{
+            margin-right: .3rem;
+            text-align: justify;
+            width: 1rem;
+            height: .6rem;
+            line-height: .6rem;
+        }
+        .bank-info span::after{
+            content: '';
+            display: inline-block;
+            width: 100%;
+        }
+        .bank-info input{
+            height: 100%;
+            font-size: .3rem;
+            color: #999;
+            height: .6rem;
+        }
+        .bank-info section{
+            display: flex;
+        }
+        .ver-tit{
+            font-size: .32rem;
+            color: #333;
+            padding: .15rem .3rem;
+        }
+        .user-info{
+            background-color: #fff;
+            padding: 0 .3rem;
+        }
+        .user-info .info-li{
+            position: relative;
+            height: 1rem;
+            line-height: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        .user-info .info-li span{
+            font-size: .3rem;
+            color: #333;
+            margin-right: .4rem;
+        }
+        .user-info .info-li input{
+            height: 1rem;
+            font-size: .3rem;
+            outline: none;
+        }
+        .icon-help{
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: .51rem;
+            height: .51rem;
+            background-position: -2.55rem -.95rem;
+            transform: translateY(-50%);
+        }
+        .agreement{
+            font-size: .3rem;
+            padding: .2rem .3rem;
+        }
+        .agreement span{
+            color: #2a75f0;
+        }
+        .accept-agreement{
+            display: block;
+            width: 90%;
+            height: 1rem;
+            color: #fff;
+            font-size: .3rem;
+            border-radius: .15rem;
+            outline: none;
+            border: 0;
+            background-color: #2a75f0;
+            margin: .5rem auto 0;
+        }
+        .mask{
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            background-color: rgba(0, 0, 0, .4);
+            width: 100%;
+            height: 100vh;
+        }
+        .help-pop{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6.67rem;
+            height: 4.53rem;
+            background-color: #fff;
+            border-radius: .1rem;
+        }
+        .help-pop h4{
+            font-size: .36rem;
+            text-align: center;
+            padding: .4rem 0;
+        }
+        .help-pop p{
+            padding: 0 .45rem;
+            font-size: .3rem;
+            color: #999;
+            letter-spacing: 1px;
+        }
+        .help-pop .know{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1.2rem;
+            border: 0;
+            background-color: transparent;
+            outline: 0;
+            color: #2a75f0;
+            font-size: .3rem;
+            text-align: center;
+            width: 100%;
+            border-top: 1px solid #bfbec0;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <a href="my_message" class="spr icon-back"></a>
+            <h3>验证银行卡信息</h3>
+        </header>
+        <div class="bank-info">
+            <section>
+                <span>银行卡</span>
+                <input type="text" value="中国银行储蓄卡">
+            </section>
+            <section>
+                <span>卡号</span>
+                <input type="text" value="1234 1234 1234 1234123">
+            </section>
+        </div>
+        <p class="ver-tit">验证身份</p>
+        <div class="user-info">
+            <ul>
+                <li class="info-li">
+                    <span>持卡人</span>
+                    <input type="text" placeholder="持卡人姓名">
+                    <i class="spr icon-help"></i>
+                </li>
+                <li class="info-li">
+                    <span>身份证</span>
+                    <input type="text" placeholder="请输入证件号码">
+                </li>
+                <li class="info-li">
+                    <span>手机号</span>
+                    <input type="text" placeholder="银行预留手机号">
+                </li>
+            </ul>
+        </div>
+        <p class="agreement">同意<span>《用户协议》</span></p>
+        <button class="accept-agreement">同意协议并验证</button>
+    </div>
+
+    <div class="mask" style="display: none;"></div>
+    <!-- 帮助信息弹窗 -->
+    <div class="help-pop" style="display: none;">
+        <h4>持卡人说明</h4>
+        <p>为了资金安全，只能绑定当前持卡人的银行卡，如需绑定其他持卡人的银行卡，请更换实名信息</p>
+        <button class="know">知道了</button>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $('.icon-help').click(function(){
+            $('.mask').show();
+            $('.help-pop').show();
+        })
+        $('.know').click(function(){
+            $('.mask').hide();
+            $('.help-pop').hide();
+        })
+    </script>
+</body>
+</html>

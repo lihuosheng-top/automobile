@@ -1,10 +1,214 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+{extend name="layout"} {block name="css"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/css/aaa.css" />
+<style type="text/css">
+    body {
+        background: #fff;
+    }
+    
+    .layui-form label {
+        width: 17%;
+        text-align: left;
+    }
+    
+    .layui-form-label span {
+        color: red;
+    }
+    
+    .layui-form {
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 40px;
+    }
+    
+    .layui-input-block {
+        min-height: 40px;
+    }
+    
+    .biaoji .layui-form-radioed span {
+        color: #fff;
+        background: red;
+        width: 33px;
+        text-align: center;
+        height: 13px;
+        line-height: 13px;
+        font-size: 9px;
+        border-radius: 6px;
+    }
+    
+    .title {
+        height: 50px;
+        background: #F2F2F2;
+        font-size: 20px;
+        line-height: 50px;
+        padding-left: 20px;
+        font-weight: bold;
+    }
+    
+    .layui-form-item {
+        padding-left: 20px;
+    }
+    
+    .add-content {
+        background: #F2F2F2;
+        width: 100%;
+    }
+    
+    .general-kuang {
+        border: solid 1px #E4E4E4;
+        width: 1000px;
+    }
+    
+    .btus {
+        background: #fff;
+        border: solid 1px #E4E4E4;
+        color: #0099FF;
+        width: 141px;
+        display: inline-block;
+        margin: 10px;
+    }
+    
+    #general-content .layui-form-item {
+        width: 100%;
+    }
+    
+    .sky-blue {
+        color: #0099FF;
+    }
+    
+    .bgwhite {
+        background: #fff;
+    }
+    
+    .noshow {
+        display: none;
+    }
+    
+    .operation-btus {
+        width: 60px;
+        height: 40px;
+        border-radius: 3px;
+        color: #fff;
+    }
+    
+    .btu-delet {
+        background: #FF0000;
+    }
+    
+    .btu-cancel {}
+    
+    .btu-add {
+        background: #0099FF;
+    }
+    
+    .num-content {
+        overflow: hidden;
+    }
+    
+    .form-group .layui-unselect {
+        display: none;
+    }
+</style>
+
+{/block}
+
 <body>
-        快递员编辑
+
+    {block name="content"}
+    <div class="open">
+
+    </div>
+    {if !empty($expressd)} {volist name="expressd" id="value"}
+    <form class="layui-form" action="{:url('admin/Install/express_updata',['id'=>$value.id])}" method="post" enctype="multipart/form-data">
+
+        <div class="layui-form-item" style="width: 700px !important;">
+            <label class="layui-form-label">服务地区</label>
+            <div class="form-inline">
+                <div data-toggle="distpicker">
+                    <div class="form-group">
+                        <label class="sr-only" for="province3">Province</label>
+                        <select class="form-control" name="economize" id="province3" data-province="{$address[0]}"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="city3">City</label>
+                        <select class="form-control" name="market" id="city3" data-city="{$address[1]}"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="district3">District</label>
+                        <select class="form-control" name="distinguish" id="district3" data-district="{$address[2]}"> </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">配送员姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" value="{$value.name}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="number" value="{$value.number}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="account" value="{$value.account}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="password" value="{$value.password}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">现居住地</label>
+            <div class="layui-input-block">
+                <input type="text" name="domicile" value="{$value.domicile}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">户籍所在地</label>
+            <div class="layui-input-block">
+                <input type="text" name="register" value="{$value.register}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
+
+                <button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit">保存</button>
+
+            </div>
+        </div>
+
+    </form>
+    {/volist} {/if} {/block}
+
+    <!--_footer 作为公共模版分离出去-->
+    {include file="template/_footer" /}
+    <!--/_footer 作为公共模版分离出去-->
+
+    <!--请在下方写此页面业务相关的脚本-->
+    {block name="bottom"}
+
+    <script type="text/javascript">
+        layui.config({
+            base: "js/"
+        }).use(['form', 'layer', 'jquery', 'laypage'], function() {
+            var form = layui.form(),
+                layer = parent.layer === undefined ? layui.layer : parent.layer,
+                laypage = layui.laypage,
+                $ = layui.jquery;
+
+        })
+    </script>
+
+    {/block}
+
 </body>
+
 </html>

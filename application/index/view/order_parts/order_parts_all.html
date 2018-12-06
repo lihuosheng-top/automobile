@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/order_parts/order_parts_all.css">
+    <title>配件商-全部</title>
+</head>
+<body>
+    <div class="wrapper" id="app">
+        <header class="header">
+            <a href="my_index" class="spr icon-back"></a>
+            <a href="javascript:;" class="parts-title active">商品订单</a>
+            <a href="order_service_all" class="service-title">预约订单</a>
+        </header>
+        <div class="tabs">
+            <button class="tab tab-on">全部</button>
+            <button class="tab">待付款</button>
+            <button class="tab">待收货</button>
+            <button class="tab">待评价</button>
+            <button class="tab">退货</button>
+        </div>
+        <div class="shops-goods-wrap">
+            <!-- 待付款 -->
+            <div class="single-shop-box" v-for="(allData, idx) in allDatas">
+                <div class="shop-name-box">
+                    <div class="name-txt-div">
+                        <i class="spr icon-shop"></i>
+                        <span class="name-txt-span">{{allData.store_name}}</span>
+                    </div>
+                    <p class="status-txt-p">{{returnStatusTxt(allData.status)}}</p>
+                </div>
+                <div class="all-goods-box">
+                    <div class="single-goods-box single-goods-box-border" v-for="goods in allData.info">
+                        <div class="shop-img-box">
+                            <img :src="`uploads/`+goods.goods_image">
+                        </div>
+                        <div class="order-info-box">
+                            <p class="goods-name-p txt-hid-two">{{goods.parts_goods_name}}</p>
+                            <p class="goods-selling-point txt-hid-two">这个是商品卖点这个是商品卖点</p>
+                            <div class="unit-price-quantity">
+                                <p class="unit-price-p">￥{{goods.goods_money}}</p>
+                                <p class="quantity-p">×{{goods.order_quantity}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-button-box">
+                    <p class="total-p">共计1件商品 合计：￥0.01</p>
+                    <div class="button-box">
+                        <button class="cancel-order-btn">取消订单</button>
+                        <button class="to-payment-btn">去付款</button>
+                        <button class="del-order-btn" style="display:none;">删除订单</button>
+                        <button class="check-logistics-btn" style="display:none;">查看物流</button>
+                        <button class="conf-receipt-btn" style="display:none;">确认收货</button>
+                        <button class="evaluation-btn" style="display:none;">去评价</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/vue.js"></script>
+    <script src="__STATIC__/index/js/plugin/vue.resource.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/order_parts/order_parts_all.js"></script>
+</html>

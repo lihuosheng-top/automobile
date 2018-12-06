@@ -1,113 +1,144 @@
 {extend name="layout"} {block name="css"}
 <link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/css/aaa.css" />
 <style type="text/css">
-	body {
-		background: #fff;
-	}
-	.layui-form  {
-		width: 90%;
-		margin: 20px auto;
-	}
-	.layui-form label {
-		width: 17%;
-		text-align: left;
-	}
-	
-
+    body {
+        background: #fff;
+    }
+    
+    .layui-form {
+        width: 90%;
+        margin: 20px auto;
+    }
+    
+    .layui-form label {
+        width: 17%;
+        text-align: left;
+    }
+    
+    body {
+        background: #fff;
+    }
+    
+    .layui-form {
+        width: 90%;
+        margin: 20px auto;
+    }
+    
+    .layui-form label {
+        text-align: left;
+    }
 </style>
 
 {/block}
 
 <body>
 
-	{block name="content"}
-	<div class="open">
+    {/block} {block name="content"}
+    <div class="open">
+    </div>
+    <form class="layui-form" action="{:url('admin/Advertisement/accessories_business_updata')}" method="post" enctype="multipart/form-data">
+        {if !empty($plat)} {volist name="plat" id="value"}
 
-	</div>
-	<form class="layui-form" action="">
-	
-		<div class="layui-form-item">
-			<label class="layui-form-label"> 广告名称：</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">广告位置：</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">开始时间：</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">结束时间：</label>
-			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			</div>
-		</div>
-<div class="layui-form-item">
-			<label class="layui-form-label">广告链接：</label>
-			<div class="layui-input-block">
-			<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			
-			</div>
-		</div>
-	
+        <div class="layui-form-item " style="display:none">
+            <label class="layui-form-label"><span>*</span>id</label>
+            <div class="layui-input-block">
+                <input type="text" name="id" value="{$value.id}"> </input>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"> 广告名称：</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" value="{$value.name}" lay-verify="title" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">广告位置：</label>
+            <div class="layui-input-block">
+                <input type="text" name="location" value="{$value.location}" lay-verify="title" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">开始时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="start_time" value="{$value.start_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">结束时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="end_time" value="{$value.end_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">广告链接：</label>
+            <div class="layui-input-block">
+                <input type="text" name="url" value="{$value.url}" lay-verify="title" class="layui-input" >
+
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">上传广告图片</label>
+            <div class="layui-input-block">
+
+                <div class="img-box full">
+                    <section class=" img-section">
+                        <div class="z_photo upimg-div clear">
+                            <section class="z_file fl">
+                                <img src="__UPLOADS__/{$value.advert_picture}">
+                                <input type="file" name="advert_picture" id="file" class="file" value="{$value.advert_picture}" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+                            </section>
+                        </div>
+                    </section>
+                </div>
+                <aside class="mask works-mask">
+                    <div class="mask-content">
+                        <p class="del-p ">您确定要删除作品图片吗？</p>
+                        <p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">或图片网址:</label>
+            <div class="layui-input-block">
+                <input type="text" name="picture_url" value="{$value.picture_url}" lay-verify="title" class="layui-input" >
+            </div>
+        </div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">上传广告图片：</label>
-		<div class="layui-input-block">
-         <img src="" > 
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">或图片网址：</label>
-		<div class="layui-input-block">
-			<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			
-		</div>
-	</div>
-	
-		<div class="layui-form-item">
 			<div class="layui-input-block">
+				<button class="layui-btn submit_btn" lay-submit="" lay-filter="demo1" type="submit">保存</button>
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-				
-				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit" >立即申请</button>
-			   
 			</div>
 		</div>
+        {/volist} {/if}
+    </form>
 
-	</form>
-	
-	{/block}
+    {/block}
 
-	<!--_footer 作为公共模版分离出去-->
-	{include file="template/_footer" /}
-	<!--/_footer 作为公共模版分离出去-->
+    <!--_footer 作为公共模版分离出去-->
+    {include file="template/_footer" /}
+    <!--/_footer 作为公共模版分离出去-->
 
-	<!--请在下方写此页面业务相关的脚本-->
-	{block name="bottom"}
-	
-	<script type="text/javascript">
-		layui.config({
-			base: "js/"
-		}).use(['form', 'layer', 'jquery', 'laypage'], function() {
-			var form = layui.form(),
-				layer = parent.layer === undefined ? layui.layer : parent.layer,
-				laypage = layui.laypage,
-				$ = layui.jquery;
+    <!--请在下方写此页面业务相关的脚本-->
+    {block name="bottom"}
 
-			
-		})
-	</script>
+    <script type="text/javascript">
+        layui.config({
+            base: "js/"
+        }).use(['form', 'layer', 'jquery', 'laypage'], function() {
+            var form = layui.form(),
+                layer = parent.layer === undefined ? layui.layer : parent.layer,
+                laypage = layui.laypage,
+                $ = layui.jquery;
 
-	
 
-	{/block}
+        })
+    </script>
+
+
+
+    {/block}
 
 </body>
 

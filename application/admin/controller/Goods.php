@@ -27,49 +27,86 @@ class Goods extends Controller{
      * 陈绪
      */
     public function index(Request $request){
-        $datemins = $request->param("datemin");
-        $datemaxs = $request->param("datemax");
-        $search_keys = $request->param("search_key");
-        $search_bts = $request->param("search_bt");
-        $datemin = isset($datemins) ? $datemins : false;
-        $datemax = isset($datemaxs) ? $datemaxs : false;
-        $search_key = isset($search_keys) ? $search_keys : '%';
-        $search_bt = isset($search_bts) ? $search_bts : false;
-        if($request->isPost()) {
-            if ($datemin && $datemax) {
-               $good = db("goods")->where('create_time','>',strtotime($datemin))->where('create_time','<',strtotime($datemax))->paginate(5);
-            }
-
-            if ($search_key) {
-                $good = db("goods")->where("goods_name","like","%".$search_key."%")->paginate(5);
-
-            }else {
-                $good = db("goods")->paginate(5);
-            }
-
-            return view("goods_index", [
-                'good' => $good,
-                'search_key' => $search_key,
-                'datemax' => $datemax,
-                'datemin' => $datemin
-            ]);
-        }else{
-            $goods = db("goods")->paginate(10);
+        $admin_id = Session::get("user_id");
+        $admin_role = db("admin")->where("id",$admin_id)->field("role_id")->find();
+        if($admin_role["role_id"] == 2){
+            $goods = db("goods")->order("id desc")->paginate(10);
             $goods_year = db("goods")->field("goods_year_id,id")->select();
             $time = date("Y-m-d");
             foreach ($goods_year as $key=>$value){
                 $year = db("year")->where("id",$value["goods_year_id"])->value("year");
                 $date = date("Y-m-d",strtotime("+$year year"));
                 if($time == $date){
-                    $bool = db("goods")->where("id",$value["id"])->update(["goods_status"=>0,"putaway_status"=>0]);
+                    $bool = db("goods")->where("id",$value["id"])->update(["goods_status"=>0,"putaway_status"=>null]);
                 }
+            }
+            $goods_money = db("goods")->field("goods_new_money,id")->select();
+            foreach ($goods_money as $k=>$val){
+                $goods_ratio[] = db("goods_ratio")->where("min_money","<=",$val["goods_new_money"])->where("max_money",">=",$val["goods_new_money"])->field("ratio")->find();
+                $goods_adjusted_money[] = $val["goods_new_money"]+($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
+                db("goods")->where("id",$val["id"])->update(["goods_adjusted_money"=>$goods_adjusted_money[$k]]);
             }
 
             $year = db("year")->select();
             $user_id = Session::get("user_id");
             $role_name = db("admin")->where("id",$user_id)->select();
-            return view("goods_index",["goods"=>$goods,"year"=>$year,"role_name"=>$role_name]);
+            $store = db("store")->select();
+            return view("goods_index",["store"=>$store,"goods"=>$goods,"year"=>$year,"role_name"=>$role_name]);
+        }else {
+            $admin_phone = db("admin")->where("id", $admin_id)->value("phone");
+            $user_id = db("user")->where("phone_num", $admin_phone)->value("id");
+            $store_id = db("store")->where("user_id", $user_id)->value("store_id");
+            $goods = db("goods")->order("id desc")->where("store_id", $store_id)->paginate(10);
+            $goods_year = db("goods")->field("goods_year_id,id")->select();
+            $time = date("Y-m-d");
+            foreach ($goods_year as $key => $value) {
+                $year = db("year")->where("id", $value["goods_year_id"])->value("year");
+                $date = date("Y-m-d", strtotime("+$year year"));
+                if ($time == $date) {
+                    $bool = db("goods")->where("id", $value["id"])->update(["goods_status" => 0, "putaway_status" => null]);
+                }
+            }
+            $goods_money = db("goods")->field("goods_new_money,id")->select();
+            foreach ($goods_money as $k => $val) {
+                $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
+                $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
+                db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
+            }
+
+            $year = db("year")->select();
+            $user_id = Session::get("user_id");
+            $role_name = db("admin")->where("id", $user_id)->select();
+            $store = db("store")->select();
+            return view("goods_index", ["store" => $store, "goods" => $goods, "year" => $year, "role_name" => $role_name]);
         }
+
+    }
+
+
+
+    /**
+     * 模糊查询
+     * 陈绪
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
+     */
+    public function seach(Request $request){
+        $search_keys = $request->param("search_key");
+        $search_bts = $request->param("search_bt");
+
+        $search_key = isset($search_keys) ? $search_keys : '%';
+        $search_bt = isset($search_bts) ? $search_bts : false;
+
+        if ($search_key) {
+            $good = db("goods")->where("goods_name", "like", "%" . $search_key . "%")->paginate(5, false,['query' => request()->param()]);
+        } else {
+            $good = db("goods")->paginate(5,false,['query' => request()->param()]);
+            $this->assign("good", $good);
+        }
+        return view("goods_index", [
+            'good' => $good,
+            'search_key' => $search_key,
+        ]);
 
     }
 
@@ -89,7 +126,7 @@ class Goods extends Controller{
         $year = db("year")->select();
         if($request->isPost()){
             $car_series = db("car_series")->distinct(true)->field("brand")->select();
-            $car_brand = db("car_series")->field("series,brand")->select();
+            $car_brand = db("car_series")->field("series,brand,year,displacement")->select();
             return ajax_success("获取成功",array("car_series"=>$car_series,"car_brand"=>$car_brand));
         }
         return view("goods_add",["year"=>$year,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
@@ -129,6 +166,11 @@ class Goods extends Controller{
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
             }
+            $admin_id = Session::get("user_id");
+            $admin_phone = db("admin")->where("id",$admin_id)->value("phone");
+            $user_id = db("user")->where("phone_num",$admin_phone)->value("id");
+            $store_id = db("store")->where("user_id",$user_id)->value("store_id");
+            $goods_data["store_id"] = $store_id;
             $bool = db("goods")->insert($goods_data);
             if ($bool) {
                 //取出图片在存到数据库
@@ -163,6 +205,8 @@ class Goods extends Controller{
             $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
             $goods_standard_value = explode(",",$value["goods_standard_value"]);
             $goods_standard_value = array_chunk($goods_standard_value,8);
+            $goods_delivery = explode(",",$value["goods_delivery"]);
+            $goods[$key]["goods_delivery"] = $goods_delivery;
             $goods[$key]["goods_standard_value"] = $goods_standard_value;
             $goods[$key]["goods_images"] = db("goods_images")->where("goods_id",$value["id"])->select();
 
@@ -179,12 +223,13 @@ class Goods extends Controller{
         $goods_list = getSelectList("goods_type");
         $goods_brand = getSelectList("brand");
         $year = db("year")->select();
+        $car_series = db("car_series")->distinct(true)->field("brand")->select();
         if($request->isPost()){
             $car_series = db("car_series")->distinct(true)->field("brand")->select();
             $car_brand = db("car_series")->field("series,brand")->select();
             return ajax_success("获取成功",array("car_series"=>$car_series,"car_brand"=>$car_brand));
         }
-        return view("goods_edit",["year"=>$year,"goods_brand"=>$goods_brand,"goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
+        return view("goods_edit",["car_series"=>$car_series,"year"=>$year,"goods_brand"=>$goods_brand,"goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
 
@@ -257,6 +302,12 @@ class Goods extends Controller{
         if ($request->isPost()) {
             $id = $request->only(["id"])["id"];
             $goods_data = $request->param();
+
+            if($goods_data["goods_standard"] == "通用"){
+                unset($goods_data["dedicated_vehicle"]);
+                unset($goods_data["goods_car_brand"]);
+                unset($goods_data["dedicated_property"]);
+            }
             if(!empty($goods_data["goods_standard_name"])){
                 $goods_standard_name = implode(",",$goods_data["goods_standard_name"]);
                 $goods_standard_value = implode(",",$goods_data["goods_standard_value"]);
@@ -274,6 +325,11 @@ class Goods extends Controller{
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
             }
+            $admin_id = Session::get("user_id");
+            $admin_phone = db("admin")->where("id",$admin_id)->value("phone");
+            $user_id = db("user")->where("phone_num",$admin_phone)->value("id");
+            $store_id = db("store")->where("user_id",$user_id)->value("store_id");
+            $goods_data["store_id"] = $store_id;
             $bool = db("goods")->where("id",$id)->update($goods_data);
             if ($bool) {
                 //取出图片在存到数据库
@@ -307,26 +363,34 @@ class Goods extends Controller{
      */
     public function status(Request $request){
 
-        if ($request->isPost()){
-            if($request->isPost()) {
-                $status = $request->only(["status"])["status"];
-                if($status == 0) {
-                    $id = $request->only(["id"])["id"];
+        if($request->isPost()) {
+            $status = $request->only(["status"])["status"];
+            if($status == 0) {
+                $id = $request->only(["id"])["id"];
+                $admin_id = Session::get("user_id");
+                $goods = db("goods")->where("id",$id)->field("putaway_status")->find();
+                if($admin_id == 2){
                     $bool = db("goods")->where("id", $id)->update(["goods_status" => 0]);
-                    if ($bool) {
-                        return ajax_success("成功");
-                    } else {
-                        return ajax_error("失败");
-                    }
+                }else{
+                    $bool = db("goods")->where("id", $id)->update(["goods_status" => 0]);
                 }
-                if($status == 1){
-                    $id = $request->only(["id"])["id"];
-                    $bool = db("goods")->where("id", $id)->update(["goods_status" => 1]);
-                    if ($bool) {
-                        return ajax_success("成功");
-                    } else {
-                        return ajax_error("失败");
-                    }
+                if ($bool) {
+                    return ajax_success("成功");
+                } else {
+                    return ajax_error("失败");
+                }
+            }
+            if($status == 1){
+                $id = $request->only(["id"])["id"];
+                $admin_id = Session::get("user_id");
+                $goods = db("goods")->where("id",$id)->field("putaway_status")->find();
+                if($admin_id == 2 || $goods["putaway_status"] != null){
+                    $bool = db("goods")->where("id", $id)->update(["goods_status" => 1,"putaway_status"=>1]);
+                }
+                if ($bool) {
+                    return ajax_success("成功");
+                } else {
+                    return ajax_error("失败");
                 }
             }
         }
@@ -344,20 +408,10 @@ class Goods extends Controller{
         if($request->isPost()) {
             $id = $request->only(["ids"])["ids"];
             foreach ($id as $value) {
-                $goods_url = db("goods")->where("id", $value)->find();
                 $goods_images = db("goods_images")->where("goods_id", $value)->select();
-                if($goods_url['goods_show_images'] != null){
-                    unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_url['goods_show_images']);
-                    unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_url['goods_parts_big_img']);
-                    unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_url['goods_spec_img']);
-                    unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $goods_url['goods_parts_img']);
-                }
                 foreach ($goods_images as $val) {
                     if ($val['goods_images'] != null) {
-                        unlink(ROOT_PATH . 'public' . DS . 'upload/' . $val['goods_images']);
-                    }
-                    if ($val['goods_quality_img'] != null) {
-                        unlink(ROOT_PATH . 'public' . DS . 'upload/' . $val['goods_quality_img']);
+                        unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $val['goods_images']);
                     }
                     GoodsImages::destroy($val['id']);
                 }
@@ -427,9 +481,14 @@ class Goods extends Controller{
             }
         }
         $goods_list = getSelectList("goods_type");
-        $goods_brand = db("brand")->select();
-        return view("good_look",["goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
-
+        $goods_brand = getSelectList("brand");
+        $year = db("year")->select();
+        if($request->isPost()){
+            $car_series = db("car_series")->distinct(true)->field("brand")->select();
+            $car_brand = db("car_series")->field("series,brand")->select();
+            return ajax_success("获取成功",array("car_series"=>$car_series,"car_brand"=>$car_brand));
+        }
+        return view("goods_look",["year"=>$year,"goods_brand"=>$goods_brand,"goods_standard_name"=>$goods_standard_name,"goods"=>$goods,"goods_list"=>$goods_list,"goods_brand"=>$goods_brand]);
     }
 
 
@@ -541,10 +600,8 @@ class Goods extends Controller{
 
         if($request->isPost()) {
             $user_id = Session::get("user_id");
-            $goods_id = $request->only(["goods_id"])["goods_id"];
             $admin = db("admin")->where("id", $user_id)->select();
-            $goods = db("goods")->where("id",$goods_id)->field("putaway_status")->select();
-            return ajax_success("获取成功",array("admin"=>$admin,"goods"=>$goods));
+            return ajax_success("获取成功",array("admin"=>$admin));
         }
 
     }
@@ -618,8 +675,11 @@ class Goods extends Controller{
     }
 
 
-
-
+    /**
+     * 回调地址
+     * 陈绪
+     * @param Request $request
+     */
     public function pay_code(Request $request){
 
         if($request->isGet()){
@@ -634,6 +694,34 @@ class Goods extends Controller{
                 $this->error("上架失败",url("admin/Goods/index"));
             }
         }
+    }
+
+
+
+
+    /**
+     * 专用适用车型编辑显示
+     * 陈绪
+     */
+    public function edit_show(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $goods = db("goods")->where("id",$id)->field("dedicated_vehicle,goods_car_year,goods_car_displacement,goods_car_series")->select();
+            foreach ($goods as $key=>$value){
+
+                $goods[$key]["goods_car_year"] = explode(",",$value["goods_car_year"]);
+                $goods[$key]["goods_car_displacement"] = explode(",",$value["goods_car_displacement"]);
+                $goods[$key]["goods_car_series"] = explode(",",$value["goods_car_series"]);
+
+            }
+            if($goods){
+                return ajax_success("获取成功",$goods);
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
+
     }
 
 

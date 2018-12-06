@@ -25,7 +25,7 @@ class Order extends Controller{
      **************************************
      */
     public function index(){
-
+        get_user_id_by_session();
         $order_parts_data =Db::table('tb_order_parts')
             ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
             ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
@@ -305,12 +305,6 @@ class Order extends Controller{
 =======
 >>>>>>> 6bdc7d3d05e679bf6b65761ada4af92d3dbe0e85
     }
-
-
-
-
-
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -354,7 +348,7 @@ class Order extends Controller{
      **************************************
      */
     public function evaluate(){
-        $evaluate_data =Db::name('evaluate')->order('create_time','desc')->paginate(3);
+        $evaluate_data =Db::name('order_parts_evaluate')->order('create_time','desc')->paginate(3);
         return view('evaluate',['evaluate_data'=>$evaluate_data]);
     }
 
@@ -365,8 +359,8 @@ class Order extends Controller{
      **************************************
      */
     public function evaluate_details($id){
-        $evaluate_details =Db::name('evaluate')->where('id',$id)->find();//评价信息
-        $evaluate_images =Db::name('evaluate_images')->where('evaluate_order_id',$id)->select();
+        $evaluate_details =Db::name('order_parts_evaluate')->where('id',$id)->find();//评价信息
+        $evaluate_images =Db::name('order_parts_evaluate_images')->where('evaluate_order_id',$id)->select();
         return view('evaluate_details',['evaluate_details'=>$evaluate_details,'evaluate_images'=>$evaluate_images]);
     }
 
@@ -382,7 +376,7 @@ class Order extends Controller{
             $status = $request->only(["status"])["status"];
             if($status == 0) {
                 $id = $request->only(["id"])["id"];
-                $bool = Db::name("evaluate")->where("id", $id)->update(["status" => 0]);
+                $bool = Db::name("order_parts_evaluate")->where("id", $id)->update(["status" => 0]);
                 if ($bool) {
                     return ajax_success('修改成功',['status'=>1]);
                 } else {
@@ -391,7 +385,7 @@ class Order extends Controller{
             }
             if($status == 1){
                 $id = $request->only(["id"])["id"];
-                $bool = Db::name("evaluate")->where("id", $id)->update(["status" => 1]);
+                $bool = Db::name("order_parts_evaluate")->where("id", $id)->update(["status" => 1]);
                 if ($bool) {
                     return ajax_success('修改成功',['status'=>1]);
                 } else {
@@ -409,7 +403,7 @@ class Order extends Controller{
      * @param $id
      */
     public function  evaluate_del($id){
-            $res =Db::name('evaluate')->where('id',$id)->delete();
+            $res =Db::name('order_parts_evaluate')->where('id',$id)->delete();
             if($res){
                 $this->success('删除成功','admin/order/evaluate');
             }else{
@@ -432,7 +426,7 @@ class Order extends Controller{
                 }else{
                     $where ='id='.$id;
                 }
-                $list =  Db::name('evaluate')->where($where)->delete();
+                $list =  Db::name('order_parts_evaluate')->where($where)->delete();
                 if($list!==false)
                 {
                     return ajax_success('成功删除!',['status'=>1]);
@@ -455,7 +449,7 @@ class Order extends Controller{
         if ((!empty($keywords)) && (!empty($keyword))) {
             $condition = " `order_information_number` like '%{$keywords}%'";
             $user_condition = " `user_phone_num` like '%{$keyword}%' or `user_name` like '%{$keyword}%'";
-            $evaluate_data = Db::name('evaluate')
+            $evaluate_data = Db::name('order_parts_evaluate')
                 ->where($condition)
                 ->where($user_condition)
                 ->order('create_time', 'desc')
@@ -466,14 +460,14 @@ class Order extends Controller{
             $keywords = (!empty($keywords)) ? $keywords : ((!empty($keyword)) ? $keyword : '');
             if (!empty($keywords)) {
                 $condition = " `user_phone_num` like '%{$keywords}%' or `user_name` like '%{$keywords}%' or  `order_information_number` like '%{$keywords}%' ";
-                $evaluate_data = Db::name('evaluate')
+                $evaluate_data = Db::name('order_parts_evaluate')
                     ->order('create_time', 'desc')
                     ->where($condition)
                     ->paginate(3, false, [
                         'query' => request()->param(),
                     ]);
             } else {
-                $evaluate_data = Db::name('evaluate')
+                $evaluate_data = Db::name('order_parts_evaluate')
                     ->order('create_time', 'desc')
                     ->paginate(3, false, [
                         'query' => request()->param(),
@@ -494,7 +488,7 @@ class Order extends Controller{
             $evaluate_id =trim(input('evaluate_id'));
             $business_repay =trim(input('business_repay'));
             if(!empty($business_repay)){
-                $data =Db::name('evaluate')->update(['business_repay'=>$business_repay,'id'=>$evaluate_id]);
+                $data =Db::name('order_parts_evaluate')->update(['business_repay'=>$business_repay,'id'=>$evaluate_id]);
                 if($data){
                    $this->success('回复成功');
                 }else{
@@ -571,8 +565,32 @@ class Order extends Controller{
      **************************************
      */
     public function platform_order_service_index(){
+        $service_order_data =Db::name('order_service')->order('create_time','desc')->paginate(5);
+        return view('platform_order_service_index',['service_order_data'=>$service_order_data]);
+    }
 
-        return view('platform_order_service_index');
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:平台服务商订单列表弹框详情
+     **************************************
+     * @param Request $request
+     */
+    public function platform_order_service_processing(Request $request){
+        if($request->isPost()){
+            $id =$request->only(['id'])['id'];
+            if(!empty($id)){
+                $data =Db::name('order_service')->where('id',$id)->find();
+                if(!empty($data)){
+                    return ajax_success('订单信息成功返回',$data);
+                }else{
+                    return ajax_error('该订单没有数据记录',['status'=>0]);
+                }
+            }else{
+                return ajax_error('沒有订单Id',['status'=>0]);
+            }
+        }
     }
 
     /**
@@ -589,6 +607,29 @@ class Order extends Controller{
             ->order('tb_order_parts.order_create_time','desc')
             ->paginate(3 );
         return view('platform_order_parts_index',['order_parts_data'=>$order_parts_data]);
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:平台商配件商订单弹窗的订单信息（前端传过来一个id）
+     **************************************
+     * @param Request $request
+     */
+    public function platform_order_processing(Request $request){
+        if($request->isPost()){
+            $id =$request->only(['id'])['id'];
+            if(!empty($id)){
+                $data =Db::name('order_parts')->where('id',$id)->find();
+                if(!empty($data)){
+                    return ajax_success('订单信息成功返回',$data);
+                }else{
+                    return ajax_error('该订单没有数据记录',['status'=>0]);
+                }
+            }else{
+                return ajax_error('沒有订单Id',['status'=>0]);
+            }
+        }
     }
 
     /**
@@ -726,6 +767,7 @@ class Order extends Controller{
         return view('platform_order_parts_index',['order_parts_data'=>$order_parts_data]);
     }
 
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -785,17 +827,18 @@ class Order extends Controller{
     /**
      **************李火生*******************
      * @return \think\response\View
-     * 平台商订单评价
+     * 平台商配件商订单评价
      **************************************
      */
     public function platform_order_evaluate(){
-        return view('platform_order_evaluate');
+        $evaluate_data =Db::name('order_parts_evaluate')->order('create_time','desc')->paginate(3);
+        return view('platform_order_evaluate',['evaluate_data'=>$evaluate_data]);
     }
 
     /**
      **************李火生*******************
      * @return \think\response\View
-     * 平台商订单评价编辑
+     * 平台配件商订单评价编辑
      **************************************
      */
     public function platform_order_evaluate_edit(){
@@ -804,13 +847,40 @@ class Order extends Controller{
 
     /**
      **************李火生*******************
+     * @param Request $request
+     * Notes:平台服务商订单评价列表
+     **************************************
+     */
+    public function platform_order_service_evaluate(){
+        $service_order_evaluate =Db::name('order_service_evaluate')->order('create_time','desc')->paginate(5);
+        return view('platform_order_service_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:平台服务商订单评价编辑
+     **************************************
+     */
+    public function platform_order_service_evaluate_edit($id){
+        $evaluate_details =Db::name('order_service_evaluate')->where('id',$id)->find();//评价信息
+        $evaluate_images =Db::name('order_service_evaluate_images')->where('evaluate_order_id',$id)->select();
+        return view('platform_order_service_evaluate_edit',['evaluate_details'=>$evaluate_details,'evaluate_images'=>$evaluate_images]);
+    }
+
+
+    /**
+     **************李火生*******************
      * @return \think\response\View
      * 平台商订单设置
      **************************************
      */
     public function platform_order_set_up(){
-        return view('platform_order_set_up');
+        $data =Db::name('order_parts_setting')->find();
+        return view('platform_order_set_up',['data'=>$data]);
     }
+
+
 
 
 
@@ -830,15 +900,63 @@ class Order extends Controller{
      **************************************
      */
     public function service_order_index(){
-//        $service_order_data =Db::table('tb_order_service')
-//            ->field("tb_order_service.*,tb_user.phone_num phone_num,tb_goods.name gname,tb_goods.show_images gimg")
-//            ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
-//            ->order('tb_integral.operation_time','desc')
-//            ->paginate(3 ,false, [
-//                'query' => request()->param(),
-//            ]);
-        return view('service_order_index');
+        $service_order_data =Db::name('order_service')->order('create_time','desc')->paginate(5);
+        return view('service_order_index',['service_order_data'=>$service_order_data]);
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单弹窗的订单信息（前端传过来一个id）
+     * 路由："order_processing"=>"admin/Order/order_processing"
+     **************************************
+     * @param Request $request
+     */
+    public function service_order_processing(Request $request){
+        if($request->isPost()){
+            $id =$request->only(['id'])['id'];
+            if(!empty($id)){
+                $data =Db::name('order_service')->where('id',$id)->find();
+                if(!empty($data)){
+                    return ajax_success('订单信息成功返回',$data);
+                }else{
+                    return ajax_error('该订单没有数据记录',['status'=>0]);
+                }
+            }else{
+                return ajax_error('沒有订单Id',['status'=>0]);
+            }
+        }
+    }
+
+
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商界面服务商订单列表批量删除
+     **************************************
+     * @param Request $request
+     */
+    public function service_order_parts_dels(Request $request){
+        if($request->isPost()){
+            $id =$_POST['id'];
+            if(is_array($id)){
+                $where ='id in('.implode(',',$id).')';
+            }else{
+                $where ='id='.$id;
+            }
+            $list =  Db::name('order_service')->where($where)->delete();
+            if($list!==false)
+            {
+                return ajax_success('成功删除!',['status'=>1]);
+            }else{
+                return ajax_error('删除失败',['status'=>0]);
+            }
+        }
+    }
+
+
 
     /**
      **************李火生*******************
@@ -847,7 +965,8 @@ class Order extends Controller{
      **************************************
      */
     public function service_order_evaluate(){
-        return view('service_order_evaluate');
+        $service_order_evaluate =Db::name('order_service_evaluate')->order('create_time','desc')->paginate(5);
+        return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
     }
 
     /**
@@ -856,10 +975,11 @@ class Order extends Controller{
      * 服务商界面订单评价
      **************************************
      */
-    public function service_order_evaluate_edit(){
-        return view('service_order_evaluate_edit');
+    public function service_order_evaluate_edit($id){
+            $evaluate_details =Db::name('order_service_evaluate')->where('id',$id)->find();//评价信息
+            $evaluate_images =Db::name('order_service_evaluate_images')->where('evaluate_order_id',$id)->select();
+        return view('service_order_evaluate_edit',['evaluate_details'=>$evaluate_details,'evaluate_images'=>$evaluate_images]);
     }
-
     /**
      * TODO:服务商订结束
      */

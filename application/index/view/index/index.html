@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
     <link rel="stylesheet" href="__STATIC__/index/css/index/index.css">
     <link rel="stylesheet" href="__STATIC__/index/css/plugin/swiper-4.3.5.min.css">
-    <!-- 高德地图 -->
-    <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
     <style>
         body {
             padding-top: constant(safe-area-inset-top);
@@ -25,7 +23,7 @@
     <div class="wrapper">
         <div class="header">
             <div class="map">
-                <span class="curr_city">深圳</span>
+                <span class="curr_city"></span>
                 <i class="spr icon_location"></i>
             </div> 
             <div class="search">
@@ -54,8 +52,11 @@
         <div class="classify_service">
             <div class="add_mycar">
                 <a href="javascript:;">
+                    <div class="txt-div">
+                        <p>添加我的爱车</p>
+                        <span>想要更多服务吗？快去添加爱车吧</span>
+                    </div>
                     <i class="spr icon_add"></i>
-                    <span>添加我的爱车</span>
                 </a>
             </div>
             <ul>
@@ -66,7 +67,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">
+                    <a href="parts_index">
                         <i class="spr parts"></i>
                         <span>配件商城</span>
                     </a>
@@ -74,7 +75,7 @@
                 <li>
                     <a href="javascript:;">
                         <i class="spr daily"></i>
-                        <span>日用商城</span>
+                        <span>紧急救援</span>
                     </a>
                 </li>
                 <li>
@@ -304,128 +305,20 @@
                         热门品牌：
                     </div>
                     <ul class="hot-brand-ul">
-                        <li class="hot-brand-li">
+                        <!-- <li class="hot-brand-li">
                             <img src="__STATIC__/index/image/bmw.png">
                             <span>宝马</span>
-                        </li>
-                        <li class="hot-brand-li">
-                            <img src="__STATIC__/index/image/bmw.png">
-                            <span>宝马</span>
-                        </li>
-                        <li class="hot-brand-li">
-                            <img src="__STATIC__/index/image/bmw.png">
-                            <span>宝马</span>
-                        </li>
-                        <li class="hot-brand-li">
-                            <img src="__STATIC__/index/image/bmw.png">
-                            <span>宝马</span>
-                        </li>
-                        <li class="hot-brand-li">
-                            <img src="__STATIC__/index/image/bmw.png">
-                            <span>宝马</span>
-                        </li>
-                        <li class="hot-brand-li">
-                            <img src="__STATIC__/index/image/bmw.png">
-                            <span>宝马</span>
-                        </li>
-                        <li class="hot-brand-li">
-                            <img src="__STATIC__/index/image/bmw.png">
-                            <span>宝马</span>
-                        </li>
-                        <li class="hot-brand-li">
-                            <img src="__STATIC__/index/image/bmw.png">
-                            <span>宝马</span>
-                        </li>
-                        <li class="hot-brand-li">
-                            <img src="__STATIC__/index/image/bmw.png">
-                            <span>宝马</span>
-                        </li>
-                        <li class="hot-brand-li">
-                            <img src="__STATIC__/index/image/bmw.png">
-                            <span>宝马</span>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
                 <div id="letter" class="letter"></div>
                 <div class="sort_box">
-                    <div class="sort_list">
+                    <!-- <div class="sort_list">
                         <div class="num_logo">
                             <img src="__STATIC__/index/image/bmw.png">
                         </div>
                         <div class="num_name">标志</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">斯柯达</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">悍马</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">五菱宏光</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">宝马</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">丰田</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">日产</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">众泰</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">凯迪拉克</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">路虎</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">Jeep</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">特斯拉</div>
-                    </div>
-                    <div class="sort_list">
-                        <div class="num_logo">
-                            <img src="__STATIC__/index/image/bmw.png">
-                        </div>
-                        <div class="num_name">奥迪</div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="initials">
                     <ul>
@@ -441,25 +334,19 @@
             <a href="javascript:;" class="spr series-back"></a>
             <h3 class="title-txt">选择车系</h3>
         </header>
-        <div class="car-brand">奥迪汽车</div>
+        <div class="car-brand"></div>
         <div class="series-list">
-            <div class="series-txt">A6L</div>
-            <div class="series-txt">A4L</div>
-            <div class="series-txt">Q5</div>
-            <div class="series-txt">A3</div>
+            <!-- <div class="series-txt"></div> -->
         </div>
     </div>
-    <!-- 选择车型 -->
+    <!-- 选择排量 -->
     <div class="motorcycle-type" style="display:none;">
         <header class="type-header">
             <a href="javascript:;" class="spr type-back"></a>
-            <h3 class="title-txt">选择车系</h3>
+            <h3 class="title-txt">选择排量</h3>
         </header>
         <div class="type-list">
-            <div class="type-txt">SUV</div>
-            <div class="type-txt">三厢轿车</div>
-            <div class="type-txt">MPV</div>
-            <div class="type-txt">皮卡</div>
+            <!-- <div class="type-txt">SUV</div> -->
         </div>
     </div>
     <!-- 选择年产 -->
@@ -469,18 +356,117 @@
             <h3 class="title-txt">选择年产</h3>
         </header>
         <div class="year-list">
-            <div class="year-txt">2018年款</div>
-            <div class="year-txt">2017年款</div>
-            <div class="year-txt">2016年款</div>
-            <div class="year-txt">2015年款</div>
+            <!-- <div class="year-txt">2018年款</div> -->
         </div>
     </div>
-
+    <!-- 定位城市 -->
+    <div class="geclocation-pop" style="display:none;">
+        <div class="container"></div>
+        <header class="geclocation-title">
+            <a href="javascript:;" class="spr gec-back"></a>
+            <h3 class="title-txt">选择城市</h3>
+        </header>
+        <div class="gec-cont">
+            <div>
+                <div class="city-search">
+                    <i class="spr icon_search"></i>
+                    <input type="text" name="gec-search-input" class="search-input" placeholder="输入城市名查询">
+                </div>
+                <div class="gec-curr-city">
+                    <div class="gec-curr-title">定位城市</div>
+                    <div class="gec-curr-box">
+                        <i class="gec-curr-icon spr"></i>
+                        <span class="gec-curr-txt"></span>
+                    </div>
+                </div>
+                <div class="hot-city">
+                    <div class="hot-city-title">热门城市</div>
+                    <ul class="hot-city-ul">
+                        <li class="hot-city-li">
+                            <span>深圳市</span>
+                        </li>
+                        <li class="hot-city-li">
+                            <span>深圳市</span>
+                        </li>
+                        <li class="hot-city-li">
+                            <span>深圳市</span>
+                        </li>
+                        <li class="hot-city-li">
+                            <span>深圳市</span>
+                        </li>
+                        <li class="hot-city-li">
+                            <span>深圳市</span>
+                        </li>
+                        <li class="hot-city-li">
+                            <span>深圳市</span>
+                        </li>
+                        <li class="hot-city-li">
+                            <span>深圳市</span>
+                        </li>
+                        <li class="hot-city-li">
+                            <span>深圳市</span>
+                        </li>
+                    </ul>
+                </div>
+                <div id="gec-letter" class="gec-letter"></div>
+                <div class="gec-sort-box">
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">遵义市</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">广州市</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">深圳市</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">北京市</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">上海</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">天津</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">杭州</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">黑龙江</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">乌鲁木齐</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">新疆</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">云南</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">重庆</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">梅州</div>
+                    </div>
+                    <div class="gec-sort-list">
+                        <div class="gec-city-name">银川</div>
+                    </div>
+                </div>
+                <div class="gec-initials">
+                    <ul>
+                        <li><img src="__STATIC__/index/image/icon2.png"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/jquery.charfirst.pinyin.js"></script>
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
-
     <!-- swiper初始化 -->
     <script>
         var mySwiper = new Swiper ('.swiper-container', {
@@ -496,6 +482,11 @@
             autoplay: {
                 disableOnInteraction: false
             }
+        })
+    </script>
+    <script>
+        $('.first_ul li').click(function(){
+            location.href = 'store_index';
         })
     </script>
 </body>

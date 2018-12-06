@@ -14,7 +14,8 @@
 		margin-bottom: 0px;
 		margin-top: 0px;
 	}
-	.layui-form-item{
+	
+	.layui-form-item {
 		max-width: 100% !important;
 	}
 	
@@ -54,24 +55,24 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="">
+			<form class="layui-form" action="{:url('admin/Advertisement/accessories_business_search')}">
 				<div class="layui-form-item">
 					<div class="layui-inline">
 						<label class="layui-form-label">广告名称：</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+							<input type="text" name="key" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
 					<div class="layui-inline">
 						<label class="layui-form-label">广告位置</label>
 						<div class="layui-input-inline">
-						<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+							<input type="text" name="keys" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
 					<div class="layui-inline">
-						<a class="layui-btn search_btn">搜索</a>
+						<button class="layui-btn search_btn" type="submit">搜索</button>
 					</div>
 				</div>
 
@@ -89,6 +90,8 @@
 				<thead>
 					<tr>
 						<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
+						<th>序号</th>
+						<th>店铺</th>
 						<th>广告名称</th>
 						<th>缩略图</th>
 						<th>格式</th>
@@ -101,24 +104,32 @@
 				</thead>
 				<tbody class="news_content">
 					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>2</td>
-						<td><img src="111" /></td>
+						{volist name="platform" id="value"}
+						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$value.id}" class="check"></td>
 						<td>管理员</td>
 						<td>管理员</td>
-						<td>2018</td>
-						<td>2018</td>
+						<td>{$value.name}</td>
 						<td>
-							<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="2">
-							
+							<div style="width: 80px; height: 80px;"><img src="__UPLOADS__/{$value.advert_picture}" /></div>
 						</td>
-						
+						<td>{$value.forms}</td>
+						<td>{$value.location}</td>
+						<td>{$value.start_time|date="Y-m-d",###}</td>
+						<td>{$value.end_time|date="Y-m-d",###}</td>
+						<td class="td-status">
+							{if $value.status == 1}
+							<span class="label label-success radius">通过</span> {/if} {if $value.status == 0}
+							<span class="label label-success radius">拒绝</span> {/if} {if $value.status == 2}
+							<span class="label label-success radius">待审核</span>{/if}
+						</td>
+
 						<td>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Advertisement/accessories_business_edit')}"><i class="iconfont icon-edit"></i> 编辑</a>
-							<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Advertisement/accessories_business_edit',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 编辑</a>
+							<a href="{:url('admin/Advertisement/accessories_business_del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 
 						</td>
 					</tr>
+					{/volist}
 				</tbody>
 			</table>
 		</div>
@@ -129,7 +140,7 @@
 			</select>
 			<button type="button" class="up-button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定 </button>
 		</div>
-
+		{$platform->render()}
 	</div>
 
 	</div>
@@ -152,7 +163,7 @@
 			var vals = $("input").data("id");
 			//是否展示
 			form.on('switch(isShow)', function(data) {
-				if ($(this).val() == 0) {
+				if($(this).val() == 0) {
 					$(this).val(1);
 				} else {
 					$(this).val(0);
@@ -175,7 +186,6 @@
 						console.log("错误")
 					}
 				});
-
 
 			});
 
@@ -200,7 +210,6 @@
 				form.render('checkbox');
 			})
 
-	
 		})
 	</script>
 

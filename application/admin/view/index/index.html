@@ -26,12 +26,9 @@
 
 	<!--右边内容-->
 	<div class="right-content">
-		<div class="right-content-title">
-			<div class="right-content-title-img"><img src="__STATIC__/admin/index/img/u134.png"></div>
-			<div class="right-content-title-text">首页</div>
-		</div>
+		
 		<div class="">
-			<iframe class="recontent" id="add" frameborder="0" src="/automobile/public/admin/home_index.html"></iframe>
+			<iframe class="recontent" id="add" frameborder="0" src="{:url('admin/Home/index')}"></iframe>
 		</div>
 
 	</div>
@@ -41,7 +38,7 @@
          <div class="layui-form-item center"  style="margin: 20px auto; width: 70%;">
           <label class="layui-form-label" style="width: 100px !important" >旧密码</label>
           <div class="layui-input-block" >
-           <input type="password" name="name" required value="" style="width: 240px" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+           <input type="password" name="old_password" required value="" style="width: 240px" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
           </div>
          </div>
          <div class="layui-form-item" style="margin: 20px auto; width: 70%;">
@@ -53,7 +50,7 @@
          <div class="layui-form-item" style="margin: 20px auto; width: 70%;">
           <label class="layui-form-label" style="width: 100px !important">确认密码</label>
           <div class="layui-input-block">
-           <input type="password" name="value" required style="width: 240px" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+           <input type="password" name="second_passwd" required style="width: 240px" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
            <!-- <input type="hidden" name="id" style="width: 240px" autocomplete="off" class="layui-input"> -->
           </div>
          </div>
@@ -87,8 +84,6 @@
 			        shift: 2,
 			        area: ['600px', '400px'],
 			        shadeClose: true,
-                    //btn: ['新增', '取消'],
-			        // btnAlign: 'c',
 			        content: $("#add-main"),
 			        success: function(layero, index){
 

@@ -1,10 +1,3 @@
-$('.classify_tab li').click(function(){
-    $(this).addClass('active').siblings().removeClass('active');
-})
-
-$('.click-adop').click(function(){
-    location.href = 'goods_list';
-})
 
 // 分类中的品牌分类和商品分类
 $.ajax({
@@ -36,7 +29,7 @@ $.ajax({
             if(val.child.length != 0){
                 $.each(val.child, function(idx, val){
                     goodsLi += '<li>\
-                                    <a href="goods_list">\
+                                    <a href="goods_list?id='+val.id+'">\
                                         <img src="uploads/'+val.brand_images+'">\
                                         <span class="brand_name">'+val.name+'</span>\
                                     </a>\
@@ -58,7 +51,7 @@ $.ajax({
             if(val.child.length != 0){
                 $.each(val.child, function(idx, val){
                     goodsLi += '<li>\
-                                    <a href="goods_list">\
+                                    <a href="goods_list?id='+val.id+'">\
                                         <img src="uploads/'+val.type_images+'">\
                                         <span class="brand_name">'+val.name+'</span>\
                                     </a>\
@@ -71,6 +64,13 @@ $.ajax({
 
         $('.cont_one_ul').append(goodsLi);
         $('.classify_ul').append(brandLi);
+
+        $('.classify_tab li').click(function(){
+            $(this).addClass('active').siblings().removeClass('active');
+        })
+        $('.click-adop').click(function(){
+            location.href = 'goods_list';
+        })
     },
     error: function(){
         console.log('error');

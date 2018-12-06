@@ -46,7 +46,6 @@ html{
     width: 1.2rem;
     height: 1.2rem;
     margin: 1.5rem auto 1.2rem;
-    border-radius: 50%;
     overflow: hidden;
 }
 .logo-wrap img{
@@ -71,6 +70,9 @@ html{
     height: .5rem;
     line-height: .5rem;
     margin-bottom: .8rem;
+}
+.remember input{
+    vertical-align: middle;
 }
 .inputbox .remember-label{
     color: #333;
@@ -115,18 +117,18 @@ html{
 .third-part .QQ,
 .third-part .weibo{
     display: inline-block;
-    width: .64rem;
-    height: .64rem;
+    width: .74rem;
+    height: .74rem;
     margin: .5rem .3rem 0;
 }
 .third-part .wechat{
-    background-position: -2.5rem -4.2rem;
+    background-position: -2.45rem -4.15rem;
 }
 .third-part .QQ{
-    background-position: -3.4rem -4.2rem;
+    background-position: -3.35rem -4.15rem;
 }
 .third-part .weibo{
-    background-position: -4.3rem -4.2rem;
+    background-position: -4.25rem -4.15rem;
 }
 
 .find-password{

@@ -16,6 +16,7 @@
  * Date: 2018/5/26
  * Time: 10:53
  */
+
 //手机验证码
 function phone($account= "",$password = '', $phone = "" ,$content = ""){
     $url = "http://120.26.38.54:8000/interface/smssend.aspx";
@@ -615,57 +616,57 @@ function show_evaluate_start_show($is_repay){
     switch ($is_repay){
         case '1':
             echo "
-                <span style=\"display: inline-block; width: 40px;\">
+                <span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-                <span style=\"display: inline-block; width: 40px;\">
+                <span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
 				</span>
 				";
             break;
         case '2':
             echo "
-                <span style=\"display: inline-block; width: 40px;\">
+                <span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-                <span style=\"display: inline-block; width: 40px;\">
+                <span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
 				</span>
 				";
             break;
         case '3':
             echo "
-                <span style=\"display: inline-block; width: 40px;\">
+                <span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-                <span style=\"display: inline-block; width: 40px;\">
+                <span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
 				</span>
             
@@ -673,38 +674,38 @@ function show_evaluate_start_show($is_repay){
             break;
         case '4':
             echo "
-                <span style=\"display: inline-block; width: 40px;\">
+                <span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-                <span style=\"display: inline-block; width: 40px;\">
+                <span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars.png\" width=\"100%\" >
 				</span>
                     ";
             break;
         case '5':
             echo "
-                <span style=\"display: inline-block; width: 40px;\">
+                <span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
-				<span style=\"display: inline-block; width: 40px;\">
+				<span style=\"display: inline-block; width: 20px;\">
 					<img src=\"__STATIC__/admin/common/img/stars_full.png\" width=\"100%\" >
 				</span>
             ";
@@ -744,11 +745,35 @@ function operation_status($status){
     }
 }
 
-
-
 /**
- * 点击
+ **************李火生*******************
+ * @param Request $request
+ * Notes:服务商订单状态值
+ **************************************
+ * @param $status
  */
+function show_service_order_status($status){
+    if($status==0){
+        echo '<button type="button" class="state  close-btu" >已关闭</button>';
+    }else if($status==1){
+        echo '<button type="button" class="state  obligation" >待支付</button>';
+    }else if($status==2){
+        echo '<button type="button" class="state  payment-has-been" >已付款</button>';
+    }else  if($status==3){
+        echo '<button type="button" class="state  shipmenting-btu" >待服务</button>';
+    }else  if($status==4){
+        echo '<button type="button" class="state  shipmented-btu" >已服务</button>';
+    }else  if($status==5){
+        echo '<button type="button" class="state  obligation" >待评价</button>';
+    } else  if($status==6){
+        echo '<button type="button" class="state  finish-btu" >已完成</button>';
+    }else  if($status==9){
+        echo '<button type="button" class="state  cancel-btu" >取消订单</button>';
+    }else  if($status==10){
+        echo '<button type="button" class="state  cancel-btu" >取消订单</button>';
+    }
+}
+
 
 
 

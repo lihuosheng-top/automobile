@@ -1,3 +1,84 @@
+// 获取url地址id
+var url = location.search;
+var id;
+if(url.indexOf('?') != -1){
+    id = url.substr(1).split('=')[1];
+}
+$.ajax({
+    url: 'goods_detail',
+    type: 'POST',
+    dataType: 'JSON',
+    data: {
+        'id': id
+    },
+    success: function(res){
+        console.log(res);
+        // 轮播图
+        var swiperImgStr = '';
+        $.each(res.data[0].images, function(idx, val){
+            swiperImgStr += '<div class="swiper-slide">\
+                                <img src="uploads/'+val.goods_images+'">\
+                            </div>'
+        })
+        $('.swiper-wrapper').append(swiperImgStr);
+        $.each(res.data, function(idx, val){
+            // 商品名字
+            $('.goods_cont .goods_name').html(val.goods_name);
+            // 卖点
+            $('.selling-point').html(val.goods_selling);
+            // 划线价
+            $('.through').html('￥' + val.goods_bottom_money);
+            // 售价
+            $('.sale').html('￥' + val.goods_new_money);
+            // 库存
+            $('.stock').html('库存' + val.goods_repertory + '件');
+            // 商品详情
+            $('.detail-img-box').html(val.goods_text);
+        })
+        
+        // swiper初始化
+        var mySwiper = new Swiper ('.swiper-container', {
+            direction: 'horizontal', // 垂直切换选项
+            loop: true, // 循环模式选项
+            autoplay: {
+                delay: 2000,
+                disableOnInteraction: false,//用户操作swiper后，不禁止autoplay
+            },
+            // 如果需要分页器
+            pagination: {
+                el: '.swiper-pagination',
+            },
+        }) 
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+
+
+// 支付
+$('#order-buy').click(function(){
+    $('.mask').show();
+    $('.alipay-pop').animate({'bottom': '0'});
+    $('html').css('overflow', 'hidden');
+})
+$('.close-alipay').click(function(){
+    $('.mask').hide();
+    $('.alipay-pop').animate({'bottom': '-100%'});
+    $('html').css('overflow', 'auto');
+})
+// 产品参数
+$('.product-parameter').click(function(){
+    $('.product-parameter-pop').animate({'bottom': '0'});
+})
+$('.parameter-btn').click(function(){
+    $('.product-parameter-pop').animate({'bottom': '-100%'});
+})
+
+
+
+
+
 // 显示 隐藏 评价弹窗 
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
@@ -97,25 +178,6 @@ $('.switch-comment').click(function(){
     $('.detail-box').hide();
 })
 
-// 购买数量
-$(function(){
-    // 减
-    var calculator_val = document.getElementsByClassName('calculator_val')[0];
-    $('.minus').click(function(){
-        if(calculator_val.value > 0){
-            calculator_val.value -= 1;
-        }else{
-            calculator_val.value = 0;
-        }
-    })
-    // 加
-    $('.increase').click(function(){
-        var add =  calculator_val.value - 0;
-        add += 1;
-        calculator_val.value = add;
-    })
-})
-
 // 查看评价详情
 $('.comment_text_a').click(function(){
     $('.wrapper').hide();
@@ -127,14 +189,70 @@ $('.detail-back').click(function(){
 })
 
 // 选择服务
-$('.ser-type').click(function(){
+$('.ser-type').add('#buy').click(function(){
     $('html').css('overflow','hidden');
-    $('.mask').add('.select-ser-pop').show();
+    $('.mask').show();
+    $('.select-ser-pop').addClass('select-ser-easeout');
+})
+// 立即购买 弹窗
+$('.select-buy').click(function(){
+    $('.select-ser-pop').removeClass('select-ser-easeout');
+    $('.place-order-pop').show();
+    $('.wrapper').hide();
+    $('.mask').hide();
+})
+$('.place-order-back').click(function(){
+    $('.place-order-pop').hide();
+    $('html').css('overflow','auto');
+    $('.wrapper').show();
+})
+// 购买弹窗  加入购物车
+$('.select-add-cart').click(function(){
+    $('.select-ser-pop').removeClass('select-ser-easeout');
+    $('.mask').hide();
+    layer.open({
+        style: 'bottom:100px;',
+        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+        skin: 'msg',
+        content: '加入购物车成功',
+        time: 1.5
+    })
+    
+})
+// 加入购物车
+$('.add-cart').click(function(){
+    layer.open({
+        style: 'bottom:100px;',
+        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+        skin: 'msg',
+        content: '加入购物车成功',
+        time: 1.5
+    })
 })
 // 关闭选择服务 弹窗
 $('.close-select-pop').click(function(){
     $('html').css('overflow','auto');
-    $('.mask').add('.select-ser-pop').hide();
+    $('.mask').hide();
+    $('.select-ser-pop').removeClass('select-ser-easeout');
+})
+
+// 购买数量
+$(function(){
+    // 减
+    var calculator_val = document.getElementsByClassName('calculator_val')[0];
+    $('.minus').click(function(){
+        if(calculator_val.value > 1){
+            calculator_val.value -= 1;
+        }else{
+            calculator_val.value = 1;
+        }
+    })
+    // 加
+    $('.increase').click(function(){
+        var add =  calculator_val.value - 0;
+        add += 1;
+        calculator_val.value = add;
+    })
 })
 
 // 弹窗 购买数量
@@ -142,10 +260,10 @@ $(function(){
     // 减
     var select_calculator_val = document.getElementsByClassName('select-calculator_val')[0];
     $('.select-minus').click(function(){
-        if(select_calculator_val.value > 0){
+        if(select_calculator_val.value > 1){
             select_calculator_val.value -= 1;
         }else{
-            select_calculator_val.value = 0;
+            select_calculator_val.value = 1;
         }
     })
     // 加

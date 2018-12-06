@@ -7,7 +7,89 @@
     url('../font/iconfont1/iconfont.ttf') format('truetype'), /* chromeÃ£â‚¬ÂfirefoxÃ£â‚¬ÂoperaÃ£â‚¬ÂSafari, Android, iOS 4.2+*/
     url('../font/iconfont1/iconfont.svg#uxiconfont') format('svg'); /* iOS 4.1- */
 }
+/*修改layui样式*/
+.tdimg{
+	width: 50px;
+	height: 50px;
+	margin: 0 auto;
+}
+.layui-table th{
+    padding: 9px 14px;	
+}
+.layui-table td{
+    padding: 4px 8px;	
+    font-size: 10px;
+}
+.overflow{
+	width: 100px;
+	overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+white-space: normal !important;
 
+	
+}
+.layui-inline{
+	line-height: 43px;
+}
+.line{
+	display: flex;
+	align-items: center;
+}
+.line input{
+	width: 200px;
+	margin-right: 20px;
+}
+/*搜索样式*/
+	.seach{
+		display: flex;
+		 flex-wrap: wrap;
+		 align-items: center;
+	}
+	.seach_list{
+		display: flex;
+		align-items: center;
+	    padding: 4px;
+	}
+	.seach_laber{
+		font-size: 13px;
+	    width: 80px;
+	    text-align: center;
+	    color: #333;
+	}
+	.seach_input{
+		width: 208px;
+		font-size: 16px;
+	}
+	.seach .layui-btn{
+		width: 100px;
+	}
+/*搜索样式*/
+/*保存列表页面样式*/
+   .layui-form-lists{
+   	padding: 11px;
+   }
+   .form-item{
+   	display: flex;
+   	padding: 6px;
+   }
+   .form-label{
+   	width: 100px;
+   	text-align: center;
+   	color: #999999;
+   }
+   .form-input{
+   	width: 734px;
+   }
+   .layui-form-lists .layui-btn{
+   	width: 100px;
+   }
+   /*保存列表页面样式*/
+
+
+/*修改layui样式*/
 .iconfont1{
     font-family:'iconfont1' !important;
     font-size:16px;font-style:normal;
@@ -31,10 +113,10 @@
 	font-size: 14px;
 }
 .layui-form label{
-	font-size: 15px;
+	font-size: 13px;
 	height: 38px;
 	line-height: 38px;
-	width: 21%;
+	/*width: 21%;*/
 	padding: 0;
 	
 }
@@ -43,6 +125,8 @@
 	width: 40%;
 	margin-bottom: 27px;
 	margin-top: 20px;
+	box-sizing: border-box;
+	margin-left: 20px;
 }
 .layui-form-select .layui-edge{
 	right: 33px;
@@ -148,12 +232,13 @@ a{
 }
 
 .UCleft {
-	margin-left: 2%;
-	height: 1000px;
+	margin-left: 10px;
+	margin-right: 10px;
+	height: 910px;
 	background: #fff;
-	width: 14%;
+	width: 13%;
 	float: left;
-	margin-top: 38px;
+	margin-top: 10px;
 }
 
 .UCleft-fixed {
@@ -403,11 +488,11 @@ a{
 /*å³è¾¹å†…å®¹*/
 .right-content{
 	float: right;
-	width: 80%;
-	height: 1000px;
+	width: 84.5%;
+	height: 910px;
 	/* background: #fff; */
-	margin-top: 21px;
-	margin-right: 29px;
+	margin-top: 10px;
+	margin-right: 10px;
 }
 .right-content-title{
 	overflow: hidden;
@@ -428,9 +513,11 @@ a{
 }
 .recontent{
 	width: 100%;
-	min-height: 800px;
+	min-height: 910px;
 	background: #fff;
-	padding-bottom: 30px;
+}
+.layui-elem-quote{
+	padding: 6px !important;
 }
 /* 按钮颜色 */
 /* 待付款 */

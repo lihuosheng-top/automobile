@@ -490,21 +490,29 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
-					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>2</td>
-						<td><img src="111" /></td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>
-							<button type="button" class="state for-the-payment">111</button>
-						</td>
-					</tr>
+				{if !empty($service_order_data)}
+				{volist name="service_order_data" id ="vo"}
+				<tr>
+					<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$vo.id}"></td>
+					<td>{$vo.service_order_number}</td>
+					{if !empty($vo.service_goods_image)}
+					<td style="width: 40px; height: 40px;"><img width="100%" src="__UPLOADS__/{$vo.service_goods_image}" /></td>
+					{else}
+					<td style="width: 40px; height: 40px;">无</td>
+					{/if}
+					<td>{$vo.service_order_amount}</td>
+					<td>{$vo.service_reservations}</td>
+					<td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>
+					<td>{$vo.car_owner_name}</td>
+					<td>{$vo.car_number}</td>
+					<td>{$vo.car_owner_phone_number}</td>
+					<td>{$vo.got_to_time|date="Y-m-d H:i:s",###}</td>
+					<td data-id="{$vo.id}">
+						{$vo.status|show_service_order_status}
+					</td>
+				</tr>
+				{/volist}
+				{/if}
 				</tbody>
 			</table>
 			<div id="page">
@@ -518,6 +526,9 @@
 					<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px; ">确定
 					</button>
 				</div>
+				{if !empty($service_order_data)}
+				{$service_order_data->render()}
+				{/if}
 			</div>
 		</div>
 

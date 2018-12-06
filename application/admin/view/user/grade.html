@@ -51,7 +51,11 @@ body{
 				<tr>
 					<td>{$grade_val.user_grade_name}</td>
 					<td>{$grade_val.user_grade_content}</td>
+					{if !empty($grade_val.user_grade_img)}
 					<td><img src="__USERIMG__/{$grade_val.user_grade_img}" alt=""></td>
+					{else}
+					<td>无</td>
+					{/if}
 				</tr>
 				{/volist}
 				{/if}

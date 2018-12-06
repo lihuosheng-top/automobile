@@ -44,7 +44,6 @@ class Capital extends Controller{
         $this->assign('listpage', $user_list->render());
         return view('index',['user_list'=>$user_list]);
     }
-
     /**
      **************李火生*******************
      * @param Request $request

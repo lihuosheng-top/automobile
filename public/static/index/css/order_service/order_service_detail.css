@@ -1,0 +1,396 @@
+.place-order-pop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+.place-order-header{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    z-index: 2;
+}
+.place-order-header .place-order-back{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    width: .25rem;
+    height: .43rem;
+    margin-top: -.22rem;
+    background-position: -.5rem -.5rem;
+}
+.place-order-header .place-order-title{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    text-align: center;
+    font-size: .36rem;
+    font-weight: normal;
+}
+.order-detail-box{
+    height: 100%;
+    padding: .89rem 0 1.2rem;
+    box-sizing: border-box;
+    overflow: auto;
+}
+.order-detail-box .order-detail-bg{
+    width: 100%;
+    height: 2.2rem;
+    background: url(../../image/my_bg4.png) no-repeat;
+    background-size: 100% 100%;
+    padding: 0 .3rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+.order-detail-box .order-detail-bg div{
+    color: #fff;
+    font-size: .32rem;
+    margin-top: .4rem;
+}
+.order-detail-box .user-info-box{
+    width: 96%;
+    background-color: #fff;
+    border-radius: .2rem;
+    box-shadow: 0 2px 10px rgba(200, 200, 200, 1);
+    padding: .45rem .42rem;
+    box-sizing: border-box;
+    margin: -.8rem auto 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    color: #333;
+}
+.user-info-box .user-name-phone{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: .26rem;
+    color: #333333;
+}
+ 
+.order-shop{
+    width: 96%;
+    margin: .3rem auto 0;
+    background-color: #fff;
+    border-radius: .2rem;
+    box-shadow: 0 2px 10px rgba(200, 200, 200, 1);
+    box-sizing: border-box;
+    padding: .45rem .42rem;
+}
+.order-shop .shop-address,
+.order-shop .service-time{
+    font-size: .24rem;
+    color: #333;
+    margin: .1rem 0;
+}
+.order-shop .service-time span{
+    color: #504cfb;
+}
+.order-shop .contact-seller{
+    text-align: center;
+    color: #666;
+    font-size: .24rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: .25rem;
+}
+.order-shop .contact-seller div{
+    flex: 1;
+}
+.order-shop .contact-seller .call-phone{
+    border-right: 1px solid #eee;
+}
+.order-shop .contact-seller .icon-phone{
+    display: inline-block;
+    width: .38rem;
+    height: .38rem;
+    background-position: -1.45rem -1.15rem;
+    vertical-align: middle;
+}
+.order-shop .contact-seller .icon-map{
+    display: inline-block;
+    width: .39rem;
+    height: .38rem;
+    background-position: -1.45rem -.75rem;
+    vertical-align: middle;
+}
+.service-item-box{
+    width: 96%;
+    margin: .3rem auto 0;
+    background-color: #fff;
+    border-radius: .2rem;
+    box-shadow: 0 2px 10px rgba(200, 200, 200, 1);
+    box-sizing: border-box;
+    padding: .45rem .42rem .3rem;
+}
+.service-item-box .service-item-title{
+    margin-bottom: .2rem;
+}
+.service-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .28rem;
+    color: #333;
+    margin-bottom: .2rem;
+}
+.service-item .service-item-price,
+.service-item-amount .discount-amount-span{
+    color: #f00;
+}
+.service-item-amount{
+    margin-bottom: .2rem;
+    border-top: 1px solid #eee;
+    padding-top: .1rem;
+}
+.service-item-amount div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #999;
+    font-size: .24rem;
+}
+.service-item-amount .service-total-sum{
+    margin-bottom: .2rem;
+}
+.discount-amount{
+    position: relative;
+}
+.service-item-amount .discount-amount-span{
+    margin-right: .35rem;
+}
+.pay-amount{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eee;
+    font-size: .28rem;
+    padding-top: .2rem;
+}
+.pay-amount span:last-of-type{
+    color: #f00;
+    font-size: .32rem;
+}
+.discount-amount .icon-select{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: .26rem;
+    height: .38rem;
+    background-position: -7.25rem -1.75rem;
+}
+
+
+
+
+.order-payment-box{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(200, 200, 200, 1);
+    padding-right: .3rem;
+    box-sizing: border-box;
+    text-align: right;
+}
+.order-payment-box .order-cancel-btn,
+.order-payment-box .order-payment-btn{
+    width: 1.8rem;
+    height: .6rem;
+    border: 0;
+    background-color: #504cfb;
+    color: #fff;
+    font-size: .2rem;
+    outline: none;
+    border-radius: .3rem;
+}
+.order-payment-box .order-cancel-btn{
+    background-color: #fff;
+    border: 1px solid #999999;
+    color: #999999;
+}
+.mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0 ,0 , 0, .5);
+}
+.cancel-order-pop{
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 50vh;
+    background-color: #fff;
+    transition: all .3s ease-in;
+}
+.showCancelPop{
+    bottom: 0;
+}
+.cancel-order-header{
+    position: relative;
+    width: 100%;
+    height: .8rem;
+    text-align: center;
+    line-height: .8rem;
+    font-size: .34rem;
+    color: #666;
+    font-weight: normal;
+    border-bottom: 1px solid #eee;
+}
+.cancel-order-header .close-cancel-order{
+    position: absolute;
+    top: 50%;
+    right: .3rem;
+    transform: translateY(-50%);
+    width: .4rem;
+    height: .39rem;
+    background-position: .05rem -1.15rem;
+}
+.cancel-order-pop .reason-title{
+    font-size: .3rem;
+    color: #333;
+    margin: .3rem 0 .3rem .5rem;
+}
+.reason-list{
+    margin-left: .5rem;
+    margin-bottom: .3rem;
+}
+.reason-list .reason-li{
+    margin: .1rem 0;
+    font-size: .28rem;
+    color: #333;
+}
+.reason-list .reason-li .icon-reason{
+    display: inline-block;
+    width: .38rem;
+    height: .38rem;
+    background-position: -2.05rem -.85rem;
+    vertical-align: middle;
+    margin-right: .2rem;
+}
+.reason-list .reason-li .reason-selected{
+    background-position: -2.05rem -1.25rem;
+}
+.select-reason-btn{
+    position: absolute;
+    bottom: .4rem;
+    left: 50%;
+    transform: translate(-50%);
+    width: 90%;
+    height: .7rem;
+    border: 0;
+    outline: none;
+    background-color: #504cfb;
+    color: #fff;
+    border-radius: .1rem;
+}
+/* 支付弹窗 start */
+.alipay-pop{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: -100%;
+    background-color: #fff;
+    width: 100%;
+    height: 60vh;
+    z-index: 9;
+    transition: all .3s;
+}
+.showAlipayPop{
+    bottom: 0;
+}
+.alipay-pop header{
+    position: relative;
+    width: 100%;
+    height: .88rem;
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+    background-color: #fff;
+    margin-bottom: .5rem;
+}
+.alipay-pop header .close-alipay{
+    position: absolute;
+    top: 50%;
+    left: .2rem;
+    font-size: .6rem;
+    color: #333;
+    transform: translateY(-50%);
+}
+.alipay-pop header .alipay-title{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    text-align: center;
+}
+.alipay-pop .price-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: .88rem;
+}
+.alipay-pop .price-box span{
+    font-size: .6rem;
+    flex-basis: 45%;
+    text-align: right;
+}
+.alipay-pop .price-box input{
+    width: 50%;
+    font-size: .6rem;
+}
+.alipay-pop .middle_box .content{
+	width: 100%;
+}
+.alipay-pop .content li{
+	width: 100%;
+	border-bottom: 1px solid #e6e6e6;
+	padding: 0 .2rem;
+	height: 44px;
+	line-height: 44px;
+	font-size: 14px;
+	color: #666;
+	display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.alipay-pop .content li input{
+	float: right;
+	color: #333;
+	height: 100%;
+	border: 0;
+	text-align: right;
+}
+.alipay-pop .alipay-submit{
+	position: absolute;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 90%;
+	height: 40px;
+	font-size: 14px;
+	color: #fff;
+	background-color: #2e8ffd;
+	border-radius: 5px;
+	border: 1px solid #2e8ffd;
+}
+/* 支付弹窗 end */

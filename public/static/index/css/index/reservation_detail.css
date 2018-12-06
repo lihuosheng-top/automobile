@@ -54,9 +54,9 @@ html{
 }
 .shop_info_box .icon_order{
     display: inline-block;
-    width: .43rem;
-    height: .43rem;
-    background-position: -2.7rem -2.5rem;
+    width: .53rem;
+    height: .53rem;
+    background-position: -2.65rem -2.45rem;
     margin-bottom: .1rem;
 }
 .shop_info_box .order_confirm span{
@@ -190,7 +190,7 @@ html{
     display: inline-block;
 }
 .wrapper .comment_box .comment_text_box .comment_text_p{
-    font-size: .2rem;
+    font-size: .28rem;
     color: #666666;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -102,36 +102,47 @@
 				</tr> 
 		    </thead>
 		    <tbody class="news_content">
+			{volist name="serve_goods" id="value"}
 		    	<tr>
 					<td ><input type="checkbox" sname="" lay-skin="primary"  lay-filter="choose" ></td>
-					<td>2</td>
-					<td>管理员</td>
-					<td>管理员</td>
-					
-					<td>2018</td>
-					
+					{volist name="store" id="val"}
+					{if $value.store_id == $val.store_id}
+					<td>{$val.store_name}</td>
+					{/if}
+					{/volist}
+					<td>{$value.serve_goods_name}</td>
+					<td>{$value.vehicle_model}</td>
+					<td>{$value.service_money}</td>
 					<td>
-                  <input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="2"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>是</em><i></i></div>
-						
+						{if $value.status == 0}
+						<input type="checkbox" class="Status" name="show" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}"/>
+						{else /}
+						<input type="checkbox" class="Status" name="show" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}"/>
+						{/if}
 					</td>
 					<td>
-						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/serve/look')}"><i class="iconfont icon-edit"></i> 查看详情</a>
-						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/serve/add')}"><i class="iconfont icon-edit"></i> 编辑</a>
-						<a href="/siring_ow/public/admin/admin_del/id/2.html" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
-					
+						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/serve/look',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 查看详情</a>
+						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/serve/edit',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 编辑</a>
+						<a href="{:url('admin/serve/del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 					</td>
 				</tr>
+			{/volist}
 		    </tbody>
 		</table>
+		<div id="page">
+				   <div class="opations" style="width: 200px; float: left;">
+                    <select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
+						<option check="" value="0">请选择</option>
+						<option value="1">批量删除</option>
+					</select>
+                </div>
+                <div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
+                    <button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
+					</button>
+                </div>
+            </div>
 	</div>
-	<div id="page">
-		
-		<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-		<option value="">批量删除</option>
-		
-	</select>
-	<button type="button"  style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定 </button>
-	</div>
+
 
 	</div>
 		
@@ -198,6 +209,63 @@
 		}
 		form.render('checkbox');
 	})
+	 //点击操作确认按钮
+            var data_id = [];
+            $("#opration_btu").click(function() {
+                var opration_val = $(".opations select option:selected").val();
+                console.log(opration_val);
+                if (opration_val == 0) {
+                    layer.alert('请选择操作', {
+                        skin: 'layui-layer-molv' //样式类名
+                            ,
+                        closeBtn: 0
+                    });
+                } else if (opration_val == 1) {
+                    layer.confirm('你确认要删除吗？', {
+                        btn: ['确认', '取消'] //按钮
+                    }, function(index) {
+                    	layer.close(index);
+                        var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+                        console.log(child);
+                        for (var i = 0; i < child.length; i++) {
+                            data_id.push($(child[i])[0].dataset.id);
+                        }
+                         console.log(data_id);
+                        $.ajax({
+                            type: "POST",
+                            url: "serve_batches",
+                            data: {
+                                "id": data_id,
+                            },
+                            success: function(data) {
+                                console.log("成功");
+                                console.log(data);
+                                var data = $.parseJSON(data);
+                                layer.alert(data.info, {
+                                    skin: 'layui-layer-molv' //样式类名
+                                        ,
+                                    closeBtn: 0
+                                });
+                                location.reload();
+                                data_id.splice(0, data_id.length);
+                            },
+                            error: function(data) {
+                                var data = $.parseJSON(data);
+                                layer.alert(data.info, {
+                                    skin: 'layui-layer-molv' //样式类名
+                                        ,
+                                    closeBtn: 0
+                                });
+                                console.log(data);
+                                console.log("错误");
+                                data_id.splice(0, data_id.length);
+                            }
+                        });
+                    });
+
+                }
+
+            });
 
 
 })

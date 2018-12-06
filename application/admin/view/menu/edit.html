@@ -3,7 +3,6 @@
 {block name="css"}
 <style type="text/css">
 .layui-form	label{
-		width: 15%;
 		text-align: left;
 	}
 .layui-form-label span{
@@ -50,7 +49,11 @@ body{
             <select name="pid" lay-filter="aihao" class="select">
                 <option value="0">顶级</option>
                 {volist name="menu_list" id="value"}
+                {if condition="$val.pid eq $value.id"}
+                <option value="{$value.id}" selected="">{$value.name}</option>
+                {else}
                 <option value="{$value.id}">{$value.name}</option>
+                {/if}
                 {/volist}
             </select>
         </div>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/my/my_message.css">
+    <title>个人信息</title>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <a href="my_index" class="spr icon-back"></a>
+            <h3>个人信息</h3>
+        </header>
+        <div class="personal-info">
+            <ul class="info-ul">
+                <li class="info-li">
+                    <p class="list-title-p">头像</p>
+                    <a href="javascript:;" class="spr icon-more"></a>
+                    <img src="__STATIC__/index/image/icon6.png" class="user-img" id="user-img">
+                    <input type="file" class="file-input upload-input" id="upload-input">
+                </li>
+                <li class="info-li">
+                    <p class="list-title-p">真实姓名</p>
+                    <i class="spr icon-more"></i>
+                </li>
+                <li class="info-li">
+                    <p class="list-title-p">手机号</p>
+                    <i class="spr icon-more"></i>
+                </li>
+                <li class="info-li">
+                    <p class="list-title-p">昵称</p>
+                    <i class="spr icon-more"></i>
+                </li>
+                <li class="info-li sex-li">
+                    <p class="list-title-p">性别</p>
+                    <i class="spr icon-more"></i>
+                </li>
+                <!-- <li class="info-li">
+                    <p class="list-title-p">会员等级</p>
+                    <i class="spr icon-more"></i>
+                </li> -->
+                <li class="info-li">
+                    <p class="list-title-p">我的积分</p>
+                    <i class="spr icon-more"></i>
+                </li>
+                <li class="info-li">
+                    <p class="list-title-p">钱包</p>
+                    <i class="spr icon-more"></i>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="mask" style="display: none;"></div>
+    <!-- 性别弹窗 -->
+    <div class="sex-pop">
+        <button class="sex-pop-male">男</button>
+        <button class="sex-pop-female">女</button>
+        <button class="sex-pop-btn">取消</button>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        // 上传图片 https://blog.csdn.net/scrat_kong/article/details/79230329
+        function uploadImg(input,img){
+            var input = document.getElementById(input);
+            var img = document.getElementById(img);
+            var reader = new FileReader();//创建fileReader实例
+            reader.readAsDataURL(input.files[0]);//发起异步请求
+            reader.onload = function(){
+                //读取完成后，数据保存在对象的result属性中
+                img.src = this.result;
+            }
+        }
+        $('.upload-input').change(function(){
+            uploadImg('upload-input', 'user-img');
+        })
+
+        $('.info-ul .info-li').click(function(){
+            var $index = $(this).index();
+            switch($index){
+                case 1:
+                    location.href = 'true_name';break;
+                case 2:
+                    location.href = 'phone_edit';break;
+                case 3:
+                    location.href = 'my_nickname';break;
+                case 6:
+                    location.href = 'my_integral';break;
+                case 7:
+                    location.href = 'wallet_index';break;
+            }
+        })
+
+        // 性别弹窗
+        $('.sex-li').click(function(){
+            $('.mask').show();
+            $('.sex-pop').animate({'bottom': '0'});
+        })
+        $('.sex-pop-btn').click(function(){
+            $('.mask').hide(0);
+            $('.sex-pop').animate({'bottom': '-100%'});
+        })
+    </script>
+</body>
+</html>

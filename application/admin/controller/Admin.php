@@ -4,6 +4,7 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Request;
 use think\Session;
+use think\Db;
 class Admin extends Controller
 {
     /**
@@ -101,6 +102,9 @@ class Admin extends Controller
                 $id = $request->only(["id"])["id"];
                 $bool = db("Admin")->where("id", $id)->update(["status" => 0]);
                 if ($bool) {
+                    $phone = db("Admin")->field('phone')->where("id", $id)->find();
+                  $user_id = Db::name('user')->field('id')->where('phone_num',$phone['phone'])->find();
+                  Db::name('store')->where('user_id',$user_id['id'])->update(['operation_status'=>-1]);
                     $this->redirect(url("admin/admin/index"));
                 } else {
                     $this->error("修改失败", url("admin/admin/index"));
@@ -110,6 +114,9 @@ class Admin extends Controller
                 $id = $request->only(["id"])["id"];
                 $bool = db("Admin")->where("id", $id)->update(["status" => 1]);
                 if ($bool) {
+                    $phone = db("Admin")->field('phone')->where("id", $id)->find();
+                    $user_id = Db::name('user')->field('id')->where('phone_num',$phone['phone'])->find();
+                    Db::name('store')->where('user_id',$user_id['id'])->update(['operation_status'=>1]);
                     $this->redirect(url("admin/admin/index"));
                 } else {
                     $this->error("修改失败", url("admin/admin/index"));
@@ -127,13 +134,31 @@ class Admin extends Controller
      */
     public function passwd(Request $request){
         $id = $request->only(['id'])['id'];
-        $passwd = md5($request->only(["passwd"])["passwd"]);
-        $bool = db("Admin")->where("id",$id)->update(["passwd"=>$passwd]);
-        if($bool){
-            $this->success("修改成功，请重新登录", url("admin/Login/index"));
+        $second_passwd =$request->only(['second_passwd'])['second_passwd'];
+        $passwd = $request->only(["passwd"])["passwd"];
+        $old_password =$request->only(['old_password'])['old_password'];
+        if(!empty($old_password)){
+            $userInfo = db("admin")->field('passwd')->where("id",$id)->select();
+            if (password_verify($old_password , $userInfo[0]["passwd"])) {
+                if($second_passwd !=$passwd){
+                    $this->error('两次密码不相同');
+                }
+                $passwords =password_hash(trim($passwd),PASSWORD_DEFAULT);
+                $admin_phone =db('admin')->field('phone')->where('id',$id)->find();
+                if(!empty($admin_phone)){
+                    $user_phone =db('user')->where('phone_num',$admin_phone['phone'])->find();
+                    if(!empty($user_phone)){
+                        db('user')->where('phone_num',$admin_phone['phone'])->update(['password'=>$passwords]);
+                    }
+                }
+                $bool = db("Admin")->where("id",$id)->update(["passwd"=>$passwords]);
+                if($bool){
+                    $this->success("修改成功，请重新登录", url("admin/Login/index"));
+                }
+            }else{
+                $this->error('原密码不正确');
+            }
         }
     }
-
-
 
 }

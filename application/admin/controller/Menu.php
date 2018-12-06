@@ -5,6 +5,8 @@ use think\Controller;
 use think\Request;
 class Menu extends Controller
 {
+
+
    protected $status = ["禁用","启用"];
     /**
      * [节点显示]
@@ -23,6 +25,7 @@ class Menu extends Controller
         }
         return view("save",["menu_list"=>$menu_list]);
     }
+
 
     /**
      * [节点添加入库]

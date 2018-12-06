@@ -11,7 +11,6 @@
 	}
 	
 	.layui-form label {
-		width: 17%;
 		text-align: left;
 	}
 	
@@ -37,11 +36,12 @@
 
 	{block name="content"}
 
-	<form class="layui-form" action="{:url('admin/Category/save')}" method="post" enctype="multipart/form-data">
+	<form class="layui-form" action="{:url('admin/Category/updata')}" method="post" enctype="multipart/form-data">
+		{volist name="category" id="val"}
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品分类名称</label>
 			<div class="layui-input-block">
-				<input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="name" value="{$val.name}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -54,18 +54,16 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">父级分类</label>
 			<div class="layui-input-block">
-				{if !empty($goods_list)}
 				<select name="pid" id="admin_role" class="role_list">
 					<option value="0">顶级</option>
-					{volist name="goods_list" id="value"}
+					{volist name="goods_lists" id="value"}
+					{if $value.id == $val.pid}
+					<option value="{$value.id}" selected="">{$value.name}</option>
+					{else}
 					<option value="{$value.id}">{$value.name}</option>
+					{/if}
 					{/volist}
 				</select><br/>
-				{else /}
-				<select name="pid" class="role_list">
-					<option value="0">顶级</option>
-				</select><br/>
-				{/if}
 			</select>
 			</div>
 		</div>
@@ -73,7 +71,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label"><span>*</span>排序</label>
 			<div class="layui-input-block">
-				<input type="number" name="sort_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="number" name="sort_number" value="{$val.sort_number}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 
@@ -102,11 +100,13 @@
 
 		<div class="layui-form-item">
 		<div class="layui-input-block">
+			<input type="hidden" name="id" value="{$val.id}">
 			<button class="layui-btn" type="submit" id="submits">保存</button>
 			<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
 		</div>
 	</div>
 	</form>
+	{/volist}
 
 	{/block}
 
