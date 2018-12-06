@@ -270,7 +270,7 @@ Route::group("admin",[
     "goods_del"=>"admin/Goods/del",
     "images_del"=>"admin/Goods/images",
     "goods_status"=>"admin/Goods/status",
-    "goods_batches"=>"admin/Goods/batches",
+    "goods_batches"=>"admin/Goods/batches",                                     //批量删除
     "goods_pay"=>"admin/Goods/pay",                                                  //商品付费详情
     "affirm_pay"=>"admin/Goods/affirm",                                                 //商品确认付费
 	"goods_look"=>"admin/Goods/look",                                                //商品查看详情
@@ -294,6 +294,7 @@ Route::group("admin",[
     "serve_edit"=>"admin/Serve/edit",
     "serve_updata"=>"admin/Serve/updata",
     "serve_del"=>"admin/Serve/del",
+    "serve_batches"=>"admin/Serve/batches",                                     //服务商品批量删除
 
 
 

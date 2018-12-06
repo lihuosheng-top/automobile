@@ -9,6 +9,7 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Request;
 use think\Session;
+use app\admin\model\ServeGoods;
 
 class Serve extends Controller{
 
@@ -180,6 +181,27 @@ class Serve extends Controller{
             $this->error("删除失败",url("admin/Serve/index"));
         }
 
+    }
+
+
+
+    /**
+     * [服务商品批量删除]
+     * 陈绪
+     */
+    public function batches(Request $request){
+        if($request->isPost()) {
+            $id = $request->only(["ids"])["ids"];
+            foreach ($id as $value) {
+                $bool = ServeGoods::destroy($value);
+            }
+            if ($bool) {
+                return ajax_success("删除成功");
+            } else {
+                return ajax_error("删除失败");
+            }
+
+        }
     }
 
 }
