@@ -1,97 +1,102 @@
-{extend name="layout"}
-{block name="css"}
+{extend name="layout"} {block name="css"}
 
 <style type="text/css">
-	body {
-		background: #fff;
-	}
-	
-	label {
-		text-align: left !important;
-	}
-	
-	.layui-form-item {
-		width: 100%;
-		margin-bottom: 0px;
-		margin-top: 0px;
-	}
-	
-	.layui-form-label {
-		width: 26% !important;
-	}
-	
-	.layui-input-inline {
-		width: 70% !important;
-	}
-	.layui-form-item{
-		max-width: 100% !important;
-	}
-	#page {
-		width: 93%;
-		height: 50px;
-		line-height: 50px;
-		border: solid 1px #E2E2E2;
-		padding-left: 50px;
-		background: #FDFDFE;
-	}
-	
-	select {
-		font-size: 15px;
-	}
-	
-	button {
-		width: 60px;
-		height: 40px;
-		border-radius: 3px;
-	}
-	/*弹窗*/
-		
-	.tanchuang {
-		width: 100%;
-		min-height: 800px;
-		background: RGBA(0, 0, 0, 0.3);
-		position: fixed;
-		z-index: 9999;
-	}
-	
-	.tanchuang-content {
-		width: 400px;
-		height: 300px;
-		background: #fff;
-		z-index: 10000;
-		position: fixed;
-		top: 25%;
-		left: 25%;
-	}
-	
-	.close {
-		width: 30px;
-	}
-	
-	.clear {
-		clear: both;
-	}
-	
-	.title-a {
-		background: RGB(247, 247, 247);
-	}
-	
-	.content-title {
-		padding-top: 10px;
-		padding-left: 20px;
-		float: left;
-		width: 50%;
-		height: 40px;
-	}
-	.noshow{
-		display: none;
-	}
-	.dom form div{
-		margin-bottom:20px; ;
-	}
-	.buts button{
-		width: 100px;
-	}
+    body {
+        background: #fff;
+    }
+    
+    label {
+        text-align: left !important;
+    }
+    
+    .layui-form-item {
+        width: 100%;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+    
+    .layui-form-label {
+        width: 26% !important;
+    }
+    
+    .layui-input-inline {
+        width: 70% !important;
+    }
+    
+    .layui-form-item {
+        max-width: 100% !important;
+    }
+    
+    #page {
+        width: 93%;
+        height: 50px;
+        line-height: 50px;
+        border: solid 1px #E2E2E2;
+        padding-left: 50px;
+        background: #FDFDFE;
+    }
+    
+    select {
+        font-size: 15px;
+    }
+    
+    button {
+        width: 60px;
+        height: 40px;
+        border-radius: 3px;
+    }
+    /*弹窗*/
+    
+    .tanchuang {
+        width: 100%;
+        min-height: 800px;
+        background: RGBA(0, 0, 0, 0.3);
+        position: fixed;
+        z-index: 9999;
+    }
+    
+    .tanchuang-content {
+        width: 400px;
+        height: 300px;
+        background: #fff;
+        z-index: 10000;
+        position: fixed;
+        top: 25%;
+        left: 25%;
+    }
+    
+    .close {
+        width: 30px;
+    }
+    
+    .clear {
+        clear: both;
+    }
+    
+    .title-a {
+        background: RGB(247, 247, 247);
+    }
+    
+    .content-title {
+        padding-top: 10px;
+        padding-left: 20px;
+        float: left;
+        width: 50%;
+        height: 40px;
+    }
+    
+    .noshow {
+        display: none;
+    }
+    
+    .dom form div {
+        margin-bottom: 20px;
+        ;
+    }
+    
+    .buts button {
+        width: 100px;
+    }
 </style>
 
 {/block}
@@ -267,53 +272,54 @@
 				<div id="page">
 					<div class="opation" style="width: 200px; float: left;">
 						<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
+
 							<option check="" value="0">请选择</option>
 							<option value="1">批量删除</option>
 							<option value="2">批量上架</option>
 							
 						</select>
-					</div>
-					<div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
-						<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
+                </div>
+                <div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
+                    <button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
 						</button>
-					</div>
-				
-				{$goods->render()}
-				</div>
-		</div>
-	
+                </div>
 
-	</div>
+                {$goods->render()}
+            </div>
+        </div>
 
-	</div>
-	{/block}
 
-	<!--_footer 作为公共模版分离出去-->
-	{include file="template/_footer" /}
-	<!--/_footer 作为公共模版分离出去-->
+    </div>
 
-	<!--请在下方写此页面业务相关的脚本-->
-	{block name="bottom"}
-	<script type="text/javascript">
-		layui.config({
-			base: "js/"
-		}).use(['form', 'layer', 'jquery', 'laypage'], function() {
-			var form = layui.form(),
-				layer = parent.layer === undefined ? layui.layer : parent.layer,
-				laypage = layui.laypage,
-				$ = layui.jquery;
-			var vals = $("input").data("id");
-			//是否上架展示
-            form.on('switch(isShow)', function(data){
-                if($(this).val()==0){
+    </div>
+    {/block}
+
+    <!--_footer 作为公共模版分离出去-->
+    {include file="template/_footer" /}
+    <!--/_footer 作为公共模版分离出去-->
+
+    <!--请在下方写此页面业务相关的脚本-->
+    {block name="bottom"}
+    <script type="text/javascript">
+        layui.config({
+            base: "js/"
+        }).use(['form', 'layer', 'jquery', 'laypage'], function() {
+            var form = layui.form(),
+                layer = parent.layer === undefined ? layui.layer : parent.layer,
+                laypage = layui.laypage,
+                $ = layui.jquery;
+            var vals = $("input").data("id");
+            //是否上架展示
+            form.on('switch(isShow)', function(data) {
+                if ($(this).val() == 0) {
                     $(this).val(1);
-                }
-                else{
+                } else {
                     $(this).val(0);
                 }
-                var vals=data.value;
-                var id=$(this).data("id");
+                var vals = data.value;
+                var id = $(this).data("id");
                 var status = $(this).val();
+
                 var price=$(this).data("title");
 			    var shop=$(".shop_name")[0].innerHTML;
 			    var putaway_status=$(this).data("action");
@@ -365,236 +371,230 @@
 												}
 											});
                                 }
-                                else{
-                                	layer.confirm('付费商品需付费后才能上架！', {
-											  btn: ['确定付费','取消付费！'] //按钮
-											}, function(){
-											 layer.close(layer.index);
-                                             $(".tanchuang").removeClass("noshow");
- 											 $("#shop").val(shop);
-											 $("#price").val(price);
-											 $("#num").val("1");
-											 $("#good-id").val(id);
-											 $("#year").val(present);
-											 
-											});
 
-                                	
-                                }
-									
-								}
-								
-								
-							},
-							error:function (data) {
-								console.log("错误")
-							}
-						});
-				
-				}
-				// 当下架时
-				else{
-					$.ajax({
-								type: "POST",
-								url: "{:url('admin/Goods/status')}",
-								data: {"id":id,"status":status},
-								success: function(data){
-									console.log(data)
-								},
-								error:function (data) {
-									console.log(data)
-								}
-							});
-				}
-                
+                            }
+
+
+                        },
+                        error: function(data) {
+                            console.log("错误")
+                        }
+                    });
+
+                }
+                // 当下架时
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: "{:url('admin/Goods/status')}",
+                        data: {
+                            "id": id,
+                            "status": status
+                        },
+                        success: function(data) {
+                            console.log(data)
+                        },
+                        error: function(data) {
+                            console.log(data)
+                        }
+                    });
+                }
+
 
 
             });
-			//全选
-			form.on('checkbox(allChoose)', function(data) {
-				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
-				child.each(function(index, item) {
-					item.checked = data.elem.checked;
-				});
-				form.render('checkbox');
-			});
+            //全选
+            form.on('checkbox(allChoose)', function(data) {
+                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
+                child.each(function(index, item) {
+                    item.checked = data.elem.checked;
+                });
+                form.render('checkbox');
+            });
 
-			//通过判断文章是否全部选中来确定全选按钮是否选中
-			form.on("checkbox(choose)", function(data) {
-				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
-				var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
-				if(childChecked.length == child.length) {
-					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
-				} else {
-					$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
-				}
-				form.render('checkbox');
-			})
+            //通过判断文章是否全部选中来确定全选按钮是否选中
+            form.on("checkbox(choose)", function(data) {
+                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
+                var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
+                if (childChecked.length == child.length) {
+                    $(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
+                } else {
+                    $(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
+                }
+                form.render('checkbox');
+            })
 
-				//点击操作确认按钮
-						var data_id = [];
-						
-						var years=[];
-						$("#opration_btu").click(function() {
-							var opration_val=$(".opation select option:selected").val();
-							if(opration_val==0){
-								layer.alert('请选择操作', {
-									skin: 'layui-layer-molv' //样式类名
-									,closeBtn: 0
-									});
-							}
-							else if(opration_val==1){
-							layer.confirm('你确认要删除吗？', {
-								  btn: ['确认','取消'] //按钮
-								}, function(){
-									var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
-										for (var i = 0; i < child.length; i++) {
-											data_id.push($(child[i])[0].dataset.id);
-										}
-									$.ajax({
-										type: "POST",
-										url: "{:url('admin/User/dels')}",
-										data: {
-											"id": data_id,
-										},
-										success: function(data) {
-											console.log("成功");
-											console.log(data);
-											var data=$.parseJSON(data);
-											layer.alert(data.info, {
-												skin: 'layui-layer-molv' //样式类名
-												,closeBtn: 0
-												});
-											location.reload();
-											data_id.splice(0, data_id.length);
-										},
-										error: function(data) {
-											var data=$.parseJSON(data);
-											layer.alert(data.info, {
-												skin: 'layui-layer-molv' //样式类名
-												,closeBtn: 0
-												});
-										console.log(data);
-											console.log("错误");
-											data_id.splice(0, data_id.length);
-										}
-									});
-								});
-									
-								
-							}
-							else if(opration_val==2){
-								var nmdata_id=[];
-						        var mdata_id=[];
-								var all_price=0;
-								var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
-										for (var i = 0; i < child.length; i++) {
-											data_id.push($(child[i])[0].dataset.id);
-											if($(child[i])[0].dataset.action==0){
-												mdata_id.push($(child[i])[0].dataset.id);
-												all_price+=parseFloat($(child[i])[0].dataset.title);
-											}
-											else{
-												nmdata_id.push($(child[i])[0].dataset.id);
-											}
-											// 年限转化函数
-											var myDate = new Date();
-											var year = myDate.getFullYear()+parseInt($(child[i])[0].dataset.text);
-											var month = myDate.getMonth() + 1;
-											var date = myDate.getDate();
-											var present = year + '-' + month + '-' + date;
-											years.push(present);
-											
-											var shop=$(child[i])[0].dataset.value;
-										}
-										$.ajax({
-												type: "POST",
-												url: "{:url('admin/Goods/role_name')}",
-												data: {"goods_id":data_id},
-												success: function(data){	
-													var data=$.parseJSON( data ); 
-													var role_id=data.data.admin[0].role_id;
-													// 当角色为平台时
-													if(role_id==2){
-														$.ajax({
-																	type: "POST",
-																	url: "{:url('admin/Goods/status')}",
-																	  data: {"id":data_id,"status":1},
-																	success: function(data){
-																		console.log(data);
-																	},
-																	error:function (data) {
-																		console.log(data);
-																	}
-																});
-													}
-													// 当角色为服务商时
-														else if(role_id==5){
-															if(mdata_id.length>0){
-																$.ajax({
-																	type: "POST",
-																	url: "{:url('admin/Goods/status')}",
-																	  data: {"id":nmdata_id,"status":1},
-																	success: function(data){
-																		console.log(data);
-																	},
-																	error:function (data) {
-																		console.log(data);
-																	}
-																});
-																layer.confirm('付费商品需付费后才能上架！', {
-																  btn: ['确定付费','取消付费！'] //按钮
-																}, function(){
-																 layer.close(layer.index);
-					                                             $(".tanchuang").removeClass("noshow");
-					 											 $("#shop").val(shop);
-																 $("#price").val(all_price);
-																 $("#num").val(mdata_id.length);
-																 $("#good-id").val(mdata_id);
-					
-																});
-																
-															}
-															
-									
+            //点击操作确认按钮
+            var data_id = [];
 
-								}
-								
-												},
-												error:function (data) {
-													console.log("错误")
-												}
-											});
-														
-							}
-							
-							
-			
-						});
-						$(".close-btus").on('click', function() {
-								$(".tanchuang").addClass("noshow");
-							});
-						  $(".close").on('click', function() {
-								$(".tanchuang").addClass("noshow");
-							});
-							$(".btu-sumit").click(function() {
-								$(".tanchuang").addClass("noshow");
-							});
-// 			$(".up-button").click(function() {
-// 				layer.confirm('付费商品需付费后才能上架！', {
-// 					btn: ['确定付费', '取消付费！'] //按钮
-// 				}, function() {
-//                      window.location.href = "{:url('admin/Goods/pay')}";
-// 					 layer.close(layer.index);
-// 				}, function() {
-// 
-// 				});
-// 			});
+            var years = [];
+            $("#opration_btu").click(function() {
+                var opration_val = $(".opation select option:selected").val();
+                if (opration_val == 0) {
+                    layer.alert('请选择操作', {
+                        skin: 'layui-layer-molv' //样式类名
+                            ,
+                        closeBtn: 0
+                    });
+                } else if (opration_val == 1) {
+                    layer.confirm('你确认要删除吗？', {
+                        btn: ['确认', '取消'] //按钮
+                    }, function(index) {
+                    	layer.close(index);
+                        var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+                        for (var i = 0; i < child.length; i++) {
+                            data_id.push($(child[i])[0].dataset.id);
+                        }
+                        $.ajax({
+                            type: "POST",
+                            url: "goods_batches",
+                            data: {
+                                "ids": data_id,
+                            },
+                            success: function(data) {
+                                console.log("成功");
+                                console.log(data);
+                                var data = $.parseJSON(data);
+                                layer.alert(data.info, {
+                                    skin: 'layui-layer-molv' //样式类名
+                                        ,
+                                    closeBtn: 0
+                                });
+                                location.reload();
+                                data_id.splice(0, data_id.length);
+                            },
+                            error: function(data) {
+                                var data = $.parseJSON(data);
+                                layer.alert(data.info, {
+                                    skin: 'layui-layer-molv' //样式类名
+                                        ,
+                                    closeBtn: 0
+                                });
+                                data_id.splice(0, data_id.length);
+                            }
+                        });
+                    });
 
-		})
-	</script>
 
-	{/block}
+                } else if (opration_val == 2) {
+                    var nmdata_id = [];
+                    var mdata_id = [];
+                    var all_price = 0;
+                    var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+                    for (var i = 0; i < child.length; i++) {
+                        data_id.push($(child[i])[0].dataset.id);
+                        if ($(child[i])[0].dataset.action == 0) {
+                            mdata_id.push($(child[i])[0].dataset.id);
+                            all_price += parseFloat($(child[i])[0].dataset.title);
+                        } else {
+                            nmdata_id.push($(child[i])[0].dataset.id);
+                        }
+                        // 年限转化函数
+                        var myDate = new Date();
+                        var year = myDate.getFullYear() + parseInt($(child[i])[0].dataset.text);
+                        var month = myDate.getMonth() + 1;
+                        var date = myDate.getDate();
+                        var present = year + '-' + month + '-' + date;
+                        years.push(present);
+
+                        var shop = $(child[i])[0].dataset.value;
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: "{:url('admin/Goods/role_name')}",
+                        data: {
+                            "goods_id": data_id
+                        },
+                        success: function(data) {
+                            var data = $.parseJSON(data);
+                            var role_id = data.data.admin[0].role_id;
+                            // 当角色为平台时
+                            if (role_id == 2) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{:url('admin/Goods/status')}",
+                                    data: {
+                                        "id": data_id,
+                                        "status": 1
+                                    },
+                                    success: function(data) {
+                                        console.log(data);
+                                    },
+                                    error: function(data) {
+                                        console.log(data);
+                                    }
+                                });
+                            }
+                            // 当角色为服务商时
+                            else if (role_id == 5) {
+                                if (mdata_id.length > 0) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "{:url('admin/Goods/status')}",
+                                        data: {
+                                            "id": nmdata_id,
+                                            "status": 1
+                                        },
+                                        success: function(data) {
+                                            console.log(data);
+                                        },
+                                        error: function(data) {
+                                            console.log(data);
+                                        }
+                                    });
+                                    layer.confirm('付费商品需付费后才能上架！', {
+                                        btn: ['确定付费', '取消付费！'] //按钮
+                                    }, function() {
+                                        layer.close(layer.index);
+                                        $(".tanchuang").removeClass("noshow");
+                                        $("#shop").val(shop);
+                                        $("#price").val(all_price);
+                                        $("#num").val(mdata_id.length);
+                                        $("#good-id").val(mdata_id);
+
+                                    });
+
+                                }
+
+
+
+                            }
+
+                        },
+                        error: function(data) {
+                            console.log("错误")
+                        }
+                    });
+
+                }
+
+
+
+            });
+            $(".close-btus").on('click', function() {
+                $(".tanchuang").addClass("noshow");
+            });
+            $(".close").on('click', function() {
+                $(".tanchuang").addClass("noshow");
+            });
+            $(".btu-sumit").click(function() {
+                $(".tanchuang").addClass("noshow");
+            });
+            // 			$(".up-button").click(function() {
+            // 				layer.confirm('付费商品需付费后才能上架！', {
+            // 					btn: ['确定付费', '取消付费！'] //按钮
+            // 				}, function() {
+            //                      window.location.href = "{:url('admin/Goods/pay')}";
+            // 					 layer.close(layer.index);
+            // 				}, function() {
+            // 
+            // 				});
+            // 			});
+
+        })
+    </script>
+
+    {/block}
 
 </body>
 

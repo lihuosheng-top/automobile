@@ -114,8 +114,9 @@
                         <td>{$value.end_time|date="Y-m-d",###}</td>
                         <td class="td-status">
                             {if $value.status == 1}
-                            <span class="label label-success radius">通过</span> {else}
-                            <span class="label label-success radius">拒绝</span> {/if}
+                            <span class="label label-success radius">通过</span> {/if} {if $value.status == 0}
+                            <span class="label label-success radius">拒绝</span> {/if} {if $value.status == 2}
+                            <span class="label label-success radius">待审核</span> {/if}
                         </td>
 
                         <td>

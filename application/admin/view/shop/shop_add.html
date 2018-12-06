@@ -1,9 +1,6 @@
 {extend name="layout"} {block name="css"}
 <style type="text/css">
-    .layui-form label {
-        width: 20%;
-        text-align: left;
-    }
+  
     
     .layui-form-label span {
         color: red;
@@ -207,19 +204,23 @@
                 <input type="text" name="department" value="" placeholder="" class="layui-input" disabled="disabled">
             </div>
         </div>
-        <div class="layui-form-item" style="width: 570px !important;">
+        <div class="layui-form-item" style="width: 1024px !important; max-width: 1024px;">
             <label class="layui-form-label">验证实体店面：</label>
+            <div class="layui-input-block">
             <div class="layui-input-inline">
                 <img src="__UPLOADS__/{$vo.verifying_physical_storefront_one}" width="100%" style="margin-bottom: 10px;">
             </div>
+            </div>
         </div>
-        <div class="layui-form-item" style="width: 570px !important;">
+        <div class="layui-form-item" style="width: 1024px !important; max-width: 1024px;">
             <label class="layui-form-label">店内照片：</label>
+             <div class="layui-input-block">
             {volist name="$imgs"  id="lists"}
-            <div class="layui-input-inline">
-                <img src="__UPLOADS__/{$lists}" width="100%" style="margin-bottom: 10px;">
+            <div class="layui-input-inline" style="height: 190px;;">
+                <img src="__UPLOADS__/{$lists}" width="100%" height="100%" style="margin-bottom: 10px;">
             </div>
             {/volist}
+             </div>
         </div>
 
         <p class="title">身份认证</p>
