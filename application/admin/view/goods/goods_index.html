@@ -202,7 +202,7 @@
 						<td>{$value.id}</td>
 						{volist name="store" id="shop"}
 						{if $value.store_id == $shop.store_id}
-						<td>{$shop.store_name}</td>
+						<td  class="shop_name">{$shop.store_name}</td>
 						{/if}
 						{/volist}
 						<td style="width: 50px; height: 50px;"><img src="__UPLOADS__/{$value.goods_show_images}" /></td>
@@ -225,11 +225,11 @@
 							{if $value.goods_status == 0}
 							{volist name="year" id="val"}
 							{if $value.goods_year_id == $val.id}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}" data-text="{$val.year}" data-action="{$value.putaway_status}" data-value="店铺还没有添加" data-title="{$val.money}"  />
+							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}" data-text="{$val.year}" data-action="{$value.putaway_status}" data-value="{$shop.store_name}" data-title="{$val.money}"  />
 							{/if}
 							{/volist}
 							{else /}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}" data-action="{$value.putaway_status}" data-value="店铺还没有添加" data-title="1" />
+							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}" data-action="{$value.putaway_status}" data-value="{$shop.store_name}" data-title="1" />
 							{/if}
 						</td>
 						<td>
@@ -315,9 +315,8 @@
                 var id=$(this).data("id");
                 var status = $(this).val();
                 var price=$(this).data("title");
-			    var shop=$(this).data("value");
+			    var shop=$(".shop_name")[0].innerHTML;
 			    var putaway_status=$(this).data("action");
-			    console.log(putaway_status);
 								var years=$(this).data("text");
 								// 年限转化函数
 							
