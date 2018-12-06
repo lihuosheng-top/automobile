@@ -41,7 +41,7 @@ html, body{
 }
 .server-list{
     height: 6rem;
-    padding: .24rem .7rem;
+    padding: .24rem .4rem;
     border-bottom: 1px solid #eee;
 }
 .server-list .server-txt{
@@ -95,7 +95,7 @@ html, body{
 }
 .server-list .server-ul li{
     float: left;
-    width: 1.5rem;
+    width: 1.65rem;
     height: 1.2rem;
     margin-bottom: .3rem;
 }

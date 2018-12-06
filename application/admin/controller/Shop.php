@@ -156,12 +156,23 @@ class Shop extends Controller{
             $id =$_POST['id'];
             if(is_array($id)){
                 $where ='store_id in('.implode(',',$id).')';
+                foreach ($id as $ks=>$vs){
+                    $phone_data =Db::name("store")->field('phone_num')->where('store_id',$vs)->find();
+                    $phone[] =$phone_data['phone_num'];
+                }
+                if(!empty($phone)){
+                    $phones ='phone in('.implode(',',$phone).')';
+                }
             }else{
                 $where ='store_id='.$id;
+                $phone_data =Db::name("store")->field('phone_num')->where('store_id',$id)->find();
+                $phones ='phone='.$phone_data['phone_num'];
+
             }
             $list =  Db::name('store')->where($where)->delete();
             if($list!==false)
             {
+                Db::name('admin')->where($phones)->delete();
                 return ajax_success('成功删除!',['status'=>1]);
             }else{
                 return ajax_error('删除失败',['status'=>0]);
@@ -218,7 +229,7 @@ class Shop extends Controller{
         ]);
         $store_data->appends($_GET);
         $this->assign('listpage', $store_data->render());
-        return view("shop_index",['store_data'=>$store_datas]);
+//        return view("shop_index",['store_data'=>$store_datas]);
     }
 
 
