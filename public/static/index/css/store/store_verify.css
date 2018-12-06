@@ -272,5 +272,18 @@ html,body{
     border: 0;
     outline: 0;
 }
-
 /* 实体店面弹窗 end */
+.close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background-color: rgba(220, 220, 220, .6);
+    color: #000;
+    font-size: .6rem;
+    text-align: center;
+    line-height: .5rem;
+    transform: translate(35%, -35%);
+}

@@ -31,6 +31,10 @@ var app = new Vue({
         idCardPopFlag: false,
         licenseFlag: false,
         storeFrontFlag: false,
+        backInfo: '',
+    },
+    created(){
+        this.getData();
     },
     methods: {
         // 上传身份证国徽面
@@ -153,6 +157,7 @@ var app = new Vue({
                 console.log($images.storeFront.innerImgsFile);
                 this.$http.post('store_update', formData)
                 .then(res => {
+                    this.backInfo = eval('('+ res.data +')').data;
                     console.log(eval('('+ res.data +')'));
                 }).catch(err => {
                     console.log(err);
@@ -166,6 +171,18 @@ var app = new Vue({
                     time: 1
                 })
             }
-        }
+        },
+        // 获取数据
+        getData(){
+            this.$http.post('return_store_information')
+            .then(res => {
+                if(eval('('+ res.data +')').data.status !== 0){
+                    this.backInfo = eval('('+ res.data +')').data;
+                }
+                console.log(eval('('+ res.data +')').data);
+            }).catch( err => {
+                console.log(err);
+            })
+        },
     }
 })

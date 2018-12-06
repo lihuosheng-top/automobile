@@ -13,7 +13,7 @@
 <body>
     <div v-cloak class="wrapper" id="app">
         <header class="header">
-            <a href="store_league" class="spr icon-back"></a>
+            <a href="store_league" @click.prevent="turnBack" class="spr icon-back"></a>
             <h3 class="header-title">身份验证</h3>
         </header>
         <div class="verify-box">
@@ -45,11 +45,11 @@
             </header>
             <p class="id-card-tips">请上传您的二代身份证</p>
             <div class="id-card-emblem">
-                <img :src="images.emblem">
+                <img :src="backInfo === ''?images.emblem:`uploads/`+backInfo.store_identity_card">
                 <input type="file" id="emblem-input" ref="avatarInput" @change="emblem($event)">
             </div>
             <div class="id-card-portrait">
-                <img :src="images.portrait">
+                <img :src="backInfo === ''?images.portrait:`uploads/`+backInfo.store_reverse_images">
                 <input type="file" id="portrait-input" ref="avatarInput2" @change="portrait($event)">
             </div>
             <button class="id-card-button" @click="idCardPop">确定</button>
@@ -62,12 +62,12 @@
             </header>
             <p class="business-license-tips">请上传您的营业执照</p>
             <div class="business-license">
-                <img :src="images.businessLicense">
+                <img :src="backInfo === ''?images.businessLicense:`uploads/`+backInfo.store_do_bussiness_positive_img">
                 <input type="file" id="business-license-input" @change="businessLicenseFn($event)">
             </div>
             <p class="license-tips">请上传您的许可证</p>
             <div class="license">
-                <img :src="images.license">
+                <img :src="backInfo === ''?images.license:`uploads/`+backInfo.store_do_bussiness_side_img">
                 <input type="file" id="license-input" @change="licenseFn($event)">
             </div>
             <button class="business-license-button" @click="businessLicensePop">确定</button>
@@ -80,13 +80,15 @@
             </header>
             <p class="store-front-tips">请上传您的门脸图片</p>
             <div class="store-front-face">
-                <img :src="images.storeFront.faceImg">
+                <img :src="backInfo === ''?images.storeFront.faceImg:`uploads/`+backInfo.verifying_physical_storefront_one">
                 <input type="file" id="face-input" @change="storeFrontFace($event)">
             </div>
             <p class="store-inner-tip1">请上传您的店内图片</p>
             <p class="store-inner-tip2">(最多上传20张店内图片)</p>
             <div>
-                <div class="store-inner-imgbox" v-show="images.storeFront.hasInnerImg" v-for="innerImg in images.storeFront.innerImgs">
+                <div class="store-inner-imgbox" v-show="images.storeFront.hasInnerImg"
+                v-for="innerImg in images.storeFront.innerImgs">
+                    <i class="close">×</i>
                     <img :src="innerImg.src">
                 </div>
             </div>
