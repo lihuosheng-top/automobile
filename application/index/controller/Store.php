@@ -171,6 +171,7 @@ class Store extends Controller{
     public function save(Request $request){
         if($request->isPost()){
             $user_id = Session::get("user");
+            $old_phone_num =Db::name("user")->field('phone_num')->where('id',$user_id)->find();
             $input_data = $_POST;
             $store_name =trim($input_data['store_name']);
             $real_name =trim($input_data['real_name']);
@@ -200,6 +201,10 @@ class Store extends Controller{
                 }
                 $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
                 db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
+                $isset_admin =Db::name('admin')->field('id')->where('phone',$old_phone_num)->find();//判断是否提交过申请
+                if(!empty($isset_admin)){
+                    db("admin")->where('id',$isset_admin['id'])->update(['name'=>$real_name,'phone'=>$phone_num,'sex'=>$sex]);
+                }
                 $data =[
                     'store_name'=>$store_name,
                     'store_detailed_address'=>$store_detailed_address,//店铺具体地址
@@ -266,12 +271,14 @@ class Store extends Controller{
      */
     public function update(Request $request){
         if($request->isPost()){
+            $user_id = Session::get("user");
             //身份证正面
             $store_identity_card_file = $request->file('store_identity_card');
             if(!empty($store_identity_card_file)){
                 $info = $store_identity_card_file->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $store_identity_card = str_replace("\\","/",$info->getSaveName());
                 $data['store_identity_card'] =$store_identity_card;
+                $del_img_url_1 =Db::name("store")->where('user_id',$user_id)->field('store_identity_card')->find();
             }
             //身份证反面
             $store_reverse_images_file = $request->file('store_reverse_images');
@@ -279,6 +286,7 @@ class Store extends Controller{
                 $info = $store_reverse_images_file->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $store_reverse_images = str_replace("\\","/",$info->getSaveName());
                 $data['store_reverse_images'] =$store_reverse_images;
+                $del_img_url_2= Db::name("store")->where('user_id',$user_id)->field('store_reverse_images')->find();
             }
             //营业执照正面
             $store_do_bussiness_positive_img_file = $request->file('store_do_bussiness_positive_img');
@@ -286,6 +294,7 @@ class Store extends Controller{
                 $info = $store_do_bussiness_positive_img_file->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $store_do_bussiness_positive_img = str_replace("\\","/",$info->getSaveName());
                 $data['store_do_bussiness_positive_img'] =$store_do_bussiness_positive_img;
+                $del_img_url_3= Db::name("store")->where('user_id',$user_id)->field('store_do_bussiness_positive_img')->find();
             }
             //营业执照反面
             $store_do_bussiness_side_img_file = $request->file('store_do_bussiness_side_img');
@@ -293,6 +302,7 @@ class Store extends Controller{
                 $info = $store_do_bussiness_side_img_file->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $store_do_bussiness_side_img= str_replace("\\","/",$info->getSaveName());
                 $data['store_do_bussiness_side_img'] =$store_do_bussiness_side_img;
+                $del_img_url_4= Db::name("store")->where('user_id',$user_id)->field('store_do_bussiness_side_img')->find();
             }
             //验证实体店面第一张
             $verifying_physical_storefront_one_file = $request->file('verifying_physical_storefront_one');
@@ -300,6 +310,7 @@ class Store extends Controller{
                 $info = $verifying_physical_storefront_one_file->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $verifying_physical_storefront_one = str_replace("\\","/",$info->getSaveName());
                 $data['verifying_physical_storefront_one'] =$verifying_physical_storefront_one;
+                $del_img_url_5= Db::name("store")->where('user_id',$user_id)->field('verifying_physical_storefront_one')->find();
             }
             //验证实体店面第二张
             $verifying_physical_storefront_two = [];
@@ -310,6 +321,7 @@ class Store extends Controller{
                     $verifying_physical_storefront_two[] = str_replace("\\", "/", $info->getSaveName());
                 }
                     $data['verifying_physical_storefront_two'] =implode(',',$verifying_physical_storefront_two);
+                $del_img_url_6= Db::name("store")->where('user_id',$user_id)->field('verifying_physical_storefront_two')->find();
             }
             $user_id = Session::get("user");
             $time=date("Y-m-d",time());
@@ -319,12 +331,35 @@ class Store extends Controller{
             $store_pay_num =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id;
             $data['store_pay_num'] =$store_pay_num;//订单号
             $data['operation_status'] =0;  //当前可操作（0待审核，1通过，-1拒绝）
+            $data['store_is_button'] =1;  //（1全部信息填写完毕提交审核，-1未填写完全部信息没有权利提交到后台审核）
             $bool =Db::name("store")->where('user_id',$user_id)->update($data);
             if($bool){
                 //删除图片
-//                if($image_url['store_logo_images'] != null){
-//                    unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$image_url['store_logo_images']);
-//                }
+                if($del_img_url_1['store_identity_card'] != null){
+                    unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_img_url_1['store_identity_card']);
+                }
+                if($del_img_url_2['store_reverse_images'] != null){
+                    unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_img_url_2['store_reverse_images']);
+                }
+                if($del_img_url_3['store_do_bussiness_positive_img'] != null){
+                    unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_img_url_3['store_do_bussiness_positive_img']);
+                }
+                if($del_img_url_4['store_do_bussiness_side_img'] != null){
+                    unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_img_url_4['store_do_bussiness_side_img']);
+                }
+                if($del_img_url_5['verifying_physical_storefront_one'] != null){
+                    unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_img_url_5['verifying_physical_storefront_one']);
+                }
+                if($del_img_url_6["verifying_physical_storefront_two"] != null){
+                    if (strpos($del_img_url_6["verifying_physical_storefront_two"], ',')){
+                        $all_img_url =explode(',',$del_img_url_6["verifying_physical_storefront_two"]);
+                        foreach ($all_img_url as $ks=>$vs){
+                            unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$vs);
+                        }
+                    }else{
+                        unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_img_url_6["verifying_physical_storefront_two"]);
+                    }
+                }
                 return ajax_success('更新成功',['store_pay_num'=>$store_pay_num]);
             }else{
                 return ajax_error('更新失败',['status'=>0]);
@@ -359,8 +394,6 @@ class Store extends Controller{
             }
         }
     }
-
-
 
 
 

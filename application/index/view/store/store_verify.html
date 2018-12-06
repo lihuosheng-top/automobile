@@ -85,8 +85,10 @@
             </div>
             <p class="store-inner-tip1">请上传您的店内图片</p>
             <p class="store-inner-tip2">(最多上传20张店内图片)</p>
-            <div class="store-inner-imgbox" v-show="images.storeFront.hasInnerImg">
-                <img v-for="innerImg in images.storeFront.innerImgs" :src="innerImg.src">
+            <div>
+                <div class="store-inner-imgbox" v-show="images.storeFront.hasInnerImg" v-for="innerImg in images.storeFront.innerImgs">
+                    <img :src="innerImg.src">
+                </div>
             </div>
             <div class="store-front-inner">
                 <img src="__STATIC__/index/image/id6.png">
