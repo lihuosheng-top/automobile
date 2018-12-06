@@ -130,7 +130,10 @@ class Shop extends Controller{
     public function del($id){
         if($id>0){
             $phone =Db::name("store")->field('phone_num')->where('store_id',$id)->find();
-            Db::name("admin")->
+            $datas =Db::name("admin")->where('phone',$phone['phone_num'])->find();
+            if(!empty($datas)){
+                Db::name("admin")->where('phone',$phone['phone_num'])->delete();
+            }
             $bool =Db::name('store')->where('store_id',$id)->delete();
             if($bool){
                 $this->success('删除成功','admin/Shop/index');
