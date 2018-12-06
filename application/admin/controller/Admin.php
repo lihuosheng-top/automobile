@@ -4,6 +4,7 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Request;
 use think\Session;
+use think\Db;
 class Admin extends Controller
 {
     /**
@@ -101,6 +102,9 @@ class Admin extends Controller
                 $id = $request->only(["id"])["id"];
                 $bool = db("Admin")->where("id", $id)->update(["status" => 0]);
                 if ($bool) {
+                    $phone = db("Admin")->field('phone')->where("id", $id)->find();
+                  $user_id = Db::name('user')->field('id')->where('phone_num',$phone['phone'])->find();
+                  Db::name('store')->where('user_id',$user_id)->update(['operation_status'=>-1]);
                     $this->redirect(url("admin/admin/index"));
                 } else {
                     $this->error("修改失败", url("admin/admin/index"));
@@ -110,6 +114,9 @@ class Admin extends Controller
                 $id = $request->only(["id"])["id"];
                 $bool = db("Admin")->where("id", $id)->update(["status" => 1]);
                 if ($bool) {
+                    $phone = db("Admin")->field('phone')->where("id", $id)->find();
+                    $user_id = Db::name('user')->field('id')->where('phone_num',$phone['phone'])->find();
+                    Db::name('store')->where('user_id',$user_id)->update(['operation_status'=>1]);
                     $this->redirect(url("admin/admin/index"));
                 } else {
                     $this->error("修改失败", url("admin/admin/index"));
