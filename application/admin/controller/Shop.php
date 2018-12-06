@@ -34,7 +34,6 @@ class Shop extends Controller{
            $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
            $store_datas[$k]['role_name']=$role_datas['name'];
        }
-
         $all_idents =$store_data ;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
         $listRow = 3;//每页3行记录
@@ -129,7 +128,8 @@ class Shop extends Controller{
      */
     public function del($id){
         if($id>0){
-            $phone =Db::name("store")->field('phone_num')->where('store_id',$id)->find();
+            $user_id =Db::name("store")->field('user_id')->where('store_id',$id)->find();
+            $phone =Db::name("user")->field('phone_num')->where('user_id',$user_id["user_id"])->find();
             $datas =Db::name("admin")->where('phone',$phone['phone_num'])->find();
             if(!empty($datas)){
                 Db::name("admin")->where('phone',$phone['phone_num'])->delete();
@@ -157,12 +157,23 @@ class Shop extends Controller{
             $id =$_POST['id'];
             if(is_array($id)){
                 $where ='store_id in('.implode(',',$id).')';
+                foreach ($id as $ks=>$vs){
+                    $phone_data =Db::name("store")->field('phone_num')->where('store_id',$vs)->find();
+                    $phone[] =$phone_data['phone_num'];
+                }
+                if(!empty($phone)){
+                    $phones ='phone in('.implode(',',$phone).')';
+                }
             }else{
                 $where ='store_id='.$id;
+                $phone_data =Db::name("store")->field('phone_num')->where('store_id',$id)->find();
+                $phones ='phone='.$phone_data['phone_num'];
+
             }
             $list =  Db::name('store')->where($where)->delete();
             if($list!==false)
             {
+                Db::name('admin')->where($phones)->delete();
                 return ajax_success('成功删除!',['status'=>1]);
             }else{
                 return ajax_error('删除失败',['status'=>0]);
@@ -181,15 +192,45 @@ class Shop extends Controller{
         $keywords =input('store_name');
         $keyword =input('store_owner');
         if(!empty($keywords)){
-            $condition  = "`store_name` like '%{$keywords}%' or `store_owner` like '%{$keywords}%' ";
+            $condition  = "`store_name` like '%{$keywords}%' ";
+            $store_data  =Db::name('store')
+                ->where($condition)
+                ->where("store_is_button",1)
+                ->select();
+        }else{
+            $store_data  =Db::name('store')
+                ->where("store_is_button",1)
+                ->select();
         }
-        if(!empty($keyword)){
-            $condition  = "`store_name` like '%{$keyword}%' or `store_owner` like '%{$keyword}%' ";
+//        if(!empty($keyword)){
+//            $conditions  = "`real_name` like '%{$keyword}%'";
+//
+//        }
+        foreach ($store_data as $k=>$v){
+            $store_datas[$k]['store_id'] =$v['store_id'];
+            $store_datas[$k]['store_name'] =$v['store_name'];
+            $store_datas[$k]['store_detailed_address'] =$v['store_detailed_address'];
+            $store_datas[$k]['store_is_pay'] =$v['store_is_pay'];
+            $store_datas[$k]['operation_status'] =$v['operation_status'];
+            $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
+            $store_datas[$k]['real_name']=$user_data['real_name'];
+            $store_datas[$k]['phone_num']=$user_data['phone_num'];
+            $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
+            $store_datas[$k]['role_name']=$role_datas['name'];
         }
-        $store_data  =Db::name('store')->where($condition)->paginate(3 ,false, [
-            'query' => request()->param(),
+        $all_idents =$store_data ;//这里是需要分页的数据
+        $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
+        $listRow = 3;//每页3行记录
+        $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
+        $store_data = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
+            'var_page' => 'page',
+            'path'     => url('admin/Shop/index'),//这里根据需要修改url
+            'query'    =>  [],
+            'fragment' => '',
         ]);
-        return view("shop_index",['store_data'=>$store_data]);
+        $store_data->appends($_GET);
+        $this->assign('listpage', $store_data->render());
+//        return view("shop_index",['store_data'=>$store_datas]);
     }
 
 

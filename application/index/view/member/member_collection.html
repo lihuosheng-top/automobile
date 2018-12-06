@@ -14,6 +14,14 @@
         .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
         .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
         .col{padding: .38rem .25rem; border-bottom: 1px solid #eee; background-color: #fff;}
+        .col{display: flex;}
+        .img-box{width: 2rem; height: 2.2rem;overflow: hidden; margin-right: .2rem;}
+        .img-box img{ width: 100%; height: 100%;}
+        .info-box{line-height: normal; flex: 1; display: flex; flex-direction: column; justify-content: space-evenly;}
+        .info-box .goods-name{font-size: .26rem;}
+        .price-del .price{font-size: .34rem; color: #f00;}
+        .price-del .del-btn{background: transparent; border: 1px solid #999; color: #999; border-radius: .1rem; font-size: .24rem;}
+        .price-del{display: flex; align-items: center;justify-content: space-between;}
     </style>
 </head>
 <body>
@@ -28,7 +36,12 @@
                     <img src="__STATIC__/index/image/02.png">
                 </div>
                 <div class="info-box">
-                    <p></p>
+                    <p class="goods-name txt-hid-two">德国马牌德国马牌德国马牌德国马牌德国马牌</p>
+                    <p class="goods-selling txt-hid-two">卖点卖点卖点卖点卖点卖点</p>
+                    <div class="price-del">
+                        <span class="price">￥199</span>
+                        <button class="del-btn">删除</button>
+                    </div>
                 </div>
             </div>
         </div>
