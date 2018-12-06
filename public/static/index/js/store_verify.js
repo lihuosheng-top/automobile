@@ -151,12 +151,26 @@ $.ajax({
     dataType: 'JSON',
     success: function(res){
         console.log(res);
-        if(res.status == 1){
-            var data = res.data;
+        var data = res.data;
+        if(data.store_identity_card !== null && data.store_reverse_images !== null &&
+            data.store_do_bussiness_positive_img !== null && data.store_do_bussiness_side_img !== null &&
+            data.verifying_physical_storefront_one !== null){
+            var str = '';
             $('#emblem-img')[0].src = 'uploads/' + data.store_identity_card;
             $('#portrait-img')[0].src =  'uploads/' + data.store_reverse_images;
             $('#business-license-img')[0].src = 'uploads/' + data.store_do_bussiness_positive_img;
-            
+            $('#license-img')[0].src = 'uploads/' + data.store_do_bussiness_side_img;
+            $('#face-img')[0].src = 'uploads/' + data.verifying_physical_storefront_one;
+            $.each(data.imgs, function(idx, val){
+                str += `<div class="store-inner-imgbox">
+                            <button class="close">×</button>
+                            <img src="uploads/`+val+`">
+                        </div>`
+            })
+            $('.mul-img').append(str);
+            $('.submit-button').text('提交更新');
+        }else{
+            $('.submit-button').text('提交申请');
         }
     },
     error: function(err){
