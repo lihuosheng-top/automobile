@@ -68,7 +68,7 @@
 
     {if !empty($data)}
     {volist name="data" id="vo"}
-	<form class="layui-form" action="" method="post">
+    <form class="layui-form" action="{:url('admin/Shop/update',['id'=>$vo.store_id])}" method="post">
 		<p class="title">店铺基本信息</p>
 		<div class="layui-form-item ">
 			<label class="layui-form-label">店铺名称:</label>
@@ -139,17 +139,19 @@
         <div class="layui-form-item">
             <label class="layui-form-label">服务范围：</label>
             <div class="layui-input-block">
-                {volist name="service_setting_id" id ="item"}
                 {volist name="service_setting_data" id="service_val"}
-                {if condition="$item == $service_val['service_setting_id']" }
-                <input value="{$service_val['service_setting_id']}" type="checkbox" name="like1[write]" lay-skin="primary" title="{$service_val['service_setting_name']}" checked="" disabled="disabled">
-                {/if}
-                {/volist}
-
+                <input value="{$service_val['service_setting_id']}"  title="{$service_val['service_setting_name']}"  disabled="disabled" {if condition = "in_array($service_val['service_setting_id'],$service_setting_id)"}
+                       checked='checked'
+                       type="checkbox" name="like1[write]" lay-skin="primary"
+                       {else}
+                       type="checkbox" name="like1[write]" lay-skin="primary"
+                       {/if}>
                 {/volist}
             </div>
         </div>
         {/if}
+
+
 
         <div class="layui-form-item">
             <label class="layui-form-label">邮件</label>
@@ -218,43 +220,55 @@
                 <img src="__UPLOADS__/{$lists}" width="100%" style="margin-bottom: 10px;">
             </div>
             {/volist}
-
         </div>
+
         <p class="title">身份认证</p>
         <div class="layui-form-item">
             <label class="layui-form-label">是否付费上架：</label>
             <div class="layui-input-block">
-                {if $vo.store_is_pay==1}
+                {if $vo.store_is_pay ==0}
+                <input type="radio" name="store_is_pay" value="1" title="选择付费上架" >
+                <input type="radio" name="store_is_pay" value="-1" title="选择不付费上架" >
+                {elseif $vo.store_is_pay==1}
                 <input type="radio" name="store_is_pay" value="1" title="付费上架" checked="">
-                <input type="radio" name="store_is_pay" value="0" title="不付费上架" >
-                {elseif  $vo.store_is_pay==0}
+                <input type="radio" name="store_is_pay" value="-1" title="不付费上架" >
+                {elseif  $vo.store_is_pay==-1}
                 <input type="radio" name="store_is_pay" value="1" title="付费上架">
-                <input type="radio" name="store_is_pay" value="0" title="不付费上架" checked="">
+                <input type="radio" name="store_is_pay" value="-1" title="不付费上架" checked="">
                 {/if}
-
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">当前可操作：</label>
             <div class="layui-input-block">
-
-                <input type="radio" name="aaa" value="通过" title=" 通过" checked="">
-                <input type="radio" name="aaa" value="拒绝" title="拒绝" checked="">
-
+                {if $vo.operation_status ==0}
+                <input type="radio" name="operation_status" value="1" title="选择通过" >
+                <input type="radio" name="operation_status" value="-1" title="选择拒绝" >
+                {/if}
+                {if $vo.operation_status ==1}
+                <input type="radio" name="operation_status" value="1" title=" 通过" checked="">
+                <input type="radio" name="operation_status" value="-1" title="拒绝" >
+                {/if}
+                {if $vo.operation_status ==-1}
+                <input type="radio" name="operation_status" value="1" title=" 通过" >
+                <input type="radio" name="operation_status" value="-1" title="拒绝" checked="">
+                {/if}
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">操作员备注：：</label>
             <div class="layui-input-block">
-                <textarea rows="10" cols="60"></textarea>
+                {if !empty($vo.operation_remarks)}
+                <textarea rows="10" cols="60" name="operation_remarks">{$vo.operation_remarks}</textarea>
+                {else}
+                <textarea rows="10" cols="60" name="operation_remarks"></textarea>
+                {/if}
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <input type="hidden" name="id" value="">
                 <button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
                 <button class="layui-btn" type="submit" id="submits">保存</button>
-
             </div>
         </div>
     </form>

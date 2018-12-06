@@ -20,14 +20,14 @@ class  PlatformAdvertisement extends  Controller{
      * 郭杨
      */
     public function platform_business_index(){
-        $platform = db("platform")->paginate(2);
-        //halt($platform);
+        $platform = db("platform")->paginate(20);
         return view('platform_business_index',['platform'=>$platform]);
     }
 
 
 
-    public function platform_business_add(){
+    public function platform_business_add()
+    {
         return view('platform_business_add');
     }
 
@@ -121,7 +121,7 @@ class  PlatformAdvertisement extends  Controller{
         if ((!empty($ppd)) || (!empty($interest))) {
             $activ = db("platform")->where("name", "like", "%" . $ppd . "%")->where("location", "like", "%" . $interest . "%")->paginate(2);    
         }else{
-            $activ = db("platform")->paginate(2);
+            $activ = db("platform")->paginate(20);
         }
         if(!empty($activ)){
             return view('platform_business_index',['platform'=>$activ]);

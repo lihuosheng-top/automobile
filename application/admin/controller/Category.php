@@ -100,6 +100,7 @@ class Category extends Controller{
                 $type_images = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["type_images"] = str_replace("\\","/",$type_images->getSaveName());
             }
+
             $bool = db("goods_type")->where('id', $request->only(["id"])["id"])->update($data);
             if ($bool) {
                 $this->success("编辑成功", url("admin/Category/index"));
