@@ -105,7 +105,11 @@
 			{volist name="serve_goods" id="value"}
 		    	<tr>
 					<td ><input type="checkbox" sname="" lay-skin="primary"  lay-filter="choose" ></td>
-					<td>店铺还没有添加</td>
+					{volist name="store" id="val"}
+					{if $value.store_id == $val.store_id}
+					<td>{$val.store_name}</td>
+					{/if}
+					{/volist}
 					<td>{$value.serve_goods_name}</td>
 					<td>{$value.vehicle_model}</td>
 					<td>{$value.service_money}</td>

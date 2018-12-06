@@ -27,28 +27,58 @@ class Goods extends Controller{
      * 陈绪
      */
     public function index(Request $request){
-        $goods = db("goods")->order("id desc")->paginate(10);
-        $goods_year = db("goods")->field("goods_year_id,id")->select();
-        $time = date("Y-m-d");
-        foreach ($goods_year as $key=>$value){
-            $year = db("year")->where("id",$value["goods_year_id"])->value("year");
-            $date = date("Y-m-d",strtotime("+$year year"));
-            if($time == $date){
-                $bool = db("goods")->where("id",$value["id"])->update(["goods_status"=>0,"putaway_status"=>null]);
+        $admin_id = Session::get("user_id");
+        $admin_role = db("admin")->where("id",$admin_id)->field("role_id")->find();
+        if($admin_role["role_id"] == 2){
+            $goods = db("goods")->order("id desc")->paginate(10);
+            $goods_year = db("goods")->field("goods_year_id,id")->select();
+            $time = date("Y-m-d");
+            foreach ($goods_year as $key=>$value){
+                $year = db("year")->where("id",$value["goods_year_id"])->value("year");
+                $date = date("Y-m-d",strtotime("+$year year"));
+                if($time == $date){
+                    $bool = db("goods")->where("id",$value["id"])->update(["goods_status"=>0,"putaway_status"=>null]);
+                }
             }
-        }
-        $goods_money = db("goods")->field("goods_new_money,id")->select();
-        foreach ($goods_money as $k=>$val){
-            $goods_ratio[] = db("goods_ratio")->where("min_money","<=",$val["goods_new_money"])->where("max_money",">=",$val["goods_new_money"])->field("ratio")->find();
-            $goods_adjusted_money[] = $val["goods_new_money"]+($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
-            db("goods")->where("id",$val["id"])->update(["goods_adjusted_money"=>$goods_adjusted_money[$k]]);
-        }
+            $goods_money = db("goods")->field("goods_new_money,id")->select();
+            foreach ($goods_money as $k=>$val){
+                $goods_ratio[] = db("goods_ratio")->where("min_money","<=",$val["goods_new_money"])->where("max_money",">=",$val["goods_new_money"])->field("ratio")->find();
+                $goods_adjusted_money[] = $val["goods_new_money"]+($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
+                db("goods")->where("id",$val["id"])->update(["goods_adjusted_money"=>$goods_adjusted_money[$k]]);
+            }
 
-        $year = db("year")->select();
-        $user_id = Session::get("user_id");
-        $role_name = db("admin")->where("id",$user_id)->select();
-        return view("goods_index",["goods"=>$goods,"year"=>$year,"role_name"=>$role_name]);
+            $year = db("year")->select();
+            $user_id = Session::get("user_id");
+            $role_name = db("admin")->where("id",$user_id)->select();
+            $store = db("store")->select();
+            return view("goods_index",["store"=>$store,"goods"=>$goods,"year"=>$year,"role_name"=>$role_name]);
+        }else {
+            $admin_phone = db("admin")->where("id", $admin_id)->value("phone");
+            $user_id = db("user")->where("phone_num", $admin_phone)->value("id");
+            $store_id = db("store")->where("user_id", $user_id)->value("store_id");
+            $goods = db("goods")->order("id desc")->where("store_id", $store_id)->paginate(10);
+            $goods_year = db("goods")->field("goods_year_id,id")->select();
+            $time = date("Y-m-d");
+            foreach ($goods_year as $key => $value) {
+                $year = db("year")->where("id", $value["goods_year_id"])->value("year");
+                $date = date("Y-m-d", strtotime("+$year year"));
+                if ($time == $date) {
+                    $bool = db("goods")->where("id", $value["id"])->update(["goods_status" => 0, "putaway_status" => null]);
+                }
+            }
+            $goods_money = db("goods")->field("goods_new_money,id")->select();
+            foreach ($goods_money as $k => $val) {
+                $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
+                $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
+                db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
+            }
 
+            $year = db("year")->select();
+            $user_id = Session::get("user_id");
+            $role_name = db("admin")->where("id", $user_id)->select();
+            $store = db("store")->select();
+            return view("goods_index", ["store" => $store, "goods" => $goods, "year" => $year, "role_name" => $role_name]);
+        }
 
     }
 
@@ -136,6 +166,11 @@ class Goods extends Controller{
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
             }
+            $admin_id = Session::get("user_id");
+            $admin_phone = db("admin")->where("id",$admin_id)->value("phone");
+            $user_id = db("user")->where("phone_num",$admin_phone)->value("id");
+            $store_id = db("store")->where("user_id",$user_id)->value("store_id");
+            $goods_data["store_id"] = $store_id;
             $bool = db("goods")->insert($goods_data);
             if ($bool) {
                 //取出图片在存到数据库
@@ -290,6 +325,11 @@ class Goods extends Controller{
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
             }
+            $admin_id = Session::get("user_id");
+            $admin_phone = db("admin")->where("id",$admin_id)->value("phone");
+            $user_id = db("user")->where("phone_num",$admin_phone)->value("id");
+            $store_id = db("store")->where("user_id",$user_id)->value("store_id");
+            $goods_data["store_id"] = $store_id;
             $bool = db("goods")->where("id",$id)->update($goods_data);
             if ($bool) {
                 //取出图片在存到数据库
