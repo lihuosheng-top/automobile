@@ -390,7 +390,7 @@ class Store extends Controller{
                             $ver_img =explode(',',$data['verifying_physical_storefront_two']);
                             $data['imgs']=$ver_img;
                         }else{
-                            $data['imgs']=$data['verifying_physical_storefront_two'];
+                            $data['imgs'][]=$data['verifying_physical_storefront_two'];
                         }
                     }
                     return ajax_success('成功获取数据',$data);
