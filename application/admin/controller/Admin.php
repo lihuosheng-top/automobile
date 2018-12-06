@@ -104,7 +104,7 @@ class Admin extends Controller
                 if ($bool) {
                     $phone = db("Admin")->field('phone')->where("id", $id)->find();
                   $user_id = Db::name('user')->field('id')->where('phone_num',$phone['phone'])->find();
-                  Db::name('store')->where('user_id',$user_id)->update(['operation_status'=>-1]);
+                  Db::name('store')->where('user_id',$user_id['id'])->update(['operation_status'=>-1]);
                     $this->redirect(url("admin/admin/index"));
                 } else {
                     $this->error("修改失败", url("admin/admin/index"));
@@ -116,7 +116,7 @@ class Admin extends Controller
                 if ($bool) {
                     $phone = db("Admin")->field('phone')->where("id", $id)->find();
                     $user_id = Db::name('user')->field('id')->where('phone_num',$phone['phone'])->find();
-                    Db::name('store')->where('user_id',$user_id)->update(['operation_status'=>1]);
+                    Db::name('store')->where('user_id',$user_id['id'])->update(['operation_status'=>1]);
                     $this->redirect(url("admin/admin/index"));
                 } else {
                     $this->error("修改失败", url("admin/admin/index"));
