@@ -93,6 +93,7 @@ $(function(){
         // 删除图片
         $('.store-inner-imgbox').on('click', '.close', function(){
             var $index = $('.close').index($(this));
+            console.log($index);
             imagesFileArr.splice($index, 1);
             console.log(imagesFileArr)
             $(this).parent().remove();
@@ -109,39 +110,43 @@ $('.submit-button').click(function(){
         faceInput = $('#portrait-input')[0].files,
         innerInput = imagesFileArr.length;
     var formData = new FormData();
-    if(emblemInput.length !== 0 && portraitInput.length !== 0 && businessLicense.length !== 0 && license.length !== 0 && faceInput.length !== 0 && innerInput !== 0){
-        formData.append('store_identity_card', emblemInput[0]);
-        formData.append('store_reverse_images', portraitInput[0]);
-        formData.append('store_do_bussiness_positive_img', businessLicense[0]);
-        formData.append('store_do_bussiness_side_img', license[0]);
-        formData.append('verifying_physical_storefront_one', faceInput[0]);
-        $.each(imagesFileArr, function(idx, val){
-            formData.append('verifying_physical_storefront_two[]', val);
-        })
-        $.ajax({
-            url: 'store_update',
-            type: 'POST',
-            dataType: 'JSON',
-            processData: false,
-            contentType: false,
-            data: formData,
-            success: function(data){
-                console.log(data);
-            },
-            error: function(){
-                console.log('error');
-            }
-        }) 
-    }else{
-        layer.open({
-            style: 'bottom:100px;',
-            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
-            skin: 'msg',
-            content: '图片未上传完整',
-            time: 1
-        })
+    if($(this).text() === '提交申请'){
+        if(emblemInput.length !== 0 && portraitInput.length !== 0 && businessLicense.length !== 0 
+            && license.length !== 0 && faceInput.length !== 0 && innerInput !== 0){
+            formData.append('store_identity_card', emblemInput[0]);
+            formData.append('store_reverse_images', portraitInput[0]);
+            formData.append('store_do_bussiness_positive_img', businessLicense[0]);
+            formData.append('store_do_bussiness_side_img', license[0]);
+            formData.append('verifying_physical_storefront_one', faceInput[0]);
+            $.each(imagesFileArr, function(idx, val){
+                formData.append('verifying_physical_storefront_two[]', val);
+            })
+            $.ajax({
+                url: 'store_update',
+                type: 'POST',
+                dataType: 'JSON',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            }) 
+        }else{
+            layer.open({
+                style: 'bottom:100px;',
+                type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                skin: 'msg',
+                content: '图片未上传完整',
+                time: 1
+            })
+        }
+    }else if($(this).text() === '提交更新'){
+        
     }
-
 })
 
 // 返回数据
@@ -169,6 +174,15 @@ $.ajax({
             })
             $('.mul-img').append(str);
             $('.submit-button').text('提交更新');
+
+            // 删除图片
+            $('.store-inner-imgbox').on('click', '.close', function(){
+                var $index = $('.close').index($(this));
+                console.log($index);
+                // imagesFileArr.splice($index, 1);
+                console.log(imagesFileArr)
+                $(this).parent().remove();
+            })
         }else{
             $('.submit-button').text('提交申请');
         }
