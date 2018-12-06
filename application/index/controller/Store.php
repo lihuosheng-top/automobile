@@ -272,6 +272,7 @@ class Store extends Controller{
     public function update(Request $request){
         if($request->isPost()){
             $user_id = Session::get("user");
+            $store_id =Db::name('store')->field('store_id')->where('user_id',$user_id)->find();
             //身份证正面
             $store_identity_card_file = $request->file('store_identity_card');
             if(!empty($store_identity_card_file)){
