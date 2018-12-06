@@ -22,7 +22,7 @@ class  Advertisement extends  Controller{
      */
 
     public function accessories_business_advertising(){
-        $platform = db("accessories")->paginate(2);
+        $platform = db("accessories")->paginate(20);
         return view('accessories_business_advertising',['platform'=>$platform]);
     }
 
@@ -68,7 +68,8 @@ class  Advertisement extends  Controller{
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
             $bool = db("accessories")->insert($data);
-            if ($bool) {
+            $boole = db("platform")->insert($data);
+            if ($bool && $boole) {
                 $this->success("添加成功", url("admin/Advertisement/accessories_business_advertising"));
             } else {
                 $this->error("添加失败", url("admin/Advertisement/accessories_business_add"));
