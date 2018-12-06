@@ -286,4 +286,7 @@ html,body{
     text-align: center;
     line-height: .5rem;
     transform: translate(35%, -35%);
+    border: 0;
+    padding: 0;
+    outline: none;
 }
