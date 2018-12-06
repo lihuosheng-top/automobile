@@ -23,6 +23,7 @@ class Serve extends Controller{
         $admin_id = Session::get("user_id");
         $admin_role = db("admin")->where("id",$admin_id)->field("role_id")->find();
         if($admin_role["role_id"] == 2){
+
             $serve_goods = db("serve_goods")->order("id desc")->select();
             foreach ($serve_goods as $key=>$value){
                 $serve_goods[$key]["serve_goods_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
