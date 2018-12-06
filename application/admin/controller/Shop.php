@@ -70,6 +70,7 @@ class Shop extends Controller{
             $store_datas[$k]['phone_num']=$user_data['phone_num'];
             $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
             $store_datas[$k]['role_name']=$role_datas['name'];
+            $imgs =explode(',',$v['verifying_physical_storefront_two']);
             $address =explode(',',$v['store_city_address']);
             if(!empty($v['service_setting_id'])){
                 if(strpos($v['service_setting_id'],',')){
@@ -83,7 +84,7 @@ class Shop extends Controller{
         }
         $service_setting_data =Db::name('service_setting')->where('service_setting_status',1)->select();
         dump($store_datas);
-        return view("shop_add",['data'=>$store_datas,'service_setting_data'=>$service_setting_data,'address'=>$address,'service_setting_id'=>$service_setting_id]);
+        return view("shop_add",['data'=>$store_datas,'service_setting_data'=>$service_setting_data,'imgs'=>$imgs,'address'=>$address,'service_setting_id'=>$service_setting_id]);
     }
 
 

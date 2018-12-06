@@ -320,7 +320,7 @@ class Store extends Controller{
                     $info = $v->move(ROOT_PATH . 'public' . DS . 'uploads');
                     $verifying_physical_storefront_two[] = str_replace("\\", "/", $info->getSaveName());
                 }
-                    $data['verifying_physical_storefront_two'] =implode(',',$verifying_physical_storefront_two);
+                $data['verifying_physical_storefront_two'] =implode(',',$verifying_physical_storefront_two);
                 $del_img_url_6= Db::name("store")->where('user_id',$user_id)->field('verifying_physical_storefront_two')->find();
             }
             $user_id = Session::get("user");
@@ -385,6 +385,14 @@ class Store extends Controller{
                     $data['real_name'] =$real_name['real_name'];
                     $data['phone_num'] =$real_name['phone_num'];
                     $data['sex'] =$real_name['sex'];
+                    if(!empty($data['verifying_physical_storefront_two'])){
+                        if(strpos($data['verifying_physical_storefront_two'],',')){
+                            $ver_img =explode(',',$data['verifying_physical_storefront_two']);
+                            $data['imgs']=$ver_img;
+                        }else{
+                            $data['imgs'][]=$data['verifying_physical_storefront_two'];
+                        }
+                    }
                     return ajax_success('成功获取数据',$data);
                 }else{
                     return ajax_error('获取数据失败',['status'=>0]);
