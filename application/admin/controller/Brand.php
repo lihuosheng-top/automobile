@@ -69,10 +69,13 @@ class Brand extends Controller{
      * 陈绪
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
      */
-    public function edit($id){
+    public function edit($id,$pid=0){
 
         $brand_data = db("brand")->where("id",$id)->select();
-        return view("brand_edit",["brand_data"=>$brand_data]);
+        if($pid == 0) {
+            $brand_list = getSelectList("brand");
+        }
+        return view("brand_edit",["brand_list"=>$brand_list,"brand_data"=>$brand_data]);
 
     }
 

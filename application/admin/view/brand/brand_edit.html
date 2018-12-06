@@ -108,9 +108,15 @@
             <label class="layui-form-label">父级分类</label>
             <div class="layui-input-block">
                 <select name="pid" id="admin_role" class="role_list">
-							<option value="0">顶级</option>
-							<option value="1">111</option>
-						</select>
+                    <option value="0">顶级</option>
+                    {volist name="brand_list" id="val"}
+                    {if $value.pid == $val.id}
+                    <option value="{$val.id}" selected="">{$val.name}</option>
+                    {else}
+                    <option value="{$val.id}">{$val.name}</option>
+                    {/if}
+                    {/volist}
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
