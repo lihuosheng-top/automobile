@@ -1,46 +1,46 @@
 {extend name="layout"} {block name="css"}
 <link rel="stylesheet" type="text/css" href="__STATIC__/admin/index/common/formSelects-v4.css" />
 <style type="text/css">
-	body {
-		background: #fff;
-	}
-	
-	.layui-form label {
-		text-align: left;
-	}
-	
-	.layui-form-label span {
-		color: red;
-	}
-	
-	.layui-form {
-		width: 98%;
-		margin: 0 auto;
-		padding-top: 40px;
-	}
-	
-	.layui-input-block {
-		min-height: 40px;
-	}
-	
-	.layui-form-item {
-		width: 54%;
-	}
-	
-	.biaoji .layui-form-radioed span {
-		color: #fff;
-		background: red;
-		width: 33px;
-		text-align: center;
-		height: 13px;
-		line-height: 13px;
-		font-size: 9px;
-		border-radius: 6px;
-	}
-	/*.car .layui-unselect{
+    body {
+        background: #fff;
+    }
+    
+    .layui-form label {
+        text-align: left;
+    }
+    
+    .layui-form-label span {
+        color: red;
+    }
+    
+    .layui-form {
+        width: 98%;
+        margin: 0 auto;
+        padding-top: 40px;
+    }
+    
+    .layui-input-block {
+        min-height: 40px;
+    }
+    
+    .layui-form-item {
+        width: 54%;
+    }
+    
+    .biaoji .layui-form-radioed span {
+        color: #fff;
+        background: red;
+        width: 33px;
+        text-align: center;
+        height: 13px;
+        line-height: 13px;
+        font-size: 9px;
+        border-radius: 6px;
+    }
+    /*.car .layui-unselect{
 		display: none !important;
 	}*/
-	/*.car select{
+    /*.car select{
 		    width: 100%;
             height: 38px;
 	}
@@ -52,95 +52,95 @@
 	}*/
 </style>
 <style type="text/css">
-	.title {
-		height: 50px;
-		background: #F2F2F2;
-		font-size: 20px;
-		line-height: 50px;
-		padding-left: 20px;
-		font-weight: bold;
-	}
-	
-	.special,
-	.general,
-	.special .layui-form-item,
-	.general .layui-form-item {
-		min-width: 100%;
-	}
-	
-	.add-content {
-		background: #F2F2F2;
-		width: 100%;
-	}
-	
-	.general-kuang {
-		border: solid 1px #E4E4E4;
-		width: 1000px;
-		padding-left: 10px;
-	}
-	
-	.btus {
-		background: #fff;
-		border: solid 1px #E4E4E4;
-		color: #0099FF;
-		width: 141px;
-		display: inline-block;
-		margin: 10px;
-	}
-	
-	#general-content .layui-form-item {
-		width: 100%;
-	}
-	
-	.sky-blue {
-		color: #0099FF;
-	}
-	
-	.bgwhite {
-		background: #fff;
-	}
-	
-	.noshow {
-		display: none;
-	}
-	
-	.special .layui-form-item {
-		width: 100%;
-	}
-	
-	.general .layui-form-item {
-		width: 100%;
-	}
-	
-	.special .layui-form-item label {
-		width: 10%;
-	}
-	
-	.general .layui-form-item label {
-		width: 10%;
-	}
-	
-	.operation-btus {
-		width: 60px;
-		height: 40px;
-		border-radius: 3px;
-		color: #fff;
-	}
-	
-	.btu-delet {
-		background: #FF0000;
-	}
-	
-	.btu-cancel {}
-	
-	.btu-add {
-		background: #0099FF;
-	}
-	
-	.num-content {
-		overflow: hidden;
-	}
-	/*#displacement {
+    .title {
+        height: 50px;
+        background: #F2F2F2;
+        font-size: 20px;
+        line-height: 50px;
+        padding-left: 20px;
+        font-weight: bold;
+    }
+    
+    .special,
+    .general,
+    .special .layui-form-item,
+    .general .layui-form-item {
+        min-width: 100%;
+    }
+    
+    .add-content {
+        background: #F2F2F2;
+        width: 100%;
+    }
+    
+    .general-kuang {
+        border: solid 1px #E4E4E4;
+        width: 1000px;
+        padding-left: 10px;
+    }
+    
+    .btus {
+        background: #fff;
+        border: solid 1px #E4E4E4;
+        color: #0099FF;
+        width: 141px;
+        display: inline-block;
+        margin: 10px;
+    }
+    
+    #general-content .layui-form-item {
+        width: 100%;
+    }
+    
+    .sky-blue {
+        color: #0099FF;
+    }
+    
+    .bgwhite {
+        background: #fff;
+    }
+    
+    .noshow {
+        display: none;
+    }
+    
+    .special .layui-form-item {
+        width: 100%;
+    }
+    
+    .general .layui-form-item {
+        width: 100%;
+    }
+    
+    .special .layui-form-item label {
+        width: 10%;
+    }
+    
+    .general .layui-form-item label {
+        width: 10%;
+    }
+    
+    .operation-btus {
+        width: 60px;
+        height: 40px;
+        border-radius: 3px;
+        color: #fff;
+    }
+    
+    .btu-delet {
+        background: #FF0000;
+    }
+    
+    .btu-cancel {}
+    
+    .btu-add {
+        background: #0099FF;
+    }
+    
+    .num-content {
+        overflow: hidden;
+    }
+    /*#displacement {
 		display: block;
 	}
 	#production{
@@ -152,657 +152,656 @@
 
 <body>
 
-	{block name="content"}
-	<div class="open">
+    {block name="content"}
+    <div class="open">
 
-	</div>
-	<form class="layui-form" action="{:url('admin/Goods/save')}" method="post" enctype="multipart/form-data">
+    </div>
+    <form class="layui-form" action="{:url('admin/Goods/save')}" method="post" enctype="multipart/form-data">
 
-		<div class="basic-information title"> 基本信息
-		</div>
-		<div class="layui-form-item ">
-			<label class="layui-form-label"><span>*</span>商品名:</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_name">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">分享描述：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_describe" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_describe">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>商品显示图片</label>
-			<div class="layui-input-block">
-				<div class="img-box full">
-					<section class=" img-section">
-						<div class="z_photo upimg-div clear">
-							<section class="z_file fl">
-								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="goods_show_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" data-id="1" />
-							</section>
-						</div>
-					</section>
-				</div>
-				<aside class="mask works-mask">
-					<div class="mask-content">
-						<p class="del-p ">您确定要删除作品图片吗？</p>
-						<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
-					</div>
-				</aside>
-				<p style="color:#999999 ; ">建议尺寸：750*750像素</p>
-			</div>
-		</div>
+        <div class="basic-information title"> 基本信息
+        </div>
+        <div class="layui-form-item ">
+            <label class="layui-form-label"><span>*</span>商品名:</label>
+            <div class="layui-input-block">
+                <input type="text" name="goods_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_name">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">分享描述：</label>
+            <div class="layui-input-block">
+                <input type="text" name="goods_describe" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_describe">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span>*</span>商品显示图片</label>
+            <div class="layui-input-block">
+                <div class="img-box full">
+                    <section class=" img-section">
+                        <div class="z_photo upimg-div clear">
+                            <section class="z_file fl">
+                                <img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+                                <input type="file" name="goods_show_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" data-id="1" />
+                            </section>
+                        </div>
+                    </section>
+                </div>
+                <aside class="mask works-mask">
+                    <div class="mask-content">
+                        <p class="del-p ">您确定要删除作品图片吗？</p>
+                        <p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+                    </div>
+                </aside>
+                <p style="color:#999999 ; ">建议尺寸：750*750像素</p>
+            </div>
+        </div>
 
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>商品图片</label>
-			<div class="layui-input-block">
-				<div class="img-box full">
-					<section class=" img-section">
-						<div class="z_photo upimg-div clear">
-							<section class="z_file fl">
-								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" id="files" name="goods_images[]" class="file" value="" data-id="10" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
-							</section>
-						</div>
-					</section>
-				</div>
-				<aside class="mask works-mask">
-					<div class="mask-content">
-						<p class="del-p ">您确定要删除作品图片吗？</p>
-						<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
-					</div>
-				</aside>
-				<p style="color:#999999; ">建议尺寸：750*480像素，最多上传10张</p>
-			</div>
-		</div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span>*</span>商品图片</label>
+            <div class="layui-input-block">
+                <div class="img-box full">
+                    <section class=" img-section">
+                        <div class="z_photo upimg-div clear">
+                            <section class="z_file fl">
+                                <img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+                                <input type="file" id="files" name="goods_images[]" class="file" value="" data-id="10" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+                            </section>
+                        </div>
+                    </section>
+                </div>
+                <aside class="mask works-mask">
+                    <div class="mask-content">
+                        <p class="del-p ">您确定要删除作品图片吗？</p>
+                        <p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+                    </div>
+                </aside>
+                <p style="color:#999999; ">建议尺寸：750*480像素，最多上传10张</p>
+            </div>
+        </div>
 
-		<div class="layui-form-item" style="min-width: 62% !important;">
-			<label class="layui-form-label">商品分组：</label>
-			<div class="layui-input-inline" style="margin-left: 30px;">
-				<select name="goods_type_id" id="goods_type_id" lay-filter="goods_type_id">
+        <div class="layui-form-item" style="min-width: 62% !important;">
+            <label class="layui-form-label">商品分组：</label>
+            <div class="layui-input-inline" style="margin-left: 30px;">
+                <select name="goods_type_id" id="goods_type_id" lay-filter="goods_type_id">
 					<option value="请选择" check>请选择</option>
 					{volist name="goods_list" id="value"}
 					<option value="{$value.id}">{$value.name}</option>
 					{/volist}
 				</select>
-			</div>
-			<div class="layui-input-inline">
-				<a href="{:url('admin/Category/add')}" style="line-height: 40px;">新建分类</a>
-			</div>
-		</div>
-		<div class="layui-form-item " style="min-width: 62% !important;">
-			<label class="layui-form-label"><span>*</span>商品品牌:</label>
-			<div class="layui-input-inline" style="margin-left: 30px;">
-				<select name="goods_brand_id" lay-filter="goods_brand_id" id="goods_brand_id">
+            </div>
+            <div class="layui-input-inline">
+                <a href="{:url('admin/Category/add')}" style="line-height: 40px;">新建分类</a>
+            </div>
+        </div>
+        <div class="layui-form-item " style="min-width: 62% !important;">
+            <label class="layui-form-label"><span>*</span>商品品牌:</label>
+            <div class="layui-input-inline" style="margin-left: 30px;">
+                <select name="goods_brand_id" lay-filter="goods_brand_id" id="goods_brand_id">
 					<option value="请选择" check>请选择</option>
 					{volist name="goods_brand" id="val"}
 					<option value="{$val.id}">{$val.name}</option>
 					{/volist}
 				</select>
-			</div>
-			<div class="layui-input-inline">
-				<a href="{:url('admin/Brand/add')}" style="line-height: 40px;">添加品牌</a>
-			</div>
-		</div>
-		<div class="layui-form-item ">
-			<label class="layui-form-label"><span>*</span>商品卖点:</label>
-			<div class="layui-input-block">
-				<textarea rows="10" name="goods_selling" cols="50"></textarea>
-				<div class="tips">*在商品列表页、详情页标题下面展示卖点信息，建议60字以内</div>
+            </div>
+            <div class="layui-input-inline">
+                <a href="{:url('admin/Brand/add')}" style="line-height: 40px;">添加品牌</a>
+            </div>
+        </div>
+        <div class="layui-form-item ">
+            <label class="layui-form-label"><span>*</span>商品卖点:</label>
+            <div class="layui-input-block">
+                <textarea rows="10" name="goods_selling" cols="50"></textarea>
+                <div class="tips">*在商品列表页、详情页标题下面展示卖点信息，建议60字以内</div>
 
-			</div>
+            </div>
 
-		</div>
-		<div class="layui-form-item ">
-			<label class="layui-form-label"><span>*</span>商品排序:</label>
-			<div class="layui-input-block">
-				<input type="text" name="sort_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="sort_number">
-			</div>
-		</div>
-		<div class="layui-form-item" class="biaoji">
-			<label class="layui-form-label"><span>*</span>商品标记：</label>
-			<div class="layui-input-block" id="goods_sign">
-				<input type="radio" name="goods_sign" value="hot" title="hot" checked="" class="hot">
-				<input type="radio" name="goods_sign" value="促销" title="促销" class="">
-				<input type="radio" name="goods_sign" value="清仓" title="清仓" class="">
-				<input type="radio" name="goods_sign" value="推荐" title="推荐" class="">
-			</div>
-		</div>
-		<div class="basic-information title">商品规格
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">商品规格</label>
-			<div class="layui-input-block">
-				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
-				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
-			</div>
-		</div>
-		<div>
-			<div class="layui-form-item general noshow">
-				<label class="layui-form-label"></label>
-				<div class="layui-input-block general-kuang">
-					<div id="general_content"></div>
-					<div class="add-content content" id="add_general_buts">
-						<button type="button" class="btus general_buts">添加规格项目</button>
-					</div>
-				</div>
+        </div>
+        <div class="layui-form-item ">
+            <label class="layui-form-label"><span>*</span>商品排序:</label>
+            <div class="layui-input-block">
+                <input type="text" name="sort_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="sort_number">
+            </div>
+        </div>
+        <div class="layui-form-item" class="biaoji">
+            <label class="layui-form-label"><span>*</span>商品标记：</label>
+            <div class="layui-input-block" id="goods_sign">
+                <input type="radio" name="goods_sign" value="hot" title="hot" checked="" class="hot">
+                <input type="radio" name="goods_sign" value="促销" title="促销" class="">
+                <input type="radio" name="goods_sign" value="清仓" title="清仓" class="">
+                <input type="radio" name="goods_sign" value="推荐" title="推荐" class="">
+            </div>
+        </div>
+        <div class="basic-information title">商品规格
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品规格</label>
+            <div class="layui-input-block">
+                <input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
+                <input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
+            </div>
+        </div>
+        <div>
+            <div class="layui-form-item general noshow">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block general-kuang">
+                    <div id="general_content"></div>
+                    <div class="add-content content" id="add_general_buts">
+                        <button type="button" class="btus general_buts">添加规格项目</button>
+                    </div>
+                </div>
 
-			</div>
-			<div class="layui-form-item special noshow">
-				<label class="layui-form-label"></label>
-				<div class="layui-input-block general-kuang">
-					<div class="layui-form-item car">
-						<label class="layui-form-label">适用车型：</label>
-						<div class="layui-input-inline">
-							<select name="dedicated_vehicle" id="province" lay-filter="province">
+            </div>
+            <div class="layui-form-item special noshow">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block general-kuang">
+                    <div class="layui-form-item car">
+                        <label class="layui-form-label">适用车型：</label>
+                        <div class="layui-input-inline">
+                            <select name="dedicated_vehicle" id="province" lay-filter="province">
 								<option value="">请选择</option>
 							</select>
-						</div>
-						<div class="layui-input-inline">
-							<select name="goods_car_series" id="city" xm-select-show-count="1" xm-select="city" multiple="multiple">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select name="goods_car_series" id="city" xm-select-show-count="1" xm-select="city" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
-						</div>
-						<div class="layui-input-inline">
-							<select name="goods_car_displacement" id="displacement" xm-select-show-count="1" xm-select="displacement" multiple="multiple">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select name="goods_car_displacement" id="displacement" xm-select-show-count="1" xm-select="displacement" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
-						</div>
-						<div class="layui-input-inline">
-							<select name="goods_car_year" id="production" xm-select-show-count="1" xm-select="production" multiple="multiple">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select name="goods_car_year" id="production" xm-select-show-count="1" xm-select="production" multiple="multiple">
 								<option value="">请选择</option>
 							</select>
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">属性</label>
-						<div class="layui-input-inline">
-							<select name="dedicated_property" class="dedicated_property">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">属性</label>
+                        <div class="layui-input-inline">
+                            <select name="dedicated_property" class="dedicated_property">
 								<option value="请选择" selected="">请选择</option>
 							</select>
-						</div>
-						<div class="layui-input-inline add-attribute " style="">
-							<button type="button" class="sky-blue bgwhite ">+添加属性</button>
-						</div>
-						<div class="layui-input-inline noshow add-attributes">
-							<input type="text" name="" id="" value="" />
-						</div>
-						<div class="layui-input-inline noshow add-attributes">
-							<button type="button" class="operation-btus btu-delet">删除</button>
-							<button type="button" class="operation-btus btu-cancel">取消</button>
-							<button type="button" class="operation-btus btu-add shuxingbtu-add">添加</button>
-						</div>
-					</div>
+                        </div>
+                        <div class="layui-input-inline add-attribute " style="">
+                            <button type="button" class="sky-blue bgwhite ">+添加属性</button>
+                        </div>
+                        <div class="layui-input-inline noshow add-attributes">
+                            <input type="text" name="" id="" value="" />
+                        </div>
+                        <div class="layui-input-inline noshow add-attributes">
+                            <button type="button" class="operation-btus btu-delet">删除</button>
+                            <button type="button" class="operation-btus btu-cancel">取消</button>
+                            <button type="button" class="operation-btus btu-add shuxingbtu-add">添加</button>
+                        </div>
+                    </div>
 
-					<div id="special_content"></div>
-					<div class="add-content content" id="add_special_buts">
-						<button type="button" class="btus special_buts">添加规格项目</button>
-					</div>
-				</div>
+                    <div id="special_content"></div>
+                    <div class="add-content content" id="add_special_buts">
+                        <button type="button" class="btus special_buts">添加规格项目</button>
+                    </div>
+                </div>
 
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>规格：</label>
-			<div class="layui-input-block">
-				<input type="text" name="standard" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="standard">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">商品编码：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_number">
-				<div class="tips">
-					当光标放入文本框中，可支持扫码枪录入编码，不填写系统生成默认
-				</div>
-			</div>
-		</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span>*</span>规格：</label>
+            <div class="layui-input-block">
+                <input type="text" name="standard" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="standard">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品编码：</label>
+            <div class="layui-input-block">
+                <input type="text" name="goods_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_number">
+                <div class="tips">
+                    当光标放入文本框中，可支持扫码枪录入编码，不填写系统生成默认
+                </div>
+            </div>
+        </div>
 
-		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span> 价格：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_new_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_new_money">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">划线价：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_bottom_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_bottom_money">
-				<div class="tips">
-					商品没有优惠的情况下，划线价在商品详情会以划线形式显示。
-				</div>
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label"> <span>*</span> 库存：</label>
-			<div class="layui-input-block">
-				<input type="text" name="goods_repertory" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_repertory">
-				<div>
-					<input type="checkbox" name="" lay-skin="primary" title="商品详情不显示剩余件数">
-				</div>
-				<div class="tips">库存为0时，会放到[已售罄]的商品列表里，保存后买家看到的商品可售库存同步更新</div>
-			</div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span>*</span> 价格：</label>
+            <div class="layui-input-block">
+                <input type="text" name="goods_new_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_new_money">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">划线价：</label>
+            <div class="layui-input-block">
+                <input type="text" name="goods_bottom_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_bottom_money">
+                <div class="tips">
+                    商品没有优惠的情况下，划线价在商品详情会以划线形式显示。
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"> <span>*</span> 库存：</label>
+            <div class="layui-input-block">
+                <input type="text" name="goods_repertory" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_repertory">
+                <div>
+                    <input type="checkbox" name="" lay-skin="primary" title="商品详情不显示剩余件数">
+                </div>
+                <div class="tips">库存为0时，会放到[已售罄]的商品列表里，保存后买家看到的商品可售库存同步更新</div>
+            </div>
 
-		</div>
-		<div class="layui-form-item layui-form-text">
-			<label class="layui-form-label">商品描述：</label>
-			<div class="layui-input-block">
-				<!-- <textarea id="demo" style="display: none;"></textarea> -->
-				<!-- <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea> -->
-				<div id="goods_text">
-					<script id="editor" type="text/plain" name="goods_text" style="width:800px;height:500px;"></script>
-				</div>
-			</div>
-		</div>
-		<div class="basic-information title"> 其他
-		</div>
-		<div class="layui-form-item" class="biaoji">
-			<label class="layui-form-label">上架年限：</label>
-			<div class="layui-input-block">
-				<select name="goods_year_id">
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">商品描述：</label>
+            <div class="layui-input-block">
+                <!-- <textarea id="demo" style="display: none;"></textarea> -->
+                <!-- <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea> -->
+                <div id="goods_text">
+                    <script id="editor" type="text/plain" name="goods_text" style="width:800px;height:500px;"></script>
+                </div>
+            </div>
+        </div>
+        <div class="basic-information title"> 其他
+        </div>
+        <div class="layui-form-item" class="biaoji">
+            <label class="layui-form-label">上架年限：</label>
+            <div class="layui-input-block">
+                <select name="goods_year_id">
 					<option value="" selected="">请选择</option>
 					{volist name="year" id="v"}
 					<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
 					{/volist}
 				</select>
-			</div>
-		</div>
-		<div class="layui-form-item" pane="">
-			<label class="layui-form-label">限购：</label>
-			<div class="layui-input-block">
-				<div class="layui-input-inline">
-					<input type="checkbox" lay-skin="primary" title="限制每人可购买数量">
-				</div>
-				<div class="layui-input-inline">
-					<input type="text" name="goods_restriction" id="" value="" style="margin-right: 10px;" id="goods_restriction" />件
-				</div>
-			</div>
-		</div>
-		<div class="layui-form-item" class="biaoji">
-			<label class="layui-form-label"><span>*</span>是否上架：</label>
-			<div class="layui-input-block" id="goods_sign">
-				<input type="radio" name="goods_status" value="hot" title="上架" checked="" class="hot">
-				<input type="radio" name="goods_status" value="促销" title="不上架" class="">
+            </div>
+        </div>
+        <div class="layui-form-item" pane="">
+            <label class="layui-form-label">限购：</label>
+            <div class="layui-input-block">
+                <div class="layui-input-inline">
+                    <input type="checkbox" lay-skin="primary" title="限制每人可购买数量">
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" name="goods_restriction" id="" value="" style="margin-right: 10px;" id="goods_restriction" />件
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" class="biaoji">
+            <label class="layui-form-label"><span>*</span>是否上架：</label>
+            <div class="layui-input-block" id="goods_sign">
+                <input type="radio" name="goods_status" value="hot" title="上架" checked="" class="hot">
+                <input type="radio" name="goods_status" value="促销" title="不上架" class="">
 
-			</div>
-		</div>
-		<div class="basic-information title"> 配送与安装服务
-		</div>
-		<div class="layui-form-item" class="biaoji">
-			<label class="layui-form-label">配送与安装服务：</label>
-			<div class="layui-input-block" id="">
-				<input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" checked="" class="hot">
-				<input type="checkbox" name="goods_delivery[]" value="上门安装" title="上门安装" class="">
-				<input type="checkbox" name="goods_delivery[]" value="送货上门" title="无需安装" class="">
-				<input type="checkbox" name="goods_delivery[]" value="送货上门" title="到店安装" class="">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<div class="layui-input-block">
-				<button class="layui-btn submit_btn" lay-submit="" lay-filter="demo1" type="submit">保存</button>
-				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-			</div>
-		</div>
+            </div>
+        </div>
+        <div class="basic-information title"> 配送与安装服务
+        </div>
+        <div class="layui-form-item" class="biaoji">
+            <label class="layui-form-label">配送与安装服务：</label>
+            <div class="layui-input-block" id="">
+                <input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" checked="" class="hot">
+                <input type="checkbox" name="goods_delivery[]" value="上门安装" title="上门安装" class="">
+                <input type="checkbox" name="goods_delivery[]" value="送货上门" title="无需安装" class="">
+                <input type="checkbox" name="goods_delivery[]" value="送货上门" title="到店安装" class="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn submit_btn" lay-submit="" lay-filter="demo1" type="submit">保存</button>
+                <button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
+            </div>
+        </div>
 
-	</form>
+    </form>
 
-	{/block}
+    {/block}
 
-	<!--_footer 作为公共模版分离出去-->
-	{include file="template/_footer" /}
-	<!--/_footer 作为公共模版分离出去-->
+    <!--_footer 作为公共模版分离出去-->
+    {include file="template/_footer" /}
+    <!--/_footer 作为公共模版分离出去-->
 
-	<!--请在下方写此页面业务相关的脚本-->
-	{block name="bottom"}
-	<script src="__STATIC__/admin/index/common/formSelects-v4.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
-		var dhtml = "";
+    <!--请在下方写此页面业务相关的脚本-->
+    {block name="bottom"}
+    <script src="__STATIC__/admin/index/common/formSelects-v4.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        var dhtml = "";
 
-		dhtml += '<div>' +
-			' 			<div class="layui-form-item">                                                                                 ' +
-			' 				<label class="layui-form-label">规格名</label>                                                               ' +
-			' 				<div class="layui-input-inline guige_name">                                                                          ' +
-			' 					<select class="universal_standard_name" name="goods_standard_name[]">                                                                                 ' +
-			' 						<option value="0" selected="">请选择</option>                                                                    ' +
-			' 					</select>                                                                                             ' +
-			' 				</div>                                                                                                    '
-			//      +'                                                                                                                        '
-			+
-			' 				<div class="layui-input-inline add-name" style="">                                                        ' +
-			' 					<button type="button" class="sky-blue bgwhite">+添加规格名</button>                                        '
-			//      +'                                                                                                                        '
-			+
-			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline noshow add-names" style="">                                                ' +
-			' 					<input type="text" name="" id="" value="" />   ' +
+        dhtml += '<div>' +
+            ' 			<div class="layui-form-item">                                                                                 ' +
+            ' 				<label class="layui-form-label">规格名</label>                                                               ' +
+            ' 				<div class="layui-input-inline guige_name">                                                                          ' +
+            ' 					<select class="universal_standard_name" name="goods_standard_name[]">                                                                                 ' +
+            ' 						<option value="0" selected="">请选择</option>                                                                    ' +
+            ' 					</select>                                                                                             ' +
+            ' 				</div>                                                                                                    '
+            //      +'                                                                                                                        '
+            +
+            ' 				<div class="layui-input-inline add-name" style="">                                                        ' +
+            ' 					<button type="button" class="sky-blue bgwhite">+添加规格名</button>                                        '
+            //      +'                                                                                                                        '
+            +
+            ' 				</div>                                                                                                    ' +
+            ' 				<div class="layui-input-inline noshow add-names" style="">                                                ' +
+            ' 					<input type="text" name="" id="" value="" />   ' +
 
-			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline noshow add-names" style="">                                                ' +
-			' 				<button type="button" class="operation-btus btu-delet">删除</button>                                                                     ' +
-			' 					<button type="button" class="operation-btus btu-cancel">取消</button>                                                                     ' +
-			' 					<button type="button" class="operation-btus btu-add guibtu-add">添加</button>                                                                    ' +
-			' 				</div>                                                                                                    ' +
-			' 			</div>                                                                                                        ' +
-			' 			<div class="layui-form-item">                                                                                 ' +
-			' 				<label class="layui-form-label">规格值：</label>                                                              ' +
-			' 			<div class="num-content">                                                                                 ' +
-			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
-			' 					<input type="text" name="goods_standard_value[]" id="" value=""  placeholder="" style="padding-left:10px;"/>                                                          ' +
-			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
-			' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
-			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
-			' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
-			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
-			' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
-			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
-			' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
-			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
-			' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
-			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
-			' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
-			' 				</div>                                                                                                    ' +
-			' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
-			' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
-			' 				</div>                                                                                                    ' +
-			' 				</div>                                                                                                    ' +
-			' 			</div>                                                                                                        ' +
-			'          </div>                                                                                                        ';
-	</script>
-	<script type="text/javascript">
-		// TODO获取车牌Ajax
-		var times_id = new Array();
-		var displacements_id = new Array();
-		var years_id = new Array();
-		$.ajax({
-			type: "POST",
-			url: "{:url('admin/Goods/add')}",
-			data: {},
-			dataType: "json",
-			success: function(data) {
-				console.log(data);
-				var datas = data.data
-				for(var i = 0; i < datas.car_series.length; i++) {
-					var series = new Array();
-					var displacement = new Array();
-					var year = new Array();
-					for(var j = 0; j < datas.car_brand.length; j++) {
-						if(datas.car_brand[j].brand == datas.car_series[i].brand) {
-							series.push({
-								"series": datas.car_brand[j].series
-							});
-							displacement.push({
-								"series": datas.car_brand[j].displacement
-							});
-							year.push({
-								"series": datas.car_brand[j].year
-							});
-						}
+            ' 				</div>                                                                                                    ' +
+            ' 				<div class="layui-input-inline noshow add-names" style="">                                                ' +
+            ' 				<button type="button" class="operation-btus btu-delet">删除</button>                                                                     ' +
+            ' 					<button type="button" class="operation-btus btu-cancel">取消</button>                                                                     ' +
+            ' 					<button type="button" class="operation-btus btu-add guibtu-add">添加</button>                                                                    ' +
+            ' 				</div>                                                                                                    ' +
+            ' 			</div>                                                                                                        ' +
+            ' 			<div class="layui-form-item">                                                                                 ' +
+            ' 				<label class="layui-form-label">规格值：</label>                                                              ' +
+            ' 			<div class="num-content">                                                                                 ' +
+            ' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
+            ' 					<input type="text" name="goods_standard_value[]" id="" value=""  placeholder="" style="padding-left:10px;"/>                                                          ' +
+            ' 				</div>                                                                                                    ' +
+            ' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
+            ' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
+            ' 				</div>                                                                                                    ' +
+            ' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
+            ' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
+            ' 				</div>                                                                                                    ' +
+            ' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
+            ' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
+            ' 				</div>                                                                                                    ' +
+            ' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
+            ' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
+            ' 				</div>                                                                                                    ' +
+            ' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
+            ' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
+            ' 				</div>                                                                                                    ' +
+            ' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
+            ' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
+            ' 				</div>                                                                                                    ' +
+            ' 				<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;" >                                                                          ' +
+            ' 					<input type="text" name="goods_standard_value[]" id="" value="" placeholder=""  style="padding-left:10px;"/>                                                          ' +
+            ' 				</div>                                                                                                    ' +
+            ' 				</div>                                                                                                    ' +
+            ' 			</div>                                                                                                        ' +
+            '          </div>                                                                                                        ';
+    </script>
+    <script type="text/javascript">
+        // TODO获取车牌Ajax
+        var times_id = new Array();
+        var displacements_id = new Array();
+        var years_id = new Array();
+        $.ajax({
+            type: "POST",
+            url: "{:url('admin/Goods/add')}",
+            data: {},
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                var datas = data.data
+                for (var i = 0; i < datas.car_series.length; i++) {
+                    var series = new Array();
+                    var displacement = new Array();
+                    var year = new Array();
+                    for (var j = 0; j < datas.car_brand.length; j++) {
+                        if (datas.car_brand[j].brand == datas.car_series[i].brand) {
+                            series.push({
+                                "series": datas.car_brand[j].series
+                            });
+                            displacement.push({
+                                "series": datas.car_brand[j].displacement
+                            });
+                            year.push({
+                                "series": datas.car_brand[j].year
+                            });
+                        }
 
-					}
-					times_id[datas.car_series[i].brand] = series;
+                    }
+                    times_id[datas.car_series[i].brand] = series;
 
-					displacements_id[datas.car_series[i].brand] = displacement;
-					years_id[datas.car_series[i].brand] = year;
-				}
+                    displacements_id[datas.car_series[i].brand] = displacement;
+                    years_id[datas.car_series[i].brand] = year;
+                }
 
-				var city_obj = times_id;
-				for(var key in city_obj) {
-					$("#province").append("<option value='" + key + "'>" + key + "</option>");
-				}
+                var city_obj = times_id;
+                for (var key in city_obj) {
+                    $("#province").append("<option value='" + key + "'>" + key + "</option>");
+                }
 
-			},
-			error: function(data) {
-				console.log("错误");
-			}
-		});
-	</script>
+            },
+            error: function(data) {
+                console.log("错误");
+            }
+        });
+    </script>
 
-	<script type="text/javascript">
-		// TODO车牌去重函数
-		function quchong(arr) {
-			var b = [];
-			for(var k in arr) {
-				if(b.indexOf(arr[k].series) == -1) {
-					b.push(arr[k].series);
-				}
-			}
-			return b;
-		}
-		var formSelects = layui.formSelects;
-		layui.config({
-			base: "js/"
-		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
-			var form = layui.form(),
-				layedit = layui.layedit,
-				layer = parent.layer === undefined ? layui.layer : parent.layer,
-				laypage = layui.laypage,
-				$ = layui.jquery;
-			layedit.build('demo');
+    <script type="text/javascript">
+        // TODO车牌去重函数
+        function quchong(arr) {
+            var b = [];
+            for (var k in arr) {
+                if (b.indexOf(arr[k].series) == -1) {
+                    b.push(arr[k].series);
+                }
+            }
+            return b;
+        }
+        var formSelects = layui.formSelects;
+        layui.config({
+            base: "js/"
+        }).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
+            var form = layui.form(),
+                layedit = layui.layedit,
+                layer = parent.layer === undefined ? layui.layer : parent.layer,
+                laypage = layui.laypage,
+                $ = layui.jquery;
+            layedit.build('demo');
 
-			// TODO限制分组和品牌
-                 form.on('select(goods_type_id)', function(data) {
-                 	var value=data.elem.selectedOptions[0].text;
-                 	value=$.trim(value);
-                 	console.log(value);
-                 	if(value!="请选择"){
-                 		$("#goods_brand_id").attr("disabled","false"); 
-                 		form.render();
-                 	}
-                 	else{
-                 		$("#goods_brand_id").attr("disabled","false"); 
-                 		form.render();
-                 	}
+            // TODO限制分组和品牌
+            form.on('select(goods_type_id)', function(data) {
+                var value = data.elem.selectedOptions[0].text;
+                value = $.trim(value);
+                console.log(value);
+                if (value != "请选择") {
+                    $("#goods_brand_id").attr("disabled", "false");
+                    form.render();
+                } else {
+                    $("#goods_brand_id").attr("disabled", "false");
+                    form.render();
+                }
 
-                 });
-			//TODO监听车牌变化时间
-			form.on('select(province)', function(data) {
-				var now_province = data.value;
-				$("#city").html('<option value="">请选择车系</option>');
-				$("#displacement").html('<option value="">请选择排量</option>');
-				$("#production").html('<option value="">请选择年产</option>');
-				formSelects.render();
-				//								quchong(times_id[now_province])/;
-				var num = 0;
-				var tim_id = quchong(times_id[now_province]);
-				var displacemen_id = quchong(displacements_id[now_province]);
-				var year_id = quchong(years_id[now_province]);
-				for(var k in tim_id) {
-					var now_city = tim_id[k];
-					$("#city").append('<option value="' + now_city + '">' + now_city + '</option>');
+            });
+            //TODO监听车牌变化时间
+            form.on('select(province)', function(data) {
+                var now_province = data.value;
+                $("#city").html('<option value="">请选择车系</option>');
+                $("#displacement").html('<option value="">请选择排量</option>');
+                $("#production").html('<option value="">请选择年产</option>');
+                formSelects.render();
+                //								quchong(times_id[now_province])/;
+                var num = 0;
+                var tim_id = quchong(times_id[now_province]);
+                var displacemen_id = quchong(displacements_id[now_province]);
+                var year_id = quchong(years_id[now_province]);
+                for (var k in tim_id) {
+                    var now_city = tim_id[k];
+                    $("#city").append('<option value="' + now_city + '">' + now_city + '</option>');
 
-				}
-				for(var k in displacemen_id) {
-					var now_displacement = displacemen_id[k];
-					$("#displacement").append('<option value="' + now_displacement + '">' + now_displacement + '</option>');
-				}
-				for(var k in year_id) {
-					var now_production = year_id[k];
-					$("#production").append('<option value="' + now_production + '">' + now_production + '</option>');
-				}
-				formSelects.render();
+                }
+                for (var k in displacemen_id) {
+                    var now_displacement = displacemen_id[k];
+                    $("#displacement").append('<option value="' + now_displacement + '">' + now_displacement + '</option>');
+                }
+                for (var k in year_id) {
+                    var now_production = year_id[k];
+                    $("#production").append('<option value="' + now_production + '">' + now_production + '</option>');
+                }
+                formSelects.render();
 
-			});
-			// TODO点击添加页面
-			$(".add-sevice").click(function() {
-				layer.open({
-					type: 1,
-					skin: 'layui-layer-rim', //加上边框
-					area: ['420px', '240px'], //宽高
-					content: 'html内容'
-				});
-			})
+            });
+            // TODO点击添加页面
+            $(".add-sevice").click(function() {
+                layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['420px', '240px'], //宽高
+                    content: 'html内容'
+                });
+            })
 
-			// TODO商品规格变化
-			form.on('radio(guige)', function(data) {
-				var checkval = data.value;
-				if(checkval == "通用") {
-					$(".general").removeClass("noshow");
-					$(".special").addClass("noshow");
-				} else {
-					$(".special").removeClass("noshow");
-					$(".general ").addClass("noshow");
-				}
+            // TODO商品规格变化
+            form.on('radio(guige)', function(data) {
+                var checkval = data.value;
+                if (checkval == "通用") {
+                    $(".general").removeClass("noshow");
+                    $(".special").addClass("noshow");
+                } else {
+                    $(".special").removeClass("noshow");
+                    $(".general ").addClass("noshow");
+                }
 
-			});
-			//TODO点击专用添加规格项目添加页面
-			$(".special_buts").click(function() {
-				$("#special_content").append(dhtml);
-				$.ajax({
-					type: "POST",
-					url: "{:url('admin/Goods/standard_name')}",
-					data: {},
-					success: function(data) {
-						console.log(data);
-						var data = eval('(' + data + ')');
-						for(var i = 0; i < data.data.length; i++) {
-							var dhtml = "";
-							dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
-							$(".universal_standard_name").append(dhtml);
-						}
+            });
+            //TODO点击专用添加规格项目添加页面
+            $(".special_buts").click(function() {
+                $("#special_content").append(dhtml);
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('admin/Goods/standard_name')}",
+                    data: {},
+                    success: function(data) {
+                        console.log(data);
+                        var data = eval('(' + data + ')');
+                        for (var i = 0; i < data.data.length; i++) {
+                            var dhtml = "";
+                            dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
+                            $(".universal_standard_name").append(dhtml);
+                        }
 
-						form.render('select');
-					},
-					error: function(data) {
-						console.log(data)
-					}
-				});
-				form.render('select');
+                        form.render('select');
+                    },
+                    error: function(data) {
+                        console.log(data)
+                    }
+                });
+                form.render('select');
 
-			});
-			//TODO点击通用添加规格项目添加页面
-			$(".general_buts").click(function() {
-				$("#general_content").append(dhtml);
-				$.ajax({
-					type: "POST",
-					url: "{:url('admin/Goods/standard_name')}",
-					data: {},
-					success: function(data) {
-						console.log(data);
-						var data = eval('(' + data + ')');
-						for(var i = 0; i < data.data.length; i++) {
-							var dhtml = "";
-							dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
-							$(".universal_standard_name").append(dhtml);
-						}
+            });
+            //TODO点击通用添加规格项目添加页面
+            $(".general_buts").click(function() {
+                $("#general_content").append(dhtml);
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('admin/Goods/standard_name')}",
+                    data: {},
+                    success: function(data) {
+                        console.log(data);
+                        var data = eval('(' + data + ')');
+                        for (var i = 0; i < data.data.length; i++) {
+                            var dhtml = "";
+                            dhtml = '<option value="' + data.data[i].standard_name + '">' + data.data[i].standard_name + '</option>'
+                            $(".universal_standard_name").append(dhtml);
+                        }
 
-						form.render('select');
-					},
-					error: function(data) {
-						console.log(data)
-					}
-				});
-				form.render('select');
+                        form.render('select');
+                    },
+                    error: function(data) {
+                        console.log(data)
+                    }
+                });
+                form.render('select');
 
-			});
+            });
 
-			//TODO点击添加属性
-			$(".add-attribute").on('click', function() {
+            //TODO点击添加属性
+            $(".add-attribute").on('click', function() {
 
-				$(this).addClass("noshow");
-				$(this).siblings(".add-attributes").removeClass("noshow");
-			});
-			//	TODO点击添加添加规格名
-			$("#general_content").on('click', ".add-name", function() {
-				$(this).addClass("noshow");
-				$(this).siblings(".add-names").removeClass("noshow");
-			});
-			$("#special_content").on('click', ".add-name", function() {
-				$(this).addClass("noshow");
-				$(this).siblings(".add-names").removeClass("noshow");
-			});
-			//TODO点击取消按钮
-			$("#general_content").on('click', ".btu-cancel", function() {
-				$(this).parent(".add-names").addClass("noshow");
-				$(this).parent().siblings(".add-names").addClass("noshow");
-				$(this).parent().siblings(".add-name").removeClass("noshow");
-			});
-			$("#special_content").on('click', ".add-name", function() {
-				$(this).addClass("noshow");
-				$(this).siblings(".add-names").removeClass("noshow");
-			});
-			// TODO通用点击添加按钮
-			$("#general_content").on('click', ".guibtu-add", function() {
-				var text = $(this).parent().siblings(".add-names").children("input").val();
-				$.ajax({
-					type: "POST",
-					url: "{:url('admin/Goods/name')}",
-					data: {
-						"goods_name": text
-					},
-					success: function(data) {
-						layer.msg('添加成功');
-						var dhtmls = "";
-						dhtmls = '<option value="' + text + '">' + text + '</option> ';
-						$(".universal_standard_name").prepend(dhtmls);
-						form.render('select');
-					},
-					error: function(data) {
-						console.log(data)
-					}
-				});
+                $(this).addClass("noshow");
+                $(this).siblings(".add-attributes").removeClass("noshow");
+            });
+            //	TODO点击添加添加规格名
+            $("#general_content").on('click', ".add-name", function() {
+                $(this).addClass("noshow");
+                $(this).siblings(".add-names").removeClass("noshow");
+            });
+            $("#special_content").on('click', ".add-name", function() {
+                $(this).addClass("noshow");
+                $(this).siblings(".add-names").removeClass("noshow");
+            });
+            //TODO点击取消按钮
+            $("#general_content").on('click', ".btu-cancel", function() {
+                $(this).parent(".add-names").addClass("noshow");
+                $(this).parent().siblings(".add-names").addClass("noshow");
+                $(this).parent().siblings(".add-name").removeClass("noshow");
+            });
+            $("#special_content").on('click', ".add-name", function() {
+                $(this).addClass("noshow");
+                $(this).siblings(".add-names").removeClass("noshow");
+            });
+            // TODO通用点击添加按钮
+            $("#general_content").on('click', ".guibtu-add", function() {
+                var text = $(this).parent().siblings(".add-names").children("input").val();
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('admin/Goods/name')}",
+                    data: {
+                        "goods_name": text
+                    },
+                    success: function(data) {
+                        layer.msg('添加成功');
+                        var dhtmls = "";
+                        dhtmls = '<option value="' + text + '">' + text + '</option> ';
+                        $(".universal_standard_name").prepend(dhtmls);
+                        form.render('select');
+                    },
+                    error: function(data) {
+                        console.log(data)
+                    }
+                });
 
-			});
-			//TODO专用点击添加按钮
-			$("#special_content").on('click', ".guibtu-add", function() {
-				var text = $(this).parent().siblings(".add-names").children("input").val();
-				$.ajax({
-					type: "POST",
-					url: "{:url('admin/Goods/name')}",
-					data: {
-						"goods_name": text
-					},
-					success: function(data) {
-						layer.msg('添加成功');
-						var dhtmls = "";
-						dhtmls = '<option value="' + text + '">' + text + '</option> ';
-						$(".universal_standard_name").prepend(dhtmls);
-						form.render('select');
-					},
-					error: function(data) {
-						console.log(data)
-					}
-				});
+            });
+            //TODO专用点击添加按钮
+            $("#special_content").on('click', ".guibtu-add", function() {
+                var text = $(this).parent().siblings(".add-names").children("input").val();
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('admin/Goods/name')}",
+                    data: {
+                        "goods_name": text
+                    },
+                    success: function(data) {
+                        layer.msg('添加成功');
+                        var dhtmls = "";
+                        dhtmls = '<option value="' + text + '">' + text + '</option> ';
+                        $(".universal_standard_name").prepend(dhtmls);
+                        form.render('select');
+                    },
+                    error: function(data) {
+                        console.log(data)
+                    }
+                });
 
-			});
+            });
 
-			// end商品规格变化
-			// TODO获取车牌Ajax
-			$.ajax({
-				type: "POST",
-				url: "{:url('admin/Goods/property_show')}",
-				data: {},
-				success: function(data) {
-					var data = eval('(' + data + ')');
-					for(var i = 0; i < data.data.length; i++) {
-						var dhtmls = '<option value="' + data.data[i].property_name + '">' + data.data[i].property_name + '</option> ';
-						$(".dedicated_property").append(dhtmls);
+            // end商品规格变化
+            // TODO获取车牌Ajax
+            $.ajax({
+                type: "POST",
+                url: "{:url('admin/Goods/property_show')}",
+                data: {},
+                success: function(data) {
+                    var data = eval('(' + data + ')');
+                    for (var i = 0; i < data.data.length; i++) {
+                        var dhtmls = '<option value="' + data.data[i].property_name + '">' + data.data[i].property_name + '</option> ';
+                        $(".dedicated_property").append(dhtmls);
 
-					}
-					form.render('select');
+                    }
+                    form.render('select');
 
-				},
-				error: function(data) {
-					console.log(data)
-				}
-			});
-		})
-	</script>
+                },
+                error: function(data) {
+                    console.log(data)
+                }
+            });
+        })
+    </script>
 
-	<script type="text/javascript">
-		//实例化编辑器
-		//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-		var ue = UE.getEditor('editor');
-	</script>
+    <script type="text/javascript">
+        //实例化编辑器
+        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+        var ue = UE.getEditor('editor');
+    </script>
 
-	{/block}
+    {/block}
 
 </body>
 

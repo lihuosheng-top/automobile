@@ -1,10 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <!-- 三级城市 -->
+    <link rel="stylesheet" href="__STATIC__/index/css/plugin/LArea.min.css">
+    <title>添加收货地址</title>
+    <style>
+        html, body, .wrapper{background-color: #fff;}
+        .header{position: relative;width: 100%;height: .88rem;background-color: #fff; border-bottom: 1px solid #eee;}
+        .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
+        .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .save-btn{position: absolute; right: .3rem; top: 50%; transform: translateY(-50%); background-color: #fff; border: 0; outline: none; font-size: .34rem; color: #333;}
+        .myul li{padding: 0 .3rem; border-bottom: 1px solid #eee; height: 1rem; display: flex; align-items: center; position: relative;justify-content: space-between;}
+        .p-title{font-size: .3rem; color: #333;width: 2rem;}
+        .icon-more{position: absolute;top: 50%;right: .3rem;width: .26rem;height: .38rem;background-position: -7.25rem -1.75rem;transform: translateY(-50%);}
+        .text-input{flex: 1;height: .83rem;box-sizing: border-box;outline: none;font-size: .3rem;}
+        .switch_checkbox {display: none;}
+        .switch_label {margin-top: 5px;background-color: rgb(222, 222, 222);display: inline-block;position: relative;height: 20px;width: 40px;border-radius: 15px;}
+        /* ~选择器 选择前面的input checkbox被选中状态下的 span标签*/
+        .switch_checkbox:checked~.switch_label .switch_circle {left: 20px;}
+        .switch_circle {position: absolute;height: 20px;width: 20px;border-radius: 50%;border: 1px solid #eee;background-color: #fff;left: 0;top: -1px;-webkit-transition: all 0.3s;-moz-transition: all 0.3s;-ms-transition: all 0.3s;-o-transition: all 0.3s;transition: all 0.3s;}
+        /* ~选择器 选择前面的input checkbox被选中状态下的 label标签*/
+        .switch_checkbox:checked~.switch_label {background: rgb(0, 153, 255);}
+
+    </style>
 </head>
 <body>
+    <div class="wrapper">
+        <header class="header">
+            <a href="member_address" class="spr icon-back"></a>
+            <h3>添加收货地址</h3>
+            <button class="save-btn">保存</button>
+        </header>
+        <ul class="myul">
+            <li>
+                <p class="p-title">收货人姓名</p>
+                <input type="text" class="text-input" placeholder="请输入">
+            </li>
+            <li>
+                <p class="p-title">手机号码</p>
+                <input type="text" class="text-input" placeholder="请输入">
+            </li>
+            <li>
+                <p class="p-title">所在地区</p>
+                <a href="javascript:;" class="spr icon-more"></a>
+                <input type="text" id="area-li" readonly class="text-input" placeholder="请选择">
+                <input type="hidden" id="value1">
+            </li>
+            <li>
+                <p class="p-title">详细地址</p>
+                <input type="text" class="text-input" placeholder="请输入">
+            </li>
+            <li>
+                <p class="p-title">设为默认</p>
+                <div class="switch-box">
+                    <input type="checkbox" class="switch_checkbox" id="switch_checkbox">
+                    <label for="switch_checkbox" class="switch_label">
+                        <span class="switch_circle"></span>
+                    </label>
+                </div>
+            </li>
+        </ul>        
+    </div>
 
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <!-- 三级城市脚本 start -->
+    <script src="__STATIC__/index/js/plugin/LAreaData1.js"></script>
+    <script src="__STATIC__/index/js/plugin/LAreaData2.js"></script>
+    <script src="__STATIC__/index/js/plugin/LArea.min.js"></script>
+    <!-- 三级城市脚本 end -->
+    <script>
+        // http://www.jq22.com/jquery-info8371 插件地址  三级城市
+        var area = new LArea();
+        area.init({
+            'trigger': '#area-li',//触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+            'valueTo': '#value1',//选择完毕后id属性输出到该位置
+            'keys': { //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+                id: 'id',
+                name: 'name'
+            },
+            'type': 1,//数据源类型
+            'data': LAreaData//数据源
+        })
+        area.value=[1,13,1];//控制初始位置，注意：该方法并不会影响到input的value
+    </script>
+    <script>
+        $('.save-btn').click(function(){
+            location.href = 'member_address';
+        })
+    </script>
 </body>
 </html>
