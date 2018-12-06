@@ -128,7 +128,8 @@ class Shop extends Controller{
      */
     public function del($id){
         if($id>0){
-            $phone =Db::name("store")->field('phone_num')->where('store_id',$id)->find();
+            $user_id =Db::name("store")->field('user_id')->where('store_id',$id)->find();
+            $phone =Db::name("user")->field('phone_num')->where('user_id',$user_id["user_id"])->find();
             $datas =Db::name("admin")->where('phone',$phone['phone_num'])->find();
             if(!empty($datas)){
                 Db::name("admin")->where('phone',$phone['phone_num'])->delete();
