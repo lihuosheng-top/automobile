@@ -95,6 +95,59 @@ $.ajax({
             $('html').css('overflow', 'auto');
         })
 
+        // 更新信息返回
+        $.ajax({
+            url: 'return_store_information',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    var data = res.data;
+                    $('.shop-name').val(data.store_name);
+                    // $('.name').val()
+                    $('.seat-phone').val(data.store_owner_seat_num);
+                    $('#logo-img')[0].src = 'uploads/'+data.store_logo_images;
+                    // 经营范围
+                    if(data.service_setting_id !== null){
+                        // 当服务商更新信息，将数组清空，再插入id
+                        service_setting_id = [];
+                        $('.business-li').show();
+                        var myArr = data.service_setting_id.split(',');
+                        $.each(myArr, function(idx, val){
+                            service_setting_id.push(val);
+                            $('#range-'+val+'').attr('checked', 'checked');
+                        })
+                    }
+                    // 店铺所在区域
+                    $('#area-li').val(data.store_city_address);
+                    // 店铺详细地址
+                    $('.detail-addr').val(data.store_street_address);
+                    // 店铺信息
+                    if(data.store_information !== null){
+                        $('.shop-info').val(data.store_information);
+                    }
+                    // 邮箱
+                    if(data.store_owner_email !== null){
+                        $('.email').val(data.store_owner_email);
+                    }
+                    // 绑定微信
+                    if(data.store_owner_wechat !== null){
+                        $('.wechat').val(data.store_owner_wechat);
+                    }
+                    // 我要加盟
+                    $('#'+data.role_id+'').attr('checked', 'checked');
+                    $('.next-button').text('更新');
+
+                }else if(res.status == 0){
+                    $('.next-button').text('下一步');
+                }
+            },
+            error: function(){
+                console.error('error');
+            }
+        })
+
         // 下一步按钮
         $('.next-button').click(function(){
             var store_name,
@@ -140,7 +193,6 @@ $.ajax({
             }else{
                 store_logo_images = null;
             }
-            
 
             // 店铺所在区域
             if($('#area-li').val() !== ''){
@@ -351,56 +403,6 @@ $.ajax({
                     }
                 }
             }  
-        })
-
-
-        // 更新信息返回
-        $.ajax({
-            url: 'return_store_information',
-            type: 'POST',
-            dataType: 'JSON',
-            success: function(res){
-                console.log(res);
-                if(res.status == 1){
-                    var data = res.data;
-                    $('.shop-name').val(data.store_name);
-                    // $('.name').val()
-                    $('.seat-phone').val(data.store_owner_seat_num);
-                    $('#logo-img')[0].src = 'uploads/'+data.store_logo_images;
-                    // 经营范围
-                    if(data.service_setting_id !== null){
-                        $('.business-li').show();
-                        var myArr = data.service_setting_id.split(',');
-                        $.each(myArr, function(idx, val){
-                            $('#range-'+val+'').attr('checked', 'checked');
-                        })
-                    }
-                    // 店铺所在区域
-                    $('#area-li').val(data.store_city_address);
-                    // 店铺详细地址
-                    $('.detail-addr').val(data.store_street_address);
-                    // 店铺信息
-                    if(data.store_information !== null){
-                        $('.shop-info').val(data.store_information);
-                    }
-                    // 邮箱
-                    if(data.store_owner_email !== null){
-                        $('.email').val(data.store_owner_email);
-                    }
-                    // 绑定微信
-                    if(data.store_owner_wechat !== null){
-                        $('.wechat').val(data.store_owner_wechat);
-                    }
-                    // 我要加盟
-                    $('#'+data.role_id+'').attr('checked', 'checked');
-                    $('.next-button').text('更新');
-                }else if(res.status == 0){
-                    $('.next-button').text('下一步');
-                }
-            },
-            error: function(){
-                console.error('error');
-            }
         })
 
     },
