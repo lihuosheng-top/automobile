@@ -411,10 +411,7 @@ class Goods extends Controller{
                 $goods_images = db("goods_images")->where("goods_id", $value)->select();
                 foreach ($goods_images as $val) {
                     if ($val['goods_images'] != null) {
-                        unlink(ROOT_PATH . 'public' . DS . 'upload/' . $val['goods_images']);
-                    }
-                    if ($val['goods_quality_img'] != null) {
-                        unlink(ROOT_PATH . 'public' . DS . 'upload/' . $val['goods_quality_img']);
+                        unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $val['goods_images']);
                     }
                     GoodsImages::destroy($val['id']);
                 }
