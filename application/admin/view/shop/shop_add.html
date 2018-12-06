@@ -68,7 +68,7 @@
 
     {if !empty($data)}
     {volist name="data" id="vo"}
-    <form class="layui-form" action="" method="post">
+    <form class="layui-form" action="{:url('admin/Shop/update',['id'=>$vo.store_id])}" method="post">
 		<p class="title">店铺基本信息</p>
 		<div class="layui-form-item ">
 			<label class="layui-form-label">店铺名称:</label>
@@ -226,12 +226,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label">是否付费上架：</label>
             <div class="layui-input-block">
-                {if $vo.store_is_pay==1}
+                {if $vo.store_is_pay ==0}
+                <input type="radio" name="store_is_pay" value="1" title="选择付费上架" >
+                <input type="radio" name="store_is_pay" value="-1" title="选择不付费上架" >
+                {elseif $vo.store_is_pay==1}
                 <input type="radio" name="store_is_pay" value="1" title="付费上架" checked="">
-                <input type="radio" name="store_is_pay" value="0" title="不付费上架" >
-                {elseif  $vo.store_is_pay==0}
+                <input type="radio" name="store_is_pay" value="-1" title="不付费上架" >
+                {elseif  $vo.store_is_pay==-1}
                 <input type="radio" name="store_is_pay" value="1" title="付费上架">
-                <input type="radio" name="store_is_pay" value="0" title="不付费上架" checked="">
+                <input type="radio" name="store_is_pay" value="-1" title="不付费上架" checked="">
                 {/if}
             </div>
         </div>
@@ -264,7 +267,6 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <input type="hidden" name="id" value="">
                 <button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
                 <button class="layui-btn" type="submit" id="submits">保存</button>
             </div>

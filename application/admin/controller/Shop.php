@@ -83,7 +83,7 @@ class Shop extends Controller{
             }
         }
         $service_setting_data =Db::name('service_setting')->where('service_setting_status',1)->select();
-        dump($store_datas);
+//        dump($store_datas);
         return view("shop_add",['data'=>$store_datas,'service_setting_data'=>$service_setting_data,'imgs'=>$imgs,'address'=>$address,'service_setting_id'=>$service_setting_id]);
     }
 
@@ -101,6 +101,18 @@ class Shop extends Controller{
         $data =$this->request->post();
         $bool =Db::name('store')->where('store_id',$id)->update($data);
         if($bool){
+            //通过则可以登录后台
+            if($data['operation_status']==1){
+                $user_id =Db::name("store")->field("user_id")->where("store_id",$id)->find();
+                $phone =Db::name("user")->field("phone_num")->where('id',$user_id['user_id'])->find();
+                Db::name('admin')->where('phone',$phone["phone_num"])->update(['status'=>1]);
+            }
+            //拒绝不可以登录后台
+            if($data['operation_status']==-1){
+                $user_id =Db::name("store")->field("user_id")->where("store_id",$id)->find();
+                $phone =Db::name("user")->field("phone_num")->where('id',$user_id['user_id'])->find();
+                Db::name('admin')->where('phone',$phone["phone_num"])->update(['status'=>0]);
+            }
             $this->success('修改成功','admin/Shop/index');
         }else{
             $this->error('修改失败');
