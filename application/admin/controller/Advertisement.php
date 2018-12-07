@@ -12,6 +12,7 @@ use think\Controller;
 use think\Db;
 use think\Request;
 use think\Image;
+use think\Session;
 
 class  Advertisement extends  Controller{
 
@@ -21,8 +22,19 @@ class  Advertisement extends  Controller{
      * 郭杨
      */
 
-    public function accessories_business_advertising(){
-        $platform = db("accessories")->paginate(20);
+    public function accessories_business_advertising(Request $request){
+        $user_phone = Session::get("user_info");
+         dump($user_phone[0]["phone"]);
+        // $platform = Db::table('tb_accessories')
+        // ->field("tb_accessories.*,tb_store.store_name")
+        // ->join("tb_user","tb_accessories.id = tb_user.id",'left')
+        // ->join("tb_store","tb_store.user_id = tb_user.id","left")
+        // ->where('tb_user.phone_num','$user_phone[0]["phone"]')
+        // ->select();
+        $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
+        $store_name = db("store")->where("user_id",$user)->value("store_name");
+        halt($store_name);
+        exit();
         return view('accessories_business_advertising',['platform'=>$platform]);
     }
 
