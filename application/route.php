@@ -108,8 +108,11 @@ Route::group("",[
     /*TODO:我的页面开始*/
     "member_equity"=>"index/member/member_equity",//会员权益
     "member_address"=>"index/member/member_address",//地址管理
+    "member_address_information"=>"index/member/member_address_information",//地址管理列表数据返回
     "member_address_add"=>"index/member/member_address_add",//地址管理添加页面
     "member_address_adds"=>"index/member/member_address_adds",//地址管理添加功能(ajax)
+    "member_address_edit_information"=>"index/member/member_address_edit_information",//地址管理编辑页面数据返回
+    "member_address_edit"=>"index/member/member_address_edit",//地址管理编辑功能(ajax)
     "member_collection"=>"index/member/member_collection",//我的收藏
     /*TODO:我的页面结束*/
     /*TODO:消息开始*/

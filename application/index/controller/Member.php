@@ -37,6 +37,24 @@ class  Member extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
+     * Notes:所有地址列表数据返回
+     **************************************
+     */
+    public function member_address_information(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $data =Db::name("user_address")->where('user_id',$user_id)->select();
+            if(!empty($data)){
+                return ajax_success('地址列表信息',$data);
+            }else{
+                return ajax_error('没有填写地址记录',['status'=>0]);
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
      * Notes:收货地址添加
      **************************************
      * @param Request $request
@@ -48,8 +66,7 @@ class  Member extends Controller{
             $harvester_phone_num = $request->only('harvester_phone_num')['harvester_phone_num'];
             $address_name = $request->only('address_name')['address_name'];
             $status = $request->only('status')['status'];
-            $address_data =explode($address_name,',');
-            $harvester_real_address =$address_data[0].$address_data[1].$address_data[2].$address_data[3];
+            $harvester_real_address =$request->only('harvester_real_address')['harvester_real_address'];
             $data =[
                 "user_id"=>$user_id,
                 "harvester"=>$harvester,
@@ -69,7 +86,54 @@ class  Member extends Controller{
         }
     }
 
-
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:编辑地址数据返回
+     **************************************
+     * @param Request $request
+     */
+    public function member_address_edit_information(Request $request){
+        if($request->isPost()){
+            $id = $request->only('id')['id'];
+            $data =Db::name("user_address")->where('id',$id)->find();
+            if(!empty($data)){
+                return ajax_success('地址信息返回成功',$data);
+            }else{
+                return ajax_error('地址信息返回失败',['status'=>0]);
+            }
+        }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:收货地址编辑
+     **************************************
+     * @param Request $request
+     */
+    public function member_address_edit(Request $request){
+        if($request->isPost()){
+            $id = $request->only('id')['id'];
+            $harvester = $request->only('harvester')['harvester'];
+            $harvester_phone_num = $request->only('harvester_phone_num')['harvester_phone_num'];
+            $address_name = $request->only('address_name')['address_name'];
+            $status = $request->only('status')['status'];
+            $harvester_real_address =$request->only('harvester_real_address')['harvester_real_address'];
+            $data =[
+                "harvester"=>$harvester,
+                "harvester_phone_num"=>$harvester_phone_num,
+                "address_name"=>$address_name,
+                "status"=> $status,
+                "harvester_real_address"=>$harvester_real_address
+            ];
+            $bool_id =Db::name("user_address")->where('id',$id)->update($data);
+            if($bool_id){
+                return ajax_success("编辑成功",$bool_id);
+            }else{
+                return ajax_error("编辑失败",['status'=>0]);
+            }
+        }
+    }
 
     /**
      **************李火生*******************
@@ -81,6 +145,8 @@ class  Member extends Controller{
     public function member_address_add(){
         return view('member_address_add');
     }
+
+
 
 
     /**
