@@ -86,6 +86,12 @@ class  Member extends Controller{
         }
     }
 
+
+
+//    public function member_address_del(Request $request){
+//
+//    }
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -95,15 +101,37 @@ class  Member extends Controller{
      */
     public function member_address_edit_information(Request $request){
         if($request->isPost()){
-            $id = $request->only('id')['id'];
+            $id = Session::get('address_id');
             $data =Db::name("user_address")->where('id',$id)->find();
             if(!empty($data)){
+                Session::clear("address_id");
                 return ajax_success('地址信息返回成功',$data);
             }else{
                 return ajax_error('地址信息返回失败',['status'=>0]);
             }
         }
     }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:编辑地址点击一个id传给我
+     **************************************
+     * @param Request $request
+     */
+    public function member_save_address_id(Request $request){
+        if($request->isPost()){
+            $id =$request->only(['id'])['id'];
+            if(!empty($id)){
+                Session::set('address_id',$id);
+                return ajax_success('保存地址id成功',['status'=>1]);
+            }else{
+                return ajax_error('没有这条地址',['status'=>0]);
+            }
+        }
+    }
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -145,6 +173,8 @@ class  Member extends Controller{
     public function member_address_add(){
         return view('member_address_add');
     }
+
+
 
 
 

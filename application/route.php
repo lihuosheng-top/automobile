@@ -111,6 +111,7 @@ Route::group("",[
     "member_address_information"=>"index/member/member_address_information",//地址管理列表数据返回
     "member_address_add"=>"index/member/member_address_add",//地址管理添加页面
     "member_address_adds"=>"index/member/member_address_adds",//地址管理添加功能(ajax)
+    "member_save_address_id"=>"index/member/member_save_address_id",//地址编辑地址点击一个id传给后台
     "member_address_edit_information"=>"index/member/member_address_edit_information",//地址管理编辑页面数据返回
     "member_address_edit"=>"index/member/member_address_edit",//地址管理编辑功能(ajax)
     "member_collection"=>"index/member/member_collection",//我的收藏
@@ -370,10 +371,13 @@ Route::group("admin",[
 
 
     /*服务商广告*/
-    "service_business_advertising"=>"admin/service_advertisement/service_business_advertising",
-    "service_business_add"=>"admin/service_advertisement/service_business_add",
-    "service_business_edit"=>"admin/service_advertisement/service_business_edit",
-    "service_business_del"=>"admin/service_advertisement/del",
+    "service_business_advertising"=>"admin/service_advertisement/service_business_advertising", //汽车服务商广告显示
+    "service_business_add"=>"admin/service_advertisement/service_business_add",                 //汽车服务商广告增加
+    "service_business_save"=>"admin/service_advertisement/service_business_save",               //汽车服务商广告保存
+    "service_business_edit"=>"admin/service_advertisement/service_business_edit",               //汽车服务商广告编辑
+    "service_business_updata"=>"admin/service_advertisement/service_business_updata",           //汽车服务商广告更新
+    "service_business_del"=>"admin/service_advertisement/del",                                  //汽车服务商广告删除
+    "service_business_search"=>"admin/service_advertisement/service_business_search",           //汽车服务商广告搜索
 
 
 
