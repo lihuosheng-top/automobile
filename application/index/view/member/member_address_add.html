@@ -36,6 +36,7 @@
             <a href="member_address" class="spr icon-back"></a>
             <h3>添加收货地址</h3>
             <button class="save-btn">保存</button>
+            <button class="updata-btn" style="display: none;">更新</button>
         </header>
         <ul class="myul">
             <li>
@@ -91,6 +92,7 @@
         area.value=[1,13,1];//控制初始位置，注意：该方法并不会影响到input的value
     </script>
     <script>
+        // 新建保存
         $('.save-btn').click(function(){
             var harvester,
                 harvester_phone_num,
@@ -101,7 +103,7 @@
                 && $('.detail-addr').val() !== ''){
                 harvester = $('.name').val();
                 harvester_phone_num = $('.phone').val();
-                address_name = $('.area-li').val();
+                address_name = $('#area-li').val();
                 harvester_real_address = $('.detail-addr').val();
                 if($('#switch_checkbox')[0].checked){
                     status = 1;
@@ -133,12 +135,68 @@
                     time: 1
                 });
             }
-            // if()
+        })
 
+        // 编辑保存
+        $.ajax({
+            url: 'member_address_edit_information',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    $('.save-btn').hide();
+                    $('.updata-btn').show();
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
 
-
-            // location.href = 'member_address';
-
+        // 编辑更新按钮
+        $('.updata-btn').click(function(){
+            var harvester,
+                harvester_phone_num,
+                address_name,
+                harvester_real_address,
+                status;
+            if($('.name').val() !== '' && $('.phone').val() !== '' && $('.area-li').val() !== ''
+                && $('.detail-addr').val() !== ''){
+                harvester = $('.name').val();
+                harvester_phone_num = $('.phone').val();
+                address_name = $('#area-li').val();
+                harvester_real_address = $('.detail-addr').val();
+                if($('#switch_checkbox')[0].checked){
+                    status = 1;
+                }else{
+                    status = -1;
+                }
+                $.ajax({
+                    url: 'member_address_edit',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'harvester': harvester,
+                        'harvester_phone_num': harvester_phone_num,
+                        'address_name': address_name,
+                        'harvester_real_address': harvester_real_address,
+                        'status': status,
+                    },
+                    success: function(res){
+                        console.log(res);
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    content: '信息填写不完整',
+                    skin: 'msg',
+                    time: 1
+                });
+            }
         })
     </script>
 </body>
