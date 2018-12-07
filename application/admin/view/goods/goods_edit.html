@@ -156,6 +156,16 @@
         right: 0;
         top: 0;
     }
+    	.big_div{
+		position: relative;
+	}
+	.delect_img{
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
 </style>
 
 {/block}
@@ -584,7 +594,7 @@
         <div class="basic-information title"> 其他
         </div>
         <div class="layui-form-item" class="biaoji">
-            <label class="layui-form-label">上架年限：</label>
+            <label class="layui-form-label"><span class="red"></span>上架年限：</label>
             <div class="layui-input-block">
                 <select name="goods_year_id">
 					{volist name="year" id="v"}
@@ -604,7 +614,7 @@
                 </div>
             </div>
         </div>
-        <div class="layui-form-item" class="biaoji">
+        <!--<div class="layui-form-item" class="biaoji">
             <label class="layui-form-label"><span>*</span>是否上架：</label>
             <div class="layui-input-block" id="goods_sign">
                 {if $value.goods_status == 1}
@@ -613,7 +623,7 @@
                 <input type="radio" name="goods_status" value="1" title="上架" class="hot">
                 <input type="radio" name="goods_status" value="{$value.goods_status}" title="不上架" checked=""> {/if}
             </div>
-        </div>
+        </div>-->
         <div class="basic-information title"> 配送与安装服务
         </div>
         <div class="layui-form-item" class="biaoji">
@@ -813,6 +823,12 @@
                 }
                 formSelects.render();
             }
+                $("#special_content").on('click', ".delect_img", function() {
+             	$(this).parent(".big_div").remove();
+             })
+                $("#general_content").on('click', ".delect_img", function() {
+             	$(this).parent(".big_div").remove();
+             })
       // TODO限制分组和品牌
             form.on('select(goods_type_id)', function(data) {
              
@@ -903,10 +919,9 @@
             //TODO点击专用添加规格项目添加页面
             $(".special_buts").click(function() {
             	var dhtml = "";
-               
-
-					        dhtml += '<div>' +
-					            ' 			<div class="layui-form-item">                                                                                 ' +
+                 dhtml += '<div class="big_div">' +
+				            ' <i class="delect_img"><img src="__STATIC__/admin/common/img/a7.png"/></i>'+
+               ' 			<div class="layui-form-item">                                                                                 ' +
 					            ' 				<label class="layui-form-label">规格名</label>                                                               ' +
 					            ' 				<div class="layui-input-inline guige_name">                                                                          ' +
 					            ' 					<select class="universal_standard_name'+num+'" name="goods_standard_name[]">                                                                                 ' +
@@ -989,10 +1004,9 @@
             //TODO点击通用添加规格项目添加页面
             $(".general_buts").click(function() {
             	var dhtml = "";
-           
-
-				        dhtml += '<div>' +
-				            ' 			<div class="layui-form-item">                                                                                 ' +
+                        dhtml += '<div class="big_div">' +
+				            ' <i class="delect_img"><img src="__STATIC__/admin/common/img/a7.png"/></i>'+
+                            ' 			<div class="layui-form-item">                                                                                 ' +
 				            ' 				<label class="layui-form-label">规格名</label>                                                               ' +
 				            ' 				<div class="layui-input-inline guige_name">                                                                          ' +
 				            ' 					<select class="universal_standard_name'+nums+'" name="goods_standard_name[]">                                                                                 ' +

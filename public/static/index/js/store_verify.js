@@ -164,7 +164,7 @@ $('.submit-button').click(function(){
                 time: 1
             })
         }
-    }else if($(this).text() === '提交更新'){
+    }else if($(this).text() === '提交修改'){
         if(emblemInput.length !== 0){
             formData.append('store_identity_card', emblemInput[0]);
         }
@@ -248,7 +248,7 @@ $.ajax({
                         </div>`
             })
             $('.mul-img').append(str);
-            $('.submit-button').text('提交更新');
+            $('.submit-button').text('提交修改');
             // 删除图片
             $('.store-inner-imgbox').on('click', '.close', function(){
                 var $index = $('.close').index($(this));
