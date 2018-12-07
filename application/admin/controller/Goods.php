@@ -330,7 +330,6 @@ class Goods extends Controller{
             $user_id = db("user")->where("phone_num",$admin_phone)->value("id");
             $store_id = db("store")->where("user_id",$user_id)->value("store_id");
             $goods_data["store_id"] = $store_id;
-            halt($goods_data);
             $bool = db("goods")->where("id",$id)->update($goods_data);
             if ($bool) {
                 //取出图片在存到数据库
@@ -372,14 +371,12 @@ class Goods extends Controller{
                 foreach ($id as $value){
                     if($admin_id == 2){
                         $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
-                    }else{
-                        $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                     }
-                    if ($bool) {
-                        return ajax_success("成功");
-                    } else {
-                        return ajax_error("失败");
-                    }
+                }
+                if ($bool) {
+                    return ajax_success("成功");
+                } else {
+                    return ajax_error("失败");
                 }
 
             }
@@ -391,11 +388,11 @@ class Goods extends Controller{
                     if($admin_id == 2 || $goods["putaway_status"] != null){
                         $bool = db("goods")->where("id", $val)->update(["goods_status" => 1,"putaway_status"=>1]);
                     }
-                    if ($bool) {
-                        return ajax_success("成功");
-                    } else {
-                        return ajax_error("失败");
-                    }
+                }
+                if ($bool) {
+                    return ajax_success("成功");
+                } else {
+                    return ajax_error("失败");
                 }
 
             }
