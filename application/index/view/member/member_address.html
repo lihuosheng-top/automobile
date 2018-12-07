@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>管理收货地址</title>
+    <style>
+        html, body, .wrapper{background-color: #efeff4;}
+        .header{position: relative;width: 100%;height: .88rem;background-color: #fff; border-bottom: 1px solid #eee;}
+        .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
+        .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .address-div{background-color: #fff; padding: .32rem; border-bottom: 1px solid #eee;}
+        .edit-box{display: flex; align-items: center;}
+        .edit-box button{background-color: transparent; border: 0; outline: 0; color: #999; font-size: .3rem;}
+        .set-default{flex: 1; display: flex; align-items: center;}
+        .set-default .icon-default{display: inline-block; width: .38rem; height: .38rem; background-position: -2.05rem -.85rem;}
+        .set-default .default-on{background-position: -2.05rem -1.25rem;}
+        .set-default .set-default-btn{color: #333;}
+        .consignee{font-size: .3rem; color: #333; margin-top: .15rem;}
+        .consignee .name{margin-right: .5rem;}
+        .consignee-addr{font-size: .28rem; color: #999; line-height: normal;}
+        .add-address{position: fixed; bottom: 0; left: 0; right: 0;background-color: #fff; width: 100%; height: 1.2rem; text-align: center; line-height: 1.2rem;}
+        .add-address-btn{width: 90%; height: .92rem; background-color: #fff; border: 2px solid #3169f6; color: #3169f6;font-size: .36rem; border-radius: .1rem; outline: none;}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <a href="my_index" class="spr icon-back"></a>
+            <h3>管理收货地址</h3>
+        </header>
+        <div class="addr-wrap">
+            <div class="address-div">
+                <div class="edit-box">
+                    <div class="set-default">
+                        <i class="spr icon-default default-on"></i>
+                        <button class="set-default-btn">设为默认</button>
+                    </div>
+                    <button class="edit-btn">编辑</button>
+                    <button class="del-btn">删除</button>
+                </div>
+                <div class="consignee">
+                    <span class="name">朱元璋</span>
+                    <span class="phone">13691853011</span>
+                </div>
+                <div class="consignee-addr">广东省深圳市福田区新闻路中电信息大厦动作1518</div>
+            </div>
+            <div class="address-div">
+                <div class="edit-box">
+                    <div class="set-default">
+                        <i class="spr icon-default"></i>
+                        <button class="set-default-btn">设为默认</button>
+                    </div>
+                    <button class="edit-btn">编辑</button>
+                    <button class="del-btn">删除</button>
+                </div>
+                <div class="consignee">
+                    <span class="name">朱元璋</span>
+                    <span class="phone">13691853011</span>
+                </div>
+                <div class="consignee-addr">广东省深圳市福田区新闻路中电信息大厦动作1518</div>
+            </div>
+        </div>
+        <div class="add-address">
+            <button class="add-address-btn">+添加收货地址</button>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $('.set-default-btn').click(function(){
+            $('.addr-wrap').find('.icon-default').removeClass('default-on');
+            $(this).siblings().addClass('default-on');
+        })
+        // 删除地址
+        $('.del-btn').click(function(){
+            layer.open({
+                content: '您确定要删除吗？',
+                btn: ['取消', '确定'],
+                yes: function (index) {
+                    layer.close(index);
+                }
+            });
+        })
+        // 添加地址
+        $('.add-address-btn').click(function(){
+            location.href = 'member_address_add';
+        })
+        // 编辑
+        $('.edit-btn').click(function(){
+            location.href = 'member_address_add'
+        })
+
+    </script>
+</body>
+</html>

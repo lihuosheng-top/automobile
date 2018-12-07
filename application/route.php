@@ -21,6 +21,8 @@ Route::group("",[
     "/$"=>"index/index/home",
     "index"=>"index/index/index",
 
+    "indexs"=>"index/Indexs/index",
+
 
 
     /*我的爱车*/
@@ -103,6 +105,25 @@ Route::group("",[
     'update_password'=>"index/findpwd/update_password",//修改密码
     /*TODO:找回密码验证码结束*/
 
+    /*TODO:我的页面开始*/
+    "member_equity"=>"index/member/member_equity",//会员权益
+    "member_address"=>"index/member/member_address",//地址管理
+    "member_address_add"=>"index/member/member_address_add",//地址管理添加
+    "member_collection"=>"index/member/member_collection",//我的收藏
+    /*TODO:我的页面结束*/
+    /*TODO:消息开始*/
+    "information_index"=>"index/Information/index",//消息页面
+    "information_details"=>"index/Information/information_details",//订单助手消息页面详情
+    "information_system"=>"index/Information/information_system",//系统消息页面详情
+    "about_index"=>"index/About/index",//关于我们
+    /*TODO:消息结束*/
+    /*TODO:投诉开始*/
+    "complaint_index"=>"index/Complaint/index",//投诉中心
+    "complaint_detail"=>"index/Complaint/detail",//投诉记录
+    /*TODO:投诉结束*/
+
+
+
 
     /**
      * 店铺
@@ -111,6 +132,12 @@ Route::group("",[
     "store_index"=>"index/Store/index",             //店铺首页
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
+
+    "store_add"=>"index/Store/add",                 //店铺添加(第一页加盟添加)
+    "store_save"=>"index/Store/save",                 //店铺编辑(第一页加盟编辑)
+    "store_update"=>"index/Store/update",           //店铺编辑更新(也是第二页完善店铺信息)
+    "url_img_del"=>"index/Store/url_img_del",           //店铺编辑更新(也是第二页信息多图的删除)
+    "return_store_information"=>"index/Store/return_store_information",    //店铺信息
 
 
 
@@ -243,7 +270,7 @@ Route::group("admin",[
     "goods_del"=>"admin/Goods/del",
     "images_del"=>"admin/Goods/images",
     "goods_status"=>"admin/Goods/status",
-    "goods_batches"=>"admin/Goods/batches",
+    "goods_batches"=>"admin/Goods/batches",                                     //批量删除
     "goods_pay"=>"admin/Goods/pay",                                                  //商品付费详情
     "affirm_pay"=>"admin/Goods/affirm",                                                 //商品确认付费
 	"goods_look"=>"admin/Goods/look",                                                //商品查看详情
@@ -267,6 +294,7 @@ Route::group("admin",[
     "serve_edit"=>"admin/Serve/edit",
     "serve_updata"=>"admin/Serve/updata",
     "serve_del"=>"admin/Serve/del",
+    "serve_batches"=>"admin/Serve/batches",                                     //服务商品批量删除
 
 
 
@@ -291,6 +319,19 @@ Route::group("admin",[
     "user_del"=>"admin/User/del", //会员删除
     "user_dels"=>"admin/User/dels", //会员批量删除
     "user_search"=>"admin/User/search", //会员搜索
+
+
+    /**
+     * 汽车品牌
+     * 陈绪
+     */
+    "car_index"=>"admin/Car/index",
+    "car_add"=>"admin/Car/add",
+    "car_save"=>"admin/Car/save",
+    "car_edit"=>"admin/Car/edit",
+    "car_updata"=>"admin/Car/updata",
+
+
     /*充值和提现*/
     "recharge_list"=>"admin/Recharge/index", //充值和提现首页
     "recharge_edit"=>"admin/Recharge/edit",   //充值和提现编辑
@@ -488,7 +529,6 @@ Route::group("admin",[
     "shop_del"=>"admin/Shop/del",//店铺列表删除
     "shop_dels"=>"admin/Shop/dels",//店铺列表批量删除
     "shop_search"=>"admin/Shop/search",//店铺列表模糊查询
-
     /*TODO:店铺管理结束*/
 
 ]);

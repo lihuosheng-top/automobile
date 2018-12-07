@@ -16,6 +16,7 @@
  * Date: 2018/5/26
  * Time: 10:53
  */
+
 //手机验证码
 function phone($account= "",$password = '', $phone = "" ,$content = ""){
     $url = "http://120.26.38.54:8000/interface/smssend.aspx";
@@ -772,5 +773,7 @@ function show_service_order_status($status){
         echo '<button type="button" class="state  cancel-btu" >取消订单</button>';
     }
 }
+
+
 
 

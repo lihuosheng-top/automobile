@@ -193,7 +193,7 @@ html{
     background-position: -4.15rem -1.75rem;
 }
 .order_step .order_step_text{
-    font-size: .22rem;
+    font-size: .28rem;
     color: #666;
 }
 .function_list{
@@ -216,7 +216,7 @@ html{
     height: 100%;
 }
 .function_list li span{
-    font-size: .22rem;
+    font-size: .28rem;
     color: #333;
 }
 .function_list li .spr{
@@ -225,9 +225,9 @@ html{
     vertical-align: text-bottom;
 }
 .function_list li .icon_addr{
-    width: .34rem;
-    height: .31rem;
-    background-position: -6.5rem -.7rem;
+    width: .44rem;
+    height: .41rem;
+    background-position: -6.45rem -.65rem;
 }
 .function_list li .icon_collect{
     width: .35rem;
@@ -235,24 +235,24 @@ html{
     background-position: -6.9rem -.7rem;
 }
 .function_list li .icon_rights{
-    width: .34rem;
-    height: .26rem;
-    background-position: -7.3rem -.7rem;
+    width: .44rem;
+    height: .36rem;
+    background-position: -7.25rem -.65rem;
 }
 .function_list li .icon_mycar{
-    width: .34rem;
-    height: .28rem;
-    background-position: -6.5rem -1.2rem;
+    width: .44rem;
+    height: .38rem;
+    background-position: -6.45rem -1.15rem;
 }
 .function_list li .icon_about{
-    width: .29rem;
-    height: .29rem;
-    background-position: -6.9rem -1.2rem;
+    width: .39rem;
+    height: .39rem;
+    background-position: -6.85rem -1.15rem;
 }
 .function_list li .icon_feedback{
-    width: .33rem;
-    height: .33rem;
-    background-position: -7.3rem -1.2rem;
+    width: .43rem;
+    height: .43rem;
+    background-position: -7.25rem -1.15rem;
 }
 
 .footer .icon_my{

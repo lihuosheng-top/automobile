@@ -11,22 +11,22 @@
     <title>身份验证</title>
 </head>
 <body>
-    <div v-cloak class="wrapper" id="app">
+    <div class="wrapper" id="app">
         <header class="header">
             <a href="store_league" class="spr icon-back"></a>
             <h3 class="header-title">身份验证</h3>
         </header>
         <div class="verify-box">
             <ul class="verify-ul">
-                <li class="verfy-li" @click="idCardPop">
+                <li class="verfy-li">
                     <p class="verify-title-p">验证身份证</p>
                     <a href="javascript:;" class="spr icon-more"></a>
                 </li>
-                <li class="verfy-li" @click="businessLicensePop">
+                <li class="verfy-li">
                     <p class="verify-title-p">验证营业执照</p>
                     <a href="javascript:;" class="spr icon-more"></a>
                 </li>
-                <li class="verfy-li" @click="storeFrontPop">
+                <li class="verfy-li">
                     <p class="verify-title-p">验证实体店面</p>
                     <a href="javascript:;" class="spr icon-more"></a>
                 </li>
@@ -35,72 +35,72 @@
                     <a href="javascript:;" class="spr icon-more"></a>
                 </li>
             </ul>
-            <button class="submit-button">提交申请</button>
+            <button class="submit-button"></button>
         </div>
         <!-- 验证身份证弹窗 -->
-        <div class="id-card-pop" :class="{idCardEaseIn: idCardPopFlag}">
+        <div class="id-card-pop">
             <header class="id-card-header">
-                <a href="javascript:;" class="spr id-card-back" @click="idCardPop"></a>
+                <a href="javascript:;" class="spr id-card-back"></a>
                 <h3 class="header-title">验证身份证</h3>
             </header>
             <p class="id-card-tips">请上传您的二代身份证</p>
             <div class="id-card-emblem">
-                <img :src="images.emblem">
-                <input type="file" id="emblem-input" @change="emblem">
+                <img src="__STATIC__/index/image/id2.png" id="emblem-img">
+                <input type="file" id="emblem-input">
             </div>
             <div class="id-card-portrait">
-                <img :src="images.portrait">
-                <input type="file" id="portrait-input" @change="portrait">
+                <img src="__STATIC__/index/image/id1.png" id="portrait-img">
+                <input type="file" id="portrait-input">
             </div>
-            <button class="id-card-button" @click="idCardPop">确定</button>
+            <button class="id-card-button">确定</button>
         </div>
         <!-- 验证营业执照弹窗 -->
-        <div class="business-license-pop" :class="{licenseEaseOut: licenseFlag}">
+        <div class="business-license-pop">
             <header class="business-license-header">
-                <a href="javascript:;" class="spr business-license-back" @click="businessLicensePop"></a>
-                <h3 class="header-title">验证营业执照</h3>
+                <a href="javascript:;" class="spr business-license-back"></a>
+                <h3 class="header-title">验证营业执照与许可证</h3>
             </header>
             <p class="business-license-tips">请上传您的营业执照</p>
             <div class="business-license">
-                <img :src="images.businessLicense">
-                <input type="file" id="business-license-input" @change="businessLicenseFn">
+                <img src="__STATIC__/index/image/id3.png" id="business-license-img">
+                <input type="file" id="business-license-input">
             </div>
-            <button class="business-license-button" @click="businessLicensePop">确定</button>
+            <p class="license-tips">请上传您的许可证</p>
+            <div class="license">
+                <img src="__STATIC__/index/image/id4.png" id="license-img">
+                <input type="file" id="license-input">
+            </div>
+            <button class="business-license-button">确定</button>
         </div>
         <!-- 验证实体店面弹窗 -->
-        <div class="store-front-pop" :class="{storeFrontEaseOut: storeFrontFlag}">
+        <div class="store-front-pop">
             <header class="store-front-header">
-                <a href="javascript:;" class="spr store-front-back" @click="storeFrontPop"></a>
+                <a href="javascript:;" class="spr store-front-back"></a>
                 <h3 class="header-title">验证实体店面</h3>
             </header>
             <p class="store-front-tips">请上传您的门脸图片</p>
             <div class="store-front-face">
-                <img :src="images.storeFront.faceImg">
-                <input type="file" id="face-input" @change="storeFrontFace">
+                <img src="__STATIC__/index/image/id5.png" id="face-img">
+                <input type="file" id="face-input">
             </div>
             <p class="store-inner-tip1">请上传您的店内图片</p>
-            <p class="store-inner-tip2">(最多上传3张店内图片)</p>
-            <div class="store-inner-imgbox" v-show="images.storeFront.hasInnerImg">
-                <img v-for="innerImg in images.storeFront.innerImgs" :src="innerImg">
+            <p class="store-inner-tip2">(最多上传20张店内图片)</p>
+            <div class="mul-img">
+                <!-- <div class="store-inner-imgbox">
+                    <i class="close">×</i>
+                    <img src="__STATIC__/index/image/id6.png">
+                </div> -->
             </div>
             <div class="store-front-inner">
-                <img src="__STATIC__/index/image/id4.png">
-                <input type="file" id="inner-input" @change="storeFrontInner">
+                <img src="__STATIC__/index/image/id6.png">
+                <input type="file" id="inner-input" multiple>
             </div>
-            <!-- <div class="store-front-inner store-inner2">
-                <img src="__STATIC__/index/image/id4.png">
-                <input type="file" id="inner-input2">
-            </div>
-            <div class="store-front-inner store-inner3">
-                <img src="__STATIC__/index/image/id4.png">
-                <input type="file" id="inner-input3">
-            </div> -->
-            <button class="store-front-button" @click="storeFrontPop">确定</button>
+            <button class="store-front-button">确定</button>
         </div>
     </div>
 
 
-    <script src="__STATIC__/index/js/plugin/vue.js"></script>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/store_verify.js"></script>
 </body>

@@ -81,8 +81,6 @@ html,body{
     height: .85rem;
     background-color: #3169f6;
     color: #fff;
-    text-align: center;
-    line-height: .85rem;
     font-size: .32rem;
     border-radius: .1rem;
     border: 0;
@@ -119,6 +117,7 @@ html,body{
 .id-card-emblem img,
 .id-card-portrait img,
 .business-license img,
+.license img,
 .store-front-face img,
 .store-front-inner img{
     width: 100%;
@@ -127,6 +126,7 @@ html,body{
 .id-card-emblem input,
 .id-card-portrait input,
 .business-license input,
+.license input,
 .store-front-face input,
 .store-front-inner input{
     position: absolute;
@@ -175,14 +175,16 @@ html,body{
 .licenseEaseOut{
     right: 0;
 }
-.business-license{
+.business-license,
+.license{
     position: relative;
     width: 4.11rem;
     height: 2.59rem;
     margin: 0 auto 1rem;
     box-shadow: 0 4px 20px rgba(230, 230, 230, 1);
 }
-.business-license-tips{
+.business-license-tips,
+.license-tips{
     width: 100%;
     margin: 1.2rem 0 .8rem;
     text-align: center;
@@ -235,7 +237,8 @@ html,body{
     width: 4.11rem;
     margin: 0 auto;
     box-shadow: 0 4px 20px rgba(230, 230, 230, 1);
-    margin-bottom: .4rem; 
+    margin-bottom: .1rem; 
+    font-size: 0;
 }
 .store-inner-imgbox img{
     width: 100%;
@@ -267,5 +270,21 @@ html,body{
     border: 0;
     outline: 0;
 }
-
 /* 实体店面弹窗 end */
+.close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background-color: rgba(220, 220, 220, .6);
+    color: #000;
+    font-size: .6rem;
+    text-align: center;
+    line-height: .5rem;
+    transform: translate(35%, -35%);
+    border: 0;
+    padding: 0;
+    outline: none;
+}
