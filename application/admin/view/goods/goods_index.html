@@ -340,8 +340,6 @@
 							success: function(data){	
 								var data=$.parseJSON( data ); 
 								var role_id=data.data.admin[0].role_id;
-								
-								
 								// 当角色为平台时
 								if(role_id==2){
 									$.ajax({ 
@@ -370,6 +368,22 @@
 													console.log(data)
 												}
 											});
+                                }
+                                         else{
+                                	layer.confirm('付费商品需付费后才能上架！', {
+											  btn: ['确定付费','取消付费！'] //按钮
+											}, function(){
+											 layer.close(layer.index);
+                                             $(".tanchuang").removeClass("noshow");
+ 											 $("#shop").val(shop);
+											 $("#price").val(price);
+											 $("#num").val("1");
+											 $("#good-id").val(id);
+											 $("#year").val(present);
+											 
+											});
+
+                                	
                                 }
 
                             }
@@ -426,7 +440,7 @@
 
             //点击操作确认按钮
             var data_id = [];
-
+          
             var years = [];
             $("#opration_btu").click(function() {
                 var opration_val = $(".opation select option:selected").val();
@@ -497,7 +511,7 @@
                         var present = year + '-' + month + '-' + date;
                         years.push(present);
 
-                        var shop = $(child[i])[0].dataset.value;
+                         var shop=$(".shop_name")[0].innerHTML;
                     }
                     $.ajax({
                         type: "POST",
