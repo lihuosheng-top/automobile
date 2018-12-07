@@ -123,6 +123,16 @@
                     },
                     success: function(res){
                         console.log(res);
+                        if(res.status == '1'){
+                            layer.open({
+                                skin: 'msg',
+                                content: res.info,
+                                time: 1
+                            })
+                            setTimeout(function(){
+                                location.href = 'member_address';
+                            }, 1100)
+                        }
                     },
                     error: function(){
                         console.log('error');
@@ -149,6 +159,12 @@
                     $('.save-btn').hide();
                     $('.updata-btn').show();
                     $('.name').val(data.harvester);
+                    $('.phone').val(data.harvester_phone_num);
+                    $('#area-li').val(data.address_name);
+                    $('.detail-addr').val(data.harvester_real_address);
+                    if(data.status === 1){
+                        $('.switch_checkbox').attr('checked', 'checked');
+                    }
                 }
             },
             error: function(){

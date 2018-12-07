@@ -58,7 +58,7 @@ class  ServiceAdvertisement extends  Controller
      * 郭杨
      */
     public function service_business_add(){
-        return view('accessories_business_add');
+        return view('service_business_add');
     }
 
 
@@ -67,10 +67,10 @@ class  ServiceAdvertisement extends  Controller
      * [汽车服务商广告编辑]
      * 郭杨
      */
-    public function accessories_business_edit($id){
+    public function service_business_edit($id){
 
         $plat = db("facilitator")->where("id",$id)->select();
-        return view('accessories_business_edit',['plat'=>$plat]);
+        return view('service_business_edit',['plat'=>$plat]);
     }
 
 
@@ -79,7 +79,7 @@ class  ServiceAdvertisement extends  Controller
      * [汽车服务商广告入库]
      * 郭杨
      */
-    public function accessories_business_save(Request $request){
+    public function service_business_save(Request $request){
         if ($request->isPost()) {
             $data = $request->param();
             $show_images = $request->file("advert_picture");
@@ -99,13 +99,13 @@ class  ServiceAdvertisement extends  Controller
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
 
-            $userId = db('accessories')->insertGetId($data);
+            $userId = db('facilitator')->insertGetId($data);
             $data["pid"] = $userId;
             $boole = db("platform")->insert($data);
             if ($userId && $boole) {
-                $this->success("添加成功", url("admin/Advertisement/accessories_business_advertising"));
+                $this->success("添加成功", url("admin/service_advertisement/service_business_advertising"));
             } else {
-                $this->error("添加失败", url("admin/Advertisement/accessories_business_add"));
+                $this->error("添加失败", url("admin/service_advertisement/service_add"));
             }
         }
     }
@@ -117,7 +117,7 @@ class  ServiceAdvertisement extends  Controller
      * @param Request $request
      * 
      */
-    public function accessories_business_updata(Request $request)
+    public function service_business_updata(Request $request)
     {
         if ($request->isPost()) {
             $data = $request->param();
@@ -125,14 +125,14 @@ class  ServiceAdvertisement extends  Controller
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
             
-            $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
+            $bool = db("facilitator")->where('id', $request->only(["id"])["id"])->update($data);
             unset($data["id"]);
             $boole = db("platform")->where('pid', $request->only(["id"])["id"])->update($data);
 
             if ($bool && $boole) {
-                $this->success("编辑成功", url("admin/Advertisement/accessories_business_advertising"));
+                $this->success("编辑成功", url("admin/service_advertisement/service_business_advertising"));
             } else {
-                $this->error("编辑失败", url("admin/Advertisement/accessories_business_edit"));
+                $this->error("编辑失败", url("admin/service_advertisement/service_business_edit"));
             }
         }
     }
@@ -143,14 +143,14 @@ class  ServiceAdvertisement extends  Controller
      * 汽车服务商广告删除
      * 郭杨
      */
-    public function accessories_business_del($id){
+    public function service_business_del($id){
 
-        $bool = db("accessories")->where("id", $id)->delete();
+        $bool = db("facilitator")->where("id", $id)->delete();
         $boole = db("platform")->where("pid", $id)->delete();
         if ($bool && $boole) {
-            $this->success("删除成功", url("admin/Advertisement/accessories_business_advertising"));
+            $this->success("删除成功", url("admin/service_advertisement/service_business_advertising"));
         } else {
-            $this->error("删除失败", url("admin/Advertisement/accessories_business_advertising"));
+            $this->error("删除失败", url("admin/service_advertisement/service_business_advertising"));
         }
 
     }
@@ -160,17 +160,17 @@ class  ServiceAdvertisement extends  Controller
      * 汽车服务商广告模糊搜索
      * 郭杨
      */
-    public function accessories_business_search(){
+    public function service_business_search(){
         $ppd = input('key');          //广告名称
         $interest = input('keys');    //广告位置
 
         if ((!empty($ppd)) || (!empty($interest))) {
-            $activ = db("accessories")->where("name", "like", "%" . $ppd . "%")->where("location", "like", "%" . $interest . "%")->paginate(2);    
+            $activ = db("facilitator")->where("name", "like", "%" . $ppd . "%")->where("location", "like", "%" . $interest . "%")->paginate(2);    
         }else{
-            $activ = db("accessories")->paginate(2);
+            $activ = db("facilitator")->paginate(2);
         }
         if(!empty($activ)){
-            return view('accessories_business_advertising',['platform'=>$activ]);
+            return view('service_business_advertising',['platform'=>$activ]);
         }
     }
 
