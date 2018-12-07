@@ -115,7 +115,12 @@ class Store extends Controller{
                        foreach ($ex_address as $k=>$v){
                            $explode_data[] =$v;
                        }
-                    $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                      if(count($explode_data) ==2){
+                          $store_detailed_address =$explode_data[0].$explode_data[1].$store_street_address;
+                      }
+                      if(count($explode_data) ==3){
+                          $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                      }
                    db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
                    $data =[
                        'store_name'=>$store_name,
@@ -199,7 +204,12 @@ class Store extends Controller{
                 foreach ($ex_address as $k=>$v){
                     $explode_data[] =$v;
                 }
-                $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                if(count($explode_data) ==2){
+                    $store_detailed_address =$explode_data[0].$explode_data[1].$store_street_address;
+                }
+                if(count($explode_data) ==3){
+                    $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                }
                 db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
                 $isset_admin =Db::name('admin')->field('id')->where('phone',$old_phone_num)->find();//判断是否提交过申请
                 if(!empty($isset_admin)){
@@ -235,7 +245,12 @@ class Store extends Controller{
                 foreach ($ex_address as $k=>$v){
                     $explode_data[] =$v;
                 }
-                $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                if(count($explode_data) ==2){
+                    $store_detailed_address =$explode_data[0].$explode_data[1].$store_street_address;
+                }
+                if(count($explode_data) ==3){
+                    $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                }
                 db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
                 $data =[
                     'store_name'=>$store_name,
