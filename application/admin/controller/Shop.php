@@ -23,16 +23,16 @@ class Shop extends Controller{
     public function index(){
         $store_data  =Db::name('store')->where("store_is_button",1)->select();
        foreach ($store_data as $k=>$v){
-           $store_datas[$k]['store_id'] =$v['store_id'];
-           $store_datas[$k]['store_name'] =$v['store_name'];
-           $store_datas[$k]['store_detailed_address'] =$v['store_detailed_address'];
-           $store_datas[$k]['store_is_pay'] =$v['store_is_pay'];
-           $store_datas[$k]['operation_status'] =$v['operation_status'];
+           $store_data[$k]['store_id'] =$v['store_id'];
+           $store_data[$k]['store_name'] =$v['store_name'];
+           $store_data[$k]['store_detailed_address'] =$v['store_detailed_address'];
+           $store_data[$k]['store_is_pay'] =$v['store_is_pay'];
+           $store_data[$k]['operation_status'] =$v['operation_status'];
            $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
-           $store_datas[$k]['real_name']=$user_data['real_name'];
-           $store_datas[$k]['phone_num']=$user_data['phone_num'];
+           $store_data[$k]['real_name']=$user_data['real_name'];
+           $store_data[$k]['phone_num']=$user_data['phone_num'];
            $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
-           $store_datas[$k]['role_name']=$role_datas['name'];
+           $store_data[$k]['role_name']=$role_datas['name'];
        }
         $all_idents =$store_data ;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
@@ -46,7 +46,7 @@ class Shop extends Controller{
         ]);
         $store_data->appends($_GET);
         $this->assign('listpage', $store_data->render());
-        return view("shop_index",['store_data'=>$store_datas]);
+        return view("shop_index",['store_data'=>$store_data]);
 
     }
 
