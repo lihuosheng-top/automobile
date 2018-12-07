@@ -366,10 +366,13 @@ Route::group("admin",[
 
 
     /*服务商广告*/
-    "service_business_advertising"=>"admin/service_advertisement/service_business_advertising",
-    "service_business_add"=>"admin/service_advertisement/service_business_add",
-    "service_business_edit"=>"admin/service_advertisement/service_business_edit",
-    "service_business_del"=>"admin/service_advertisement/del",
+    "service_business_advertising"=>"admin/service_advertisement/service_business_advertising", //汽车服务商广告显示
+    "service_business_add"=>"admin/service_advertisement/service_business_add",                 //汽车服务商广告增加
+    "service_business_save"=>"admin/service_advertisement/service_business_save",               //汽车服务商广告保存
+    "service_business_edit"=>"admin/service_advertisement/service_business_edit",               //汽车服务商广告编辑
+    "service_business_updata"=>"admin/service_advertisement/service_business_updata",           //汽车服务商广告更新
+    "service_business_del"=>"admin/service_advertisement/del",                                  //汽车服务商广告删除
+    "service_business_search"=>"admin/service_advertisement/service_business_search",           //汽车服务商广告搜索
 
 
 
