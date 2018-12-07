@@ -104,7 +104,7 @@ class  Member extends Controller{
             $id = Session::get('address_id');
             $data =Db::name("user_address")->where('id',$id)->find();
             if(!empty($data)){
-                Session::clear("address_id");
+                Session::delete("address_id");
                 return ajax_success('地址信息返回成功',$data);
             }else{
                 return ajax_error('地址信息返回失败',['status'=>0]);
