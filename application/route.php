@@ -531,6 +531,14 @@ Route::group("admin",[
     "shop_search"=>"admin/Shop/search",//店铺列表模糊查询
     /*TODO:店铺管理结束*/
 
+
+    /**
+     * 运行管理
+     * 陈绪
+     */
+    "complaint_index"=>"admin/Operation/complaint_index",
+    "urgency_index"=>"admin/Operation/urgency_index",
+
 ]);
 
 Route::miss("public/miss");
