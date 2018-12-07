@@ -87,10 +87,28 @@ class  Member extends Controller{
     }
 
 
-
-//    public function member_address_del(Request $request){
-//
-//    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:删除
+     **************************************
+     * @param Request $request
+     */
+    public function member_address_del(Request $request){
+        if($request->isPost()){
+            $id =$request->only('id')['id'];
+            if($id){
+                $bool =Db::name('user_address')->where('id',$id)->delete();
+                if($bool){
+                    return ajax_success('删除成功',['status'=>1]);
+                }else{
+                    return ajax_error('删除失败',['status'=>0]);
+                }
+            }else{
+                return ajax_error('这条地址信息不正确',['status']);
+            }
+        }
+    }
 
     /**
      **************李火生*******************
