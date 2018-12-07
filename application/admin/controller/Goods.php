@@ -371,6 +371,8 @@ class Goods extends Controller{
                 foreach ($id as $value){
                     if($admin_id == 2){
                         $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
+                    }else{
+                        $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                     }
                 }
                 if ($bool) {
