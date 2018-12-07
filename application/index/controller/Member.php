@@ -7,6 +7,9 @@
  */
 namespace app\index\controller;
 use think\Controller;
+use think\Request;
+use think\Db;
+use think\Session;
 
 class  Member extends Controller{
     /**
@@ -30,6 +33,43 @@ class  Member extends Controller{
     public function member_address(){
         return view('member_address');
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:收货地址添加
+     **************************************
+     * @param Request $request
+     */
+    public function member_address_adds(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $harvester = $request->only('harvester')['harvester'];
+            $harvester_phone_num = $request->only('harvester_phone_num')['harvester_phone_num'];
+            $address_name = $request->only('address_name')['address_name'];
+            $status = $request->only('status')['status'];
+            $address_data =explode($address_name,',');
+            $harvester_real_address =$address_data[0].$address_data[1].$address_data[2].$address_data[3];
+            $data =[
+                "user_id"=>$user_id,
+                "harvester"=>$harvester,
+                "harvester_phone_num"=>$harvester_phone_num,
+                "address_name"=>$address_name,
+                "status"=> $status,
+                "harvester_real_address"=>$harvester_real_address
+            ];
+            $bool_id =Db::name("user_address")->insertGetId($data);
+            if($bool_id){
+                return ajax_success("添加成功",$bool_id);
+            }else{
+                return ajax_error("添加失败",['status'=>0]);
+            }
+
+
+        }
+    }
+
+
 
     /**
      **************李火生*******************
