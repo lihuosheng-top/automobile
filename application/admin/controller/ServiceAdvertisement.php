@@ -100,12 +100,14 @@ class  ServiceAdvertisement extends  Controller
             $data["end_time"] = strtotime($data["end_time"]);
 
             $userId = db('facilitator')->insertGetId($data);
-            $data["pid"] = $userId;
+            $data["pfd"] = $userId;
+            $data["department"] = $user_phone[0]["department"];
+            $data["shop_name"] = $store_name;
             $boole = db("platform")->insert($data);
             if ($userId && $boole) {
                 $this->success("添加成功", url("admin/service_advertisement/service_business_advertising"));
             } else {
-                $this->error("添加失败", url("admin/service_advertisement/service_add"));
+                $this->error("添加失败", url("admin/service_advertisement/service_business_advertising"));
             }
         }
     }
@@ -127,7 +129,7 @@ class  ServiceAdvertisement extends  Controller
             
             $bool = db("facilitator")->where('id', $request->only(["id"])["id"])->update($data);
             unset($data["id"]);
-            $boole = db("platform")->where('pid', $request->only(["id"])["id"])->update($data);
+            $boole = db("platform")->where('pfd', $request->only(["id"])["id"])->update($data);
 
             if ($bool && $boole) {
                 $this->success("编辑成功", url("admin/service_advertisement/service_business_advertising"));
@@ -146,7 +148,7 @@ class  ServiceAdvertisement extends  Controller
     public function service_business_del($id){
 
         $bool = db("facilitator")->where("id", $id)->delete();
-        $boole = db("platform")->where("pid", $id)->delete();
+        $boole = db("platform")->where("pfd", $id)->delete();
         if ($bool && $boole) {
             $this->success("删除成功", url("admin/service_advertisement/service_business_advertising"));
         } else {

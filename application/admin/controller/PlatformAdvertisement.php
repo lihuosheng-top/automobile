@@ -12,6 +12,8 @@ use think\Controller;
 use think\Db;
 use think\Request;
 use think\Image;
+use think\Session;
+use think\paginator\driver\Bootstrap;
 
 class  PlatformAdvertisement extends  Controller{
 
@@ -19,8 +21,26 @@ class  PlatformAdvertisement extends  Controller{
      * [汽车平台广告显示]
      * 郭杨
      */
-    public function platform_business_index(){
-        $platform = db("platform")->paginate(20);
+    public function platform_business_index(Request $request){
+
+
+        $user_phone = Session::get("user_info");
+        $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
+        $store_name = db("store")->where("user_id",$user)->value("store_name");
+
+        $platform = db("platform") -> select();
+        $all_idents = $platform;//这里是需要分页的数据
+        $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
+        $listRow = 20;//每页20行记录
+        $showdata = array_slice($all_idents, ($curPage - 1) * $listRow, $listRow, true);// 数组中根据条件取出一段值，并返回
+        $platform = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
+            'var_page' => 'page',
+            'path' => url('admin/service_advertisement/service_business_advertising'),//这里根据需要修改url
+            'query' => [],
+            'fragment' => '',
+        ]);
+        $platform->appends($_GET);
+        $this->assign('platforme', $platform->render());
         return view('platform_business_index',['platform'=>$platform]);
     }
 
@@ -40,6 +60,7 @@ class  PlatformAdvertisement extends  Controller{
     public function platform_business_edit($id){
 
         $plat = db("platform")->where("id",$id)->select();
+    
         return view('platform_business_edit',['plat'=>$plat]);
     }
 
@@ -82,8 +103,25 @@ class  PlatformAdvertisement extends  Controller{
     {
         if ($request->isPost()) {
             $data = $request->param();
+            $find = db("platform")->where('id', $request->only(["id"])["id"])->find();
 
+            if($find['pid'])
+            {
+               $bools = db("accessories")->where('id', $find['pid'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
+            }
+            if($find['pfd'])
+            {
+               $boolse = db("facilitator")->where('id', $find['pfd'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
+            }
+
+
+            if(empty($find['department']))
+            {
+            $data["start_time"] = strtotime($data["start_time"]);
+            $data["end_time"] = strtotime($data["end_time"]);  
+            }     
             $bool = db("platform")->where('id', $request->only(["id"])["id"])->update($data);
+               
 
             if ($bool) {
                 $this->success("编辑成功", url("admin/platform_advertisement/platform_business_index"));
