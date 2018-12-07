@@ -133,8 +133,6 @@ class  Member extends Controller{
             }
         }
     }
-
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -153,7 +151,6 @@ class  Member extends Controller{
             }
         }
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -188,7 +185,6 @@ class  Member extends Controller{
             }
         }
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -199,7 +195,6 @@ class  Member extends Controller{
     public function member_address_add(){
         return view('member_address_add');
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -223,9 +218,6 @@ class  Member extends Controller{
             }
         }
     }
-
-
-
 
     /**
      **************李火生*******************
