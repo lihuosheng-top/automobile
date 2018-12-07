@@ -29,7 +29,7 @@ $.ajax({
             // 划线价
             $('.through').html('￥' + val.goods_bottom_money);
             // 售价
-            $('.sale').html('￥' + val.goods_new_money);
+            $('.sale').html('￥' + val.goods_adjusted_money);
             // 库存
             $('.stock').html('库存' + val.goods_repertory + '件');
             // 商品详情
