@@ -818,8 +818,9 @@
              
                 var value = data.elem.selectedOptions[0].text;
                 value = $.trim(value);
-               
                 if (value != "请选择") {
+                 $("#goods_brand_id").val("0");
+                   form.render();
                   $("#goods_brand_id").siblings().addClass("layui-disabled");
                   $("#goods_brand_id").siblings().children("layui-anim-upbit").prevObject[0].lastElementChild.remove();
                   
@@ -832,6 +833,8 @@
                 var value = data.elem.selectedOptions[0].text;
                 value = $.trim(value);
                 if (value != "请选择") {
+                	$("#goods_type_id").val("0");
+                   form.render();
                   $("#goods_type_id").siblings().addClass("layui-disabled");
                   $("#goods_type_id").siblings().children("layui-anim-upbit").prevObject[0].lastElementChild.remove();
                   
