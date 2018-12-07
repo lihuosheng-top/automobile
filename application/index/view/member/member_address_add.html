@@ -149,6 +149,12 @@
                     $('.save-btn').hide();
                     $('.updata-btn').show();
                     $('.name').val(data.harvester);
+                    $('.phone').val(data.harvester_phone_num);
+                    $('#area-li').val(data.address_name);
+                    $('.detail-addr').val(data.harvester_real_address);
+                    if(data.status === 1){
+                        $('.switch_checkbox').attr('checked', 'checked');
+                    }
                 }
             },
             error: function(){
