@@ -16,7 +16,6 @@ function pay_money($arr){
 //通过后台登录获取admin表id进行判断属于什么
 function get_user_id_by_session(){
     $session_user_id =session('user_id');
-    dump($session_user_id);
 }
 
 

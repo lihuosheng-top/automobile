@@ -81,7 +81,8 @@ class My extends Controller
     public function message(){
         return view("my_message");
     }
-    
+
+
 
 
 
