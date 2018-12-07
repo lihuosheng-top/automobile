@@ -15,7 +15,6 @@ class My extends Controller
     }
 
 
-
     // 登录
     public function Login()
     {
@@ -68,7 +67,6 @@ class My extends Controller
      * 陈绪
      */
     public function consume(){
-
         return view("my_consume");
 
     }
@@ -81,10 +79,9 @@ class My extends Controller
      * 陈绪
      */
     public function message(){
-
         return view("my_message");
-
     }
+    
 
 
 
@@ -94,7 +91,6 @@ class My extends Controller
      * 陈绪
      */
     public function phone_edit(){
-
         return view("phone_edit");
 
     }
@@ -106,7 +102,6 @@ class My extends Controller
      * 陈绪
      */
     public function true_name(){
-
         return view("true_name");
 
     }
@@ -118,7 +113,6 @@ class My extends Controller
      * 陈绪
      */
     public function nickname(){
-
         return view("my_nickname");
 
     }
@@ -129,7 +123,6 @@ class My extends Controller
      * 陈绪
      */
     public function integral(){
-
         return view("my_integral");
 
     }
@@ -141,7 +134,6 @@ class My extends Controller
      * 陈绪
      */
     public function consume_message(){
-
         return view("consume_message");
 
     }
