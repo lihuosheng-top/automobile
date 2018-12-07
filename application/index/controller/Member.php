@@ -101,7 +101,7 @@ class  Member extends Controller{
      */
     public function member_address_edit_information(Request $request){
         if($request->isPost()){
-            $id = $request->only('id')['id'];
+            $id = Session::get('address_id');
             $data =Db::name("user_address")->where('id',$id)->find();
             if(!empty($data)){
                 return ajax_success('地址信息返回成功',$data);
@@ -170,6 +170,7 @@ class  Member extends Controller{
      * @return \think\response\View
      */
     public function member_address_add(){
+        Session::clear("address_id");
         return view('member_address_add');
     }
 
