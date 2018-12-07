@@ -162,6 +162,7 @@
                     $('.phone').val(data.harvester_phone_num);
                     $('#area-li').val(data.address_name);
                     $('.detail-addr').val(data.harvester_real_address);
+                    $('.updata-btn').attr('id', 'updata-'+data.id+'')
                     if(data.status === 1){
                         $('.switch_checkbox').attr('checked', 'checked');
                     }
@@ -178,7 +179,8 @@
                 harvester_phone_num,
                 address_name,
                 harvester_real_address,
-                status;
+                status,
+                id = $(this)[0].id.split('-')[1];
             if($('.name').val() !== '' && $('.phone').val() !== '' && $('.area-li').val() !== ''
                 && $('.detail-addr').val() !== ''){
                 harvester = $('.name').val();
@@ -200,9 +202,20 @@
                         'address_name': address_name,
                         'harvester_real_address': harvester_real_address,
                         'status': status,
+                        'id': id
                     },
                     success: function(res){
                         console.log(res);
+                        if(res.status == 1){
+                            layer.open({
+                                content: res.info,
+                                skin: 'msg',
+                                time: 1
+                            });
+                            setTimeout(function(){
+                                location.href = 'member_address';
+                            },1100);
+                        }
                     },
                     error: function(){
                         console.log('error');
