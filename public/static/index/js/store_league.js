@@ -255,8 +255,6 @@ $.ajax({
                                     console.log(res);
                                     if(res.status == 1){
                                         layer.open({
-                                            style: 'bottom:100px;',
-                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                             skin: 'msg',
                                             content: res.info,
                                             time: 1.5
@@ -266,8 +264,6 @@ $.ajax({
                                         }, 1700)
                                     }else if(res.status == 0){
                                         layer.open({
-                                            style: 'bottom:100px;',
-                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                             skin: 'msg',
                                             content: res.info,
                                             time: 1.5
@@ -290,8 +286,6 @@ $.ajax({
                                     console.log(res);
                                     if(res.status === '0'){
                                         layer.open({
-                                            style: 'bottom:100px;',
-                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                             skin: 'msg',
                                             content: res.info,
                                             time: 1.5
@@ -301,8 +295,6 @@ $.ajax({
                                         }, 1700)
                                     }else{
                                         layer.open({
-                                            style: 'bottom:100px;',
-                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                             skin: 'msg',
                                             content: res.info,
                                             time: 1.5
@@ -319,8 +311,6 @@ $.ajax({
                         }
                     }else{
                         layer.open({
-                            style: 'bottom:100px;',
-                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: '服务商需选择服务范围',
                             time: 1.5
@@ -339,8 +329,6 @@ $.ajax({
                                 console.log(res);
                                 if(res.status == 1){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: res.info,
                                         time: 1.5
@@ -350,8 +338,6 @@ $.ajax({
                                     }, 1700)
                                 }else if(res.status == 0){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: res.info,
                                         time: 1.5
@@ -374,8 +360,6 @@ $.ajax({
                                 console.log(res);
                                 if(res.status === '0'){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: res.info,
                                         time: 1.5
@@ -385,8 +369,6 @@ $.ajax({
                                     }, 1700)
                                 }else{
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: res.info,
                                         time: 1.5
