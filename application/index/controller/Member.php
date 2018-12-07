@@ -99,9 +99,10 @@ class  Member extends Controller{
      */
     public function member_address_del(Request $request){
         if($request->isPost()){
+            $user_id = Session::get("user");
             $id =$request->only('id')['id'];
             if($id){
-                $bool =Db::name('user_address')->bind(["id"=>[$id,\PDO::PARAM_INT]])->delete();
+                $bool =Db::name('user_address')->where("user_id",$user_id)->where("id",":id")->bind(["id"=>[$id,\PDO::PARAM_INT]])->delete();
                 if($bool){
                     return ajax_success('删除成功',['status'=>1]);
                 }else{
@@ -132,8 +133,6 @@ class  Member extends Controller{
             }
         }
     }
-
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -152,7 +151,6 @@ class  Member extends Controller{
             }
         }
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -187,7 +185,6 @@ class  Member extends Controller{
             }
         }
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -198,7 +195,6 @@ class  Member extends Controller{
     public function member_address_add(){
         return view('member_address_add');
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -222,9 +218,6 @@ class  Member extends Controller{
             }
         }
     }
-
-
-
 
     /**
      **************李火生*******************
