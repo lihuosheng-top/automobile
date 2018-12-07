@@ -80,10 +80,16 @@
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">收货地址1：</label>
+	{if !empty($address_data)}
+		{foreach name="address_data" item="vos"}
+		<label class="layui-form-label">收货地址{$key+1}：</label>
 		<div class="layui-input-block">
-			<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_val.harvester_real_address}">
+			<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$vos.address_name}{$vos.harvester_real_address}">
+			<span>收货人{$key+1}：</span><span>{$vos.harvester}</span><br>
+			<span>收货人电话{$key+1}：</span><span>{$vos.harvester_phone_num}</span>
 		</div>
+		{/foreach}
+	{/if}
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">申请时间：</label>
@@ -92,6 +98,32 @@
 		</div>
 	</div>
 		{/volist}
+
+		{if !empty($love_car)}
+		{volist name="love_car" id="v_data"}
+		<span>品牌{$v_data.brand}</span>
+		<span>车系{$v_data.series}</span>
+		<span>车型{$v_data.displacement}</span>
+		<span>年产{$v_data.production_time}</span>
+		{if !empty($v_data.user_car_massage)}
+		<span>颜色{$v_data.user_car_massage["colour"]}</span>
+		<span>座位{$v_data.user_car_massage["seat"]}</span>
+		<span>车牌号{$v_data.user_car_massage["plate_number"]}</span>
+		<span>行驶里程{$v_data.user_car_massage["driving_number"]}</span>
+		<span>车架号{$v_data.user_car_massage["carriage_number"]}</span>
+		<span>发动机号{$v_data.user_car_massage["engine_number"]}</span>
+		<span>商业车险公司{$v_data.user_car_massage["car_insurance"]}</span>
+		<span>保险到期时间{$v_data.user_car_massage["insurance_time"]}</span>
+		<br>
+		{/if}
+		{/volist}
+		{/if}
+
+
+
+
+
+
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button type="button" class="layui-btn" onClick="javascript :history.back(-1);"> 返回</button>

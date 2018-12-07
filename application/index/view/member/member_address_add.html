@@ -15,7 +15,7 @@
         .header{position: relative;width: 100%;height: .88rem;background-color: #fff; border-bottom: 1px solid #eee;}
         .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
         .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
-        .save-btn{position: absolute; right: .3rem; top: 50%; transform: translateY(-50%); background-color: #fff; border: 0; outline: none; font-size: .34rem; color: #333;}
+        .save-btn,.updata-btn{position: absolute; right: .3rem; top: 50%; transform: translateY(-50%); background-color: #fff; border: 0; outline: none; font-size: .34rem; color: #333;}
         .myul li{padding: 0 .3rem; border-bottom: 1px solid #eee; height: 1rem; display: flex; align-items: center; position: relative;justify-content: space-between;}
         .p-title{font-size: .3rem; color: #333;width: 2rem;}
         .icon-more{position: absolute;top: 50%;right: .3rem;width: .26rem;height: .38rem;background-position: -7.25rem -1.75rem;transform: translateY(-50%);}
@@ -36,15 +36,16 @@
             <a href="member_address" class="spr icon-back"></a>
             <h3>添加收货地址</h3>
             <button class="save-btn">保存</button>
+            <button class="updata-btn" style="display: none;">更新</button>
         </header>
         <ul class="myul">
             <li>
                 <p class="p-title">收货人姓名</p>
-                <input type="text" class="text-input" placeholder="请输入">
+                <input type="text" class="text-input name" placeholder="请输入">
             </li>
             <li>
                 <p class="p-title">手机号码</p>
-                <input type="text" class="text-input" placeholder="请输入">
+                <input type="text" class="text-input phone" placeholder="请输入">
             </li>
             <li>
                 <p class="p-title">所在地区</p>
@@ -54,7 +55,7 @@
             </li>
             <li>
                 <p class="p-title">详细地址</p>
-                <input type="text" class="text-input" placeholder="请输入">
+                <input type="text" class="text-input detail-addr" placeholder="请输入">
             </li>
             <li>
                 <p class="p-title">设为默认</p>
@@ -91,8 +92,142 @@
         area.value=[1,13,1];//控制初始位置，注意：该方法并不会影响到input的value
     </script>
     <script>
+        // 新建保存
         $('.save-btn').click(function(){
-            location.href = 'member_address';
+            var harvester,
+                harvester_phone_num,
+                address_name,
+                harvester_real_address,
+                status;
+            if($('.name').val() !== '' && $('.phone').val() !== '' && $('.area-li').val() !== ''
+                && $('.detail-addr').val() !== ''){
+                harvester = $('.name').val();
+                harvester_phone_num = $('.phone').val();
+                address_name = $('#area-li').val();
+                harvester_real_address = $('.detail-addr').val();
+                if($('#switch_checkbox')[0].checked){
+                    status = 1;
+                }else{
+                    status = -1;
+                }
+                $.ajax({
+                    url: 'member_address_adds',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'harvester': harvester,
+                        'harvester_phone_num': harvester_phone_num,
+                        'address_name': address_name,
+                        'harvester_real_address': harvester_real_address,
+                        'status': status,
+                    },
+                    success: function(res){
+                        console.log(res);
+                        if(res.status == '1'){
+                            layer.open({
+                                skin: 'msg',
+                                content: res.info,
+                                time: 1
+                            })
+                            setTimeout(function(){
+                                location.href = 'member_address';
+                            }, 1100)
+                        }
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    content: '信息填写不完整',
+                    skin: 'msg',
+                    time: 1
+                });
+            }
+        })
+
+        // 编辑保存
+        $.ajax({
+            url: 'member_address_edit_information',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    var data = res.data;
+                    $('.save-btn').hide();
+                    $('.updata-btn').show();
+                    $('.name').val(data.harvester);
+                    $('.phone').val(data.harvester_phone_num);
+                    $('#area-li').val(data.address_name);
+                    $('.detail-addr').val(data.harvester_real_address);
+                    $('.updata-btn').attr('id', 'updata-'+data.id+'')
+                    if(data.status === 1){
+                        $('.switch_checkbox').attr('checked', 'checked');
+                    }
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+
+        // 编辑更新按钮
+        $('.updata-btn').click(function(){
+            var harvester,
+                harvester_phone_num,
+                address_name,
+                harvester_real_address,
+                status,
+                id = $(this)[0].id.split('-')[1];
+            if($('.name').val() !== '' && $('.phone').val() !== '' && $('.area-li').val() !== ''
+                && $('.detail-addr').val() !== ''){
+                harvester = $('.name').val();
+                harvester_phone_num = $('.phone').val();
+                address_name = $('#area-li').val();
+                harvester_real_address = $('.detail-addr').val();
+                if($('#switch_checkbox')[0].checked){
+                    status = 1;
+                }else{
+                    status = -1;
+                }
+                $.ajax({
+                    url: 'member_address_edit',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'harvester': harvester,
+                        'harvester_phone_num': harvester_phone_num,
+                        'address_name': address_name,
+                        'harvester_real_address': harvester_real_address,
+                        'status': status,
+                        'id': id
+                    },
+                    success: function(res){
+                        console.log(res);
+                        if(res.status == 1){
+                            layer.open({
+                                content: res.info,
+                                skin: 'msg',
+                                time: 1
+                            });
+                            setTimeout(function(){
+                                location.href = 'member_address';
+                            },1100);
+                        }
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    content: '信息填写不完整',
+                    skin: 'msg',
+                    time: 1
+                });
+            }
         })
     </script>
 </body>

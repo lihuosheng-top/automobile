@@ -113,7 +113,6 @@
 						<th>用户昵称</th>
 						<th>头像</th>
 						<th>配件商/零配件商</th>
-						<th>收货地址</th>
 						<th>注册时间</th>
 						<th>账户状态</th>
 						<th>操作</th>
@@ -135,7 +134,6 @@
 							{/if}
 						</td>
 						<td>{$user_val.type|show_user_type}</td>
-						<td>{$user_val.harvester_real_address} </td>
 						<td>{$user_val.create_time|date='Y-m-d H:i:s',###} </td>
 						<td>
 							{if $user_val.status==0}
