@@ -26,25 +26,25 @@
         </div>
         <div class="shops-goods-wrap">
             <!-- 待付款 -->
-            <div class="single-shop-box" v-for="(allData, idx) in allDatas">
+            <div class="single-shop-box">
                 <div class="shop-name-box">
                     <div class="name-txt-div">
                         <i class="spr icon-shop"></i>
-                        <span class="name-txt-span">{{allData.store_name}}</span>
+                        <span class="name-txt-span">店铺名</span>
                     </div>
-                    <p class="status-txt-p">{{returnStatusTxt(allData.status)}}</p>
+                    <p class="status-txt-p">待支付</p>
                 </div>
                 <div class="all-goods-box">
-                    <div class="single-goods-box single-goods-box-border" v-for="goods in allData.info">
+                    <div class="single-goods-box single-goods-box-border">
                         <div class="shop-img-box">
-                            <img :src="`uploads/`+goods.goods_image">
+                            <img src="__STATIC__/index/image/01.png">
                         </div>
                         <div class="order-info-box">
-                            <p class="goods-name-p txt-hid-two">{{goods.parts_goods_name}}</p>
+                            <p class="goods-name-p txt-hid-two">商品名</p>
                             <p class="goods-selling-point txt-hid-two">这个是商品卖点这个是商品卖点</p>
                             <div class="unit-price-quantity">
-                                <p class="unit-price-p">￥{{goods.goods_money}}</p>
-                                <p class="quantity-p">×{{goods.order_quantity}}</p>
+                                <p class="unit-price-p">￥199</p>
+                                <p class="quantity-p">×2</p>
                             </div>
                         </div>
                     </div>
@@ -65,8 +65,6 @@
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
-    <script src="__STATIC__/index/js/plugin/vue.js"></script>
-    <script src="__STATIC__/index/js/plugin/vue.resource.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_all.js"></script>
 </html>
