@@ -123,6 +123,16 @@
                     },
                     success: function(res){
                         console.log(res);
+                        if(res.status == '1'){
+                            layer.open({
+                                skin: 'msg',
+                                content: res.info,
+                                time: 1
+                            })
+                            setTimeout(function(){
+                                location.href = 'member_address';
+                            }, 1100)
+                        }
                     },
                     error: function(){
                         console.log('error');
