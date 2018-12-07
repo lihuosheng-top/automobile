@@ -40,11 +40,11 @@
         <ul class="myul">
             <li>
                 <p class="p-title">收货人姓名</p>
-                <input type="text" class="text-input" placeholder="请输入">
+                <input type="text" class="text-input name" placeholder="请输入">
             </li>
             <li>
                 <p class="p-title">手机号码</p>
-                <input type="text" class="text-input" placeholder="请输入">
+                <input type="text" class="text-input phone" placeholder="请输入">
             </li>
             <li>
                 <p class="p-title">所在地区</p>
@@ -54,7 +54,7 @@
             </li>
             <li>
                 <p class="p-title">详细地址</p>
-                <input type="text" class="text-input" placeholder="请输入">
+                <input type="text" class="text-input detail-addr" placeholder="请输入">
             </li>
             <li>
                 <p class="p-title">设为默认</p>
@@ -92,7 +92,53 @@
     </script>
     <script>
         $('.save-btn').click(function(){
-            location.href = 'member_address';
+            var harvester,
+                harvester_phone_num,
+                address_name,
+                harvester_real_address,
+                status;
+            if($('.name').val() !== '' && $('.phone').val() !== '' && $('.area-li').val() !== ''
+                && $('.detail-addr').val() !== ''){
+                harvester = $('.name').val();
+                harvester_phone_num = $('.phone').val();
+                address_name = $('.area-li').val();
+                harvester_real_address = $('.detail-addr').val();
+                if($('#switch_checkbox')[0].checked){
+                    status = 1;
+                }else{
+                    status = -1;
+                }
+                $.ajax({
+                    url: 'member_address_adds',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'harvester': harvester,
+                        'harvester_phone_num': harvester_phone_num,
+                        'address_name': address_name,
+                        'harvester_real_address': harvester_real_address,
+                        'status': status,
+                    },
+                    success: function(res){
+                        console.log(res);
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    content: '信息填写不完整',
+                    skin: 'msg',
+                    time: 1
+                });
+            }
+            // if()
+
+
+
+            // location.href = 'member_address';
+
         })
     </script>
 </body>
