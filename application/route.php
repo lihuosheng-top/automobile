@@ -108,7 +108,12 @@ Route::group("",[
     /*TODO:我的页面开始*/
     "member_equity"=>"index/member/member_equity",//会员权益
     "member_address"=>"index/member/member_address",//地址管理
-    "member_address_add"=>"index/member/member_address_add",//地址管理添加
+    "member_address_information"=>"index/member/member_address_information",//地址管理列表数据返回
+    "member_address_add"=>"index/member/member_address_add",//地址管理添加页面
+    "member_address_adds"=>"index/member/member_address_adds",//地址管理添加功能(ajax)
+    "member_save_address_id"=>"index/member/member_save_address_id",//地址编辑地址点击一个id传给后台
+    "member_address_edit_information"=>"index/member/member_address_edit_information",//地址管理编辑页面数据返回
+    "member_address_edit"=>"index/member/member_address_edit",//地址管理编辑功能(ajax)
     "member_collection"=>"index/member/member_collection",//我的收藏
     /*TODO:我的页面结束*/
     /*TODO:消息开始*/
@@ -533,6 +538,14 @@ Route::group("admin",[
     "shop_dels"=>"admin/Shop/dels",//店铺列表批量删除
     "shop_search"=>"admin/Shop/search",//店铺列表模糊查询
     /*TODO:店铺管理结束*/
+
+
+    /**
+     * 运行管理
+     * 陈绪
+     */
+    "complaint_index"=>"admin/Operation/complaint_index",
+    "urgency_index"=>"admin/Operation/urgency_index",
 
 ]);
 
