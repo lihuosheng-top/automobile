@@ -156,6 +156,16 @@
         right: 0;
         top: 0;
     }
+    	.big_div{
+		position: relative;
+	}
+	.delect_img{
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
 </style>
 
 {/block}
@@ -252,7 +262,8 @@
 
             <div class="layui-input-inline" style="margin-left: 30px;">
                 {if !empty($goods_list)}
-                <select name="goods_type_id" id="goods_type_id">
+                <select name="goods_type_id" id="goods_type_id" lay-filter="goods_type_id">
+                	<option value="0">请选择</option>
 					{volist name="goods_list" id="goods"} {if $value.goods_type_id == $goods.id}
 					<option value="{$goods.id}" selected="">{$goods.name}</option>
 					{else}
@@ -260,7 +271,7 @@
 					{/if} {/volist}
 				</select> {else}
                 <select name="goods_type_id">
-					<option value="0">顶级</option>
+					<option value="0">请选择</option>
 				</select> {/if}
             </div>
             <div class="layui-input-inline">
@@ -271,7 +282,8 @@
             <label class="layui-form-label"><span>*</span>商品品牌:</label>
             <div class="layui-input-inline" style="margin-left: 30px;">
                 {if !empty($goods_brand)}
-                <select name="goods_brand_id">
+                <select name="goods_brand_id" lay-filter="goods_brand_id" id="goods_brand_id">
+                	<option value="0">请选择</option>
 					{volist name="goods_brand" id="v"} {if $value.goods_brand_id == $v.id}
 					<option value="{$v.id}" selected>{$v.name}</option>
 					{else}
@@ -279,7 +291,7 @@
 					{/if} {/volist}
 				</select> {else}
                 <select name="goods_brand_id">
-					<option value="0">顶级</option>
+					<option value="0">请选择</option>
 				</select> {/if}
             </div>
             <div class="layui-input-inline">
@@ -582,7 +594,7 @@
         <div class="basic-information title"> 其他
         </div>
         <div class="layui-form-item" class="biaoji">
-            <label class="layui-form-label">上架年限：</label>
+            <label class="layui-form-label"><span class="red"></span>上架年限：</label>
             <div class="layui-input-block">
                 <select name="goods_year_id">
 					{volist name="year" id="v"}
@@ -602,7 +614,7 @@
                 </div>
             </div>
         </div>
-        <div class="layui-form-item" class="biaoji">
+        <!--<div class="layui-form-item" class="biaoji">
             <label class="layui-form-label"><span>*</span>是否上架：</label>
             <div class="layui-input-block" id="goods_sign">
                 {if $value.goods_status == 1}
@@ -611,7 +623,7 @@
                 <input type="radio" name="goods_status" value="1" title="上架" class="hot">
                 <input type="radio" name="goods_status" value="{$value.goods_status}" title="不上架" checked=""> {/if}
             </div>
-        </div>
+        </div>-->
         <div class="basic-information title"> 配送与安装服务
         </div>
         <div class="layui-form-item" class="biaoji">
@@ -811,7 +823,42 @@
                 }
                 formSelects.render();
             }
+                $("#special_content").on('click', ".delect_img", function() {
+             	$(this).parent(".big_div").remove();
+             })
+                $("#general_content").on('click', ".delect_img", function() {
+             	$(this).parent(".big_div").remove();
+             })
+      // TODO限制分组和品牌
+            form.on('select(goods_type_id)', function(data) {
+             
+                var value = data.elem.selectedOptions[0].text;
+                value = $.trim(value);
+                if (value != "请选择") {
+                 $("#goods_brand_id").val("0");
+                   form.render();
+                  $("#goods_brand_id").siblings().addClass("layui-disabled");
+                  $("#goods_brand_id").siblings().children("layui-anim-upbit").prevObject[0].lastElementChild.remove();
+                  
+                } else {
+                    form.render();
+                }
 
+            });
+                form.on('select(goods_brand_id)', function(data) {
+                var value = data.elem.selectedOptions[0].text;
+                value = $.trim(value);
+                if (value != "请选择") {
+                	$("#goods_type_id").val("0");
+                   form.render();
+                  $("#goods_type_id").siblings().addClass("layui-disabled");
+                  $("#goods_type_id").siblings().children("layui-anim-upbit").prevObject[0].lastElementChild.remove();
+                  
+                } else {
+                    form.render();
+                }
+
+            });
 
             //		车型开始赋值
             //			改变车型时
@@ -872,10 +919,9 @@
             //TODO点击专用添加规格项目添加页面
             $(".special_buts").click(function() {
             	var dhtml = "";
-               
-
-					        dhtml += '<div>' +
-					            ' 			<div class="layui-form-item">                                                                                 ' +
+                 dhtml += '<div class="big_div">' +
+				            ' <i class="delect_img"><img src="__STATIC__/admin/common/img/a7.png"/></i>'+
+               ' 			<div class="layui-form-item">                                                                                 ' +
 					            ' 				<label class="layui-form-label">规格名</label>                                                               ' +
 					            ' 				<div class="layui-input-inline guige_name">                                                                          ' +
 					            ' 					<select class="universal_standard_name'+num+'" name="goods_standard_name[]">                                                                                 ' +
@@ -958,10 +1004,9 @@
             //TODO点击通用添加规格项目添加页面
             $(".general_buts").click(function() {
             	var dhtml = "";
-           
-
-				        dhtml += '<div>' +
-				            ' 			<div class="layui-form-item">                                                                                 ' +
+                        dhtml += '<div class="big_div">' +
+				            ' <i class="delect_img"><img src="__STATIC__/admin/common/img/a7.png"/></i>'+
+                            ' 			<div class="layui-form-item">                                                                                 ' +
 				            ' 				<label class="layui-form-label">规格名</label>                                                               ' +
 				            ' 				<div class="layui-input-inline guige_name">                                                                          ' +
 				            ' 					<select class="universal_standard_name'+nums+'" name="goods_standard_name[]">                                                                                 ' +
@@ -1054,7 +1099,6 @@
                     },
                     success: function(data) {
                     	var data = eval('(' + data + ')');
-                    	console.log(data);
                     	layer.msg(data.info);
                     	if(data.info=="成功"){
 	                        var dhtmls = "";

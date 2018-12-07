@@ -25,14 +25,17 @@ class Order extends Controller{
      **************************************
      */
     public function index(){
-        get_user_id_by_session();
+        $session_user_id =session('user_id');
+        $phone = Db::name("admin")->field("phone")->where('id',$session_user_id)->find();
+        $user_id =Db::name("user")->field("id")->where('phone_num',$phone['phone'])->find();
+        $store_id =Db::name("store")->field('store_id')->where('user_id',$user_id['id'])->find();
         $order_parts_data =Db::table('tb_order_parts')
             ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
             ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
             ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
+            ->where('tb_order_parts.store_id',$store_id['store_id'])
             ->order('tb_order_parts.order_create_time','desc')
             ->paginate(3);
-
        return view('index',['order_parts_data'=>$order_parts_data]);
     }
 
@@ -288,7 +291,6 @@ class Order extends Controller{
      */
     public function edit($id){
         $order_parts_data = Db::name("order_parts")->where("id",$id)->select();
-        dump($order_parts_data);
         return view('edit',['order_parts_data'=>$order_parts_data]);
     }
 
@@ -851,7 +853,11 @@ class Order extends Controller{
      **************************************
      */
     public function service_order_index(){
-        $service_order_data =Db::name('order_service')->order('create_time','desc')->paginate(5);
+        $session_user_id =session('user_id');
+        $phone = Db::name("admin")->field("phone")->where('id',$session_user_id)->find();
+        $user_id =Db::name("user")->field("id")->where('phone_num',$phone['phone'])->find();
+        $store_id =Db::name("store")->field('store_id')->where('user_id',$user_id['id'])->find();
+        $service_order_data =Db::name('order_service')->where("store_id",$store_id["store_id"])->order('create_time','desc')->paginate(5);
         return view('service_order_index',['service_order_data'=>$service_order_data]);
     }
 

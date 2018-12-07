@@ -204,7 +204,13 @@
 						<td><input type="checkbox" data-text="{$val.year}" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加" data-action="{$value.putaway_status}"></td>
 						{/if}
 						{/volist}
-						<td>{$value.goods_number}</td>
+						<td>
+							{if !empty($value.goods_number)}
+							{$value.goods_number}
+							{else}
+							无
+							{/if}
+						</td>
 						{volist name="store" id="shop"}
 						{if $value.store_id == $shop.store_id}
 						<td  class="shop_name">{$shop.store_name}</td>
@@ -245,20 +251,28 @@
 							{/if}
 						</td>
 						<td>
+							{if !empty($value.goods_year_id)}
 							{volist name="year" id="val"}
 							{if $value.goods_year_id == $val.id}
 							{$val.money}元
 							{/if}
 							{/volist}
+							{else}
+							无
+							{/if}
 						</td>
 						<td>{$value.sort_number}</td>
 						<td>{$value.goods_repertory}</td>
 						<td>
+							{if !empty($value.goods_year_id)}
 							{volist name="year" id="val"}
 							{if $value.goods_year_id == $val.id}
 							{$val.year}年
 							{/if}
 							{/volist}
+							{else}
+							无
+							{/if}
 						</td>
 						<td style="width: 155px;">
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/look',['id'=>$value.id])}"> 查看详情</a>
@@ -316,10 +330,10 @@
                 } else {
                     $(this).val(0);
                 }
+                
                 var vals = data.value;
                 var id = $(this).data("id");
                 var status = $(this).val();
-
                 var price=$(this).data("title");
 			    var shop=$(".shop_name")[0].innerHTML;
 			    var putaway_status=$(this).data("action");
@@ -342,10 +356,12 @@
 								var role_id=data.data.admin[0].role_id;
 								// 当角色为平台时
 								if(role_id==2){
+								   var ids=[];
+									  ids.push(id);
 									$.ajax({ 
 												type: "POST",
 												url: "{:url('admin/Goods/status')}",
-												  data: {"id":id,"status":status},
+												  data: {"id":ids,"status":status},
 												success: function(data){
 													console.log(data)
 												},
@@ -357,10 +373,12 @@
 								// 当角色为服务商时
 								else if(role_id==5){
                                 if(putaway_status==1){
+                                	var ids=[];
+									  ids.push(id);
                                 		$.ajax({ 
 												type: "POST",
 												url: "{:url('admin/Goods/status')}",
-												  data: {"id":id,"status":status},
+												  data: {"id":ids,"status":status},
 												success: function(data){
 													console.log(data)
 												},
@@ -398,11 +416,13 @@
                 }
                 // 当下架时
                 else {
+                	  var ids=[];
+					   ids.push(id);
                     $.ajax({
                         type: "POST",
                         url: "{:url('admin/Goods/status')}",
                         data: {
-                            "id": id,
+                            "id": ids,
                             "status": status
                         },
                         success: function(data) {
@@ -542,7 +562,22 @@
                             // 当角色为服务商时
                             else if (role_id == 5) {
                                 if (mdata_id.length > 0) {
-                                    $.ajax({
+                                 
+                                    layer.confirm('付费商品需付费后才能上架！', {
+                                        btn: ['确定付费', '取消付费！'] //按钮
+                                    }, function() {
+                                        layer.close(layer.index);
+                                        $(".tanchuang").removeClass("noshow");
+                                        $("#shop").val(shop);
+                                        $("#price").val(all_price);
+                                        $("#num").val(mdata_id.length);
+                                        $("#good-id").val(mdata_id);
+
+                                    });
+
+                                }
+                                if(nmdata_id.length > 0){
+                                	   $.ajax({
                                         type: "POST",
                                         url: "{:url('admin/Goods/status')}",
                                         data: {
@@ -556,18 +591,6 @@
                                             console.log(data);
                                         }
                                     });
-                                    layer.confirm('付费商品需付费后才能上架！', {
-                                        btn: ['确定付费', '取消付费！'] //按钮
-                                    }, function() {
-                                        layer.close(layer.index);
-                                        $(".tanchuang").removeClass("noshow");
-                                        $("#shop").val(shop);
-                                        $("#price").val(all_price);
-                                        $("#num").val(mdata_id.length);
-                                        $("#good-id").val(mdata_id);
-
-                                    });
-
                                 }
 
 

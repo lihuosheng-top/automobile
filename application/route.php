@@ -111,6 +111,8 @@ Route::group("",[
     "member_address_information"=>"index/member/member_address_information",//地址管理列表数据返回
     "member_address_add"=>"index/member/member_address_add",//地址管理添加页面
     "member_address_adds"=>"index/member/member_address_adds",//地址管理添加功能(ajax)
+    "member_address_del"=>"index/member/member_address_del",//地址管理删除功能(ajax)
+    "member_address_status"=>"index/member/member_address_status",//地址管理设置默认功能(ajax)
     "member_save_address_id"=>"index/member/member_save_address_id",//地址编辑地址点击一个id传给后台
     "member_address_edit_information"=>"index/member/member_address_edit_information",//地址管理编辑页面数据返回
     "member_address_edit"=>"index/member/member_address_edit",//地址管理编辑功能(ajax)

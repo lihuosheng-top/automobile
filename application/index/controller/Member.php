@@ -77,6 +77,9 @@ class  Member extends Controller{
             ];
             $bool_id =Db::name("user_address")->insertGetId($data);
             if($bool_id){
+                if($status==1){
+                    Db::name('user_address')->where('user_id',$user_id)->where('id','NEQ',$bool_id)->update(['status'=>-1]);
+                }
                 return ajax_success("添加成功",$bool_id);
             }else{
                 return ajax_error("添加失败",['status'=>0]);
@@ -87,10 +90,29 @@ class  Member extends Controller{
     }
 
 
-
-//    public function member_address_del(Request $request){
-//
-//    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:删除
+     **************************************
+     * @param Request $request
+     */
+    public function member_address_del(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $id =$request->only('id')['id'];
+            if($id){
+                $bool =Db::name('user_address')->where("user_id",$user_id)->where("id",":id")->bind(["id"=>[$id,\PDO::PARAM_INT]])->delete();
+                if($bool){
+                    return ajax_success('删除成功',['status'=>1]);
+                }else{
+                    return ajax_error('删除失败',['status'=>0]);
+                }
+            }else{
+                return ajax_error('这条地址信息不正确',['status']);
+            }
+        }
+    }
 
     /**
      **************李火生*******************
@@ -111,8 +133,6 @@ class  Member extends Controller{
             }
         }
     }
-
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -131,7 +151,6 @@ class  Member extends Controller{
             }
         }
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -141,6 +160,7 @@ class  Member extends Controller{
      */
     public function member_address_edit(Request $request){
         if($request->isPost()){
+            $user_id =Session::get("user");
             $id = $request->only('id')['id'];
             $harvester = $request->only('harvester')['harvester'];
             $harvester_phone_num = $request->only('harvester_phone_num')['harvester_phone_num'];
@@ -156,13 +176,15 @@ class  Member extends Controller{
             ];
             $bool_id =Db::name("user_address")->where('id',$id)->update($data);
             if($bool_id){
+                if($status==1){
+                    Db::name('user_address')->where('user_id',$user_id)->where('id','NEQ',$id)->update(['status'=>-1]);
+                }
                 return ajax_success("编辑成功",$bool_id);
             }else{
                 return ajax_error("编辑失败",['status'=>0]);
             }
         }
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -173,11 +195,29 @@ class  Member extends Controller{
     public function member_address_add(){
         return view('member_address_add');
     }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:设置默认地址
+     **************************************
+     * @param Request $request
+     */
+    public function member_address_status(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            $id =$request->only('id')['id'];
+            if(!empty($id)){
+              $bool=  Db::name('user_address')->where("user_id",$user_id)->where("id","EQ",$id)->update(['status'=>1]);
+              if($bool){
+                  Db::name('user_address')->where("user_id",$user_id)->where("id","NEQ",$id)->update(['status'=>-1]);
+                  return ajax_success("设置成功",['status'=>1]);
+              }else{
+                  return ajax_error('设置失败',['status'=>0]);
+              }
 
-
-
-
-
+            }
+        }
+    }
 
     /**
      **************李火生*******************

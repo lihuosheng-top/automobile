@@ -72,7 +72,7 @@
                                         <div class="edit-box">
                                             <div class="set-default">
                                                 <i class="spr icon-default default-on"></i>
-                                                <button class="set-default-btn">设为默认</button>
+                                                <button class="set-default-btn" id="def-`+val.id+`">设为默认</button>
                                             </div>
                                             <button class="edit-btn" id="edit-`+val.id+`">编辑</button>
                                             <button class="del-btn" id="del-`+val.id+`">删除</button>
@@ -88,7 +88,7 @@
                                         <div class="edit-box">
                                             <div class="set-default">
                                                 <i class="spr icon-default"></i>
-                                                <button class="set-default-btn">设为默认</button>
+                                                <button class="set-default-btn" id="def-`+val.id+`">设为默认</button>
                                             </div>
                                             <button class="edit-btn" id="edit-`+val.id+`">编辑</button>
                                             <button class="del-btn" id="del-`+val.id+`">删除</button>
@@ -124,6 +124,73 @@
                             }
                         })
                     })
+
+                    // 删除地址
+                    $('.del-btn').click(function(){
+                        var $this = this;
+                        layer.open({
+                            content: '您确定要删除吗？',
+                            btn: ['确定', '取消'],
+                            yes: function (index) {
+                                layer.close(index);
+                                var id = $($this)[0].id.split('-')[1];
+                                $.ajax({
+                                    url: 'member_address_del',
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    data: {
+                                        'id': id
+                                    },
+                                    success: function(res){
+                                        console.log(res);
+                                        if(res.status == 1){
+                                            layer.open({
+                                                content: res.info,
+                                                skin: 'msg',
+                                                time: 1
+                                            });
+                                            setTimeout(function(){
+                                                location.reload();
+                                            },1100);
+                                        }
+                                    },
+                                    error: function(){
+                                        console.log('err');
+                                    }
+                                })
+                            }
+                        });
+                    })
+                    
+                    // 设置默认地址
+                    $('.set-default-btn').click(function(){
+                        var id = $(this)[0].id.split('-')[1];
+                        console.log(id)
+                        $.ajax({
+                            url: 'member_address_status',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'id': id
+                            },
+                            success: function(res){
+                                console.log(res);
+                                if(res.status == 1){
+                                    layer.open({
+                                        content: res.info,
+                                        skin: 'msg',
+                                        time: 1
+                                    });
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },1100);
+                                }
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
+                        })
+                    })
                 }
             },
             error: function(){
@@ -136,16 +203,7 @@
             $('.addr-wrap').find('.icon-default').removeClass('default-on');
             $(this).siblings().addClass('default-on');
         })
-        // 删除地址
-        $('.del-btn').click(function(){
-            layer.open({
-                content: '您确定要删除吗？',
-                btn: ['取消', '确定'],
-                yes: function (index) {
-                    layer.close(index);
-                }
-            });
-        })
+        
         // 添加地址
         $('.add-address-btn').click(function(){
             location.href = 'member_address_add';
