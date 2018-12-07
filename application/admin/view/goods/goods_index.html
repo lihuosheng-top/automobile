@@ -316,10 +316,10 @@
                 } else {
                     $(this).val(0);
                 }
+                
                 var vals = data.value;
                 var id = $(this).data("id");
                 var status = $(this).val();
-
                 var price=$(this).data("title");
 			    var shop=$(".shop_name")[0].innerHTML;
 			    var putaway_status=$(this).data("action");
@@ -342,10 +342,12 @@
 								var role_id=data.data.admin[0].role_id;
 								// 当角色为平台时
 								if(role_id==2){
+								   var ids=[];
+									  ids.push(id);
 									$.ajax({ 
 												type: "POST",
 												url: "{:url('admin/Goods/status')}",
-												  data: {"id":id,"status":status},
+												  data: {"id":ids,"status":status},
 												success: function(data){
 													console.log(data)
 												},
@@ -357,10 +359,12 @@
 								// 当角色为服务商时
 								else if(role_id==5){
                                 if(putaway_status==1){
+                                	var ids=[];
+									  ids.push(id);
                                 		$.ajax({ 
 												type: "POST",
 												url: "{:url('admin/Goods/status')}",
-												  data: {"id":id,"status":status},
+												  data: {"id":ids,"status":status},
 												success: function(data){
 													console.log(data)
 												},
@@ -398,11 +402,13 @@
                 }
                 // 当下架时
                 else {
+                	  var ids=[];
+					   ids.push(id);
                     $.ajax({
                         type: "POST",
                         url: "{:url('admin/Goods/status')}",
                         data: {
-                            "id": id,
+                            "id": ids,
                             "status": status
                         },
                         success: function(data) {
@@ -542,7 +548,22 @@
                             // 当角色为服务商时
                             else if (role_id == 5) {
                                 if (mdata_id.length > 0) {
-                                    $.ajax({
+                                 
+                                    layer.confirm('付费商品需付费后才能上架！', {
+                                        btn: ['确定付费', '取消付费！'] //按钮
+                                    }, function() {
+                                        layer.close(layer.index);
+                                        $(".tanchuang").removeClass("noshow");
+                                        $("#shop").val(shop);
+                                        $("#price").val(all_price);
+                                        $("#num").val(mdata_id.length);
+                                        $("#good-id").val(mdata_id);
+
+                                    });
+
+                                }
+                                if(nmdata_id.length > 0){
+                                	   $.ajax({
                                         type: "POST",
                                         url: "{:url('admin/Goods/status')}",
                                         data: {
@@ -556,18 +577,6 @@
                                             console.log(data);
                                         }
                                     });
-                                    layer.confirm('付费商品需付费后才能上架！', {
-                                        btn: ['确定付费', '取消付费！'] //按钮
-                                    }, function() {
-                                        layer.close(layer.index);
-                                        $(".tanchuang").removeClass("noshow");
-                                        $("#shop").val(shop);
-                                        $("#price").val(all_price);
-                                        $("#num").val(mdata_id.length);
-                                        $("#good-id").val(mdata_id);
-
-                                    });
-
                                 }
 
 

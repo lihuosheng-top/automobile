@@ -330,6 +330,7 @@ class Goods extends Controller{
             $user_id = db("user")->where("phone_num",$admin_phone)->value("id");
             $store_id = db("store")->where("user_id",$user_id)->value("store_id");
             $goods_data["store_id"] = $store_id;
+            halt($goods_data);
             $bool = db("goods")->where("id",$id)->update($goods_data);
             if ($bool) {
                 //取出图片在存到数据库
