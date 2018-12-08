@@ -74,7 +74,7 @@ class Findpwd extends Controller{
             $mobile = $_POST["mobile"];
             $is_set_mobile =Db::name('user')->where('phone_num',$mobile)->find();
             if(!empty($is_set_mobile)){
-                return ajax_error("手机号未修改",['status'=>0]);
+                return ajax_error("请输入不一样的号码",['status'=>0]);
             }
             $mobileCode = rand(100000, 999999);
             $arr = json_decode($mobile, true);
