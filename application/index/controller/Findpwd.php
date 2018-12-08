@@ -169,6 +169,7 @@ class Findpwd extends Controller{
             $password =$request->only(['password'])['password'];
             $passwords =password_hash(trim($password),PASSWORD_DEFAULT);
             $member =session('member');
+            $user_id = Session::get("user");
             if(!empty(trim($password))){
                 $is_admin =Db::name('admin')->where('phone',$member['phone'])->find();
                 if(!empty($is_admin)){
