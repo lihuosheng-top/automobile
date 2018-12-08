@@ -47,6 +47,7 @@ class My extends Controller
                    $return_data =Db::table('tb_user')
                        ->field('tb_user.*,tb_user_grade.user_grade_content user_grade_content')
                        ->join("tb_user_grade","tb_user.user_grade=tb_user_grade.grade_id",'left')
+                       ->where("tb_user.phone_num",$phone_num)
                        ->find();
                    if(!empty($return_data)){
                        return ajax_success('用户信息返回成功',$return_data);
