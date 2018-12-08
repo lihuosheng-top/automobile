@@ -168,7 +168,13 @@ class My extends Controller
                         }
                     }
                     //性别
-
+                    if(!empty($sex)){
+                        $phone_num =Db::name("user")->field('phone_num')->where("id",$user_id)->find();
+                        $is_set_admin =Db::name("admin")->where("phone",$phone_num['phone_num'])->find();
+                        if(!empty($is_set_admin)){
+                            Db::name("admin")->where("phone",$phone_num['phone_num'])->update(['sex'=>$sex]);
+                        }
+                    }
                     return ajax_success('更新成功',['status'=>1]);
                 }else {
                     return ajax_error('更新失败', ['status' => 0]);
