@@ -32,6 +32,22 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
+
+         $.ajax({
+            url: 'member_information_data',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    // $('.name-input').val(res.data);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+
         $('.save-btn').click(function(){
             if($('.name-input').val() !== ''){
                 var real_name = $('.name-input').val();

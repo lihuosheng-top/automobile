@@ -124,7 +124,7 @@ white-space: normal !important;
 	max-width: 662px;
 	width: 40%;
 	margin-bottom: 27px;
-	margin-top: 20px;
+	/* margin-top: 20px; */
 	box-sizing: border-box;
 	margin-left: 20px;
 }

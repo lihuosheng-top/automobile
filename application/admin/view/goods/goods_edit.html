@@ -186,7 +186,7 @@
         <div class="layui-form-item ">
             <label class="layui-form-label"><span>*</span>商品名:</label>
             <div class="layui-input-block">
-                <input type="text" name="goods_name" value="{$value.goods_name}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_name">
+                <input type="text" name="goods_name" value="{$value.goods_name}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input err_check" id="goods_name">
             </div>
         </div>
         <div class="layui-form-item">
@@ -279,7 +279,7 @@
             </div>
         </div>
         <div class="layui-form-item " style="min-width: 62% !important;">
-            <label class="layui-form-label"><span>*</span>商品品牌:</label>
+            <label class="layui-form-label">商品品牌:</label>
             <div class="layui-input-inline" style="margin-left: 30px;">
                 {if !empty($goods_brand)}
                 <select name="goods_brand_id" lay-filter="goods_brand_id" id="goods_brand_id">
@@ -300,7 +300,7 @@
 
         </div>
         <div class="layui-form-item ">
-            <label class="layui-form-label"><span>*</span>商品卖点:</label>
+            <label class="layui-form-label">商品卖点:</label>
             <div class="layui-input-block">
                 <textarea rows="10" name="goods_selling" cols="50">{$value.goods_selling}</textarea>
                 <div class="tips">*在商品列表页、详情页标题下面展示卖点信息，建议60字以内</div>
@@ -308,13 +308,13 @@
 
         </div>
         <div class="layui-form-item ">
-            <label class="layui-form-label"><span>*</span>商品排序:</label>
+            <label class="layui-form-label">商品排序:</label>
             <div class="layui-input-block">
                 <input type="text" name="sort_number" value="{$value.sort_number}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="sort_number">
             </div>
         </div>
         <div class="layui-form-item" class="biaoji">
-            <label class="layui-form-label"><span>*</span>商品标记：</label>
+            <label class="layui-form-label">商品标记：</label>
             <div class="layui-input-block" id="goods_sign">
                 <input type="radio" name="goods_sign" value="hot" title="hot" checked="" class="hot">
                 <input type="radio" name="goods_sign" value="促销" title="促销" class="">
@@ -543,7 +543,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label"><span>*</span>规格：</label>
             <div class="layui-input-block">
-                <input type="text" value="{$value.standard}" name="standard" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="standard">
+                <input type="text" value="{$value.standard}" name="standard" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input err_check" id="standard">
             </div>
         </div>
         <div class="layui-form-item">
@@ -559,7 +559,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label"><span>*</span> 价格：</label>
             <div class="layui-input-block">
-                <input type="text" name="goods_new_money" value="{$value.goods_new_money}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_new_money">
+                <input type="text" name="goods_new_money" value="{$value.goods_new_money}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input err_check" id="goods_new_money">
             </div>
         </div>
         <div class="layui-form-item">
@@ -574,7 +574,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label"> <span>*</span> 库存：</label>
             <div class="layui-input-block">
-                <input type="text" name="goods_repertory" value="{$value.goods_repertory}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="goods_repertory">
+                <input type="text" name="goods_repertory" value="{$value.goods_repertory}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input err_check" id="goods_repertory">
                 <div>
                     <input type="checkbox" name="" lay-skin="primary" title="商品详情不显示剩余件数">
                 </div>
@@ -1412,6 +1412,22 @@
             }
             // 		
         });
+          	function checks(){
+					 for(var i=0;i<$(".err_check").length;i++){
+					 	if($(".err_check")[i].value==''){
+					 		alert("证明文件有空没填写");
+					 		return false;
+					 	}
+					 }
+					 for(var j=0;j<$(".files").length;j++){
+					 	if($(".files")[j].files.length==0){
+					 		alert("证明图片有空没填写");
+					 		return false;
+					 	}
+					 }
+			     $(".btu").attr("type","submit");
+					
+				}
     </script>
 
     {/block}

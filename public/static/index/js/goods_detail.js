@@ -1,9 +1,13 @@
 // 获取url地址id
 var url = location.search;
-var id;
+var id, preId;
 if(url.indexOf('?') != -1){
-    id = url.substr(1).split('=')[1];
+    id = url.substr(1).split('&&')[0].split('=')[1];
+    preId = url.substr(1).split('&&')[1].split('=')[1];
 }
+$('.wrapper').find('a.back').click(function(){
+    location.href = 'goods_list?id=' + preId;
+})
 $.ajax({
     url: 'goods_detail',
     type: 'POST',
@@ -234,7 +238,7 @@ $('.ser-type').add('#buy').click(function(){
 // 立即购买 弹窗
 $('.select-buy').click(function(){
     if($('.select-goods-spec').text() !== '选择规格'){
-        location.href = 'ios_api_order_parts_firm_order?id=' + id;
+        location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
     }else{
         layer.open({
             skin: 'msg',

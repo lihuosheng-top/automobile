@@ -492,13 +492,27 @@
         })
         // 获取url地址id
         var url = location.search;
-        var id;
+        var id, preId;
         if(url.indexOf('?') != -1){
-            id = url.substr(1).split('=')[1];
+            id = url.substr(1).split('&&')[0].split('=')[1];
+            preId = url.substr(1).split('&&')[1].split('=')[1];
         }
 
         $('.place-order-back').click(function(){
-            location.href = 'goods_detail?id=' + id;
+            location.href = 'goods_detail?id=' + id + '&&preid=' + preId;
+        })
+
+        // 地址返回
+        $.ajax({
+            url: 'member_default_address_return',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
         })
     </script>
 </body>
