@@ -104,6 +104,7 @@ Route::group("",[
 
     /*TODO:找回密码验证码开始*/
     'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
+    'sendMobileCodeByPh'=>'index/findpwd/sendMobileCodeByPh',//修改手机号
     'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
     'update_password'=>"index/findpwd/update_password",//修改密码
     'member_update_mobile'=>"index/findpwd/member_update_mobile",//修改密码
