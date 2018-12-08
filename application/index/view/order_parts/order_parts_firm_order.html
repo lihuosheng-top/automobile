@@ -500,6 +500,19 @@
         $('.place-order-back').click(function(){
             location.href = 'goods_detail?id=' + id;
         })
+
+        // 地址返回
+        $.ajax({
+            url: 'member_default_address_return',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
     </script>
 </body>
 </html>
