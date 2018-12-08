@@ -562,7 +562,7 @@ var map = new AMap.Map('container', {
     zoom: 12, //级别
     center: [114.07, 22.62]
 });
-AMap.plugin([
+map.plugin([
     'AMap.CitySearch',
     'AMap.Geolocation',
     // 'AMap.CitySearch',
@@ -583,7 +583,8 @@ AMap.plugin([
         timeout: 0,
         buttonPosition: 'RB',
         buttonOffset: new AMap.Pixel(10, 20),
-        zoomToAccuracy: true
+        zoomToAccuracy: true,
+        useNative: true
     })
     map.addControl(geolocation);
     geolocation.getCurrentPosition();
