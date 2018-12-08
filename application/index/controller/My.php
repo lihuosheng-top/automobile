@@ -189,6 +189,42 @@ class My extends Controller
     /**
      **************李火生*******************
      * @param Request $request
+     * Notes:修改手机
+     **************************************
+     * @param Request $request
+     */
+    public function member_update_mobile(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $phone_num =$request->only('phone_num')['phone_num'];
+            $code =$request->only('code')['code'];
+           $mobileCode =  session('mobileCode');
+            if(!empty(trim($code))){
+                $user_isset =Db::name('user')->where('phone_num',$phone_num)->find();
+                if(empty($user_isset)){
+                    return ajax_error('用户不存在',['status'=>0]);
+                }
+                if($code != $mobileCode){
+                    return ajax_error('验证码不正确',['status'=>0]);
+                }
+//                $is_admin =Db::name('admin')->where('phone',$member['phone'])->find();
+//                if(!empty($is_admin)){
+//                    Db::name('admin')->where('phone',$member['phone'])->update(['password'=>$passwords]);
+//                }
+                $bool =Db::name('user')->where('phone_num',$phone_num)->update();
+                if($bool){
+                    return ajax_success('修改成功',['status'=>1]);
+                }else{
+                    return ajax_error('修改失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
      * Notes:用户个人信息数据返回
      **************************************
      */
