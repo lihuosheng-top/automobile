@@ -497,34 +497,6 @@
         </div>
     </div>
 
-    <!-- 支付弹窗 -->
-    <form name=alipayment action="{:url('index/Apppay/index_aliPay')}" method="post">
-        <div class="alipay-pop">
-            <header>
-                <a href="javascript:;" class="close-alipay">×</a>
-                <h3 class="alipay-title">确认付款</h3>
-            </header>
-            <div class="middle_box">
-                <div class="price-box">
-                    <span>￥</span>
-                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="0.01" readonly>
-                </div>
-                <ul class="content">
-                    <li>
-                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="15428821121021" readonly>
-                    </li>
-                    <li>
-                        订单名称: <input id="WIDsubject" name="WIDsubject" value="汽车贴膜" readonly>
-                    </li>
-                    <li>
-                        商品描述: <input id="WIDbody" name="WIDbody" value="汽车贴膜" readonly>
-                    </li>
-                </ul>
-            </div>
-            <button type="submit" class="alipay-submit">立即付款</button>
-        </div>
-    </form>
-
     <!-- 产品参数 -->
     <div class="product-parameter-pop">
         <header class="title-txt">专用参数</header>
@@ -552,81 +524,6 @@
             <button class="parameter-btn">确定</button>
         </div>
     </div>
-
-    <!-- 提交订单 start -->
-    <div class="place-order-pop" style="display: none;">
-        <header class="place-order-header">
-            <a href="javascript:;" class="spr place-order-back"></a>
-            <h3 class="place-order-title">确认订单</h3>
-        </header>
-        <div class="order-detail-box">
-            <div class="order-detail-bg"></div>
-            <div class="user-info-box">
-                <div class="user-name-phone">
-                    <span class="user-name">收货人：叶问</span>
-                    <span class="user-phone">13691853045</span>
-                </div>
-                <div class="user-address">
-                    <span class="address-title">配送地址：</span>
-                    <span class="address-txt txt-hid-two">深圳市福田区深南大道新闻路1号中电信息大厦西座1楼</span>
-                    <i class="spr icon-addr-more"></i>
-                </div>
-                <!-- <div class="no-addr">去添加地址</div> -->
-            </div>
-            <div class="order-goods-info">
-                <div class="order-shop-box">
-                    <i class="spr icon-shop"></i>
-                    <span class="order-shop-namp">米其林轮胎旗舰店</span>
-                </div>
-                <div class="order-goods-detail">
-                    <div class="order-goods-img">
-                        <img src="__STATIC__/index/image/14.png">
-                    </div>
-                    <div class="order-info-box">
-                        <p class="order-goods-p txt-hid-two">宝马轮胎宝马轮胎胎宝马胎宝马胎宝马轮胎</p>
-                        <p class="order-selling-point txt-hid-two">宝马轮胎宝马轮胎胎宝马轮胎</p>
-                        <div class="unit-price-quantity">
-                            <p class="unit-price-p">￥0.01</p>
-                            <p class="quantity-p">×1</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="sundry">
-                <ul class="sundry-ul">
-                    <li class="sundry-li">
-                        <p class="sundry-title">购买数量</p>
-                        <div class="sundry-cal">
-                            <a href="javascript:;" class="sundry-minus">-</a>
-                            <input type="text" value="1" class="sundry-cal-val" readonly>
-                            <a href="javascript:;" class="sundry-increase">+</a>
-                        </div>
-                    </li>
-                    <li class="sundry-li">
-                        <p class="sundry-title">积分抵扣</p>
-                        <span class="discount">-￥2</span>
-                        <a href="javascript:;" class="spr icon-more"></a>
-                    </li>
-                    <li class="sundry-li">
-                        <p class="sundry-title">发票信息</p>
-                        <span class="invoice">不开发票</span>
-                        <a href="javascript:;" class="spr icon-more"></a>
-                    </li>
-                    <li class="sundry-li">
-                        <p class="sundry-title">买家留言</p>
-                        <input type="text" placeholder="请填写内容(选填)" class="leave-msg">
-                    </li>
-                    <li class="sundry-li">
-                        <p class="sundry-li-last">共计1件商品 合计：<span>￥0.01</span></p>
-                    </li>
-                </ul>
-            </div>
-            <div class="order-payment-box">
-                <button class="order-payment-btn" id="order-buy">立即付款</button>
-            </div>
-        </div>
-    </div>
-    <!-- 提交订单 end -->
 
     <!-- 选择门店 start -->
     <div class="chose-shop-pop" style="display: none;">

@@ -66,6 +66,21 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
+        $.ajax({
+            url: 'member_information_data',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    $('.user-img')[0].src = 'uploads/' + res.data;
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+
         // 上传图片 https://blog.csdn.net/scrat_kong/article/details/79230329
         function uploadImg(input,img){
             var input = document.getElementById(input);
@@ -79,7 +94,7 @@
         }
         $('.upload-input').change(function(){
             uploadImg('upload-input', 'user-img');
-            var user_img = $(this)[0].files[0],
+            var user_img = $(this)[0].files[0]
                 real_name = '',
                 user_name = '',
                 sex = '';
@@ -89,7 +104,7 @@
             formData.append('real_name', real_name);
             formData.append('user_name', user_name);
             formData.append('sex', sex);
-            
+
             $.ajax({
                 url: 'member_information_update',
                 type: 'POST',
@@ -131,6 +146,45 @@
             $('.mask').hide();
             $('.sex-pop').animate({'bottom': '-100%'});
         })
+        // 男 女
+        $('.sex-pop-male').add('.sex-pop-female').click(function(){
+            var user_img = '',
+                real_name = '',
+                user_name = '';
+                sex = $(this)[0].innerText;
+                
+            $.ajax({
+                url: 'member_information_update',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'sex': sex,
+                    'user_img': user_img,
+                    'real_name': real_name,
+                    'user_name': user_name
+                },
+                fuccess: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1.5
+                        })
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1.5
+                        })
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+    
     </script>
 </body>
 </html>

@@ -99,17 +99,7 @@ $.ajax({
 })
 
 
-// 支付
-$('#order-buy').click(function(){
-    $('.mask').show();
-    $('.alipay-pop').animate({'bottom': '0'});
-    $('html').css('overflow', 'hidden');
-})
-$('.close-alipay').click(function(){
-    $('.mask').hide();
-    $('.alipay-pop').animate({'bottom': '-100%'});
-    $('html').css('overflow', 'auto');
-})
+
 // 产品参数
 $('.product-parameter').click(function(){
     $('.mask').show();
@@ -244,10 +234,7 @@ $('.ser-type').add('#buy').click(function(){
 // 立即购买 弹窗
 $('.select-buy').click(function(){
     if($('.select-goods-spec').text() !== '选择规格'){
-        $('.select-ser-pop').removeClass('select-ser-easeout');
-        $('.place-order-pop').show();
-        $('.wrapper').hide();
-        $('.mask').hide();
+        location.href = 'ios_api_order_parts_firm_order?id=' + id;
     }else{
         layer.open({
             skin: 'msg',
@@ -255,11 +242,6 @@ $('.select-buy').click(function(){
             time: 1.5
         })
     }
-})
-$('.place-order-back').click(function(){
-    $('.place-order-pop').hide();
-    $('html').css('overflow','auto');
-    $('.wrapper').show();
 })
 // 购买弹窗  加入购物车
 $('.select-add-cart').click(function(){
