@@ -79,6 +79,31 @@
         }
         $('.upload-input').change(function(){
             uploadImg('upload-input', 'user-img');
+            var user_img = $(this)[0].files[0],
+                real_name = '',
+                user_name = '',
+                sex = '';
+
+            var formData = new FormData();
+            formData.append('user_img', user_img);
+            formData.append('real_name', real_name);
+            formData.append('user_name', user_name);
+            formData.append('sex', sex);
+            
+            $.ajax({
+                url: 'member_information_update',
+                type: 'POST',
+                dataType: 'JSON',
+                processData: false,
+                contentType: false,
+                data: formData,
+                fuccess: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
 
         $('.info-ul .info-li').click(function(){
@@ -103,7 +128,7 @@
             $('.sex-pop').animate({'bottom': '0'});
         })
         $('.sex-pop-btn').click(function(){
-            $('.mask').hide(0);
+            $('.mask').hide();
             $('.sex-pop').animate({'bottom': '-100%'});
         })
     </script>

@@ -34,6 +34,48 @@ $.ajax({
             $('.stock').html('库存' + val.goods_repertory + '件');
             // 商品详情
             $('.detail-img-box').html(val.goods_text);
+            // 专用参数
+            $('.parameter-brand').text(val.dedicated_vehicle);
+            $('.parameter-series').text(val.goods_car_series.split(',').join('  '));
+            $('.parameter-year').text(val.goods_car_year.split(',').join('  '));
+            $('.parameter-displacement').text(val.goods_car_displacement.split(',').join('  '));
+            // 选择服务弹窗
+            $('.select-goods-img img')[0].src = 'uploads/' + val.goods_show_images;
+            $('.select-goods-price').text('￥' + val.goods_adjusted_money);
+            $('.select-goods-stock').text('库存' + val.goods_repertory + '件');
+            var specStr =  '';
+            for(var i = 0, l = val.goods_standard_name.length; i < l; i++){
+                specStr += `<div class="spec-box">
+                            <p>`+val.goods_standard_name[i]+`</p>`;
+                // 遍历属性值
+                $.each(val.goods_standard_value[i], function(index, value){
+                    // 去掉空值
+                    if(value !== ''){
+                        if(index === 0){
+                            specStr += `<span class="select-on">`+value+`</span>`;
+                        }else{
+                            specStr += `<span>`+value+`</span>`;
+                        }
+                    }
+                })
+                specStr += '</div>';
+            }
+            $('.spec-wrap').prepend(specStr);
+            // 选择切换class
+            $('.spec-wrap').on('click', 'span', function(){
+                $(this).addClass('select-on');
+                $(this).siblings('span').removeClass('select-on');
+                if($(this)[0].innerText === '无需安装'){
+                    $('.select-shop').hide();
+                }else{
+                    $('.select-shop').show();
+                }
+                var selectSpec = '';
+                $.each($('.select-on'), function(idx, val){
+                    selectSpec += $(val).text() + ' ';
+                })
+                $('.select-goods-spec').text('规格：' + selectSpec);
+            })
         })
         
         // swiper初始化
@@ -49,6 +91,7 @@ $.ajax({
                 el: '.swiper-pagination',
             },
         }) 
+
     },
     error: function(){
         console.log('error');
@@ -71,10 +114,12 @@ $('.close-alipay').click(function(){
 $('.product-parameter').click(function(){
     $('.mask').show();
     $('.product-parameter-pop').animate({'bottom': '0'});
+    $('html').css('overflow', 'hidden');
 })
 $('.parameter-btn').click(function(){
     $('.mask').hide();
     $('.product-parameter-pop').animate({'bottom': '-100%'});
+    $('html').css('overflow', 'auto');
 })
 
 
@@ -198,10 +243,18 @@ $('.ser-type').add('#buy').click(function(){
 })
 // 立即购买 弹窗
 $('.select-buy').click(function(){
-    $('.select-ser-pop').removeClass('select-ser-easeout');
-    $('.place-order-pop').show();
-    $('.wrapper').hide();
-    $('.mask').hide();
+    if($('.select-goods-spec').text() !== '选择规格'){
+        $('.select-ser-pop').removeClass('select-ser-easeout');
+        $('.place-order-pop').show();
+        $('.wrapper').hide();
+        $('.mask').hide();
+    }else{
+        layer.open({
+            skin: 'msg',
+            content: '请选择规格',
+            time: 1.5
+        })
+    }
 })
 $('.place-order-back').click(function(){
     $('.place-order-pop').hide();
@@ -213,8 +266,6 @@ $('.select-add-cart').click(function(){
     $('.select-ser-pop').removeClass('select-ser-easeout');
     $('.mask').hide();
     layer.open({
-        style: 'bottom:100px;',
-        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
         skin: 'msg',
         content: '加入购物车成功',
         time: 1.5
