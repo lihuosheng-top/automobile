@@ -72,6 +72,10 @@ class Findpwd extends Controller{
         //接受验证码的手机号码
         if ($request->isPost()) {
             $mobile = $_POST["mobile"];
+            $is_set_mobile =Db::name('user')->where('phone_num',$mobile)->find();
+            if(empty($is_set_mobile)){
+                return ajax_error("此手机未注册",['status'=>0]);
+            }
             $mobileCode = rand(100000, 999999);
             $arr = json_decode($mobile, true);
             $mobiles = strlen($arr);
