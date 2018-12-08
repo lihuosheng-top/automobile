@@ -207,11 +207,11 @@ class My extends Controller
                 if($code != $mobileCode){
                     return ajax_error('验证码不正确',['status'=>0]);
                 }
-//                $is_admin =Db::name('admin')->where('phone',$member['phone'])->find();
-//                if(!empty($is_admin)){
-//                    Db::name('admin')->where('phone',$member['phone'])->update(['password'=>$passwords]);
-//                }
-                $bool =Db::name('user')->where('phone_num',$phone_num)->update();
+                $is_admin =Db::name('admin')->field('id')->where('phone',$phone_num)->find();
+                if(!empty($is_admin)){
+                    Db::name('admin')->where('id',$is_admin['id'])->update(['phone'=>$phone_num]);
+                }
+                $bool =Db::name('user')->where('user_id',$user_id)->update(['phone_num'=>$phone_num]);
                 if($bool){
                     return ajax_success('修改成功',['status'=>1]);
                 }else{

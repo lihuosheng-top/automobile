@@ -44,7 +44,7 @@ class  Member extends Controller{
     public function member_default_address_return(Request $request){
         if($request->isPost()){
             $user_id = Session::get("user");
-          $is_address =  Db::name('address')->where('user_id',$user_id)->where("status",1)->find();
+          $is_address =  Db::name('user_address')->where('user_id',$user_id)->where("status",1)->find();
           if(!empty($is_address)){
               return ajax_success('收货地址成功返回',$is_address);
           }else{
