@@ -234,16 +234,7 @@ class My extends Controller
                 $data =Db::name("user")->where('id',$user_id)->find();
                 if(!empty($data)){
                     if(!empty($data['user_img'])){
-                        return ajax_success('头像信息返回成功',$data['user_img']);
-                    }
-                    if(!empty($data['real_name'])){
-                        return ajax_success('信息返回成功',$data['real_name']);
-                    }
-                    if(!empty($data['user_name'])){
-                        return ajax_success('信息返回成功',$data['user_name']);
-                    }
-                    if(!empty($data['sex'])){
-                        return ajax_success('信息返回成功',$data['sex']);
+                        return ajax_success('信息返回成功',$data);
                     }
                 }else{
                     return ajax_success('用户不存在');
