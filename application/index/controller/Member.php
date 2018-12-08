@@ -41,10 +41,15 @@ class  Member extends Controller{
      * Notes:购买页面默认地址返回或者选择其他地址
      **************************************
      */
-    public function member_default_addrees_return(Request $request){
+    public function member_default_address_return(Request $request){
         if($request->isPost()){
-          $is_address =  Db::name('address')->where("status",1)->find();
-          
+            $user_id = Session::get("user");
+          $is_address =  Db::name('address')->where('user_id',$user_id)->where("status",1)->find();
+          if(!empty($is_address)){
+              return ajax_success('收货地址成功返回',$is_address);
+          }else{
+              return ajax_error('没设置默认收货地址',["status"=>0]);
+          }
         }
     }
 

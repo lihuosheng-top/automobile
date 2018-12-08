@@ -132,10 +132,10 @@ class My extends Controller
             //头像
             $user_img = $request->file('user_img');
             if(!empty($user_img)){
-                $info = $user_img->move(ROOT_PATH . 'public' . DS . 'userimg');
+                $info = $user_img->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $user_img_url = str_replace("\\","/",$info->getSaveName());
                 $data['user_img'] =$user_img_url;
-                $del_user_img_url= Db::name("user")->where('user_id',$user_id)->field('user_img')->find();
+                $del_user_img_url= Db::name("user")->where('id',$user_id)->field('user_img')->find();
             }
             //真实姓名
             $real_name =$request->only('real_name')['real_name'];
@@ -157,7 +157,7 @@ class My extends Controller
                 if($bool){
                     //删除头像
                     if(!empty( $del_user_img_url)){
-                        unlink(ROOT_PATH . 'public' . DS . 'userimg/'.$del_user_img_url['user_img']);//更换头像的时候删了
+                        unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_user_img_url['user_img']);//更换头像的时候删了
                     }
                     //管理员列表真实姓名
                     if(!empty($real_name)){
@@ -168,7 +168,13 @@ class My extends Controller
                         }
                     }
                     //性别
-
+                    if(!empty($sex)){
+                        $phone_num =Db::name("user")->field('phone_num')->where("id",$user_id)->find();
+                        $is_set_admin =Db::name("admin")->where("phone",$phone_num['phone_num'])->find();
+                        if(!empty($is_set_admin)){
+                            Db::name("admin")->where("phone",$phone_num['phone_num'])->update(['sex'=>$sex]);
+                        }
+                    }
                     return ajax_success('更新成功',['status'=>1]);
                 }else {
                     return ajax_error('更新失败', ['status' => 0]);
