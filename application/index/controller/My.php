@@ -159,7 +159,6 @@ class My extends Controller
                     //删除头像
                     if(!empty($del_user_img_url['user_img'])){
                         unlink(ROOT_PATH . 'public' . DS . 'userimg/'.$del_user_img_url['user_img']);//更换头像的时候删了
-                        return ajax_success('更新成功',['status'=>1]);
                     }
                     //管理员列表真实姓名
                     if(!empty($real_name)){
@@ -168,7 +167,6 @@ class My extends Controller
                         if(!empty($is_set_admin)){
                             Db::name("admin")->where("phone",$phone_num['phone_num'])->update(['name'=>$real_name]);
                         }
-                        return ajax_success('更新成功',['status'=>1]);
                     }
                     //性别
                     if(!empty($sex)){
@@ -177,9 +175,8 @@ class My extends Controller
                         if(!empty($is_set_admin)){
                             Db::name("admin")->where("phone",$phone_num['phone_num'])->update(['sex'=>$sex]);
                         }
-                        return ajax_success('更新成功',['status'=>1]);
                     }
-
+                    return ajax_success('更新成功',['status'=>1]);
                 }else {
                     return ajax_error('更新失败', ['status' => 0]);
                 }
