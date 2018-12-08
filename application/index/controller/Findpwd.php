@@ -121,12 +121,12 @@ class Findpwd extends Controller{
         if ($request->isPost()) {
             $mobile = $_POST["mobile"];
             $user_id = Session::get("user");
-            $is_set_mobile =Db::name('user')->where("user_id",$user_id)->where('phone_num',$mobile)->find();
+            $is_set_mobile =Db::name('user')->where("id",$user_id)->where('phone_num',$mobile)->find();
             if(!empty($is_set_mobile)){
                 return ajax_error("请输入不一样的号码",['status'=>0]);
             }
             $is_set_mobiles =Db::name('user')->where('phone_num',$mobile)->find();
-            if(!empty($is_set_mobile)){
+            if(!empty($is_set_mobiles)){
                 return ajax_error("此手机号已注册",['status'=>0]);
             }
 
