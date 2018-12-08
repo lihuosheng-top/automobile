@@ -72,10 +72,37 @@
         <button class="save-btn">保存</button>
     </div>
     
-
-
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
-    
+    <script>
+        $('.save-btn').click(function(){
+            if($('.name-input').val() !== ''){
+                var user_name = $('.name-input').val();
+                var user_img = '',
+                    real_name = '',
+                    sex = '';
+                $.ajax({
+                url: 'member_information_update',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'sex': sex,
+                    'user_img': user_img,
+                    'real_name': real_name,
+                    'user_name': user_name
+                },
+                fuccess: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+            }else{
+                $('.name-input').focus();
+            }
+        })
+    </script>
+
 </body>
 </html>

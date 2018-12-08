@@ -79,7 +79,7 @@
         }
         $('.upload-input').change(function(){
             uploadImg('upload-input', 'user-img');
-            var user_img = $(this)[0].files[0],
+            var user_img = $(this)[0].files[0]
                 real_name = '',
                 user_name = '',
                 sex = '';
@@ -89,7 +89,7 @@
             formData.append('real_name', real_name);
             formData.append('user_name', user_name);
             formData.append('sex', sex);
-            
+
             $.ajax({
                 url: 'member_information_update',
                 type: 'POST',
@@ -130,6 +130,31 @@
         $('.sex-pop-btn').click(function(){
             $('.mask').hide();
             $('.sex-pop').animate({'bottom': '-100%'});
+        })
+        // 男 女
+        $('.sex-pop-male').add('.sex-pop-female').click(function(){
+            var user_img = '',
+                real_name = '',
+                user_name = '';
+                sex = $(this)[0].innerText;
+                
+            $.ajax({
+                url: 'member_information_update',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'sex': sex,
+                    'user_img': user_img,
+                    'real_name': real_name,
+                    'user_name': user_name
+                },
+                fuccess: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
     </script>
 </body>
