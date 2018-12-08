@@ -10,6 +10,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Db;
 use think\Request;
+use  think\Session;
 
 class Findpwd extends Controller{
     /**
@@ -72,7 +73,8 @@ class Findpwd extends Controller{
         //接受验证码的手机号码
         if ($request->isPost()) {
             $mobile = $_POST["mobile"];
-            $is_set_mobile =Db::name('user')->where('phone_num',$mobile)->find();
+            $user_id = Session::get("user");
+            $is_set_mobile =Db::name('user')->where('user_id',$user_id)->where('phone_num',$mobile)->find();
             if(empty($is_set_mobile)){
                 return ajax_error("此手机未注册",['status'=>0]);
             }
@@ -118,10 +120,16 @@ class Findpwd extends Controller{
         //接受验证码的手机号码
         if ($request->isPost()) {
             $mobile = $_POST["mobile"];
-            $is_set_mobile =Db::name('user')->where('phone_num',$mobile)->find();
+            $user_id = Session::get("user");
+            $is_set_mobile =Db::name('user')->where("user_id",$user_id)->where('phone_num',$mobile)->find();
             if(!empty($is_set_mobile)){
                 return ajax_error("请输入不一样的号码",['status'=>0]);
             }
+            $is_set_mobiles =Db::name('user')->where('phone_num',$mobile)->find();
+            if(!empty($is_set_mobile)){
+                return ajax_error("此手机号已注册",['status'=>0]);
+            }
+
             $mobileCode = rand(100000, 999999);
             $arr = json_decode($mobile, true);
             $mobiles = strlen($arr);
