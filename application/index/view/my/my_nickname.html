@@ -93,6 +93,19 @@
                 },
                 fuccess: function(res){
                     console.log(res);
+                    if(res.status == 1){
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1.5
+                        })
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1.5
+                        })
+                    }
                 },
                 error: function(){
                     console.log('error');
