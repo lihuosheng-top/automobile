@@ -72,6 +72,9 @@
             dataType: 'JSON',
             success: function(res){
                 console.log(res);
+                if(res.status == 1){
+                    $('.user-img')[0].src = 'uploads/' + res.data;
+                }
             },
             error: function(){
                 console.log('error');
