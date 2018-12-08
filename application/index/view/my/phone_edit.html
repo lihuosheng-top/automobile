@@ -68,6 +68,7 @@
             border: 0;
             color: #fff;
             font-size: .3rem;
+            outline: none;
         }
         .get-code{
             position: absolute;
@@ -187,13 +188,16 @@
         })
         $('.save-btn').click(function(){
             if($('.code-input').val() !== ''){
+                var phone = $('.phone-input').val();
+                var code = $('.code-input').val();
                 $.ajax({
-                    url: 'member_information_update',
+                    url: 'member_update_mobiles',
                     type: 'POST',
                     dataType: 'JSON',
-                    processData: false,
-                    contentType: false,
-                    data: formData,
+                    data: {
+                        'phone_num': phone,
+                        'code': code
+                    },
                     success: function(res){
                         console.log(res);
                         if(res.status == 1){
@@ -202,6 +206,9 @@
                                 content: res.info,
                                 time: 1
                             })
+                            setTimeout(function(){
+                                location.href = 'my_message';
+                            }, 1100)
                         }else{
                             layer.open({
                                 skin: 'msg',
