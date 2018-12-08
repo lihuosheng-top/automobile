@@ -21,13 +21,8 @@ class  PlatformAdvertisement extends  Controller{
      * [汽车平台广告显示]
      * 郭杨
      */
-    public function platform_business_index(Request $request){
-
-
-        $user_phone = Session::get("user_info");
-        $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
-        $store_name = db("store")->where("user_id",$user)->value("store_name");
-
+    public function platform_business_index(Request $request)
+    {
         $platform = db("platform") -> select();
         $all_idents = $platform;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
@@ -117,10 +112,10 @@ class  PlatformAdvertisement extends  Controller{
 
             if(empty($find['department']))
             {
-            $data["start_time"] = strtotime($data["start_time"]);
-            $data["end_time"] = strtotime($data["end_time"]);  
+              $data["start_time"] = strtotime($data["start_time"]);
+              $data["end_time"] = strtotime($data["end_time"]);  
             }     
-            $bool = db("platform")->where('id', $request->only(["id"])["id"])->update($data);
+              $bool = db("platform")->where('id', $request->only(["id"])["id"])->update($data);
                
 
             if ($bool) {
