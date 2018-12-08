@@ -1038,16 +1038,16 @@ html{
     padding: .2rem;
     border-bottom: 1px solid #eee;
 }
-.select-ser-pop .select-color-box p,
-.select-ser-pop .select-size-box p,
-.select-ser-pop .select-install-box p{
+.select-ser-pop .spec-wrap p,
+.select-ser-pop .spec-wrap p,
+.select-ser-pop .spec-wrap p{
     font-size: .3rem;
     color: #666;
     margin: .1rem 0 .2rem;
 }
-.select-ser-pop .select-color-box span,
-.select-ser-pop .select-size-box span,
-.select-ser-pop .select-install-box span{
+.select-ser-pop .spec-wrap span,
+.select-ser-pop .spec-wrap span,
+.select-ser-pop .spec-wrap span{
     display: inline-block;
     width: 1.4rem;
     height: .7rem;
@@ -1538,3 +1538,41 @@ html{
     border-radius: .3rem;
 }
 /* 提交订单 end */
+
+/* 选择门店 start */
+.chose-shop-pop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #f2f2f2;
+    width: 100%;
+    height: 100vh;
+    z-index: 2;
+}
+.chose-header{
+    position: relative;
+    width: 100%;
+    height: .88rem;
+    background-color: #fff;
+    border-bottom: #eee;
+}
+.chose-hid{
+    position: absolute;
+    left: .2rem;
+    top: 50%;
+    width: .25rem;
+    height: .43rem;
+    margin-top: -.22rem;
+    background-position: -.5rem -.5rem;
+}
+.chose-header h3{
+    width: 100%;
+    height: .88rem;
+    line-height: .88rem;
+    text-align: center;
+    font-size: .36rem;
+    font-weight: normal;
+}
+
+/* 选择门店 end */
