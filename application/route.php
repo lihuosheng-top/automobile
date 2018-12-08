@@ -72,6 +72,9 @@ Route::group("",[
     "isLogin"=>"index/My/isLogin", //是否登录判断
     "phone_edit"=>"index/My/phone_edit",        //手机号码修改
     "true_name"=>"index/My/true_name",          //真实姓名
+    "member_information_update"=>"index/My/member_information_update",//个人信息用户个人信息更新（头像,真实姓名，昵称，性别）
+    "member_information_data"=>"index/My/member_information_data",//个人信息用户个人信息返回（头像,真实姓名，昵称，性别）
+    "member_update_mobile"=>"index/My/member_update_mobile",//个人信息修改手机
     "my_integral"=>"index/My/integral",            //我的积分
     "setting"=>"index/My/setting",              //设置
     "my_nickname"=>"index/My/nickname",         //昵称
@@ -103,11 +106,13 @@ Route::group("",[
     'sendMobileCodeByPhone'=>'index/findpwd/sendMobileCodeByPhone',//找回密码验证码
     'find_password_by_phone'=>"index/findpwd/find_password_by_phone",//用于操作手机找回密码
     'update_password'=>"index/findpwd/update_password",//修改密码
+    'member_update_mobile'=>"index/findpwd/member_update_mobile",//修改密码
     /*TODO:找回密码验证码结束*/
 
     /*TODO:我的页面开始*/
     "member_equity"=>"index/member/member_equity",//会员权益
     "member_address"=>"index/member/member_address",//地址管理
+    "member_default_address_return"=>"index/member/member_default_address_return",//购买页面默认地址返回或者选择其他地址
     "member_address_information"=>"index/member/member_address_information",//地址管理列表数据返回
     "member_address_add"=>"index/member/member_address_add",//地址管理添加页面
     "member_address_adds"=>"index/member/member_address_adds",//地址管理添加功能(ajax)
@@ -175,6 +180,7 @@ Route::group("",[
 
 
     /*TODO:配件商订单状态开始*/
+    "ios_api_order_parts_firm_order"=>"index/OrderParts/ios_api_order_parts_firm_order",//确认订单页面
     "order_parts_detail"=>"index/OrderParts/order_parts_detail",//订单详情
     "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单页面
     "ios_api_order_parts_all"=>"index/OrderParts/ios_api_order_parts_all",//全部订单接口（ajax）

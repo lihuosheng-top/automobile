@@ -31,6 +31,64 @@
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
-    
+    <script>
+
+         $.ajax({
+            url: 'member_information_data',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    // $('.name-input').val(res.data);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+
+        $('.save-btn').click(function(){
+            if($('.name-input').val() !== ''){
+                var real_name = $('.name-input').val();
+                var user_img = '',
+                    user_name = '',
+                    sex = '';
+
+                $.ajax({
+                url: 'member_information_update',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'sex': sex,
+                    'user_img': user_img,
+                    'real_name': real_name,
+                    'user_name': user_name
+                },
+                fuccess: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1.5
+                        })
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1.5
+                        })
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+            }else{
+                $('.name-input').focus();
+            }
+        })
+    </script>
 </body>
 </html>

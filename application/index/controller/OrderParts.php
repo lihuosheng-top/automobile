@@ -693,11 +693,11 @@ class OrderParts extends Controller{
             $user_id =Session::get("user");
             $is_address = Db::name('user_address')->where('user_id', $user_id)->find();
             if (empty($is_address) ) {
-                return ajax_error('请填写收货人信息',['status'=>0]);
+                return ajax_error('请填写收货地址',['status'=>0]);
             }
             $is_address_status = Db::name('user_address')->where('user_id', $user_id)->where('status',1)->find();
             if (empty($is_address_status) ) {
-                return ajax_error('请选择收货人信息',['status'=>0]);
+                return ajax_error('请选择收货地址',['status'=>0]);
             }
             $commodity_id = $_POST['goods_id'];
             if (!empty($commodity_id)) {
@@ -730,6 +730,7 @@ class OrderParts extends Controller{
                     $res = Db::name('order')->insertGetId($datas);
                     if ($res) {
                         return ajax_success('下单成功', $datas['parts_order_number']);
+
                     }else{
                         return ajax_error('失败',['status'=>0]);
                     }
@@ -739,5 +740,14 @@ class OrderParts extends Controller{
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单确认订单页面
+     **************************************
+     */
+    public function ios_api_order_parts_firm_order(){
+            return view("order_parts_firm_order");
+    }
 
 }
