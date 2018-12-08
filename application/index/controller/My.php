@@ -203,7 +203,7 @@ class My extends Controller
             if(!empty(trim($code))){
                 $user_isset =Db::name('user')->where('phone_num',$phone_num)->find();
                 if(!empty($user_isset)){
-                    return ajax_error('用户不存在',['status'=>0]);
+                    return ajax_error('手机已存在',['status'=>0]);
                 }
                 if($code != $mobileCode){
                     return ajax_error('验证码不正确',['status'=>0]);
