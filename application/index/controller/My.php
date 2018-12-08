@@ -194,7 +194,7 @@ class My extends Controller
      **************************************
      * @param Request $request
      */
-    public function member_update_mobile(Request $request){
+    public function member_update_mobiles(Request $request){
         if($request->isPost()){
             $user_id = Session::get("user");
             $phone_num =$request->only('phone_num')['phone_num'];
