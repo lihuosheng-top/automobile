@@ -171,12 +171,12 @@ class Findpwd extends Controller{
             $member =session('member');
             $user_id = Session::get("user");
             if(!empty(trim($password))){
-                $is_admin =Db::name('admin')->where('phone',$member['phone'])->find();
-                if(!empty($is_admin)){
-                    Db::name('admin')->where('phone',$member['phone'])->update(['password'=>$passwords]);
-                }
-                $bool =Db::name('user')->where('phone_num',$member['phone'])->update(['password'=>$passwords]);
+                $bool =Db::name('user')->where('phone_num',$member['phone_num'])->update(['password'=>$passwords]);
                 if($bool){
+                    $is_admin =Db::name('admin')->where('phone',$member['phone_num'])->find();
+                    if(!empty($is_admin)){
+                        Db::name('admin')->where('phone',$member['phone_num'])->update(['passwd'=>$passwords]);
+                    }
                     return ajax_success('修改成功',['status'=>1]);
                 }else{
                     return ajax_error('修改失败',['status'=>0]);
