@@ -156,7 +156,7 @@ class My extends Controller
                $bool = Db::name("user")->where('id',$user_id)->update($data);
                 if($bool){
                     //删除头像
-                    if($del_user_img_url['user_img'] !=null){
+                    if(!empty($del_user_img_url['user_img'])){
                         unlink(ROOT_PATH . 'public' . DS . 'userimg/'.$del_user_img_url['user_img']);//更换头像的时候删了
                     }
                     //管理员列表真实姓名
@@ -233,19 +233,8 @@ class My extends Controller
                 $user_id =Session::get("user");//用户id
                 $data =Db::name("user")->where('id',$user_id)->find();
                 if(!empty($data)){
-                    if(!empty($data['user_img'])){
-                        return ajax_success('头像信息返回成功',$data['user_img']);
-                    }
-                    if(!empty($data['real_name'])){
-                        return ajax_success('信息返回成功',$data['real_name']);
-                    }
-                    if(!empty($data['user_name'])){
-                        return ajax_success('信息返回成功',$data['user_name']);
-                    }
-                    if(!empty($data['sex'])){
-                        return ajax_success('信息返回成功',$data['sex']);
-                    }
-                }else{
+                        return ajax_success('信息返回成功',$data);
+                }else {
                     return ajax_success('用户不存在');
                 }
             }
