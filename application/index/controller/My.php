@@ -135,7 +135,7 @@ class My extends Controller
                 $info = $user_img->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $user_img_url = str_replace("\\","/",$info->getSaveName());
                 $data['user_img'] =$user_img_url;
-                $del_user_img_url= Db::name("user")->where('id',$user_id)->field('user_img')->find();
+                $del_user_img_url= Db::name("user")->field('user_img')->where('id',$user_id)->find();
             }
             //真实姓名
             $real_name =$request->only('real_name')['real_name'];
@@ -156,7 +156,7 @@ class My extends Controller
                $bool = Db::name("user")->where('id',$user_id)->update($data);
                 if($bool){
                     //删除头像
-                    if(!empty( $del_user_img_url)){
+                    if( $del_user_img_url !=null){
                         unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$del_user_img_url['user_img']);//更换头像的时候删了
                     }
                     //管理员列表真实姓名

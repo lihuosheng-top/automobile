@@ -740,5 +740,14 @@ class OrderParts extends Controller{
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单确认订单页面
+     **************************************
+     */
+    public function ios_api_order_parts_firm_order(){
+            return view("order_parts_firm_order");
+    }
 
 }
