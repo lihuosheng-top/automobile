@@ -66,6 +66,18 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
+        $.ajax({
+            url: 'member_information_data',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+
         // 上传图片 https://blog.csdn.net/scrat_kong/article/details/79230329
         function uploadImg(input,img){
             var input = document.getElementById(input);
@@ -169,6 +181,7 @@
                 }
             })
         })
+    
     </script>
 </body>
 </html>
