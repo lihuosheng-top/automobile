@@ -100,6 +100,8 @@ class  Advertisement extends  Controller{
 
             $userId = db('accessories')->insertGetId($data);
             $data["pid"] = $userId;
+            $data["department"] = $user_phone[0]["department"];
+            $data["shop_name"] = $store_name;
             $boole = db("platform")->insert($data);
             if ($userId && $boole) {
                 $this->success("添加成功", url("admin/Advertisement/accessories_business_advertising"));
