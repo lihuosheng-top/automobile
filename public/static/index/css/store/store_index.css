@@ -1,8 +1,5 @@
 html{
-    background-color: #fff;
-}
-.wrapper{
-    background-color: #fff;
+    background-color: #f2f2f2;
 }
 .head{
     position: relative;
@@ -85,13 +82,12 @@ html{
     width: 100%;
     padding: 0 .1rem;
     box-sizing: border-box;
-    background-color: #fff;
 }
 .list_cont li{
     float: left;
-    width: 3.6rem;
+    width: 3.55rem;
     height: 5.3rem;
-    margin-right: .08rem;
+    margin-right: .14rem;
     background-color: #fff;
     margin-bottom: .3rem;
 }
@@ -140,6 +136,7 @@ html{
     align-items: center;
     padding-left: .3rem;
     height: 1rem;
+    background-color: #fff;
 }
 .flagship-name img{
     width: .7rem;

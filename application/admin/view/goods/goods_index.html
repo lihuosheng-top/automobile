@@ -204,7 +204,13 @@
 						<td><input type="checkbox" data-text="{$val.year}" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加" data-action="{$value.putaway_status}"></td>
 						{/if}
 						{/volist}
-						<td>{$value.goods_number}</td>
+						<td>
+							{if !empty($value.goods_number)}
+							{$value.goods_number}
+							{else}
+							无
+							{/if}
+						</td>
 						{volist name="store" id="shop"}
 						{if $value.store_id == $shop.store_id}
 						<td  class="shop_name">{$shop.store_name}</td>
@@ -245,20 +251,28 @@
 							{/if}
 						</td>
 						<td>
+							{if !empty($value.goods_year_id)}
 							{volist name="year" id="val"}
 							{if $value.goods_year_id == $val.id}
 							{$val.money}元
 							{/if}
 							{/volist}
+							{else}
+							无
+							{/if}
 						</td>
 						<td>{$value.sort_number}</td>
 						<td>{$value.goods_repertory}</td>
 						<td>
+							{if !empty($value.goods_year_id)}
 							{volist name="year" id="val"}
 							{if $value.goods_year_id == $val.id}
 							{$val.year}年
 							{/if}
 							{/volist}
+							{else}
+							无
+							{/if}
 						</td>
 						<td style="width: 155px;">
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/look',['id'=>$value.id])}"> 查看详情</a>

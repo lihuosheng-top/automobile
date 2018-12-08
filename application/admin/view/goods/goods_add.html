@@ -50,6 +50,7 @@
 	#province{
 		display: block;
 	}*/
+
 </style>
 <style type="text/css">
     .title {
@@ -146,6 +147,16 @@
 	#production{
 		display: block;
 	}*/
+		.big_div{
+		position: relative;
+	}
+	.delect_img{
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
 </style>
 
 {/block}
@@ -399,7 +410,7 @@
         <div class="basic-information title"> 其他
         </div>
         <div class="layui-form-item" class="biaoji">
-            <label class="layui-form-label">上架年限：</label>
+            <label class="layui-form-label"><span class="red">*</span>上架年限：</label>
             <div class="layui-input-block">
                 <select name="goods_year_id">
 					<option value="" selected="">请选择</option>
@@ -420,14 +431,14 @@
                 </div>
             </div>
         </div>
-        <div class="layui-form-item" class="biaoji">
+        <!--<div class="layui-form-item" class="biaoji">
             <label class="layui-form-label"><span>*</span>是否上架：</label>
             <div class="layui-input-block" id="goods_sign">
                 <input type="radio" name="goods_status" value="hot" title="上架" checked="" class="hot">
                 <input type="radio" name="goods_status" value="促销" title="不上架" class="">
 
             </div>
-        </div>
+        </div>-->
         <div class="basic-information title"> 配送与安装服务
         </div>
         <div class="layui-form-item" class="biaoji">
@@ -610,9 +621,8 @@
             //TODO点击专用添加规格项目添加页面
             $(".special_buts").click(function() {
             	var dhtml = "";
-               
-
-					        dhtml += '<div>' +
+					        dhtml += '<div class="big_div">' +
+					           ' <i class="delect_img"><img src="__STATIC__/admin/common/img/a7.png"/></i>'+
 					            ' 			<div class="layui-form-item">                                                                                 ' +
 					            ' 				<label class="layui-form-label">规格名</label>                                                               ' +
 					            ' 				<div class="layui-input-inline guige_name">                                                                          ' +
@@ -698,9 +708,10 @@
             	var dhtml = "";
            
 
-				        dhtml += '<div>' +
-				            ' 			<div class="layui-form-item">                                                                                 ' +
-				            ' 				<label class="layui-form-label">规格名</label>                                                               ' +
+				        dhtml += '<div class="big_div">' +
+				            ' <i class="delect_img"><img src="__STATIC__/admin/common/img/a7.png"/></i>'+
+				         ' 			<div class="layui-form-item">                                                                                 ' +
+				          ' 				<label class="layui-form-label">规格名</label>                                                               ' +
 				            ' 				<div class="layui-input-inline guige_name">                                                                          ' +
 				            ' 					<select class="universal_standard_name'+nums+'" name="goods_standard_name[]">                                                                                 ' +
 				            ' 						<option value="0" selected="">请选择</option>                                                                    ' +
@@ -786,6 +797,7 @@
                 $(this).addClass("noshow");
                 $(this).siblings(".add-attributes").removeClass("noshow");
             });
+            
             //	TODO点击添加添加规格名
             $("#general_content").on('click', ".add-name", function() {
                 $(this).addClass("noshow");
@@ -835,15 +847,79 @@
 
             });
             $("#special_content").on('click', ".btu-cancel", function() {
-            	alert(111);
                 $(this).parent(".add-names").addClass("noshow");
                 $(this).parent().siblings(".add-names").addClass("noshow");
                 $(this).parent().siblings(".add-name").removeClass("noshow");
             });
-            $("#special_content").on('click', ".add-name", function() {
+            $("#special_content").on('click', ".btu-delet", function() {
                 $(this).addClass("noshow");
                 $(this).siblings(".add-names").removeClass("noshow");
             });
+             $("#special_content").on('click', ".delect_img", function() {
+             	$(this).parent(".big_div").remove();
+             })
+                $("#general_content").on('click', ".delect_img", function() {
+             	$(this).parent(".big_div").remove();
+             })
+            // TODO通用点击删除按钮
+             $("#general_content").on('click', ".guibtu-add", function() {
+                var text = $(this).parent().siblings(".add-names").children("input").val();
+                var numss=$(this).data("id");
+                console.log(numss);
+//              $.ajax({
+//                  type: "POST",
+//                  url: "{:url('admin/Goods/name')}",
+//                  data: {
+//                      "goods_name": text
+//                  },
+//                  success: function(data) {
+//                    var data = eval('(' + data + ')');
+//                    layer.msg(data.info);
+//                    if(data.info=="成功"){
+//                    	 var dhtmls = "";
+//                      dhtmls = '<option value="' + text + '">' + text + '</option> ';
+//                      $(".universal_standard_name"+numss).prepend(dhtmls);
+//                      form.render('select');
+//                    }
+//                      
+//                     
+//                  },
+//                  error: function(data) {
+//                      console.log(data)
+//                  }
+//              });
+
+            });
+            
+            // TODO专用点击删除按钮
+             $("#special_content").on('click', ".btu-delet", function() {
+            	 var numss=$(this).data("id");
+                var text = $(this).parent().siblings(".add-names").children("input").val();
+//                    $.ajax({
+//                  type: "POST",
+//                  url: "{:url('admin/Goods/name')}",
+//                  data: {
+//                      "goods_name": text
+//                  },
+//                  success: function(data) {
+//                    var data = eval('(' + data + ')');
+//                    layer.msg(data.info);
+//                    if(data.info=="成功"){
+//                    	 var dhtmls = "";
+//                      dhtmls = '<option value="' + text + '">' + text + '</option> ';
+//                      $(".universal_standard_name"+numss).prepend(dhtmls);
+//                      form.render('select');
+//                    }
+//                      
+//                     
+//                  },
+//                  error: function(data) {
+//                      console.log(data)
+//                  }
+//              });
+
+            });
+            
             // TODO通用点击添加按钮
             $("#general_content").on('click', ".guibtu-add", function() {
                 var text = $(this).parent().siblings(".add-names").children("input").val();

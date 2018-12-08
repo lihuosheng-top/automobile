@@ -69,9 +69,11 @@ $('.close-alipay').click(function(){
 })
 // 产品参数
 $('.product-parameter').click(function(){
+    $('.mask').show();
     $('.product-parameter-pop').animate({'bottom': '0'});
 })
 $('.parameter-btn').click(function(){
+    $('.mask').hide();
     $('.product-parameter-pop').animate({'bottom': '-100%'});
 })
 
