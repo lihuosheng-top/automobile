@@ -72,6 +72,7 @@ Route::group("",[
     "isLogin"=>"index/My/isLogin", //是否登录判断
     "phone_edit"=>"index/My/phone_edit",        //手机号码修改
     "true_name"=>"index/My/true_name",          //真实姓名
+    "member_information_update"=>"index/My/member_information_update",//个人信息用户个人信息更新（头像,真实姓名，昵称，性别）
     "my_integral"=>"index/My/integral",            //我的积分
     "setting"=>"index/My/setting",              //设置
     "my_nickname"=>"index/My/nickname",         //昵称
