@@ -10,6 +10,7 @@ namespace app\index\controller;
 use think\Controller;
 use  think\Request;
 use  think\Db;
+use think\Session;
 
 class OrderParts extends Controller{
     /**
@@ -680,11 +681,6 @@ class OrderParts extends Controller{
         }
     }
 
-
-
-
-
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -694,34 +690,47 @@ class OrderParts extends Controller{
     public function  ios_api_order_parts_button(Request $request){
         if ($request->isPost()) {
             $data = $_POST;
-            $member_data = session('member');
-            $member = Db::name('user')->field('id,harvester,harvester_phone_num,harvester_real_address')->where('phone_num', $member_data['phone_num'])->find();
-            if (empty($member['harvester']) || empty($member['harvester_phone_num']) || empty($member['harvester_real_address']) ) {
-                return ajax_error('请填写收货人信息',['status'=>0]);
+            $user_id =Session::get("user");
+            $is_address = Db::name('user_address')->where('user_id', $user_id)->find();
+            if (empty($is_address) ) {
+                return ajax_error('请填写收货地址',['status'=>0]);
+            }
+            $is_address_status = Db::name('user_address')->where('user_id', $user_id)->where('status',1)->find();
+            if (empty($is_address_status) ) {
+                return ajax_error('请选择收货地址',['status'=>0]);
             }
             $commodity_id = $_POST['goods_id'];
             if (!empty($commodity_id)) {
                 $goods_data = Db::name('goods')->where('id', $commodity_id)->find();
                 $create_time = time();
                 if (!empty($data)) {
+                    $harvest_address_city =str_replace(',','',$is_address_status['address_name']);
+                    $harvest_address =$harvest_address_city.$is_address_status['harvester_real_address']; //收货人地址
+
+                    $time=date("Y-m-d",time());
+                    $v=explode('-',$time);
+                    $time_second=date("H:i:s",time());
+                    $vs=explode(':',$time_second);
+                    $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
                     $datas = [
                         'goods_image' => $goods_data['goods_show_images'],//图片
                         'parts_goods_name' => $goods_data['goods_name'],//名字
                         'order_quantity' => $data['order_quantity'],//订单数量
-                        'user_id' => $member['id'],
-                        'harvester' => $member['harvester'],
-                        'harvest_phone_num' => $member['harvester_phone_num'],
-                        'harvest_address' => $member['harvester_real_address'],
+                        'user_id' => $user_id,
+                        'harvester' => $is_address_status['harvester'],
+                        'harvest_phone_num' => $is_address_status['harvester_phone_num'],
+                        'harvest_address' => $harvest_address,
                         'order_create_time' => $create_time,
                         'order_amount' => $data['order_amount'], //订单金额
                         'status' => 1,
                         'goods_id' => $commodity_id,
                         'shop_id' => $data['shop_id'],
-                        'parts_order_number' => $create_time . $member['id'],//时间戳+用户id构成订单号
+                        'parts_order_number' => $parts_order_number,//时间+4位随机数+用户id构成订单号
                     ];
                     $res = Db::name('order')->insertGetId($datas);
                     if ($res) {
                         return ajax_success('下单成功', $datas['parts_order_number']);
+
                     }else{
                         return ajax_error('失败',['status'=>0]);
                     }

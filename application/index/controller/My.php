@@ -4,6 +4,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Db;
 use think\Request;
+use  think\Session;
 
 class My extends Controller
 {
@@ -117,7 +118,69 @@ class My extends Controller
         return view("my_nickname");
 
     }
-    
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:用户个人信息更新
+     * 头像,真实姓名，昵称，性别
+     **************************************
+     */
+    public function member_information_update(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");//用户id
+            //头像
+            $user_img = $request->file('user_img');
+            if(!empty($user_img)){
+                $info = $user_img->move(ROOT_PATH . 'public' . DS . 'userimg');
+                $user_img_url = str_replace("\\","/",$info->getSaveName());
+                $data['user_img'] =$user_img_url;
+                $del_user_img_url= Db::name("user")->where('user_id',$user_id)->field('user_img')->find();
+            }
+            //真实姓名
+            $real_name =$request->only('real_name')['real_name'];
+            if(!empty($real_name)){
+                $data['real_name']=$real_name;
+            }
+            //昵称
+            $user_name =$request->only('user_name')['user_name'];
+            if(!empty($user_name)){
+                $data['user_name']=$user_name;
+            }
+            //性别
+            $sex =$request->only('sex')['sex'];
+            if(!empty($sex)){
+                $data['sex']=$sex;
+            }
+            if(!empty($data)){
+               $bool = Db::name("user")->where('id',$user_id)->update($data);
+                if($bool){
+                    //删除头像
+                    if(!empty( $del_user_img_url)){
+                        unlink(ROOT_PATH . 'public' . DS . 'userimg/'.$del_user_img_url['user_img']);//更换头像的时候删了
+                    }
+                    //管理员列表真实姓名
+                    if(!empty($real_name)){
+                        $phone_num =Db::name("user")->field('phone_num')->where("id",$user_id)->find();
+                        $is_set_admin =Db::name("admin")->where("phone",$phone_num['phone_num'])->find();
+                        if(!empty($is_set_admin)){
+                            Db::name("admin")->where("phone",$phone_num['phone_num'])->update(['name'=>$real_name]);
+                        }
+                    }
+                    //性别
+
+                    return ajax_success('更新成功',['status'=>1]);
+                }else {
+                    return ajax_error('更新失败', ['status' => 0]);
+                }
+            }else{
+                return ajax_error('所修改值不能为空',['status'=>0]);
+            }
+
+        }
+    }
+
+
     
     /**
      * 昵称

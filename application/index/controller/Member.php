@@ -34,6 +34,20 @@ class  Member extends Controller{
         return view('member_address');
     }
 
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:购买页面默认地址返回或者选择其他地址
+     **************************************
+     */
+    public function member_default_addrees_return(Request $request){
+        if($request->isPost()){
+          $is_address =  Db::name('address')->where("status",1)->find();
+          
+        }
+    }
+
     /**
      **************李火生*******************
      * @param Request $request
