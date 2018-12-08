@@ -40,7 +40,9 @@
             success: function(res){
                 console.log(res);
                 if(res.status == 1){
-                    // $('.name-input').val(res.data);
+                    if(res.data.real_name !== null){
+                        $('.name-input').val(res.data.real_name);
+                    }
                 }
             },
             error: function(){
