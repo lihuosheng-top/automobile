@@ -140,6 +140,38 @@
             $('.reset-pwd-pop').hide();
             $('.wrapper').show();
         })
+        $('.reset-pwd-btn').click(function(){
+            var reset = $('.reset-pwd-input').val();
+            var repeat = $('.repeat-pwd-input').val()
+            if(reset !== '' && repeat !== '' && reset === repeat){
+                $.ajax({
+                    url: 'update_password',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'password': repeat
+                    },
+                    success: function(res){
+                        console.log(res);
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else if(reset !== repeat){
+                layer.open({
+                    skin: 'msg',
+                    content: '前后密码不一致',
+                    time: 1
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请填写完整',
+                    time: 1
+                })
+            }
+        })
     </script>
     <!-- 修改支付密码 -->
     <script>

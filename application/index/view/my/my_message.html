@@ -73,7 +73,9 @@
             success: function(res){
                 console.log(res);
                 if(res.status == 1){
-                    // $('.user-img')[0].src = 'uploads/' + res.data;
+                    if(res.data.user_img !== null){
+                        $('.user-img')[0].src = 'userimg/' + res.data.user_img;
+                    }
                 }
             },
             error: function(){
@@ -112,8 +114,21 @@
                 processData: false,
                 contentType: false,
                 data: formData,
-                fuccess: function(res){
+                success: function(res){
                     console.log(res);
+                    if(res.status == 1){
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1
+                        })
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1
+                        })
+                    }
                 },
                 error: function(){
                     console.log('error');
@@ -163,19 +178,21 @@
                     'real_name': real_name,
                     'user_name': user_name
                 },
-                fuccess: function(res){
+                success: function(res){
                     console.log(res);
                     if(res.status == 1){
                         layer.open({
                             skin: 'msg',
                             content: res.info,
-                            time: 1.5
+                            time: 1
                         })
+                        $('.mask').hide();
+                        $('.sex-pop').animate({'bottom': '-100%'});
                     }else{
                         layer.open({
                             skin: 'msg',
                             content: res.info,
-                            time: 1.5
+                            time: 1
                         })
                     }
                 },
