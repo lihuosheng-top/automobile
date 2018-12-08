@@ -67,19 +67,22 @@
                     'real_name': real_name,
                     'user_name': user_name
                 },
-                fuccess: function(res){
+                success: function(res){
                     console.log(res);
                     if(res.status == 1){
                         layer.open({
                             skin: 'msg',
                             content: res.info,
-                            time: 1.5
+                            time: 1
                         })
+                        setTimeout(function(){
+                            location.href = 'my_message';
+                        }, 1100)
                     }else{
                         layer.open({
                             skin: 'msg',
                             content: res.info,
-                            time: 1.5
+                            time: 1
                         })
                     }
                 },
