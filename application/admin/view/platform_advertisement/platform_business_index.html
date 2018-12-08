@@ -107,7 +107,10 @@
                         {volist name="platform" id="value"}
                         <td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id="{$value.id}" class="check"></td>
                         <td>{$value.id}</td>
+                        {if $value.shop_name}
                         <td>{$value.shop_name}</td>
+                        {else}
+                        <td>本地广告</td>{/if}
                         <td>{$value.name}</td>
                         <td>
                             <div style="width: 80px; height: 80px;"><img src="__UPLOADS__/{$value.advert_picture}" /></div>
@@ -140,7 +143,7 @@
 			</select>
             <button type="button" class="up-button" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 30px;line-height: 30px;">确定 </button>
         </div>
-        {$platform->render()}
+        {$platforme}
     </div>
 
     </div>
