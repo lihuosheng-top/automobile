@@ -366,15 +366,14 @@
             <div class="order-detail-bg"></div>
             <div class="user-info-box">
                 <div class="user-name-phone">
-                    <span class="user-name">收货人：叶问</span>
-                    <span class="user-phone">13691853045</span>
+                    <span class="user-name"></span>
+                    <span class="user-phone"></span>
                 </div>
                 <div class="user-address">
                     <span class="address-title">配送地址：</span>
                     <span class="address-txt txt-hid-two">深圳市福田区深南大道新闻路1号中电信息大厦西座1楼</span>
                     <i class="spr icon-addr-more"></i>
                 </div>
-                <!-- <div class="no-addr">去添加地址</div> -->
             </div>
             <div class="order-goods-info">
                 <div class="order-shop-box">
@@ -474,7 +473,7 @@
             $('html').css('overflow', 'auto');
         })
 
-        // 购买数量
+        // 购买数量按钮
         $(function(){
             // 减
             var calculator_val = document.getElementsByClassName('sundry-cal-val')[0];
@@ -492,6 +491,7 @@
                 calculator_val.value = add;
             })
         })
+        
         // 获取url地址id
         var url = location.search;
         var id, preId;
@@ -511,11 +511,29 @@
             dataType: 'JSON',
             success: function(res){
                 console.log(res);
+                $('.user-name').text('收货人：' + res.data.harvester);
+                $('.user-phone').text(res.data.harvester_phone_num);
+                var addr = res.data.address_name.split(',').join('');
+                $('.address-txt').text(addr + res.data.harvester_real_address);
             },
             error: function(){
                 console.log('error');
             }
         })
+        
+        // 商品详情 传过来的数据
+        $.ajax({
+            url: 'return_order_buy_information',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+        
     </script>
 </body>
 </html>
