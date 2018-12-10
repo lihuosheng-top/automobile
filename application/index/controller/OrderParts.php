@@ -721,6 +721,7 @@ class OrderParts extends Controller{
                             'harvester_address' => $harvest_address,
                             'order_create_time' => $create_time,
                             'order_amount' => $data['order_amount'], //订单金额
+                            "order_real_pay"=>$data["order_amount"],//订单实际支付的金额(即积分抵扣之后的价钱）
                             'status' => 1,
                             'goods_id' => $commodity_id,
                             'store_id' => $data['shop_id'],
@@ -729,7 +730,7 @@ class OrderParts extends Controller{
                         ];
                         $res = Db::name('order_parts')->insertGetId($datas);
                         if ($res) {
-                            $order_datas =Db::name("order_parts")->field("order_real_pay,parts_goods_name")->where('id',$res)->where("user_id",$user_id)->find();
+                            $order_datas =Db::name("order_parts")->field("order_real_pay,parts_goods_name,parts_order_number")->where('id',$res)->where("user_id",$user_id)->find();
                             return ajax_success('下单成功',$order_datas);
                         }else{
                             return ajax_error('失败',['status'=>0]);
