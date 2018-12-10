@@ -691,7 +691,9 @@ class OrderParts extends Controller{
         if ($request->isPost()) {
             $data = $_POST;
             $user_id =Session::get("user");
+            $user_information =Db::name("user")->where("id",$user_id)->find();
             $is_address = Db::name('user_address')->where('user_id', $user_id)->find();
+            $store_name =Db::name("store")->where("store_id",$data["store_id"])->find();
             if (empty($is_address) ) {
                 return ajax_error('请填写收货地址',['status'=>0]);
             }else{
@@ -714,8 +716,11 @@ class OrderParts extends Controller{
                         $datas = [
                             'goods_image' => $goods_data['goods_show_images'],//图片
                             'parts_goods_name' => $goods_data['goods_name'],//名字
+                            "goods_money"=>$goods_data['goods_new_money'],//商品价钱
                             'order_quantity' => $data['order_quantity'],//订单数量
-                            'user_id' => $user_id,
+                            'user_id' => $user_id,//用户id
+                            "user_account_name"=>$user_information["user_name"],//用户名
+                            "user_phone_number"=>$user_information["phone_num"],//用户名手机号
                             'harvester' => $is_address_status['harvester'],
                             'harvest_phone_num' => $is_address_status['harvester_phone_num'],
                             'harvester_address' => $harvest_address,
@@ -724,7 +729,7 @@ class OrderParts extends Controller{
                             "order_real_pay"=>$data["order_amount"],//订单实际支付的金额(即积分抵扣之后的价钱）
                             'status' => 1,
                             'goods_id' => $commodity_id,
-                            'store_id' => $data['shop_id'],
+                            'store_id' => $data['store_id'],
                             'goods_standard'=>$data["goods_standard"], //商品规格
                             'parts_order_number' => $parts_order_number,//时间+4位随机数+用户id构成订单号
                         ];
