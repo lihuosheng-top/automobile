@@ -56,23 +56,38 @@ $.ajax({
                     // 去掉空值
                     if(value !== ''){
                         if(index === 0){
-                            specStr += `<span class="select-on">`+value+`</span>`;
+                            specStr += `<span class="select-on select-item">`+value+`</span>`;
                         }else{
-                            specStr += `<span>`+value+`</span>`;
+                            specStr += `<span class="select-item">`+value+`</span>`;
                         }
                     }
                 })
                 specStr += '</div>';
             }
             $('.spec-wrap').prepend(specStr);
-            // 选择切换class
-            $('.spec-wrap').on('click', 'span', function(){
-                $(this).addClass('select-on');
-                $(this).siblings('span').removeClass('select-on');
-                if($(this)[0].innerText === '无需安装'){
-                    $('.select-shop').hide();
+            // 安装方式
+            var installationArr = val.goods_delivery.split(',');
+            var installationStr = '';
+            for(var j = 0; j < installationArr.length; j++){
+                if(j === 0){
+                    installationStr += `<button class="select-on select-item btn-item">`+installationArr[j]+`</button>`;
                 }else{
-                    $('.select-shop').show();
+                    installationStr += `<button class="select-item btn-item">`+installationArr[j]+`</button>`;
+                }
+            }
+            $('.installation').append(installationStr);
+            // 立即购买 身上放商品id
+            $('.select-buy').attr('id', val.id);
+            // 选择切换class
+            $('.spec-wrap').on('click', '.select-item', function(){
+                $(this).addClass('select-on');
+                $(this).siblings('.select-item').removeClass('select-on');
+                if($(this).hasClass('btn-item')){
+                    if($(this)[0].innerText === '无需安装'){
+                        $('.select-shop').hide();
+                    }else{
+                        $('.select-shop').show();
+                    }
                 }
                 var selectSpec = '';
                 $.each($('.select-on'), function(idx, val){
@@ -118,8 +133,6 @@ $('.parameter-btn').click(function(){
 
 
 
-
-
 // 显示 隐藏 评价弹窗 
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
@@ -129,15 +142,6 @@ function hidePop(){
     $('.pop').css('transform', 'translateX(100%)');
     $('html').css('overflow', 'auto');
 }
-// 往下滑 头部添加背景
-// $(window).on('scroll', function(){
-//     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-//     if(scrollTop > 0){
-//         $('.wrapper .head').css('background', 'rgba(255, 255, 255, .5)');
-//     }else{
-//         $('.wrapper .head').css('background', 'transparent');
-//     }
-// })
 
 // 所有评论切换
 $('.comment_classify_box li').click(function(){
@@ -234,16 +238,36 @@ $('.ser-type').add('#buy').click(function(){
     $('html').css('overflow','hidden');
     $('.mask').show();
     $('.select-ser-pop').addClass('select-ser-easeout');
+    $('.select-calculator_val').val($('.calculator_val').val());
 })
 // 立即购买 弹窗
 $('.select-buy').click(function(){
     if($('.select-goods-spec').text() !== '选择规格'){
-        location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
+        var goods_id = $(this)[0].id;
+        var goods_number = $('.select-calculator_val').val();
+        var goods_standard = $('.select-goods-spec').text();
+        $.ajax({
+            url: 'get_goods_id_save',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'goods_id': goods_id,
+                'goods_number': goods_number,
+                'goods_standard': goods_standard,
+            },
+            success: function(res){
+                console.log(res);
+                location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
+            },
+            error: function(){
+                console.log('error')
+            }
+        })
     }else{
         layer.open({
             skin: 'msg',
             content: '请选择规格',
-            time: 1.5
+            time: 1
         })
     }
 })

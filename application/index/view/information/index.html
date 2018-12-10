@@ -10,19 +10,52 @@
     <title>消息</title>
     <style>
         html, body, .wrapper{background-color: #f2f2f2;}
-        .header{position: fixed;top: 0;left: 0;right: 0;width: 100%;height: .88rem;background-color: #fff;}
+        .header{position: relative;width: 100%;height: .88rem;background-color: #fff; border-bottom: 1px solid #eee;}
         .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
         .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
-        
-
+        .order-assistant, .system-message, .activity-message{height: 2.12rem; border-bottom: 1px solid #eee; background-color: #fff; padding-left: .32rem; display: flex; align-items: center;}
+        .icon-box{width: 1.15rem;}
+        .icon-assistant{display: inline-block; width: .83rem; height: .83rem; background-position: -1.45rem -3.05rem;}
+        .msg-title{flex: 1;}
+        .msg-title p{font-size: .32rem; color: #333;}
+        .msg-title span{font-size: .26rem; color: #999;}
+        .icon-system{display: inline-block; width: .83rem; height: .83rem; background-position: -2.45rem -3.05rem;}
+        .icon-activity{display: inline-block; width: .83rem; height: .83rem; background-position: -3.45rem -3.05rem;}
     </style>
 </head>
 <body>
     <div class="wrapper">
         <header class="header">
-            <a href="my_message" class="spr icon-back"></a>
+            <a href="my_index" class="spr icon-back"></a>
             <h3>消息</h3>
         </header>
+        <div class="order-assistant">
+            <div class="icon-box">
+                <i class="spr icon-assistant"></i>
+            </div>
+            <div class="msg-title">
+                <p>订单助手</p>
+                <span>订单、物流信息</span>
+            </div>
+        </div>
+        <div class="system-message">
+            <div class="icon-box">
+                <i class="spr icon-system"></i>
+            </div>
+            <div class="msg-title">
+                <p>系统消息</p>
+                <span>站内公告、奖励通知</span>
+            </div>
+        </div>
+        <!-- <div class="activity-message">
+            <div class="icon-box">
+                <i class="spr icon-activity"></i>
+            </div>
+            <div class="msg-title">
+                <p>活动消息</p>
+                <span>专属优惠资讯</span>
+            </div>
+        </div> -->
     </div>
     
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
