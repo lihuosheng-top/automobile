@@ -718,15 +718,16 @@ class OrderParts extends Controller{
                             'user_id' => $user_id,
                             'harvester' => $is_address_status['harvester'],
                             'harvest_phone_num' => $is_address_status['harvester_phone_num'],
-                            'harvest_address' => $harvest_address,
+                            'harvester_address' => $harvest_address,
                             'order_create_time' => $create_time,
                             'order_amount' => $data['order_amount'], //订单金额
                             'status' => 1,
                             'goods_id' => $commodity_id,
-                            'shop_id' => $data['shop_id'],
+                            'store_id' => $data['shop_id'],
+                            'goods_standard'=>$data["goods_standard"], //商品规格
                             'parts_order_number' => $parts_order_number,//时间+4位随机数+用户id构成订单号
                         ];
-                        $res = Db::name('order')->insertGetId($datas);
+                        $res = Db::name('order_parts')->insertGetId($datas);
                         if ($res) {
                             return ajax_success('下单成功', $datas['parts_order_number']);
                         }else{
