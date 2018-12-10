@@ -691,6 +691,9 @@ class OrderParts extends Controller{
         if ($request->isPost()) {
             $data = $_POST;
             $user_id =Session::get("user");
+            if(empty($user_id)){
+                return ajax_error("未登录",['status'=>0]);
+            }
             $user_information =Db::name("user")->where("id",$user_id)->find();
             $is_address = Db::name('user_address')->where('user_id', $user_id)->find();
             $store_name =Db::name("store")->where("store_id",$data["store_id"])->find();
@@ -771,6 +774,10 @@ class OrderParts extends Controller{
      */
     public function get_goods_id_save(Request $request){
         if($request->isPost()){
+            $user_id =Session::get("user");
+            if(empty($user_id)){
+                return ajax_error("未登录",['status'=>0]);
+            }
             $goods_id =$request->only('goods_id')['goods_id'];//商品id
             $goods_number=$request->only('goods_number')['goods_number'];//数量
             $goods_standard=$request->only('goods_standard')['goods_standard'];//规格

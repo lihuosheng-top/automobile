@@ -192,6 +192,7 @@ class Apppay extends Controller
             $data['status'] = 2;
             $pay_time = time();
             $data['pay_time']=$pay_time;
+            $data["pay_type_content"] ="支付宝";
             if(!empty($_GET['out_trade_no'])){
                 $bool = Db::name("order_parts")->where("parts_order_number",$_GET['out_trade_no'])->update($data);
                 if($bool){

@@ -45,6 +45,9 @@ class  Member extends Controller{
     {
         if ($request->isPost()) {
             $user_id = Session::get("user");
+            if(empty($user_id)){
+                return ajax_error("请登录",["status"=>2]);
+            }
             $is_address_status = Db::name('user_address')->where('user_id', $user_id)->find();
             if (!empty($is_address_status)) {
                 $is_address = Db::name('user_address')->where('user_id', $user_id)->where("status", 1)->find();
