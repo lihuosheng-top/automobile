@@ -544,6 +544,10 @@
                 })
 
                 // 支付弹窗
+                var goodsId = res.data.goods[0].id;
+                var shopId = res.data.goods[0].goods_brand.id;
+                var orderAmount = $('.total-num').text();
+                var quantity = $('.total-money').text().split('￥')[1];
                 $('#order-buy').click(function(){
                     $('.mask').show();
                     $('.alipay-pop').animate({'bottom': '0'});
@@ -553,7 +557,10 @@
                         type: 'POST',
                         dataType: 'JSON',
                         data: {
-                            
+                            'goods_id': goodsId,
+                            'shop_id': shopId,
+                            'order_amount': orderAmount,
+                            'order_quantity': quantity
                         },
                         success: function(res){
                             console.log(res);
