@@ -65,6 +65,17 @@ $.ajax({
                 specStr += '</div>';
             }
             $('.spec-wrap').prepend(specStr);
+            // 安装方式
+            var installationArr = val.goods_delivery.split(',');
+            var installationStr = '';
+            for(var j = 0; j < installationArr.length; j++){
+                if(j === 0){
+                    installationStr += `<span class="select-on">`+installationArr[j]+`</span>`;
+                }else{
+                    installationStr += `<span>`+installationArr[j]+`</span>`;
+                }
+            }
+            $('.installation').append(installationStr);
             // 选择切换class
             $('.spec-wrap').on('click', 'span', function(){
                 $(this).addClass('select-on');
