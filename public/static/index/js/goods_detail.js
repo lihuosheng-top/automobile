@@ -56,9 +56,9 @@ $.ajax({
                     // 去掉空值
                     if(value !== ''){
                         if(index === 0){
-                            specStr += `<span class="select-on">`+value+`</span>`;
+                            specStr += `<span class="select-on select-item">`+value+`</span>`;
                         }else{
-                            specStr += `<span>`+value+`</span>`;
+                            specStr += `<span class="select-item">`+value+`</span>`;
                         }
                     }
                 })
@@ -70,24 +70,25 @@ $.ajax({
             var installationStr = '';
             for(var j = 0; j < installationArr.length; j++){
                 if(j === 0){
-                    installationStr += `<span class="select-on">`+installationArr[j]+`</span>`;
+                    installationStr += `<button class="select-on select-item btn-item">`+installationArr[j]+`</button>`;
                 }else{
-                    installationStr += `<span>`+installationArr[j]+`</span>`;
+                    installationStr += `<button class="select-item btn-item">`+installationArr[j]+`</button>`;
                 }
             }
             $('.installation').append(installationStr);
             // 立即购买 身上放商品id
             $('.select-buy').attr('id', val.id);
             // 选择切换class
-            $('.spec-wrap').on('click', 'span', function(){
+            $('.spec-wrap').on('click', '.select-item', function(){
                 $(this).addClass('select-on');
-                $(this).siblings('span').removeClass('select-on');
-                if($(this)[0].innerText === '无需安装'){
-                    $('.select-shop').hide();
-                }else{
-                    $('.select-shop').show();
+                $(this).siblings('.select-item').removeClass('select-on');
+                if($(this).hasClass('btn-item')){
+                    if($(this)[0].innerText === '无需安装'){
+                        $('.select-shop').hide();
+                    }else{
+                        $('.select-shop').show();
+                    }
                 }
-
                 var selectSpec = '';
                 $.each($('.select-on'), function(idx, val){
                     selectSpec += $(val).text() + ' ';
@@ -132,8 +133,6 @@ $('.parameter-btn').click(function(){
 
 
 
-
-
 // 显示 隐藏 评价弹窗 
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
@@ -143,15 +142,6 @@ function hidePop(){
     $('.pop').css('transform', 'translateX(100%)');
     $('html').css('overflow', 'auto');
 }
-// 往下滑 头部添加背景
-// $(window).on('scroll', function(){
-//     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-//     if(scrollTop > 0){
-//         $('.wrapper .head').css('background', 'rgba(255, 255, 255, .5)');
-//     }else{
-//         $('.wrapper .head').css('background', 'transparent');
-//     }
-// })
 
 // 所有评论切换
 $('.comment_classify_box li').click(function(){
