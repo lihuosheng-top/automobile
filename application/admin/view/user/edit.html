@@ -4,26 +4,39 @@
 	body {
 		background: #fff;
 	}
-	.layui-form  {
+	
+	.layui-form {
 		width: 90%;
 		margin: 20px auto;
 	}
+	
 	.layui-form label {
 		width: 17%;
 		text-align: left;
 	}
-	img{
+	
+	img {
 		width: 100%;
 		height: 100%;
 	}
-  
-     .img{
-		 width: 100px;
-		 height: 100px;
-		 overflow: hidden;
-		 border-radius: 50% ;
-		 
-	 }
+	
+	.img {
+		width: 100px;
+		height: 100px;
+		overflow: hidden;
+		border-radius: 50%;
+	}
+	.car-boxs{
+		display: flex;
+		align-content: center;
+		flex-wrap:wrap;
+	}
+		.car-boxs span{
+			width: 25%;
+	}
+     .car-boxs>div{
+			width: 100%;
+	}
 </style>
 
 {/block}
@@ -35,7 +48,7 @@
 
 	</div>
 	<form class="layui-form" action="">
-	{volist name="user_data" id="user_val"}
+		{volist name="user_data" id="user_val"}
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 会员名称：</label>
 			<div class="layui-input-block">
@@ -60,69 +73,69 @@
 				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_val.user_grade|show_user_grade}">
 			</div>
 		</div>
-<div class="layui-form-item">
+		<div class="layui-form-item">
 			<label class="layui-form-label">会员头像：</label>
 			<div class="layui-input-block">
-				<div class="img"><img src="__USERIMG__/{$user_val.user_img}" ></div>
+				<div class="img"><img src="__USERIMG__/{$user_val.user_img}"></div>
 			</div>
 		</div>
-	
-	<div class="layui-form-item">
-		<label class="layui-form-label">性别：</label>
-		<div class="layui-input-block">
-		<p>{$user_val.sex}</p>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">性别：</label>
+			<div class="layui-input-block">
+				<p>{$user_val.sex}</p>
+			</div>
 		</div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">角色：</label>
-		<div class="layui-input-block">
-		<p>{$user_val.type|show_user_type}</p>
+		<div class="layui-form-item">
+			<label class="layui-form-label">角色：</label>
+			<div class="layui-input-block">
+				<p>{$user_val.type|show_user_type}</p>
+			</div>
 		</div>
-	</div>
-	<div class="layui-form-item">
-	{if !empty($address_data)}
-		{foreach name="address_data" item="vos"}
-		<label class="layui-form-label">收货地址{$key+1}：</label>
-		<div class="layui-input-block">
-			<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$vos.address_name}{$vos.harvester_real_address}">
-			<span>收货人{$key+1}：</span><span>{$vos.harvester}</span><br>
-			<span>收货人电话{$key+1}：</span><span>{$vos.harvester_phone_num}</span>
+		{if !empty($address_data)} {foreach name="address_data" item="vos"}
+		<div class="layui-form-item">
+
+			<label class="layui-form-label">收货地址{$key+1}：</label>
+			<div class="layui-input-block" style="border: solid #EFEFEF 1px; border-radius:10px ; padding: 10px;">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$vos.address_name}{$vos.harvester_real_address}" style="border: 0;padding: 0;">
+				<span>收货人：</span><span>{$vos.harvester}</span><br>
+				<span>收货人电话：</span><span>{$vos.harvester_phone_num}</span><br>
+				<span>默认：</span><span>是</span>
+
+			</div>
+
 		</div>
-		{/foreach}
-	{/if}
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">申请时间：</label>
-		<div class="layui-input-block">
-		<p>{$user_val.create_time|date="Y-m-d H:i:s",###}</p>
+		{/foreach} {/if}
+		<div class="layui-form-item">
+			<label class="layui-form-label">申请时间：</label>
+			<div class="layui-input-block">
+				<p>{$user_val.create_time|date="Y-m-d H:i:s",###}</p>
+			</div>
 		</div>
-	</div>
-		{/volist}
+		{/volist} {if !empty($love_car)} {volist name="love_car" id="v_data"}
+		<div class="layui-form-item" style="width: 1024px;">
 
-		{if !empty($love_car)}
-		{volist name="love_car" id="v_data"}
-		<span>品牌{$v_data.brand}</span>
-		<span>车系{$v_data.series}</span>
-		<span>车型{$v_data.displacement}</span>
-		<span>年产{$v_data.production_time}</span>
-		{if !empty($v_data.user_car_massage)}
-		<span>颜色{$v_data.user_car_massage["colour"]}</span>
-		<span>座位{$v_data.user_car_massage["seat"]}</span>
-		<span>车牌号{$v_data.user_car_massage["plate_number"]}</span>
-		<span>行驶里程{$v_data.user_car_massage["driving_number"]}</span>
-		<span>车架号{$v_data.user_car_massage["carriage_number"]}</span>
-		<span>发动机号{$v_data.user_car_massage["engine_number"]}</span>
-		<span>商业车险公司{$v_data.user_car_massage["car_insurance"]}</span>
-		<span>保险到期时间{$v_data.user_car_massage["insurance_time"]}</span>
-		<br>
-		{/if}
-		{/volist}
-		{/if}
+			<label class="layui-form-label">我的爱车：</label>
+			<div class="layui-input-block car-boxs" style="border: solid #EFEFEF 1px; border-radius:10px ; padding: 10px;" >
+				<span>品牌：{$v_data.brand}</span>
+				<span>车系：{$v_data.series}</span>
+				<span>车型：{$v_data.displacement}</span>
+				<span>年产：{$v_data.production_time}</span> {if !empty($v_data.user_car_massage)}
+				<span>颜色：{$v_data.user_car_massage["colour"]}</span>
+				<span>座位：{$v_data.user_car_massage["seat"]}</span>
+				<div>
+					<div>车牌号：{$v_data.user_car_massage["plate_number"]}</div>
+					<div>行驶里程：{$v_data.user_car_massage["driving_number"]}</div>
+					<div>车架号：{$v_data.user_car_massage["carriage_number"]}</div>
+					<div>发动机号：{$v_data.user_car_massage["engine_number"]}</div>
+					<div>商业车险公司：{$v_data.user_car_massage["car_insurance"]}</div>
+					<div>保险到期时间：{$v_data.user_car_massage["insurance_time"]}</div>
+				</div>
+				<br> {/if}
+			</div>
+		</div>
 
-
-
-
-
+		{/volist} {/if}
 
 		<div class="layui-form-item">
 			<div class="layui-input-block">
@@ -131,7 +144,7 @@
 		</div>
 
 	</form>
-	
+
 	{/block}
 
 	<!--_footer 作为公共模版分离出去-->
@@ -140,7 +153,7 @@
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
-	
+
 	<script type="text/javascript">
 		layui.config({
 			base: "js/"
@@ -150,11 +163,8 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 
-			
 		})
 	</script>
-
-	
 
 	{/block}
 
