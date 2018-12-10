@@ -592,12 +592,12 @@ map.plugin([
     AMap.event.addListener(geolocation, 'complete', onComplete);
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
-        console.log('成功：' + e)
+        console.log(e)
         $('.gec-curr-txt').text(e.addressComponent.city);
         $('.curr_city').text(e.addressComponent.district);
     };
     function onError(e){
-        console.log('错误' + JSON.stringify(e));
+        console.log(e)
     };
 })
 
