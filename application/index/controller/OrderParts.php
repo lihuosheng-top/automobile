@@ -694,46 +694,49 @@ class OrderParts extends Controller{
             $is_address = Db::name('user_address')->where('user_id', $user_id)->find();
             if (empty($is_address) ) {
                 return ajax_error('请填写收货地址',['status'=>0]);
-            }
-            $is_address_status = Db::name('user_address')->where('user_id', $user_id)->where('status',1)->find();
-            if (empty($is_address_status) ) {
-                return ajax_error('请选择收货地址',['status'=>2]);
-            }
-            $commodity_id = $_POST['goods_id'];
-            if (!empty($commodity_id)) {
-                $goods_data = Db::name('goods')->where('id', $commodity_id)->find();
-                $create_time = time();
-                if (!empty($data)) {
-                    $harvest_address_city =str_replace(',','',$is_address_status['address_name']);
-                    $harvest_address =$harvest_address_city.$is_address_status['harvester_real_address']; //收货人地址
-                    $time=date("Y-m-d",time());
-                    $v=explode('-',$time);
-                    $time_second=date("H:i:s",time());
-                    $vs=explode(':',$time_second);
-                    $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
-                    $datas = [
-                        'goods_image' => $goods_data['goods_show_images'],//图片
-                        'parts_goods_name' => $goods_data['goods_name'],//名字
-                        'order_quantity' => $data['order_quantity'],//订单数量
-                        'user_id' => $user_id,
-                        'harvester' => $is_address_status['harvester'],
-                        'harvest_phone_num' => $is_address_status['harvester_phone_num'],
-                        'harvest_address' => $harvest_address,
-                        'order_create_time' => $create_time,
-                        'order_amount' => $data['order_amount'], //订单金额
-                        'status' => 1,
-                        'goods_id' => $commodity_id,
-                        'shop_id' => $data['shop_id'],
-                        'parts_order_number' => $parts_order_number,//时间+4位随机数+用户id构成订单号
-                    ];
-                    $res = Db::name('order')->insertGetId($datas);
-                    if ($res) {
-                        return ajax_success('下单成功', $datas['parts_order_number']);
-                    }else{
-                        return ajax_error('失败',['status'=>0]);
+            }else{
+                $is_address_status = Db::name('user_address')->where('user_id', $user_id)->where('status',1)->find();
+                if (empty($is_address_status) ) {
+                    $is_address_status =$is_address;
+                }
+                $commodity_id = $_POST['goods_id'];
+                if (!empty($commodity_id)) {
+                    $goods_data = Db::name('goods')->where('id', $commodity_id)->find();
+                    $create_time = time();
+                    if (!empty($data)) {
+                        $harvest_address_city =str_replace(',','',$is_address_status['address_name']);
+                        $harvest_address =$harvest_address_city.$is_address_status['harvester_real_address']; //收货人地址
+                        $time=date("Y-m-d",time());
+                        $v=explode('-',$time);
+                        $time_second=date("H:i:s",time());
+                        $vs=explode(':',$time_second);
+                        $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
+                        $datas = [
+                            'goods_image' => $goods_data['goods_show_images'],//图片
+                            'parts_goods_name' => $goods_data['goods_name'],//名字
+                            'order_quantity' => $data['order_quantity'],//订单数量
+                            'user_id' => $user_id,
+                            'harvester' => $is_address_status['harvester'],
+                            'harvest_phone_num' => $is_address_status['harvester_phone_num'],
+                            'harvest_address' => $harvest_address,
+                            'order_create_time' => $create_time,
+                            'order_amount' => $data['order_amount'], //订单金额
+                            'status' => 1,
+                            'goods_id' => $commodity_id,
+                            'shop_id' => $data['shop_id'],
+                            'parts_order_number' => $parts_order_number,//时间+4位随机数+用户id构成订单号
+                        ];
+                        $res = Db::name('order')->insertGetId($datas);
+                        if ($res) {
+                            return ajax_success('下单成功', $datas['parts_order_number']);
+                        }else{
+                            return ajax_error('失败',['status'=>0]);
+                        }
                     }
                 }
             }
+
+
         }
     }
 
@@ -806,6 +809,27 @@ class OrderParts extends Controller{
         }
     }
 
+
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:生成订单(未用)
+     **************************************
+     * @param Request $request
+     */
+    public function ios_return_parts_num(Request $request){
+        if($request->isPost()){
+            $ios_return_num =$request->only(['num'])['num'];
+            $data =Db::name('order_parts')->where('parts_order_number',$ios_return_num)->find();
+            if($data){
+                return ajax_success('成功',$data);
+            }else{
+                return ajax_error('失败');
+            }
+        }
+    }
 
 
 
