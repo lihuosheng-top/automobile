@@ -760,13 +760,30 @@ class OrderParts extends Controller{
      */
     public function get_goods_id_save(Request $request){
         if($request->isPost()){
-            $goods_id =$request->only('goods_id')['goods_id'];
+            $goods_info =$request->only('goods_info')['goods_info'];
             if(!empty($goods_id)){
-                Session::set('part_goods_id',$goods_id);
-                return ajax_success('保存商品id成功',$goods_id);
+                Session::set('part_goods_info',$goods_info);
+                return ajax_success('保存商品id成功',$goods_info);
             }else{
                 return ajax_error('保存商品失败',['status'=>0]);
             }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:提交订单页面返回购买页面传过来的数据
+     **************************************
+     */
+    public function return_order_buy_information(Request $request){
+        if($request->isPost()){
+           $part_goods_info = Session::get("part_goods_info");
+           if(!empty($part_goods_info)){
+               return ajax_success("数据返回成功",$part_goods_info);
+           }else{
+               return ajax_success("没有数据",["status"=>0]);
+           }
         }
     }
 
