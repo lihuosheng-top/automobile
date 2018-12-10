@@ -750,4 +750,28 @@ class OrderParts extends Controller{
             return view("order_parts_firm_order");
     }
 
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:立即购买存储一个id，方便确定订单提交
+     **************************************
+     * @param Request $request
+     */
+    public function get_goods_id_save(Request $request){
+        if($request->isPost()){
+            $goods_id =$request->only('goods_id')['goods_id'];
+            if(!empty($goods_id)){
+                Session::set('part_goods_id',$goods_id);
+                return ajax_success('保存商品id成功',$goods_id);
+            }else{
+                return ajax_error('保存商品失败',['status'=>0]);
+            }
+        }
+    }
+
+
+
+
+
 }
