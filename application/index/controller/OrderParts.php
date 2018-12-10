@@ -797,6 +797,8 @@ class OrderParts extends Controller{
                if(!empty($goods)){
                    $part_goods_info['goods'] =$goods;
                    return ajax_success("数据返回成功",$part_goods_info);
+               }else{
+                   return ajax_error("没有数据",["status"=>0]);
                }
            }else{
                return ajax_success("没有数据",["status"=>0]);
