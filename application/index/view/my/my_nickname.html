@@ -59,6 +59,7 @@
             border: 0;
             color: #fff;
             font-size: .3rem;
+            outline: none;
         }
     </style>
 </head>
@@ -97,13 +98,16 @@
                         layer.open({
                             skin: 'msg',
                             content: res.info,
-                            time: 1.5
+                            time: 1
                         })
+                        setTimeout(function(){
+                            location.href = 'my_message';
+                        }, 1100)
                     }else{
                         layer.open({
                             skin: 'msg',
                             content: res.info,
-                            time: 1.5
+                            time: 1
                         })
                     }
                 },
@@ -113,6 +117,23 @@
             })
             }else{
                 $('.name-input').focus();
+            }
+        })
+
+        $.ajax({
+            url: 'member_information_data',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    if(res.data.real_name !== null){
+                        $('.name-input').val(res.data.user_name);
+                    }
+                }
+            },
+            error: function(){
+                console.log('error');
             }
         })
     </script>
