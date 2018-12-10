@@ -76,6 +76,8 @@ $.ajax({
                 }
             }
             $('.installation').append(installationStr);
+            // 立即购买 身上放商品id
+            $('.select-buy').attr('id', val.id);
             // 选择切换class
             $('.spec-wrap').on('click', 'span', function(){
                 $(this).addClass('select-on');
@@ -85,6 +87,7 @@ $.ajax({
                 }else{
                     $('.select-shop').show();
                 }
+
                 var selectSpec = '';
                 $.each($('.select-on'), function(idx, val){
                     selectSpec += $(val).text() + ' ';
@@ -245,16 +248,36 @@ $('.ser-type').add('#buy').click(function(){
     $('html').css('overflow','hidden');
     $('.mask').show();
     $('.select-ser-pop').addClass('select-ser-easeout');
+    $('.select-calculator_val').val($('.calculator_val').val());
 })
 // 立即购买 弹窗
 $('.select-buy').click(function(){
     if($('.select-goods-spec').text() !== '选择规格'){
-        location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
+        var goods_id = $(this)[0].id;
+        var goods_number = $('.select-calculator_val').val();
+        var goods_standard = $('.select-goods-spec').text();
+        $.ajax({
+            url: 'get_goods_id_save',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'goods_id': goods_id,
+                'goods_number': goods_number,
+                'goods_standard': goods_standard,
+            },
+            success: function(res){
+                console.log(res);
+                location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
+            },
+            error: function(){
+                console.log('error')
+            }
+        })
     }else{
         layer.open({
             skin: 'msg',
             content: '请选择规格',
-            time: 1.5
+            time: 1
         })
     }
 })
