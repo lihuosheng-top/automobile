@@ -457,6 +457,9 @@
             <button type="submit" class="alipay-submit">立即付款</button>
         </div>
     </form>
+
+    <!-- 积分抵扣 -->
+    <div class="deduction"></div>
     
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
@@ -548,6 +551,7 @@
                 var shopId = res.data.goods[0].goods_brand.id;
                 var orderAmount = $('.total-num').text();
                 var quantity = $('.total-money').text().split('￥')[1];
+                var goods_standard = $('.standard').text();
                 $('#order-buy').click(function(){
                     $('.mask').show();
                     $('.alipay-pop').animate({'bottom': '0'});
@@ -560,7 +564,8 @@
                             'goods_id': goodsId,
                             'shop_id': shopId,
                             'order_amount': orderAmount,
-                            'order_quantity': quantity
+                            'order_quantity': quantity,
+                            'goods_standard': goods_standard
                         },
                         success: function(res){
                             console.log(res);
