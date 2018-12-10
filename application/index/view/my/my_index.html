@@ -282,9 +282,17 @@
                 isLoginFun();
             }
         })
+        // 设置
         $('.set').click(function(){
             if(islogin == 1){
                 location.href = 'setting';
+            }else{
+                isLoginFun();
+            }
+        })
+        $('.message').click(function(){
+            if(islogin == 1){
+                location.href = 'information_index';
             }else{
                 isLoginFun();
             }
