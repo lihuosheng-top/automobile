@@ -584,7 +584,7 @@ map.plugin([
         buttonOffset: new AMap.Pixel(10, 20),
         zoomToAccuracy: true,
         useNative: true,
-        noIpLocate: 1,
+        // noIpLocate: 1,
         // noGeoLocation: 1,
     })
     map.addControl(geolocation);
@@ -592,7 +592,7 @@ map.plugin([
     AMap.event.addListener(geolocation, 'complete', onComplete);
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
-        alert('成功：' + e)
+        console.log('成功：' + e)
         $('.gec-curr-txt').text(e.addressComponent.city);
         $('.curr_city').text(e.addressComponent.district);
     };
