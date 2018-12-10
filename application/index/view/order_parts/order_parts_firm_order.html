@@ -558,6 +558,7 @@
                     var orderAmount = $('.total-money').text().split('￥')[1];
                     var quantity = $('.total-num').text();
                     var goods_standard = $('.standard').text();
+                    var buy_message = $('.leave-msg').val();
                     $.ajax({
                         url: 'ios_api_order_parts_button',
                         type: 'POST',
@@ -567,7 +568,8 @@
                             'store_id': storeId,
                             'order_amount': orderAmount,
                             'order_quantity': quantity,
-                            'goods_standard': goods_standard
+                            'goods_standard': goods_standard,
+                            'buy_message': buy_message
                         },
                         success: function(res){
                             console.log(res);
