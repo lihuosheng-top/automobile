@@ -50,8 +50,8 @@ Route::group("",[
     "ios_api_order_service_button"=>"index/OrderService/ios_api_order_service_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
-    'index_aliPay'=>"index/Apppay/index_aliPay",
-    'index_pay_code'=>"index/Apppay/index_pay_code",
+    'index_aliPay'=>"index/Apppay/index_aliPay", //服务商提交支付（付款）（弹窗支付）
+    'index_pay_code'=>"index/Apppay/index_pay_code", //状态修改(回调地址修改)
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/
@@ -59,7 +59,7 @@ Route::group("",[
     "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
 //    "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
 //    "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
-//    'index_aliPay'=>"index/Apppay/index_aliPay",
+    'index_parts_aliPay'=>"index/Apppay/index_parts_aliPay", //配件商支付接口（弹窗支付）
 //    'index_pay_code'=>"index/Apppay/index_pay_code",
     /*TODO:配件商订单结束*/
 
