@@ -365,16 +365,15 @@
         <div class="order-detail-box">
             <div class="order-detail-bg"></div>
             <div class="user-info-box">
-                <!-- <div class="user-name-phone">
-                    <span class="user-name">收货人：叶问</span>
-                    <span class="user-phone">13691853045</span>
+                <div class="user-name-phone">
+                    <span class="user-name"></span>
+                    <span class="user-phone"></span>
                 </div>
                 <div class="user-address">
                     <span class="address-title">配送地址：</span>
                     <span class="address-txt txt-hid-two">深圳市福田区深南大道新闻路1号中电信息大厦西座1楼</span>
                     <i class="spr icon-addr-more"></i>
-                </div> -->
-                <div class="no-addr">去添加地址</div>
+                </div>
             </div>
             <div class="order-goods-info">
                 <div class="order-shop-box">
@@ -505,7 +504,22 @@
             location.href = 'goods_detail?id=' + id + '&&preid=' + preId;
         })
 
-        
+        // 地址返回
+        $.ajax({
+            url: 'member_default_address_return',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                $('.user-name').text('收货人：' + res.data.harvester);
+                $('.user-phone').text(res.data.harvester_phone_num);
+                var addr = res.data.address_name.split(',').join('');
+                $('.address-txt').text(addr + res.data.harvester_real_address);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
         
         // 商品详情 传过来的数据
         $.ajax({

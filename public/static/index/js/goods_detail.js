@@ -243,6 +243,7 @@ $('.ser-type').add('#buy').click(function(){
 // 立即购买 弹窗
 $('.select-buy').click(function(){
     // 地址返回
+    var $this = this;
     $.ajax({
         url: 'member_default_address_return',
         type: 'POST',
@@ -258,40 +259,41 @@ $('.select-buy').click(function(){
                         location.href = 'member_address_add?id=271&&preid=10';
                     }
                 });
+            }else{
+                if($('.select-goods-spec').text() !== '选择规格'){
+                    var goods_id = $($this)[0].id;
+                    var goods_number = $('.select-calculator_val').val();
+                    var goods_standard = $('.select-goods-spec').text();
+                    $.ajax({
+                        url: 'get_goods_id_save',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'goods_id': goods_id,
+                            'goods_number': goods_number,
+                            'goods_standard': goods_standard,
+                        },
+                        success: function(res){
+                            console.log(res);
+                            location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
+                        },
+                        error: function(){
+                            console.log('error')
+                        }
+                    })
+                }else{
+                    layer.open({
+                        skin: 'msg',
+                        content: '请选择规格',
+                        time: 1
+                    })
+                }
             }
         },
         error: function(){
             console.log('error');
         }
     })
-    // if($('.select-goods-spec').text() !== '选择规格'){
-    //     var goods_id = $(this)[0].id;
-    //     var goods_number = $('.select-calculator_val').val();
-    //     var goods_standard = $('.select-goods-spec').text();
-    //     $.ajax({
-    //         url: 'get_goods_id_save',
-    //         type: 'POST',
-    //         dataType: 'JSON',
-    //         data: {
-    //             'goods_id': goods_id,
-    //             'goods_number': goods_number,
-    //             'goods_standard': goods_standard,
-    //         },
-    //         success: function(res){
-    //             console.log(res);
-    //             location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
-    //         },
-    //         error: function(){
-    //             console.log('error')
-    //         }
-    //     })
-    // }else{
-    //     layer.open({
-    //         skin: 'msg',
-    //         content: '请选择规格',
-    //         time: 1
-    //     })
-    // }
 })
 // 购买弹窗  加入购物车
 $('.select-add-cart').click(function(){
