@@ -183,6 +183,9 @@ Route::group("",[
     /*TODO:配件商订单状态开始*/
     "ios_api_order_parts_firm_order"=>"index/OrderParts/ios_api_order_parts_firm_order",//确认订单页面
     "order_parts_detail"=>"index/OrderParts/order_parts_detail",//订单详情
+    "get_goods_id_save"=>"index/OrderParts/get_goods_id_save",//立即购买存储一个id，方便确定订单提交
+
+
     "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单页面
     "ios_api_order_parts_all"=>"index/OrderParts/ios_api_order_parts_all",//全部订单接口（ajax）
     "order_parts_wait_pay"=>"index/OrderParts/order_parts_wait_pay",//待付款页面

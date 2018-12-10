@@ -71,7 +71,6 @@ class Classify extends Controller
     // 商品详情
     public function goods_detail(Request $request)
     {
-
         if($request->isPost()){
             $goods_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("id",$goods_id)->select();
