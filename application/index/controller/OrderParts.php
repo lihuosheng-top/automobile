@@ -729,7 +729,8 @@ class OrderParts extends Controller{
                         ];
                         $res = Db::name('order_parts')->insertGetId($datas);
                         if ($res) {
-                            return ajax_success('下单成功', $datas['parts_order_number']);
+                            $order_datas =Db::name("order_parts")->field("order_real_pay,parts_goods_name")->where('id',$res)->where("user_id",$user_id)->find();
+                            return ajax_success('下单成功',$order_datas);
                         }else{
                             return ajax_error('失败',['status'=>0]);
                         }
