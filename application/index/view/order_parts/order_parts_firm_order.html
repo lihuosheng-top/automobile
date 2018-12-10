@@ -378,19 +378,19 @@
             <div class="order-goods-info">
                 <div class="order-shop-box">
                     <i class="spr icon-shop"></i>
-                    <span class="order-shop-namp">米其林轮胎旗舰店</span>
+                    <span class="order-shop-namp"></span>
                 </div>
                 <div class="order-goods-detail">
                     <div class="order-goods-img">
                         <img src="__STATIC__/index/image/14.png">
                     </div>
                     <div class="order-info-box">
-                        <p class="order-goods-p txt-hid-two">宝马轮胎宝马轮胎胎宝马胎宝马胎宝马轮胎</p>
-                        <p class="order-selling-point txt-hid-two">宝马轮胎宝马轮胎胎宝马轮胎</p>
-                        <p class="standard txt-hid-two">规格:</p>
+                        <p class="order-goods-p txt-hid-two"></p>
+                        <p class="order-selling-point txt-hid-two"></p>
+                        <p class="standard txt-hid-two"></p>
                         <div class="unit-price-quantity">
-                            <p class="unit-price-p">￥0.01</p>
-                            <p class="quantity-p">×1</p>
+                            <p class="unit-price-p"></p>
+                            <p class="quantity-p"></p>
                         </div>
                     </div>
                 </div>
@@ -420,7 +420,7 @@
                         <input type="text" placeholder="请填写内容(选填)" class="leave-msg">
                     </li>
                     <li class="sundry-li">
-                        <p class="sundry-li-last">共计1件商品 合计：<span>￥0.01</span></p>
+                        <p class="sundry-li-last">共计<span class="total-num"></span>件商品 合计：<span class="total-money"></span></p>
                     </li>
                 </ul>
             </div>
@@ -431,7 +431,7 @@
     </div>
     <div class="mask"></div>
     <!-- 支付弹窗 -->
-    <form name=alipayment action="{:url('index/Apppay/index_aliPay')}" method="post">
+    <form name=alipayment action="{:url('index/Apppay/index_parts_aliPay')}" method="post">
         <div class="alipay-pop">
             <header>
                 <a href="javascript:;" class="close-alipay">×</a>
@@ -461,36 +461,6 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-        // 支付弹窗
-        $('#order-buy').click(function(){
-            $('.mask').show();
-            $('.alipay-pop').animate({'bottom': '0'});
-            $('html').css('overflow', 'hidden');
-        })
-        $('.close-alipay').click(function(){
-            $('.mask').hide();
-            $('.alipay-pop').animate({'bottom': '-100%'});
-            $('html').css('overflow', 'auto');
-        })
-
-        // 购买数量按钮
-        $(function(){
-            // 减
-            var calculator_val = document.getElementsByClassName('sundry-cal-val')[0];
-            $('.sundry-minus').click(function(){
-                if(calculator_val.value > 1){
-                    calculator_val.value -= 1;
-                }else{
-                    calculator_val.value = 1;
-                }
-            })
-            // 加
-            $('.sundry-increase').click(function(){
-                var add =  calculator_val.value - 0;
-                add += 1;
-                calculator_val.value = add;
-            })
-        })
         
         // 获取url地址id
         var url = location.search;
@@ -528,11 +498,82 @@
             dataType: 'JSON',
             success: function(res){
                 console.log(res);
+                // 数量
+                $('.quantity-p').text('×' + res.data.goods_number)
+                $('.sundry-cal-val').val(res.data.goods_number)
+                // 用户选择的规格
+                $('.standard').text(res.data.goods_standard);
+                $.each(res.data.goods, function(idx, val){
+                    // 店铺名
+                    $('.order-shop-namp').text(val.goods_brand.name);
+                    // 商品名
+                    $('.order-goods-p').text(val.goods_name);
+                    // 商品描述
+                    $('.order-selling-point').text(val.goods_describe);
+                    // 价格
+                    $('.unit-price-p').text('￥' + val.goods_adjusted_money);
+                    // 总价
+                    $('.total-money').text('￥' + (res.data.goods_number*val.goods_adjusted_money));
+                })
+                // 总数量
+                $('.total-num').text(res.data.goods_number);
+
+                // 购买数量按钮
+                $(function(){
+                    // 减
+                    var calculator_val = document.getElementsByClassName('sundry-cal-val')[0];
+                    $('.sundry-minus').click(function(){
+                        if(calculator_val.value > 1){
+                            calculator_val.value -= 1;
+                            $('.quantity-p').text(calculator_val.value);
+                            $('.total-num').text(calculator_val.value);
+                            $('.total-money').text('￥' + (calculator_val.value*res.data.goods[0].goods_adjusted_money))
+                        }else{
+                            calculator_val.value = 1;
+                        }
+                    })
+                    // 加
+                    $('.sundry-increase').click(function(){
+                        var add =  calculator_val.value - 0;
+                        add += 1;
+                        calculator_val.value = add;
+                        $('.quantity-p').text(calculator_val.value);
+                        $('.total-num').text(calculator_val.value);
+                        $('.total-money').text('￥' + (calculator_val.value*res.data.goods[0].goods_adjusted_money))
+                    })
+                })
+
+                // 支付弹窗
+                $('#order-buy').click(function(){
+                    $('.mask').show();
+                    $('.alipay-pop').animate({'bottom': '0'});
+                    $('html').css('overflow', 'hidden');
+                    $.ajax({
+                        url: 'ios_api_order_parts_button',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            
+                        },
+                        success: function(res){
+                            console.log(res);
+                        },
+                        error: function(){
+                            console.log('error');
+                        }
+                    })
+                })
+                $('.close-alipay').click(function(){
+                    $('.mask').hide();
+                    $('.alipay-pop').animate({'bottom': '-100%'});
+                    $('html').css('overflow', 'auto');
+                })
             },
             error: function(){
                 console.log('error');
             }
         })
+
         
     </script>
 </body>

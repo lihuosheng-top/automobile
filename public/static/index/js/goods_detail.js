@@ -239,6 +239,13 @@ $('.ser-type').add('#buy').click(function(){
     $('.mask').show();
     $('.select-ser-pop').addClass('select-ser-easeout');
     $('.select-calculator_val').val($('.calculator_val').val());
+    
+    // 点开弹窗 规格显示 默认选中的几个
+    var selectSpec = '';
+    $.each($('.select-on'), function(idx, val){
+        selectSpec += $(val).text() + ' ';
+    })
+    $('.select-goods-spec').text('规格：' + selectSpec);
 })
 // 立即购买 弹窗
 $('.select-buy').click(function(){
