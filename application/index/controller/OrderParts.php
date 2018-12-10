@@ -733,6 +733,7 @@ class OrderParts extends Controller{
                             'store_name' => $store_name['store_name'],
                             'goods_standard'=>$data["goods_standard"], //商品规格
                             'parts_order_number' => $parts_order_number,//时间+4位随机数+用户id构成订单号
+                            "buy_message"=>$data["buy_message"],//买家留言
                         ];
                         $res = Db::name('order_parts')->insertGetId($datas);
                         if ($res) {
