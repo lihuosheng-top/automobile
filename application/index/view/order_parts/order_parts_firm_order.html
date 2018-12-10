@@ -440,17 +440,17 @@
             <div class="middle_box">
                 <div class="price-box">
                     <span>￥</span>
-                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="0.01" readonly>
+                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="" readonly>
                 </div>
                 <ul class="content">
                     <li>
-                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="15428821121021" readonly>
+                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="" readonly>
                     </li>
                     <li>
-                        订单名称: <input id="WIDsubject" name="WIDsubject" value="汽车贴膜" readonly>
+                        订单名称: <input id="WIDsubject" name="WIDsubject" value="" readonly>
                     </li>
                     <li>
-                        商品描述: <input id="WIDbody" name="WIDbody" value="汽车贴膜" readonly>
+                        商品描述: <input id="WIDbody" name="WIDbody" value="" readonly>
                     </li>
                 </ul>
             </div>
@@ -549,8 +549,8 @@
                 // 支付弹窗
                 var goodsId = res.data.goods[0].id;
                 var shopId = res.data.goods[0].goods_brand.id;
-                var orderAmount = $('.total-num').text();
-                var quantity = $('.total-money').text().split('￥')[1];
+                var orderAmount = $('.total-money').text().split('￥')[1];
+                var quantity = $('.total-num').text();
                 var goods_standard = $('.standard').text();
                 $('#order-buy').click(function(){
                     $('.mask').show();
@@ -569,6 +569,8 @@
                         },
                         success: function(res){
                             console.log(res);
+                            $('#WIDout_trade_no').val(res.data);
+                            $('#WIDtotal_amount').val(orderAmount);
                         },
                         error: function(){
                             console.log('error');
