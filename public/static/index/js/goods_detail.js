@@ -263,7 +263,7 @@ $('.select-buy').click(function(){
                     btn: ['确定', '取消'],
                     yes: function (index) {
                         layer.close(index);
-                        location.href = 'member_address_add?id=271&&preid=10';
+                        // location.href = 'member_address_add?id=271&&preid=10';
                     }
                 });
             }else{
@@ -282,7 +282,7 @@ $('.select-buy').click(function(){
                         },
                         success: function(res){
                             console.log(res);
-                            location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
+                            // location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
                         },
                         error: function(){
                             console.log('error')
