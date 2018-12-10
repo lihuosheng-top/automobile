@@ -218,7 +218,9 @@ class Apppay extends Controller
         //交易状态
         $trade_status = input('trade_status');
         if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
-            $data['status'] = 2;
+            $data['status'] = 2;//状态值
+            $data['trade_no'] = $trade_no;//支付宝交易号
+
             $condition['parts_order_number'] = $out_trade_no;
             $select_data = Db::name('order_parts')->where($condition)->select();
             foreach ($select_data as $key => $val) {
