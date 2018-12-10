@@ -785,7 +785,19 @@ class OrderParts extends Controller{
         if($request->isPost()){
            $part_goods_info = Session::get("part_goods_info");
            if(!empty($part_goods_info)){
-               return ajax_success("数据返回成功",$part_goods_info);
+               $goods_id = $part_goods_info["goods_id"];
+               $goods = db("goods")->where("id",$goods_id)->select();
+               foreach ($goods as $key=>$value){
+                   $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
+                   $goods_standard_value = explode(",",$value["goods_standard_value"]);
+                   $goods[$key]["goods_standard_value"] = array_chunk($goods_standard_value,"8");
+                   $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
+                   $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
+               }
+               if(!empty($goods)){
+                   $part_goods_info['goods'] =$goods;
+                   return ajax_success("数据返回成功",$part_goods_info);
+               }
            }else{
                return ajax_success("没有数据",["status"=>0]);
            }
