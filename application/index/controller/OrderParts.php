@@ -730,6 +730,7 @@ class OrderParts extends Controller{
                             'status' => 1,
                             'goods_id' => $commodity_id,
                             'store_id' => $data['store_id'],
+                            'store_name' => $store_name['store_name'],
                             'goods_standard'=>$data["goods_standard"], //商品规格
                             'parts_order_number' => $parts_order_number,//时间+4位随机数+用户id构成订单号
                         ];
