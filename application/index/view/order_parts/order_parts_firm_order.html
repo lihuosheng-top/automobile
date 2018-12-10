@@ -460,7 +460,7 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-        // 支付
+        // 支付弹窗
         $('#order-buy').click(function(){
             $('.mask').show();
             $('.alipay-pop').animate({'bottom': '0'});
@@ -497,7 +497,7 @@
             id = url.substr(1).split('&&')[0].split('=')[1];
             preId = url.substr(1).split('&&')[1].split('=')[1];
         }
-
+        // 返回商品详情
         $('.place-order-back').click(function(){
             location.href = 'goods_detail?id=' + id + '&&preid=' + preId;
         })
