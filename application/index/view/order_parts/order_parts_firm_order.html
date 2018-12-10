@@ -327,6 +327,7 @@
             height: 100%;
             border: 0;
             text-align: right;
+            width: 4.5rem;
         }
         .alipay-pop .alipay-submit{
             position: absolute;
@@ -562,16 +563,17 @@
                         dataType: 'JSON',
                         data: {
                             'goods_id': goodsId,
-                            'shop_id': shopId,
+                            'store_id': shopId,
                             'order_amount': orderAmount,
                             'order_quantity': quantity,
                             'goods_standard': goods_standard
                         },
                         success: function(res){
                             console.log(res);
-                            $('#WIDout_trade_no').val(res.data);
-                            $('#WIDtotal_amount').val(orderAmount);
-                            $('')
+                            $('#WIDout_trade_no').val(res.data.parts_order_number);
+                            $('#WIDtotal_amount').val(res.data.order_real_pay);
+                            $('#WIDsubject').val(res.data.parts_goods_name);
+                            $('#WIDbody').val(res.data.parts_goods_name);
                         },
                         error: function(){
                             console.log('error');
