@@ -549,21 +549,22 @@
 
                 // 支付弹窗
                 var goodsId = res.data.goods[0].id;
-                var shopId = res.data.goods[0].goods_brand.id;
-                var orderAmount = $('.total-money').text().split('￥')[1];
-                var quantity = $('.total-num').text();
-                var goods_standard = $('.standard').text();
+                var storeId = res.data.goods[0].store_id;
                 $('#order-buy').click(function(){
                     $('.mask').show();
                     $('.alipay-pop').animate({'bottom': '0'});
                     $('html').css('overflow', 'hidden');
+                    
+                    var orderAmount = $('.total-money').text().split('￥')[1];
+                    var quantity = $('.total-num').text();
+                    var goods_standard = $('.standard').text();
                     $.ajax({
                         url: 'ios_api_order_parts_button',
                         type: 'POST',
                         dataType: 'JSON',
                         data: {
                             'goods_id': goodsId,
-                            'store_id': shopId,
+                            'store_id': storeId,
                             'order_amount': orderAmount,
                             'order_quantity': quantity,
                             'goods_standard': goods_standard
@@ -571,7 +572,7 @@
                         success: function(res){
                             console.log(res);
                             $('#WIDout_trade_no').val(res.data.parts_order_number);
-                            $('#WIDtotal_amount').val(res.data.order_real_pay);
+                            $('#WIDtotal_amount').val($('.total-money').text().split('￥')[1]);
                             $('#WIDsubject').val(res.data.parts_goods_name);
                             $('#WIDbody').val(res.data.parts_goods_name);
                         },
