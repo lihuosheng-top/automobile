@@ -597,7 +597,7 @@ map.plugin([
         $('.curr_city').text(e.addressComponent.district);
     };
     function onError(e){
-        alert('错误' + e);
+        console.log('错误' + JSON.stringify(e));
     };
 })
 
