@@ -563,9 +563,8 @@ var map = new AMap.Map('container', {
     center: [114.07, 22.62]
 });
 map.plugin([
-    'AMap.CitySearch',
-    'AMap.Geolocation',
     // 'AMap.CitySearch',
+    'AMap.Geolocation',
 ], function () {
     // 城市获取服务，获取用户所在城市信息或根据给定IP参数查询城市信息
     // var citySearch = new AMap.CitySearch()
@@ -584,19 +583,21 @@ map.plugin([
         buttonPosition: 'RB',
         buttonOffset: new AMap.Pixel(10, 20),
         zoomToAccuracy: true,
-        useNative: true
+        useNative: true,
+        noIpLocate: 1,
+        // noGeoLocation: 1,
     })
     map.addControl(geolocation);
     geolocation.getCurrentPosition();
     AMap.event.addListener(geolocation, 'complete', onComplete);
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
-        console.log(e);
+        alert('成功：' + e)
         $('.gec-curr-txt').text(e.addressComponent.city);
         $('.curr_city').text(e.addressComponent.district);
     };
     function onError(e){
-        // console.log(e);
+        alert('错误' + e);
     };
 })
 
