@@ -697,7 +697,7 @@ class OrderParts extends Controller{
             }
             $is_address_status = Db::name('user_address')->where('user_id', $user_id)->where('status',1)->find();
             if (empty($is_address_status) ) {
-                return ajax_error('请选择收货地址',['status'=>0]);
+                return ajax_error('请选择收货地址',['status'=>2]);
             }
             $commodity_id = $_POST['goods_id'];
             if (!empty($commodity_id)) {
@@ -706,7 +706,6 @@ class OrderParts extends Controller{
                 if (!empty($data)) {
                     $harvest_address_city =str_replace(',','',$is_address_status['address_name']);
                     $harvest_address =$harvest_address_city.$is_address_status['harvester_real_address']; //收货人地址
-
                     $time=date("Y-m-d",time());
                     $v=explode('-',$time);
                     $time_second=date("H:i:s",time());
@@ -730,7 +729,6 @@ class OrderParts extends Controller{
                     $res = Db::name('order')->insertGetId($datas);
                     if ($res) {
                         return ajax_success('下单成功', $datas['parts_order_number']);
-
                     }else{
                         return ajax_error('失败',['status'=>0]);
                     }
@@ -754,16 +752,23 @@ class OrderParts extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:立即购买存储一个id，方便确定订单提交
+     * Notes:立即购买存储数据，方便确定订单提交
      **************************************
      * @param Request $request
      */
     public function get_goods_id_save(Request $request){
         if($request->isPost()){
-            $goods_info =$request->only('goods_info')['goods_info'];
+            $goods_id =$request->only('goods_id')['goods_id'];//商品id
+            $goods_number=$request->only('goods_number')['goods_number'];//数量
+            $goods_standard=$request->only('goods_standard')['goods_standard'];//规格
             if(!empty($goods_id)){
-                Session::set('part_goods_info',$goods_info);
-                return ajax_success('保存商品id成功',$goods_info);
+                $data =[
+                    "goods_id"=>$goods_id,
+                    "goods_number"=>$goods_number,
+                    "goods_standard"=>$goods_standard
+                ];
+                Session::set('part_goods_info',$data);
+                return ajax_success('保存商品id成功',$data);
             }else{
                 return ajax_error('保存商品失败',['status'=>0]);
             }
