@@ -756,8 +756,6 @@ class OrderParts extends Controller{
                     }
                 }
             }
-
-
         }
     }
 
