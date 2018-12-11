@@ -21,8 +21,6 @@ Route::group("",[
     "/$"=>"index/index/home",
     "index"=>"index/index/index",
 
-    "indexs"=>"index/Indexs/index",
-
 
 
     /*我的爱车*/
@@ -138,10 +136,7 @@ Route::group("",[
 
 
 
-    /**
-     * 店铺
-     * 陈绪
-     */
+    /*TODO：店铺开始*/
     "store_index"=>"index/Store/index",             //店铺首页
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
@@ -151,6 +146,10 @@ Route::group("",[
     "store_update"=>"index/Store/update",           //店铺编辑更新(也是第二页完善店铺信息)
     "url_img_del"=>"index/Store/url_img_del",           //店铺编辑更新(也是第二页信息多图的删除)
     "return_store_information"=>"index/Store/return_store_information",    //店铺信息
+    /*TODO:店铺结束*/
+    /*TODO：我要推广开始*/
+    "spread_index"=>"index/Extension/spread_index",//我要推广
+    /*TODO：我要推广结束*/
 
 
 
@@ -217,10 +216,11 @@ Route::group("",[
     "ios_api_order_service_no_pay_cancel"=>"index/OrderService/ios_api_order_service_no_pay_cancel",//买家未付款取消订单接口(ajax)
     "ios_api_order_service_already_served"=>"index/OrderService/ios_api_order_service_already_served",//买家服务商订单买家确认服务（ajax）
 
-
-
     /*TODO:服务商订单状态结束*/
 
+    /*TODO:前端积分开始*/
+    "return_integral_information"=>"index/Integral/return_integral_information", //消费满3元可使用3积分，3积分抵3元（ 返回给前端显示）
+    /*TODO:前端积分结束*/
 
 
     
