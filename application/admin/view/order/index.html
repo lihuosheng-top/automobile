@@ -729,12 +729,14 @@ body {
             var static_select=$("#static_select  option:selected").val();
                  $.ajax({
                 type: "POST",
-                url: "{:url('abc')}",
+                url: "{:url('admin/Order/order_update_status')}",
                 async: false,
                 data: {
                     "id": id,
-                    "note_tip":note_tip,
-                    "static_select":static_select
+                    "sell_message":note_tip,
+                    "status":static_select,
+                    "pay_type_content":"",
+                    "refund_amount": "",
                 },
                 success: function(data) {
                 	console.log(data)
