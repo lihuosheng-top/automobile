@@ -340,7 +340,17 @@
     </script>
     <!-- 积分抵扣 -->
     <script>
-        
+        $.ajax({
+            url: 'return_integral_information',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
         $('.icon_back').click(function(){
             $('.discount_pop').hide();
             $('.place-order-pop').show();
