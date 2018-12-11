@@ -42,7 +42,7 @@
         .sundry-cal .sundry-increase{flex: 1;font-size: .22rem;color: #ccc;text-align: center;line-height: .4rem;}
         .sundry-cal .sundry-cal-val{font-size: .24rem;color: #666;width: .65rem;text-align: center;border-left: 1px solid #dcdcdc;border-right: 1px solid #dcdcdc;outline: none;}
         .sundry-li-last{text-align: right;width: 100%;font-size: .28rem;}
-        .sundry-li-last span{color: #f00;}
+        .sundry-li-last span, .icon-money{color: #f00;}
         .sundry .sundry-li .discount,
         .sundry .sundry-li .invoice{padding-right: .3rem;}
         .sundry .sundry-li .leave-msg{flex: 1;height: 100%;padding-left: .3rem;font-size: .3rem;outline: none;}
@@ -72,9 +72,10 @@
         .discount_wrap{width: 94%;margin: 0 auto;}        
         .discount_wrap .default{display: flex;align-items: center;justify-content: space-between;border: 1px solid #e7e8e9;border-radius: .1rem;padding: .2rem;margin-bottom: .2rem;text-align: center;background-color: #fff;}
         .discount_wrap .default .dont{flex: 1;text-align: left;}
-        .discount_wrap .dis{display: flex;align-items: center;justify-content: space-between;border: 1px solid #e7e8e9;border-radius: .1rem;padding: .2rem;margin-bottom: .2rem;text-align: center;font-size: 0;color: #f00;background-color: #fff;}
-        .discount_wrap .dis p{font-size: .42rem;}
-        .discount_wrap .dis span{font-size: .24rem;}
+        .discount_wrap .dis{display: flex;align-items: center;justify-content: space-between;border: 1px solid #e7e8e9;border-radius: .1rem;padding: .2rem;margin-bottom: .2rem;text-align: center;font-size: 0;color: #f00;background-color: #fff; line-height: normal;}
+        .discount_wrap .dis .dis-introduce{font-size: .42rem; color: #333;}
+        .discount_wrap .dis .need-integ{font-size: .24rem; color: #333;}
+        .discount_wrap .dis .deduction-money{font-size: .42rem;}
     </style>
 </head>
 <body>
@@ -128,7 +129,7 @@
                     </li>
                     <li class="sundry-li deduction">
                         <p class="sundry-title">积分抵扣</p>
-                        <span class="discount">-￥2</span>
+                        <span class="discount">不使用积分</span>
                         <a href="javascript:;" class="spr icon-more"></a>
                     </li>
                     <li class="sundry-li">
@@ -141,7 +142,7 @@
                         <input type="text" placeholder="请填写内容(选填)" class="leave-msg">
                     </li>
                     <li class="sundry-li">
-                        <p class="sundry-li-last">共计<span class="total-num"></span>件商品 合计：<span class="total-money"></span></p>
+                        <p class="sundry-li-last">共计<span class="total-num"></span>件商品 合计：<span class="icon-money">￥</span><span class="total-money"></span></p>
                     </li>
                 </ul>
             </div>
@@ -190,24 +191,21 @@
                 <label class="dont" for="dont">不使用积分</label>
                 <input type="radio" id="dont" name="disc" checked>
             </div>
-            <div class="dis">
-                <div class="denomination">
-                    <p>￥2</p>
-                    <span>需20积分</span>
-                </div>
-                <label class="twent" for="twent">
-                    <p>消费满30元可用</p>
-                    <!-- <span>仅限预约服务可用</span> -->
-                </label>
-                <input type="radio" id="twent" name="disc">
-            </div>
         </div>
     </div>
     
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-        
+        var finalMoney;
+        // 解决计算精度问题
+        function toFixed(num, s) {
+            var times = Math.pow(10, s)
+            var des = num * times + 0.5
+            des = parseInt(des, 10) / times
+            return des + ''
+        }
+
         // 获取url地址id
         var url = location.search;
         var id, preId;
@@ -259,10 +257,13 @@
                     // 价格
                     $('.unit-price-p').text('￥' + val.goods_adjusted_money);
                     // 总价
-                    $('.total-money').text('￥' + (res.data.goods_number*val.goods_adjusted_money));
+                    $('.total-money').text(toFixed(res.data.goods_number*val.goods_adjusted_money, 2));
+
                 })
                 // 总数量
                 $('.total-num').text(res.data.goods_number);
+
+                finalMoney = parseFloat($('.total-money').text());
 
                 // 购买数量按钮
                 $(function(){
@@ -273,7 +274,20 @@
                             calculator_val.value -= 1;
                             $('.quantity-p').text(calculator_val.value);
                             $('.total-num').text(calculator_val.value);
-                            $('.total-money').text('￥' + (calculator_val.value*res.data.goods[0].goods_adjusted_money))
+                            // 数量*单价
+                            var minusP = toFixed(calculator_val.value*res.data.goods[0].goods_adjusted_money, 2)
+                            console.log(minusP)
+                            // 用户选择抵扣金额后  增加购买数量
+                            if($('.discount').text() != '不使用积分'){
+                                // 保存用户选择的抵扣金额
+                                var choseD = $('.discount').text().split('￥')[1];
+                                $('.total-money').text(toFixed(minusP-choseD, 2));
+                            }else{
+                                $('.total-money').text(minusP);
+                            }
+                            // 保存没有抵扣的金额
+                            finalMoney = parseFloat(minusP);
+                            // console.log('未抵扣钱：' + finalMoney)
                         }else{
                             calculator_val.value = 1;
                         }
@@ -285,7 +299,21 @@
                         calculator_val.value = add;
                         $('.quantity-p').text(calculator_val.value);
                         $('.total-num').text(calculator_val.value);
-                        $('.total-money').text('￥' + (calculator_val.value*res.data.goods[0].goods_adjusted_money))
+                        // 数量*单价
+                        var increaseP = toFixed(calculator_val.value*res.data.goods[0].goods_adjusted_money, 2)
+                        // 用户选择抵扣金额后  增加购买数量
+                        if($('.discount').text() != '不使用积分'){
+                            // 保存用户选择的抵扣金额
+                            var choseD = $('.discount').text().split('￥')[1];
+                            console.log(choseD)
+                            $('.total-money').text(toFixed(increaseP-choseD, 2));
+                        }else{
+                            $('.total-money').text(increaseP);
+                        }
+
+                        // 保存没有抵扣的金额
+                        finalMoney = parseFloat(increaseP);
+                        // console.log('未抵扣钱：' + finalMoney)
                     })
                 })
 
@@ -297,7 +325,7 @@
                     $('.alipay-pop').animate({'bottom': '0'});
                     $('html').css('overflow', 'hidden');
                     
-                    var orderAmount = $('.total-money').text().split('￥')[1];
+                    var orderAmount = $('.total-money').text();
                     var quantity = $('.total-num').text();
                     var goods_standard = $('.standard').text();
                     var buy_message = $('.leave-msg').val();
@@ -311,12 +339,13 @@
                             'order_amount': orderAmount,
                             'order_quantity': quantity,
                             'goods_standard': goods_standard,
-                            'buy_message': buy_message
+                            'buy_message': buy_message,
+
                         },
                         success: function(res){
                             console.log(res);
                             $('#WIDout_trade_no').val(res.data.parts_order_number);
-                            $('#WIDtotal_amount').val($('.total-money').text().split('￥')[1]);
+                            $('#WIDtotal_amount').val($('.total-money').text());
                             $('#WIDsubject').val(res.data.parts_goods_name);
                             $('#WIDbody').val(res.data.parts_goods_name);
                         },
@@ -326,9 +355,18 @@
                     })
                 })
                 $('.close-alipay').click(function(){
-                    $('.mask').hide();
-                    $('.alipay-pop').animate({'bottom': '-100%'});
-                    $('html').css('overflow', 'auto');
+                    
+                    layer.open({
+                        content: res.info,
+                        btn: ['确定', '取消'],
+                        yes: function (index) {
+                            layer.close(index);
+                            location.href = 'order_parts_detail';
+                            $('.mask').hide();
+                            $('.alipay-pop').animate({'bottom': '-100%'});
+                            $('html').css('overflow', 'auto');
+                        }
+                    });
                 })
             },
             error: function(){
@@ -340,12 +378,65 @@
     </script>
     <!-- 积分抵扣 -->
     <script>
+        
         $.ajax({
             url: 'return_integral_information',
             type: 'POST',
             dataType: 'JSON',
             success: function(res){
                 console.log(res);
+                var str = '';
+                $.each(res.data, function(idx, val){
+                    str += `<div class="dis">
+                                <div class="denomination">
+                                    <p class="deduction-money">￥`+val.deductible_money+`</p>
+                                    <span class="need-integ">需`+val.integral_full+`积分</span>
+                                </div>
+                                <label class="twent" for="twent-`+val.setting_id+`" id="`+val.consumption_full+`">
+                                    <p class="dis-introduce">消费满`+val.consumption_full+`元可用</p>
+                                </label>
+                                <input type="radio" id="twent-`+val.setting_id+`" name="disc">
+                            </div>`
+                })
+                $('.discount_wrap').append(str);
+
+                $('.dis').click(function(e){
+                    e.preventDefault();
+                    var index = $(this).index() -1;
+                    var consumptionFul = $(this).find('label')[0].id;
+                    if(finalMoney >= consumptionFul){
+                        var cut = $(this).find('.deduction-money').text().split('￥')[1];
+                        $(this).find('input').attr('checked', 'checked');
+                        $('.discount').text('-￥' + cut);
+                        $('.discount_pop').hide();
+                        $('.place-order-pop').show();
+                        $(this).siblings().find('input').removeAttr('checked');
+                        $(this).find('input').prop('checked', 'checked');
+
+                        // 抵扣后的总价格
+                        $('.total-money').text(toFixed(finalMoney - cut, 2));
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: '未达到使用条件',
+                            time: 1
+                        })
+                    }
+                })
+                $('.default').click(function(e){
+                    e.preventDefault();
+                    // 隐藏弹窗
+                    $('.discount_pop').hide();
+                    $('.place-order-pop').show();
+                    // 显示 不适用积分
+                    $(this).siblings().find('input').removeAttr('checked');
+                    var dont = $(this).find('label').text();
+                    $(this).find('input').prop('checked', 'checked');
+                    $('.discount').text(dont);
+                    // 不适用积分 重新计算价格
+                    $('.total-money').text(toFixed(finalMoney, 2));
+                })
+
             },
             error: function(){
                 console.log('error');
