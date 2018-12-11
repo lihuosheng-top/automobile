@@ -21,8 +21,6 @@ Route::group("",[
     "/$"=>"index/index/home",
     "index"=>"index/index/index",
 
-    "indexs"=>"index/Indexs/index",
-
 
 
     /*我的爱车*/
@@ -50,17 +48,17 @@ Route::group("",[
     "ios_api_order_service_button"=>"index/OrderService/ios_api_order_service_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
-    'index_aliPay'=>"index/Apppay/index_aliPay",
-    'index_pay_code'=>"index/Apppay/index_pay_code",
+    'index_aliPay'=>"index/Apppay/index_aliPay", //服务商提交支付（付款）（弹窗支付）
+    'index_pay_code'=>"index/Apppay/index_pay_code", //状态修改(回调地址修改状态)
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/
-//    "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
+    "parts_notifyurl"=>"index/Apppay/parts_notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
-//    "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
-//    "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
-//    'index_aliPay'=>"index/Apppay/index_aliPay",
-//    'index_pay_code'=>"index/Apppay/index_pay_code",
+//    "ios_api_alipay"=>"index/OrderParts/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
+   "ios_return_parts_num"=>"index/OrderParts/ios_return_parts_num",//生成订单(未用)
+    'index_parts_aliPay'=>"index/Apppay/index_parts_aliPay", //配件商支付接口（弹窗支付）
+    'index_parts_pay_code'=>"index/Apppay/index_parts_pay_code",//配件商支付回调修改订单状态
     /*TODO:配件商订单结束*/
 
     /*TODO：登录开始*/
@@ -138,10 +136,7 @@ Route::group("",[
 
 
 
-    /**
-     * 店铺
-     * 陈绪
-     */
+    /*TODO：店铺开始*/
     "store_index"=>"index/Store/index",             //店铺首页
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
@@ -151,6 +146,10 @@ Route::group("",[
     "store_update"=>"index/Store/update",           //店铺编辑更新(也是第二页完善店铺信息)
     "url_img_del"=>"index/Store/url_img_del",           //店铺编辑更新(也是第二页信息多图的删除)
     "return_store_information"=>"index/Store/return_store_information",    //店铺信息
+    /*TODO:店铺结束*/
+    /*TODO：我要推广开始*/
+    "spread_index"=>"index/Extension/spread_index",//我要推广
+    /*TODO：我要推广结束*/
 
 
 
@@ -217,10 +216,11 @@ Route::group("",[
     "ios_api_order_service_no_pay_cancel"=>"index/OrderService/ios_api_order_service_no_pay_cancel",//买家未付款取消订单接口(ajax)
     "ios_api_order_service_already_served"=>"index/OrderService/ios_api_order_service_already_served",//买家服务商订单买家确认服务（ajax）
 
-
-
     /*TODO:服务商订单状态结束*/
 
+    /*TODO:前端积分开始*/
+    "return_integral_information"=>"index/Integral/return_integral_information", //消费满3元可使用3积分，3积分抵3元（ 返回给前端显示）
+    /*TODO:前端积分结束*/
 
 
     
@@ -409,6 +409,7 @@ Route::group("admin",[
     /*订单管理：TODO:配件商订单开始*/
     "order_index"=>"admin/Order/index", //配件商订单列表
     "order_processing"=>"admin/Order/order_processing", //配件商订单列表弹窗接口（ajax）
+    "order_update_status"=>"admin/Order/order_update_status", //配件商订单列表弹窗修改状态值（ajax）
     "order_search"=>"admin/Order/search", //配件商订单列表模糊搜索
     "order_dels"=>"admin/Order/dels", //配件商订单列表批量删除
     "order_edit"=>"admin/Order/edit", //*********配件商订单设置（未做）
