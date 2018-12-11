@@ -266,6 +266,15 @@ $('.select-buy').click(function(){
                         location.href = 'member_address_add?id=271&&preid=10';
                     }
                 });
+            }else if(res.status == 2){
+                layer.open({
+                    content: res.info,
+                    btn: ['确定', '取消'],
+                    yes: function (index) {
+                        layer.close(index);
+                        location.href = 'login';
+                    }
+                });
             }else{
                 if($('.select-goods-spec').text() !== '选择规格'){
                     var goods_id = $($this)[0].id;
