@@ -198,6 +198,7 @@
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
         var finalMoney;
+        var deductionId = '';
         // 解决计算精度问题
         function toFixed(num, s) {
             var times = Math.pow(10, s)
@@ -340,7 +341,7 @@
                             'order_quantity': quantity,
                             'goods_standard': goods_standard,
                             'buy_message': buy_message,
-
+                            'setting_id': deductionId
                         },
                         success: function(res){
                             console.log(res);
@@ -415,6 +416,9 @@
 
                         // 抵扣后的总价格
                         $('.total-money').text(toFixed(finalMoney - cut, 2));
+                        // 存储积分券id
+                        deductionId = $(this).find('input')[0].id.split('-')[1];
+                        console.log(deductionId)
                     }else{
                         layer.open({
                             skin: 'msg',
