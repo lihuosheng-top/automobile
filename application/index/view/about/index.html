@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>关于我们</title>
+    <style>
+        .wrapper{height: 100vh; background-color: #fff; display: flex; flex-direction: column;}
+        .title{width: 100%; height: .88rem;background-color: #fff; position: relative; border-bottom: 1px solid #e1e1e1;}
+        .title .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .title .title-txt{font-size: .36rem; width: 100%; height: .88rem; text-align: center; color: #333; line-height: .88rem; font-weight: normal;}
+        
+    </style>
 </head>
 <body>
-about we
+    <div class="wrapper">
+        <header class="title">
+            <a href="my_index" class="spr icon-back"></a>
+            <h3 class="title-txt">关于我们</h3>
+        </header>
+    </div>  
+    
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
 </body>
 </html>
