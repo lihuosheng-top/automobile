@@ -136,13 +136,16 @@ body {
             margin-top: 10px;
         }
         .btu-sumit {
-            float: right;
-            color: #fff;
-            background: #0099FF;
-            border-radius: 10px;
-            width: 100px;
-            height: 40px;
-            margin-right: 24px;
+            position: absolute;
+		    bottom: 25px;
+		    right: 0;
+		    /* float: right; */
+		    color: #fff;
+		    background: #0099FF;
+		    border-radius: 10px;
+		    width: 100px;
+		    height: 40px;
+		    margin-right: 24px;
         }
         .active {
             background: #F2F2F2;
@@ -232,7 +235,7 @@ body {
                 <div class="close"><img src="__STATIC__/admin/common/img/a7.png"></div>
             </div>
             <!-- 里面的内容 -->
-
+             <button type="button" class="btu-sumit" data-id="">确定</button>
             <div class="dom">
                 <ul class="clear card">
                     <li class="active" data-id="list-a">订单处理</li>
@@ -268,7 +271,7 @@ body {
                     </div>
                     <div class="reply">
                         <span>官方回复</span>
-                        <span><input type="text" name="" id="" value="" placeholder="请输入处理备注" style="width: 400px; height: 30px;"/></span>
+                        <span><input type="text" name="" value="" placeholder="请输入处理备注" style="width: 400px; height: 30px;" id="note_tip" /></span>
                         <div class="reply-content">
                             <span>0180811 15：27：23</span>
                             <span>官方备注已用户要求高可顺非邮寄</span>
@@ -277,7 +280,7 @@ body {
                     <div class="opation clear">
                         <div class="select-operation">
                             <span>选择状态</span>
-                            <select>
+                            <select id="static_select">
 								<option value="">请选择</option>
 								<option value="3">待付款</option>
 								<option value="1">待付款</option>
@@ -297,7 +300,7 @@ body {
                             <span>退款金额</span>
                             <input type="text" name="" id="" value="" />
                         </div>
-                        <button type="button" class="btu-sumit">确定</button>
+                        
                     </div>
                 </div>
                 <div class="list-b list noshow">
@@ -666,8 +669,16 @@ body {
         }
     </script>
     <script type="text/javascript">
+//  	 $(".btu-sumit").click(function(){
+//      	alert(111);
+//      	var note_tip=$("#note_tip").val();
+//          var static_select=$("#static_select  option:selected").val();
+//          console.log(note_tip); 
+//          console.log(static_select);
+//      });
         $(".state").on('click', function() {
             var id = $(this).parent("td").data(id).id;
+            $(".btu-sumit").data('id',id);
             $.ajax({
                 type: "POST",
                 url: "{:url('admin/Order/order_processing')}",
@@ -676,7 +687,6 @@ body {
                     "id": id,
                 },
                 success: function(data) {
-                	
                     $(".tanchuang").removeClass("noshow");
                     data = eval("(" + data + ")");
                     console.log(data);
@@ -688,7 +698,6 @@ body {
                             amount: data.data.goods_money,
                             points_Deduction: data.data.goods_money,
                             real_Pay: data.data.goods_money,
-
                         }
                     })
 
@@ -699,6 +708,7 @@ body {
             });
 
         });
+    
 
         // 弹窗选项卡切换
         $(".card").on('click', 'li', function() {
@@ -707,17 +717,35 @@ body {
             var dait_id = $(this).data("id");
             $("." + dait_id).removeClass("noshow");
             $("." + dait_id).siblings("div").addClass("noshow");
-
         });
         $(".close").on('click', function() {
+        	
             $(".tanchuang").addClass("noshow");
         });
-        $(".btu-sumit").click(function() {
-            $(".tanchuang").addClass("noshow");
+        $(".btu-sumit").on('click', function() {
+        	$(".tanchuang").addClass("noshow");
+        	var id=$(this).data("id");
+        	var note_tip=$("#note_tip").val();
+            var static_select=$("#static_select  option:selected").val();
+                 $.ajax({
+                type: "POST",
+                url: "{:url('abc')}",
+                async: false,
+                data: {
+                    "id": id,
+                    "note_tip":note_tip,
+                    "static_select":static_select
+                },
+                success: function(data) {
+                	console.log(data)
+                },
+                error: function(data) {
+                    console.log("失败");
+                }
+            });
+          
         });
-    </script>
-    <script type="text/javascript">
-    </script>
+   </script>
     {/block}
 
 </body>
