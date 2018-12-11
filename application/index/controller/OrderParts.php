@@ -748,6 +748,21 @@ class OrderParts extends Controller{
                         ];
                         $res = Db::name('order_parts')->insertGetId($datas);
                         if ($res) {
+                            if(!empty($setting_id)){
+                                //积分消费记录
+                                $setting_data =Db::name("integral_discount_settings")->where("setting_id",$data["setting_id"])->find();
+                                $user_integral_wallet =$user_information["user_integral_wallet"]; //之前的积分余额
+                                $user_integral_wallets =$user_integral_wallet - $setting_data["integral_full"];//减了之后的积分
+                                $integral_data =[
+                                    "user_id"=>$user_id,//用户ID
+                                    "integral_operation"=>$setting_data['integral_full'],//积分操作
+                                    "integral_balance"=>$user_integral_wallets,//积分余额
+                                    "integral_type"=>-1,//积分类型
+                                    "operation_time"=>$create_time ,//操作时间
+                                    "integral_remarks"=>"下单使用积分".$setting_data['integral_full']."抵扣".$setting_data["deductible_money"]."钱",//积分备注
+                                ];
+                                    Db::name("integral")->insert($integral_data); //插入积分消费记录
+                            }
                             $order_datas =Db::name("order_parts")->field("order_real_pay,parts_goods_name,parts_order_number")->where('id',$res)->where("user_id",$user_id)->find();
                             return ajax_success('下单成功',$order_datas);
                         }else{
