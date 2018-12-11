@@ -1,10 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>我要推广</title>
+    <style>
+        .wrapper{height: 100vh; background-color: #fff; display: flex; flex-direction: column;}
+        .title{width: 100%; height: .88rem;background-color: #fff; position: relative; border-bottom: 1px solid #e1e1e1;}
+        .title .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .title .title-txt{font-size: .36rem; width: 100%; height: .88rem; text-align: center; color: #333; line-height: .88rem; font-weight: normal;}
+        .cont{flex: 1;width: 100%; background: url(__STATIC__/index/image/tgbg.png) no-repeat; background-size: 100% 100%;}
+        .code-box{width: 2.68rem; height: 2.68rem; margin: 2.7rem auto 0;}
+        .code-box img{width: 100%; height: 100%;}
+        .invite-code{text-align: center; color: #0e2e84; margin-top: .9rem; font-size: .28rem;}
+        .invite-btn{display: block; width: 4.3rem; height: .7rem; color: #fff; background-color: #3868e8; margin: 1.5rem auto 0; border: 0; border-radius: .1rem; outline: none;}
+        .share-box{position: fixed; bottom: -100%; left: 0; right: 0; background-color: #fff; width: 100%; height: 35vh;}
+        .share-title{text-align: center; font-size: .3rem; color: #666666; margin: .2rem 0 .8rem; font-weight: normal;}
+        .share-ul{display: flex; align-items: center; justify-content: space-evenly;}
+        .icon-moments{display: block; width: 1.12rem; height: 1.12rem; background-position: -4.4rem -2.65rem;}
+        .icon-wechat{display: block; width: 1.12rem; height: 1.12rem; background-position: -5.6rem -2.65rem;}
+        .icon-qq{display: block; width: 1.12rem; height: 1.12rem; background-position: -6.85rem -2.65rem;}
+        .share-item p{text-align: center; color: #999; font-size: .28rem;}
+        .cancel-share{position: absolute; bottom: 0; left: 0; right: 0; width: 100%; height: .9rem; color: #fff; outline: none; border: 0; background-color: #504cfb; font-size: .32rem;}
+        .mask{position: absolute; top: 0;left: 0; right: 0; background-color: rgba(0, 0, 0, .5); width: 100%; height: 100vh;}
+    </style>
 </head>
 <body>
-tuiguang
+    <div class="wrapper">
+        <header class="title">
+            <a href="my_index" class="spr icon-back"></a>
+            <h3 class="title-txt">我要推广</h3>
+        </header>
+        <div class="cont">
+            <div class="code-box">
+                <img src="__STATIC__/index/image/code.png">
+            </div>
+            <p class="invite-code">邀请码：900850</p>
+            <button class="invite-btn">立即邀请</button>
+        </div>
+    </div>  
+    <div class="mask" style="display: none;"></div>
+    <div class="share-box">
+        <h4 class="share-title">分享</h4>
+        <ul class="share-ul">
+            <li class="share-item">
+                <i class="spr icon-moments"></i>
+                <p>朋友圈</p>
+            </li>
+            <li class="share-item">
+                <i class="spr icon-wechat"></i>
+                <p>微信</p>
+            </li>
+            <li class="share-item">
+                <i class="spr icon-qq"></i>
+                <p>QQ</p>
+            </li>
+        </ul>
+        <button class="cancel-share">取消</button>
+    </div>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        // 立即邀请
+        $('.invite-btn').click(function(){
+            $('.mask').show();
+            $('.share-box').animate({'bottom': '0'});
+        })
+        // 取消分享
+        $('.cancel-share').click(function(){
+            $('.mask').hide();
+            $('.share-box').animate({'bottom': '-100%'});
+        })
+    </script>
 </body>
 </html>
