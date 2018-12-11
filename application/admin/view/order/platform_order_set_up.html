@@ -54,7 +54,7 @@
 	{block name="content"}
 	{if !empty($data)}
 	<form action="{:url('admin/Install/order_setting_update')}" method="post">
-		<div>
+		<div style="display: none">
 			<span class="title">秒杀订单超过：</span>
 			<span style="display: inline-block;height: 40px; line-height: 40px; border-color:#E4E4E4;">
 			<input type="text" name="spike" id="" value="{$data.spike_time}" />
