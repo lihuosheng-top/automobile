@@ -33,11 +33,11 @@ class Integral extends Controller{
                 exit(json_encode(array("status"=>2,"info"=>"请登录")));
             }
             $integral_wallet_data =Db::name("user")->where("id",$user_id)->field("user_integral_wallet,user_wallet")->find();
-            $data =Db::name("integral_discount_settings")->where("integral_can_be_used","<=",$integral_wallet_data["user_integral_wallet"])->order("consumption_full","asc")->find();
+            $data =Db::name("integral_discount_settings")->where("integral_can_be_used","<=",$integral_wallet_data["user_integral_wallet"])->order("consumption_full","asc")->select();
             if(!empty($data)){
                 return ajax_success("积分信息返回成功",$data);
             }else{
-                exit(json_encode(array("status"=>0,"info"=>"没有积分设置")));
+                exit(json_encode(array("status"=>0,"info"=>"积分不够")));
             }
         }
     }
