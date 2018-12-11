@@ -707,7 +707,9 @@ class OrderParts extends Controller{
                 $commodity_id = $_POST['goods_id'];
                 if (!empty($commodity_id)) {
                     $goods_data = Db::name('goods')->where('id', $commodity_id)->find();
-                    $create_time = time();
+                    $create_time = time();//下单时间
+                    $normal_time =Db::name("order_parts_setting")->find();//订单设置的时间
+                    $normal_future_time =strtotime("+". $normal_time['normal_time']." minute");
                     if (!empty($data)) {
                         $harvest_address_city =str_replace(',','',$is_address_status['address_name']);
                         $harvest_address =$harvest_address_city.$is_address_status['harvester_real_address']; //收货人地址
@@ -716,6 +718,11 @@ class OrderParts extends Controller{
                         $time_second=date("H:i:s",time());
                         $vs=explode(':',$time_second);
                         $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
+                        if(!empty($data["buy_message"])){
+                            $buy_message =$data["buy_message"];
+                        }else{
+                            $buy_message = NUll ;
+                        }
                         $datas = [
                             'goods_image' => $goods_data['goods_show_images'],//图片
                             'parts_goods_name' => $goods_data['goods_name'],//名字
@@ -736,7 +743,8 @@ class OrderParts extends Controller{
                             'store_name' => $store_name['store_name'],
                             'goods_standard'=>$data["goods_standard"], //商品规格
                             'parts_order_number' => $parts_order_number,//时间+4位随机数+用户id构成订单号
-                            "buy_message"=>$data["buy_message"],//买家留言
+                            "buy_message"=>$buy_message,//买家留言
+                            "normal_future_time"=>$normal_future_time,//未来时间
                         ];
                         $res = Db::name('order_parts')->insertGetId($datas);
                         if ($res) {
@@ -822,9 +830,6 @@ class OrderParts extends Controller{
            }
         }
     }
-
-
-
 
     /**
      **************李火生*******************
