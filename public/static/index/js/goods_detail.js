@@ -82,13 +82,13 @@ $.ajax({
             $('.spec-wrap').on('click', '.select-item', function(){
                 $(this).addClass('select-on');
                 $(this).siblings('.select-item').removeClass('select-on');
-                if($(this).hasClass('btn-item')){
-                    if($(this)[0].innerText === '无需安装'){
-                        $('.select-shop').hide();
-                    }else{
-                        $('.select-shop').show();
-                    }
-                }
+                // if($(this).hasClass('btn-item')){
+                //     if($(this)[0].innerText === '无需安装'){
+                //         $('.select-shop').hide();
+                //     }else{
+                //         $('.select-shop').show();
+                //     }
+                // }
                 var selectSpec = '';
                 $.each($('.select-on'), function(idx, val){
                     selectSpec += $(val).text() + ' ';
