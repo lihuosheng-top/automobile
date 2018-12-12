@@ -72,6 +72,7 @@ class OrderParts extends Controller{
                                     ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->select();
+
                                 $names = Db::name('order_parts')
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
@@ -81,9 +82,14 @@ class OrderParts extends Controller{
                                 $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
-                                $order_undate["all_order_real_pay"][] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$order_undate["info"][0]));
-                                $order_undate["all_numbers"][] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$order_undate["info"][0]));
+                                foreach ($order_undate["info"] as  $kk=>$vv){
+                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
+                                    $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
+                                }
+
                             }
+
+
                         }
                         else{
                             $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
@@ -267,8 +273,10 @@ class OrderParts extends Controller{
                                 $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
-                                $order_undate["all_order_real_pay"][] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$order_undate["info"][0]));
-                                $order_undate["all_numbers"][] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$order_undate["info"][0]));
+                                foreach ($order_undate["info"] as  $kk=>$vv){
+                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
+                                    $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
+                                }
                             }
                         }
                         else{
@@ -454,8 +462,10 @@ class OrderParts extends Controller{
                                 $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
-                                $order_undate["all_order_real_pay"][] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$order_undate["info"][0]));
-                                $order_undate["all_numbers"][] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$order_undate["info"][0]));
+                                foreach ($order_undate["info"] as  $kk=>$vv){
+                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
+                                    $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
+                                }
                             }
                         }
                         else{
@@ -643,8 +653,10 @@ class OrderParts extends Controller{
                                 $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
-                                $order_undate["all_order_real_pay"][] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$order_undate["info"][0]));
-                                $order_undate["all_numbers"][] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$order_undate["info"][0]));
+                                foreach ($order_undate["info"] as  $kk=>$vv){
+                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
+                                    $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
+                                }
                             }
                         }
                         else{
@@ -828,8 +840,10 @@ class OrderParts extends Controller{
                                 $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
-                                $order_undate["all_order_real_pay"][] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$order_undate["info"][0]));
-                                $order_undate["all_numbers"][] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$order_undate["info"][0]));
+                                foreach ($order_undate["info"] as  $kk=>$vv){
+                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
+                                    $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
+                                }
                             }
                         }
                         else{

@@ -845,7 +845,10 @@ class Goods extends Controller{
 
     public function qrcode(){
 
-
+        error_reporting(E_ERROR);
+        include ('../extend/WxpayAPI/example/phpqrcode/phpqrcode.php');
+        $url = urldecode($_GET["url2"]);
+        \QRcode::png($url);
 
     }
 
