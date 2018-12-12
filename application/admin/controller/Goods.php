@@ -818,7 +818,7 @@ class Goods extends Controller{
              * 设置接收微信支付异步通知回调地址
              * @param string $value
              **/
-            $input->SetNotify_url("http://localhost/automobile/public/indexs");
+            $input->SetNotify_url("http://automobile.siring.com.cn/indexs");
             /**
              * 设置取值如下：JSAPI，NATIVE，APP，详细说明见参数规定
              * @param string $value
