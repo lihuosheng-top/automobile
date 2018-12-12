@@ -80,11 +80,13 @@ class OrderParts extends Controller{
                                 $order_undate['store_name'][] = $names['store_name'];
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["all_order_real_pay"][] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$order_undate["info"][0]));
+                                $order_undate["all_numbers"][] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$order_undate["info"][0]));
                             }
                         }
                         else{
                             $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                             $data_infomation["all_order_real_pay"][] =$return_datas["order_real_pay"];
+                            $data_infomation["all_numbers"][] =$return_datas["order_quantity"];
                             $data_infomation['name'][]= $return_datas['store_name'];
                             $data_infomation['status'][] = $return_datas['status'];
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
@@ -127,6 +129,15 @@ class OrderParts extends Controller{
                             $end_info[$i]['all_order_real_pay'] = $j;
                         }
 
+                        foreach ($order_undate['all_numbers'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_all_numbers[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_all_numbers as $i=>$j){
+                            $end_info[$i]['all_numbers'] = $j;
+                        }
+
 
                     }
                     if(!empty($data_infomation)){
@@ -143,6 +154,10 @@ class OrderParts extends Controller{
                         }
                         foreach ($data_infomation['all_order_real_pay'] as $a=>$b){
                             $end_info[$a+$coutn]['all_order_real_pay'] = $b;
+                        }
+
+                        foreach ($data_infomation['all_numbers'] as $a=>$b){
+                            $end_info[$a+$coutn]['all_numbers'] = $b;
                         }
                         foreach ($data_infomation['all'] as $a=>$b){
                             $end_info[$a+$coutn]['info'][] = $b;
