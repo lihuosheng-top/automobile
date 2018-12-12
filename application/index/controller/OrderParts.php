@@ -981,22 +981,52 @@ class OrderParts extends Controller{
      */
     public function ios_api_order_parts_no_pay_cancel(Request $request){
         if($request->isPost()){
-            $order_id =$_POST['order_id'];
-            if(is_array($order_id)){
-                $where ='id in('.implode(',',$order_id).')';
-            }else{
-                $where ='id='.$order_id;
-            }
-            if(!empty($order_id)){
-                $res =Db::name('order_parts')->where($where)->update(['status'=>9]);
-                if($res){
-
-                    return ajax_success('订单取消成功',['status'=>1]);
-                }else{
-                    return ajax_error('订单取消失败',['status'=>0]);
+            $store_id =$request->only('store_id')["store_id"];//店铺id
+            $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//订单编号
+            if(!empty($store_id)&&!empty($parts_order_number)){
+                $res =Db::name("order_parts")
+                    ->where("parts_order_number",$parts_order_number)
+                    ->where("store_id",$store_id)
+                    ->select();
+                if(!empty($res)){
+                    foreach($res as $k=>$v){
+                        $is_use_integral[$k] =Db::name("order_parts")
+                            ->field("integral_discount_setting_id,id")
+                            ->where("id",$v["id"])
+                            ->find();
+                        $data =[
+                            "status"=>9
+                        ];
+//                        $bool =Db::name("order_parts")->where("id",$v["id"])->update($data);
+                    }
+                    halt($is_use_integral);
+                    if($bool){
+                        return ajax_success("取消成功",["status"=>1]);
+                    }else{
+                        return ajax_error("取消失败",["status"=>0]);
+                    }
                 }
+            }else{
+                return ajax_error("所传参数不能为空",["status"=>0]);
             }
         }
+//        if($request->isPost()){
+//            $order_id =$_POST['order_id'];
+//            if(is_array($order_id)){
+//                $where ='id in('.implode(',',$order_id).')';
+//            }else{
+//                $where ='id='.$order_id;
+//            }
+//            if(!empty($order_id)){
+//                $res =Db::name('order_parts')->where($where)->update(['status'=>9]);
+//                if($res){
+//
+//                    return ajax_success('订单取消成功',['status'=>1]);
+//                }else{
+//                    return ajax_error('订单取消失败',['status'=>0]);
+//                }
+//            }
+//        }
     }
 
     /**
