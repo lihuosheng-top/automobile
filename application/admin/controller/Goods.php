@@ -845,7 +845,7 @@ class Goods extends Controller{
 
 
     public function WeiAlpay_code(){
-        
+
     }
 
 
