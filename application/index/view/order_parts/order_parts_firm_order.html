@@ -240,23 +240,7 @@
                 console.log('error');
             }
         })
-        $.ajax({
-            url: 'member_address_edit_information',
-            type: 'POST',
-            dataType: 'JSON',
-            success: function(res){
-                console.log(res);
-                if(res.status == 1){
-                    $('.user-name').text('收货人：' + res.data.harvester);
-                    $('.user-phone').text(res.data.harvester_phone_num);
-                    var addr = res.data.address_name.split(',').join('');
-                    $('.address-txt').text(addr + res.data.harvester_real_address);
-                }
-            },
-            error: function(){
-                console.log('error');
-            }
-        })
+        
 
         
         // 商品详情 传过来的数据
