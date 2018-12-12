@@ -78,7 +78,9 @@ class OrderParts extends Controller{
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
+                                $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
+                                $order_undate["parts_order_number"][] =$names["parts_order_number"];
                                 $order_undate["all_order_real_pay"][] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$order_undate["info"][0]));
                                 $order_undate["all_numbers"][] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$order_undate["info"][0]));
                             }
@@ -88,7 +90,9 @@ class OrderParts extends Controller{
                             $data_infomation["all_order_real_pay"][] =$return_datas["order_real_pay"];
                             $data_infomation["all_numbers"][] =$return_datas["order_quantity"];
                             $data_infomation['name'][]= $return_datas['store_name'];
+                            $data_infomation['store_id'][]= $return_datas['store_id'];
                             $data_infomation['status'][] = $return_datas['status'];
+                            $data_infomation['parts_order_number'][] = $return_datas['parts_order_number'];
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
@@ -102,6 +106,7 @@ class OrderParts extends Controller{
                         foreach ($new_arr as $i=>$j){
                             $end_info[$i]['info'] = $j;
                         }
+
                         foreach ($order_undate['store_name'] as $i => $j) {
                             if(!empty($j)){
                                 $new_arr_name[] =$j;
@@ -138,6 +143,24 @@ class OrderParts extends Controller{
                             $end_info[$i]['all_numbers'] = $j;
                         }
 
+                        foreach ($order_undate['store_id'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_all_store_id[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_all_store_id as $i=>$j){
+                            $end_info[$i]['store_id'] = $j;
+                        }
+
+                        foreach ($order_undate['parts_order_number'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_all_order_number[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_all_order_number as $i=>$j){
+                            $end_info[$i]['parts_order_number'] = $j;
+                        }
+
 
                     }
                     if(!empty($data_infomation)){
@@ -162,6 +185,15 @@ class OrderParts extends Controller{
                         foreach ($data_infomation['all_numbers'] as $a=>$b){
                             $end_info[$a+$coutn]['all_numbers'] = $b;
                         }
+                        //订单编号
+                        foreach ($data_infomation['parts_order_number'] as $a=>$b){
+                            $end_info[$a+$coutn]['parts_order_number'] = $b;
+                        }
+                        //店铺id
+                        foreach ($data_infomation['store_id'] as $a=>$b){
+                            $end_info[$a+$coutn]['store_id'] = $b;
+                        }
+                        //所有信息
                         foreach ($data_infomation['all'] as $a=>$b){
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
@@ -206,7 +238,7 @@ class OrderParts extends Controller{
                     $data = Db::name('order_parts')
                         ->field('parts_order_number,group_concat(id) order_parts_id')
                         ->where('user_id', $member_id['id'])
-                        ->where('status',1)
+                        ->where("status",1)
                         ->order('order_create_time', 'desc')
                         ->group('parts_order_number')
                         ->select();
@@ -232,7 +264,9 @@ class OrderParts extends Controller{
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
+                                $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
+                                $order_undate["parts_order_number"][] =$names["parts_order_number"];
                                 $order_undate["all_order_real_pay"][] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$order_undate["info"][0]));
                                 $order_undate["all_numbers"][] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$order_undate["info"][0]));
                             }
@@ -242,7 +276,9 @@ class OrderParts extends Controller{
                             $data_infomation["all_order_real_pay"][] =$return_datas["order_real_pay"];
                             $data_infomation["all_numbers"][] =$return_datas["order_quantity"];
                             $data_infomation['name'][]= $return_datas['store_name'];
+                            $data_infomation['store_id'][]= $return_datas['store_id'];
                             $data_infomation['status'][] = $return_datas['status'];
+                            $data_infomation['parts_order_number'][] = $return_datas['parts_order_number'];
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
@@ -256,6 +292,7 @@ class OrderParts extends Controller{
                         foreach ($new_arr as $i=>$j){
                             $end_info[$i]['info'] = $j;
                         }
+
                         foreach ($order_undate['store_name'] as $i => $j) {
                             if(!empty($j)){
                                 $new_arr_name[] =$j;
@@ -292,6 +329,24 @@ class OrderParts extends Controller{
                             $end_info[$i]['all_numbers'] = $j;
                         }
 
+                        foreach ($order_undate['store_id'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_all_store_id[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_all_store_id as $i=>$j){
+                            $end_info[$i]['store_id'] = $j;
+                        }
+
+                        foreach ($order_undate['parts_order_number'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_all_order_number[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_all_order_number as $i=>$j){
+                            $end_info[$i]['parts_order_number'] = $j;
+                        }
+
 
                     }
                     if(!empty($data_infomation)){
@@ -316,6 +371,15 @@ class OrderParts extends Controller{
                         foreach ($data_infomation['all_numbers'] as $a=>$b){
                             $end_info[$a+$coutn]['all_numbers'] = $b;
                         }
+                        //订单编号
+                        foreach ($data_infomation['parts_order_number'] as $a=>$b){
+                            $end_info[$a+$coutn]['parts_order_number'] = $b;
+                        }
+                        //店铺id
+                        foreach ($data_infomation['store_id'] as $a=>$b){
+                            $end_info[$a+$coutn]['store_id'] = $b;
+                        }
+                        //所有信息
                         foreach ($data_infomation['all'] as $a=>$b){
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
@@ -331,7 +395,6 @@ class OrderParts extends Controller{
                 }
             }
         }
-
     }
 
     /**
@@ -388,7 +451,9 @@ class OrderParts extends Controller{
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
+                                $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
+                                $order_undate["parts_order_number"][] =$names["parts_order_number"];
                                 $order_undate["all_order_real_pay"][] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$order_undate["info"][0]));
                                 $order_undate["all_numbers"][] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$order_undate["info"][0]));
                             }
@@ -398,7 +463,9 @@ class OrderParts extends Controller{
                             $data_infomation["all_order_real_pay"][] =$return_datas["order_real_pay"];
                             $data_infomation["all_numbers"][] =$return_datas["order_quantity"];
                             $data_infomation['name'][]= $return_datas['store_name'];
+                            $data_infomation['store_id'][]= $return_datas['store_id'];
                             $data_infomation['status'][] = $return_datas['status'];
+                            $data_infomation['parts_order_number'][] = $return_datas['parts_order_number'];
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
@@ -412,6 +479,7 @@ class OrderParts extends Controller{
                         foreach ($new_arr as $i=>$j){
                             $end_info[$i]['info'] = $j;
                         }
+
                         foreach ($order_undate['store_name'] as $i => $j) {
                             if(!empty($j)){
                                 $new_arr_name[] =$j;
@@ -448,6 +516,24 @@ class OrderParts extends Controller{
                             $end_info[$i]['all_numbers'] = $j;
                         }
 
+                        foreach ($order_undate['store_id'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_all_store_id[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_all_store_id as $i=>$j){
+                            $end_info[$i]['store_id'] = $j;
+                        }
+
+                        foreach ($order_undate['parts_order_number'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_all_order_number[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_all_order_number as $i=>$j){
+                            $end_info[$i]['parts_order_number'] = $j;
+                        }
+
 
                     }
                     if(!empty($data_infomation)){
@@ -472,6 +558,15 @@ class OrderParts extends Controller{
                         foreach ($data_infomation['all_numbers'] as $a=>$b){
                             $end_info[$a+$coutn]['all_numbers'] = $b;
                         }
+                        //订单编号
+                        foreach ($data_infomation['parts_order_number'] as $a=>$b){
+                            $end_info[$a+$coutn]['parts_order_number'] = $b;
+                        }
+                        //店铺id
+                        foreach ($data_infomation['store_id'] as $a=>$b){
+                            $end_info[$a+$coutn]['store_id'] = $b;
+                        }
+                        //所有信息
                         foreach ($data_infomation['all'] as $a=>$b){
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
@@ -545,7 +640,9 @@ class OrderParts extends Controller{
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
+                                $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
+                                $order_undate["parts_order_number"][] =$names["parts_order_number"];
                                 $order_undate["all_order_real_pay"][] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$order_undate["info"][0]));
                                 $order_undate["all_numbers"][] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$order_undate["info"][0]));
                             }
@@ -555,10 +652,13 @@ class OrderParts extends Controller{
                             $data_infomation["all_order_real_pay"][] =$return_datas["order_real_pay"];
                             $data_infomation["all_numbers"][] =$return_datas["order_quantity"];
                             $data_infomation['name'][]= $return_datas['store_name'];
+                            $data_infomation['store_id'][]= $return_datas['store_id'];
                             $data_infomation['status'][] = $return_datas['status'];
+                            $data_infomation['parts_order_number'][] = $return_datas['parts_order_number'];
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
+
                     if (!empty($order_undate)) {
                         foreach ($order_undate['info'] as $i => $j) {
                             if(!empty($j)){
@@ -568,6 +668,7 @@ class OrderParts extends Controller{
                         foreach ($new_arr as $i=>$j){
                             $end_info[$i]['info'] = $j;
                         }
+
                         foreach ($order_undate['store_name'] as $i => $j) {
                             if(!empty($j)){
                                 $new_arr_name[] =$j;
@@ -604,6 +705,24 @@ class OrderParts extends Controller{
                             $end_info[$i]['all_numbers'] = $j;
                         }
 
+                        foreach ($order_undate['store_id'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_all_store_id[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_all_store_id as $i=>$j){
+                            $end_info[$i]['store_id'] = $j;
+                        }
+
+                        foreach ($order_undate['parts_order_number'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_all_order_number[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_all_order_number as $i=>$j){
+                            $end_info[$i]['parts_order_number'] = $j;
+                        }
+
 
                     }
                     if(!empty($data_infomation)){
@@ -628,6 +747,15 @@ class OrderParts extends Controller{
                         foreach ($data_infomation['all_numbers'] as $a=>$b){
                             $end_info[$a+$coutn]['all_numbers'] = $b;
                         }
+                        //订单编号
+                        foreach ($data_infomation['parts_order_number'] as $a=>$b){
+                            $end_info[$a+$coutn]['parts_order_number'] = $b;
+                        }
+                        //店铺id
+                        foreach ($data_infomation['store_id'] as $a=>$b){
+                            $end_info[$a+$coutn]['store_id'] = $b;
+                        }
+                        //所有信息
                         foreach ($data_infomation['all'] as $a=>$b){
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
@@ -697,7 +825,9 @@ class OrderParts extends Controller{
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
+                                $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
+                                $order_undate["parts_order_number"][] =$names["parts_order_number"];
                                 $order_undate["all_order_real_pay"][] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$order_undate["info"][0]));
                                 $order_undate["all_numbers"][] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$order_undate["info"][0]));
                             }
@@ -707,7 +837,9 @@ class OrderParts extends Controller{
                             $data_infomation["all_order_real_pay"][] =$return_datas["order_real_pay"];
                             $data_infomation["all_numbers"][] =$return_datas["order_quantity"];
                             $data_infomation['name'][]= $return_datas['store_name'];
+                            $data_infomation['store_id'][]= $return_datas['store_id'];
                             $data_infomation['status'][] = $return_datas['status'];
+                            $data_infomation['parts_order_number'][] = $return_datas['parts_order_number'];
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
@@ -721,6 +853,7 @@ class OrderParts extends Controller{
                         foreach ($new_arr as $i=>$j){
                             $end_info[$i]['info'] = $j;
                         }
+
                         foreach ($order_undate['store_name'] as $i => $j) {
                             if(!empty($j)){
                                 $new_arr_name[] =$j;
@@ -757,6 +890,24 @@ class OrderParts extends Controller{
                             $end_info[$i]['all_numbers'] = $j;
                         }
 
+                        foreach ($order_undate['store_id'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_all_store_id[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_all_store_id as $i=>$j){
+                            $end_info[$i]['store_id'] = $j;
+                        }
+
+                        foreach ($order_undate['parts_order_number'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_all_order_number[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_all_order_number as $i=>$j){
+                            $end_info[$i]['parts_order_number'] = $j;
+                        }
+
 
                     }
                     if(!empty($data_infomation)){
@@ -781,6 +932,15 @@ class OrderParts extends Controller{
                         foreach ($data_infomation['all_numbers'] as $a=>$b){
                             $end_info[$a+$coutn]['all_numbers'] = $b;
                         }
+                        //订单编号
+                        foreach ($data_infomation['parts_order_number'] as $a=>$b){
+                            $end_info[$a+$coutn]['parts_order_number'] = $b;
+                        }
+                        //店铺id
+                        foreach ($data_infomation['store_id'] as $a=>$b){
+                            $end_info[$a+$coutn]['store_id'] = $b;
+                        }
+                        //所有信息
                         foreach ($data_infomation['all'] as $a=>$b){
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
