@@ -92,15 +92,16 @@
         area.value=[1,13,1];//控制初始位置，注意：该方法并不会影响到input的value
     </script>
     <script>
-        // 获取url地址id
         var url = location.search;
-        var id, preId;
+        var id, preId, gid;
         if(url.indexOf('?') != -1){
             id = url.substr(1).split('&&')[0].split('=')[1];
             preId = url.substr(1).split('&&')[1].split('=')[1];
+            if(url.substr(1).split('&&').length > 2){
+                gid = url.substr(1).split('&&')[2].split('=')[1];
+            }
+            console.log(id,preId, gid);
         }
-        console.log(id, preId)
-        
         // 新建保存
         $('.save-btn').click(function(){
             var harvester,
@@ -138,7 +139,13 @@
                                 content: res.info,
                                 time: 1
                             })
-                            if(id !== undefined && preId !== undefined){
+                            // 获取url地址id
+                            var url = location.search;
+                            var id, preId, gid;
+                            if(url.indexOf('?') != -1){
+                                id = url.substr(1).split('&&')[0].split('=')[1];
+                                preId = url.substr(1).split('&&')[1].split('=')[1];
+                                // gid = url.substr(1).split('&&')[2].split('=')[1];
                                 setTimeout(function(){
                                     location.href = 'goods_detail?id='+id+'&&preid='+preId;
                                 }, 1100)
@@ -147,7 +154,6 @@
                                     location.href = 'member_address';
                                 }, 1100)
                             }
-                            
                         }
                     },
                     error: function(){

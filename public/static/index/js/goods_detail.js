@@ -77,7 +77,7 @@ $.ajax({
             }
             $('.installation').append(installationStr);
             // 立即购买 身上放商品id
-            $('.select-buy').attr('id', val.id);
+            $('.select-buy').prop('id', val.id);
             // 选择切换class
             $('.spec-wrap').on('click', '.select-item', function(){
                 $(this).addClass('select-on');
