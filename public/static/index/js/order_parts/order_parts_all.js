@@ -58,6 +58,7 @@ $.ajax({
                 </div>`
             }else if(statusTxt == '待收货'){
                 str +=`<div class="button-box">
+                            <button class="cancel-order-btn">取消订单</button>
                             <button class="check-logistics-btn">查看物流</button>
                             <button class="conf-receipt-btn">确认收货</button>
                         </div>
