@@ -102,6 +102,9 @@ class Install extends Controller{
             if(empty($consumption_full) ||empty($integral_can_be_used) ||empty($integral_full)||empty($deductible_money) ){
                 $this->error('所添加的值不能为空');
             }
+            if($integral_can_be_used != $integral_full){
+                $this->error('可使用积分和积分抵扣数量需要一致');
+            }
             $settings_table= new IntegralDiscountSettings();
             foreach ($consumption_full as $key => $value) {
                 $bool = $settings_table->insert(
