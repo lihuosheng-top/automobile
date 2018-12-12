@@ -152,7 +152,7 @@
                                             });
                                             setTimeout(function(){
                                                 location.reload();
-                                            },1100);
+                                            },1000);
                                         }
                                     },
                                     error: function(){
@@ -210,7 +210,22 @@
                         // 选择地址
                         $('.address-div').click(function(e){
                             e.preventDefault();
-                            
+                            var addressId = $(this).find('.set-default-btn')[0].id.split('-')[1];
+                            location.href = 'ios_api_order_parts_firm_order?id='+ id + '&&preid=' + preId;
+                            // $.ajax({
+                            //     url: '',
+                            //     type: 'POST',
+                            //     dataType: 'JSON',
+                            //     data: {
+                            //         'id': id
+                            //     },
+                            //     success: function(res){
+                            //         console.log(res);
+                            //     },
+                            //     error: function(){
+                            //         console.log('error');
+                            //     }
+                            // })
                         })
                     }
                 }

@@ -47,7 +47,7 @@ $.ajax({
                         </div>`
             })
             str += `<div class="total-button-box">
-                        <p class="total-p">共计`+val.order_quantity+`件商品 合计：￥`+val.order_real_pay+`</p>
+                        <p class="total-p">合计：￥`+val+`</p>
                         <div class="button-box">
                             <button class="cancel-order-btn">取消订单</button>
                             <button class="to-payment-btn">去付款</button>
@@ -56,7 +56,8 @@ $.ajax({
                             <button class="conf-receipt-btn" style="display:none;">确认收货</button>
                             <button class="evaluation-btn" style="display:none;">去评价</button>
                         </div>
-                    </div>`
+                    </div>
+                </div>`
         })
         $('.shops-goods-wrap').append(str);
     },

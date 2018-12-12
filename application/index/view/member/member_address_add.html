@@ -145,14 +145,14 @@
                             if(url.indexOf('?') != -1){
                                 id = url.substr(1).split('&&')[0].split('=')[1];
                                 preId = url.substr(1).split('&&')[1].split('=')[1];
-                                // gid = url.substr(1).split('&&')[2].split('=')[1];
-                                setTimeout(function(){
+                                if(url.substr(1).split('&&').length > 2){
+                                    gid = url.substr(1).split('&&')[2].split('=')[1];
+                                    location.href = 'ios_api_order_parts_firm_order?id='+id+'&&preid='+preId;
+                                }else{
                                     location.href = 'goods_detail?id='+id+'&&preid='+preId;
-                                }, 1100)
+                                }
                             }else{
-                                setTimeout(function(){
-                                    location.href = 'member_address';
-                                }, 1100)
+                                location.href = 'member_address';
                             }
                         }
                     },
