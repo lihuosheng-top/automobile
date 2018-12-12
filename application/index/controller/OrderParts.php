@@ -981,6 +981,7 @@ class OrderParts extends Controller{
      */
     public function ios_api_order_parts_no_pay_cancel(Request $request){
         if($request->isPost()){
+            $user_id =Session::get("user");
             $store_id =$request->only('store_id')["store_id"];//店铺id
             $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//订单编号
             if(!empty($store_id)&&!empty($parts_order_number)){
@@ -991,16 +992,39 @@ class OrderParts extends Controller{
                 if(!empty($res)){
                     foreach($res as $k=>$v){
                         $is_use_integral[$k] =Db::name("order_parts")
-                            ->field("integral_discount_setting_id,id")
+                            ->field("integral_discount_setting_id,id,integral_deductible_num")
                             ->where("id",$v["id"])
+                            ->having("integral_discount_setting_id","NEQ",NULL)
+                            ->group("integral_discount_setting_id")
                             ->find();
                         $data =[
                             "status"=>9
                         ];
-//                        $bool =Db::name("order_parts")->where("id",$v["id"])->update($data);
+                        $bool =Db::name("order_parts")->where("id",$v["id"])->update($data);
                     }
-                    halt($is_use_integral);
                     if($bool){
+                        //取消订单退回积分到积余额
+                        if(!empty( $is_use_integral)){
+                            foreach ($is_use_integral as $keys=>$values){
+                                if(!empty($values["integral_deductible_num"])){
+                                $user_info = Db::name("user")->field("user_integral_wallet,user_integral_wallet_consumed")->where("id",$user_id)->find();
+                                $update_data =[
+                                    "user_integral_wallet"=>$user_info["user_integral_wallet"] + $values["integral_deductible_num"],
+                                    "user_integral_wallet_consumed"=>$user_info["user_integral_wallet_consumed"] - $values["integral_deductible_num"]
+                                ];
+                                Db::name("user")->where("id",$user_id)->update($update_data); //积分增加
+                                    $integral_data =[
+                                    "user_id"=>$user_id,//用户ID
+                                    "integral_operation"=>"+".$values["integral_deductible_num"],//积分操作
+                                    "integral_balance"=>$user_info["user_integral_wallet"] + $values["integral_deductible_num"],//积分余额
+                                    "integral_type"=> 1,//积分类型
+                                    "operation_time"=>time() ,//操作时间
+                                    "integral_remarks"=>"订单号:".$parts_order_number."取消退回".$values["integral_deductible_num"]."积分",//积分备注
+                                ];
+                                    Db::name("integral")->insert($integral_data); //插入积分消费记录
+                                }
+                            }
+                        }
                         return ajax_success("取消成功",["status"=>1]);
                     }else{
                         return ajax_error("取消失败",["status"=>0]);
@@ -1010,23 +1034,9 @@ class OrderParts extends Controller{
                 return ajax_error("所传参数不能为空",["status"=>0]);
             }
         }
-//        if($request->isPost()){
-//            $order_id =$_POST['order_id'];
-//            if(is_array($order_id)){
-//                $where ='id in('.implode(',',$order_id).')';
-//            }else{
-//                $where ='id='.$order_id;
-//            }
-//            if(!empty($order_id)){
-//                $res =Db::name('order_parts')->where($where)->update(['status'=>9]);
-//                if($res){
-//
-//                    return ajax_success('订单取消成功',['status'=>1]);
-//                }else{
-//                    return ajax_error('订单取消失败',['status'=>0]);
-//                }
-//            }
-//        }
+
+
+
     }
 
     /**
@@ -1101,9 +1111,11 @@ class OrderParts extends Controller{
                             $setting_data =Db::name("integral_discount_settings")->where("setting_id",$data["setting_id"])->find();
                             $integral_deductible =$setting_data["integral_full"];
                             $integral_discount_setting_id =$data["setting_id"];
+                            $integral_deductible_num =$setting_data["integral_full"];
                         }else{
                             $integral_deductible = 0;
                             $integral_discount_setting_id =NULL;
+                            $integral_deductible_num =NULL;
                         }
                         $datas = [
                             'goods_image' => $goods_data['goods_show_images'],//图片
@@ -1130,25 +1142,27 @@ class OrderParts extends Controller{
                             "normal_future_time"=>$normal_future_time,//未来时间
                             "integral_deductible"=>$integral_deductible, //积分抵扣
                             "integral_discount_setting_id"=>$integral_discount_setting_id, //积分抵扣的设置id
+                            "integral_deductible_num"=>$integral_deductible_num,//抵扣的积分
                         ];
                         $res = Db::name('order_parts')->insertGetId($datas);
                         if ($res) {
+                            $order_datas =Db::name("order_parts")->field("order_real_pay,parts_goods_name,parts_order_number")->where('id',$res)->where("user_id",$user_id)->find();
                             if(!empty($data["setting_id"])){
                                 //积分消费记录
                                 $user_integral_wallet =$user_information["user_integral_wallet"]; //之前的积分余额
                                 $user_integral_wallets =$user_integral_wallet - $setting_data["integral_full"];//减了之后的积分
                                 $integral_data =[
                                     "user_id"=>$user_id,//用户ID
-                                    "integral_operation"=>$setting_data['integral_full'],//积分操作
+                                    "integral_operation"=>"-".$setting_data['integral_full'],//积分操作
                                     "integral_balance"=>$user_integral_wallets,//积分余额
                                     "integral_type"=> -1,//积分类型
                                     "operation_time"=>$create_time ,//操作时间
-                                    "integral_remarks"=>"下单使用积分".$setting_data['integral_full']."抵扣".$setting_data["deductible_money"]."钱",//积分备注
+                                    "integral_remarks"=>"订单号:".$order_datas['parts_order_number']."下单使用积分".$setting_data['integral_full']."抵扣".$setting_data["deductible_money"]."元钱",//积分备注
                                 ];
                                 Db::name("user")->where("id",$user_id)->update(["user_integral_wallet"=>$user_integral_wallets,"user_integral_wallet_consumed"=>$setting_data["integral_full"]+$user_information["user_wallet_consumed"]]);
                                     Db::name("integral")->insert($integral_data); //插入积分消费记录
                             }
-                            $order_datas =Db::name("order_parts")->field("order_real_pay,parts_goods_name,parts_order_number")->where('id',$res)->where("user_id",$user_id)->find();
+
                             return ajax_success('下单成功',$order_datas);
                         }else{
                             return ajax_error('失败',['status'=>0]);
