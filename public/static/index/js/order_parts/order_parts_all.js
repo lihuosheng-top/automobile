@@ -58,7 +58,7 @@ $.ajax({
                         </div>
                     </div>`
         })
-
+        $('.shops-goods-wrap').append(str);
     },
     error: function(){
         console.log('err');
