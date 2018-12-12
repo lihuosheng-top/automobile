@@ -178,6 +178,7 @@
                 islogin = data.status;
                 if(data.status == 1){
                     var data = data.data;
+                    $('.user_headimg img')[0].src = 'userimg/' + data.user_img;
                     if(data.user_name != null){
                         str += '<p class="user_name">'+data.user_name+'</p>\
                                 <p class="invitation_code">邀请码: <span>'+data.id+'</span></p>\

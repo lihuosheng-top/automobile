@@ -47,17 +47,45 @@ $.ajax({
                         </div>`
             })
             str += `<div class="total-button-box">
-                        <p class="total-p">共计`+val.all_numbers+`件商品 合计：￥`+val.all_order_real_pay+`</p>
-                        <div class="button-box">
+                        <p class="total-p">共计`+val.all_numbers+`件商品 合计：￥`+val.all_order_real_pay+`</p>`
+
+            if(statusTxt == '待付款'){
+                str +=`<div class="button-box">
                             <button class="cancel-order-btn">取消订单</button>
                             <button class="to-payment-btn">去付款</button>
-                            <button class="del-order-btn" style="display:none;">删除订单</button>
-                            <button class="check-logistics-btn" style="display:none;">查看物流</button>
-                            <button class="conf-receipt-btn" style="display:none;">确认收货</button>
-                            <button class="evaluation-btn" style="display:none;">去评价</button>
                         </div>
                     </div>
                 </div>`
+            }else if(statusTxt == '待收货'){
+                str +=`<div class="button-box">
+                            <button class="check-logistics-btn">查看物流</button>
+                            <button class="conf-receipt-btn">确认收货</button>
+                        </div>
+                    </div>
+                </div>`
+            }else if(statusTxt == '待评价'){
+                str +=`<div class="button-box">
+                            <button class="del-order-btn">删除订单</button>
+                            <button class="evaluation-btn">去评价</button>
+                        </div>
+                    </div>
+                </div>`
+            }else if(statusTxt == '已完成'){
+                str +=`<div class="button-box">
+                            <button class="del-order-btn">删除订单</button>
+                        </div>
+                    </div>
+                </div>`
+            }else if(statusTxt == '已取消'){
+                str +=`<div class="button-box">
+                            <button class="del-order-btn">删除订单</button>
+                        </div>
+                    </div>
+                </div>`
+            }else if(statusTxt == '退货'){
+                str +=`</div>
+                    </div>`
+            }
         })
         $('.shops-goods-wrap').append(str);
     },
