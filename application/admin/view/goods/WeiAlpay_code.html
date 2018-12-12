@@ -1,15 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+{extend name="layout"} {block name="css"}
+<style type="text/css">
+	body {
+		background: #fff;
+	}
+	
+
+</style>
+
+{/block}
+
 <body>
-<div class="tantan noshow">
-    <div class="doms">
+
+	{block name="content"}
+	<div class="all">
+		<h2>选择付款方式</h2>
+		<p>商家名称：siring</p>
+		<p>支付金额：<span>￥250000</span></p>
+		<span>支付方式：</span>
+		<span>
+			<input type="radio" name="" id="" value="" />扫码支付
+			<input type="radio" name="" id="" value="" />扫码支付
+			<input type="radio" name="" id="" value="" />扫码支付
+		</span>
+		
+	</div>
+	 <div class="doms">
+    	aaaaaa
         <!--二维码-->
-        <img alt="模式二扫码支付" src="goods_qrcode?url2={$url2}" style="width:150px;height:150px;"/>
+        <img alt="模式二扫码支付" src="" style="width:150px;height:150px;" id="img_url"/>
     </div>
-</div>
+	{/block}
+
+	<!--_footer 作为公共模版分离出去-->
+	{include file="template/_footer" /}
+	<!--/_footer 作为公共模版分离出去-->
+
+	<!--请在下方写此页面业务相关的脚本-->
+	{block name="bottom"}
+<script type="text/javascript">
+		var loc = location.href;
+		var n1 = loc.length; //地址的总长度
+		var n2 = loc.indexOf("="); //取得=号的位置
+		var id = decodeURI(loc.substr(n2 + 1, n1 - n2)); //从=号后面的内容
+		 var text = id.replace (/(.*)&.*/, '$1');
+		 var WIDsubject = text.replace (/(.*)&.*/, '$1');
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg); //获取url中"?"符后的字符串并正则匹配
+			var context = "";
+			if(r != null)
+				context = r[2];
+			reg = null;
+			r = null;
+			return context == null || context == "" || context == "undefined" ? "" : context;
+		}
+		var WIDbody = GetQueryString("WIDbody");
+		var WIDtotal_amount = GetQueryString("WIDtotal_amount");
+		
+		              	$.ajax({
+							type: "POST",
+							url: "{:url('admin/Goods/WeiAlpay')}",
+							data: {
+								"WIDbody":WIDbody,
+								"WIDsubject":WIDsubject,
+								"WIDtotal_amount":WIDtotal_amount,
+							},
+							success: function(data){
+								console.log(data);
+								var datas="goods_qrcode?url2="+data;
+								$("#img_url").attr("src",datas);
+                           },
+
+                        error: function(data) {
+                            console.log("错误")
+                        }
+                    });
+	</script>
+		{/block}
+
 </body>
+
 </html>
