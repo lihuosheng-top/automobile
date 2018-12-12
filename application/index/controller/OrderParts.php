@@ -734,6 +734,7 @@ class OrderParts extends Controller{
                         }
                         $datas = [
                             'goods_image' => $goods_data['goods_show_images'],//图片
+                            "goods_describe"=>$goods_data["goods_describe"],//卖点
                             'parts_goods_name' => $goods_data['goods_name'],//名字
                             "goods_money"=>$goods_data['goods_adjusted_money'],//商品价钱
                             'order_quantity' => $data['order_quantity'],//订单数量
