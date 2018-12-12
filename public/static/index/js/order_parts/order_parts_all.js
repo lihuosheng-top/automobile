@@ -47,7 +47,7 @@ $.ajax({
                         </div>`
             })
             str += `<div class="total-button-box">
-                        <p class="total-p">合计：￥`+val+`</p>
+                        <p class="total-p">共计`+val.all_numbers+`件商品 合计：￥`+val.all_order_real_pay+`</p>
                         <div class="button-box">
                             <button class="cancel-order-btn">取消订单</button>
                             <button class="to-payment-btn">去付款</button>
