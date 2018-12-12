@@ -840,6 +840,7 @@ class Goods extends Controller{
             return ajax_success("获取成功", $url2);
             //return view("WeiAlpay_code",["url2"=>urlencode(url2)]);
         }
+        return view("WeiAlpay_code");
 
 
     }
