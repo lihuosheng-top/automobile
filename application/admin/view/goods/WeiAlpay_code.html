@@ -57,24 +57,24 @@
 		var WIDbody = GetQueryString("WIDbody");
 		var WIDtotal_amount = GetQueryString("WIDtotal_amount");
 		
-//		              	$.ajax({
-//							type: "POST",
-//							url: "{:url('admin/Goods/WeiAlpay')}",
-//							data: {
-//								"WIDbody":WIDbody,
-//								"WIDsubject":WIDsubject,
-//								"WIDtotal_amount":WIDtotal_amount,
-//							},
-//							success: function(data){
-//								console.log(data);
+		              	$.ajax({
+							type: "POST",
+							url: "{:url('admin/Goods/WeiAlpay')}",
+							data: {
+								"WIDbody":WIDbody,
+								"WIDsubject":WIDsubject,
+								"WIDtotal_amount":WIDtotal_amount,
+							},
+							success: function(data){
+								console.log(data);
 //								var datas="goods_qrcode?url2="+data;
 //								$("#img_url").attr("src",datas);
-//                         },
-//
-//                      error: function(data) {
-//                          console.log("错误")
-//                      }
-//                  });
+                           },
+
+                        error: function(data) {
+                            console.log("错误")
+                        }
+                    });
 	</script>
 		{/block}
 
