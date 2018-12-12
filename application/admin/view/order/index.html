@@ -722,17 +722,7 @@
 		//          console.log(note_tip); 
 		//          console.log(static_select);
 		//      });
-//		时间戳转换函数
-		function timestampToTime(timestamp) {
-        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-        var Y = date.getFullYear() + '-';
-        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-        var D = date.getDate() + ' ';
-        var h = date.getHours() + ':';
-        var m = date.getMinutes() + ':';
-        var s = date.getSeconds();
-        return Y+M+D+h+m+s;
-    }
+
 		$(".state").on('click', function() {
 			var id = $(this).parent("td").data(id).id;
 			$(".btu-sumit").data('id', id);
