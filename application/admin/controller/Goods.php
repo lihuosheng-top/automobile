@@ -836,10 +836,18 @@ class Goods extends Controller{
 
         $result = $notify->GetPayUrl($input);
         $url2 = $result["code_url"];
-        $this->assign("url2",$url2);
+        session("url2",$url2);
+        $url2 = Session::get("url2");
+        return view("WeiAlpay_code",["url2"=>$url2]);
 
 
     }
+
+
+    public function WeiAlpay_code(){
+        
+    }
+
 
 
 }
