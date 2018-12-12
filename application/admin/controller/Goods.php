@@ -835,9 +835,8 @@ class Goods extends Controller{
          */
 
         $result = $notify->GetPayUrl($input);
-        var_dump($result);
-        exit();
         $url2 = $result["code_url"];
+        $this->assign("url2",$url2);
 
 
     }
