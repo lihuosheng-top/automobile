@@ -67,6 +67,8 @@
     
     .close {
         width: 30px;
+        position: absolute;
+        right: 0;
     }
     
     .clear {
@@ -638,26 +640,28 @@
             
             //支付按钮点击之后
             $(".go_pay").click(function() {
-                $(".tanchuang").addClass("noshow");
+//              $(".tanchuang").addClass("noshow");
                 var  WIDbody=$("input[name='WIDbody']").val();
                 var  WIDsubject=$("input[name='WIDsubject']").val();
                 var  WIDtotal_amount=$("input[name='WIDtotal_amount']").val();
-                	$.ajax({
-							type: "POST",
-							url: "{:url('admin/Goods/alipay')}",
-							data: {
-								"WIDbody":WIDbody,
-								"WIDsubject":WIDsubject,
-								"WIDtotal_amount":WIDtotal_amount,
-							},
-							success: function(data){	
-								$(".tantan").removeClass("noshow");
-                           },
-
-                        error: function(data) {
-                            console.log("错误")
-                        }
-                    });
+               window.location="goods_WeiAlpay?WIDsubject=" +encodeURI(WIDsubject)+"&WIDbody=" +WIDbody+"&WIDtotal_amount=" +WIDtotal_amount+"";
+//              	$.ajax({
+//							type: "POST",
+//							url: "{:url('admin/Goods/WeiAlpay')}",
+//							data: {
+//								"WIDbody":WIDbody,
+//								"WIDsubject":WIDsubject,
+//								"WIDtotal_amount":WIDtotal_amount,
+//							},
+//							success: function(data){
+//								console.log(data);
+////								$(".tantan").removeClass("noshow");
+//                         },
+//
+//                      error: function(data) {
+//                          console.log("错误")
+//                      }
+//                  });
              
             });
            
