@@ -1,11 +1,23 @@
 body, html{background-color: #f2f2f2;}
 .header{height: 5.7rem; background: url(../../image/my_bg9.png) no-repeat; background-size: 100%; margin-bottom: .2rem;}
-.head_icon{width: 100%;height: .88rem;margin-bottom: .25rem; display: flex; align-items: center; justify-content: flex-end;}
+.head_icon{width: 100%;height: .88rem;display: flex; align-items: center; justify-content: flex-end;}
 .head_icon .set{display:block; width: .49rem;height: .46rem;background-position: -5.95rem -.95rem; margin-right: .5rem;}
 .head_icon .message{display:block; width: .54rem;height: .48rem;background-position: -.85rem .05rem; margin-right: .35rem;}
-
-
-
+.head-img-bg{width: 1.9rem; height: 1.9rem; background: url(../../image/icon9.png) no-repeat; background-size: 100%; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center;}
+.head-img-bg .img-box{width: 1.55rem; height: 1.55rem; border-radius: 50%; overflow: hidden;}
+.head-img-bg .img-box img{width: 100%; height: 100%;}
+.shop-name{font-size: .28rem; color: #fff; text-align: center; margin-bottom: .15rem;}
+.bill-box{display: flex; align-items: center; justify-content: space-around; margin-bottom: .35rem;}
+.bill-box .monthly-bill{position: relative; flex-basis: 50%; text-align: right; padding-right: .5rem; color: #fff; line-height: normal}
+.bill-box .monthly-bill::after{content: ''; background: -webkit-linear-gradient(top,#50aec1,#f7b5f3); width: 1px; position: absolute; top: 5px; right: 0; height: 80%;}
+.monthly-bill .bill-money span, .last-bill .bill-money span{font-size: .56rem;}
+.bill-box .last-bill{flex-basis: 50%; padding-left: .5rem; color: #fff; line-height: normal;}
+.bill-txt{font-size: .24rem;}
+.wallet-btn{display: block; width: 1.85rem; height: .58rem; border: 0; outline: none; margin: 0 auto; background: -webkit-linear-gradient(top, #b8d1fa, #83b6f7 ,#2b88f2); border-radius: .29rem; color: #fff;}
+.main-cont{background-color: #fff; width: 96%; margin: 0 auto; display: flex; flex-wrap: wrap;}
+.function-item{flex-basis: 33%; text-align: center; font-size: 0; line-height: normal;}
+.function-item .icon-order{display: inline-block; width: 1.56rem; height: 1.56rem; background-position: .05rem .05rem;}
+.item-txt{font-size: .28rem;}
 
 
 
