@@ -5,49 +5,66 @@ $.ajax({
     dataType: 'JSON',
     success: function(res){
         console.log(res);
+        var str = '';
+        var statusTxt = '';
+        $.each(res.data, function(idx, val){
+            if(val.status === 1){
+                statusTxt = `待付款`;
+            }else if(val.status === 2 || val.status === 3 || val.status === 4 || val.status === 5){
+                statusTxt = `待收货`;
+            }else if(val.status === 6 || val.status === 7){
+                statusTxt = `待评价`;
+            }else if(val.status === 8){
+                statusTxt = `已完成`;
+            }else if(val.status === 9 || val.status === 10){
+                statusTxt = `已取消`;
+            }else if(val.status === 11){
+                statusTxt = `退货`;
+            }
+            str += `<div class="single-shop-box">
+                        <div class="shop-name-box">
+                            <div class="name-txt-div">
+                                <i class="spr icon-shop"></i>
+                                <span class="name-txt-span">`+val.store_name+`</span>
+                            </div>
+                            <p class="status-txt-p">`+statusTxt+`</p>
+                        </div>`
+            $.each(val.info, function(idx, val){
+                str += `<div class="all-goods-box">
+                            <div class="single-goods-box single-goods-box-border">
+                                <div class="shop-img-box">
+                                    <img src="uploads/`+val.goods_image+`">
+                                </div>
+                                <div class="order-info-box">
+                                    <p class="goods-name-p txt-hid-two">`+val.parts_goods_name+`</p>
+                                    <p class="goods-selling-point txt-hid-two">`+val.parts_goods_name+`</p>
+                                    <div class="unit-price-quantity">
+                                        <p class="unit-price-p">￥`+val.goods_money+`</p>
+                                        <p class="quantity-p">×`+val.order_quantity+`</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+            })
+            str += `<div class="total-button-box">
+                        <p class="total-p">共计`+val.all_numbers+`件商品 合计：￥`+val.all_order_real_pay+`</p>
+                        <div class="button-box">
+                            <button class="cancel-order-btn">取消订单</button>
+                            <button class="to-payment-btn">去付款</button>
+                            <button class="del-order-btn" style="display:none;">删除订单</button>
+                            <button class="check-logistics-btn" style="display:none;">查看物流</button>
+                            <button class="conf-receipt-btn" style="display:none;">确认收货</button>
+                            <button class="evaluation-btn" style="display:none;">去评价</button>
+                        </div>
+                    </div>
+                </div>`
+        })
+        $('.shops-goods-wrap').append(str);
     },
     error: function(){
         console.log('err');
     }
 })
-
-// var app = new Vue({
-//     el: '#app',
-//     data: {
-//         allDatas: '',
-//     },
-//     created(){
-//         this.getData();
-//     },
-//     methods: {
-//         getData(){
-//             this.$http.post('ios_api_order_parts_all')
-//             .then(res => {
-//                 this.allDatas = eval("(" + res.body + ")").data;
-//                 console.log(eval("(" + res.body + ")").data);
-//             }).catch(res => {
-//                 console.error('error');
-//             })
-//         },
-//         returnStatusTxt(status){
-//             if(status === 1){
-//                 return `待付款`;
-//             }else if(status === 2 || status === 3 || status === 4 || status === 5){
-//                 return `待收货`;
-//             }else if(status === 6 || status === 7){
-//                 return `待评价`;
-//             }else if(status === 8){
-//                 return `已完成`;
-//             }else if(status === 9 || status === 10){
-//                 return `已取消`;
-//             }else if(status === 11){
-//                 return `退货`;
-//             }
-//         }
-//     }
-// })
-
-
 
 $('.tabs button').click(function(){
     var $index = $(this).index();

@@ -226,15 +226,22 @@
             dataType: 'JSON',
             success: function(res){
                 console.log(res);
-                $('.user-name').text('收货人：' + res.data.harvester);
-                $('.user-phone').text(res.data.harvester_phone_num);
-                var addr = res.data.address_name.split(',').join('');
-                $('.address-txt').text(addr + res.data.harvester_real_address);
+                if(res.status == 1){
+                    $('.user-name').text('收货人：' + res.data.harvester);
+                    $('.user-phone').text(res.data.harvester_phone_num);
+                    var addr = res.data.address_name.split(',').join('');
+                    $('.address-txt').text(addr + res.data.harvester_real_address);
+                    $('.user-info-box').click(function(){
+                        location.href = 'member_address?id=' + id + '&&preid=' + preId;
+                    })
+                }
             },
             error: function(){
                 console.log('error');
             }
         })
+        
+
         
         // 商品详情 传过来的数据
         $.ajax({
@@ -356,18 +363,10 @@
                     })
                 })
                 $('.close-alipay').click(function(){
-                    
-                    layer.open({
-                        content: res.info,
-                        btn: ['确定', '取消'],
-                        yes: function (index) {
-                            layer.close(index);
-                            location.href = 'order_parts_detail';
-                            $('.mask').hide();
-                            $('.alipay-pop').animate({'bottom': '-100%'});
-                            $('html').css('overflow', 'auto');
-                        }
-                    });
+                    location.href = 'order_parts_detail';
+                    $('.mask').hide();
+                    $('.alipay-pop').animate({'bottom': '-100%'});
+                    $('html').css('overflow', 'auto');
                 })
             },
             error: function(){

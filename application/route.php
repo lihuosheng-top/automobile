@@ -80,6 +80,10 @@ Route::group("",[
     "consume_message"=>"index/My/consume_message",       //消费详情
     /*TODO:登录结束*/
 
+    /*TODO:卖家我的页面开始*/
+    "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
+    /*TODO:卖家我的页面结束*/
+
 
 
 
@@ -301,6 +305,8 @@ Route::group("admin",[
     "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付后调
     "goods_edit_show"=>"admin/Goods/edit_show",                                       //专用适用车型编辑显示
     "goods_seach"=>"admin/Goods/seach",                                                //商品模糊搜索
+    "goods_WeiAlpay"=>"admin/Goods/WeiAlpay",                                             //微信支付
+    "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
 
 
 
