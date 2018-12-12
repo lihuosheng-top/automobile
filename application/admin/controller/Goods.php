@@ -836,8 +836,8 @@ class Goods extends Controller{
 
         $result = $notify->GetPayUrl($input);
         $url2 = $result["code_url"];
-        
-        return view("WeiAlpay_code",["url2"=>urlencode($url2)]);
+
+        return view("WeiAlpay_code",["url2"=>$url2]);
 
 
     }
