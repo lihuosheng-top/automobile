@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/sell_my/sell_my_index.css">
+    <title>服务商和配件商</title>
 </head>
 <body>
-sell
+    <div class="wrapper">
+        <header class="header">
+            <div class="head_icon">
+                <a href="javascript:;" class="spr message"></a>
+                <a href="javascript:;" class="spr set"></a>
+            </div>
+
+        </header>
+        <!-- footer 样式分离到common.css -->
+		<div class="footer">
+            <ul>
+                <li class="home">
+                    <a href="{:url('index/index/index')}">
+                        <i class="spr icon_home"></i>
+                        <span class="text_home">首页</span>
+                    </a>
+                </li>
+                <li class="classify">
+                    <a href="classify_index">
+                        <i class="spr icon_classify"></i>
+                        <span class="text_classify">分类</span>
+                    </a>
+                </li>
+                <li class="cart">
+                    <a href="cart_index">
+                        <i class="spr icon_cart"></i>
+                        <span class="text_cart">购物车</span>
+                    </a>
+                </li>
+                <li class="my">
+                    <a href="sell_my_index">
+                        <i class="spr icon_my"></i>
+                        <span class="text_my active">我的</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
 </body>
 </html>
