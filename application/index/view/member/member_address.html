@@ -211,21 +211,21 @@
                         $('.address-div').click(function(e){
                             e.preventDefault();
                             var addressId = $(this).find('.set-default-btn')[0].id.split('-')[1];
-                            location.href = 'ios_api_order_parts_firm_order?id='+ id + '&&preid=' + preId;
-                            // $.ajax({
-                            //     url: '',
-                            //     type: 'POST',
-                            //     dataType: 'JSON',
-                            //     data: {
-                            //         'id': id
-                            //     },
-                            //     success: function(res){
-                            //         console.log(res);
-                            //     },
-                            //     error: function(){
-                            //         console.log('error');
-                            //     }
-                            // })
+                            $.ajax({
+                                url: 'member_save_address_id',
+                                type: 'POST',
+                                dataType: 'JSON',
+                                data: {
+                                    'id': addressId
+                                },
+                                success: function(res){
+                                    console.log(res);
+                                    location.href = 'ios_api_order_parts_firm_order?id='+ id + '&&preid=' + preId;
+                                },
+                                error: function(){
+                                    console.log('error');
+                                }
+                            })
                         })
                     }
                 }

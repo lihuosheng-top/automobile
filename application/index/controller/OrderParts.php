@@ -632,49 +632,6 @@ class OrderParts extends Controller{
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
                     }
-//                    if (!empty($order_undate)) {
-//                        foreach ($order_undate['info'] as $i => $j) {
-//                            if(!empty($j)){
-//                                $new_arr[] =$j;
-//                            }
-//                        }
-//                        foreach ($new_arr as $i=>$j){
-//                            $end_info[$i]['info'] = $j;
-//                        }
-//                        foreach ($order_undate['store_name'] as $i => $j) {
-//                            if(!empty($j)){
-//                                $new_arr_name[] =$j;
-//                            }
-//                        }
-//                        foreach ($new_arr_name as $i=>$j){
-//                            $end_info[$i]['store_name'] = $j;
-//                        }
-//
-//                        foreach ($order_undate['status'] as $i => $j) {
-//                            if(!empty($j)){
-//                                $new_arr_status[] = $j;
-//                            }
-//                        }
-//                        foreach ($new_arr_status as $i=>$j){
-//                            $end_info[$i]['status'] = $j;
-//                        }
-//                    }
-//                    if(!empty($data_infomation)){
-//                        if(!empty($new_arr)){
-//                            $coutn =count($new_arr);
-//                        }else{
-//                            $coutn =0;
-//                        }
-//                        foreach ($data_infomation['name'] as $a=>$b){
-//                            $end_info[$a+$coutn]['store_name'] = $b;
-//                        }
-//                        foreach ($data_infomation['status'] as $a=>$b){
-//                            $end_info[$a+$coutn]['status'] = $b;
-//                        }
-//                        foreach ($data_infomation['all'] as $a=>$b){
-//                            $end_info[$a+$coutn]['info'][] = $b;
-//                        }
-//                    }
 
                     if (!empty($end_info)) {
                         return ajax_success('数据', $end_info);
