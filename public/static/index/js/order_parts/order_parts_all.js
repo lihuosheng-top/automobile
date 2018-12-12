@@ -21,7 +21,7 @@ $.ajax({
             }else if(val.status === 11){
                 statusTxt = `退货`;
             }
-            str += `<div class="single-shop-box">
+            str += `<div class="single-shop-box" data-id="`+val.store_id+`" name="`+val.parts_order_number+`">
                         <div class="shop-name-box">
                             <div class="name-txt-div">
                                 <i class="spr icon-shop"></i>
@@ -88,6 +88,83 @@ $.ajax({
             }
         })
         $('.shops-goods-wrap').append(str);
+
+        // 取消订单
+        $('.cancel-order-btn').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            layer.open({
+                content: '您确定取消订单？',
+                btn: ['确定', '取消'],
+                yes: function (index) {
+                    layer.close(index);
+                    $.ajax({
+                        url: 'ios_api_order_parts_no_pay_cancel',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'parts_order_number': parts_order_number,
+                            'store_id': store_id
+                        },
+                        success: function(res){
+                            console.log(res);
+                            location.reload();
+                        },
+                        error: function(){
+                            console.log('error');
+                        }
+                    })
+                }
+            });
+        })
+        // 去付款
+        $('.to-payment-btn').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            $.ajax({
+                url: 'ios_api_order_parts_no_pay_cancel',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'parts_order_number': parts_order_number,
+                    'store_id': store_id
+                },
+                success: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+        // 确认收货
+        $('.conf-receipt-btn').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            layer.open({
+                content: '您确认收货？',
+                btn: ['确认', '取消'],
+                yes: function (index) {
+                    layer.close(index);
+                    $.ajax({
+                        url: 'ios_api_order_parts_no_pay_cancel',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'parts_order_number': parts_order_number,
+                            'store_id': store_id
+                        },
+                        success: function(res){
+                            console.log(res);
+                            location.reload();
+                        },
+                        error: function(){
+                            console.log('error');
+                        }
+                    })
+                }
+            });
+        })
     },
     error: function(){
         console.log('err');
