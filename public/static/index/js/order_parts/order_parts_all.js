@@ -118,7 +118,7 @@ $.ajax({
             });
         })
         // 删除订单
-        $('.cancel-order-btn').click(function(){
+        $('.del-order-btn').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
             layer.open({
@@ -127,7 +127,7 @@ $.ajax({
                 yes: function (index) {
                     layer.close(index);
                     $.ajax({
-                        url: 'ios_api_order_parts_no_pay_cancel',
+                        url: 'ios_api_order_parts_del',
                         type: 'POST',
                         dataType: 'JSON',
                         data: {
@@ -175,7 +175,7 @@ $.ajax({
                 yes: function (index) {
                     layer.close(index);
                     $.ajax({
-                        url: 'ios_api_order_parts_no_pay_cancel',
+                        url: 'ios_api_order_parts_collect_goods',
                         type: 'POST',
                         dataType: 'JSON',
                         data: {
