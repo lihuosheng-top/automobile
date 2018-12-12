@@ -67,7 +67,7 @@
 								"WIDtotal_amount":WIDtotal_amount,
 							},
 							success: function(data){
-								console.log(data);
+//								console.log(data);
 								var data=eval("("+data+")");
 								var datas="goods_qrcode?url2="+data.data;
 								$("#img_url").attr("src",datas);
