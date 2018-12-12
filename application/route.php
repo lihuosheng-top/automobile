@@ -80,6 +80,10 @@ Route::group("",[
     "consume_message"=>"index/My/consume_message",       //消费详情
     /*TODO:登录结束*/
 
+    /*TODO:卖家我的页面开始*/
+    "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
+    /*TODO:卖家我的页面结束*/
+
 
 
 
