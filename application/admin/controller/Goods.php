@@ -739,7 +739,7 @@ class Goods extends Controller{
      * 陈绪
      */
     public function WeiAlpay(Request $request){
-        
+
         /*$out_trade_no = date("YmdHis").uniqid();
 
         //订单名称，必填
@@ -841,6 +841,11 @@ class Goods extends Controller{
         return view("WeiAlpay_code",["url2"=>$url2]);
 
 
+    }
+
+
+    public function WeiAlpay_code(){
+        
     }
 
 
