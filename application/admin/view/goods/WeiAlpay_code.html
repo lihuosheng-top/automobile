@@ -69,6 +69,7 @@
 							success: function(data){
 //								console.log(data);
 								var data=eval("("+data+")");
+									console.log(data);
 								var datas="goods_qrcode?url2="+data.data;
 								$("#img_url").attr("src",datas);
                            },
