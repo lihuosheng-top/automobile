@@ -647,6 +647,7 @@ class OrderParts extends Controller{
             if(!empty($order_id)){
                 $res =Db::name('order_parts')->where($where)->update(['status'=>9]);
                 if($res){
+
                     return ajax_success('订单取消成功',['status'=>1]);
                 }else{
                     return ajax_error('订单取消失败',['status'=>0]);
@@ -723,10 +724,18 @@ class OrderParts extends Controller{
                         }else{
                             $buy_message = NUll ;
                         }
+                        if(!empty($data["setting_id"])){
+                            $setting_data =Db::name("integral_discount_settings")->where("setting_id",$data["setting_id"])->find();
+                            $integral_deductible =$setting_data["integral_full"];
+                            $integral_discount_setting_id =$data["setting_id"];
+                        }else{
+                            $integral_deductible = 0;
+                            $integral_discount_setting_id =NULL;
+                        }
                         $datas = [
                             'goods_image' => $goods_data['goods_show_images'],//图片
                             'parts_goods_name' => $goods_data['goods_name'],//名字
-                            "goods_money"=>$goods_data['goods_new_money'],//商品价钱
+                            "goods_money"=>$goods_data['goods_adjusted_money'],//商品价钱
                             'order_quantity' => $data['order_quantity'],//订单数量
                             'user_id' => $user_id,//用户id
                             "user_account_name"=>$user_information["user_name"],//用户名
@@ -745,9 +754,26 @@ class OrderParts extends Controller{
                             'parts_order_number' => $parts_order_number,//时间+4位随机数+用户id构成订单号
                             "buy_message"=>$buy_message,//买家留言
                             "normal_future_time"=>$normal_future_time,//未来时间
+                            "integral_deductible"=>$integral_deductible, //积分抵扣
+                            "integral_discount_setting_id"=>$integral_discount_setting_id, //积分抵扣的设置id
                         ];
                         $res = Db::name('order_parts')->insertGetId($datas);
                         if ($res) {
+                            if(!empty($data["setting_id"])){
+                                //积分消费记录
+                                $user_integral_wallet =$user_information["user_integral_wallet"]; //之前的积分余额
+                                $user_integral_wallets =$user_integral_wallet - $setting_data["integral_full"];//减了之后的积分
+                                $integral_data =[
+                                    "user_id"=>$user_id,//用户ID
+                                    "integral_operation"=>$setting_data['integral_full'],//积分操作
+                                    "integral_balance"=>$user_integral_wallets,//积分余额
+                                    "integral_type"=> -1,//积分类型
+                                    "operation_time"=>$create_time ,//操作时间
+                                    "integral_remarks"=>"下单使用积分".$setting_data['integral_full']."抵扣".$setting_data["deductible_money"]."钱",//积分备注
+                                ];
+                                Db::name("user")->where("id",$user_id)->update(["user_integral_wallet"=>$user_integral_wallets,"user_integral_wallet_consumed"=>$setting_data["integral_full"]+$user_information["user_wallet_consumed"]]);
+                                    Db::name("integral")->insert($integral_data); //插入积分消费记录
+                            }
                             $order_datas =Db::name("order_parts")->field("order_real_pay,parts_goods_name,parts_order_number")->where('id',$res)->where("user_id",$user_id)->find();
                             return ajax_success('下单成功',$order_datas);
                         }else{
@@ -756,8 +782,6 @@ class OrderParts extends Controller{
                     }
                 }
             }
-
-
         }
     }
 

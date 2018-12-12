@@ -301,6 +301,7 @@ Route::group("admin",[
     "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付后调
     "goods_edit_show"=>"admin/Goods/edit_show",                                       //专用适用车型编辑显示
     "goods_seach"=>"admin/Goods/seach",                                                //商品模糊搜索
+    "goods_WeiAlpay"=>"admin/Goods/WeiAlpay",                                                //商品模糊搜索
 
 
 
