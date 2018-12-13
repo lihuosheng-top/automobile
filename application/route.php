@@ -188,7 +188,9 @@ Route::group("",[
 
 
     /*TODO:配件商订单状态开始*/
+    "order_parts_save_record"=>"index/OrderParts/order_parts_save_record",//配件商订单进入详情需要存储的订单编号和店铺id
     "ios_api_order_parts_firm_order"=>"index/OrderParts/ios_api_order_parts_firm_order",//确认订单页面
+
     "order_parts_detail"=>"index/OrderParts/order_parts_detail",//订单详情
     "get_goods_id_save"=>"index/OrderParts/get_goods_id_save",//立即购买存储需要传到订单提交页面信息，方便确定订单提交
     "return_order_buy_information"=>"index/OrderParts/return_order_buy_information",//提交订单页面返回购买页面传过来的数据

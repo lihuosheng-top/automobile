@@ -52,9 +52,7 @@
 			<!--二维码-->
 			<img alt="模式二扫码支付" src="" style="width:230px;height:230px;margin: 10px auto;" id="img_url" />
 		</div>
-		<div class="doms1 noshow" >
-			<!--二维码-->
-			<img alt="3333" src="" style="width:230px;height:230px;margin: 10px auto;" id="img_url1" />
+		<div class="doms1 noshow " id="qrcode" style="width:230px; height:230px; margin: 10px auto;">
 		</div>
 		<div class="img">
 			<span class="weixin_ico" style="  margin-right: 30px;"><img src="__STATIC__/admin/common/img/weixin.png"/></span>
@@ -74,6 +72,7 @@
 
 	<!--请在下方写此页面业务相关的脚本-->
 	{block name="bottom"}
+	<script type="text/javascript" src="__STATIC__/admin/common/js/qrcode.js"></script>
 	<script type="text/javascript">
 		var loc = location.href;
 		var n1 = loc.length; //地址的总长度
@@ -127,6 +126,35 @@
 			
 			
 		});
+		var qrcode = new QRCode(document.getElementById("qrcode"), {
+				width : 230,
+				height : 230
+			});
+		function makeCode () {	
+				$.ajax({
+					type: "POST",
+					url: "{:url('admin/Goods/alipay')}",
+					data: {
+						"WIDbody": WIDbody,
+						"WIDsubject": WIDsubject,
+						"WIDtotal_amount": WIDtotal_amount,
+					},
+					success: function(data) {
+						var data = eval("(" + data + ")");
+						console.log(data);
+						var datas = "goods_qrcode?url2=" + data.data;
+						qrcode.makeCode(datas);
+					},
+		
+					error: function(data) {
+						console.log("错误")
+					}
+				});
+//                      var datas = "https://www.baidu.com/?tn=21002492_17_hao_pg";
+//						qrcode.makeCode(datas);
+		}
+		makeCode();
+		
 	</script>
 	{/block}
 

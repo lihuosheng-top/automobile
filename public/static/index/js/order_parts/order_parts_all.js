@@ -206,7 +206,7 @@ $.ajax({
             var store_id = $(this).attr('data-id');
             var parts_order_number = $(this).attr('name');
             $.ajax({
-                url: 'order_parts_detail',
+                url: 'order_parts_save_record',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
