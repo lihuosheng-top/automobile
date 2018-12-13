@@ -6,11 +6,36 @@
 	.static{
 		text-align: center;
 	}
+	.all{
+		margin-top: 200px;
+	}
+	
 	.all p{
+		font-size: 20px;
 		text-align: center;
+		line-height: 34px;
 	}
 	.all div{
 		text-align: center;
+	}
+	.img span{
+		display: inline-block;
+        width: 60px;
+      
+	}
+	.text{
+		font-size:20px ;
+	}
+	.static{
+		font-weight: bold;
+	    font-size: 30px;
+	    margin-bottom: 35px;
+	}
+	#repay_money{
+		color: red;
+	}
+	.noshow{
+		display: none;
 	}
 </style>
 
@@ -20,16 +45,20 @@
 
 	{block name="content"}
 	<div class="all">
-		<h2 class="static">待支付</h2>
+		<h2 class="static">待支付......</h2>
 		<p>商家名称：<span id="shop_name"></span></p>
-		<p>支付金额：<span class="repay_money">￥250000</span></p>
+		<p>支付金额：<span id="repay_money"></span></p>
 		<div class="doms">
 			<!--二维码-->
-			<img alt="模式二扫码支付" src="" style="width:150px;height:150px;margin: 10px auto;" id="img_url" />
+			<img alt="模式二扫码支付" src="" style="width:230px;height:230px;margin: 10px auto;" id="img_url" />
 		</div>
-		<div id="">
-			<span class="weixin_ico"><img src="__STATIC__/admin/common/img/weixin.png"/></span>
-			<span class="zhifubao_ico"><img src="__STATIC__/admin/common/img/weixin.png"/></span>
+		<div class="doms1 noshow" >
+			<!--二维码-->
+			<img alt="3333" src="" style="width:230px;height:230px;margin: 10px auto;" id="img_url1" />
+		</div>
+		<div class="img">
+			<span class="weixin_ico" style="  margin-right: 30px;"><img src="__STATIC__/admin/common/img/weixin.png"/></span>
+			<span class="zhifubao_ico"><img src="__STATIC__/admin/common/img/zhifubao.png"/></span>
 		</div>
 		<div class="text">
 			扫一扫完成支付
@@ -65,7 +94,8 @@
 		}
 		var WIDbody = GetQueryString("WIDbody");
 		var WIDtotal_amount = GetQueryString("WIDtotal_amount");
-
+        $("#shop_name").html(WIDsubject);
+        $("#repay_money").html("￥"+WIDtotal_amount);
 		$.ajax({
 			type: "POST",
 			url: "{:url('admin/Goods/WeiAlpay')}",
@@ -85,6 +115,17 @@
 			error: function(data) {
 				console.log("错误")
 			}
+		});
+		$(".weixin_ico").click(function(){
+			$(".doms1").addClass("noshow");
+			$(".doms").removeClass("noshow");
+		
+		});
+			$(".zhifubao_ico").click(function(){
+				$(".doms").addClass("noshow");
+			$(".doms1").removeClass("noshow");
+			
+			
 		});
 	</script>
 	{/block}
