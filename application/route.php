@@ -302,11 +302,12 @@ Route::group("admin",[
     "goods_property_name"=>"admin/Goods/property_name",                                       //专用属性入库
     "goods_property_show"=>"admin/Goods/property_show",                                       //专用属性显示
     "goods_alipay"=>"admin/Goods/alipay",                                       //支付
-    "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付后调
+    "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付宝回调地址
     "goods_edit_show"=>"admin/Goods/edit_show",                                       //专用适用车型编辑显示
     "goods_seach"=>"admin/Goods/seach",                                                //商品模糊搜索
     "goods_WeiAlpay"=>"admin/Goods/WeiAlpay",                                             //微信支付
     "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
+    "goods_wx_notify"=>"admin/Goods/wx_notify",                                                //微信支付回调地址
 
 
 
