@@ -73,7 +73,7 @@ Route::group("",[
     "member_information_update"=>"index/My/member_information_update",//个人信息用户个人信息更新（头像,真实姓名，昵称，性别）
     "member_information_data"=>"index/My/member_information_data",//个人信息用户个人信息返回（头像,真实姓名，昵称，性别）
     "member_update_mobiles"=>"index/My/member_update_mobiles",//个人信息修改手机
-    "my_integral"=>"index/My/integral",            //我的积分
+    "my_integral"=>"index/My/integral",            //我的积分页面(积分记录ajax)
     "setting"=>"index/My/setting",              //设置
     "my_nickname"=>"index/My/nickname",         //昵称
     "my_consume"=>"index/My/consume",         //我的消费
@@ -151,9 +151,11 @@ Route::group("",[
     "url_img_del"=>"index/Store/url_img_del",           //店铺编辑更新(也是第二页信息多图的删除)
     "return_store_information"=>"index/Store/return_store_information",    //店铺信息
     /*TODO:店铺结束*/
+
     /*TODO：我要推广开始*/
     "spread_index"=>"index/Extension/spread_index",//我要推广
     /*TODO：我要推广结束*/
+
     /*TODO：评价开始*/
     "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面
     /*TODO：评价结束*/
@@ -191,7 +193,6 @@ Route::group("",[
     "get_goods_id_save"=>"index/OrderParts/get_goods_id_save",//立即购买存储需要传到订单提交页面信息，方便确定订单提交
     "return_order_buy_information"=>"index/OrderParts/return_order_buy_information",//提交订单页面返回购买页面传过来的数据
 
-
     "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单页面
     "ios_api_order_parts_all"=>"index/OrderParts/ios_api_order_parts_all",//全部订单接口（ajax）
     "order_parts_wait_pay"=>"index/OrderParts/order_parts_wait_pay",//待付款页面
@@ -206,6 +207,13 @@ Route::group("",[
     "ios_api_order_parts_del"=>"index/OrderParts/ios_api_order_parts_del",//买家删除订单接口(ajax)
     "ios_api_order_parts_collect_goods"=>"index/OrderParts/ios_api_order_parts_collect_goods",//配件商订单状态修改（买家确认收货）（ajax）
     /*TODO:配件商订单状态结束*/
+    /*TODO：查看物流信息开始*/
+    "logistics_index"=>"index/Logistics/logistics_index",//查看物流页面
+    /*TODO：查看物流信息结束*/
+
+
+
+
 
     /*TODO:服务商订单状态开始*/
     "order_service_detail"=>"index/OrderService/order_service_detail",//订单详情
