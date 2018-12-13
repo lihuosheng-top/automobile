@@ -895,9 +895,7 @@ class Goods extends Controller{
      * 陈绪
      */
     public function wx_notify(){
-
-        echo 1;
-        exit;
+        
         ini_set('date.timezone','Asia/Shanghai');
 
         error_reporting(E_ERROR);
