@@ -58,10 +58,15 @@ class OrderParts extends Controller{
             $store_id =Session::get("store_id");
             $parts_order_number =Session::get("parts_order_number");;//订单编号
             $condition ="`user_id` = ".$user_id." and `store_id` = ".$store_id." and `parts_order_number` = ".$parts_order_number;
-            $data =Db::name("order_parts")
-                ->where($condition)
-                ->select();
-
+                $data =Db::name("order_parts")
+                    ->where($condition)
+                    ->select();
+                if(!empty($data)){
+                    $store_id = $data[0]["store_id"];//店铺id
+                    $store_name = $data[0]["store_name"];//店铺名称
+                    $create_time =$data[0]["order_create_time"];//订单创建时间
+                    $pay_time =$data[0]["pay_time"]; //支付时间
+                }
         }
         return view('order_parts_detail');
     }
