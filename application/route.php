@@ -193,7 +193,6 @@ Route::group("",[
     "get_goods_id_save"=>"index/OrderParts/get_goods_id_save",//立即购买存储需要传到订单提交页面信息，方便确定订单提交
     "return_order_buy_information"=>"index/OrderParts/return_order_buy_information",//提交订单页面返回购买页面传过来的数据
 
-
     "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单页面
     "ios_api_order_parts_all"=>"index/OrderParts/ios_api_order_parts_all",//全部订单接口（ajax）
     "order_parts_wait_pay"=>"index/OrderParts/order_parts_wait_pay",//待付款页面
@@ -208,6 +207,13 @@ Route::group("",[
     "ios_api_order_parts_del"=>"index/OrderParts/ios_api_order_parts_del",//买家删除订单接口(ajax)
     "ios_api_order_parts_collect_goods"=>"index/OrderParts/ios_api_order_parts_collect_goods",//配件商订单状态修改（买家确认收货）（ajax）
     /*TODO:配件商订单状态结束*/
+    /*TODO：查看物流信息开始*/
+    "logistics_index"=>"index/Logistics/logistics_index",//查看物流页面
+    /*TODO：查看物流信息结束*/
+
+
+
+
 
     /*TODO:服务商订单状态开始*/
     "order_service_detail"=>"index/OrderService/order_service_detail",//订单详情
