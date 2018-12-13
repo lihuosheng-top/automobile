@@ -27,11 +27,42 @@ class OrderParts extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
+     * Notes:配件商订单进入详情需要存储的订单编号和店铺id
+     **************************************
+     */
+    public function order_parts_save_record(Request $request){
+            if($request->isPost()){
+                $store_id =$request->only("store_id")["store_id"];//店铺id
+                $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//配件商订单编号
+                if(!empty($store_id)){
+                    Session::set("store_id",$store_id);
+                    Session::set("parts_order_number",$parts_order_number);
+                    return ajax_success("暂存成功",['status'=>1]);
+                }else{
+                    return ajax_error("店铺id不能为空",["status"=>0]);
+                }
+            }
+    }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
      * Notes:配件商订单详情页面
      **************************************
      * @return \think\response\View
      */
-    public function order_parts_detail(){
+    public function order_parts_detail(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            $store_id =Session::get("store_id");
+            $parts_order_number =Session::get("parts_order_number");;//订单编号
+            $condition ="`user_id` = ".$user_id." and `store_id` = ".$store_id." and `parts_order_number` = ".$parts_order_number;
+            $data =Db::name("order_parts")
+                ->where($condition)
+                ->select();
+
+        }
         return view('order_parts_detail');
     }
 
@@ -983,6 +1014,7 @@ class OrderParts extends Controller{
         if($request->isPost()){
             $user_id =Session::get("user");
             $store_id =$request->only('store_id')["store_id"];//店铺id
+            $cancel_order_description =$request->only('cancel_order_description')["cancel_order_description"];//取消原因
             $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//订单编号
             if(!empty($store_id)&&!empty($parts_order_number)){
                 $res =Db::name("order_parts")
@@ -998,7 +1030,8 @@ class OrderParts extends Controller{
                             ->group("integral_discount_setting_id")
                             ->find();
                         $data =[
-                            "status"=>9
+                            "status"=>9,
+                            "cancel_order_description"=>$cancel_order_description
                         ];
                         $bool =Db::name("order_parts")->where("id",$v["id"])->update($data);
                     }
@@ -1042,25 +1075,76 @@ class OrderParts extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
+     * Notes:配件商买家删除订单接口(ajax)
+     **************************************
+     * @param Request $request
+     */
+    public function  ios_api_order_parts_del(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");//用户id
+            $store_id =$request->only('store_id')["store_id"];//店铺id
+            $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//订单编号
+            if(!empty($store_id)&&!empty($parts_order_number)){
+                $res =Db::name("order_parts")
+                    ->where("parts_order_number",$parts_order_number)
+                    ->where("store_id",$store_id)
+                    ->where("user_id",$user_id)
+                    ->select();
+                if(!empty($res)){
+                    foreach($res as $k=>$v){
+                        $bool =Db::name("order_parts")
+                            ->where("id",$v["id"])
+                            ->delete();
+                    }
+                    if($bool){
+                        return ajax_success("删除成功",["status"=>1]);
+                    }else{
+                        return ajax_error("删除失败",["status"=>0]);
+                    }
+                }
+            }else{
+                return ajax_error("所传参数不能为空",["status"=>0]);
+            }
+        }
+    }
+
+
+
+
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
      * Notes:配件商订单状态修改（买家确认收货）
      **************************************
      * @param Request $request
      */
     public function ios_api_order_parts_collect_goods(Request $request){
         if($request->isPost()){
-            $order_id =$_POST['order_id'];
-            if(is_array($order_id)){
-                $where ='id in('.implode(',',$order_id).')';
-            }else{
-                $where ='id='.$order_id;
-            }
-            if(!empty($order_id)){
-                $res =Db::name('order_parts')->where($where)->update(['status'=>7]);
-                if($res){
-                    return ajax_success('确认收货成功',['status'=>1]);
-                }else{
-                    return ajax_error('确认收货失败',['status'=>0]);
+            $user_id =Session::get("user");
+            $store_id =$request->only('store_id')["store_id"];//店铺id
+            $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//订单编号
+            if(!empty($store_id)&&!empty($parts_order_number)){
+                $res =Db::name("order_parts")
+                    ->where("parts_order_number",$parts_order_number)
+                    ->where("store_id",$store_id)
+                    ->select();
+                if(!empty($res)){
+                    foreach($res as $k=>$v){
+                        $data =[
+                            "status"=>7
+                        ];
+                        $bool =Db::name("order_parts")->where("id",$v["id"])->update($data);
+                    }
+                    if($bool){
+                        return ajax_success("确认收货成功",["status"=>1]);
+                    }else{
+                        return ajax_error("确认收货失败",["status"=>0]);
+                    }
                 }
+            }else{
+                return ajax_error("所传参数不能为空",["status"=>0]);
             }
         }
     }

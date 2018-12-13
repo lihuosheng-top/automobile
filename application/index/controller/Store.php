@@ -211,7 +211,7 @@ class Store extends Controller{
                     $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
                 }
                 db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
-                $isset_admin =Db::name('admin')->field('id')->where('phone',$old_phone_num)->find();//判断是否提交过申请
+                $isset_admin =Db::name('admin')->field('id')->where('phone',$old_phone_num["phone_num"])->find();//判断是否提交过申请
                 if(!empty($isset_admin)){
                     db("admin")->where('id',$isset_admin['id'])->update(['name'=>$real_name,'phone'=>$phone_num,'sex'=>$sex]);
                 }

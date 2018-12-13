@@ -7,6 +7,7 @@
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/payment.css">
     <title>确认订单</title>
     <style>
         /* 提交订单 start */
@@ -50,20 +51,6 @@
         .order-payment-box .order-payment-btn{width: 1.8rem;height: .6rem;border: 0;background-color: #504cfb;color: #fff;font-size: .2rem;outline: none;border-radius: .3rem;}
         /* 提交订单 end */
 
-        /* 支付弹窗 start */
-        .alipay-pop{position: fixed;left: 0;right: 0;bottom: -100%;background-color: #fff;width: 100%;height: 60vh;z-index: 9;}
-        .alipay-pop header{position: relative;width: 100%;height: .88rem;border-bottom: 1px solid #eee;box-sizing: border-box;background-color: #fff;margin-bottom: .5rem;}
-        .alipay-pop header .close-alipay{position: absolute;top: 50%;left: .2rem;font-size: .6rem;color: #333;transform: translateY(-50%);}
-        .alipay-pop header .alipay-title{width: 100%;height: .88rem;line-height: .88rem;text-align: center;}
-        .alipay-pop .price-box{display: flex;align-items: center;justify-content: center;height: .88rem;}
-        .alipay-pop .price-box span{font-size: .6rem;flex-basis: 45%;text-align: right;}
-        .alipay-pop .price-box input{width: 50%;font-size: .6rem;}
-        .alipay-pop .middle_box .content{width: 100%;}
-        .alipay-pop .content li{width: 100%;border-bottom: 1px solid #e6e6e6;padding: 0 .2rem;height: 44px;line-height: 44px;font-size: 14px;color: #666;display: flex;justify-content: space-between;box-sizing: border-box;}
-        .alipay-pop .content li input{float: right;color: #333;height: 100%;border: 0;text-align: right;width: 4.5rem;}
-        .alipay-pop .alipay-submit{position: absolute;bottom: 20px;left: 50%;transform: translateX(-50%);width: 90%;height: 40px;font-size: 14px;color: #fff;background-color: #2e8ffd;border-radius: 5px;border: 1px solid #2e8ffd;}
-        /* 支付弹窗 end */
-        .mask{display: none;position: fixed;top: 0;left: 0;right: 0;background-color: rgba(0, 0, 0, .6);width: 100%;height: 100vh;z-index: 8;}
         .standard{font-size: .24rem; color: #999;}
         .discount_pop{position: absolute; top: 0; left: 0; right: 0;z-index: 2; background-color: #fff; width: 100%;height: 100vh;}
         .head{position: relative;width: 100%;height: .88rem;background-color: #fff;border-bottom: 1px solid #ccc;margin-bottom: .3rem;}
@@ -174,11 +161,42 @@
                     <li>
                         商品描述: <input id="WIDbody" name="WIDbody" value="" readonly>
                     </li>
+                    <li>
+                        付款方式: <input class="widway" value="微信支付" readonly><i class="spr icon-more"></i>
+                    </li>
                 </ul>
             </div>
             <button type="submit" class="alipay-submit">立即付款</button>
         </div>
     </form>
+    <!-- 选择支付方式 -->
+    <div class="chose-payment">
+        <header>
+            <a href="javascript:;" class="spr chose-payment-back"></a>
+            <h3 class="chose-title">选择支付方式</h3>
+        </header>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/money.png">
+            </div>
+            <p>余额支付</p>
+            <a href="javascript:;" class="spr check-a"></a>
+        </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/wechat.png">
+            </div>
+            <p>微信支付</p>
+            <a href="javascript:;" class="spr check-a icon-check"></a>
+        </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/alipay.png">
+            </div>
+            <p>支付宝支付</p>
+            <a href="javascript:;" class="spr check-a"></a>
+        </div>
+    </div>
 
     <!-- 积分抵扣 -->
     <div class="discount_pop" style="display: none;">
@@ -196,263 +214,6 @@
     
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
-    <script>
-        var finalMoney;
-        var deductionId = '';
-        // 解决计算精度问题
-        function toFixed(num, s) {
-            var times = Math.pow(10, s)
-            var des = num * times + 0.5
-            des = parseInt(des, 10) / times
-            return des + ''
-        }
-
-        // 获取url地址id
-        var url = location.search;
-        var id, preId;
-        if(url.indexOf('?') != -1){
-            id = url.substr(1).split('&&')[0].split('=')[1];
-            preId = url.substr(1).split('&&')[1].split('=')[1];
-        }
-        // 返回商品详情
-        $('.place-order-back').click(function(){
-            location.href = 'goods_detail?id=' + id + '&&preid=' + preId;
-        })
-
-        // 地址返回
-        $.ajax({
-            url: 'member_default_address_return',
-            type: 'POST',
-            dataType: 'JSON',
-            success: function(res){
-                console.log(res);
-                if(res.status == 1){
-                    $('.user-name').text('收货人：' + res.data.harvester);
-                    $('.user-phone').text(res.data.harvester_phone_num);
-                    var addr = res.data.address_name.split(',').join('');
-                    $('.address-txt').text(addr + res.data.harvester_real_address);
-                    $('.user-info-box').click(function(){
-                        location.href = 'member_address?id=' + id + '&&preid=' + preId;
-                    })
-                }
-            },
-            error: function(){
-                console.log('error');
-            }
-        })
-        
-
-        
-        // 商品详情 传过来的数据
-        $.ajax({
-            url: 'return_order_buy_information',
-            type: 'POST',
-            dataType: 'JSON',
-            success: function(res){
-                console.log(res);
-                // 数量
-                $('.quantity-p').text('×' + res.data.goods_number)
-                $('.sundry-cal-val').val(res.data.goods_number)
-                // 用户选择的规格
-                $('.standard').text(res.data.goods_standard);
-                $.each(res.data.goods, function(idx, val){
-                    // 店铺名
-                    $('.order-shop-namp').text(val.goods_brand.name);
-                    // 商品名
-                    $('.order-goods-p').text(val.goods_name);
-                    // 商品描述
-                    $('.order-selling-point').text(val.goods_describe);
-                    // 价格
-                    $('.unit-price-p').text('￥' + val.goods_adjusted_money);
-                    // 总价
-                    $('.total-money').text(toFixed(res.data.goods_number*val.goods_adjusted_money, 2));
-
-                })
-                // 总数量
-                $('.total-num').text(res.data.goods_number);
-
-                finalMoney = parseFloat($('.total-money').text());
-
-                // 购买数量按钮
-                $(function(){
-                    // 减
-                    var calculator_val = document.getElementsByClassName('sundry-cal-val')[0];
-                    $('.sundry-minus').click(function(){
-                        if(calculator_val.value > 1){
-                            calculator_val.value -= 1;
-                            $('.quantity-p').text(calculator_val.value);
-                            $('.total-num').text(calculator_val.value);
-                            // 数量*单价
-                            var minusP = toFixed(calculator_val.value*res.data.goods[0].goods_adjusted_money, 2)
-                            console.log(minusP)
-                            // 用户选择抵扣金额后  增加购买数量
-                            if($('.discount').text() != '不使用积分'){
-                                // 保存用户选择的抵扣金额
-                                var choseD = $('.discount').text().split('￥')[1];
-                                $('.total-money').text(toFixed(minusP-choseD, 2));
-                            }else{
-                                $('.total-money').text(minusP);
-                            }
-                            // 保存没有抵扣的金额
-                            finalMoney = parseFloat(minusP);
-                            // console.log('未抵扣钱：' + finalMoney)
-                        }else{
-                            calculator_val.value = 1;
-                        }
-                    })
-                    // 加
-                    $('.sundry-increase').click(function(){
-                        var add =  calculator_val.value - 0;
-                        add += 1;
-                        calculator_val.value = add;
-                        $('.quantity-p').text(calculator_val.value);
-                        $('.total-num').text(calculator_val.value);
-                        // 数量*单价
-                        var increaseP = toFixed(calculator_val.value*res.data.goods[0].goods_adjusted_money, 2)
-                        // 用户选择抵扣金额后  增加购买数量
-                        if($('.discount').text() != '不使用积分'){
-                            // 保存用户选择的抵扣金额
-                            var choseD = $('.discount').text().split('￥')[1];
-                            console.log(choseD)
-                            $('.total-money').text(toFixed(increaseP-choseD, 2));
-                        }else{
-                            $('.total-money').text(increaseP);
-                        }
-
-                        // 保存没有抵扣的金额
-                        finalMoney = parseFloat(increaseP);
-                        // console.log('未抵扣钱：' + finalMoney)
-                    })
-                })
-
-                // 支付弹窗
-                var goodsId = res.data.goods[0].id;
-                var storeId = res.data.goods[0].store_id;
-                $('#order-buy').click(function(){
-                    $('.mask').show();
-                    $('.alipay-pop').animate({'bottom': '0'});
-                    $('html').css('overflow', 'hidden');
-                    
-                    var orderAmount = $('.total-money').text();
-                    var quantity = $('.total-num').text();
-                    var goods_standard = $('.standard').text();
-                    var buy_message = $('.leave-msg').val();
-                    $.ajax({
-                        url: 'ios_api_order_parts_button',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: {
-                            'goods_id': goodsId,
-                            'store_id': storeId,
-                            'order_amount': orderAmount,
-                            'order_quantity': quantity,
-                            'goods_standard': goods_standard,
-                            'buy_message': buy_message,
-                            'setting_id': deductionId
-                        },
-                        success: function(res){
-                            console.log(res);
-                            $('#WIDout_trade_no').val(res.data.parts_order_number);
-                            $('#WIDtotal_amount').val($('.total-money').text());
-                            $('#WIDsubject').val(res.data.parts_goods_name);
-                            $('#WIDbody').val(res.data.parts_goods_name);
-                        },
-                        error: function(){
-                            console.log('error');
-                        }
-                    })
-                })
-                $('.close-alipay').click(function(){
-                    location.href = 'order_parts_detail';
-                    $('.mask').hide();
-                    $('.alipay-pop').animate({'bottom': '-100%'});
-                    $('html').css('overflow', 'auto');
-                })
-            },
-            error: function(){
-                console.log('error');
-            }
-        })
-
-        
-    </script>
-    <!-- 积分抵扣 -->
-    <script>
-        
-        $.ajax({
-            url: 'return_integral_information',
-            type: 'POST',
-            dataType: 'JSON',
-            success: function(res){
-                console.log(res);
-                var str = '';
-                $.each(res.data, function(idx, val){
-                    str += `<div class="dis">
-                                <div class="denomination">
-                                    <p class="deduction-money">￥`+val.deductible_money+`</p>
-                                    <span class="need-integ">需`+val.integral_full+`积分</span>
-                                </div>
-                                <label class="twent" for="twent-`+val.setting_id+`" id="`+val.consumption_full+`">
-                                    <p class="dis-introduce">消费满`+val.consumption_full+`元可用</p>
-                                </label>
-                                <input type="radio" id="twent-`+val.setting_id+`" name="disc">
-                            </div>`
-                })
-                $('.discount_wrap').append(str);
-
-                $('.dis').click(function(e){
-                    e.preventDefault();
-                    var index = $(this).index() -1;
-                    var consumptionFul = $(this).find('label')[0].id;
-                    if(finalMoney >= consumptionFul){
-                        var cut = $(this).find('.deduction-money').text().split('￥')[1];
-                        $(this).find('input').attr('checked', 'checked');
-                        $('.discount').text('-￥' + cut);
-                        $('.discount_pop').hide();
-                        $('.place-order-pop').show();
-                        $(this).siblings().find('input').removeAttr('checked');
-                        $(this).find('input').prop('checked', 'checked');
-
-                        // 抵扣后的总价格
-                        $('.total-money').text(toFixed(finalMoney - cut, 2));
-                        // 存储积分券id
-                        deductionId = $(this).find('input')[0].id.split('-')[1];
-                        console.log(deductionId)
-                    }else{
-                        layer.open({
-                            skin: 'msg',
-                            content: '未达到使用条件',
-                            time: 1
-                        })
-                    }
-                })
-                $('.default').click(function(e){
-                    e.preventDefault();
-                    // 隐藏弹窗
-                    $('.discount_pop').hide();
-                    $('.place-order-pop').show();
-                    // 显示 不适用积分
-                    $(this).siblings().find('input').removeAttr('checked');
-                    var dont = $(this).find('label').text();
-                    $(this).find('input').prop('checked', 'checked');
-                    $('.discount').text(dont);
-                    // 不适用积分 重新计算价格
-                    $('.total-money').text(toFixed(finalMoney, 2));
-                })
-
-            },
-            error: function(){
-                console.log('error');
-            }
-        })
-        $('.icon_back').click(function(){
-            $('.discount_pop').hide();
-            $('.place-order-pop').show();
-        })
-        $('.deduction').click(function(){
-            $('.discount_pop').show();
-            $('.place-order-pop').hide();
-        })
-    </script>
+    <script src="__STATIC__/index/js/order_parts/order_parts_firm_order.js"></script>
 </body>
 </html>
