@@ -59,10 +59,9 @@ class OrderParts extends Controller{
             $parts_order_number =Session::get("parts_order_number");;//订单编号
             $condition ="`user_id` = ".$user_id." and `store_id` = ".$store_id." and `parts_order_number` = ".$parts_order_number;
             $data =Db::name("order_parts")
-                ->where("user_id",$user_id)
                 ->where($condition)
                 ->select();
-            dump($data);
+
         }
         return view('order_parts_detail');
     }
