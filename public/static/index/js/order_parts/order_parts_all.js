@@ -58,6 +58,7 @@ $.ajax({
                 </div>`
             }else if(statusTxt == '待收货'){
                 str +=`<div class="button-box">
+                            <button class="cancel-order-btn">取消订单</button>
                             <button class="check-logistics-btn">查看物流</button>
                             <button class="conf-receipt-btn">确认收货</button>
                         </div>
@@ -118,7 +119,7 @@ $.ajax({
             });
         })
         // 删除订单
-        $('.cancel-order-btn').click(function(){
+        $('.del-order-btn').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
             layer.open({
@@ -127,7 +128,7 @@ $.ajax({
                 yes: function (index) {
                     layer.close(index);
                     $.ajax({
-                        url: 'ios_api_order_parts_no_pay_cancel',
+                        url: 'ios_api_order_parts_del',
                         type: 'POST',
                         dataType: 'JSON',
                         data: {
@@ -175,7 +176,7 @@ $.ajax({
                 yes: function (index) {
                     layer.close(index);
                     $.ajax({
-                        url: 'ios_api_order_parts_no_pay_cancel',
+                        url: 'ios_api_order_parts_collect_goods',
                         type: 'POST',
                         dataType: 'JSON',
                         data: {
