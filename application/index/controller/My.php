@@ -242,14 +242,29 @@ class My extends Controller
     }
 
 
-    
     /**
-     * 昵称
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:我的页面积分记录
+     **************************************
+     * @return \think\response\View
      */
-    public function integral(){
+    public function integral(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");//用户id
+           $data = Db::name("integral")->where("user_id",$user_id)->order("operation_time","desc")->select();
+           $user_data =Db::name("user")->field("user_integral_wallet")->where("id",$user_id)->find();
+           $res =[
+               "integral"=>$user_data["user_integral_wallet"],
+               "integral_record"=>$data
+           ];
+           if(!empty($data)){
+               return ajax_success("消费细节返回成功",$res);
+           }else{
+               return ajax_error("暂无消费记录",["status"=>0]);
+           }
+        }
         return view("my_integral");
-
     }
 
 
