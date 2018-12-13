@@ -787,8 +787,8 @@ class Goods extends Controller{
             ini_set('date.timezone', 'Asia/Shanghai');
 
             include("../extend/WxpayAPI/lib/WxPay.Api.php");
-            include('../extend/WxpayAPI/example/WxPay.NativePay.php');
-            include('../extend/WxpayAPI/example/log.php');
+            include("../extend/WxpayAPI/example/WxPay.NativePay.php");
+            include("../extend/WxpayAPI/example/log.php");
 
             /**
              * 流程：
@@ -863,6 +863,7 @@ class Goods extends Controller{
              */
 
             $result = $notify->GetPayUrl($input);
+            halt($result);
             $url2 = $result["code_url"];
 
             return ajax_success("获取成功", $url2);
@@ -895,7 +896,7 @@ class Goods extends Controller{
      * 陈绪
      */
     public function wx_notify(){
-        
+
         ini_set('date.timezone','Asia/Shanghai');
 
         error_reporting(E_ERROR);
