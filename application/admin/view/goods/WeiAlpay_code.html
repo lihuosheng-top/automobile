@@ -133,14 +133,13 @@
 		function makeCode () {	
 				$.ajax({
 					type: "POST",
-					url: "{:url('admin/Goods/WeiAlpay')}",
+					url: "{:url('admin/Goods/alipay')}",
 					data: {
 						"WIDbody": WIDbody,
 						"WIDsubject": WIDsubject,
 						"WIDtotal_amount": WIDtotal_amount,
 					},
 					success: function(data) {
-						//								console.log(data);
 						var data = eval("(" + data + ")");
 						console.log(data);
 						var datas = "goods_qrcode?url2=" + data.data;
