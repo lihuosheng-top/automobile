@@ -1,10 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/js/plugin/layui/css/layui.css">
+    <title>发表评价</title>
+    <style>
+        html, body{background-color: #fff;}
+        .header{position: relative; height: .88rem; background-color: #f9f9f9;}
+        .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;   height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
+        .publish-btn{position: absolute; right: .2rem; top: 50%; transform: translateY(-50%); border: 0; background-color: transparent; color: #f85d26; outline: none;width: 1rem; height: .6rem; font-size: .3rem;}
+        .goods-evaluate{display: flex; align-items: center; padding: 0 .2rem; border-bottom: 1px solid #eee; height: 1rem;}
+        .goods-img{width: .7rem; height: .7rem; overflow: hidden; margin-right: .2rem;}
+        .goods-img img{width: 100%; height: 100%;}
+        .ms{color: #666; margin-right: .5rem;}
+        .star1 span{color: #999;}
+        .evaluate-txt{margin-bottom: .2rem;}
+        .evaluate-txt textarea{width: 100%; height: 2rem; padding: .2rem; box-sizing: border-box; border: 0; font-size: .3rem; resize: none;}
+        .vi-camera{padding: 0 .2rem; display: flex; flex-wrap: wrap; margin-bottom: .3rem;}
+        .switch-span{position: relative; display: block; width: 1.25rem; height: 1.25rem; border: 1px dashed #ccc; text-align: center; line-height: 2.1rem; color: #ccc; font-size: .24rem;}
+        .switch-span::before{position: absolute; left: 50%; top: 50%; transform: translate(-50%, -60%); content: ''; background: url(__STATIC__/index/image/camera.png) no-repeat; width: .72rem; height: .72rem; background-size: 100%;}
+        .upload-item{position: relative; width: 1.25rem; height: 1.25rem; margin-right: .3rem;}
+        .upload-item img{width: 100%; height: 100%;}
+        .upload-item .del-img{position: absolute; top: -6px; right: -6px; font-size: .3rem; color: #fff; background-color: rgba(0, 0, 0, .6); border: 0; outline: none; width: .3rem; height: .3rem; border-radius: 50%; text-align: center; line-height: .3rem;}
+        .shop-evaluate{border-top: 5px solid #f2f2f2; padding: .25rem .2rem 0;}
+        .shop-eva-title{margin-bottom: .35rem;}
+        .icon-shop{display: inline-block;width: .3rem;height: .29rem;background-position: -5.6rem -1rem;vertical-align: text-bottom;}
+        .on-time{margin-bottom: .2rem;}
+        .on-time input{vertical-align: middle; margin-left: .35rem;}
+        .star2{margin-left: .35rem;}
+        .star3{margin-left: .35rem;}
+    </style>
 </head>
 <body>
-评价页面
+    <div class="wrapper">
+        <header class="header">
+            <a href="order_wait_evaluate" class="spr icon-back"></a>
+            <h3>发表评价</h3>
+            <button class="publish-btn">发布</button>
+        </header>
+        <div class="goods-evaluate">
+            <div class="goods-img">
+                <img src="__STATIC__/index/image/15.jpg">
+            </div>
+            <p class="ms">描述相符</p>
+            <div id="star1" class="star1"></div>
+        </div>
+        <div class="evaluate-txt">
+            <textarea placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧"></textarea>
+        </div>
+        <div class="vi-camera">
+            <div class="upload-item">
+                <img src="__STATIC__/index/image/15.jpg">
+                <button class="del-img">×</button>
+            </div>
+            <span class="switch-span">添加图片</span>
+            <input type="file" multiple hidden id="upload">
+        </div>
+        <div class="shop-evaluate">
+            <div class="shop-eva-title">
+                <i class="spr icon-shop"></i>店铺评分
+            </div>
+            <div class="on-time">
+                是否准时
+                <input type="radio" id="punctual" name='ontimes' checked>
+                <label for="punctual">准时</label>
+                <input type="radio" id="late" name='ontimes'>
+                <label for="late">不准时</label>
+            </div>
+            <div class="service-eval">
+                服务态度
+                <div class="star2" id="star2"></div>
+            </div>
+            <div class="logistics-eval">
+                物流服务
+                <div class="star3" id="star3"></div>
+            </div>
+        </div>
+    </div>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/plugin/layui/layui.js"></script>
+    <script>
+        layui.use(['rate'], function(){
+            var rate = layui.rate;
+            rate.render({
+                elem: '#star1',
+                value: 3,
+                text: true,
+                setText: function(val){
+                    var arrs = {
+                        '1': '很差',
+                        '2': '差',
+                        '3': '一般',
+                        '4': '好',
+                        '5': '很好',
+                    };
+                    this.span.text(arrs[val] || ( val + "星"));
+                }
+            })
+            rate.render({
+                elem: '#star2',
+                value: 3,
+                text: true,
+                setText: function(val){
+                    var arrs = {
+                        '1': '很差',
+                        '2': '差',
+                        '3': '一般',
+                        '4': '好',
+                        '5': '很好',
+                    };
+                    this.span.text(arrs[val] || ( val + "星"));
+                }
+            })
+            rate.render({
+                elem: '#star3',
+                value: 3,
+                text: true,
+                setText: function(val){
+                    var arrs = {
+                        '1': '很差',
+                        '2': '差',
+                        '3': '一般',
+                        '4': '好',
+                        '5': '很好',
+                    };
+                    this.span.text(arrs[val] || ( val + "星"));
+                }
+            })
+        })
+    </script>
 </body>
 </html>
