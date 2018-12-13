@@ -27,11 +27,43 @@ class OrderParts extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
+     * Notes:配件商订单进入详情需要存储的订单编号和店铺id
+     **************************************
+     */
+    public function order_parts_save_record(Request $request){
+            if($request->isPost()){
+                $store_id =$request->only("store_id")["store_id"];//店铺id
+                $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//配件商订单编号
+                if(!empty($store_id)){
+                    Session::set("store_id",$store_id);
+                    Session::set("parts_order_number",$parts_order_number);
+                    return ajax_success("暂存成功",['status'=>1]);
+                }else{
+                    return ajax_error("店铺id不能为空",["status"=>0]);
+                }
+            }
+    }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
      * Notes:配件商订单详情页面
      **************************************
      * @return \think\response\View
      */
-    public function order_parts_detail(){
+    public function order_parts_detail(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            $store_id =Session::get("store_id");
+            $parts_order_number =Session::get("parts_order_number");;//订单编号
+            $condition ="`user_id` = ".$user_id." and `store_id` = ".$store_id." and `parts_order_number` = ".$parts_order_number;
+            $data =Db::name("order_parts")
+                ->where("user_id",$user_id)
+                ->where($condition)
+                ->select();
+            dump($data);
+        }
         return view('order_parts_detail');
     }
 
@@ -983,6 +1015,7 @@ class OrderParts extends Controller{
         if($request->isPost()){
             $user_id =Session::get("user");
             $store_id =$request->only('store_id')["store_id"];//店铺id
+            $cancel_order_description =$request->only('cancel_order_description')["cancel_order_description"];//取消原因
             $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//订单编号
             if(!empty($store_id)&&!empty($parts_order_number)){
                 $res =Db::name("order_parts")
@@ -998,7 +1031,8 @@ class OrderParts extends Controller{
                             ->group("integral_discount_setting_id")
                             ->find();
                         $data =[
-                            "status"=>9
+                            "status"=>9,
+                            "cancel_order_description"=>$cancel_order_description
                         ];
                         $bool =Db::name("order_parts")->where("id",$v["id"])->update($data);
                     }
