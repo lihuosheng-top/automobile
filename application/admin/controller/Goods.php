@@ -703,17 +703,34 @@ class Goods extends Controller{
      */
     public function pay_code(Request $request){
 
-        if($request->isGet()){
-            $id = Session::get("goods_id");
-            $goods_id = explode(",",$id);
-            foreach ($goods_id as $value){
-                $bool = db("goods")->where("id",$value)->update(["goods_status"=>1,"putaway_status"=>1]);
-            }
-            if($bool){
-                $this->success("上架成功",url("admin/Goods/index"));
-            }else{
-                $this->error("上架失败",url("admin/Goods/index"));
-            }
+        include('../extend/AliPay_demo/f2fpay/model/builder/AlipayTradePrecreateContentBuilder.php');
+        include('../extend/AliPay_demo/f2fpay/service/AlipayTradeService.php');
+        include("../extend/AliPay_demo/f2fpay/config/config.php");
+        $qrPayRequestBuilder = new \AlipayTradePrecreateContentBuilder();
+        $qrPay = new \AlipayTradeService($config);
+        $qrPayResult = $qrPay->qrPay($qrPayRequestBuilder);
+
+        //	根据状态值进行业务处理
+        switch ($qrPayResult->getTradeStatus()) {
+            case "SUCCESS":
+                $response = $qrPayResult->getResponse();
+                $qrcode = $qrPay->create_erweima($response->qr_code);
+                return ajax_success("获取成功", $qrcode);
+
+                break;
+            case "FAILED":
+                if (!empty($qrPayResult->getResponse())) {
+                    return ajax_success("成功",$qrPayResult->getResponse());
+                }
+                break;
+            case "UNKNOWN":
+                if (!empty($qrPayResult->getResponse())) {
+                    return ajax_error("失败",$qrPayResult->getResponse());
+                }
+                break;
+            default:
+                echo "不支持的返回状态，创建订单二维码返回异常!!!";
+                break;
         }
     }
 

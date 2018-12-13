@@ -19,7 +19,7 @@ $config = array (
 		'app_id' => "2018120762470526",
 
 		//异步通知地址,只有扫码支付预下单可用
-		'notify_url' => "https://automobile.siring.com.cn/index_pay_code",
+		'notify_url' => "http://localhost/automobile/public/admin/goods_pay_code",
 
 		//最大查询重试次数
 		'MaxQueryRetry' => "10",
