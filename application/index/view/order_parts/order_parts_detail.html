@@ -82,10 +82,20 @@
         </div>
     </div>
 
-    
-    <script src="__STATIC__/index/js/plugin/vue.js"></script>
-    <script src="__STATIC__/index/js/plugin/vue.resource.js"></script>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
-    <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
+    <script>
+        $.ajax({
+            url: 'order_parts_detail',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+    </script>
 </body>
 </html>
