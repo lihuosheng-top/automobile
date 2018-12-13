@@ -73,7 +73,7 @@ Route::group("",[
     "member_information_update"=>"index/My/member_information_update",//个人信息用户个人信息更新（头像,真实姓名，昵称，性别）
     "member_information_data"=>"index/My/member_information_data",//个人信息用户个人信息返回（头像,真实姓名，昵称，性别）
     "member_update_mobiles"=>"index/My/member_update_mobiles",//个人信息修改手机
-    "my_integral"=>"index/My/integral",            //我的积分
+    "my_integral"=>"index/My/integral",            //我的积分页面(积分记录ajax)
     "setting"=>"index/My/setting",              //设置
     "my_nickname"=>"index/My/nickname",         //昵称
     "my_consume"=>"index/My/consume",         //我的消费
