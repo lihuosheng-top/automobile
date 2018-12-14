@@ -80,6 +80,12 @@ Route::group("",[
     "consume_message"=>"index/My/consume_message",       //消费详情
     /*TODO:登录结束*/
 
+    /*TODO:经纬度开始*/
+    "lglt_save"=>"index/LgLt/save",//经纬度刷新保存
+    "lglt_read"=>"index/LgLt/read",//经纬度读取
+
+    /*TODO:经纬度结束*/
+
     /*TODO:卖家我的页面开始*/
     "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
     /*TODO:卖家我的页面结束*/
@@ -91,10 +97,10 @@ Route::group("",[
      * 钱包
      * 陈绪
      */
-    "wallet_index"=>"index/Wallet/index",           //钱包首页
-    "wallet_recharge"=>"index/Wallet/recharge",     //钱包充值
-    "wallet_block"=>"index/Wallet/block",           //添加银行卡
-    "wallet_verification"=>"index/Wallet/verification",   //银行卡验证
+    "wallet_index"=>"index/wallet/index",           //钱包首页
+    "wallet_recharge"=>"index/wallet/recharge",     //钱包充值
+    "wallet_block"=>"index/wallet/block",           //添加银行卡
+    "wallet_verification"=>"index/wallet/verification",   //银行卡验证
 
 
 

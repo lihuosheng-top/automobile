@@ -259,7 +259,20 @@ class My extends Controller
                ->where($condition)
                ->order("operation_time","desc")
                ->select();
-           $datas =[];
+          $datas =array(
+              "january"=>[],
+              "sebruary"=>[],
+              "march"=>[],
+              "april"=>[],
+              "may"=>[],
+              "june"=>[],
+              "july"=>[],
+              "august"=>[],
+              "september"=>[],
+              "october"=>[],
+              "november"=>[],
+              "december"=>[],
+          );
            foreach ($data as $ks=>$vs){
                if(strpos($vs["operation_time"],$now_time_one."-01") !==false){
                    $datas["january"][] =$vs;
@@ -287,6 +300,9 @@ class My extends Controller
                    $datas["december"][] =$vs;
                }
            }
+
+
+
            $user_data =Db::name("user")
                ->field("user_integral_wallet")
                ->where("id",$user_id)

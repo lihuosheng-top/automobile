@@ -31,7 +31,6 @@ html{
 .shop_info_box{
     position: relative;
     width: 96%;
-    height: 2.7rem;
     background-color: #fff;
     padding: .42rem .32rem;
     box-sizing: border-box;
@@ -89,20 +88,21 @@ html{
     margin-right: .2rem;
 }
 .star2{
-    background-position: .05rem -3.5rem;
+    background-position: .05rem -3.5rem !important;
 }
 .star3{
-    background-position: .05rem -3.25rem;
+    background-position: .05rem -3.25rem !important;
 }
 .star4{
-    background-position: .05rem -3rem;
+    background-position: .05rem -3rem !important;
 }
 .star5{
-    background-position: .05rem -2.75rem;
+    background-position: .05rem -2.75rem !important;
 }
 .shop_info_box .addr_p{
     font-size: .24rem;
     color: #999;
+    margin-bottom: .15rem;
 }
 .shop_info_box .icon_addr{
     display: inline-block;
@@ -112,45 +112,125 @@ html{
     margin-right: .15rem;
     vertical-align: sub;
 }
-/* .addr_phone_box{
-    width: 100%;
-    height: 2.26rem;
-    background-color: #fff;
-    padding-left: .4rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: .1rem;
+.shop_info_box .shop-describe{
+    font-size: .26rem; 
+    color: #666;
 }
-.addr_phone_box .addr_p,
-.addr_phone_box .phone_p{
-    font-size: .26rem;
+/* 服务项目 start */
+.service-section{
+    width: 96%;
+    margin: 0 auto .3rem;
+    border-radius: .1rem;
+    padding: .42rem .32rem;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.service-tab-title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: .3rem;
+}
+.service-tab-title li{
+    margin: 0 .2rem;
+    padding: 0 .2rem;
+    font-size: .32rem;
     color: #333;
 }
-.addr_phone_box .addr_p{
-    margin-bottom: .55rem;
+.service-tab-title .service-this{
+    position: relative;
+    color: #504cfb;
 }
-.addr_phone_box .icon_addr{
-    display: inline-block;
-    width: .24rem;
-    height: .32rem;
-    background-position: -3.3rem -2.5rem;
-    margin-right: .3rem;
-    vertical-align: sub;
+.service-tab-title .service-this::after{
+    width: 100%;
+    content: '';
+    border-bottom: 2px solid #504cfb;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
-.addr_phone_box .icon_phone{
-    display: inline-block;
-    width: .27rem;
-    height: .28rem;
-    background-position: -3.75rem -2.5rem;
-    margin-right: .3rem;
-    vertical-align: sub;    
-} */
+.service-colla-item{
+    padding: .25rem 0;
+    border-bottom: 1px solid #eee;
+}
+.service-colla-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .2rem 0;
+}
+.service-colla-item .icon-uncheck{
+    display: block;
+    width: .38rem;
+    height: .38rem;
+    background-position: -2.05rem -.85rem;
+}
+.service-colla-item .icon-check{
+    background-position: -2.05rem -1.25rem !important;
+}
+.service-colla-content li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    line-height: normal;
+    padding: .2rem 0;
+    border-top: 1px solid #eee;
+}
+.service-colla-content .content-money-div{
+    text-align: center;
+    font-size: .26rem;
+    color: #f00;
+}
+.service-colla-content .content-money-div .thro{
+    color: #999;
+    text-decoration: line-through;
+}
+.goods-colla-item{
+    display: flex;
+    padding: .3rem 0;
+    line-height: normal;
+    border-bottom: 1px solid #eee;
+}
+.goods-img-box{
+    width: 2.2rem;
+    height: 2.42rem;
+    border-radius: .1rem;
+    overflow: hidden;
+    margin-right: .2rem;
+}
+.goods-img-box img{
+    width: 100%;
+    height: 100%;
+}
+.goods-info-box{
+    flex: 1;
+}
+.goods-info-box .goods-name{
+    font-size: .3rem;
+    color: #333;
+    margin-bottom: .1rem;
+}
+.goods-info-box .goods-selling,
+.goods-info-box .goods-spec{
+    font-size: .26rem;
+    color: #999;
+}
+.goods-info-box .goods-price{
+    font-size: .32rem;
+    color: #f00;
+    margin-top: .1rem;
+}
+
+
+/* 服务项目 end */
+
 /* 用户评论 start */
 .wrapper .comment_box{
-    width: 100%;
+    width: 96%;
     background-color: #fff;
+    margin: 0 auto 1.2rem;
+    border-radius: .1rem;
+    box-shadow: 1px 1px 10px 0 rgba(220, 220, 220, .3);
 }
 .wrapper .comment_box .comment_title{
     font-size: .3rem;
@@ -161,6 +241,30 @@ html{
     line-height: 1.2rem;
     box-sizing: border-box;
 }
+.wrapper .comment-filter .filter-ul{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: .5rem 0;
+    border-bottom: 1px solid #eee;
+}
+.wrapper .filter-ul li{
+    line-height: normal;
+    text-align: center;
+    flex: 1;
+    border-right: 1px solid #eee;
+}
+.wrapper .filter-ul li:last-of-type{
+    border: 0;
+}
+.filter-ul li p{
+    font-size: .3rem;
+    color: #666;
+}
+.filter-ul .filter-this p{
+    color: #504cfb;
+}
+
 .wrapper .comment_box .comment_ul{
     width: 100%;
     padding-bottom: .2rem;
@@ -204,10 +308,11 @@ html{
     color: #ccc;
 }
 .wrapper .comment_box .comment_phone_time .star{
-    display: inline-block;
-    width: 1.04rem;
-    height: .2rem;
-    background-position: 0 -2.8rem;
+    display: block;
+    width: 1.14rem;
+    height: .3rem;
+    background-position: .05rem -3.75rem;
+    margin-right: .2rem;
 }
 .wrapper .comment_box .comment_text_box{
     width: 100%;
@@ -280,7 +385,7 @@ html{
 }
 .wrapper .comment_box .reply_box{
     position: relative;
-    width: 6rem;
+    width: 5.5rem;
     background-color: #f4f5f6;
     padding: .15rem .25rem;
     box-sizing: border-box;
@@ -317,6 +422,40 @@ html{
     border-radius: .3rem;
 }
 /* 用户评论 end */
+.balance-box{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 1rem;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between
+}
+.balance-box .bespeak-money-box{
+    flex-basis: 60%;
+    box-sizing: border-box;
+    padding-left: .5rem;
+    line-height: 1rem;
+    font-size: .3rem;
+    color: #333;
+}
+.balance-box .bespeak-money-box .bespeak-money{
+    color: #f00;
+}
+.balance-box .bespeak-btn[disabled]{
+    background-color: #d8d8d8;
+}
+.balance-box .bespeak-btn{
+    border: 0;
+    outline: none;
+    background-color: #3558fa;
+    color: #fff;
+    font-size: .3rem;
+    flex-basis: 40%;
+}
 
 /* 全部评论弹窗 start */
 .pop{
