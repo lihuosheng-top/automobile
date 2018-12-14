@@ -80,6 +80,12 @@ Route::group("",[
     "consume_message"=>"index/My/consume_message",       //消费详情
     /*TODO:登录结束*/
 
+    /*TODO:经纬度开始*/
+    "lglt_save"=>"index/LgLt/save",//经纬度刷新保存
+    "lglt_read"=>"index/LgLt/read",//经纬度读取
+
+    /*TODO:经纬度结束*/
+
     /*TODO:卖家我的页面开始*/
     "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
     /*TODO:卖家我的页面结束*/
