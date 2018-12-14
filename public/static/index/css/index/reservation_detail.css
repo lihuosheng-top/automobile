@@ -129,7 +129,7 @@ html{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: .5rem;
+    margin-bottom: .3rem;
 }
 .service-tab-title li{
     margin: 0 .2rem;
@@ -157,6 +157,7 @@ html{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: .2rem 0;
 }
 .service-colla-item .icon-uncheck{
     display: block;
@@ -164,12 +165,30 @@ html{
     height: .38rem;
     background-position: -2.05rem -.85rem;
 }
+.service-colla-item .icon-check{
+    background-position: -2.05rem -1.25rem !important;
+}
 .service-colla-content li{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 1.2rem;
+    line-height: normal;
+    padding: .2rem 0;
+    border-top: 1px solid #eee;
 }
+.service-colla-content .content-money-div{
+    text-align: center;
+    font-size: .26rem;
+    color: #f00;
+}
+.service-colla-content .content-money-div .thro{
+    color: #999;
+    text-decoration: line-through;
+}
+/* .service-colla-title img{
+    width: .6rem;
+    height: .6rem;
+} */
 
 
 /* 服务项目 end */

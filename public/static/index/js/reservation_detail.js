@@ -123,6 +123,11 @@ $('.service-tab-title').on('click', 'li', function(){
     $(this).siblings().removeClass('service-this');
     $(this).addClass('service-this');
 })
+$('.service-colla-title').click(function(e){
+    e.preventDefault();
+    $(this).find('.icon-uncheck').toggleClass('icon-check');
+    
+})
 
 // 筛选评论
 $('.filter-ul').on('click', 'li', function(){
