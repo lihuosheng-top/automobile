@@ -184,13 +184,12 @@ html, body{
 /* 取消订单原因 */
 .cancel-order-pop{
     position: fixed;
-    bottom: 0;
+    bottom: -100%;
     left: 0;
     right: 0;
     width: 100%;
     height: 50vh;
     background-color: #fff;
-    transition: all .3s ease-in;
 }
 
 .cancel-order-header{

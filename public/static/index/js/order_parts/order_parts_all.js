@@ -93,7 +93,7 @@ $.ajax({
         $('.cancel-order-btn').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
-            $('.cancel-order-pop').show();
+            $('.cancel-order-pop').animate({'bottom': '0'});
             $('.mask').show();
             $('.select-reason-btn').click(function(){
                 var cancel_order_description = $('.reason-selected')[0].innerText;
@@ -121,7 +121,7 @@ $.ajax({
             $(this).addClass('reason-selected').siblings().removeClass('reason-selected');
         })
         $('.close-cancel-order').click(function(){
-            $('.cancel-order-pop').hide();
+            $('.cancel-order-pop').animate({'bottom': '-100%'});
             $('.mask').hide();
         })
         // 删除订单
@@ -201,10 +201,9 @@ $.ajax({
             });
         })
         // 查看订单详情
-        $('.single-shop-box').click(function(e){
-            e.preventDefault();
-            var store_id = $(this).attr('data-id');
-            var parts_order_number = $(this).attr('name');
+        $('.all-goods-box').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
             $.ajax({
                 url: 'order_parts_save_record',
                 type: 'POST',
