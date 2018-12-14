@@ -97,10 +97,10 @@ Route::group("",[
      * 钱包
      * 陈绪
      */
-    "wallet_index"=>"index/Wallet/index",           //钱包首页
-    "wallet_recharge"=>"index/Wallet/recharge",     //钱包充值
-    "wallet_block"=>"index/Wallet/block",           //添加银行卡
-    "wallet_verification"=>"index/Wallet/verification",   //银行卡验证
+    "wallet_index"=>"index/wallet/index",           //钱包首页
+    "wallet_recharge"=>"index/wallet/recharge",     //钱包充值
+    "wallet_block"=>"index/wallet/block",           //添加银行卡
+    "wallet_verification"=>"index/wallet/verification",   //银行卡验证
 
 
 
