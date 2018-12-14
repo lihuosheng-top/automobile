@@ -126,7 +126,11 @@ $('.service-tab-title').on('click', 'li', function(){
 $('.service-colla-title').click(function(e){
     e.preventDefault();
     $(this).find('.icon-uncheck').toggleClass('icon-check');
-    
+    if($(this).find('.icon-uncheck').hasClass('icon-check')){
+        $(this).siblings('.service-colla-content').show();
+    }else{
+        $(this).siblings('.service-colla-content').hide();
+    }
 })
 
 // 筛选评论
