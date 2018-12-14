@@ -62,10 +62,23 @@ class OrderParts extends Controller{
                     ->where($condition)
                     ->select();
                 if(!empty($data)){
-                    $store_id = $data[0]["store_id"];//店铺id
-                    $store_name = $data[0]["store_name"];//店铺名称
-                    $create_time =$data[0]["order_create_time"];//订单创建时间
-                    $pay_time =$data[0]["pay_time"]; //支付时间
+                    $datas["store_id"] = $data[0]["store_id"];//店铺id
+                    $datas["store_name"] = $data[0]["store_name"];//店铺名称
+                    $datas["create_time"] =$data[0]["order_create_time"];//订单创建时间
+                    $datas["pay_time"] =$data[0]["pay_time"]; //支付时间
+                    $datas["harvester"] =$data[0]["harvester"];//收货人
+                    $datas["harvest_phone_num"] =$data[0]["harvest_phone_num"];//收件人电话
+                    $datas["harvester_address"] =$data[0]["harvester_address"];//收件人地址
+                    $datas["status"] =$data[0]["status"];//状态
+                    $datas["normal_future_time"] =$data[0]["normal_future_time"];//正常订单未付款自动关闭的时间
+                    $datas["info"] =$data;
+                    if(!empty($datas)){
+                        return ajax_success("数据返回成功",$datas);
+                    }else{
+                        return ajax_error("没有数据信息",["status"=>0]);
+                    }
+                }else{
+                    return ajax_error("订单信息错误",["status"=>0]);
                 }
         }
         return view('order_parts_detail');
