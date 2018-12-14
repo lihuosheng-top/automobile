@@ -31,7 +31,6 @@ html{
 .shop_info_box{
     position: relative;
     width: 96%;
-    height: 2.7rem;
     background-color: #fff;
     padding: .42rem .32rem;
     box-sizing: border-box;
@@ -89,20 +88,21 @@ html{
     margin-right: .2rem;
 }
 .star2{
-    background-position: .05rem -3.5rem;
+    background-position: .05rem -3.5rem !important;
 }
 .star3{
-    background-position: .05rem -3.25rem;
+    background-position: .05rem -3.25rem !important;
 }
 .star4{
-    background-position: .05rem -3rem;
+    background-position: .05rem -3rem !important;
 }
 .star5{
-    background-position: .05rem -2.75rem;
+    background-position: .05rem -2.75rem !important;
 }
 .shop_info_box .addr_p{
     font-size: .24rem;
     color: #999;
+    margin-bottom: .15rem;
 }
 .shop_info_box .icon_addr{
     display: inline-block;
@@ -112,45 +112,28 @@ html{
     margin-right: .15rem;
     vertical-align: sub;
 }
-/* .addr_phone_box{
-    width: 100%;
-    height: 2.26rem;
+.shop_info_box .shop-describe{
+    font-size: .26rem; 
+    color: #666;
+}
+/* 服务项目 start */
+.service-section{
+    width: 96%;
+    margin: 0 auto .3rem;
+    border-radius: .1rem;
+    padding: .42rem .32rem;
     background-color: #fff;
-    padding-left: .4rem;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: .1rem;
 }
-.addr_phone_box .addr_p,
-.addr_phone_box .phone_p{
-    font-size: .26rem;
-    color: #333;
-}
-.addr_phone_box .addr_p{
-    margin-bottom: .55rem;
-}
-.addr_phone_box .icon_addr{
-    display: inline-block;
-    width: .24rem;
-    height: .32rem;
-    background-position: -3.3rem -2.5rem;
-    margin-right: .3rem;
-    vertical-align: sub;
-}
-.addr_phone_box .icon_phone{
-    display: inline-block;
-    width: .27rem;
-    height: .28rem;
-    background-position: -3.75rem -2.5rem;
-    margin-right: .3rem;
-    vertical-align: sub;    
-} */
+/* 服务项目 end */
+
 /* 用户评论 start */
 .wrapper .comment_box{
-    width: 100%;
+    width: 96%;
     background-color: #fff;
+    margin: 0 auto .2rem;
+    border-radius: .1rem;
+    box-shadow: 1px 1px 10px 0 rgba(220, 220, 220, .3);
 }
 .wrapper .comment_box .comment_title{
     font-size: .3rem;
@@ -204,10 +187,11 @@ html{
     color: #ccc;
 }
 .wrapper .comment_box .comment_phone_time .star{
-    display: inline-block;
-    width: 1.04rem;
-    height: .2rem;
-    background-position: 0 -2.8rem;
+    display: block;
+    width: 1.14rem;
+    height: .3rem;
+    background-position: .05rem -3.75rem;
+    margin-right: .2rem;
 }
 .wrapper .comment_box .comment_text_box{
     width: 100%;
@@ -280,7 +264,7 @@ html{
 }
 .wrapper .comment_box .reply_box{
     position: relative;
-    width: 6rem;
+    width: 5.5rem;
     background-color: #f4f5f6;
     padding: .15rem .25rem;
     box-sizing: border-box;

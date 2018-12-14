@@ -7,6 +7,7 @@
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <!-- <link rel="stylesheet" href="__STATIC__/index/js/plugin/layui/css/layui.css"> -->
     <link rel="stylesheet" href="__STATIC__/index/css/plugin/swiper-4.3.5.min.css">
     <link rel="stylesheet" href="__STATIC__/index/css/index/reservation_detail.css">
     <title>店铺详情</title>
@@ -47,10 +48,14 @@
             <p class="addr_p"><i class="spr icon_addr"></i>深圳市福田区景田路3号景文阁右侧1楼深圳市福田区景田路3号景文阁右侧1楼</p>
             <p class="shop-describe">店铺描述店铺描述店铺描述店铺描述店铺描述店铺描述店铺描述店铺描述</p>
         </div>
-        <!-- <div class="addr_phone_box">
-            <p class="addr_p"><i class="spr icon_addr"></i>深圳市福田区景田路3号景文阁右侧1楼</p>
-            <p class="phone_p"><i class="spr icon_phone"></i>0755-85242377</p>
-        </div> -->
+        <div class="service-section">
+            <ul class="">
+                <li>服务项目</li>
+                <li>本店商品</li>
+            </ul>
+            <!-- <div class="service"></div>
+            <div class="goods"></div> -->
+        </div>
         <div class="comment_box">
             <h3 class="comment_title">评论（<span>2000</span>）</h3>
             <ul class="comment_ul">
@@ -64,7 +69,7 @@
                                 <span class="phone_box">13691853045</span>
                                 <span class="time_box">2018-11-5</span>
                             </div>
-                            <span class="spr star"></span>
+                            <span class="spr star star5"></span>
                         </div>
                     </div>
                     <div class="comment_text_box">
@@ -184,6 +189,7 @@
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
+    <!-- <script src="__STATIC__/index/js/plugin/layui/layui.js"></script> -->
     <script src="__STATIC__/index/js/reservation_detail.js"></script>
     <!-- swiper初始化 -->
     <script>        
@@ -198,7 +204,7 @@
             pagination: {
                 el: '.swiper-pagination',
             },
-        })        
+        })  
     </script>
 </body>
 </html>
