@@ -159,7 +159,7 @@
 
         function wx_notify () {
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url: "{:url('admin/Goods/wx_notify')}",
                 data: {
                     "WIDbody": WIDbody,
