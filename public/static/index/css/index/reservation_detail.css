@@ -125,6 +125,31 @@ html{
     background-color: #fff;
     box-sizing: border-box;
 }
+.service-tab-title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.service-tab-title li{
+    margin: 0 .2rem;
+    padding: 0 .2rem;
+    font-size: .32rem;
+    color: #333;
+}
+.service-tab-title .service-this{
+    position: relative;
+    color: #504cfb;
+}
+.service-tab-title .service-this::after{
+    width: 100%;
+    content: '';
+    border-bottom: 2px solid #504cfb;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+
 /* 服务项目 end */
 
 /* 用户评论 start */
