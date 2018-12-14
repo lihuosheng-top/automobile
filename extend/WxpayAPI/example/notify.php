@@ -5,7 +5,6 @@ error_reporting(E_ERROR);
 include "../lib/WxPay.Api.php";
 include '../lib/WxPay.Notify.php';
 include 'log.php';
-use WxpayAPI\example\WxPayNotify;
 
 //初始化日志
 $logHandler= new CLogFileHandler("../logs/".date('Y-m-d').'.log');

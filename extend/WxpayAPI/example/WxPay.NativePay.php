@@ -1,6 +1,5 @@
 <?php
-//require_once "../lib/WxPay.Api.php";
-namespace WxpayAPI\example;
+include ("../lib/WxPay.Api.php");
 
 
 /**
