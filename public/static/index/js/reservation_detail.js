@@ -117,3 +117,15 @@ if(url.indexOf('?') != -1){
 //         console.log('error');
 //     }
 // })
+
+// 切换服务项目 本店商品
+$('.service-tab-title').on('click', 'li', function(){
+    $(this).siblings().removeClass('service-this');
+    $(this).addClass('service-this');
+})
+
+// 筛选评论
+$('.filter-ul').on('click', 'li', function(){
+    $(this).siblings().removeClass('filter-this');
+    $(this).addClass('filter-this');
+})
