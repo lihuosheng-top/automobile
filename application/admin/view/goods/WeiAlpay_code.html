@@ -154,7 +154,31 @@
 //						qrcode.makeCode(datas);
 		}
 		makeCode();
-		
+
+
+
+        function wx_notify () {
+            $.ajax({
+                type: "POST",
+                url: "{:url('admin/Goods/goods_wx_notify')}",
+                data: {
+                    "WIDbody": WIDbody,
+                    "WIDsubject": WIDsubject,
+                    "WIDtotal_amount": WIDtotal_amount,
+                },
+                success: function(data) {
+                    console.log(data);
+                },
+
+                error: function(data) {
+                    console.log("错误")
+                }
+            });
+//                      var datas = "https://www.baidu.com/?tn=21002492_17_hao_pg";
+//						qrcode.makeCode(datas);
+        }
+        wx_notify();
+
 	</script>
 	{/block}
 

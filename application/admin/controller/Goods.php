@@ -666,13 +666,14 @@ class Goods extends Controller{
                 // 调用qrPay方法获取当面付应答
                 $qrPay = new \AlipayTradeService($config);
                 $qrPayResult = $qrPay->qrPay($qrPayRequestBuilder);
-
+                $response = $qrPayResult->getResponse();
+                $qrcode = $qrPay->create_erweima($response->qr_code);
+                return ajax_success("获取成功", $qrcode);
                 //	根据状态值进行业务处理
                 switch ($qrPayResult->getTradeStatus()) {
                     case "SUCCESS":
-                        $response = $qrPayResult->getResponse();
-                        $qrcode = $qrPay->create_erweima($response->qr_code);
-                        return ajax_success("获取成功", $qrcode);
+
+
 
                         break;
                     case "FAILED":
@@ -777,7 +778,7 @@ class Goods extends Controller{
             //店铺名称，必填
             $store = $_POST['WIDsubject'];
             //付款金额，必填
-            $goods_money = $_POST['WIDtotal_amount'];
+            $goods_money = $_POST['WIDtotal_amount'] * 100;
 
             //商品描述，可空
             $goods_id = $_POST['WIDbody'];
@@ -821,7 +822,7 @@ class Goods extends Controller{
             /**
              * 设置商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
              */
-            $input->SetOut_trade_no(\WxPayConfig::MCHID . date("YmdHis"));
+            $input->SetOut_trade_no(\WxPayConfig::MCHID.date("YmdHis"));
             /**
              * 设置订单总金额，只能为整数，详见支付金额
              * @param string $value
@@ -846,7 +847,7 @@ class Goods extends Controller{
              * 设置接收微信支付异步通知回调地址
              * @param string $value
              **/
-            $input->SetNotify_url("http://automobile.siring.com.cn/goods_wx_notify");
+            $input->SetNotify_url("http://automobile.siring.com.cn/admin/goods_qrcode");
             /**
              * 设置取值如下：JSAPI，NATIVE，APP，详细说明见参数规定
              * @param string $value
@@ -863,10 +864,9 @@ class Goods extends Controller{
              */
 
             $result = $notify->GetPayUrl($input);
-            halt($result);
             $url2 = $result["code_url"];
 
-            return ajax_success("获取成功", $url2);
+            return ajax_success("获取成功", urlencode($url2));
             //return view("WeiAlpay_code",["url2"=>urlencode(url2)]);
         }
         return view("WeiAlpay_code");
@@ -885,7 +885,10 @@ class Goods extends Controller{
         error_reporting(E_ERROR);
         include ('../extend/WxpayAPI/example/phpqrcode/phpqrcode.php');
         $url = urldecode($_GET["url2"]);
-        \QRcode::png($url);
+        halt($url);
+        $errorCorrectionLevel = 'H';
+        $matrixPointSize = 10;
+        \QRcode::png($url,false,$errorCorrectionLevel, $matrixPointSize,3);
 
     }
 
@@ -896,7 +899,6 @@ class Goods extends Controller{
      * 陈绪
      */
     public function wx_notify(){
-
         ini_set('date.timezone','Asia/Shanghai');
 
         error_reporting(E_ERROR);
@@ -910,9 +912,12 @@ class Goods extends Controller{
         $is_success = $notify->IsSuccess();
 
         $bdata = $is_success['data'];               //获取微信回调数据
-
+        return ajax_success("成功",$bdata);
 
         if($is_success['code'] == 1){
+
+            echo 1;
+            exit();
 
             //验证成功，获取数据
 
