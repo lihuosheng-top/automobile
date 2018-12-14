@@ -847,7 +847,7 @@ class Goods extends Controller{
              * 设置接收微信支付异步通知回调地址
              * @param string $value
              **/
-            $input->SetNotify_url("http://automobile.siring.com.cn/admin/goods_qrcode");
+            $input->SetNotify_url("http://automobile.siring.com.cn/admin/goods_wx_notify");
             /**
              * 设置取值如下：JSAPI，NATIVE，APP，详细说明见参数规定
              * @param string $value
@@ -898,42 +898,9 @@ class Goods extends Controller{
      * 陈绪
      */
     public function wx_notify(Request $request){
-        if($request->isPost()) {
-            ini_set('date.timezone', 'Asia/Shanghai');
 
-            error_reporting(E_ERROR);
-
-            include("../extend/WxpayAPI/example/notify.php");
-
-            $notify = new \PayNotifyCallBack();
-
-            $notify->Handle(false);
-
-            $is_success = $notify->IsSuccess();
-
-            $bdata = $is_success['data'];               //获取微信回调数据
-            return ajax_success("成功", $bdata);
-
-            if ($is_success['code'] == 1) {
-
-                echo 1;
-                exit();
-
-                //验证成功，获取数据
-
-                $total_fee = $bdata['total_fee'] / 100;     //支付金额
-
-                $trade_no = $bdata['transaction_id'];     //微信订单号
-
-                $out_trade_no = $bdata['out_trade_no'];           //系统订单号
-
-                $openid = $bdata['openid'];           //用户在商户appid下的唯一标识
-
-
-                // 其他coding ……
-
-            }
-        }
+        $goods_id = $_GET["WIDtotal_amount"];
+        halt($goods_id);
 
     }
 
