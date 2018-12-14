@@ -213,7 +213,13 @@ class Store extends Controller{
                 db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
                 $isset_admin =Db::name('admin')->field('id')->where('phone',$old_phone_num["phone_num"])->find();//判断是否提交过申请
                 if(!empty($isset_admin)){
-                    db("admin")->where('id',$isset_admin['id'])->update(['name'=>$real_name,'phone'=>$phone_num,'sex'=>$sex]);
+                    if($role_id ==5){
+                        db("admin")->where('id',$isset_admin['id'])->update(['name'=>$real_name,'phone'=>$phone_num,'sex'=>$sex,"role_id"=>$role_id,"department"=>"配件商"]);
+                    }
+                    if($role_id ==13){
+                        db("admin")->where('id',$isset_admin['id'])->update(['name'=>$real_name,'phone'=>$phone_num,'sex'=>$sex,"role_id"=>$role_id,"department"=>"服务商"]);
+                    }
+
                 }
                 $data =[
                     'store_name'=>$store_name,
@@ -264,6 +270,7 @@ class Store extends Controller{
                     'store_owner_wechat'=>$store_owner_wechat,
                     'store_information'=>$store_information,
                     'role_id'=>$role_id,
+                    'del_status'=>1, //判断店铺是否被伪删除（-1为伪删除，1为正常状态）
                 ];
                 $bool = db("store")->where('user_id',$user_id)->update($data);
                 $store_id =db("store")->field('store_id')->where('user_id',$user_id)->find();
