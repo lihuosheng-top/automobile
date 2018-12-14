@@ -122,6 +122,17 @@ if(url.indexOf('?') != -1){
 $('.service-tab-title').on('click', 'li', function(){
     $(this).siblings().removeClass('service-this');
     $(this).addClass('service-this');
+    var index = $(this).index();
+    switch(index){
+        case 0:
+            $('.service-content').show();
+            $('.goods-content').hide();
+            break;
+        case 1:
+            $('.service-content').hide();
+            $('.goods-content').show();
+            break;
+    }
 })
 $('.service-colla-title').click(function(e){
     e.preventDefault();
@@ -130,6 +141,15 @@ $('.service-colla-title').click(function(e){
         $(this).siblings('.service-colla-content').show();
     }else{
         $(this).siblings('.service-colla-content').hide();
+    }
+})
+$('.service-colla-content li').click(function(){
+    $(this).find('.icon-uncheck').toggleClass('icon-check');
+    if($(this).find('.icon-uncheck').hasClass('icon-check')){
+        $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
+        $('.bespeak-btn').removeAttr('disabled')
+    }else{
+        $('.bespeak-btn').prop('disabled', 'disabled');
     }
 })
 
