@@ -92,28 +92,28 @@ var id;
 if(url.indexOf('?') != -1){
     id = url.substr(1).split('=')[1];
 }
-$.ajax({
-    url: 'reservation_detail',
-    type: 'POST',
-    dataType: 'JSON',
-    data: {
-        'id': id
-    },
-    success: function(data){
-        console.log(data);
-        var str = '';
-        var str2 = '';
-        $.each(data.data, function(idx, val){
-            str += '<p class="shop_name">'+val.store.store_name+'</p>\
-                    <i class="spr star"></i>\
-                    <p class="nature">'+val.service_setting_name+'</p>';
-            str2 += '<p class="addr_p"><i class="spr icon_addr"></i>'+val.store.store_detailed_address+'</p>\
-                    <p class="phone_p"><i class="spr icon_phone"></i>'+val.store.store_owner_seat_num+'</p>'
-        })
-        $('.shop_info_box').append(str);
-        $('.addr_phone_box').append(str2);
-    },
-    error: function(){
-        console.log('error');
-    }
-})
+// $.ajax({
+//     url: 'reservation_detail',
+//     type: 'POST',
+//     dataType: 'JSON',
+//     data: {
+//         'id': id
+//     },
+//     success: function(data){
+//         console.log(data);
+//         var str = '';
+//         var str2 = '';
+//         $.each(data.data, function(idx, val){
+//             str += '<p class="shop_name">'+val.store.store_name+'</p>\
+//                     <i class="spr star"></i>\
+//                     <p class="nature">'+val.service_setting_name+'</p>';
+//             str2 += '<p class="addr_p"><i class="spr icon_addr"></i>'+val.store.store_detailed_address+'</p>\
+//                     <p class="phone_p"><i class="spr icon_phone"></i>'+val.store.store_owner_seat_num+'</p>'
+//         })
+//         $('.shop_info_box').append(str);
+//         $('.addr_phone_box').append(str2);
+//     },
+//     error: function(){
+//         console.log('error');
+//     }
+// })
