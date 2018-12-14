@@ -21,7 +21,10 @@ class Shop extends Controller{
      **************************************
      */
     public function index(){
-        $store_data  =Db::name('store')->where("store_is_button",1)->select();
+        $store_data  =Db::name('store')
+            ->where("store_is_button",1)
+            ->where("del_status",1)
+            ->select();
        foreach ($store_data as $k=>$v){
            $store_data[$k]['store_id'] =$v['store_id'];
            $store_data[$k]['store_name'] =$v['store_name'];
@@ -82,7 +85,6 @@ class Shop extends Controller{
             }
         }
         $service_setting_data =Db::name('service_setting')->where('service_setting_status',1)->select();
-//        dump($store_datas);
         return view("shop_add",['data'=>$store_datas,'service_setting_data'=>$service_setting_data,'imgs'=>$imgs,'address'=>$address,'service_setting_id'=>$service_setting_id]);
     }
 
@@ -129,13 +131,14 @@ class Shop extends Controller{
     public function del($id){
         if($id>0){
             $user_id =Db::name("store")->field('user_id')->where('store_id',$id)->find();
-            $phone =Db::name("user")->field('phone_num')->where('user_id',$user_id["user_id"])->find();
+            $phone =Db::name("user")->field('phone_num')->where('id',$user_id["user_id"])->find();
             $datas =Db::name("admin")->where('phone',$phone['phone_num'])->find();
             if(!empty($datas)){
-                Db::name("admin")->where('phone',$phone['phone_num'])->delete();
+                Db::name("admin")->where('phone',$phone['phone_num'])->update(["status"=>0]);//账号删除(伪删除)
             }
-            $bool =Db::name('store')->where('store_id',$id)->delete();
+            $bool =Db::name('store')->where('store_id',$id)->update(["del_status"=>-1,"operation_status"=>-1]);//店铺删除（伪删除）
             if($bool){
+                //所有的订单删除
                 $this->success('删除成功','admin/Shop/index');
             }else{
                 $this->error('删除失败');
@@ -148,7 +151,7 @@ class Shop extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:批量删除
+     * Notes:批量删除(伪删除)
      **************************************
      * @param Request $request
      */
@@ -158,7 +161,8 @@ class Shop extends Controller{
             if(is_array($id)){
                 $where ='store_id in('.implode(',',$id).')';
                 foreach ($id as $ks=>$vs){
-                    $phone_data =Db::name("store")->field('phone_num')->where('store_id',$vs)->find();
+                    $user_id =Db::name("store")->field('user_id')->where('store_id',$vs)->find();
+                    $phone_data =Db::name("user")->field('phone_num')->where('id',$user_id["user_id"])->find();
                     $phone[] =$phone_data['phone_num'];
                 }
                 if(!empty($phone)){
@@ -166,14 +170,15 @@ class Shop extends Controller{
                 }
             }else{
                 $where ='store_id='.$id;
-                $phone_data =Db::name("store")->field('phone_num')->where('store_id',$id)->find();
+                $user_id =Db::name("store")->field('user_id')->where('store_id',$id)->find();
+                $phone_data =Db::name("user")->field('phone_num')->where('id',$user_id["user_id"])->find();
                 $phones ='phone='.$phone_data['phone_num'];
 
             }
-            $list =  Db::name('store')->where($where)->delete();
+            $list =  Db::name('store')->where($where)->update(["status"=>0]);
             if($list!==false)
             {
-                Db::name('admin')->where($phones)->delete();
+                Db::name('admin')->where($phones)->update(["del_status"=>-1,"operation_status"=>-1]);
                 return ajax_success('成功删除!',['status'=>1]);
             }else{
                 return ajax_error('删除失败',['status'=>0]);
