@@ -258,6 +258,7 @@ class My extends Controller
                "integral"=>$user_data["user_integral_wallet"],
                "integral_record"=>$data
            ];
+           dump($res);
            if(!empty($data)){
                return ajax_success("消费细节返回成功",$res);
            }else{

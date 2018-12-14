@@ -1056,7 +1056,7 @@ class OrderParts extends Controller{
                                     "integral_operation"=>"+".$values["integral_deductible_num"],//积分操作
                                     "integral_balance"=>$user_info["user_integral_wallet"] + $values["integral_deductible_num"],//积分余额
                                     "integral_type"=> 1,//积分类型
-                                    "operation_time"=>time() ,//操作时间
+                                    "operation_time"=>date("Y-m-d H:i:s") ,//操作时间
                                     "integral_remarks"=>"订单号:".$parts_order_number."取消退回".$values["integral_deductible_num"]."积分",//积分备注
                                 ];
                                     Db::name("integral")->insert($integral_data); //插入积分消费记录
@@ -1240,12 +1240,13 @@ class OrderParts extends Controller{
                                 //积分消费记录
                                 $user_integral_wallet =$user_information["user_integral_wallet"]; //之前的积分余额
                                 $user_integral_wallets =$user_integral_wallet - $setting_data["integral_full"];//减了之后的积分
+                                $operation_times =date("Y-m-d H:i:s");
                                 $integral_data =[
                                     "user_id"=>$user_id,//用户ID
                                     "integral_operation"=>"-".$setting_data['integral_full'],//积分操作
                                     "integral_balance"=>$user_integral_wallets,//积分余额
                                     "integral_type"=> -1,//积分类型
-                                    "operation_time"=>$create_time ,//操作时间
+                                    "operation_time"=>$operation_times ,//操作时间
                                     "integral_remarks"=>"订单号:".$order_datas['parts_order_number']."下单使用积分".$setting_data['integral_full']."抵扣".$setting_data["deductible_money"]."元钱",//积分备注
                                 ];
                                 Db::name("user")->where("id",$user_id)->update(["user_integral_wallet"=>$user_integral_wallets,"user_integral_wallet_consumed"=>$setting_data["integral_full"]+$user_information["user_wallet_consumed"]]);
