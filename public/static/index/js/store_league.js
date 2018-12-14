@@ -260,7 +260,7 @@ $.ajax({
                                             time: 1
                                         })
                                         setTimeout(function(){
-                                            // location.href = 'store_verify';
+                                            location.href = 'store_verify';
                                         }, 1100)
                                     }else if(res.status == 0){
                                         layer.open({
@@ -291,7 +291,7 @@ $.ajax({
                                             time: 1
                                         })
                                         setTimeout(function(){
-                                            // location.href = 'store_verify';
+                                            location.href = 'store_verify';
                                         }, 1100)
                                     }else{
                                         layer.open({
@@ -300,7 +300,7 @@ $.ajax({
                                             time: 1
                                         })
                                         setTimeout(function(){
-                                            // location.href = 'store_verify';
+                                            location.href = 'store_verify';
                                         }, 1100)
                                     }
                                 },
@@ -334,7 +334,7 @@ $.ajax({
                                         time: 1
                                     })
                                     setTimeout(function(){
-                                        // location.href = 'store_verify';
+                                        location.href = 'store_verify';
                                     }, 1100)
                                 }else if(res.status == 0){
                                     layer.open({
@@ -365,7 +365,7 @@ $.ajax({
                                         time: 1
                                     })
                                     setTimeout(function(){
-                                        // location.href = 'store_verify';
+                                        location.href = 'store_verify';
                                     }, 1100)
                                 }else{
                                     layer.open({
@@ -374,7 +374,7 @@ $.ajax({
                                         time: 1
                                     })
                                     setTimeout(function(){
-                                        // location.href = 'store_verify';
+                                        location.href = 'store_verify';
                                     }, 1100)
                                 }
                             },

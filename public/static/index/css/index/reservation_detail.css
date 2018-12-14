@@ -391,6 +391,12 @@ html{
     border-radius: .3rem;
 }
 /* 用户评论 end */
+.balance-box{
+    position: fixed;
+    width: 100%;
+    height: 1rem;
+    
+}
 
 /* 全部评论弹窗 start */
 .pop{
