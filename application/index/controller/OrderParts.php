@@ -53,34 +53,37 @@ class OrderParts extends Controller{
      * @return \think\response\View
      */
     public function order_parts_detail(Request $request){
-        if($request->isPost()){
-            $user_id =Session::get("user");
-            $store_id =Session::get("store_id");
-            $parts_order_number =Session::get("parts_order_number");;//订单编号
-            $condition ="`user_id` = ".$user_id." and `store_id` = ".$store_id." and `parts_order_number` = ".$parts_order_number;
-                $data =Db::name("order_parts")
-                    ->where($condition)
-                    ->select();
-                if(!empty($data)){
-                    $datas["store_id"] = $data[0]["store_id"];//店铺id
-                    $datas["store_name"] = $data[0]["store_name"];//店铺名称
-                    $datas["create_time"] =$data[0]["order_create_time"];//订单创建时间
-                    $datas["pay_time"] =$data[0]["pay_time"]; //支付时间
-                    $datas["harvester"] =$data[0]["harvester"];//收货人
-                    $datas["harvest_phone_num"] =$data[0]["harvest_phone_num"];//收件人电话
-                    $datas["harvester_address"] =$data[0]["harvester_address"];//收件人地址
-                    $datas["status"] =$data[0]["status"];//状态
-                    $datas["normal_future_time"] =$data[0]["normal_future_time"];//正常订单未付款自动关闭的时间
-                    $datas["info"] =$data;
-                    if(!empty($datas)){
-                        return ajax_success("数据返回成功",$datas);
-                    }else{
-                        return ajax_error("没有数据信息",["status"=>0]);
-                    }
-                }else{
-                    return ajax_error("订单信息错误",["status"=>0]);
+        if($request->isPost()) {
+            $user_id = Session::get("user");
+            $store_id = Session::get("store_id");
+            $parts_order_number = Session::get("parts_order_number");;//订单编号
+            $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number;
+            $data = Db::name("order_parts")
+                ->where($condition)
+                ->select();
+            if (!empty($data)) {
+                $datas["store_id"] = $data[0]["store_id"];//店铺id
+                $datas["store_name"] = $data[0]["store_name"];//店铺名称
+                $datas["create_time"] = $data[0]["order_create_time"];//订单创建时间
+                $datas["pay_time"] = $data[0]["pay_time"]; //支付时间
+                $datas["harvester"] = $data[0]["harvester"];//收货人
+                $datas["harvest_phone_num"] = $data[0]["harvest_phone_num"];//收件人电话
+                $datas["harvester_address"] = $data[0]["harvester_address"];//收件人地址
+                $datas["status"] = $data[0]["status"];//状态
+                $datas["normal_future_time"] = $data[0]["normal_future_time"];//正常订单未付款自动关闭的时间
+                $datas["all_order_real_pay"] = array_sum(array_map(create_function('$val', 'return $val["order_real_pay"];'), $data));
+                $datas["all_numbers"] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $data));
+                $datas["info"] = $data;
+                if (!empty($datas)) {
+                    return ajax_success("数据返回成功", $datas);
+                } else {
+                    return ajax_error("没有数据信息", ["status" => 0]);
                 }
+            } else {
+                return ajax_error("订单信息错误", ["status" => 0]);
+            }
         }
+
         return view('order_parts_detail');
     }
 
