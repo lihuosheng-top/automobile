@@ -102,6 +102,9 @@ class Install extends Controller{
             if(empty($consumption_full) ||empty($integral_can_be_used) ||empty($integral_full)||empty($deductible_money) ){
                 $this->error('所添加的值不能为空');
             }
+            if($integral_can_be_used != $integral_full){
+                $this->error('可使用积分和积分抵扣数量需要一致');
+            }
             $settings_table= new IntegralDiscountSettings();
             foreach ($consumption_full as $key => $value) {
                 $bool = $settings_table->insert(
@@ -592,7 +595,9 @@ class Install extends Controller{
             $after_sale_time =$request->only(['after_sale'])['after_sale']; //售后
             $start_evaluate_time =$request->only(['start_evaluate'])['start_evaluate']; //自动好评
             $time =time();
+            $details ="秒杀订单超过：".$spike_time." 分未付款，订单自动关闭，正常订单超过：".$normal_time." 分未付款，订单自动关闭,发货超过：".$deliver_goods_time."分未收货，订单自动完成,订单完成超过：". $after_sale_time."分自动结束交易，不能申请售后。订单完成超过：".$start_evaluate_time."分自动五星好评";
             $data =[
+                'details'=>$details,
                 'spike_time'=>$spike_time,
                 'normal_time'=>$normal_time,
                 'deliver_goods_time'=>$deliver_goods_time,

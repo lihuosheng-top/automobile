@@ -52,7 +52,7 @@
 <h4>（单个商品）</h4>
 	  {volist name="year" id="value"}
 	  <div class="show">
-	  	   <div style=" " class="text">年限<input type="text" name="year" id="" value="{$value.year}" style="width: 100px;"/>费用<input type="text" name="money" id="" value="{$value.money}" style="width: 100px;"/>元</div>
+	  	   <div style=" " class="text">年限<input type="text" name="year" id="" value="{$value.year}" style="width: 100px;"/>费用<input type="text" name="money" id="" value="{$value.money}" style="width: 100px;"/>元 <i class="layui-icon remove_img " data-id="">&#x1007;</i></div>
 	  </div>
 	 {/volist}
 	 <form action="{:url('admin/Install/putaway')}" method="post">

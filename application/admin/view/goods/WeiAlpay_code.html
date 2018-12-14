@@ -1,0 +1,187 @@
+{extend name="layout"} {block name="css"}
+<style type="text/css">
+	body {
+		background: #fff;
+	}
+	.static{
+		text-align: center;
+	}
+	.all{
+		margin-top: 200px;
+	}
+	
+	.all p{
+		font-size: 20px;
+		text-align: center;
+		line-height: 34px;
+	}
+	.all div{
+		text-align: center;
+	}
+	.img span{
+		display: inline-block;
+        width: 60px;
+      
+	}
+	.text{
+		font-size:20px ;
+	}
+	.static{
+		font-weight: bold;
+	    font-size: 30px;
+	    margin-bottom: 35px;
+	}
+	#repay_money{
+		color: red;
+	}
+	.noshow{
+		display: none;
+	}
+</style>
+
+{/block}
+
+<body>
+
+	{block name="content"}
+	<div class="all">
+		<h2 class="static">待支付......</h2>
+		<p>商家名称：<span id="shop_name"></span></p>
+		<p>支付金额：<span id="repay_money"></span></p>
+		<div class="doms">
+			<!--二维码-->
+			<img alt="模式二扫码支付" src="" style="width:230px;height:230px;margin: 10px auto;" id="img_url" />
+		</div>
+		<div class="doms1 noshow " id="qrcode" style="width:230px; height:230px; margin: 10px auto;">
+		</div>
+		<div class="img">
+			<span class="weixin_ico" style="  margin-right: 30px;"><img src="__STATIC__/admin/common/img/weixin.png"/></span>
+			<span class="zhifubao_ico"><img src="__STATIC__/admin/common/img/zhifubao.png"/></span>
+		</div>
+		<div class="text">
+			扫一扫完成支付
+		</div>
+
+	</div>
+
+	{/block}
+
+	<!--_footer 作为公共模版分离出去-->
+	{include file="template/_footer" /}
+	<!--/_footer 作为公共模版分离出去-->
+
+	<!--请在下方写此页面业务相关的脚本-->
+	{block name="bottom"}
+	<script type="text/javascript" src="__STATIC__/admin/common/js/qrcode.js"></script>
+	<script type="text/javascript">
+		var loc = location.href;
+		var n1 = loc.length; //地址的总长度
+		var n2 = loc.indexOf("="); //取得=号的位置
+		var id = decodeURI(loc.substr(n2 + 1, n1 - n2)); //从=号后面的内容
+		var text = id.replace(/(.*)&.*/, '$1');
+		var WIDsubject = text.replace(/(.*)&.*/, '$1');
+
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg); //获取url中"?"符后的字符串并正则匹配
+			var context = "";
+			if(r != null)
+				context = r[2];
+			reg = null;
+			r = null;
+			return context == null || context == "" || context == "undefined" ? "" : context;
+		}
+		var WIDbody = GetQueryString("WIDbody");
+		var WIDtotal_amount = GetQueryString("WIDtotal_amount");
+        $("#shop_name").html(WIDsubject);
+        $("#repay_money").html("￥"+WIDtotal_amount);
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Goods/WeiAlpay')}",
+			data: {
+				"WIDbody": WIDbody,
+				"WIDsubject": WIDsubject,
+				"WIDtotal_amount": WIDtotal_amount,
+			},
+			success: function(data) {
+				//								console.log(data);
+				var data = eval("(" + data + ")");
+				console.log(data);
+				var datas = "goods_qrcode?url2=" + data.data;
+				$("#img_url").attr("src", datas);
+			},
+
+			error: function(data) {
+				console.log("错误")
+			}
+		});
+		$(".weixin_ico").click(function(){
+			$(".doms1").addClass("noshow");
+			$(".doms").removeClass("noshow");
+		
+		});
+			$(".zhifubao_ico").click(function(){
+				$(".doms").addClass("noshow");
+			$(".doms1").removeClass("noshow");
+			
+			
+		});
+		var qrcode = new QRCode(document.getElementById("qrcode"), {
+				width : 230,
+				height : 230
+			});
+		function makeCode () {	
+				$.ajax({
+					type: "POST",
+					url: "{:url('admin/Goods/alipay')}",
+					data: {
+						"WIDbody": WIDbody,
+						"WIDsubject": WIDsubject,
+						"WIDtotal_amount": WIDtotal_amount,
+					},
+					success: function(data) {
+						var data = eval("(" + data + ")");
+						console.log(data);
+						var datas = data.data;
+						qrcode.makeCode(datas);
+					},
+		
+					error: function(data) {
+						console.log("错误")
+					}
+				});
+//                      var datas = "https://www.baidu.com/?tn=21002492_17_hao_pg";
+//						qrcode.makeCode(datas);
+		}
+		makeCode();
+
+
+
+        function wx_notify () {
+            $.ajax({
+                type: "POST",
+                url: "{:url('admin/Goods/wx_notify')}",
+                data: {
+                    "WIDbody": WIDbody,
+                    "WIDsubject": WIDsubject,
+                    "WIDtotal_amount": WIDtotal_amount,
+                },
+                success: function(data) {
+                    console.log(data);
+                },
+
+                error: function(data) {
+                    console.log("错误")
+                }
+            });
+//                      var datas = "https://www.baidu.com/?tn=21002492_17_hao_pg";
+//						qrcode.makeCode(datas);
+        }
+        wx_notify();
+
+	</script>
+	{/block}
+
+</body>
+
+</html>

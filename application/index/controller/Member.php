@@ -41,15 +41,38 @@ class  Member extends Controller{
      * Notes:购买页面默认地址返回或者选择其他地址
      **************************************
      */
-    public function member_default_address_return(Request $request){
-        if($request->isPost()){
+    public function member_default_address_return(Request $request)
+    {
+        if ($request->isPost()) {
             $user_id = Session::get("user");
-          $is_address =  Db::name('user_address')->where('user_id',$user_id)->where("status",1)->find();
-          if(!empty($is_address)){
-              return ajax_success('收货地址成功返回',$is_address);
-          }else{
-              return ajax_error('没设置默认收货地址',["status"=>0]);
-          }
+            if(empty($user_id)){
+                exit(json_encode(array("status"=>2,"info"=>"请登录")));
+            }
+            $address_id =Session::get("address_id");
+            if(!empty($address_id)){
+                $is_address =Db::name("user_address")->where("user_id",$user_id)->where("id",$address_id)->find();
+                if(!empty($is_address)){
+                    Session::delete("address_id");
+                    return ajax_success('收货地址成功返回', $is_address);
+                }else{
+                    Session::delete("address_id");
+                    exit(json_encode(array("status"=>0,"info"=>"请先选择收货地址")));
+                }
+            }
+
+
+            $is_address_status = Db::name('user_address')->where('user_id', $user_id)->order("id","desc")->find();
+            if (!empty($is_address_status)) {
+                $is_address = Db::name('user_address')->where('user_id', $user_id)->where("status", 1)->find();
+                if(!empty($is_address)){
+                    return ajax_success('收货地址成功返回', $is_address);
+                }else{
+                    return ajax_success('收货地址成功返回', $is_address_status);
+                }
+            } else {
+                exit(json_encode(array("status"=>0,"info"=>"请先设置收货地址")));
+                //return ajax_error('请先设置收货地址', ["status" => 0]);
+            }
         }
     }
 
@@ -62,7 +85,7 @@ class  Member extends Controller{
     public function member_address_information(Request $request){
         if($request->isPost()){
             $user_id = Session::get("user");
-            $data =Db::name("user_address")->where('user_id',$user_id)->select();
+            $data =Db::name("user_address")->where('user_id',$user_id)->order("id","desc")->select();
             if(!empty($data)){
                 return ajax_success('地址列表信息',$data);
             }else{

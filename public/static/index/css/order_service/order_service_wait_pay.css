@@ -15,7 +15,7 @@ html, body{
     border-bottom: 1px solid #ddd;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
     z-index: 2;
 }
 .header .icon-back{
@@ -32,6 +32,13 @@ html, body{
     font-size: .34rem;
     color: #333;
     font-weight: normal;
+    flex-basis: 35%;
+}
+.header .parts-title{
+    text-align: right;
+}
+.header .service-title{
+    text-align: left;
 }
 .header a.active{
     color: #504cfb;
@@ -41,7 +48,7 @@ html, body{
     height: .84rem;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
     background-color: #fff;
     margin-bottom: .24rem;
 }

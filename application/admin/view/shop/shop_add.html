@@ -113,10 +113,12 @@
                         <label class="sr-only" for="city3">City</label>
                         <select  class="form-control" id="city3" data-city="{$address[1]}" disabled="disabled"></select>
                     </div>
+                    {if !empty($address[2])}
                     <div class="form-group">
                         <label class="sr-only" for="district3">District</label>
                         <select  class="form-control" id="district3" data-district="{$address[2]}" disabled="disabled"></select>
                     </div>
+                    {/if}
                 </div>
             </div>
         </div>

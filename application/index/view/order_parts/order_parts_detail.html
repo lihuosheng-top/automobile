@@ -14,7 +14,7 @@
 <body>
     <div class="place-order-pop">
         <header class="place-order-header">
-            <a href="javascript:;" class="spr place-order-back"></a>
+            <a href="order_parts_all" class="spr place-order-back"></a>
             <h3 class="place-order-title">订单详情</h3>
         </header>
         <div class="order-detail-box">
@@ -70,10 +70,10 @@
                 <p>订单信息</p>
                 <p class="create-time">创建时间：2018-11-30 17:55</p>
                 <p class="pay-time">支付时间：2018-12-05 17:55</p>
-                <div class="contact-seller">
+                <!-- <div class="contact-seller">
                     <a href="javascript:;" class="spr icon-phone"></a>
                     联系卖家
-                </div>
+                </div> -->
             </div>
             <div class="order-payment-box">
                 <button class="order-cancel-btn">取消订单</button>
@@ -82,10 +82,20 @@
         </div>
     </div>
 
-    
-    <script src="__STATIC__/index/js/plugin/vue.js"></script>
-    <script src="__STATIC__/index/js/plugin/vue.resource.js"></script>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
-    <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
+    <script>
+        $.ajax({
+            url: 'order_parts_detail',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+    </script>
 </body>
 </html>
