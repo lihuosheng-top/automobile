@@ -59,6 +59,61 @@ $.ajax({
                 </div>`
         })
         $('.shops-goods-wrap').append(str);
+        // 取消订单
+        $('.cancel-order-btn').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            $('.cancel-order-pop').animate({'bottom': '0'});
+            $('.mask').show();
+            $('.select-reason-btn').click(function(){
+                var cancel_order_description = $('.reason-selected')[0].innerText;
+                $.ajax({
+                    url: 'ios_api_order_parts_no_pay_cancel',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'parts_order_number': parts_order_number,
+                        'store_id': store_id,
+                        'cancel_order_description': cancel_order_description
+                    },
+                    success: function(res){
+                        console.log(res);
+                        location.reload();
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            })
+        })
+        // 选择取消订单原因 
+        $('.reason-li').click(function(){
+            $(this).addClass('reason-selected').siblings().removeClass('reason-selected');
+        })
+        $('.close-cancel-order').click(function(){
+            $('.cancel-order-pop').animate({'bottom': '-100%'});
+            $('.mask').hide();
+        })
+        // 去付款
+        $('.to-payment-btn').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            $.ajax({
+                url: 'ios_api_order_parts_no_pay_cancel',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'parts_order_number': parts_order_number,
+                    'store_id': store_id
+                },
+                success: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
     },
     error: function(){
         console.log('error');
