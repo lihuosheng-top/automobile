@@ -20,6 +20,8 @@ Route::group("",[
     /*首页*/
     "/$"=>"index/index/home",
     "index"=>"index/index/index",
+    "saoma_callback"=>"index/index/saoma_callback",
+    "weixin_notify"=>"index/index/weixin_notify",
 
 
 
@@ -326,7 +328,8 @@ Route::group("admin",[
     "goods_seach"=>"admin/Goods/seach",                                                //商品模糊搜索
     "goods_WeiAlpay"=>"admin/Goods/WeiAlpay",                                             //微信支付
     "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
-    "goods_wx_notify"=>"admin/Goods/wx_notify",                                                //微信支付回调地址
+    "goods_alipay_pay"=>"admin/Goods/alipay_pay",                                                //微信支付回调地址
+    "goods_get_weixin_pay_url"=>"admin/Goods/get_weixin_pay_url",                              //获取微信扫描链接
 
 
 
