@@ -65,6 +65,8 @@ class OrderParts extends Controller{
                 $datas["store_id"] = $data[0]["store_id"];//店铺id
                 $datas["store_name"] = $data[0]["store_name"];//店铺名称
                 $datas["create_time"] = $data[0]["order_create_time"];//订单创建时间
+                $datas["parts_order_number"] = $data[0]["parts_order_number"];//订单编号
+                $datas["goods_money"] = $data[0]["goods_money"];//商品金额
                 $datas["pay_time"] = $data[0]["pay_time"]; //支付时间
                 $datas["harvester"] = $data[0]["harvester"];//收货人
                 $datas["harvest_phone_num"] = $data[0]["harvest_phone_num"];//收件人电话
