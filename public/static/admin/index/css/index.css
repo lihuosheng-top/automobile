@@ -627,10 +627,7 @@ a{
 .cancel-btu{
 	background: #990000
 }
-.datetimepicker{
-	height: 28px;
-	border:solid #E6E6E6 1px;
-}
+
 .all {
     min-width: 1400px;
 }

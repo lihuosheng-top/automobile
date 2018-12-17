@@ -9,27 +9,6 @@
 		background: #fff;
 	}
 	
-	label {
-		text-align: left !important;
-	}
-	
-	.layui-form-item {
-		max-width: 100% !important;
-	}
-	
-	.layui-form-item {
-		width: 100%;
-		margin-bottom: 0;
-		margin-top: 0;
-	}
-	
-	.layui-form-label {
-		width: 26% !important;
-	}
-	
-	.layui-input-inline {
-		width: 70% !important;
-	}
 	
 	#page {
 		width: 96%;
@@ -38,11 +17,6 @@
 		border: solid 1px #E2E2E2;
 		padding-left: 50px;
 		background: #FDFDFE;
-	}
-	
-	.time {
-		width: 110px;
-		display: inline-block;
 	}
 	
 	.noshow {
@@ -439,57 +413,63 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="">
-				<div class="layui-form-item">
-					<div class="layui-inline">
-						<label class="layui-form-label">订单编号</label>
-						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<form class="layui-form" action="">
+				<div class="seach">
+					<div class="seach_list">
+						<div class="seach_laber">订单编号：</div>
+						<div class="seach_input">
+							<input type="text" name="parts_order_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
-					<div class="layui-inline">
-						<label class="layui-form-label">商品名称</label>
-						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+						<div class="seach_list">
+						<div class="seach_laber">商品名称：</div>
+						<div class="seach_input">
+							<input type="text" name="goods_name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+						</div>
+					</div>
+							<div class="seach_list">
+						<div class="seach_laber">用户账号：</div>
+						<div class="seach_input">
+							<input type="text" name="phone_num" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
 						</div>
 					</div>
-					<div class="layui-inline">
-						<label class="layui-form-label">用户账号</label>
-						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+			
+					<div class="seach_list">
+						<div class="seach_laber">订单状态</div>
+						<div class="seach_input">
+						<select name="order_status" id="admin_status">
 
-						</div>
-					</div>
-					<div class="layui-inline">
-						<label class="layui-form-label">订单状态</label>
-						<div class="layui-input-inline">
-							<select name="interest" id="admin_status">
-								<option value="1" selected="">启用</option>
-								<option value="2">禁用</option>
+								<option value="" selected="">全部</option>
+								<option value="3">待发货</option>
+								<option value="1">待付款</option>
+								<option value="4">已发货</option>
+								<option value="5">待收货</option>
+								<option value="0">已关闭</option>
+
 							</select>
 						</div>
 					</div>
-					<div class="layui-inline" style="width: 36%;">
-						<label class="layui-form-label" style="width: 14% !important; ">时间</label>
-						<div class="layui-input-inline" style="width: 80% !important; margin-top: 8px;">
-							<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""
-								 style="width: 100px; font-size: 13px;">
-							</span>--
-							<span class="time"><input type="text" class=" text datetimepicker" readonly="readonly" id="endTime" value=""
-								 style="width: 100px; font-size: 13px;"></span>
+								<div class="seach_list">
+						<div class="seach_laber">开始时间</div>
+						<div class="seach_input">
+							<span class="time"><input type="text" class="text datetimepicker layui-input" readonly="readonly" id="beginTime" value=""   name="date_min">
+							</span>
+						</div>
+					</div>
+					<div class="seach_list">
+						<div class="seach_laber">结束时间</div>
+						<div class="seach_input">
+							<span class="time"><input type="text" class=" text datetimepicker layui-input" readonly="readonly" id="endTime" value=""  name="date_max" ></span>
 
 						</div>
 					</div>
-
-					<div class="layui-inline">
-						<button class="layui-btn search_btn" type="submit">搜索</button>
-					</div>
+					<button class="layui-btn" type="submit" id="seach">立即搜索</button>
 				</div>
 
 			</form>
-
+		
 		</blockquote>
 		<div class="layui-form news_list">
 			<table class="layui-table">

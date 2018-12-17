@@ -9,28 +9,6 @@
 		background: #fff;
 	}
 	
-	label {
-		text-align: left !important;
-	}
-	
-	.layui-form-item {
-		width: 100%;
-		margin-bottom: 0;
-		margin-top: 0;
-	}
-	
-	.layui-form-item {
-		max-width: 100% !important;
-	}
-	
-	.layui-form-label {
-		width: 26% !important;
-	}
-	
-	.layui-input-inline {
-		width: 70% !important;
-	}
-	
 	#page {
 		width: 96%;
 		height: 50px;
@@ -40,14 +18,7 @@
 		background: #FDFDFE;
 	}
 	
-	.time {
-		width: 110px;
-		display: inline-block;
-	}
-	
-	.pagination {
-		float: right;
-	}
+
 </style>
 
 {/block}
@@ -58,36 +29,39 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="{:url('admin/Order/evaluate_search')}">
-				<div class="layui-form-item">
-					<div class="layui-inline">
-						<label class="layui-form-label">订单号</label>
-						<div class="layui-input-inline">
-							<input type="text" name="order_nums" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<form class="layui-form" action="{:url('admin/Order/evaluate_search')}">
+				<div class="seach">
+					<div class="seach_list">
+						<div class="seach_laber">订单号：</div>
+						<div class="seach_input">
+								<input type="text" name="order_nums" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 						</div>
 					</div>
-					<div class="layui-inline">
-						<label class="layui-form-label">会员名</label>
-						<div class="layui-input-inline">
-							<input type="text" name="user_phone_num" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+					<div class="seach_list">
+						<div class="seach_laber">会员名</div>
+						<div class="seach_input">
+						   <input type="text" name="user_phone_num" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+                       </div>
+					</div>
+					<div class="seach_list">
+						<div class="seach_laber">开始时间</div>
+						<div class="seach_input">
+							<span class="time"><input type="text" class="text datetimepicker layui-input" readonly="readonly" id="beginTime" value=""   name="date_min">
+							</span>
+						</div>
+					</div>
+					<div class="seach_list">
+						<div class="seach_laber">结束时间</div>
+						<div class="seach_input">
+							<span class="time"><input type="text" class=" text datetimepicker layui-input" readonly="readonly" id="endTime" value=""  name="date_min" ></span>
 
 						</div>
 					</div>
-					<!--<div class="layui-inline" style="width: 36%;">-->
-						<!--<label class="layui-form-label" style="width: 17% !important; ">评论时间</label>-->
-						<!--<div class="layui-input-inline" style="width: 70% !important; ">-->
-							<!--<span class="time"><input type="text" class="text datetimepicker" readonly="readonly" id="beginTime" value=""-->
-								 <!--style="width: 200px; font-size: 13px;">-->
-							<!--</span>-->
-						<!--</div>-->
-					<!--</div>-->
-					<div class="layui-inline">
-						<button class="layui-btn search_btn" type="submit"> 查询</button>
-					</div>
+					<button class="layui-btn" type="submit" id="seach">立即搜索</button>
 				</div>
 
 			</form>
-
+		        
 		</blockquote>
 		<div class="layui-form news_list">
 			<table class="layui-table">
