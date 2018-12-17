@@ -6,7 +6,7 @@ function initStar(){
         layui.each($('.star'), function(idx, elem){
             rate.render({
                 elem: elem,
-                value: 3,
+                value: 5,
                 text: true,
                 setText: function(val){
                     var arrs = {
@@ -22,7 +22,6 @@ function initStar(){
         })
     })
 }
-initStar();
 
 // 获取商品信息
 $.ajax({
@@ -45,67 +44,67 @@ $.ajax({
                             <textarea placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧"></textarea>
                         </div>
                         <div class="vi-camera">
-                            <span class="switch-span">添加图片</span>
-                            <input type="file" multiple hidden id="upload">
+                            <span class="switch-span">添加图片
+                                <input type="file" multiple id="upload-`+idx+`">
+                            </span>
                         </div>
                     </div>`
         })
         $('.header').after(str);
+        // 初始化star
+        initStar();
+        // 上传图片
+        $('.switch-span').on('click', 'input', function(){
+            var inputElem = $(this).attr('id');
+            var switchSpan = $(this).parent();
+            changeEvent(inputElem, switchSpan);
+        })
     },
     error: function(){
         console.log('error');
     }
 })
-
-// 上传图片
-var imagesFileArray = [];
-$('.switch-span').click(function(){
-    $('#upload').click();
-})
-$(function(){
-    // 在浏览器上预览本地图片
-    function getObjectURL(file) {
-        var url = null;
-        if(window.URL != undefined) { // mozilla(firefox)
-            url = window.URL.createObjectURL(file);
-        } else if(window.webkitURL != undefined) { // webkit or chrome
-            url = window.webkitURL.createObjectURL(file);
-        }
-        return url;
-    }
-    $('#upload').change(function(){
-        var urlArr = [],
-            str = '';
+function changeEvent(inputElem, clickObj){
+    $('#'+inputElem).change(function(){
+        var imgArrDom = [];
+        var str = '';
         var len =  this.files.length;
+        console.log(this.files)
         // 限制上传图片
-        if($('.upload-item').length+len <= 4){
-
+        var uploadItemLen = $(clickObj).siblings('.upload-item').length;
+        if(uploadItemLen + len <= 4){
             for(var i = 0; i < len; i++){
-                // 存 files
-                imagesFileArray.push(this.files[i]);
                 // 存图片地址
-                urlArr.push(getObjectURL(this.files[i]));
+                imgArrDom.push(getObjectURL(this.files[i]));
             }
-            console.log(imagesFileArr);
-
-            $.each(urlArr, function(idx, val){
-                str += `<div class="store-inner-imgbox">
-                            <button class="close">×</button>
+            $.each(imgArrDom, function(idx, val){
+                str += `<div class="upload-item">
                             <img src="`+val+`">
+                            <button class="del-img">×</button>
                         </div>`
             })
-            $('.vi-camera').prepend(str);
+            $(clickObj).before(str);
         }else{
             layer.open({
                 style: 'bottom:100px;',
                 type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                 skin: 'msg',
-                content: '最多上传20张图片',
+                content: '最多上传4张图片',
                 time: 2
             })
         }
     })
-});
+}
+// 在浏览器上预览本地图片
+function getObjectURL(file) {
+    var url = null;
+    if(window.URL != undefined) { // mozilla(firefox)
+        url = window.URL.createObjectURL(file);
+    } else if(window.webkitURL != undefined) { // webkit or chrome
+        url = window.webkitURL.createObjectURL(file);
+    }
+    return url;
+}
 
 // 发布
 $('.publish-btn').click(function(){
