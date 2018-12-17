@@ -55,6 +55,8 @@ class Index extends Controller
         */
     public function saoma_callback()
     {
+        file_put_contents(EXTEND_PATH."lib/data.txt",1);
+        exit();
         //扫码支付，接收微信请求
         ini_set('date.timezone', 'Asia/Shanghai');
         error_reporting(E_ERROR);
