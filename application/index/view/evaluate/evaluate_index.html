@@ -19,7 +19,7 @@
         .goods-img{width: .7rem; height: .7rem; overflow: hidden; margin-right: .2rem;}
         .goods-img img{width: 100%; height: 100%;}
         .ms{color: #666; margin-right: .5rem;}
-        .star1 span{color: #999;}
+        .star span{color: #999;}
         .evaluate-txt{margin-bottom: .2rem;}
         .evaluate-txt textarea{width: 100%; height: 2rem; padding: .2rem; box-sizing: border-box; border: 0; font-size: .3rem; resize: none;}
         .vi-camera{padding: 0 .2rem; display: flex; flex-wrap: wrap; margin-bottom: .3rem;}
@@ -33,8 +33,9 @@
         .icon-shop{display: inline-block;width: .3rem;height: .29rem;background-position: -5.6rem -1rem;vertical-align: text-bottom;}
         .on-time{margin-bottom: .2rem;}
         .on-time input{vertical-align: middle; margin-left: .35rem;}
-        .star2{margin-left: .35rem;}
-        .star3{margin-left: .35rem;}
+        .service{margin-left: .35rem;}
+        .logistics{margin-left: .35rem;}
+        .evaluation-subject{border-bottom: 1px solid #eee;}
     </style>
 </head>
 <body>
@@ -44,24 +45,26 @@
             <h3>发表评价</h3>
             <button class="publish-btn">发布</button>
         </header>
-        <div class="goods-evaluate">
-            <div class="goods-img">
-                <img src="__STATIC__/index/image/15.jpg">
+        <!-- <div class="evaluation-subject">
+            <div class="goods-evaluate">
+                <div class="goods-img">
+                    <img src="__STATIC__/index/image/15.jpg">
+                </div>
+                <p class="ms">描述相符</p>
+                <div class="star"></div>
             </div>
-            <p class="ms">描述相符</p>
-            <div id="star1" class="star1"></div>
-        </div>
-        <div class="evaluate-txt">
-            <textarea placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧"></textarea>
-        </div>
-        <div class="vi-camera">
-            <div class="upload-item">
-                <img src="__STATIC__/index/image/15.jpg">
-                <button class="del-img">×</button>
+            <div class="evaluate-txt">
+                <textarea placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧"></textarea>
             </div>
-            <span class="switch-span">添加图片</span>
-            <input type="file" multiple hidden id="upload">
-        </div>
+            <div class="vi-camera">
+                <div class="upload-item">
+                    <img src="__STATIC__/index/image/15.jpg">
+                    <button class="del-img">×</button>
+                </div>
+                <span class="switch-span">添加图片</span>
+                <input type="file" multiple hidden id="upload">
+            </div>
+        </div> -->
         <div class="shop-evaluate">
             <div class="shop-eva-title">
                 <i class="spr icon-shop"></i>店铺评分
@@ -75,66 +78,17 @@
             </div>
             <div class="service-eval">
                 服务态度
-                <div class="star2" id="star2"></div>
+                <div class="service star" id="service"></div>
             </div>
             <div class="logistics-eval">
                 物流服务
-                <div class="star3" id="star3"></div>
+                <div class="logistics star" id="logistics"></div>
             </div>
         </div>
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/plugin/layui/layui.js"></script>
-    <script>
-        layui.use(['rate'], function(){
-            var rate = layui.rate;
-            rate.render({
-                elem: '#star1',
-                value: 3,
-                text: true,
-                setText: function(val){
-                    var arrs = {
-                        '1': '很差',
-                        '2': '差',
-                        '3': '一般',
-                        '4': '好',
-                        '5': '很好',
-                    };
-                    this.span.text(arrs[val] || ( val + "星"));
-                }
-            })
-            rate.render({
-                elem: '#star2',
-                value: 3,
-                text: true,
-                setText: function(val){
-                    var arrs = {
-                        '1': '很差',
-                        '2': '差',
-                        '3': '一般',
-                        '4': '好',
-                        '5': '很好',
-                    };
-                    this.span.text(arrs[val] || ( val + "星"));
-                }
-            })
-            rate.render({
-                elem: '#star3',
-                value: 3,
-                text: true,
-                setText: function(val){
-                    var arrs = {
-                        '1': '很差',
-                        '2': '差',
-                        '3': '一般',
-                        '4': '好',
-                        '5': '很好',
-                    };
-                    this.span.text(arrs[val] || ( val + "星"));
-                }
-            })
-        })
-    </script>
+    <script src="__STATIC__/index/js/evaluate_index.js"></script>
 </body>
 </html>

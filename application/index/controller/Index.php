@@ -48,7 +48,6 @@ class Index extends Controller
     }
 
 
-
     /*
         用户扫码后会请求这个方法 记得要写到前台去 获取单独设置这个方法不用登录都可以有权限访问 不然微信访问不了
         到这里就可以调起微信扫码支付了
@@ -59,7 +58,11 @@ class Index extends Controller
         include_once(EXTEND_PATH ."lib/payment/wxpay/WxPayPubHelper.php");
         $nativeCall = new \NativeCall_pub();
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        //file_put_contents(S_ROOT . 'data/data_wx_qrcode_pay.txt', $xml);
+        $die = EXTEND_PATH.'data';
+        if(is_dir($die)){
+            mkdir($die,0777);
+        }
+        file_put_contents(EXTEND_PATH . 'data/data_wx_qrcode_pay.txt', $xml);
         $nativeCall->saveData($xml);
         if ($nativeCall->checkSign() == FALSE) {
             $nativeCall->setReturnParameter("return_code", "FAIL"); //返回状态码
@@ -179,11 +182,6 @@ class Index extends Controller
         $returnXml = $notify->returnXml();
         echo $returnXml;
     }
-
-
-
-
-
 
 
 }

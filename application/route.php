@@ -25,6 +25,7 @@ Route::group("",[
 
 
 
+
     /*我的爱车*/
     "love_car"=>"index/LoveCar/love_car",
     "love_list"=>"index/LoveCar/love_list",                         //我的爱车列表
@@ -164,9 +165,9 @@ Route::group("",[
     "spread_index"=>"index/Extension/spread_index",//我要推广
     /*TODO：我要推广结束*/
 
-    /*TODO：评价开始*/
-    "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面
-    /*TODO：评价结束*/
+    /*TODO：配件商评价开始*/
+    "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面(ajax)
+    /*TODO：配件商评价结束*/
 
 
 

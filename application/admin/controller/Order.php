@@ -334,7 +334,9 @@ class Order extends Controller{
      **************************************
      */
     public function evaluate(){
-        $evaluate_data =Db::name('order_parts_evaluate')->order('create_time','desc')->paginate(3);
+        $evaluate_data =Db::name('order_parts_evaluate')
+            ->order('create_time','desc')
+            ->paginate(3);
         return view('evaluate',['evaluate_data'=>$evaluate_data]);
     }
 
