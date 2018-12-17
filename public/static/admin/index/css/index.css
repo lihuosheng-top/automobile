@@ -8,6 +8,10 @@
     url('../font/iconfont1/iconfont.svg#uxiconfont') format('svg'); /* iOS 4.1- */
 }
 /*修改layui样式*/
+/*.layui-btn{
+	line-height: 35px !important;
+	height: 35px !important;
+}*/
 .tdimg{
 	width: 50px;
 	height: 50px;
@@ -19,6 +23,9 @@
 .layui-table td{
     padding: 4px 8px;	
     font-size: 10px;
+}
+.operation_three{
+	width: ;
 }
 .overflow{
 	width: 100px;

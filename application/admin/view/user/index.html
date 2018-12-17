@@ -128,9 +128,9 @@
 						<td>{$user_val.user_name}</td>
 						<td>
 							{if !empty($user_val.user_img)}
-							<div class="img_show"><img src="__USERIMG__/{$user_val.user_img}"></div>
+							<div class="img_show tdimg"><img src="__USERIMG__/{$user_val.user_img}"></div>
 							{else}
-							<div class="img_show">无</div>
+							<div class="img_show tdimg">无</div>
 							{/if}
 						</td>
 						<td>{$user_val.type|show_user_type}</td>
@@ -145,7 +145,7 @@
 							 lay-text="是|否" lay-filter="isShow" data-id="{$user_val.id}">
 							{/if}
 						</td>
-						<td width="124px">
+						<td width="155px">
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/user/edit',['id'=>$user_val.id])} "><i class="iconfont icon-edit"></i>
 								查看详情</a>
 							<a href="{:url('admin/user/del',['id'=>$user_val.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del"

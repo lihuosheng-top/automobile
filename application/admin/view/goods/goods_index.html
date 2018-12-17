@@ -236,7 +236,7 @@
 						</td>
 						{volist name="store" id="shop"}
 						{if $value.store_id == $shop.store_id}
-						<td  class="shop_name">{$shop.store_name}</td>
+						<td  class="shop_name" ><div class="overflow">{$shop.store_name}</div></td>
 						{/if}
 						{/volist}
 						<td style="width: 50px; height: 50px;"><img src="__UPLOADS__/{$value.goods_show_images}" /></td>
@@ -297,7 +297,7 @@
 							无
 							{/if}
 						</td>
-						<td style="width: 155px;">
+						<td style="width: 180px;">
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/look',['id'=>$value.id])}"> 查看详情</a>
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit',['id'=>$value.id])}">编辑</a>
 							<a href="{:url('admin/Goods/del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"> 删除</a>
