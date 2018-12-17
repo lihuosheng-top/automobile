@@ -203,7 +203,7 @@ $.ajax({
                     type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                     skin: 'msg',
                     content: '请选择店铺所在区域',
-                    time: 1.5
+                    time: 1
                 })
             }
             // 店铺详细地址
@@ -255,22 +255,18 @@ $.ajax({
                                     console.log(res);
                                     if(res.status == 1){
                                         layer.open({
-                                            style: 'bottom:100px;',
-                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                             skin: 'msg',
                                             content: res.info,
-                                            time: 1.5
+                                            time: 1
                                         })
                                         setTimeout(function(){
                                             location.href = 'store_verify';
-                                        }, 1700)
+                                        }, 1100)
                                     }else if(res.status == 0){
                                         layer.open({
-                                            style: 'bottom:100px;',
-                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                             skin: 'msg',
                                             content: res.info,
-                                            time: 1.5
+                                            time: 1
                                         })
                                     }
                                 },
@@ -290,26 +286,22 @@ $.ajax({
                                     console.log(res);
                                     if(res.status === '0'){
                                         layer.open({
-                                            style: 'bottom:100px;',
-                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                             skin: 'msg',
                                             content: res.info,
-                                            time: 1.5
+                                            time: 1
                                         })
                                         setTimeout(function(){
                                             location.href = 'store_verify';
-                                        }, 1700)
+                                        }, 1100)
                                     }else{
                                         layer.open({
-                                            style: 'bottom:100px;',
-                                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                             skin: 'msg',
                                             content: res.info,
-                                            time: 1.5
+                                            time: 1
                                         })
                                         setTimeout(function(){
                                             location.href = 'store_verify';
-                                        }, 1700)
+                                        }, 1100)
                                     }
                                 },
                                 error: function(){
@@ -319,11 +311,9 @@ $.ajax({
                         }
                     }else{
                         layer.open({
-                            style: 'bottom:100px;',
-                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: '服务商需选择服务范围',
-                            time: 1.5
+                            time: 1
                         })
                     }
                 }else{//配件商
@@ -339,22 +329,18 @@ $.ajax({
                                 console.log(res);
                                 if(res.status == 1){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: res.info,
-                                        time: 1.5
+                                        time: 1
                                     })
                                     setTimeout(function(){
                                         location.href = 'store_verify';
-                                    }, 1700)
+                                    }, 1100)
                                 }else if(res.status == 0){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: res.info,
-                                        time: 1.5
+                                        time: 1
                                     })
                                 }
                             },
@@ -374,26 +360,22 @@ $.ajax({
                                 console.log(res);
                                 if(res.status === '0'){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: res.info,
-                                        time: 1.5
+                                        time: 1
                                     })
                                     setTimeout(function(){
                                         location.href = 'store_verify';
-                                    }, 1700)
+                                    }, 1100)
                                 }else{
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: res.info,
-                                        time: 1.5
+                                        time: 1
                                     })
                                     setTimeout(function(){
                                         location.href = 'store_verify';
-                                    }, 1700)
+                                    }, 1100)
                                 }
                             },
                             error: function(){
@@ -428,7 +410,7 @@ function mustFill(){
         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
         skin: 'msg',
         content: '带星号信息需填写完整',
-        time: 1.5
+        time: 1
     })
 }
 

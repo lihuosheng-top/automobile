@@ -25,14 +25,17 @@ class Order extends Controller{
      **************************************
      */
     public function index(){
-        get_user_id_by_session();
+        $session_user_id =session('user_id');
+        $phone = Db::name("admin")->field("phone")->where('id',$session_user_id)->find();
+        $user_id =Db::name("user")->field("id")->where('phone_num',$phone['phone'])->find();
+        $store_id =Db::name("store")->field('store_id')->where('user_id',$user_id['id'])->find();
         $order_parts_data =Db::table('tb_order_parts')
             ->field("tb_order_parts.*,tb_user.phone_num phone_num,tb_goods.goods_name gname,tb_goods.goods_show_images gimages")
             ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
             ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
+            ->where('tb_order_parts.store_id',$store_id['store_id'])
             ->order('tb_order_parts.order_create_time','desc')
             ->paginate(3);
-
        return view('index',['order_parts_data'=>$order_parts_data]);
     }
 
@@ -61,6 +64,39 @@ class Order extends Controller{
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:弹窗返回对应修改的状态值
+     **************************************
+     */
+    public function order_update_status(Request $request){
+        if($request->isPost()){
+            $id =$request->only("id")["id"];
+            $sell_message =$request->only("sell_message")["sell_message"];//卖家留言
+            $sell_message_time =time(); //回复时间
+            $status =$request->only("status")["status"];//状态值
+            $pay_type_content =$request->only("pay_type_content")["pay_type_content"];//支付方式（微信,支付宝）
+            $refund_amount =$request->only("refund_amount")["refund_amount"];//退款金额
+            if(!empty($id)){
+                $data =[
+                    "sell_message"=>$sell_message,
+                    "sell_message_time"=>$sell_message_time,
+                    "status"=>$status,
+                    "pay_type_content"=>$pay_type_content,
+                    "refund_amount"=>$refund_amount
+                ];
+                $bool =Db::name("order_parts")->where("id",$id)->update($data);
+                if($bool){
+                    return ajax_success("修改成功",["status"=>1]);
+                }else{
+                    return ajax_error("修改失败",["status"=>0]);
+                }
+
+            }
+
+        }
+    }
 
     /**
      **************李火生*******************
@@ -288,7 +324,6 @@ class Order extends Controller{
      */
     public function edit($id){
         $order_parts_data = Db::name("order_parts")->where("id",$id)->select();
-        dump($order_parts_data);
         return view('edit',['order_parts_data'=>$order_parts_data]);
     }
 
@@ -299,7 +334,9 @@ class Order extends Controller{
      **************************************
      */
     public function evaluate(){
-        $evaluate_data =Db::name('order_parts_evaluate')->order('create_time','desc')->paginate(3);
+        $evaluate_data =Db::name('order_parts_evaluate')
+            ->order('create_time','desc')
+            ->paginate(3);
         return view('evaluate',['evaluate_data'=>$evaluate_data]);
     }
 
@@ -851,7 +888,11 @@ class Order extends Controller{
      **************************************
      */
     public function service_order_index(){
-        $service_order_data =Db::name('order_service')->order('create_time','desc')->paginate(5);
+        $session_user_id =session('user_id');
+        $phone = Db::name("admin")->field("phone")->where('id',$session_user_id)->find();
+        $user_id =Db::name("user")->field("id")->where('phone_num',$phone['phone'])->find();
+        $store_id =Db::name("store")->field('store_id')->where('user_id',$user_id['id'])->find();
+        $service_order_data =Db::name('order_service')->where("store_id",$store_id["store_id"])->order('create_time','desc')->paginate(5);
         return view('service_order_index',['service_order_data'=>$service_order_data]);
     }
 

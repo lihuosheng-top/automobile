@@ -90,6 +90,10 @@ class Store extends Controller{
             }
             $input_data = $_POST;
             $store_name =trim($input_data['store_name']);
+            $is_set_store_name =Db::name("store")->where("store_name",$store_name)->find();
+            if(!empty($is_set_store_name)){
+                return ajax_success("店铺名已存在",["status"=>0]);
+            }
             $real_name =trim($input_data['real_name']);
             $phone_num =trim($input_data['phone_num']);
             $store_owner_seat_num =trim($input_data['store_owner_seat_num']);
@@ -115,7 +119,12 @@ class Store extends Controller{
                        foreach ($ex_address as $k=>$v){
                            $explode_data[] =$v;
                        }
-                    $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                      if(count($explode_data) ==2){
+                          $store_detailed_address =$explode_data[0].$explode_data[1].$store_street_address;
+                      }
+                      if(count($explode_data) ==3){
+                          $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                      }
                    db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
                    $data =[
                        'store_name'=>$store_name,
@@ -132,7 +141,8 @@ class Store extends Controller{
                        'store_owner_wechat'=>$store_owner_wechat,
                        'store_information'=>$store_information,
                        'user_id'=> $user_id,
-                       'role_id'=>$role_id
+                       'role_id'=>$role_id,
+                       'is_hot_store'=>-1,
                    ];
                    $bool = db("store")->insertGetId($data);
                    if($bool > 0){
@@ -199,11 +209,22 @@ class Store extends Controller{
                 foreach ($ex_address as $k=>$v){
                     $explode_data[] =$v;
                 }
-                $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                if(count($explode_data) ==2){
+                    $store_detailed_address =$explode_data[0].$explode_data[1].$store_street_address;
+                }
+                if(count($explode_data) ==3){
+                    $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                }
                 db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
-                $isset_admin =Db::name('admin')->field('id')->where('phone',$old_phone_num)->find();//判断是否提交过申请
+                $isset_admin =Db::name('admin')->field('id')->where('phone',$old_phone_num["phone_num"])->find();//判断是否提交过申请
                 if(!empty($isset_admin)){
-                    db("admin")->where('id',$isset_admin['id'])->update(['name'=>$real_name,'phone'=>$phone_num,'sex'=>$sex]);
+                    if($role_id ==5){
+                        db("admin")->where('id',$isset_admin['id'])->update(['name'=>$real_name,'phone'=>$phone_num,'sex'=>$sex,"role_id"=>$role_id,"department"=>"配件商"]);
+                    }
+                    if($role_id ==13){
+                        db("admin")->where('id',$isset_admin['id'])->update(['name'=>$real_name,'phone'=>$phone_num,'sex'=>$sex,"role_id"=>$role_id,"department"=>"服务商"]);
+                    }
+
                 }
                 $data =[
                     'store_name'=>$store_name,
@@ -235,8 +256,23 @@ class Store extends Controller{
                 foreach ($ex_address as $k=>$v){
                     $explode_data[] =$v;
                 }
-                $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                if(count($explode_data) ==2){
+                    $store_detailed_address =$explode_data[0].$explode_data[1].$store_street_address;
+                }
+                if(count($explode_data) ==3){
+                    $store_detailed_address =$explode_data[0].$explode_data[1].$explode_data[2].$store_street_address;
+                }
                 db("user")->where('id',$user_id)->update(['real_name'=>$real_name,'phone_num'=>$phone_num,'sex'=>$sex]);
+                $isset_admin =Db::name('admin')->field('id')->where('phone',$old_phone_num["phone_num"])->find();//判断是否提交过申请
+                if(!empty($isset_admin)){
+                    if($role_id ==5){
+                        db("admin")->where('id',$isset_admin['id'])->update(['name'=>$real_name,'phone'=>$phone_num,'sex'=>$sex,"role_id"=>$role_id,"department"=>"配件商"]);
+                    }
+                    if($role_id ==13){
+                        db("admin")->where('id',$isset_admin['id'])->update(['name'=>$real_name,'phone'=>$phone_num,'sex'=>$sex,"role_id"=>$role_id,"department"=>"服务商"]);
+                    }
+
+                }
                 $data =[
                     'store_name'=>$store_name,
                     'store_detailed_address'=>$store_detailed_address,//店铺具体地址
@@ -249,6 +285,7 @@ class Store extends Controller{
                     'store_owner_wechat'=>$store_owner_wechat,
                     'store_information'=>$store_information,
                     'role_id'=>$role_id,
+                    'del_status'=>1, //判断店铺是否被伪删除（-1为伪删除，1为正常状态）
                 ];
                 $bool = db("store")->where('user_id',$user_id)->update($data);
                 $store_id =db("store")->field('store_id')->where('user_id',$user_id)->find();
@@ -435,8 +472,6 @@ class Store extends Controller{
                 }else{
                     return ajax_success('删除失败',['status'=>0]);
                 }
-
-
 
             }
         }

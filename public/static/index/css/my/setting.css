@@ -141,12 +141,12 @@
     font-size: .3rem;
 }
 .change-role-pop div{
-    width: 20%;
+    width: 35%;
     margin: 0 auto .2rem;
 }
 .customer-box{
     margin-top: 1.5rem !important;
 }
-.facilitator-box{
+.supplier-box{
     margin-bottom: 1rem !important;
 }

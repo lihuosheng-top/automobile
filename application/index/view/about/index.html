@@ -1,10 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>关于我们</title>
+    <style>
+    	img{
+    		width: 100%;
+    	}
+        .wrapper{height: 100vh; background-color: #eee;}
+        .title{width: 100%; height: .88rem;background-color: #fff; position: relative; border-bottom: 1px solid #e1e1e1;}
+        .title .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .title .title-txt{font-size: .36rem; width: 100%; height: .88rem; text-align: center; color: #333; line-height: .88rem; font-weight: normal;}
+        .tel_content{ width: 3.6rem; height: 5rem; display: flex; flex-direction: column; align-items: center; background: #fff; margin: 0.1rem 0.05rem 0.15rem 0.1rem; }
+        .email_content{ width: 3.6rem; height: 5rem; display: flex; flex-direction: column; align-items: center; background: #fff; margin: 0.1rem 0.05rem 0.15rem 0.1rem; }
+        .wrapper_content_list .phone_ico{ width: 1.08rem;     margin-top: 0.8rem;}
+        .wrapper_content_list .email_ico{ width: 1.08rem;     margin-top: 0.8rem;}
+        .wrapper_content_list{ display: flex; }
+        .wrapper_content_list .text { font-weight: bold; font-size: 0.3rem; }
+        .wrapper_content_list .tel_content  .phone a{ color: #333; text-decoration: underline; cursor: pointer;  }
+        .wrapper_content_list .tel_content .pnone_tip{ color: #ccc }
+        .wrapper_content_list .tel_content div{ padding-bottom: 0.1rem; }
+        .wrapper_content_list .email_content div { padding-bottom: 0.1rem; }
+        .email_tip a { color: #333; }
+        .wrapper_content_listb{ background: #fff; padding-bottom: 0.3rem; }
+        .wrapper_content_listb .list_content { display: flex; padding: 0.4rem; }
+        .wrapper_content_listb .weixin_ico{ width: 0.72rem; margin-right: 0.3rem; }
+         .wrapper_content_listb .weibo_ico { width: 0.72rem; margin-right: 0.3rem; }
+        .wrapper_content_listb .add_ico{ width: 0.58rem; margin-right: 0.58rem; }
+        .listcontent a{ color: #333; text-decoration: underline; }
+        .list_tilt{ font-size: 0.3rem; font-weight: bold; }
+        .bold{ color: #333; font-size: 0.3rem; }
+    </style>
 </head>
 <body>
-about we
+    <div class="wrapper">
+        <header class="title">
+            <a href="my_index" class="spr icon-back"></a>
+            <h3 class="title-txt">关于我们</h3>
+        </header>
+         <div class="wrapper_content_list">
+         	<div class="tel_content">
+	         	<div class="phone_ico ico"><img src="__STATIC__/index/image/telico.png"/></div>
+	         	<div class="phone_text text">联系电话</div>
+	         	<div class="phone"><a href="tel:400-666-1666">400-666-1666</a></div>
+	         	<div class="pnone_tip">周一到周日9：00-21：00</div>
+         	</div>
+         		<div class="email_content">
+	         	<div class="email_ico ico"><img src="__STATIC__/index/image/emailico.png"/></div>
+	         	<div class="email_text text">品牌合作</div>
+	         	<div class="email_tip"><a href="mailto:zlh@zlh188.cn">zlh@zlh188.cn</a></div>
+	         	<div class="pnone_tip">&nbsp;</div>
+         	</div>
+         	
+         </div>
+         <div class="wrapper_content_listb">
+         	<div class="weixin list_content">
+         		<div class="weixin_ico"><img src="__STATIC__/index/image/weixinico.png" alt="" /></div>
+         		<div class="list">
+         			<div class="list_tilt">官方微信</div>
+         			<div class="listcontent" style="color: #ccc;">1.微信搜索框输入<span class="bold">"zlh_1888"</span></div>
+         			<div class="listcontent" style="color: #ccc;">2.点击搜一搜</div>
+         			<div class="listcontent" style="color: #ccc;">3.关注<span class="bold">遵联汇汽车服务中心</span>公众号</div>
+         		</div>
+         	</div>
+         	<div class="weixin list_content">
+         		<div class="weibo_ico"><img src="__STATIC__/index/image/weibo.png" alt="" /></div>
+         		<div class="list">
+         			<div class="list_tilt">新浪微博</div>
+         			<div class="listcontent" style="color: #ccc;"><a href="https://weibo.com/6853292733">点击关注</a><span class="bold">"遵联汇"</span>微博</div>
+         		</div>
+         	</div>
+         	<div class="weixin list_content">
+         		<div class="add_ico"><img src="__STATIC__/index/image/add.png" alt="" /></div>
+         		<div class="list">
+         			<div class="list_tilt">联系地址</div>
+         			<div class="listcontent"><span class="bold">贵州省遵义市南部新区遵南大道东都凯莱国际24幢2单元7层2-7-1号</span></div>
+         		</div>
+         	</div>
+         </div>
+         
+    </div>  
+    
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
 </body>
 </html>

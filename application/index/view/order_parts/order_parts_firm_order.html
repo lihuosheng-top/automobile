@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/payment.css">
+    <title>确认订单</title>
+    <style>
+        /* 提交订单 start */
+        .place-order-pop{position: fixed;top: 0;left: 0;right: 0;width: 100%;height: 100vh;background-color: #f4f4f4; z-index: 2;}
+        .place-order-header{position: absolute;left: 0;top: 0;right: 0;width: 100%;height: .88rem;background-color: #fff;border-bottom: 1px solid #eee;z-index: 2;}
+        .place-order-header .place-order-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .place-order-header .place-order-title{width: 100%;height: .88rem;line-height: .88rem;text-align: center;font-size: .36rem;font-weight: normal;}
+        .order-detail-box{height: 100%;padding: .89rem 0 1.2rem;box-sizing: border-box;overflow: auto;}
+        .order-detail-box .order-detail-bg{width: 100%;height: 2.2rem;background: url(__STATIC__/index/image/my_bg4.png) no-repeat;background-size: 100% 100%;}
+        .order-detail-box .user-info-box{width: 96%;height: 2.3rem;background-color: #fff;border-radius: .2rem;box-shadow: 0 2px 10px rgba(200, 200, 200, 1);padding: .45rem .42rem;box-sizing: border-box;margin: -1.4rem auto 0;}
+        .user-info-box .user-name-phone,
+        .user-info-box .user-address{position: relative;display: flex;justify-content: space-between;font-size: .26rem;color: #333333;}
+        .user-info-box .user-name-phone{margin-bottom: .15rem;}
+        .user-info-box .user-address .address-txt{flex: 1;line-height: normal;}
+        .icon-addr-more{position: absolute;right: 0;top: 50%;transform: translateY(-50%);width: .16rem;height: .28rem;background-position: -7.3rem -1.8rem;}
+        .order-goods-info{width: 96%;height: 4.05rem;padding: .45rem .42rem;box-sizing: border-box;background-color: #fff;border-radius: .2rem;margin: .3rem auto 0;box-shadow: 0 2px 10px rgba(200, 200, 200, 1);}
+        .order-goods-info .order-shop-box{margin-bottom: .1rem;}
+        .order-goods-info .icon-shop{display: inline-block;width: .3rem;height: .29rem;background-position: -5.6rem -1rem;vertical-align: text-bottom;}
+        .order-goods-info .order-goods-detail{display: flex;}
+        .order-goods-detail .order-goods-img{width: 2.2rem;height: 2.4rem;margin-right: .2rem;}
+        .order-goods-detail .order-goods-img img{width: 100%;height: 100%;}
+        .order-goods-detail .order-info-box{flex: 1;display: flex;flex-direction: column;justify-content: space-evenly;line-height: normal;font-size: .28rem;}
+        .order-goods-detail .order-info-box .order-selling-point{font-size: .24rem;}
+        .order-goods-detail .order-info-box .unit-price-quantity{display: flex;justify-content: space-between;align-items: center;}
+        .order-info-box .unit-price-quantity .unit-price-p{font-size: .32rem;color: #f00;}
+        .sundry{width: 96%;height: 5.5rem;margin: .3rem auto 0;background-color: #fff;border-radius: .2rem;box-shadow: 0 2px 10px rgba(200, 200, 200, 1);box-sizing: border-box;}
+        .sundry .sundry-ul{width: 100%;height: 100%;display: flex;flex-direction: column;justify-content: space-around;}
+        .sundry .sundry-li{position: relative;margin: 0 .42rem;border-bottom: 1px solid #eee;flex: 1;display: flex;align-items: center;justify-content: space-between;}
+        .sundry .sundry-li .sundry-title{width: 1.5rem;}
+        .sundry .sundry-li .icon-more{position: absolute;right: 0;top: 50%;transform: translateY(-50%);width: .16rem;height: .28rem;background-position: -7.3rem -1.8rem;}
+        .sundry-cal{position: absolute;right: 0;top: 50%;transform: translateY(-50%);width: 1.45rem;height: .4rem;border: 1px solid #dcdcdc;display: flex;justify-content: space-around;border-radius: .1rem;}
+        .sundry-cal .sundry-minus,
+        .sundry-cal .sundry-increase{flex: 1;font-size: .22rem;color: #ccc;text-align: center;line-height: .4rem;}
+        .sundry-cal .sundry-cal-val{font-size: .24rem;color: #666;width: .65rem;text-align: center;border-left: 1px solid #dcdcdc;border-right: 1px solid #dcdcdc;outline: none;}
+        .sundry-li-last{text-align: right;width: 100%;font-size: .28rem;}
+        .sundry-li-last span, .icon-money{color: #f00;}
+        .sundry .sundry-li .discount,
+        .sundry .sundry-li .invoice{padding-right: .3rem;}
+        .sundry .sundry-li .leave-msg{flex: 1;height: 100%;padding-left: .3rem;font-size: .3rem;outline: none;}
+        .order-payment-box{position: absolute;bottom: 0;left: 0;right: 0;width: 100%;height: 1rem;line-height: 1rem;background-color: #fff;box-shadow: 0 2px 10px rgba(200, 200, 200, 1);padding-right: .3rem;box-sizing: border-box;text-align: right;}
+        .order-payment-box .order-payment-btn{width: 2.4rem;height: .7rem;border: 0;background-color: #504cfb;color: #fff;font-size: .3rem;outline: none;border-radius: .35rem;}
+        /* 提交订单 end */
+
+        .standard{font-size: .24rem; color: #999;}
+        .discount_pop{position: absolute; top: 0; left: 0; right: 0;z-index: 2; background-color: #fff; width: 100%;height: 100vh;}
+        .head{position: relative;width: 100%;height: .88rem;background-color: #fff;border-bottom: 1px solid #ccc;margin-bottom: .3rem;}
+        .head h3{width: 100%;height: .88rem;line-height: .88rem;font-size: .36rem;font-weight: normal;text-align: center;}
+        .head .icon_back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;transform: translateY(-50%);background-position: -.5rem -.5rem;}
+        .discount_wrap{width: 94%;margin: 0 auto;}        
+        .discount_wrap .default{display: flex;align-items: center;justify-content: space-between;border: 1px solid #e7e8e9;border-radius: .1rem;padding: .2rem;margin-bottom: .2rem;text-align: center;background-color: #fff;}
+        .discount_wrap .default .dont{flex: 1;text-align: left;}
+        .discount_wrap .dis{display: flex;align-items: center;justify-content: space-between;border: 1px solid #e7e8e9;border-radius: .1rem;padding: .2rem;margin-bottom: .2rem;text-align: center;font-size: 0;color: #f00;background-color: #fff; line-height: normal;}
+        .discount_wrap .dis .dis-introduce{font-size: .42rem; color: #333;}
+        .discount_wrap .dis .need-integ{font-size: .24rem; color: #333;}
+        .discount_wrap .dis .deduction-money{font-size: .42rem;}
+    </style>
+</head>
+<body>
+    <div class="place-order-pop">
+        <header class="place-order-header">
+            <a href="javascript:;" class="spr place-order-back"></a>
+            <h3 class="place-order-title">确认订单</h3>
+        </header>
+        <div class="order-detail-box">
+            <div class="order-detail-bg"></div>
+            <div class="user-info-box">
+                <div class="user-name-phone">
+                    <span class="user-name"></span>
+                    <span class="user-phone"></span>
+                </div>
+                <div class="user-address">
+                    <span class="address-title">配送地址：</span>
+                    <span class="address-txt txt-hid-two">深圳市福田区深南大道新闻路1号中电信息大厦西座1楼</span>
+                    <i class="spr icon-addr-more"></i>
+                </div>
+            </div>
+            <div class="order-goods-info">
+                <div class="order-shop-box">
+                    <i class="spr icon-shop"></i>
+                    <span class="order-shop-namp"></span>
+                </div>
+                <div class="order-goods-detail">
+                    <div class="order-goods-img">
+                        <img src="__STATIC__/index/image/14.png">
+                    </div>
+                    <div class="order-info-box">
+                        <p class="order-goods-p txt-hid-two"></p>
+                        <p class="order-selling-point txt-hid-two"></p>
+                        <p class="standard txt-hid-two"></p>
+                        <div class="unit-price-quantity">
+                            <p class="unit-price-p"></p>
+                            <p class="quantity-p"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sundry">
+                <ul class="sundry-ul">
+                    <li class="sundry-li">
+                        <p class="sundry-title">购买数量</p>
+                        <div class="sundry-cal">
+                            <a href="javascript:;" class="sundry-minus">-</a>
+                            <input type="text" value="1" class="sundry-cal-val" readonly>
+                            <a href="javascript:;" class="sundry-increase">+</a>
+                        </div>
+                    </li>
+                    <li class="sundry-li deduction">
+                        <p class="sundry-title">积分抵扣</p>
+                        <span class="discount">不使用积分</span>
+                        <a href="javascript:;" class="spr icon-more"></a>
+                    </li>
+                    <li class="sundry-li">
+                        <p class="sundry-title">发票信息</p>
+                        <span class="invoice">不开发票</span>
+                        <a href="javascript:;" class="spr icon-more"></a>
+                    </li>
+                    <li class="sundry-li">
+                        <p class="sundry-title">买家留言</p>
+                        <input type="text" placeholder="请填写内容(选填)" class="leave-msg">
+                    </li>
+                    <li class="sundry-li">
+                        <p class="sundry-li-last">共计<span class="total-num"></span>件商品 合计：<span class="icon-money">￥</span><span class="total-money"></span></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="order-payment-box">
+                <button class="order-payment-btn" id="order-buy">立即付款</button>
+            </div>
+        </div>
+    </div>
+    <div class="mask"></div>
+    <!-- 支付弹窗 -->
+    <form name=alipayment action="{:url('index/Apppay/index_parts_aliPay')}" method="post">
+        <div class="alipay-pop">
+            <header>
+                <a href="javascript:;" class="close-alipay">×</a>
+                <h3 class="alipay-title">确认付款</h3>
+            </header>
+            <div class="middle_box">
+                <div class="price-box">
+                    <span>￥</span>
+                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="" readonly>
+                </div>
+                <ul class="content">
+                    <li>
+                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="" readonly>
+                    </li>
+                    <li>
+                        订单名称: <input id="WIDsubject" name="WIDsubject" value="" readonly>
+                    </li>
+                    <li>
+                        商品描述: <input id="WIDbody" name="WIDbody" value="" readonly>
+                    </li>
+                    <li>
+                        付款方式: <input class="widway" value="微信支付" readonly><i class="spr icon-more"></i>
+                    </li>
+                </ul>
+            </div>
+            <button type="submit" class="alipay-submit">立即付款</button>
+        </div>
+    </form>
+    <!-- 选择支付方式 -->
+    <div class="chose-payment">
+        <header>
+            <a href="javascript:;" class="spr chose-payment-back"></a>
+            <h3 class="chose-title">选择支付方式</h3>
+        </header>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/money.png">
+            </div>
+            <p>余额支付</p>
+            <a href="javascript:;" class="spr check-a"></a>
+        </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/wechat.png">
+            </div>
+            <p>微信支付</p>
+            <a href="javascript:;" class="spr check-a icon-check"></a>
+        </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/alipay.png">
+            </div>
+            <p>支付宝支付</p>
+            <a href="javascript:;" class="spr check-a"></a>
+        </div>
+    </div>
+
+    <!-- 积分抵扣 -->
+    <div class="discount_pop" style="display: none;">
+        <div class="head">
+            <a href="javascript:;" class="spr icon_back"></a>
+            <h3>使用积分</h3>
+        </div>
+        <div class="discount_wrap">
+            <div class="default">
+                <label class="dont" for="dont">不使用积分</label>
+                <input type="radio" id="dont" name="disc" checked>
+            </div>
+        </div>
+    </div>
+    
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/order_parts/order_parts_firm_order.js"></script>
+</body>
+</html>

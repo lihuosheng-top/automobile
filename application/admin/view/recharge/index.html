@@ -9,27 +9,6 @@
 		background: #fff;
 	}
 
-	label {
-		text-align: left !important;
-	}
-	.layui-form-item{
-		max-width: 100% !important;
-	}
-
-	.layui-form-item {
-		width: 100%;
-		margin-bottom: 0;
-		margin-top: 0;
-
-	}
-
-	.layui-form-label {
-		width: 27% !important;
-	}
-
-	.layui-input-inline {
-		width: 68% !important;
-	}
 
 	#page {
 		width: 96%;
@@ -39,9 +18,7 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
-	.pagination {
-		float: right;
-	}
+
 </style>
 
 
@@ -54,16 +31,17 @@
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
 			<form class="layui-form" action="{:url('admin/Recharge/search')}">
-				<div class="layui-form-item">
-					<div class="layui-inline">
-						<label class="layui-form-label">用户名称：</label>
-						<div class="layui-input-inline">
-							<input type="text" name="search_key" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<div class="seach">
+					<div class="seach_list">
+						<div class="seach_laber">用户名称：</div>
+						<div class="seach_input">
+							<input type="text" name="" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+
 						</div>
 					</div>
-					<div class="layui-inline">
-						<label class="layui-form-label">支付方式：</label>
-						<div class="layui-input-inline">
+					<div class="seach_list">
+						<div class="seach_laber">支付方式:</div>
+						<div class="seach_input">
 							<select name="pay_type_content" id="admin_status">
 								<option value="" selected="">请选择</option>
 								<option value="支付宝" >支付宝</option>
@@ -71,9 +49,9 @@
 							</select>
 						</div>
 					</div>
-					<div class="layui-inline">
-						<label class="layui-form-label">类型：</label>
-						<div class="layui-input-inline">
+						<div class="seach_list">
+						<div class="seach_laber">类型:</div>
+						<div class="seach_input">
 							<select name="operation_type" id="admin_status">
 								<option value="" selected="">请选择</option>
 								<option value="1" >充值</option>
@@ -81,10 +59,7 @@
 							</select>
 						</div>
 					</div>
-										
-					<div class="layui-inline">
-						<button class="layui-btn search_btn" type="submit"> 搜索</button>
-					</div>
+				<button class="layui-btn" type="submit" id="seach">立即搜索</button>
 				</div>
 
 			</form>

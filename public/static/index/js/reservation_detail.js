@@ -1,5 +1,5 @@
 
-// 显示 隐藏 评价弹窗 
+// 全部弹窗
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
     $('html').css('overflow', 'hidden');
@@ -8,6 +8,15 @@ function hidePop(){
     $('.pop').css('transform', 'translateX(100%)');
     $('html').css('overflow', 'auto');
 }
+$('.filter-com-ul').on('click', 'li', function(){
+    $(this).siblings().removeClass('filter-li-this');
+    $(this).toggleClass('filter-li-this');
+})
+$('.filter-service-ul').on('click', 'li', function(){
+    $(this).siblings().removeClass('filter-service-li');
+    $(this).toggleClass('filter-service-li');
+})
+
 // 往下滑 头部添加背景
 $(window).on('scroll', function(){
     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
@@ -28,7 +37,7 @@ var index, curr_container, curr_img_len;
 $(function(){
     $('.comment_img_ul .comment_img_li').on('click', function(e){
         index = $(this).index();// 当前被点击的索引值
-        curr_container = e.liveFired;//被点击li的父级
+        curr_container = $(this).parent();//被点击li的父级
         curr_img_len = $(curr_container).children().length;//被点击容器中li的length
         $('.show_img .img_num').html(index+1+'/'+curr_img_len);//显示图片数量
         loadImage(e.target);//执行 传参
@@ -74,6 +83,7 @@ $('.img_box').on('click', function(e){
         loadImage(nextImg);
     }
 }).on('swipeRight', function(){//用户右划
+    console.log(111)
     index--;
     if(index < 0){
         index = 0;
@@ -91,28 +101,69 @@ var id;
 if(url.indexOf('?') != -1){
     id = url.substr(1).split('=')[1];
 }
-$.ajax({
-    url: 'reservation_detail',
-    type: 'POST',
-    dataType: 'JSON',
-    data: {
-        'id': id
-    },
-    success: function(data){
-        console.log(data);
-        var str = '';
-        var str2 = '';
-        $.each(data.data, function(idx, val){
-            str += '<p class="shop_name">'+val.store.store_name+'</p>\
-                    <i class="spr star"></i>\
-                    <p class="nature">'+val.service_setting_name+'</p>';
-            str2 += '<p class="addr_p"><i class="spr icon_addr"></i>'+val.store.store_detailed_address+'</p>\
-                    <p class="phone_p"><i class="spr icon_phone"></i>'+val.store.store_owner_seat_num+'</p>'
-        })
-        $('.order_confirm').after(str);
-        $('.addr_phone_box').append(str2);
-    },
-    error: function(){
-        console.log('error');
+// $.ajax({
+//     url: 'reservation_detail',
+//     type: 'POST',
+//     dataType: 'JSON',
+//     data: {
+//         'id': id
+//     },
+//     success: function(data){
+//         console.log(data);
+//         var str = '';
+//         var str2 = '';
+//         $.each(data.data, function(idx, val){
+//             str += '<p class="shop_name">'+val.store.store_name+'</p>\
+//                     <i class="spr star"></i>\
+//                     <p class="nature">'+val.service_setting_name+'</p>';
+//             str2 += '<p class="addr_p"><i class="spr icon_addr"></i>'+val.store.store_detailed_address+'</p>\
+//                     <p class="phone_p"><i class="spr icon_phone"></i>'+val.store.store_owner_seat_num+'</p>'
+//         })
+//         $('.shop_info_box').append(str);
+//         $('.addr_phone_box').append(str2);
+//     },
+//     error: function(){
+//         console.log('error');
+//     }
+// })
+
+// 切换服务项目 本店商品
+$('.service-tab-title').on('click', 'li', function(){
+    $(this).siblings().removeClass('service-this');
+    $(this).addClass('service-this');
+    var index = $(this).index();
+    switch(index){
+        case 0:
+            $('.service-content').show();
+            $('.goods-content').hide();
+            break;
+        case 1:
+            $('.service-content').hide();
+            $('.goods-content').show();
+            break;
     }
+})
+$('.service-colla-title').click(function(e){
+    e.preventDefault();
+    $(this).find('.icon-uncheck').toggleClass('icon-check');
+    if($(this).find('.icon-uncheck').hasClass('icon-check')){
+        $(this).siblings('.service-colla-content').show();
+    }else{
+        $(this).siblings('.service-colla-content').hide();
+    }
+})
+$('.service-colla-content li').click(function(){
+    $(this).find('.icon-uncheck').toggleClass('icon-check');
+    if($(this).find('.icon-uncheck').hasClass('icon-check')){
+        $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
+        $('.bespeak-btn').removeAttr('disabled')
+    }else{
+        $('.bespeak-btn').prop('disabled', 'disabled');
+    }
+})
+
+// 筛选评论
+$('.filter-ul').on('click', 'li', function(){
+    $(this).siblings().removeClass('filter-this');
+    $(this).addClass('filter-this');
 })

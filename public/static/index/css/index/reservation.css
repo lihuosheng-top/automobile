@@ -51,6 +51,8 @@ body,html{
     border-bottom: 1px solid #f7f7f7;
     padding: 0 .38rem;
     box-sizing: border-box;
+    color: #000;
+    line-height: normal;
 }
 .shop_box .addr_info_box{
     width: 4rem;
@@ -62,13 +64,18 @@ body,html{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
-    font-size: .28rem;
+    font-size: .3rem;
     color: #333333;
-    margin-bottom: .1rem;
+    font-weight: 600;
+}
+.addr_span{
+    line-height: normal;
+    font-size: .24rem;
 }
 .shop_box .comment_box{
     display: flex;
     align-items: center;
+    margin: .15rem 0;
 }
 .shop_box .comment_box .icon_star{
     display: inline-block;
@@ -103,7 +110,7 @@ body,html{
     text-align: center;
 }
 .shop_box .service_type .service_price{
-    font-size: .36rem;
+    font-size: .52rem;
     color: #ff1800;
 }
 .shop_box .service_type .service_text{

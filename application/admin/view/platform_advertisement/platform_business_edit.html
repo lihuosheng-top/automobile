@@ -36,9 +36,8 @@
     {/block} {block name="content"}
     <div class="open">
     </div>
+    {if !empty($plat)} {volist name ="plat" id="value"} {if $value.department}
     <form class="layui-form" action="{:url('admin/platform_advertisement/platform_business_updata')}" method="post" enctype="multipart/form-data">
-        {if !empty($plat)} {volist name="plat" id="value"}
-
         <div class="layui-form-item " style="display:none">
             <label class="layui-form-label"><span>*</span>id</label>
             <div class="layui-input-block">
@@ -131,10 +130,103 @@
 
             </div>
         </div>
-        {/volist} {/if}
     </form>
+    {else}
+    <form class="layui-form" action="{:url('admin/platform_advertisement/platform_business_updata')}" method="post" enctype="multipart/form-data">
+        <div class="layui-form-item " style="display:none">
+            <label class="layui-form-label"><span>*</span>id</label>
+            <div class="layui-input-block">
+                <input type="text" name="id" value="{$value.id}"> </input>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"> 广告名称：</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" value="{$value.name}" lay-verify="title" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">广告位置：</label>
+            <div class="layui-input-block">
+                <input type="text" name="location" value="{$value.location}" lay-verify="title" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">开始时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="start_time" value="{$value.start_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">结束时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="end_time" value="{$value.end_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">广告链接：</label>
+            <div class="layui-input-block">
+                <input type="text" name="url" value="{$value.url}" lay-verify="title" class="layui-input">
 
-    {/block}
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">上传广告图片</label>
+            <div class="layui-input-block">
+
+                <div class="img-box full">
+                    <section class=" img-section">
+                        <div class="z_photo upimg-div clear">
+                            <section class="z_file fl">
+                                <img src="__UPLOADS__/{$value.advert_picture}">
+                                <input type="file" disabled="disabled" name="advert_picture" id="file" class="file" value="{$value.advert_picture}" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+                            </section>
+                        </div>
+                    </section>
+                </div>
+                <aside class="mask works-mask">
+                    <div class="mask-content">
+                        <p class="del-p ">您确定要删除作品图片吗？</p>
+                        <p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">或图片网址:</label>
+            <div class="layui-input-block">
+                <input type="text" name="picture_url" value="{$value.picture_url}" lay-verify="title" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">当前可操作：</label>
+            <div class="layui-input-block">
+                {if $value.status == 1}
+                <input type="radio" name="status" value="1" title="同意" checked="">
+                <input type="radio" name="status" value="0" title="拒绝"> {else}
+                <input type="radio" name="status" value="1" title="同意">
+                <input type="radio" name="status" value="0" title="拒绝" checked="">{/if}
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">操作员备注：</label>
+            <div class="layui-input-block">
+                <textarea name="remarks" value="{$value.remarks}" rows="10" cols="60"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
+
+                <button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit">保存</button>
+
+            </div>
+        </div>
+    </form>
+    {/if} {/volist} {/if} {/block}
 
     <!--_footer 作为公共模版分离出去-->
     {include file="template/_footer" /}

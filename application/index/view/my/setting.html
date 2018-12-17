@@ -85,16 +85,17 @@
         </div>
         <div class="supplier-box">
             <input type="radio" name="role" class="supplier" id="supplier">
-            <label for="supplier">配件商</label>
+            <label for="supplier">配件商和服务商</label>
         </div>
-        <div class="facilitator-box">
+        <!-- <div class="facilitator-box">
             <input type="radio" name="role" class="facilitator" id="facilitator">
             <label for="facilitator">服务商</label>
-        </div>
+        </div> -->
         <button class="change-role-btn">确定</button>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <!-- 退出登录 -->
     <script>
         $('.exit').click(function(){
@@ -140,6 +141,48 @@
             $('.reset-pwd-pop').hide();
             $('.wrapper').show();
         })
+        $('.reset-pwd-btn').click(function(){
+            var reset = $('.reset-pwd-input').val();
+            var repeat = $('.repeat-pwd-input').val()
+            if(reset !== '' && repeat !== '' && reset === repeat){
+                $.ajax({
+                    url: 'update_password',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'password': repeat
+                    },
+                    success: function(res){
+                        console.log(res);
+                        if(res.status == 1){
+                            layer.open({
+                                skin: 'msg',
+                                content: res.info,
+                                time: 1
+                            })
+                            setTimeout(function(){
+                                location.href = 'login';
+                            }, 1100)
+                        }
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else if(reset !== repeat){
+                layer.open({
+                    skin: 'msg',
+                    content: '前后密码不一致',
+                    time: 1
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请填写完整',
+                    time: 1
+                })
+            }
+        })
     </script>
     <!-- 修改支付密码 -->
     <script>
@@ -163,6 +206,17 @@
         $('.change-role-back').click(function(){
             $('.change-role-pop').hide();
             $('.wrapper').show();
+        })
+
+        $('.change-role-pop').on('change', 'input', function(){
+            var role = $(this).attr('id');
+            $('.change-role-btn').click(function(){
+                if(role == 'customer'){
+                    location.href = 'my_index';
+                }else if(role == 'supplier'){
+                    location.href = 'sell_my_index';
+                }
+            })
         })
     </script>
 </body>

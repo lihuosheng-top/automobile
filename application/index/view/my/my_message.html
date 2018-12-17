@@ -66,6 +66,23 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
+        $.ajax({
+            url: 'member_information_data',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    if(res.data.user_img !== null){
+                        $('.user-img')[0].src = 'userimg/' + res.data.user_img;
+                    }
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+
         // 上传图片 https://blog.csdn.net/scrat_kong/article/details/79230329
         function uploadImg(input,img){
             var input = document.getElementById(input);
@@ -79,6 +96,44 @@
         }
         $('.upload-input').change(function(){
             uploadImg('upload-input', 'user-img');
+            var user_img = $(this)[0].files[0]
+                real_name = '',
+                user_name = '',
+                sex = '';
+
+            var formData = new FormData();
+            formData.append('user_img', user_img);
+            formData.append('real_name', real_name);
+            formData.append('user_name', user_name);
+            formData.append('sex', sex);
+
+            $.ajax({
+                url: 'member_information_update',
+                type: 'POST',
+                dataType: 'JSON',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1
+                        })
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1
+                        })
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
 
         $('.info-ul .info-li').click(function(){
@@ -90,9 +145,9 @@
                     location.href = 'phone_edit';break;
                 case 3:
                     location.href = 'my_nickname';break;
-                case 6:
+                case 5:
                     location.href = 'my_integral';break;
-                case 7:
+                case 6:
                     location.href = 'wallet_index';break;
             }
         })
@@ -103,9 +158,50 @@
             $('.sex-pop').animate({'bottom': '0'});
         })
         $('.sex-pop-btn').click(function(){
-            $('.mask').hide(0);
+            $('.mask').hide();
             $('.sex-pop').animate({'bottom': '-100%'});
         })
+        // 男 女
+        $('.sex-pop-male').add('.sex-pop-female').click(function(){
+            var user_img = '',
+                real_name = '',
+                user_name = '';
+                sex = $(this)[0].innerText;
+                
+            $.ajax({
+                url: 'member_information_update',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'sex': sex,
+                    'user_img': user_img,
+                    'real_name': real_name,
+                    'user_name': user_name
+                },
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1
+                        })
+                        $('.mask').hide();
+                        $('.sex-pop').animate({'bottom': '-100%'});
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1
+                        })
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+    
     </script>
 </body>
 </html>

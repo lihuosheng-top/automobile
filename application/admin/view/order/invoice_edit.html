@@ -22,6 +22,31 @@
 	.blue {
 		color: #4F99FF;
 	}
+	    /* 数据库展现图片样式 */
+    
+    .img {
+        position: relative;
+        display: inline-block;
+        width: 100px;
+    }
+    
+    .img>i {
+        display: inline-block;
+        width: 20px;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    	.big_div{
+		position: relative;
+	}
+	.delect_img{
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
 </style>
 
 {/block}
@@ -79,6 +104,47 @@
 				<p>优质米其林轮胎</p>
 			</div>
 		</div>
+			<div class="layui-form-item">
+			<label class="layui-form-label"> 手续费：</label>
+			<div class="layui-input-block">
+				<p>￥5.00</p>
+			</div>
+		</div>
+			<div class="layui-form-item">
+			<label class="layui-form-label"> 税费：</label>
+			<div class="layui-input-block">
+			<p>￥5.00</p>
+			</div>
+		</div>
+		  <div class="layui-form-item">
+            <label class="layui-form-label">上传发票</label>
+            <div class="layui-input-block">
+                <div class="imgcontent">
+                    <span class="img">
+						<img src="" width="100%">
+						<i class="remove-img" data-id="" data-value="1"><img src="__STATIC__/admin/common/img/a7.png"></i>
+					</span>
+                </div>
+            </div>
+            <div class="layui-input-block">
+                <div class="img-box full">
+                    <section class=" img-section">
+                        <div class="z_photo upimg-div clear">
+                            <section class="z_file fl">
+                                <img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+                                <input type="file" name="goods_show_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" data-id="1" />
+                            </section>
+                        </div>
+                    </section>
+                </div>
+                <aside class="mask works-mask">
+                    <div class="mask-content">
+                        <p class="del-p ">您确定要删除作品图片吗？</p>
+                        <p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+                    </div>
+                </aside>
+            </div>
+        </div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>

@@ -8,6 +8,7 @@
     <script src="__STATIC__/index/js/adaptation.js"></script>
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
     <link rel="stylesheet" href="__STATIC__/index/css/order_parts/order_parts_all.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/payment.css">
     <title>配件商-全部</title>
 </head>
 <body>
@@ -26,25 +27,25 @@
         </div>
         <div class="shops-goods-wrap">
             <!-- 待付款 -->
-            <div class="single-shop-box" v-for="(allData, idx) in allDatas">
+            <!-- <div class="single-shop-box">
                 <div class="shop-name-box">
                     <div class="name-txt-div">
                         <i class="spr icon-shop"></i>
-                        <span class="name-txt-span">{{allData.store_name}}</span>
+                        <span class="name-txt-span">店铺名</span>
                     </div>
-                    <p class="status-txt-p">{{returnStatusTxt(allData.status)}}</p>
+                    <p class="status-txt-p">待支付</p>
                 </div>
                 <div class="all-goods-box">
-                    <div class="single-goods-box single-goods-box-border" v-for="goods in allData.info">
+                    <div class="single-goods-box single-goods-box-border">
                         <div class="shop-img-box">
-                            <img :src="`uploads/`+goods.goods_image">
+                            <img src="__STATIC__/index/image/01.png">
                         </div>
                         <div class="order-info-box">
-                            <p class="goods-name-p txt-hid-two">{{goods.parts_goods_name}}</p>
+                            <p class="goods-name-p txt-hid-two">商品名</p>
                             <p class="goods-selling-point txt-hid-two">这个是商品卖点这个是商品卖点</p>
                             <div class="unit-price-quantity">
-                                <p class="unit-price-p">￥{{goods.goods_money}}</p>
-                                <p class="quantity-p">×{{goods.order_quantity}}</p>
+                                <p class="unit-price-p">￥199</p>
+                                <p class="quantity-p">×2</p>
                             </div>
                         </div>
                     </div>
@@ -60,13 +61,86 @@
                         <button class="evaluation-btn" style="display:none;">去评价</button>
                     </div>
                 </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="mask" style="display: none;"></div>
+    <!-- 取消订单弹窗 -->
+    <div class="cancel-order-pop">
+        <header class="cancel-order-header">
+            取消订单
+            <a href="javascript:;" class="spr close-cancel-order"></a>
+        </header>
+        <p class="reason-title">请选择取消订单原因：</p>
+        <ul class="reason-list">
+            <li class="reason-li reason-selected"><i class="spr icon-reason"></i> 操作有误</li>
+            <li class="reason-li"><i class="spr icon-reason"></i> 暂时不需要</li>
+            <li class="reason-li"><i class="spr icon-reason"></i> 选错商品</li>
+            <li class="reason-li"><i class="spr icon-reason"></i> 预约时间有误</li>
+            <li class="reason-li"><i class="spr icon-reason"></i> 其他原因</li>
+        </ul>
+        <button class="select-reason-btn">确定</button>
+    </div>
+    <!-- 支付弹窗 -->
+    <form name=alipayment action="{:url('index/Apppay/index_parts_aliPay')}" method="post">
+        <div class="alipay-pop">
+            <header>
+                <a href="javascript:;" class="close-alipay">×</a>
+                <h3 class="alipay-title">确认付款</h3>
+            </header>
+            <div class="middle_box">
+                <div class="price-box">
+                    <span>￥</span>
+                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="" readonly>
+                </div>
+                <ul class="content">
+                    <li>
+                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="" readonly>
+                    </li>
+                    <li>
+                        订单名称: <input id="WIDsubject" name="WIDsubject" value="" readonly>
+                    </li>
+                    <li>
+                        商品描述: <input id="WIDbody" name="WIDbody" value="" readonly>
+                    </li>
+                    <li>
+                        付款方式: <input class="widway" value="微信支付" readonly><i class="spr icon-more"></i>
+                    </li>
+                </ul>
             </div>
+            <button type="submit" class="alipay-submit">立即付款</button>
+        </div>
+    </form>
+    <!-- 选择支付方式 -->
+    <div class="chose-payment">
+        <header>
+            <a href="javascript:;" class="spr chose-payment-back"></a>
+            <h3 class="chose-title">选择支付方式</h3>
+        </header>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/money.png">
+            </div>
+            <p>余额支付</p>
+            <a href="javascript:;" class="spr check-a"></a>
+        </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/wechat.png">
+            </div>
+            <p>微信支付</p>
+            <a href="javascript:;" class="spr check-a icon-check"></a>
+        </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/alipay.png">
+            </div>
+            <p>支付宝支付</p>
+            <a href="javascript:;" class="spr check-a"></a>
         </div>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
-    <script src="__STATIC__/index/js/plugin/vue.js"></script>
-    <script src="__STATIC__/index/js/plugin/vue.resource.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_all.js"></script>
 </html>

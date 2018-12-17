@@ -10,6 +10,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Db;
 use think\Request;
+use  think\Session;
 
 class Findpwd extends Controller{
     /**
@@ -72,6 +73,11 @@ class Findpwd extends Controller{
         //接受验证码的手机号码
         if ($request->isPost()) {
             $mobile = $_POST["mobile"];
+            $user_id = Session::get("user");
+            $is_set_mobile =Db::name('user')->where('user_id',$user_id)->where('phone_num',$mobile)->find();
+            if(empty($is_set_mobile)){
+                return ajax_error("此手机未注册",['status'=>0]);
+            }
             $mobileCode = rand(100000, 999999);
             $arr = json_decode($mobile, true);
             $mobiles = strlen($arr);
@@ -101,6 +107,57 @@ class Findpwd extends Controller{
         }
     }
 
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:修改手机号
+     **************************************
+     * @param Request $request
+     */
+    public function sendMobileCodeByPh(Request $request)
+    {
+        //接受验证码的手机号码
+        if ($request->isPost()) {
+            $mobile = $_POST["mobile"];
+            $user_id = Session::get("user");
+            $is_set_mobile =Db::name('user')->where("id",$user_id)->where('phone_num',$mobile)->find();
+            if(!empty($is_set_mobile)){
+                return ajax_error("请输入不一样的号码",['status'=>0]);
+            }
+            $is_set_mobiles =Db::name('user')->where('phone_num',$mobile)->find();
+            if(!empty($is_set_mobiles)){
+                return ajax_error("此手机号已注册",['status'=>0]);
+            }
+
+            $mobileCode = rand(100000, 999999);
+            $arr = json_decode($mobile, true);
+            $mobiles = strlen($arr);
+            if (isset($mobiles) != 11) {
+                return ajax_error("手机号码不正确");
+            }
+            //存入session中
+            if (strlen($mobileCode)> 0){
+                session('mobileCode',$mobileCode);
+                session('mobile',$mobile);
+            }
+            $content = "尊敬的用户，您本次验证码为{$mobileCode}，十分钟内有效";
+            $url = "http://120.26.38.54:8000/interface/smssend.aspx";
+            $post_data = array("account" => "qiche", "password" => "123qwe", "mobile" => "$mobile", "content" => $content);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            if ($output) {
+                return ajax_success("发送成功", $output);
+            } else {
+                return ajax_error("发送失败",['status'=>0]);
+            }
+        }
+    }
     /**
      **************李火生*******************
      * @param Request $request
@@ -112,13 +169,14 @@ class Findpwd extends Controller{
             $password =$request->only(['password'])['password'];
             $passwords =password_hash(trim($password),PASSWORD_DEFAULT);
             $member =session('member');
+            $user_id = Session::get("user");
             if(!empty(trim($password))){
-                $is_admin =Db::name('admin')->where('phone',$member['phone'])->find();
-                if(!empty($is_admin)){
-                    Db::name('admin')->where('phone',$member['phone'])->update(['password'=>$passwords]);
-                }
-                $bool =Db::name('user')->where('phone_num',$member['phone'])->update(['password'=>$passwords]);
+                $bool =Db::name('user')->where('phone_num',$member['phone_num'])->update(['password'=>$passwords]);
                 if($bool){
+                    $is_admin =Db::name('admin')->where('phone',$member['phone_num'])->find();
+                    if(!empty($is_admin)){
+                        Db::name('admin')->where('phone',$member['phone_num'])->update(['passwd'=>$passwords]);
+                    }
                     return ajax_success('修改成功',['status'=>1]);
                 }else{
                     return ajax_error('修改失败',['status'=>0]);
