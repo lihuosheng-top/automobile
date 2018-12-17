@@ -191,6 +191,17 @@ html{
     line-height: normal;
     border-bottom: 1px solid #eee;
 }
+.more-goods{
+    display: block;
+    margin: .2rem auto;
+    width: 2.5rem;
+    height: .7rem;
+    border-radius: .35rem;
+    border: 1px solid #504cfb;
+    color: #504cfb;
+    text-align: center;
+    line-height: .7rem;
+}
 .goods-img-box{
     width: 2.2rem;
     height: 2.42rem;
@@ -496,28 +507,61 @@ html{
     line-height: .88rem;
     text-align: center;
 }
-.pop .comment_classify_box{
-    width: 100%;
-    height: .8rem;
+.filter-service{
+    margin-top: .88rem;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+    margin-bottom: .12rem;
+}
+.filter-service-ul{
     display: flex;
     align-items: center;
-    margin-top: .88rem;
     justify-content: space-around;
+    line-height: normal;
+    text-align: center;
+    padding: .2rem 0;
+}
+.filter-service-ul li{
+    position: relative;
+}
+.com-number,
+.com-name{
+    font-size: .28rem;
+    color: #333;
+}
+.filter-service-li p{
+    color: #504cfb !important;
+}
+.filter-service-li::after{
+    content: '';
+    border: 1px solid #504cfb;
+    position: absolute;
+    bottom: -.1rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+.filter-com{
+    border-bottom: 1px solid #eee;
     background-color: #fff;
-    border-bottom: 1px solid #ccc;
-    color: #666;
+    padding: .2rem .3rem;
 }
-.pop .comment_classify_box p{
-    display: inline;
+.filter-com-ul li{
+    float: left;
+    background-color: #e4f3fb;
+    font-size: .24rem;
+    color: #333;
+    border-radius: .1rem;
+    padding: .1rem .25rem;
+    margin: 0 .3rem .25rem 0;
 }
-.pop .comment_classify_box li{
-    height: .8rem;
-    line-height: .8rem;
-    box-sizing: border-box;
+.filter-com-ul li.negative{
+    background-color: #eeeeee;
+    color: #999;
 }
-.pop .comment_classify_box li.active{
-    border-bottom: 2px solid #504cfb;
-    color: #504cfb;
+.filter-com-ul .filter-li-this{
+    background-color: #504cfb !important;
+    color: #fff !important;
 }
 .pop .comment_box{
     width: 100%;

@@ -1,5 +1,5 @@
 
-// 显示 隐藏 评价弹窗 
+// 全部弹窗
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
     $('html').css('overflow', 'hidden');
@@ -8,6 +8,15 @@ function hidePop(){
     $('.pop').css('transform', 'translateX(100%)');
     $('html').css('overflow', 'auto');
 }
+$('.filter-com-ul').on('click', 'li', function(){
+    $(this).siblings().removeClass('filter-li-this');
+    $(this).toggleClass('filter-li-this');
+})
+$('.filter-service-ul').on('click', 'li', function(){
+    $(this).siblings().removeClass('filter-service-li');
+    $(this).toggleClass('filter-service-li');
+})
+
 // 往下滑 头部添加背景
 $(window).on('scroll', function(){
     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;

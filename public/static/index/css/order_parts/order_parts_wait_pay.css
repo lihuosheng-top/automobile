@@ -89,6 +89,7 @@ html, body{
     background-color: #fff;
     border-radius: .1rem;
     padding: .24rem .28rem;
+    margin-bottom: .3rem;
 }
 .shop-name-box{
     display: flex;
@@ -187,4 +188,82 @@ html, body{
 .total-button-box .button-box .conf-receipt-btn{
     border-color: #504cfb;
     color: #504cfb;
+}
+/* 取消订单原因 */
+.cancel-order-pop{
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 50vh;
+    background-color: #fff;
+}
+
+.cancel-order-header{
+    position: relative;
+    width: 100%;
+    height: .8rem;
+    text-align: center;
+    line-height: .8rem;
+    font-size: .34rem;
+    color: #666;
+    font-weight: normal;
+    border-bottom: 1px solid #eee;
+}
+.cancel-order-header .close-cancel-order{
+    position: absolute;
+    top: 50%;
+    right: .3rem;
+    transform: translateY(-50%);
+    width: .4rem;
+    height: .39rem;
+    background-position: .05rem -1.15rem;
+}
+.cancel-order-pop .reason-title{
+    font-size: .3rem;
+    color: #333;
+    margin: .3rem 0 .3rem .5rem;
+}
+.reason-list{
+    margin-left: .5rem;
+    margin-bottom: .3rem;
+}
+.reason-list .reason-li{
+    margin: .1rem 0;
+    font-size: .28rem;
+    color: #333;
+}
+.reason-list .reason-li .icon-reason{
+    display: inline-block;
+    width: .38rem;
+    height: .38rem;
+    background-position: -2.05rem -.85rem;
+    vertical-align: middle;
+    margin-right: .2rem;
+}
+.reason-list .reason-selected i{
+    background-position: -2.05rem -1.25rem !important;
+}
+.select-reason-btn{
+    position: absolute;
+    bottom: .4rem;
+    left: 50%;
+    transform: translate(-50%);
+    width: 90%;
+    height: .7rem;
+    border: 0;
+    outline: none;
+    background-color: #504cfb;
+    color: #fff;
+    border-radius: .1rem;
+}
+.mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .6);
 }
