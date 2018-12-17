@@ -64,7 +64,7 @@ class Index extends Controller
         $logHandler = new \CLogFileHandler("./logs/" . date('Y-m-d') . '.log');
         $log = \Log::Init($logHandler, 15);
         if (isset($_REQUEST["transaction_id"]) && $_REQUEST["transaction_id"] != "") {
-            echo 1;
+            file_put_contents(EXTEND_PATH."lib/data.txt",$_REQUEST["transaction_id"]);
             exit();
             $transaction_id = $_REQUEST["transaction_id"];
             $input = new \WxPayOrderQuery();
@@ -74,7 +74,7 @@ class Index extends Controller
         }
 
         if (isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != "") {
-            echo 2;
+            file_put_contents(EXTEND_PATH."lib/data.txt",$_REQUEST["transaction_id"]);
             exit();
             $out_trade_no = $_REQUEST["out_trade_no"];
             $input = new \WxPayOrderQuery();
