@@ -62,24 +62,23 @@ class Index extends Controller
         //初始化日志
         $logHandler = new \CLogFileHandler("./logs/" . date('Y-m-d') . '.log');
         $log = \Log::Init($logHandler, 15);
-        if (isset($_REQUEST["transaction_id"]) && $_REQUEST["transaction_id"] != "") {
+        if(isset($_REQUEST["transaction_id"]) && $_REQUEST["transaction_id"] != ""){
             $transaction_id = $_REQUEST["transaction_id"];
-            file_put_contents(EXTEND_PATH."lib/data/data.txt",$transaction_id);
-            exit();
             $input = new \WxPayOrderQuery();
             $input->SetTransaction_id($transaction_id);
-
-
+            //printf_info(WxPayApi::orderQuery($input));
+            $result=\WxPayApi::orderQuery($input);
+            file_put_contents(EXTEND_PATH."lib/data/data.txt",$result['trade_state']);
+            exit();
         }
 
-        if (isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != "") {
+        if(isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != ""){
             $out_trade_no = $_REQUEST["out_trade_no"];
-            file_put_contents(EXTEND_PATH."lib/data/data.txt",$out_trade_no);
-            exit();
             $input = new \WxPayOrderQuery();
-            $bool = $input->SetOut_trade_no($out_trade_no);
-
-            //echo json_encode(\WxPayApi::orderQuery($input));
+            $input->SetOut_trade_no($out_trade_no);
+            //printf_info(WxPayApi::orderQuery($input));
+            $result=\WxPayApi::orderQuery($input);
+            file_put_contents(EXTEND_PATH."lib/data/data.txt",$result['trade_state']);
             exit();
         }
     }
