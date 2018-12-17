@@ -44,26 +44,27 @@
 <body>
 
 	{block name="content"}
-	<div class="all">
-		<h2 class="static">待支付......</h2>
-		<p>商家名称：<span id="shop_name"></span></p>
-		<p>支付金额：<span id="repay_money"></span></p>
-		<div class="doms">
-			<!--二维码-->
-			<img alt="模式二扫码支付" src="" style="width:230px;height:230px;margin: 10px auto;" id="img_url" />
-		</div>
-		<div class="doms1 noshow " id="qrcode" style="width:230px; height:230px; margin: 10px auto;">
-		</div>
-		<div class="img">
-			<span class="weixin_ico" style="  margin-right: 30px;"><img src="__STATIC__/admin/common/img/weixin.png"/></span>
-			<span class="zhifubao_ico"><img src="__STATIC__/admin/common/img/zhifubao.png"/></span>
-		</div>
-		<div class="text">
-			扫一扫完成支付
-		</div>
+		<div class="all">
+			<input type="hidden" readonly="true" id="J_order_id" value="{$int_order_id}" />
+			<input type="hidden" readonly="true" id="J_pay_url" value="{$str_pay_url}" />
+			<h2 class="static">待支付......</h2>
+			<p>商家名称：<span id="shop_name"></span></p>
+			<p>支付金额：<span id="repay_money"></span></p>
+			<div class="doms">
+				<!--二维码-->
+				<img alt="模式二扫码支付" src="goods_qrcode?text={$str_pay_url}&size=8" style="width:230px;height:230px;margin: 10px auto;" id="J_weixin_pay_url" />
+			</div>
+			<div class="doms1 noshow " id="qrcode" style="width:230px; height:230px; margin: 10px auto;">
+			</div>
+			<div class="img">
+				<span class="weixin_ico J_show_weixin_img" style="margin-right: 30px;"><img src="__STATIC__/admin/common/img/weixin.png"/></span>
+				<span class="zhifubao_ico J_alipay_pay"><img src="__STATIC__/admin/common/img/zhifubao.png"/></span>
+			</div>
+			<div class="text">
+				扫一扫完成支付
+			</div>
 
-	</div>
-
+		</div>
 	{/block}
 
 	<!--_footer 作为公共模版分离出去-->
@@ -74,44 +75,97 @@
 	{block name="bottom"}
 	<script type="text/javascript" src="__STATIC__/admin/common/js/qrcode.js"></script>
 	<script type="text/javascript">
-		var loc = location.href;
-		var n1 = loc.length; //地址的总长度
-		var n2 = loc.indexOf("="); //取得=号的位置
-		var id = decodeURI(loc.substr(n2 + 1, n1 - n2)); //从=号后面的内容
-		var text = id.replace(/(.*)&.*/, '$1');
-		var WIDsubject = text.replace(/(.*)&.*/, '$1');
+		/*
+		获取微信扫描支付链接
+		*/
+		$('.J_show_weixin_img').click(function(){
+			var int_order_id = parseInt($('#J_order_id').val());
+			$.ajax({
+				type: "POST",
+				url: "{:url('admin/Goods/get_weixin_pay_url')}",
+				data: {'order_id': int_order_id},
+				success: function(_data) {
+					var _data = $.parseJSON(_data);
+					$('#J_weixin_pay_url').attr('src','/index/qrcode?text='+_data.data.pay_url+'&size=8');
+                                    	_pay_huidiao();//回调 检测订单是否已支付和二维码是否超时
+				},
 
-		function GetQueryString(name) {
-			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-			var r = window.location.search.substr(1).match(reg); //获取url中"?"符后的字符串并正则匹配
-			var context = "";
-			if(r != null)
-				context = r[2];
-			reg = null;
-			r = null;
-			return context == null || context == "" || context == "undefined" ? "" : context;
+				error: function() {
+					console.log("错误")
+				}
+			});
+		});
+
+
+
+		function _pay_huidiao(){
+			daojishi = setInterval("_do_huidiao()",5000);//时刻检测订单是否已支付
+	            	setTimeout(function(){
+	                    	alert('二维码已过期请刷新');
+	            	},180000);
 		}
-		var WIDbody = GetQueryString("WIDbody");
-		var WIDtotal_amount = GetQueryString("WIDtotal_amount");
-        $("#shop_name").html(WIDsubject);
-        $("#repay_money").html("￥"+WIDtotal_amount);
-		$.ajax({
-			type: "POST",
-			url: "{:url('admin/Goods/WeiAlpay')}",
-			data: {
-				"WIDbody": WIDbody,
-				"WIDsubject": WIDsubject,
-				"WIDtotal_amount": WIDtotal_amount,
-			},
-			success: function(data) {
-				//								console.log(data);
-				var data = eval("(" + data + ")");
-				console.log(data);
-				var datas = "goods_qrcode?url2=" + data.data;
-				$("#img_url").attr("src", datas);
-			},
 
-			error: function(data) {
+		function _do_huidiao(){
+			var order_id = $('#J_order_id').val();
+			/*$.get(//你自己写这个方法就是一直拿这个id查这条数据是否已支付就行
+				'/cart/check_order_pay',//自己写地址
+				{order_id:order_id},
+				function(data){
+					if(data.info.status == 110){//等于已支付的状态就跳转
+						window.location.href = '/i/my_order';
+					}
+				}
+			,'json');*/
+	        }
+
+	        $(document).ready(function () {
+	        	_do_huidiao();
+	        });
+
+	        //支付宝支付
+		$('.J_alipay_pay').click(function(){
+			var int_order_id = parseInt($('#J_order_id').val());
+			window.location.href = "goods_alipay_pay?order_id="+int_order_id;
+		});
+
+		//r loc = location.href;
+		//var n1 = loc.length; //地址的总长度
+		//var n2 = loc.indexOf("="); //取得=号的位置
+		//var id = decodeURI(loc.substr(n2 + 1, n1 - n2)); //从=号后面的内容
+		//var text = id.replace(/(.*)&.*/, '$1');
+		//var WIDsubject = text.replace(/(.*)&.*/, '$1');
+
+		//function GetQueryString(name) {
+			//var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			//var r = window.location.search.substr(1).match(reg); //获取url中"?"符后的字符串并正则匹配
+			//var context = "";
+			//if(r != null)
+				//context = r[2];
+			//reg = null;
+			//r = null;
+			//return context == null || context == "" || context == "undefined" ? "" : context;
+		//}
+		//var WIDbody = GetQueryString("WIDbody");
+		//var WIDtotal_amount = GetQueryString("WIDtotal_amount");
+        	//$("#shop_name").html(WIDsubject);
+        	//$("#repay_money").html("￥"+WIDtotal_amount);
+		//$.ajax({
+			//type: "POST",
+			//url: "{:url('admin/Goods/WeiAlpay')}",
+			//data: {
+				//"WIDbody": WIDbody,
+				//"WIDsubject": WIDsubject,
+				//"WIDtotal_amount": WIDtotal_amount,
+			//},
+			//success: function(data) {
+				//								console.log(data);
+				//var data = eval("(" + data + ")");
+				//console.log(data);
+				//var datas = "goods_qrcode?url2=" + data.data;
+				//$("#img_url").attr("src", datas);
+			//},
+
+			/*error: function(data) {
 				console.log("错误")
 			}
 		});
@@ -153,7 +207,9 @@
 //                      var datas = "https://www.baidu.com/?tn=21002492_17_hao_pg";
 //						qrcode.makeCode(datas);
 		}
-		makeCode();
+		makeCode();*/
+		
+
 
 	</script>
 	{/block}
