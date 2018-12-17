@@ -55,7 +55,11 @@ class Index extends Controller
         */
     public function saoma_callback()
     {
-        file_put_contents(EXTEND_PATH."lib/data.txt",1);
+        $dir_name = EXTEND_PATH."lib/data";
+        if(!is_dir($dir_name)){
+            mkdir($dir_name,0777);
+        }
+        file_put_contents(EXTEND_PATH."lib/data/data.txt",1);
         exit();
         //扫码支付，接收微信请求
         ini_set('date.timezone', 'Asia/Shanghai');
