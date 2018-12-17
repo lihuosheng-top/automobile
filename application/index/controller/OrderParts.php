@@ -65,14 +65,21 @@ class OrderParts extends Controller{
                 $datas["store_id"] = $data[0]["store_id"];//店铺id
                 $datas["store_name"] = $data[0]["store_name"];//店铺名称
                 $datas["create_time"] = $data[0]["order_create_time"];//订单创建时间
+                $datas["parts_order_number"] = $data[0]["parts_order_number"];//订单编号
                 $datas["pay_time"] = $data[0]["pay_time"]; //支付时间
                 $datas["harvester"] = $data[0]["harvester"];//收货人
                 $datas["harvest_phone_num"] = $data[0]["harvest_phone_num"];//收件人电话
                 $datas["harvester_address"] = $data[0]["harvester_address"];//收件人地址
                 $datas["status"] = $data[0]["status"];//状态
+                foreach ($data as $ks=>$vs){
+                    $datas["all_goods_money"][] =$vs["goods_money"]*$vs["order_quantity"];
+                }
+                $datas["all_goods_pays"] =array_sum($datas["all_goods_money"]); //商品总额（商品*数量）
                 $datas["normal_future_time"] = $data[0]["normal_future_time"];//正常订单未付款自动关闭的时间
-                $datas["all_order_real_pay"] = array_sum(array_map(create_function('$val', 'return $val["order_real_pay"];'), $data));
-                $datas["all_numbers"] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $data));
+                $datas["all_order_real_pay"] = array_sum(array_map(create_function('$val', 'return $val["order_real_pay"];'), $data));//订单实际支付
+                $datas["all_numbers"] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $data));//订单总数量
+                $datas["integral_deductible"] = array_sum(array_map(create_function('$values', 'return $values["integral_deductible"];'), $data));//抵扣积分钱
+
                 $datas["info"] = $data;
                 if (!empty($datas)) {
                     return ajax_success("数据返回成功", $datas);
