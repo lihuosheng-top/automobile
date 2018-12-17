@@ -29,6 +29,8 @@ class Evaluate extends  Controller{
                 ->where($condition)
                 ->select();
             if(!empty($data)){
+                session::set("user",null);
+                Session::set("store_id",null); //店铺id
                 return ajax_success("对应的订单信息返回成功",$data);
             }else{
                 return ajax_error("没有对应的订单信息",["status"=>0]);
@@ -46,7 +48,23 @@ class Evaluate extends  Controller{
      */
     public function evaluate_parts_add(Request $request){
         if($request->isPost()){
-            
+            $user_id = Session::get("user");//用户id
+            $order_id =$request->only("order_id")["order_id"];//订单排序号
+            $is_on_time =$request->only("is_on_time")["is_on_time"];//是否准时（是否准时，1为准时,-1为不准时）
+            $service_attitude_stars =$request->only("service_attitude_stars")["service_attitude_stars"];//服务态度的星星（1为1颗星，...5为5颗星）
+            $logistics_stars =$request->only("logistics_stars")["logistics_stars"];//物流服务的星星（1为1颗星，...5为5颗星）
+            Db::startTrans();
+            try{
+                $a=Db::table("user")->delete(31);
+                if(!$a){
+                    throw  new \Exception("没有查询成功");
+                }
+                Db::commit();
+            }catch(\Exception $e){
+            Db::rollback();
+            dump($e->getMessage());
+            }
+
         }
     }
 
