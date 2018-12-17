@@ -68,16 +68,15 @@ class Index extends Controller
             $input->SetTransaction_id($transaction_id);
             file_put_contents(EXTEND_PATH."lib/data/data.txt",\WxPayApi::orderQuery($input));
             exit();
-            
+
         }
 
         if (isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != "") {
-            file_put_contents(EXTEND_PATH."lib/data.txt",$_REQUEST["transaction_id"]);
-            exit();
             $out_trade_no = $_REQUEST["out_trade_no"];
             $input = new \WxPayOrderQuery();
-            $input->SetOut_trade_no($out_trade_no);
-            echo json_encode(\WxPayApi::orderQuery($input));
+            $bool = $input->SetOut_trade_no($out_trade_no);
+            file_put_contents(EXTEND_PATH."lib/data/data.txt",$bool);
+            //echo json_encode(\WxPayApi::orderQuery($input));
             exit();
         }
     }
