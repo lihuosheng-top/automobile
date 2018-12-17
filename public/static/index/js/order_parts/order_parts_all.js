@@ -152,7 +152,7 @@ $.ajax({
                 }
             });
         })
-        // 去付款
+        // 去付款 √
         $('.to-payment-btn').click(function(){
             $('.mask').show();
             $('.alipay-pop').animate({ 'bottom': '0' });
@@ -227,7 +227,7 @@ $.ajax({
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
             $.ajax({
-                url: 'ios_api_order_parts_no_pay_cancel',
+                url: 'order_parts_save_record',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
