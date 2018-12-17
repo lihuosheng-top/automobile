@@ -20,6 +20,7 @@ Route::group("",[
     /*首页*/
     "/$"=>"index/index/home",
     "index"=>"index/index/index",
+    "saoma_callback"=>"index/index/saoma_callback",
 
 
 
