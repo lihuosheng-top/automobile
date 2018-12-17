@@ -91,6 +91,18 @@ Route::group("",[
 
     /*TODO:卖家我的页面开始*/
     "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
+    "sell_service_order"=>"index/SellMy/sell_service_order",//卖家服务订单
+    "sell_parts_order"=>"index/SellMy/sell_parts_order",//卖家商品订单
+    "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
+    "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
+
+    "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
+    "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
+    "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
+    "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
+
+
+
     /*TODO:卖家我的页面结束*/
 
 
