@@ -167,6 +167,7 @@ Route::group("",[
 
     /*TODO：配件商评价开始*/
     "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面(ajax)
+    "evaluate_parts_add"=>"index/Evaluate/evaluate_parts_add",//评价页面(ajax)
     /*TODO：配件商评价结束*/
 
 
@@ -543,6 +544,8 @@ Route::group("admin",[
     "service_image_del"=>"admin/Install/service_image_del",//服务设置之编辑里面图片删除
     "service_updata"=>"admin/Install/service_updata",
     "service_del"=>"admin/Install/service_del", //服务设置之删除
+
+    "invoice_setting"=>"admin/Install/invoice_setting",//设置之发票手续费设置
 
 
     "message_index"=>"admin/Install/message_index",
