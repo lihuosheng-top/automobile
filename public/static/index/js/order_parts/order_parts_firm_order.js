@@ -157,17 +157,33 @@ $.ajax({
                     $('#WIDtotal_amount').val($('.total-money').text());
                     $('#WIDsubject').val(res.data.parts_goods_name);
                     $('#WIDbody').val(res.data.parts_goods_name);
+
+                    $('.close-alipay').click(function () {
+                        $('.mask').hide();
+                        $('.alipay-pop').animate({ 'bottom': '-100%' });
+                        $('html').css('overflow', 'auto');
+                        $.ajax({
+                            url: '',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'store_id': storeId,
+                                'parts_order_number': res.data.parts_order_number
+                            },
+                            success: function(res){
+                                console.log(res);
+                                location.href = 'order_parts_detail';
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
+                        })
+                    })
                 },
                 error: function () {
                     console.log('error');
                 }
             })
-        })
-        $('.close-alipay').click(function () {
-            location.href = 'order_parts_detail';
-            $('.mask').hide();
-            $('.alipay-pop').animate({ 'bottom': '-100%' });
-            $('html').css('overflow', 'auto');
         })
     },
     error: function () {
