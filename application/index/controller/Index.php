@@ -56,7 +56,7 @@ class Index extends Controller
         */
     public function saoma_callback(){
         //扫码支付，接收微信请求
-        include ("../extend/lib/payment/wxpay/WxPayPubHelper.php");
+        include_once(EXTEND_PATH ."lib/payment/wxpay/WxPayPubHelper.php");
         $nativeCall = new \NativeCall_pub();
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
         //file_put_contents(S_ROOT . 'data/data_wx_qrcode_pay.txt', $xml);
@@ -71,11 +71,11 @@ class Index extends Controller
             return false;
         }
         //$int_order_id = 53214;
-        $obj_order = L::loadClass('order', 'index');//加载你自动的订单表 等于说你要支付的那条数据
-        $arr_order = $obj_order->get_one_bat_pay($int_order_id);//用订单id获取到要支付的订单数据
+        //$obj_order = L::loadClass('order', 'index');//加载你自动的订单表 等于说你要支付的那条数据
+        //$arr_order = $obj_order->get_one_bat_pay($int_order_id);//用订单id获取到要支付的订单数据
         //file_put_contents(S_ROOT.'data/order_data.txt', $int_order_id.var_export($arr_order,1));
-        if (is_array($arr_order) && !empty($arr_order)) {
-            $int_order_total_price = number_format($arr_order['price'], 2, '.', '')*100;//获取订单价格 要乘以100 微信是以分为单位
+        if (1 == 1) {
+            $int_order_total_price = number_format('100.00', 2, '.', '')*100;//获取订单价格 要乘以100 微信是以分为单位
             $unifiedOrder = new \UnifiedOrder_pub();//实例化统一下单接口 要不要加斜杠\你到线上测 有文件就写文件 看哪里报错 用file_put_contents
             $unifiedOrder->setParameter("openid", "$openid"); //用户openid 固定 不用动 上面已经获取好了
             $unifiedOrder->setParameter("body", "就是支付的时候显示的标题"); //商品描述
@@ -144,8 +144,8 @@ class Index extends Controller
 
             if ($notify->data["return_code"] != "FAIL" && $notify->data["result_code"] != "FAIL") {
 
-                $obj_order = L::loadClass('order', 'index');//加载订单表 就是你那个goods数据表
-                $arr_order = $obj_order->get_one_main($int_order_id); //获取到支付的那条数据
+                //$obj_order = L::loadClass('order', 'index');//加载订单表 就是你那个goods数据表
+                //$arr_order = $obj_order->get_one_main($int_order_id); //获取到支付的那条数据
 
                 $int_main_total_fee = ($arr_bat_pay['price']) * 100;//z这个是你数据表里面的价格 用于对比跟微信支付过来的金额是否一致
 
