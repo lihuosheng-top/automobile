@@ -48,11 +48,10 @@ class Index extends Controller
     }
 
 
-    /*
-        用户扫码后会请求这个方法 记得要写到前台去 获取单独设置这个方法不用登录都可以有权限访问 不然微信访问不了
-        到这里就可以调起微信扫码支付了
-        WxPayConf_pub::NOTIFY_URL 回调我先写在下面的 weixin_notify方法 这个方法也是要写到前台 不能限制登录不然微信访问不了 以后这种回调不要写在后台 单独写一个类或控制器
-        */
+    /**
+     * 微信回调
+     * 陈绪
+     */
     public function saoma_callback()
     {
         //扫码支付，接收微信请求
@@ -63,23 +62,23 @@ class Index extends Controller
         //初始化日志
         $logHandler = new \CLogFileHandler("./logs/" . date('Y-m-d') . '.log');
         $log = \Log::Init($logHandler, 15);
-        if (isset($_REQUEST["transaction_id"]) && $_REQUEST["transaction_id"] != "") {
-            file_put_contents(EXTEND_PATH."lib/data/data.txt",$_REQUEST["transaction_id"]);
-            exit();
+        if(isset($_REQUEST["transaction_id"]) && $_REQUEST["transaction_id"] != ""){
             $transaction_id = $_REQUEST["transaction_id"];
             $input = new \WxPayOrderQuery();
             $input->SetTransaction_id($transaction_id);
-            echo json_encode(\WxPayApi::orderQuery($input));
+            //printf_info(WxPayApi::orderQuery($input));
+            $result=\WxPayApi::orderQuery($input);
+            file_put_contents(EXTEND_PATH."lib/data/data.txt",$result['trade_state']);
             exit();
         }
 
-        if (isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != "") {
-            file_put_contents(EXTEND_PATH."lib/data.txt",$_REQUEST["transaction_id"]);
-            exit();
+        if(isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != ""){
             $out_trade_no = $_REQUEST["out_trade_no"];
             $input = new \WxPayOrderQuery();
             $input->SetOut_trade_no($out_trade_no);
-            echo json_encode(\WxPayApi::orderQuery($input));
+            //printf_info(WxPayApi::orderQuery($input));
+            $result=\WxPayApi::orderQuery($input);
+            file_put_contents(EXTEND_PATH."lib/data/data.txt",$result['trade_state']);
             exit();
         }
     }
