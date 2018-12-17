@@ -773,12 +773,12 @@ class Goods extends Controller{
     public function WeiAlpay(Request $request){
 
             //店铺名称，必填
-           /* $store = $_POST['WIDsubject'];
+            $store = $_POST['WIDsubject'];
             //付款金额，必填
             $goods_money = $_POST['WIDtotal_amount'];
 
             //商品描述，可空
-            $goods_id = $_POST['WIDbody'];*/
+            $goods_id = $_POST['WIDbody'];
 
 
             header("Content-type: text/html; charset=utf-8");
@@ -815,7 +815,7 @@ class Goods extends Controller{
             /**
              * 设置商品或支付单简要描述
              */
-            $input->SetBody("测试商品支付");
+            $input->SetBody($store);
             /**
              * 设置附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
              */
@@ -828,7 +828,7 @@ class Goods extends Controller{
              * 设置订单总金额，只能为整数，详见支付金额
              * @param string $value
              **/
-            $input->SetTotal_fee("1");
+            $input->SetTotal_fee($goods_money*100);
             /**
              * 设置订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
              * @param string $value
@@ -858,7 +858,7 @@ class Goods extends Controller{
              * 设置trade_type=NATIVE，此参数必传。此id为二维码中包含的商品ID，商户自行定义。
              * @param string $value
              **/
-            $input->SetProduct_id("123456789");
+            $input->SetProduct_id($goods_id);
             /**
              * 生成直接支付url，支付url有效期为2小时,模式二
              * @param UnifiedOrderInput $input
