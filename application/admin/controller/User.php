@@ -148,11 +148,13 @@ class User extends Controller{
         $time_max_data =strtotime(input('date_max'));
         $t=date('Y-m-d H:i:s',$time_max_data+1*24*60*60);
         $timemax  =strtotime($t);
-
         if(empty($keywords)){
             $keywords=$keyword;
             if(empty($keywords)){
+                dump(empty($timemin));
+                dump(empty($timemax));
                 if((!empty($timemin))&&(empty($timemax))){
+                    dump(11);
                     $time_condition  = "create_time>{$timemin}";
                 $user_data=Db::name("user")
                     ->where($time_condition)
@@ -161,6 +163,7 @@ class User extends Controller{
                         'query' => request()->param(),
                     ]);
                 }else if((empty($timemin))&&(!empty($timemax))){
+                    dump(222);
                     $time_condition  = "create_time< {$timemax}";
                     $user_data=Db::name("user")
                         ->where($time_condition)
@@ -169,6 +172,7 @@ class User extends Controller{
                             'query' => request()->param(),
                         ]);
                 }else if((!empty($timemin))&&(!empty($timemax))){
+                    dump(33);
                     $time_condition  = "create_time>{$timemin} and create_time< {$timemax}";
                     $user_data=Db::name("user")
                         ->where($time_condition)
@@ -177,6 +181,7 @@ class User extends Controller{
                             'query' => request()->param(),
                         ]);
                 }else {
+                    dump(4444);
                     $user_data=Db::name("user")
                         ->order('create_time','desc')
                         ->paginate(3 ,false, [
