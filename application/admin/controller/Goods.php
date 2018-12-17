@@ -888,47 +888,98 @@ class Goods extends Controller{
 
 
 
-    /**
-     * 微信回调
-     * 陈绪
-     */
-    public function wx_notify(){
+    /*
+    支付宝支付
+    */
+    public function alipay_pay(){
+        header("Content-type:text/html;charset=utf-8");
+        include EXTEND_PATH . "/lib/payment/alipay/alipay.class.php";
+        $int_order_id = intval($_GET['order_id']);
 
-        echo 1;
-        exit;
-        ini_set('date.timezone','Asia/Shanghai');
+        $obj_alipay = new \alipay();
 
-        error_reporting(E_ERROR);
+        $arr_data = array(
+            "return_url" => trim("http://automobile.siring.com.cn/admin.html"),
+            "notify_url" => trim("http://automobile.siring.com.cn/"),
+            "service" => "create_direct_pay_by_user",
+            "payment_type" => 1, //
+            "seller_email" => 'bill.nie@hotmail.com',
+            "out_trade_no" => 'mall' . $int_order_id,
+            "subject" => "支付表单的名称先不管你支付就知道了",
+            "total_fee" => number_format('100.12', 2, '.', ''),
+        );
 
-        include ("../extend/WxpayAPI/example/notify.php");
+        if (isset($arr_order['paymethod']) && isset($arr_order['defaultbank']) && $arr_order['paymethod'] === "bankPay" && $arr_order['defaultbank'] != "") {
 
-        $notify = new \PayNotifyCallBack();
-
-        $notify->Handle(false);
-
-        $is_success = $notify->IsSuccess();
-
-        $bdata = $is_success['data'];               //获取微信回调数据
-
-
-        if($is_success['code'] == 1){
-
-            //验证成功，获取数据
-
-            $total_fee=$bdata['total_fee']/100;     //支付金额
-
-            $trade_no=$bdata['transaction_id'];     //微信订单号
-
-            $out_trade_no=$bdata['out_trade_no'];           //系统订单号
-
-            $openid=$bdata['openid'];           //用户在商户appid下的唯一标识
+            $arr_data['paymethod'] = "bankPay";
+            $arr_data['defaultbank'] = $arr_order['defaultbank'];
+        }
+        $str_pay_html = $obj_alipay->make_form($arr_data, true);
+        return view("alipay",['str_pay_html' => $str_pay_html]);
+    }
 
 
+    /*
+    支付宝回调
+    */
+    public function shopping_notify(){
 
-            // 其他coding ……
-
+        include EXTEND_PATH . "/lib/payment/alipay/alipay.class.php";
+        $obj_alipay = new \alipay();
+        if (!$obj_alipay->verify_notify()) {//验证未通过
+            //file_put_contents(S_ROOT.'data/failed_'.time().'.txt',var_export($_POST,true));
+            echo "fail";
+            exit();
         }
 
+        $str_order_id = strtolower(trim($_POST['out_trade_no']));
+        $int_order_id = intval(ltrim($str_order_id, 'mall'));
+        $str_total_fee = number_format(trim($_POST['total_fee']), 2, '.', '');
+
+        //记录日志
+        $arr_log_data = array(
+            'order_id' => $int_order_id,
+            'pay_type' => 0,
+            'is_update_ok' => 0,
+            'return_info' => str_addslashes(var_export($_POST, TRUE)),
+            'in_date' => $_SGLOBAL['timestamp'],
+        );
+
+        if ($_POST['trade_status'] == 'TRADE_SUCCESS') {
+            //file_put_contents(S_ROOT.'data/success_order_id_'.time().'.txt','订单ID:'.$int_order_id);
+            //1.根据订单号，获取订单信息
+            $obj_order = L::loadClass('order', 'index');
+            //$arr_order = $obj_order->get_one_main($int_order_id);
+            $arr_bat_pay = $obj_order->get_one_bat_pay($int_order_id);
+            if($arr_bat_pay['coupons_id']){
+                $int_main_total_fee = ($arr_bat_pay['pay_price']);
+            }else{
+                $int_main_total_fee = ($arr_bat_pay['price']);
+            }
+            $str_main_total_fee = number_format($int_main_total_fee, 2, '.', '');
+            if ($str_total_fee != $str_main_total_fee) {
+                //file_put_contents(S_ROOT.'data/price_error'.time().'.txt',$str_total_fee.','.$int_main_total_fee);
+                echo "success";  ////反馈给支付宝,请不要修改或删除
+            } else {
+                //第三方交易信息
+                $arr_third_pay_data = array(
+                    'third_id' => str_addslashes($_POST['trade_no']),
+                );
+                $arr_res = $obj_order->do_pay_success($int_order_id, $arr_third_pay_data['third_id']);
+                //$bool_update = $obj_order->update_main(array('order_id'=>$int_order_id),array('status'=>LEM_order::ORDER_PAY,'third_id'=>$arr_third_pay_data['third_id'],'pay_date'=>$_SGLOBAL['timestamp']));
+                //file_put_contents(S_ROOT.'data/update_bool'.time().'.txt',$bool_update);
+                if ($arr_res['status'] == 200) {
+                    $arr_log_data['is_update_ok'] = 1; //更新成功
+                    echo "success";  ////反馈给支付宝,请不要修改或删除
+                } else {
+                    echo 'fail';
+                }
+            }
+            //include template('template/mall/cart/pay_success');
+        } else {
+            echo "fail"; //反馈给支付宝,请不要修改或删除
+        }
+        $obj_alipay->log($arr_log_data);   //记录日志
     }
 
 
