@@ -55,12 +55,10 @@ class Index extends Controller
     public function saoma_callback()
     {
         //扫码支付，接收微信请求
-
+        Session::get("goods_id");
         ini_set('date.timezone', 'Asia/Shanghai');
         error_reporting(E_ERROR);
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        file_put_contents(EXTEND_PATH."lib/data/data.txt",$xml);
-        exit();
         include("../extend/WxpayAPI/lib/WxPay.Api.php");
         include('../extend/WxpayAPI/example/log.php');
         //初始化日志
