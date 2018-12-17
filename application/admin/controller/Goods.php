@@ -818,7 +818,7 @@ class Goods extends Controller{
             /**
              * 设置附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
              */
-            $input->SetAttach("ceshidingdan1");
+            $input->SetAttach($goods_id);
             /**
              * 设置商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
              */
@@ -865,7 +865,7 @@ class Goods extends Controller{
 
             $result = $notify->GetPayUrl($input);
             $url2 = $result["code_url"];
-
+            Session("goods_id",$goods_id);
             return view("WeiAlpay_code",["url2"=>$url2]);
 
     }
