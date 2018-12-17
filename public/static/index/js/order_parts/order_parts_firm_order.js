@@ -163,7 +163,7 @@ $.ajax({
                         $('.alipay-pop').animate({ 'bottom': '-100%' });
                         $('html').css('overflow', 'auto');
                         $.ajax({
-                            url: '',
+                            url: 'order_parts_save_record',
                             type: 'POST',
                             dataType: 'JSON',
                             data: {
