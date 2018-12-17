@@ -241,7 +241,7 @@
                 {/if}
             </div>
         </div>
-        <div class="layui-form-item">
+           <div class="layui-form-item">
             <label class="layui-form-label">当前可操作：</label>
             <div class="layui-input-block">
                 {if $vo.operation_status ==0}
@@ -256,6 +256,14 @@
                 <input type="radio" name="operation_status" value="1" title=" 通过" >
                 <input type="radio" name="operation_status" value="-1" title="拒绝" checked="">
                 {/if}
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否设为热门店铺：</label>
+            <div class="layui-input-block">
+                <input type="radio" name="operation_status" value="1" title="是" >
+                <input type="radio" name="operation_status" value="-1" title="否" >
+              
             </div>
         </div>
         <div class="layui-form-item">
