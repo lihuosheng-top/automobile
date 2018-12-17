@@ -25,6 +25,7 @@
         .vi-camera{padding: 0 .2rem; display: flex; flex-wrap: wrap; margin-bottom: .3rem;}
         .switch-span{position: relative; display: block; width: 1.25rem; height: 1.25rem; border: 1px dashed #ccc; text-align: center; line-height: 2.1rem; color: #ccc; font-size: .24rem;}
         .switch-span::before{position: absolute; left: 50%; top: 50%; transform: translate(-50%, -60%); content: ''; background: url(__STATIC__/index/image/camera.png) no-repeat; width: .72rem; height: .72rem; background-size: 100%;}
+        .switch-span input{position: absolute; top: 0;left: 0; width: 100%;height: 100%; opacity: 0;}
         .upload-item{position: relative; width: 1.25rem; height: 1.25rem; margin-right: .3rem;}
         .upload-item img{width: 100%; height: 100%;}
         .upload-item .del-img{position: absolute; top: -6px; right: -6px; font-size: .3rem; color: #fff; background-color: rgba(0, 0, 0, .6); border: 0; outline: none; width: .3rem; height: .3rem; border-radius: 50%; text-align: center; line-height: .3rem;}
@@ -61,8 +62,9 @@
                     <img src="__STATIC__/index/image/15.jpg">
                     <button class="del-img">×</button>
                 </div>
-                <span class="switch-span">添加图片</span>
-                <input type="file" multiple hidden id="upload">
+                <span class="switch-span">添加图片
+                    <input type="file" multiple id="upload">
+                </span>
             </div>
         </div> -->
         <div class="shop-evaluate">
