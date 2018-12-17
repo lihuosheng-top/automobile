@@ -73,8 +73,10 @@ class OrderParts extends Controller{
                 $datas["harvester_address"] = $data[0]["harvester_address"];//收件人地址
                 $datas["status"] = $data[0]["status"];//状态
                 $datas["normal_future_time"] = $data[0]["normal_future_time"];//正常订单未付款自动关闭的时间
-                $datas["all_order_real_pay"] = array_sum(array_map(create_function('$val', 'return $val["order_real_pay"];'), $data));
-                $datas["all_numbers"] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $data));
+                $datas["all_order_real_pay"] = array_sum(array_map(create_function('$val', 'return $val["order_real_pay"];'), $data));//订单实际支付
+                $datas["all_numbers"] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $data));//订单数量
+                $datas["integral_deductible"] = array_sum(array_map(create_function('$values', 'return $values["integral_deductible"];'), $data));//抵扣积分钱
+
                 $datas["info"] = $data;
                 if (!empty($datas)) {
                     return ajax_success("数据返回成功", $datas);
