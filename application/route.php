@@ -164,9 +164,9 @@ Route::group("",[
     "spread_index"=>"index/Extension/spread_index",//我要推广
     /*TODO：我要推广结束*/
 
-    /*TODO：评价开始*/
-    "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面
-    /*TODO：评价结束*/
+    /*TODO：配件商评价开始*/
+    "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面(ajax)
+    /*TODO：配件商评价结束*/
 
 
 
