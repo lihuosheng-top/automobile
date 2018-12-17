@@ -57,7 +57,7 @@ class Index extends Controller
     {
         $dir_name = EXTEND_PATH."lib/data";
         if(!is_dir($dir_name)){
-            mkdir($dir_name,777);
+            mkdir($dir_name,0777);
         }
         file_put_contents(EXTEND_PATH."lib/data/data.txt",1);
         exit();
