@@ -135,6 +135,26 @@ Route::group("",[
     "member_address_edit"=>"index/member/member_address_edit",//地址管理编辑功能(ajax)
     "member_collection"=>"index/member/member_collection",//我的收藏
     /*TODO:我的页面结束*/
+
+
+    /*TODO:收藏开始*/
+    "collection_index"=>"index/Collection/collection_index",//（收藏数据返回）(ajax)
+    "collection_add"=>"index/Collection/collection_add",//（添加收藏）（ajax）
+    "collection_del"=>"index/Collection/collection_del",//（删除收藏）（ajax）
+    "show_collection"=>"index/Collection/show_collection",//收藏样式返回的数据库状态值（ajax）
+    /*TODO:收藏结束*/
+
+
+    /*TODO:快递开始*/
+    "express_wait_for_order"=>"index/Express/express_wait_for_order",//待接单
+    "express_wait_for_take"=>"index/Express/express_wait_for_take",//待取货
+    "express_distribution"=>"index/Express/express_distribution",//配送中
+    "express_completed"=>"index/Express/express_completed",//已完成
+    /*TODO:快递结束*/
+
+
+
+
     /*TODO:消息开始*/
     "information_index"=>"index/Information/index",//消息页面
     "information_details"=>"index/Information/information_details",//订单助手消息页面详情
