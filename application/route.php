@@ -20,6 +20,8 @@ Route::group("",[
     /*首页*/
     "/$"=>"index/index/home",
     "index"=>"index/index/index",
+    "saoma_callback"=>"index/index/saoma_callback",
+    "weixin_notify"=>"index/index/weixin_notify",
 
 
 
@@ -212,6 +214,7 @@ Route::group("",[
     "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货页面
     "ios_api_order_parts_return_goods"=>"index/OrderParts/ios_api_order_parts_return_goods",//退货接口ajax
     "ios_api_order_parts_no_pay_cancel"=>"index/OrderParts/ios_api_order_parts_no_pay_cancel",//买家未付款取消订单接口(ajax)
+    "order_parts_detail_cancel"=>"index/OrderParts/order_parts_detail_cancel",//买家未付款超过后台设置的时间未付款，系统取消订单接口(ajax)
     "ios_api_order_parts_del"=>"index/OrderParts/ios_api_order_parts_del",//买家删除订单接口(ajax)
     "ios_api_order_parts_collect_goods"=>"index/OrderParts/ios_api_order_parts_collect_goods",//配件商订单状态修改（买家确认收货）（ajax）
     /*TODO:配件商订单状态结束*/
@@ -326,7 +329,8 @@ Route::group("admin",[
     "goods_seach"=>"admin/Goods/seach",                                                //商品模糊搜索
     "goods_WeiAlpay"=>"admin/Goods/WeiAlpay",                                             //微信支付
     "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
-    "goods_wx_notify"=>"admin/Goods/wx_notify",                                                //微信支付回调地址
+    "goods_alipay_pay"=>"admin/Goods/alipay_pay",                                                //微信支付回调地址
+    "goods_get_weixin_pay_url"=>"admin/Goods/get_weixin_pay_url",                              //获取微信扫描链接
 
 
 

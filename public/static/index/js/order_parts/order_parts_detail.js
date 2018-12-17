@@ -21,6 +21,7 @@ $.ajax({
         if(val.status === 1){
             statusTxt = `待付款`;
             $('.cancel-order-btn').add('.to-payment-btn').show();
+            $('.time-count-down').show();
         }else if(val.status === 2 || val.status === 3 || val.status === 4 || val.status === 5){
             statusTxt = `待收货`;
             $('.check-logistics-btn').add('.conf-receipt-btn').show();
@@ -39,7 +40,7 @@ $.ajax({
         // 状态值
         $('.status').text(statusTxt);
         // 订单编号
-        // $('.order-num span').text()
+        $('.order-num span').text(val.parts_order_number);
         // 收货人
         $('.user-name span').text(val.harvester);
         // 电话
@@ -66,6 +67,12 @@ $.ajax({
                     </div>`
         })
         $('.order-shop-box').after(str);
+        // 商品总额
+        $('.total-box span').text(val.all_goods_pays);
+        // 抵扣金额
+        $('.discount-box span').text(val.integral_deductible);
+        // 需付款
+        $('.pay-amount-span span').text(val.all_order_real_pay);
         // 创建时间
         $('.create-time span').text(timetrans(val.create_time));
         // 支付时间

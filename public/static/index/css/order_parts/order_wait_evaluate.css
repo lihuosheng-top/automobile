@@ -89,6 +89,7 @@ html, body{
     background-color: #fff;
     border-radius: .1rem;
     padding: .24rem .28rem;
+    margin-bottom: .3rem;
 }
 .shop-name-box{
     display: flex;
