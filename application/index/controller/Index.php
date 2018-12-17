@@ -55,12 +55,6 @@ class Index extends Controller
         */
     public function saoma_callback()
     {
-        $dir_name = EXTEND_PATH."lib/data";
-        if(!is_dir($dir_name)){
-            mkdir($dir_name,0777);
-        }
-        file_put_contents(EXTEND_PATH."lib/data/data.txt",1);
-        exit();
         //扫码支付，接收微信请求
         ini_set('date.timezone', 'Asia/Shanghai');
         error_reporting(E_ERROR);
@@ -70,7 +64,7 @@ class Index extends Controller
         $logHandler = new \CLogFileHandler("./logs/" . date('Y-m-d') . '.log');
         $log = \Log::Init($logHandler, 15);
         if (isset($_REQUEST["transaction_id"]) && $_REQUEST["transaction_id"] != "") {
-            file_put_contents(EXTEND_PATH."lib/data.txt",$_REQUEST["transaction_id"]);
+            file_put_contents(EXTEND_PATH."lib/data/data.txt",$_REQUEST["transaction_id"]);
             exit();
             $transaction_id = $_REQUEST["transaction_id"];
             $input = new \WxPayOrderQuery();
