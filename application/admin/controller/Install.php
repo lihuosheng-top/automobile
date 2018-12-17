@@ -613,6 +613,17 @@ class Install extends Controller{
             }
         }
     }
- 
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:发票设置页面
+     **************************************
+     */
+    public function invoice_setting(){
+        return view("invoice_setting");
+    }
+
+
     
 }
