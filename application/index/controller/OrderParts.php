@@ -44,7 +44,6 @@ class OrderParts extends Controller{
             }
     }
 
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -93,8 +92,6 @@ class OrderParts extends Controller{
 
         return view('order_parts_detail');
     }
-
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -167,9 +164,6 @@ class OrderParts extends Controller{
         }
     }
 
-
-
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -177,7 +171,6 @@ class OrderParts extends Controller{
      **************************************
      * @param Request $request
      */
-
     public function   ios_api_order_parts_all(Request $request)
     {
         if ($request->isPost()) {
@@ -351,7 +344,6 @@ class OrderParts extends Controller{
             }
         }
     }
-
     /**
      **************李火生*******************
      * @param Request $request
