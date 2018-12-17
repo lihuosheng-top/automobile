@@ -55,36 +55,13 @@ class Index extends Controller
     public function saoma_callback()
     {
         //扫码支付，接收微信请求
+
         $goods_id = Session::get("goods_id");
         halt($goods_id);
-        ini_set('date.timezone', 'Asia/Shanghai');
-        error_reporting(E_ERROR);
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        include("../extend/WxpayAPI/lib/WxPay.Api.php");
-        include('../extend/WxpayAPI/example/log.php');
-        //初始化日志
-        $logHandler = new \CLogFileHandler("./logs/" . date('Y-m-d') . '.log');
-        $log = \Log::Init($logHandler, 15);
-
-        if(isset($_REQUEST["transaction_id"]) && $_REQUEST["transaction_id"] != ""){
-            $transaction_id = $_REQUEST["transaction_id"];
-            $input = new \WxPayOrderQuery();
-            $input->SetTransaction_id($transaction_id);
-            //printf_info(WxPayApi::orderQuery($input));
-            $result=\WxPayApi::orderQuery($input);
-            file_put_contents(EXTEND_PATH."lib/data/data.txt",$result['trade_state']);
-            exit();
-        }
-
-        if(isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != ""){
-            $out_trade_no = $_REQUEST["out_trade_no"];
-            $input = new \WxPayOrderQuery();
-            $input->SetOut_trade_no($out_trade_no);
-            //printf_info(WxPayApi::orderQuery($input));
-            $result=\WxPayApi::orderQuery($input);
-            file_put_contents(EXTEND_PATH."lib/data/data.txt",$result['trade_state']);
-            exit();
-        }
+        $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $val = json_decode(json_encode($xml_data),true);
+        file_put_contents(EXTEND_PATH."lib/data/data.txt",$xml);
     }
 
 
