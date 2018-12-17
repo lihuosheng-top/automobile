@@ -64,10 +64,11 @@ class Index extends Controller
         $log = \Log::Init($logHandler, 15);
         if (isset($_REQUEST["transaction_id"]) && $_REQUEST["transaction_id"] != "") {
             $transaction_id = $_REQUEST["transaction_id"];
+            file_put_contents(EXTEND_PATH."lib/data/data.txt",$transaction_id);
+            exit();
             $input = new \WxPayOrderQuery();
             $input->SetTransaction_id($transaction_id);
-            file_put_contents(EXTEND_PATH."lib/data/data.txt",\WxPayApi::orderQuery($input));
-            exit();
+
 
         }
 
