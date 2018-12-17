@@ -14,8 +14,8 @@
     <div class="wrapper" id="app">
         <header class="header">
             <a href="javascript:;" class="spr icon-back"></a>
-            <h3 class="parts-title active">商品订单</h3>
-            <h3 class="service-title">预约订单</h3>
+            <a href="javascript:;" class="parts-title active">商品订单</a>
+            <a href="order_service_all" class="service-title">预约订单</a>
         </header>
         <div class="tabs">
             <button class="tab">全部</button>
@@ -54,14 +54,27 @@
                     <div class="button-box">
                         <button class="cancel-order-btn">取消订单</button>
                         <button class="to-payment-btn">去付款</button>
-                        <button class="del-order-btn" style="display:none;">删除订单</button>
-                        <button class="check-logistics-btn" style="display:none;">查看物流</button>
-                        <button class="conf-receipt-btn" style="display:none;">确认收货</button>
-                        <button class="evaluation-btn" style="display:none;">去评价</button>
                     </div>
                 </div>
             </div> -->
         </div>
+    </div>
+    <div class="mask" style="display:none;"></div>
+    <!-- 取消订单弹窗 -->
+    <div class="cancel-order-pop">
+        <header class="cancel-order-header">
+            取消订单
+            <a href="javascript:;" class="spr close-cancel-order"></a>
+        </header>
+        <p class="reason-title">请选择取消订单原因：</p>
+        <ul class="reason-list">
+            <li class="reason-li reason-selected"><i class="spr icon-reason"></i> 操作有误</li>
+            <li class="reason-li"><i class="spr icon-reason"></i> 暂时不需要</li>
+            <li class="reason-li"><i class="spr icon-reason"></i> 选错商品</li>
+            <li class="reason-li"><i class="spr icon-reason"></i> 预约时间有误</li>
+            <li class="reason-li"><i class="spr icon-reason"></i> 其他原因</li>
+        </ul>
+        <button class="select-reason-btn">确定</button>
     </div>
 
 

@@ -44,7 +44,6 @@ class OrderParts extends Controller{
             }
     }
 
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -53,17 +52,116 @@ class OrderParts extends Controller{
      * @return \think\response\View
      */
     public function order_parts_detail(Request $request){
-        if($request->isPost()){
-            $user_id =Session::get("user");
-            $store_id =Session::get("store_id");
-            $parts_order_number =Session::get("parts_order_number");;//订单编号
-            $condition ="`user_id` = ".$user_id." and `store_id` = ".$store_id." and `parts_order_number` = ".$parts_order_number;
-            $data =Db::name("order_parts")
+        if($request->isPost()) {
+            $user_id = Session::get("user");
+            $store_id = Session::get("store_id");
+            $parts_order_number = Session::get("parts_order_number");;//订单编号
+            $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number;
+            $data = Db::name("order_parts")
                 ->where($condition)
                 ->select();
+            if (!empty($data)) {
+                $datas["store_id"] = $data[0]["store_id"];//店铺id
+                $datas["store_name"] = $data[0]["store_name"];//店铺名称
+                $datas["create_time"] = $data[0]["order_create_time"];//订单创建时间
+                $datas["parts_order_number"] = $data[0]["parts_order_number"];//订单编号
+                $datas["pay_time"] = $data[0]["pay_time"]; //支付时间
+                $datas["harvester"] = $data[0]["harvester"];//收货人
+                $datas["harvest_phone_num"] = $data[0]["harvest_phone_num"];//收件人电话
+                $datas["harvester_address"] = $data[0]["harvester_address"];//收件人地址
+                $datas["status"] = $data[0]["status"];//状态
+                foreach ($data as $ks=>$vs){
+                    $datas["all_goods_money"][] =$vs["goods_money"]*$vs["order_quantity"];
+                }
+                $datas["all_goods_pays"] =array_sum($datas["all_goods_money"]); //商品总额（商品*数量）
+                $datas["normal_future_time"] = $data[0]["normal_future_time"];//正常订单未付款自动关闭的时间
+                $datas["all_order_real_pay"] = array_sum(array_map(create_function('$val', 'return $val["order_real_pay"];'), $data));//订单实际支付
+                $datas["all_numbers"] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $data));//订单总数量
+                $datas["integral_deductible"] = array_sum(array_map(create_function('$values', 'return $values["integral_deductible"];'), $data));//抵扣积分钱
 
+                $datas["info"] = $data;
+                if (!empty($datas)) {
+                    return ajax_success("数据返回成功", $datas);
+                } else {
+                    return ajax_error("没有数据信息", ["status" => 0]);
+                }
+            } else {
+                return ajax_error("订单信息错误", ["status" => 0]);
+            }
         }
+
         return view('order_parts_detail');
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:未付款判断时间是否过了订单设置的时间，过了则进行自动关闭
+     **************************************
+     * @param Request $request
+     */
+    public function order_parts_detail_cancel(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            $store_id =$request->only('store_id')["store_id"];//店铺id
+            $cancel_order_description =$request->only('cancel_order_description')["cancel_order_description"];//取消原因
+            $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//订单编号
+            if(!empty($store_id)&&!empty($parts_order_number)){
+                $res =Db::name("order_parts")
+                    ->where("parts_order_number",$parts_order_number)
+                    ->where("store_id",$store_id)
+                    ->select();
+                if(!empty($res)){
+                    $normal_future_time =$res[0]["normal_future_time"];//未来时间（超过则自动关闭有积分抵扣退回积分抵扣）
+                    $new_time =time();
+                    if($new_time >= $normal_future_time){
+                        foreach($res as $k=>$v){
+                            $is_use_integral[$k] =Db::name("order_parts")
+                                ->field("integral_discount_setting_id,id,integral_deductible_num")
+                                ->where("id",$v["id"])
+                                ->having("integral_discount_setting_id","NEQ",NULL)
+                                ->group("integral_discount_setting_id")
+                                ->find();
+                            $data =[
+                                "status"=>9,
+                                "cancel_order_description"=>$cancel_order_description
+                            ];
+                            $bool =Db::name("order_parts")->where("id",$v["id"])->update($data);
+                        }
+                        if($bool){
+                            //取消订单退回积分到积余额
+                            if(!empty( $is_use_integral)){
+                                foreach ($is_use_integral as $keys=>$values){
+                                    if(!empty($values["integral_deductible_num"])){
+                                        $user_info = Db::name("user")->field("user_integral_wallet,user_integral_wallet_consumed")->where("id",$user_id)->find();
+                                        $update_data =[
+                                            "user_integral_wallet"=>$user_info["user_integral_wallet"] + $values["integral_deductible_num"],
+                                            "user_integral_wallet_consumed"=>$user_info["user_integral_wallet_consumed"] - $values["integral_deductible_num"]
+                                        ];
+                                        Db::name("user")->where("id",$user_id)->update($update_data); //积分增加
+                                        $integral_data =[
+                                            "user_id"=>$user_id,//用户ID
+                                            "integral_operation"=>"+".$values["integral_deductible_num"],//积分操作
+                                            "integral_balance"=>$user_info["user_integral_wallet"] + $values["integral_deductible_num"],//积分余额
+                                            "integral_type"=> 1,//积分类型
+                                            "operation_time"=>date("Y-m-d H:i:s") ,//操作时间
+                                            "integral_remarks"=>"订单号:".$parts_order_number."因超时未付款，取消退回".$values["integral_deductible_num"]."积分",//积分备注
+                                        ];
+                                        Db::name("integral")->insert($integral_data); //插入积分消费记录
+                                    }
+                                }
+                            }
+                            return ajax_success("取消成功",["status"=>1]);
+                        }else{
+                            return ajax_error("取消失败",["status"=>0]);
+                        }
+                    }else{
+                        return ajax_error("还未到达自动取消订单时间",["status"=>0]);
+                    }
+                }
+            }else{
+                return ajax_error("所传参数不能为空",["status"=>0]);
+            }
+        }
     }
 
     /**
@@ -73,7 +171,6 @@ class OrderParts extends Controller{
      **************************************
      * @param Request $request
      */
-
     public function   ios_api_order_parts_all(Request $request)
     {
         if ($request->isPost()) {
@@ -247,7 +344,6 @@ class OrderParts extends Controller{
             }
         }
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -1051,7 +1147,7 @@ class OrderParts extends Controller{
                                     "integral_operation"=>"+".$values["integral_deductible_num"],//积分操作
                                     "integral_balance"=>$user_info["user_integral_wallet"] + $values["integral_deductible_num"],//积分余额
                                     "integral_type"=> 1,//积分类型
-                                    "operation_time"=>time() ,//操作时间
+                                    "operation_time"=>date("Y-m-d H:i:s") ,//操作时间
                                     "integral_remarks"=>"订单号:".$parts_order_number."取消退回".$values["integral_deductible_num"]."积分",//积分备注
                                 ];
                                     Db::name("integral")->insert($integral_data); //插入积分消费记录
@@ -1067,9 +1163,6 @@ class OrderParts extends Controller{
                 return ajax_error("所传参数不能为空",["status"=>0]);
             }
         }
-
-
-
     }
 
     /**
@@ -1235,12 +1328,13 @@ class OrderParts extends Controller{
                                 //积分消费记录
                                 $user_integral_wallet =$user_information["user_integral_wallet"]; //之前的积分余额
                                 $user_integral_wallets =$user_integral_wallet - $setting_data["integral_full"];//减了之后的积分
+                                $operation_times =date("Y-m-d H:i:s");
                                 $integral_data =[
                                     "user_id"=>$user_id,//用户ID
                                     "integral_operation"=>"-".$setting_data['integral_full'],//积分操作
                                     "integral_balance"=>$user_integral_wallets,//积分余额
                                     "integral_type"=> -1,//积分类型
-                                    "operation_time"=>$create_time ,//操作时间
+                                    "operation_time"=>$operation_times ,//操作时间
                                     "integral_remarks"=>"订单号:".$order_datas['parts_order_number']."下单使用积分".$setting_data['integral_full']."抵扣".$setting_data["deductible_money"]."元钱",//积分备注
                                 ];
                                 Db::name("user")->where("id",$user_id)->update(["user_integral_wallet"=>$user_integral_wallets,"user_integral_wallet_consumed"=>$setting_data["integral_full"]+$user_information["user_wallet_consumed"]]);

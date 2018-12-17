@@ -48,12 +48,13 @@ class Index extends Controller
     }
 
 
-
-
+    /*
+        用户扫码后会请求这个方法 记得要写到前台去 获取单独设置这个方法不用登录都可以有权限访问 不然微信访问不了
+        到这里就可以调起微信扫码支付了
+        WxPayConf_pub::NOTIFY_URL 回调我先写在下面的 weixin_notify方法 这个方法也是要写到前台 不能限制登录不然微信访问不了 以后这种回调不要写在后台 单独写一个类或控制器
+        */
     public function saoma_callback(){
         //扫码支付，接收微信请求
-        echo 1;
-        exit();
         include_once(EXTEND_PATH ."lib/payment/wxpay/WxPayPubHelper.php");
         $nativeCall = new \NativeCall_pub();
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
@@ -177,8 +178,6 @@ class Index extends Controller
         $returnXml = $notify->returnXml();
         echo $returnXml;
     }
-
-
 
 
 }

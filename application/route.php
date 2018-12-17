@@ -21,6 +21,8 @@ Route::group("",[
     "/$"=>"index/index/home",
     "index"=>"index/index/index",
     "saoma_callback"=>"index/index/saoma_callback",
+    "weixin_notify"=>"index/index/weixin_notify",
+
 
 
 
@@ -81,6 +83,12 @@ Route::group("",[
     "consume_message"=>"index/My/consume_message",       //消费详情
     /*TODO:登录结束*/
 
+    /*TODO:经纬度开始*/
+    "lglt_save"=>"index/LgLt/save",//经纬度刷新保存
+    "lglt_read"=>"index/LgLt/read",//经纬度读取
+
+    /*TODO:经纬度结束*/
+
     /*TODO:卖家我的页面开始*/
     "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
     /*TODO:卖家我的页面结束*/
@@ -92,10 +100,10 @@ Route::group("",[
      * 钱包
      * 陈绪
      */
-    "wallet_index"=>"index/Wallet/index",           //钱包首页
-    "wallet_recharge"=>"index/Wallet/recharge",     //钱包充值
-    "wallet_block"=>"index/Wallet/block",           //添加银行卡
-    "wallet_verification"=>"index/Wallet/verification",   //银行卡验证
+    "wallet_index"=>"index/wallet/index",           //钱包首页
+    "wallet_recharge"=>"index/wallet/recharge",     //钱包充值
+    "wallet_block"=>"index/wallet/block",           //添加银行卡
+    "wallet_verification"=>"index/wallet/verification",   //银行卡验证
 
 
 
@@ -157,9 +165,9 @@ Route::group("",[
     "spread_index"=>"index/Extension/spread_index",//我要推广
     /*TODO：我要推广结束*/
 
-    /*TODO：评价开始*/
-    "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面
-    /*TODO：评价结束*/
+    /*TODO：配件商评价开始*/
+    "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面(ajax)
+    /*TODO：配件商评价结束*/
 
 
 
@@ -207,6 +215,7 @@ Route::group("",[
     "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货页面
     "ios_api_order_parts_return_goods"=>"index/OrderParts/ios_api_order_parts_return_goods",//退货接口ajax
     "ios_api_order_parts_no_pay_cancel"=>"index/OrderParts/ios_api_order_parts_no_pay_cancel",//买家未付款取消订单接口(ajax)
+    "order_parts_detail_cancel"=>"index/OrderParts/order_parts_detail_cancel",//买家未付款超过后台设置的时间未付款，系统取消订单接口(ajax)
     "ios_api_order_parts_del"=>"index/OrderParts/ios_api_order_parts_del",//买家删除订单接口(ajax)
     "ios_api_order_parts_collect_goods"=>"index/OrderParts/ios_api_order_parts_collect_goods",//配件商订单状态修改（买家确认收货）（ajax）
     /*TODO:配件商订单状态结束*/
@@ -321,7 +330,8 @@ Route::group("admin",[
     "goods_seach"=>"admin/Goods/seach",                                                //商品模糊搜索
     "goods_WeiAlpay"=>"admin/Goods/WeiAlpay",                                             //微信支付
     "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
-    "goods_wx_notify"=>"admin/Goods/wx_notify",                                                //微信支付回调地址
+    "goods_alipay_pay"=>"admin/Goods/alipay_pay",                                                //微信支付回调地址
+    "goods_get_weixin_pay_url"=>"admin/Goods/get_weixin_pay_url",                              //获取微信扫描链接
 
 
 

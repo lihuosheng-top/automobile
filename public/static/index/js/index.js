@@ -571,19 +571,19 @@ map.plugin([
     // citySearch.getLocalCity(function (status, result) {
     //     if (status === 'complete' && result.info === 'OK') {
     //         // 查询成功，result即为当前所在城市信息
-            // $('.gec-curr-txt').text(result.city);
-            // $('.curr_city').text(result.city);
+    //         $('.gec-curr-txt').text(result.city);
+    //         $('.curr_city').text(result.city);
     //         console.log(result);
     //     }
     // })
 
     var geolocation = new AMap.Geolocation({
         enableHighAccuracy: true,
-        timeout: 0,
+        timeout: 1000,
         buttonPosition: 'RB',
         buttonOffset: new AMap.Pixel(10, 20),
         zoomToAccuracy: true,
-        useNative: true,
+        // useNative: true,
         // noIpLocate: 1,
         // noGeoLocation: 1,
     })

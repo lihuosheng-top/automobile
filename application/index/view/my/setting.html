@@ -85,12 +85,12 @@
         </div>
         <div class="supplier-box">
             <input type="radio" name="role" class="supplier" id="supplier">
-            <label for="supplier">配件商</label>
+            <label for="supplier">配件商和服务商</label>
         </div>
-        <div class="facilitator-box">
+        <!-- <div class="facilitator-box">
             <input type="radio" name="role" class="facilitator" id="facilitator">
             <label for="facilitator">服务商</label>
-        </div>
+        </div> -->
         <button class="change-role-btn">确定</button>
     </div>
 
@@ -206,6 +206,17 @@
         $('.change-role-back').click(function(){
             $('.change-role-pop').hide();
             $('.wrapper').show();
+        })
+
+        $('.change-role-pop').on('change', 'input', function(){
+            var role = $(this).attr('id');
+            $('.change-role-btn').click(function(){
+                if(role == 'customer'){
+                    location.href = 'my_index';
+                }else if(role == 'supplier'){
+                    location.href = 'sell_my_index';
+                }
+            })
         })
     </script>
 </body>

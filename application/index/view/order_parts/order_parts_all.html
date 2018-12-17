@@ -8,6 +8,7 @@
     <script src="__STATIC__/index/js/adaptation.js"></script>
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
     <link rel="stylesheet" href="__STATIC__/index/css/order_parts/order_parts_all.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/payment.css">
     <title>配件商-全部</title>
 </head>
 <body>
@@ -65,7 +66,7 @@
     </div>
     <div class="mask" style="display: none;"></div>
     <!-- 取消订单弹窗 -->
-    <div class="cancel-order-pop" style="display: none;">
+    <div class="cancel-order-pop">
         <header class="cancel-order-header">
             取消订单
             <a href="javascript:;" class="spr close-cancel-order"></a>
@@ -79,6 +80,64 @@
             <li class="reason-li"><i class="spr icon-reason"></i> 其他原因</li>
         </ul>
         <button class="select-reason-btn">确定</button>
+    </div>
+    <!-- 支付弹窗 -->
+    <form name=alipayment action="{:url('index/Apppay/index_parts_aliPay')}" method="post">
+        <div class="alipay-pop">
+            <header>
+                <a href="javascript:;" class="close-alipay">×</a>
+                <h3 class="alipay-title">确认付款</h3>
+            </header>
+            <div class="middle_box">
+                <div class="price-box">
+                    <span>￥</span>
+                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="" readonly>
+                </div>
+                <ul class="content">
+                    <li>
+                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="" readonly>
+                    </li>
+                    <li>
+                        订单名称: <input id="WIDsubject" name="WIDsubject" value="" readonly>
+                    </li>
+                    <li>
+                        商品描述: <input id="WIDbody" name="WIDbody" value="" readonly>
+                    </li>
+                    <li>
+                        付款方式: <input class="widway" value="微信支付" readonly><i class="spr icon-more"></i>
+                    </li>
+                </ul>
+            </div>
+            <button type="submit" class="alipay-submit">立即付款</button>
+        </div>
+    </form>
+    <!-- 选择支付方式 -->
+    <div class="chose-payment">
+        <header>
+            <a href="javascript:;" class="spr chose-payment-back"></a>
+            <h3 class="chose-title">选择支付方式</h3>
+        </header>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/money.png">
+            </div>
+            <p>余额支付</p>
+            <a href="javascript:;" class="spr check-a"></a>
+        </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/wechat.png">
+            </div>
+            <p>微信支付</p>
+            <a href="javascript:;" class="spr check-a icon-check"></a>
+        </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/alipay.png">
+            </div>
+            <p>支付宝支付</p>
+            <a href="javascript:;" class="spr check-a"></a>
+        </div>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
