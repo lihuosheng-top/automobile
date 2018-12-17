@@ -45,14 +45,14 @@
 
 	{block name="content"}
 		<div class="all">
-			<input type="hidden" readonly="true" id="J_order_id" value="{$int_order_id}" />
-			<input type="hidden" readonly="true" id="J_pay_url" value="{$str_pay_url}" />
+			<input type="hidden" readonly="true" id="J_order_id"/>
+			<input type="hidden" readonly="true" id="J_pay_url" />
 			<h2 class="static">待支付......</h2>
 			<p>商家名称：<span id="shop_name"></span></p>
 			<p>支付金额：<span id="repay_money"></span></p>
 			<div class="doms">
 				<!--二维码-->
-				<img alt="模式二扫码支付" src="goods_qrcode?text={$str_pay_url}&size=8" style="width:230px;height:230px;margin: 10px auto;" id="J_weixin_pay_url" />
+				<img alt="模式二扫码支付" src="goods_qrcode?url2={$url2}" style="width:230px;height:230px;margin: 10px auto;" id="J_weixin_pay_url" />
 			</div>
 			<div class="doms1 noshow " id="qrcode" style="width:230px; height:230px; margin: 10px auto;">
 			</div>

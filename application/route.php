@@ -135,6 +135,19 @@ Route::group("",[
     "member_address_edit"=>"index/member/member_address_edit",//地址管理编辑功能(ajax)
     "member_collection"=>"index/member/member_collection",//我的收藏
     /*TODO:我的页面结束*/
+    /*TODO:收藏开始*/
+    "collection_add"=>"index/Collection/collection_add",//（添加收藏）
+    /*TODO:收藏结束*/
+    /*TODO:快递开始*/
+    "express_wait_for_order"=>"index/Express/express_wait_for_order",//待接单
+    "express_wait_for_take"=>"index/Express/express_wait_for_take",//待取货
+    "express_distribution"=>"index/Express/express_distribution",//配送中
+    "express_completed"=>"index/Express/express_completed",//已完成
+    /*TODO:快递结束*/
+
+
+
+
     /*TODO:消息开始*/
     "information_index"=>"index/Information/index",//消息页面
     "information_details"=>"index/Information/information_details",//订单助手消息页面详情
@@ -167,6 +180,7 @@ Route::group("",[
 
     /*TODO：配件商评价开始*/
     "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面(ajax)
+    "evaluate_parts_add"=>"index/Evaluate/evaluate_parts_add",//评价页面(ajax)
     /*TODO：配件商评价结束*/
 
 
@@ -543,6 +557,8 @@ Route::group("admin",[
     "service_image_del"=>"admin/Install/service_image_del",//服务设置之编辑里面图片删除
     "service_updata"=>"admin/Install/service_updata",
     "service_del"=>"admin/Install/service_del", //服务设置之删除
+
+    "invoice_setting"=>"admin/Install/invoice_setting",//设置之发票手续费设置
 
 
     "message_index"=>"admin/Install/message_index",
