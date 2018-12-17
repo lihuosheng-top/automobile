@@ -866,9 +866,8 @@ class Goods extends Controller{
 
             $result = $notify->GetPayUrl($input);
             $url2 = $result["code_url"];
-            $url = urlencode($url2);
 
-            return view("WeiAlpay_code",["url2"=>$url]);
+            return view("WeiAlpay_code",["url2"=>$url2]);
 
     }
 
@@ -882,7 +881,7 @@ class Goods extends Controller{
 
         error_reporting(E_ERROR);
         include ('../extend/WxpayAPI/example/phpqrcode/phpqrcode.php');
-        $url = urldecode($_GET["url2"]);
+        $url = $_GET["url2"];
         \QRcode::png($url);
 
     }
