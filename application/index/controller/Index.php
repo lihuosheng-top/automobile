@@ -55,6 +55,8 @@ class Index extends Controller
         WxPayConf_pub::NOTIFY_URL 回调我先写在下面的 weixin_notify方法 这个方法也是要写到前台 不能限制登录不然微信访问不了 以后这种回调不要写在后台 单独写一个类或控制器
         */
     public function saoma_callback(){
+        echo 1;
+        exit();
         //扫码支付，接收微信请求
         include_once(EXTEND_PATH . "lib/payment/wxpay/WxPayPubHelper.php");
         $nativeCall = new \NativeCall_pub();
