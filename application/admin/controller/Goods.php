@@ -614,6 +614,129 @@ class Goods extends Controller{
 
 
 
+
+    /**
+     * 商品提交订单
+     * 陈绪
+     */
+    public function alipay(Request $request){
+
+        if($request->isPost()) {
+            include('../extend/AliPay_demo/f2fpay/model/builder/AlipayTradePrecreateContentBuilder.php');
+            include('../extend/AliPay_demo/f2fpay/service/AlipayTradeService.php');
+            include("../extend/AliPay_demo/f2fpay/config/config.php");
+
+            if (!empty($_POST['WIDbody']) && trim($_POST['WIDtotal_amount']) != "") {
+                // (必填) 商户网站订单系统中唯一订单号，64个字符以内，只能包含字母、数字、下划线，
+                // 需保证商户系统端不能重复，建议通过数据库sequence生成，
+                $outTradeNo = date("YmdHis").uniqid();
+
+                // (必填) 订单标题，粗略描述用户的支付目的。如“xxx品牌xxx门店当面付扫码消费”
+                $store = $_POST['WIDsubject'];
+
+                // (必填) 订单总金额，单位为元，不能超过1亿元
+                // 如果同时传入了【打折金额】,【不可打折金额】,【订单总金额】三者,则必须满足如下条件:【订单总金额】=【打折金额】+【不可打折金额】
+                $goods_money = $_POST['WIDtotal_amount'];
+
+
+                // (可选) 订单不可打折金额，可以配合商家平台配置折扣活动，如果酒水不参与打折，则将对应金额填写至此字段
+                // 如果该值未传入,但传入了【订单总金额】,【打折金额】,则该值默认为【订单总金额】-【打折金额】
+                $undiscountableAmount = "";
+
+                // 卖家支付宝账号ID，用于支持一个签约账号下支持打款到不同的收款账号，(打款到sellerId对应的支付宝账号)
+                // 如果该字段为空，则默认为与支付宝签约的商户的PID，也就是appid对应的PID
+                //$sellerId = "";
+
+                // 订单描述，可以对交易或商品进行一个详细地描述，比如填写"购买商品2件共15.00元"
+                $goods_id = $_POST['WIDbody'];
+
+                //第三方应用授权令牌,商户授权系统商开发模式下使用
+                $appAuthToken = "";//根据真实值填写
+
+                // 创建请求builder，设置请求参数
+                $qrPayRequestBuilder = new \AlipayTradePrecreateContentBuilder();
+                $qrPayRequestBuilder->setOutTradeNo($outTradeNo);
+                $qrPayRequestBuilder->setTotalAmount($goods_money);
+                $qrPayRequestBuilder->setSubject($store);
+                $qrPayRequestBuilder->setBody($goods_id);
+                $qrPayRequestBuilder->setUndiscountableAmount($undiscountableAmount);
+                $qrPayRequestBuilder->setAppAuthToken($appAuthToken);
+
+
+                // 调用qrPay方法获取当面付应答
+                $qrPay = new \AlipayTradeService($config);
+                $qrPayResult = $qrPay->qrPay($qrPayRequestBuilder);
+
+                //	根据状态值进行业务处理
+                switch ($qrPayResult->getTradeStatus()) {
+                    case "SUCCESS":
+                        $response = $qrPayResult->getResponse();
+                        $qrcode = $qrPay->create_erweima($response->qr_code);
+                        return ajax_success("获取成功", $qrcode);
+
+                        break;
+                    case "FAILED":
+                        if (!empty($qrPayResult->getResponse())) {
+                            return ajax_success("成功",$qrPayResult->getResponse());
+                        }
+                        break;
+                    case "UNKNOWN":
+                        if (!empty($qrPayResult->getResponse())) {
+                            return ajax_error("失败",$qrPayResult->getResponse());
+                        }
+                        break;
+                    default:
+                        echo "不支持的返回状态，创建订单二维码返回异常!!!";
+                        break;
+                }
+            }
+        }
+
+    }
+
+
+
+    /**
+     * 支付宝回到地址
+     * 陈绪
+     * @param Request $request
+     */
+    public function pay_code(Request $request){
+
+        include('../extend/AliPay_demo/f2fpay/model/builder/AlipayTradePrecreateContentBuilder.php');
+        include('../extend/AliPay_demo/f2fpay/service/AlipayTradeService.php');
+        include("../extend/AliPay_demo/f2fpay/config/config.php");
+        $qrPayRequestBuilder = new \AlipayTradePrecreateContentBuilder();
+        $qrPay = new \AlipayTradeService($config);
+        $qrPayResult = $qrPay->qrPay($qrPayRequestBuilder);
+
+        //	根据状态值进行业务处理
+        switch ($qrPayResult->getTradeStatus()) {
+            case "SUCCESS":
+                $response = $qrPayResult->getResponse();
+                $qrcode = $qrPay->create_erweima($response->qr_code);
+                return ajax_success("获取成功", $qrcode);
+
+                break;
+            case "FAILED":
+                if (!empty($qrPayResult->getResponse())) {
+                    return ajax_success("成功",$qrPayResult->getResponse());
+                }
+                break;
+            case "UNKNOWN":
+                if (!empty($qrPayResult->getResponse())) {
+                    return ajax_error("失败",$qrPayResult->getResponse());
+                }
+                break;
+            default:
+                echo "不支持的返回状态，创建订单二维码返回异常!!!";
+                break;
+        }
+    }
+
+
+
+
     /**
      * 专用适用车型编辑显示
      * 陈绪
@@ -648,142 +771,120 @@ class Goods extends Controller{
      * 陈绪
      */
     public function WeiAlpay(Request $request){
-       /* $goods_data = $request->param();//接收参数
-        $int_order_id = intval($goods_data['WIDbody']);//订单id 以后统一叫order_id
-        if(!$int_order_id){
-            echo '参数错误';
-            exit();
-        }
-        include EXTEND_PATH . "/lib/payment/wxpay/WxPayPubHelper.php";//载入weixin支付类
-        $nativeLink_pub = new \NativeLink_pub();
-        $nativeLink_pub->setParameter('product_id',$int_order_id);//回调要用的订单id
-        $str_pay_url = urlencode($nativeLink_pub->getUrl());//这个只是支付链接 用户扫完码后会请求你在商户号配置的支付回调 现在写在下面的saoma_callback 你自己后面要写到前台去或者不要判断这个方法的登录 不然微信没办法请求
-        return view("WeiAlpay_code", ['str_pay_url' => $str_pay_url, 'int_order_id' => $int_order_id]);*/
 
-        $store = $_POST['WIDsubject'];
-        //付款金额，必填
-        $goods_money = $_POST['WIDtotal_amount'];
+            //店铺名称，必填
+           /* $store = $_POST['WIDsubject'];
+            //付款金额，必填
+            $goods_money = $_POST['WIDtotal_amount'];
 
-        //商品描述，可空
-        $goods_id = $_POST['WIDbody'];
-
-        include("../extend/WxpayAPI/lib/WxPay.Api.php");
-        include('../extend/WxpayAPI/example/WxPay.NativePay.php');
-        include('../extend/WxpayAPI/example/log.php');
-
-        /**
-         * 流程：
-         * 1、组装包含支付信息的url，生成二维码
-         * 2、用户扫描二维码，进行支付
-         * 3、确定支付之后，微信服务器会回调预先配置的回调地址，在【微信开放平台-微信支付-支付配置】中进行配置
-         * 4、在接到回调通知之后，用户进行统一下单支付，并返回支付信息以完成支付（见：native_notify.php）
-         * 5、支付完成之后，微信服务器会通知支付成功
-         * 6、在支付成功通知中需要查单确认是否真正支付成功（见：notify.php）
-         */
-        $notify = new \NativePay();
-        /**
-         * 流程：
-         * 1、调用统一下单，取得code_url，生成二维码
-         * 2、用户扫描二维码，进行支付
-         * 3、支付完成之后，微信服务器会通知支付成功
-         * 4、在支付成功通知中需要查单确认是否真正支付成功（见：notify.php）
-         */
+            //商品描述，可空
+            $goods_id = $_POST['WIDbody'];*/
 
 
-        $input = new \WxPayUnifiedOrder();
-        /**
-         * 设置商品或支付单简要描述
-         */
-        $input->SetBody($store);
-        /**
-         * 设置附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
-         */
-        $input->SetAttach("ceshidingdan1");
-        /**
-         * 设置商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
-         */
-        $input->SetOut_trade_no(\WxPayConfig::MCHID . date("YmdHis"));
-        /**
-         * 设置订单总金额，只能为整数，详见支付金额
-         * @param string $value
-         **/
-        $input->SetTotal_fee($goods_money);
-        /**
-         * 设置订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
-         * @param string $value
-         **/
-        $input->SetTime_start(date("YmdHis"));
-        /**
-         * 设置订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。其他详见时间规则
-         * @param string $value
-         **/
-        $input->SetTime_expire(date("YmdHis", time() + 600));
-        /**
-         * 设置商品标记，代金券或立减优惠功能的参数，说明详见代金券或立减优惠
-         * @param string $value
-         **/
-        $input->SetGoods_tag("无");
-        /**
-         * 设置接收微信支付异步通知回调地址
-         * @param string $value
-         **/
-        $input->SetNotify_url("http://automobile.siring.com.cn/goods_wx_notify");
-        /**
-         * 设置取值如下：JSAPI，NATIVE，APP，详细说明见参数规定
-         * @param string $value
-         **/
-        $input->SetTrade_type("NATIVE");
-        /**
-         * 设置trade_type=NATIVE，此参数必传。此id为二维码中包含的商品ID，商户自行定义。
-         * @param string $value
-         **/
-        $input->SetProduct_id($goods_id);
-        /**
-         * 生成直接支付url，支付url有效期为2小时,模式二
-         * @param UnifiedOrderInput $input
-         */
+            header("Content-type: text/html; charset=utf-8");
+            ini_set('date.timezone', 'Asia/Shanghai');
 
-        $result = $notify->GetPayUrl($input);
-        $url2 = $result["code_url"];
+            include("../extend/WxpayAPI/lib/WxPay.Api.php");
+            include('../extend/WxpayAPI/example/WxPay.NativePay.php');
+            include('../extend/WxpayAPI/example/log.php');
 
-        //return ajax_success("获取成功", $url2);
-        return view("WeiAlpay_code",["url2"=>urlencode($url2)]);
+            /**
+             * 流程：
+             * 1、组装包含支付信息的url，生成二维码
+             * 2、用户扫描二维码，进行支付
+             * 3、确定支付之后，微信服务器会回调预先配置的回调地址，在【微信开放平台-微信支付-支付配置】中进行配置
+             * 4、在接到回调通知之后，用户进行统一下单支付，并返回支付信息以完成支付（见：native_notify.php）
+             * 5、支付完成之后，微信服务器会通知支付成功
+             * 6、在支付成功通知中需要查单确认是否真正支付成功（见：notify.php）
+             */
+            $notify = new \NativePay();
+    //$url1 = $notify->GetPrePayUrl("123456789");
+
+    //模式二
+            /**
+             * 流程：
+             * 1、调用统一下单，取得code_url，生成二维码
+             * 2、用户扫描二维码，进行支付
+             * 3、支付完成之后，微信服务器会通知支付成功
+             * 4、在支付成功通知中需要查单确认是否真正支付成功（见：notify.php）
+             */
 
 
-    }
 
+            $input = new \WxPayUnifiedOrder();
+            /**
+             * 设置商品或支付单简要描述
+             */
+            $input->SetBody("测试商品支付");
+            /**
+             * 设置附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
+             */
+            $input->SetAttach("ceshidingdan1");
+            /**
+             * 设置商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
+             */
+            $input->SetOut_trade_no(\WxPayConfig::MCHID.date("YmdHis"));
+            /**
+             * 设置订单总金额，只能为整数，详见支付金额
+             * @param string $value
+             **/
+            $input->SetTotal_fee("1");
+            /**
+             * 设置订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
+             * @param string $value
+             **/
+            $input->SetTime_start(date("YmdHis"));
+            /**
+             * 设置订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。其他详见时间规则
+             * @param string $value
+             **/
+            $input->SetTime_expire(date("YmdHis", time() + 600));
+            /**
+             * 设置商品标记，代金券或立减优惠功能的参数，说明详见代金券或立减优惠
+             * @param string $value
+             **/
+            $input->SetGoods_tag("无");
+            /**
+             * 设置接收微信支付异步通知回调地址
+             * @param string $value
+             **/
+            $input->SetNotify_url("http://automobile.siring.com.cn/saoma_callback");
+            /**
+             * 设置取值如下：JSAPI，NATIVE，APP，详细说明见参数规定
+             * @param string $value
+             **/
+            $input->SetTrade_type("NATIVE");
+            /**
+             * 设置trade_type=NATIVE，此参数必传。此id为二维码中包含的商品ID，商户自行定义。
+             * @param string $value
+             **/
+            $input->SetProduct_id("123456789");
+            /**
+             * 生成直接支付url，支付url有效期为2小时,模式二
+             * @param UnifiedOrderInput $input
+             */
 
-    /*
-    ajax获取微信支付链接
-    */
-    public function get_weixin_pay_url(Request $request){
-        $goods_data = $request->param();
-        $int_order_id = intval($goods_data['order_id']);
-        if(!$int_order_id){
-            echo '参数错误';
-            exit();
-        }
-        include EXTEND_PATH . "/lib/payment/wxpay/WxPayPubHelper.php";
-        $nativeLink_pub = new \NativeLink_pub();
-        $nativeLink_pub->setParameter('product_id',$int_order_id);
-        $str_pay_url = urlencode($nativeLink_pub->getUrl());
-        return ajax_success("获取成功", array('pay_url' => $str_pay_url));
+            $result = $notify->GetPayUrl($input);
+            $url2 = $result["code_url"];
+
+            return view("WeiAlpay_code",["url2"=>$url2]);
+
     }
 
 
 
     /**
-     * 创建二维码
+     * 进行二维码扫码
      * 陈绪
      */
     public function qrcode(){
+
         error_reporting(E_ERROR);
-        include("../extend/WxpayAPI/phpqrcode/phpqrcode.php");
-        $url = urldecode($_GET["data"]);
+        include ('../extend/WxpayAPI/example/phpqrcode/phpqrcode.php');
+        $url = $_GET["url2"];
         \QRcode::png($url);
+
     }
-
-
 
 
 
@@ -880,5 +981,7 @@ class Goods extends Controller{
         }
         $obj_alipay->log($arr_log_data);   //记录日志
     }
+
+
 
 }

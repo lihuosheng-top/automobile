@@ -53,56 +53,37 @@ class Index extends Controller
         到这里就可以调起微信扫码支付了
         WxPayConf_pub::NOTIFY_URL 回调我先写在下面的 weixin_notify方法 这个方法也是要写到前台 不能限制登录不然微信访问不了 以后这种回调不要写在后台 单独写一个类或控制器
         */
-    public function saoma_callback(){
+    public function saoma_callback()
+    {
+        file_put_contents(EXTEND_PATH."lib/data.txt",1);
+        exit();
         //扫码支付，接收微信请求
-        include_once(EXTEND_PATH ."lib/payment/wxpay/WxPayPubHelper.php");
-        $nativeCall = new \NativeCall_pub();
-        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        $die = EXTEND_PATH.'data';
-        if(is_dir($die)){
-            mkdir($die,0777);
+        ini_set('date.timezone', 'Asia/Shanghai');
+        error_reporting(E_ERROR);
+        include("../extend/WxpayAPI/lib/WxPay.Api.php");
+        include('../extend/WxpayAPI/example/log.php');
+        //初始化日志
+        $logHandler = new \CLogFileHandler("./logs/" . date('Y-m-d') . '.log');
+        $log = \Log::Init($logHandler, 15);
+        if (isset($_REQUEST["transaction_id"]) && $_REQUEST["transaction_id"] != "") {
+            file_put_contents(EXTEND_PATH."lib/data.txt",$_REQUEST["transaction_id"]);
+            exit();
+            $transaction_id = $_REQUEST["transaction_id"];
+            $input = new \WxPayOrderQuery();
+            $input->SetTransaction_id($transaction_id);
+            echo json_encode(\WxPayApi::orderQuery($input));
+            exit();
         }
-        file_put_contents(EXTEND_PATH . 'data/data_wx_qrcode_pay.txt', $xml);
-        $nativeCall->saveData($xml);
-        if ($nativeCall->checkSign() == FALSE) {
-            $nativeCall->setReturnParameter("return_code", "FAIL"); //返回状态码
-            $nativeCall->setReturnParameter("return_msg", "签名失败"); //返回信息
-        }
-        $openid = $nativeCall->getOpenId();
-        $int_order_id = $nativeCall->getProductId();//获取上面设置的订单id 此语句$nativeLink_pub->setParameter('product_id',$int_order_id);
-        if(empty($int_order_id)){
-            return false;
-        }
-        //$int_order_id = 53214;
-        //$obj_order = L::loadClass('order', 'index');//加载你自动的订单表 等于说你要支付的那条数据
-        //$arr_order = $obj_order->get_one_bat_pay($int_order_id);//用订单id获取到要支付的订单数据
-        //file_put_contents(S_ROOT.'data/order_data.txt', $int_order_id.var_export($arr_order,1));
-        if (1 == 1) {
-            $int_order_total_price = number_format('100.00', 2, '.', '')*100;//获取订单价格 要乘以100 微信是以分为单位
-            $unifiedOrder = new \UnifiedOrder_pub();//实例化统一下单接口 要不要加斜杠\你到线上测 有文件就写文件 看哪里报错 用file_put_contents
-            $unifiedOrder->setParameter("openid", "$openid"); //用户openid 固定 不用动 上面已经获取好了
-            $unifiedOrder->setParameter("body", "就是支付的时候显示的标题"); //商品描述
-            //自定义订单号，此处仅作举例
-            $out_trade_no = WxPayConf_pub::APPID . 'b' . $int_order_id;//拼接订单号 b 是自定义 在后面的 NOTIFY_URL之后用到 WxPayConf_pub类在ssi的config目录自己找一下
-            //$out_trade_no = WxPayConf_pub::APPID . "$timeStamp";
-            $unifiedOrder->setParameter("out_trade_no", "$out_trade_no"); //商户订单号
-            $unifiedOrder->setParameter("total_fee", "$int_order_total_price"); //总金额,分为单位
-            $unifiedOrder->setParameter("notify_url", WxPayConf_pub::NOTIFY_URL); //通知地址 WxPayConf_pub类里定义
-            $unifiedOrder->setParameter("trade_type", "NATIVE"); //交易类型
-            $unifiedOrder->setParameter("product_id", "$int_order_id"); //用户标识 订单id
-            $prepay_id = $unifiedOrder->getPrepayId();
 
-            $nativeCall->setReturnParameter("return_code", "SUCCESS"); //返回状态码
-            $nativeCall->setReturnParameter("result_code", "SUCCESS"); //业务结果
-            $nativeCall->setReturnParameter("prepay_id", "$prepay_id"); //预支付ID
-        } else {//支付过的订单就会走这里
-            $nativeCall->setReturnParameter("return_code", "SUCCESS"); //返回状态码
-            $nativeCall->setReturnParameter("result_code", "FAIL"); //业务结果
-            $nativeCall->setReturnParameter("err_code_des", "此订单无效"); //业务结果
+        if (isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != "") {
+            file_put_contents(EXTEND_PATH."lib/data.txt",$_REQUEST["transaction_id"]);
+            exit();
+            $out_trade_no = $_REQUEST["out_trade_no"];
+            $input = new \WxPayOrderQuery();
+            $input->SetOut_trade_no($out_trade_no);
+            echo json_encode(\WxPayApi::orderQuery($input));
+            exit();
         }
-        $returnXml = $nativeCall->returnXml();
-        //file_put_contents(S_ROOT.'data/xml_data.txt', $int_order_id.var_export($returnXml,1));
-        echo $returnXml;
     }
 
 
