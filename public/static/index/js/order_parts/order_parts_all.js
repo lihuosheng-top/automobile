@@ -236,7 +236,9 @@ $.ajax({
                 },
                 success: function(res){
                     console.log(res);
-                    location.href = 'evaluate_index';
+                    if(res.data.status === 1){
+                        location.href = 'evaluate_index';
+                    }
                 },
                 error: function(){
                     console.log('error');
