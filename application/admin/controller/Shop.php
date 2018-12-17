@@ -120,6 +120,36 @@ class Shop extends Controller{
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:设置为热门店铺
+     **************************************
+     */
+    public function store_hot_status(Request $request){
+        if($request->isPost()) {
+            $status = $request->only(["status"])["status"];
+            if($status == -1) {
+                $id = $request->only(["id"])["id"];
+                $bool = Db::name("store")->where("store_id", $id)->update(["is_hot_store" => -1]);
+                if ($bool) {
+                    return ajax_success('修改成功',['status'=>1]);
+                } else {
+                    return ajax_error('修改失败',['status'=>0]);
+                }
+            }
+            if($status == 1){
+                $id = $request->only(["id"])["id"];
+                $bool = Db::name("store")->where("store_id", $id)->update(["is_hot_store" => 1]);
+                if ($bool) {
+                    return ajax_success('修改成功',['status'=>1]);
+                } else {
+                    return ajax_error('修改失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
 
     /**
      **************李火生*******************

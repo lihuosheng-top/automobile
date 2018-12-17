@@ -118,9 +118,16 @@
                         <td>
                             {$vo.operation_status|operation_status}
                         </td>
-                          <td>
-                            <input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
+                        <td>
+                            {if $vo.is_hot_store == -1}
+                            <input type="checkbox" class="Status" name="show" value="-1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
                             data-id="{$vo.store_id}">
+                            {/if}
+                            {if $vo.is_hot_store == 1}
+                            <input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
+                                   checked=""    data-id="{$vo.store_id}">
+                            {/if}
+
                         </td>
                         <td>
                             <a class="layui-btn layui-btn-mini edit" href="{:url('admin/Shop/add',['id'=>$vo.store_id])}"><i class="iconfont icon-edit"></i> 编辑</a>
@@ -167,10 +174,10 @@
             var vals = $("input").data("id");
             //是否付费上架展示
             form.on('switch(isShow)', function(data) {
-                if ($(this).val() == 0) {
+                if ($(this).val() == -1) {
                     $(this).val(1);
                 } else {
-                    $(this).val(0);
+                    $(this).val(-1);
                 }
                 var vals = data.value;
                 var id = $(this).data("id");
@@ -178,7 +185,7 @@
                 console.log(status);
                 $.ajax({
                     type: "POST",
-                    url: "{:url('admin/admin/status')}",
+                    url: "{:url('admin/Shop/store_hot_status')}",
                     data: {
                         "id": id,
                         "status": status

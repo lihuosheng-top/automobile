@@ -141,7 +141,8 @@ class Store extends Controller{
                        'store_owner_wechat'=>$store_owner_wechat,
                        'store_information'=>$store_information,
                        'user_id'=> $user_id,
-                       'role_id'=>$role_id
+                       'role_id'=>$role_id,
+                       'is_hot_store'=>-1,
                    ];
                    $bool = db("store")->insertGetId($data);
                    if($bool > 0){
