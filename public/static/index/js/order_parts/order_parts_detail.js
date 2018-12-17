@@ -42,6 +42,7 @@ function countDown(id, endTime, storeId, orderNum, reason){
             },
             success: function(res){
                 console.log(res);
+                location.reload();
             },
             error: function(){
                 console.log('error');
