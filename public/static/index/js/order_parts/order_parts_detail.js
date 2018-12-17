@@ -38,7 +38,7 @@ function countDown(id, endTime, storeId, orderNum, reason){
             data: {
                 'store_id': storeId,
                 'parts_order_number': orderNum,
-                'Cancel_order_description': reason
+                'cancel_order_description': reason
             },
             success: function(res){
                 console.log(res);
