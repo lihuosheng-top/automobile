@@ -38,6 +38,17 @@ class Evaluate extends  Controller{
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单评价信息的添加
+     **************************************
+     */
+    public function evaluate_parts_add(Request $request){
+        if($request->isPost()){
+            
+        }
+    }
 
 
 
