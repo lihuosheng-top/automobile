@@ -66,6 +66,8 @@ $.ajax({
                     </div>`
         })
         $('.order-shop-box').after(str);
+        // 需付款
+        $('.pay-amount-span span').text(val.all_order_real_pay);
         // 创建时间
         $('.create-time span').text(timetrans(val.create_time));
         // 支付时间

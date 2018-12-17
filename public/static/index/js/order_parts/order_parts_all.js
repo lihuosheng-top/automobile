@@ -89,7 +89,7 @@ $.ajax({
         })
         $('.shops-goods-wrap').append(str);
 
-        // 取消订单
+        // 取消订单 √
         $('.cancel-order-btn').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
@@ -124,7 +124,7 @@ $.ajax({
             $('.cancel-order-pop').animate({'bottom': '-100%'});
             $('.mask').hide();
         })
-        // 删除订单
+        // 删除订单 √
         $('.del-order-btn').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
@@ -172,7 +172,7 @@ $.ajax({
                 }
             })
         })
-        // 确认收货
+        // 确认收货 √
         $('.conf-receipt-btn').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
@@ -200,7 +200,7 @@ $.ajax({
                 }
             });
         })
-        // 查看订单详情
+        // 查看订单详情 √
         $('.all-goods-box').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
@@ -215,6 +215,48 @@ $.ajax({
                 success: function(res){
                     console.log(res);
                     location.href = 'order_parts_detail'; 
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+        // 去评价
+        $('.evaluation-btn').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            $.ajax({
+                url: 'ios_api_order_parts_no_pay_cancel',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'parts_order_number': parts_order_number,
+                    'store_id': store_id
+                },
+                success: function(res){
+                    console.log(res);
+                    location.href = 'evaluate_index';
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+        // 查看物流
+        $('.check-logistics-btn').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            $.ajax({
+                url: 'ios_api_order_parts_no_pay_cancel',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'parts_order_number': parts_order_number,
+                    'store_id': store_id
+                },
+                success: function(res){
+                    console.log(res);
+                    location.href = 'logistics_index';
                 },
                 error: function(){
                     console.log('error');
