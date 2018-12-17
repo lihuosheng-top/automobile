@@ -61,17 +61,6 @@ class Shop extends Controller{
      * @return \think\response\View
      */
     public function add($id){
-<<<<<<< HEAD
-        $data =Db::name('store')->where('store_id',$id)->find(); //所有数据
-        $store_work_server_range =explode(',',$data['store_work_server_range']);//服务范围
-      
-        foreach ($store_work_server_range as $k=>$v){
-            $range_data[] =Db::name('service_setting')->field('service_setting_name')->where('service_setting_id',$v)->find();
-        }
-      
-        $store_city_address =explode(',',$data['store_city_address']);  //三级城市
-        return view("shop_add",['data'=>$data,'store_city_address'=>$store_city_address,'range_data'=>$range_data]);
-=======
         $store_data  =Db::name('store')->where('store_id',$id)->select();
         foreach ($store_data as $k=>$v){
             $store_datas[$k] =$v;
@@ -152,7 +141,6 @@ class Shop extends Controller{
                 $this->error('删除失败');
             }
         }
->>>>>>> 06f0ac87db0570d776ca17ae3a9ba442b6e2bb28
     }
 
 
