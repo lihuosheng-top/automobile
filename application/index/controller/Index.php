@@ -55,7 +55,8 @@ class Index extends Controller
     public function saoma_callback()
     {
         //扫码支付，接收微信请求
-        Session::get("goods_id");
+        $goods_id = Session::get("goods_id");
+        halt($goods_id);
         ini_set('date.timezone', 'Asia/Shanghai');
         error_reporting(E_ERROR);
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
