@@ -621,84 +621,117 @@ class Goods extends Controller{
      */
     public function alipay(Request $request){
 
-        $config = array (
-            //应用ID,您的APPID。
-            'app_id' => "2018120762470526",
+        if($request->isPost()) {
+            include('../extend/AliPay_demo/f2fpay/model/builder/AlipayTradePrecreateContentBuilder.php');
+            include('../extend/AliPay_demo/f2fpay/service/AlipayTradeService.php');
+            include("../extend/AliPay_demo/f2fpay/config/config.php");
 
-            //商户私钥，您的原始格式RSA私钥
-            'merchant_private_key' => "MIIEpAIBAAKCAQEAyC9iRV5kLDbVK619EtISgMN5Gz0bOdFAfSojUzefVhKUrEJ6j48d1Awrg98yudp22kUs0zboMkVTYDT1l9ux5xj/p39JhqjjIl44oZsGFjSmu9/2HxaZ4UjfTJXkaGwJqyY0fSY2f+cE5YjoRYq5XhqijzF0BoKoH64pQNWxqp6f3wss2FKp707KV/oLAArqkqFcWfyylMsncdxV59Lo0mtJ7cIEOezng4es3KDdHmLT5kq3j0hl0kfIjdGuDR0cWnlcolHUoIOKVGSlSHn+WnFlZ20/fkfF+hdadUcG42tywCBVT40ugX1LmmdCI4hAnxLxeQ7bFkhrnpDWcW7KWQIDAQABAoIBAQCBQK730TFmpuTOtc669y6BOzUX1EWe+C/mYO28Dn7vqUGbU7UkuihtQIpcNCHhhGAXIHEH0zzrMH3b8XXdXjmo2ChBstr7elJlX2a7WYf9kHNTfRDCE+q5Xj7niSSYE6HOgvWDFMg9nyE3P0WRmTeEvjfVsv2SMoxxIBd8yD1Vxr3Gbg+gT8zWDrqXQ1Ap1gg5jNS14CFE3uKKwQ4n5JZWnIQ+jw3LZcpk9Eb/mrQ9kbnU7g0ikx8sYJpTiP7lAlb3dq1tdUmRV8+HfWYC/a8MbZtO6UyDWvms5Lb5g4we7FCmBAkG+zv62PxG9sQAvrQoSwKTOj/7LSeTgJsT97QNAoGBAPuQUNZEhVODVhCCISg84TGi0BozU64PqegJXFxbR++hQC2EsN6L2Mk2ftpd+J/9XRD0ffcBMea+H4N7ui4Y+OHoED/8d76dTX06PWfAYYJMu/o65c3IBSBiwgREuRo38a20CZ8hKr8LVpLXbtCB8WJ1kp5QeqqSPpwnjFncyBorAoGBAMu3Hokjze+FPpeFQ3tYVt9G/VSAhRMVAb5ZQClQH9plpVM9aMukp8jiaeSBg7d5RzNRGRU5ouKQ1AVs3jkgvVzUWRMKM+VkW4lzAhEkM766egpzngs9z4YXHcBW1bPJQap2TVLRcFmueDsVABXF5XZSgAwenBhtvmZ9X/UDCD+LAoGBALmXaOwLNUm9lVsshgXHlGQoN9t8jnnV+IXFkixY86NolY5/XHVzOwaHe+LifTCbnXOKzPvUF9qh3WIFf//OUJ9ps8NhIX6xUp/WvcKzfbzBm9Uqaqv8qzuPYJABm4YqS9TZBFgwAfdcCAzhf1G47Dq1fuvpd/YrWqGd07/gUIhtAoGAHDSkg7RzZQB75BrNdxyKGqwHk1WgFz5HWYWd/ppbbq+4LkhIZDnOCWBf7QWJqTOfihlmcavjQ59t27pxIlPIJDw6gQpemRpGGkfUN29dwsCq+Rt8/G14eEZnFiRvvk7VSrbKifb5qVEg0H1d36Xg2Xsew47Ragh33lTpnlDnKXUCgYBIuk9VU3DkITWsy+xiQbN4eQqbiFB7BA55xIjwPqK8K+0PVzRyObUEF6m9KSz2mEB1CHwr1fHj8qzJ/0CgKUeCONm5crLEGCGMbGUzMloGmVLSJz6+4xT8mwKOv/BcpTqkDLx+8HBaJppJnjWn0OmHLNa1JhAaVuef8eheH546kw==",
+            if (!empty($_POST['WIDbody']) && trim($_POST['WIDtotal_amount']) != "") {
+                // (必填) 商户网站订单系统中唯一订单号，64个字符以内，只能包含字母、数字、下划线，
+                // 需保证商户系统端不能重复，建议通过数据库sequence生成，
+                $outTradeNo = date("YmdHis").uniqid();
 
-            //异步通知地址
-            'notify_url' => "http://localhost/automobile/public/admin/goods_pay_code",
+                // (必填) 订单标题，粗略描述用户的支付目的。如“xxx品牌xxx门店当面付扫码消费”
+                $store = $_POST['WIDsubject'];
 
-            //同步跳转
-            'return_url' => "http://localhost/automobile/public/admin/goods_pay_code",
+                // (必填) 订单总金额，单位为元，不能超过1亿元
+                // 如果同时传入了【打折金额】,【不可打折金额】,【订单总金额】三者,则必须满足如下条件:【订单总金额】=【打折金额】+【不可打折金额】
+                $goods_money = $_POST['WIDtotal_amount'];
 
-            //编码格式
-            'charset' => "UTF-8",
 
-            //签名方式
-            'sign_type'=>"RSA2",
+                // (可选) 订单不可打折金额，可以配合商家平台配置折扣活动，如果酒水不参与打折，则将对应金额填写至此字段
+                // 如果该值未传入,但传入了【订单总金额】,【打折金额】,则该值默认为【订单总金额】-【打折金额】
+                $undiscountableAmount = "";
 
-            //支付宝网关
-            'gatewayUrl' => "https://openapi.alipay.com/gateway.do",
+                // 卖家支付宝账号ID，用于支持一个签约账号下支持打款到不同的收款账号，(打款到sellerId对应的支付宝账号)
+                // 如果该字段为空，则默认为与支付宝签约的商户的PID，也就是appid对应的PID
+                //$sellerId = "";
 
-            //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
-            'alipay_public_key' => "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyC9iRV5kLDbVK619EtISgMN5Gz0bOdFAfSojUzefVhKUrEJ6j48d1Awrg98yudp22kUs0zboMkVTYDT1l9ux5xj/p39JhqjjIl44oZsGFjSmu9/2HxaZ4UjfTJXkaGwJqyY0fSY2f+cE5YjoRYq5XhqijzF0BoKoH64pQNWxqp6f3wss2FKp707KV/oLAArqkqFcWfyylMsncdxV59Lo0mtJ7cIEOezng4es3KDdHmLT5kq3j0hl0kfIjdGuDR0cWnlcolHUoIOKVGSlSHn+WnFlZ20/fkfF+hdadUcG42tywCBVT40ugX1LmmdCI4hAnxLxeQ7bFkhrnpDWcW7KWQIDAQAB",
+                // 订单描述，可以对交易或商品进行一个详细地描述，比如填写"购买商品2件共15.00元"
+                $goods_id = $_POST['WIDbody'];
 
-        );
+                //第三方应用授权令牌,商户授权系统商开发模式下使用
+                $appAuthToken = "";//根据真实值填写
 
-        //Loader::import("Alipay.wappay.buildermodel.AlipayTradeWapPayContentBuilder");
-        //Loader::import('Alipay.wappay.service.AlipayTradeService');
-        //商户订单号，商户网站订单系统中唯一订单号，必填
-        $out_trade_no = date("YmdHis").uniqid();
+                // 创建请求builder，设置请求参数
+                $qrPayRequestBuilder = new \AlipayTradePrecreateContentBuilder();
+                $qrPayRequestBuilder->setOutTradeNo($outTradeNo);
+                $qrPayRequestBuilder->setTotalAmount($goods_money);
+                $qrPayRequestBuilder->setSubject($store);
+                $qrPayRequestBuilder->setBody($goods_id);
+                $qrPayRequestBuilder->setUndiscountableAmount($undiscountableAmount);
+                $qrPayRequestBuilder->setAppAuthToken($appAuthToken);
 
-        //订单名称，必填
-        $subject = $_POST['WIDsubject'];
-        //付款金额，必填
-        $total_amount = $_POST['WIDtotal_amount'];
 
-        //商品描述，可空
-        $body = $_POST['WIDbody'];
-        //超时时间
-        $timeout_express="1m";
-        include('../extend/AliPay/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php');
+                // 调用qrPay方法获取当面付应答
+                $qrPay = new \AlipayTradeService($config);
+                $qrPayResult = $qrPay->qrPay($qrPayRequestBuilder);
+                $response = $qrPayResult->getResponse();
+                $qrcode = $qrPay->create_erweima($response->qr_code);
+                return ajax_success("获取成功", $qrcode);
+                //	根据状态值进行业务处理
+                switch ($qrPayResult->getTradeStatus()) {
+                    case "SUCCESS":
 
-        $payRequestBuilder = new \AlipayTradeWapPayContentBuilder();
-        $payRequestBuilder->setBody($body);
-        $payRequestBuilder->setSubject($subject);
-        $payRequestBuilder->setOutTradeNo($out_trade_no);
-        $payRequestBuilder->setTotalAmount($total_amount);
-        $payRequestBuilder->setTimeExpress($timeout_express);
-        include('../extend/AliPay/wappay/service/AlipayTradeService.php');
 
-        $payResponse = new \AlipayTradeService($config);
-        $result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
-        Session("goods_id",$body);
-        return ;
 
+                        break;
+                    case "FAILED":
+                        if (!empty($qrPayResult->getResponse())) {
+                            return ajax_success("成功",$qrPayResult->getResponse());
+                        }
+                        break;
+                    case "UNKNOWN":
+                        if (!empty($qrPayResult->getResponse())) {
+                            return ajax_error("失败",$qrPayResult->getResponse());
+                        }
+                        break;
+                    default:
+                        echo "不支持的返回状态，创建订单二维码返回异常!!!";
+                        break;
+                }
+            }
+        }
 
     }
 
 
+
     /**
-     * 回调地址
+     * 支付宝回到地址
      * 陈绪
      * @param Request $request
      */
     public function pay_code(Request $request){
 
-        if($request->isGet()){
-            $id = Session::get("goods_id");
-            $goods_id = explode(",",$id);
-            foreach ($goods_id as $value){
-                $bool = db("goods")->where("id",$value)->update(["goods_status"=>1,"putaway_status"=>1]);
-            }
-            if($bool){
-                $this->success("上架成功",url("admin/Goods/index"));
-            }else{
-                $this->error("上架失败",url("admin/Goods/index"));
-            }
+        include('../extend/AliPay_demo/f2fpay/model/builder/AlipayTradePrecreateContentBuilder.php');
+        include('../extend/AliPay_demo/f2fpay/service/AlipayTradeService.php');
+        include("../extend/AliPay_demo/f2fpay/config/config.php");
+        $qrPayRequestBuilder = new \AlipayTradePrecreateContentBuilder();
+        $qrPay = new \AlipayTradeService($config);
+        $qrPayResult = $qrPay->qrPay($qrPayRequestBuilder);
+
+        //	根据状态值进行业务处理
+        switch ($qrPayResult->getTradeStatus()) {
+            case "SUCCESS":
+                $response = $qrPayResult->getResponse();
+                $qrcode = $qrPay->create_erweima($response->qr_code);
+                return ajax_success("获取成功", $qrcode);
+
+                break;
+            case "FAILED":
+                if (!empty($qrPayResult->getResponse())) {
+                    return ajax_success("成功",$qrPayResult->getResponse());
+                }
+                break;
+            case "UNKNOWN":
+                if (!empty($qrPayResult->getResponse())) {
+                    return ajax_error("失败",$qrPayResult->getResponse());
+                }
+                break;
+            default:
+                echo "不支持的返回状态，创建订单二维码返回异常!!!";
+                break;
         }
     }
 
@@ -741,23 +774,22 @@ class Goods extends Controller{
     public function WeiAlpay(Request $request){
 
         if($request->isPost()) {
-            /*$out_trade_no = date("YmdHis").uniqid();
 
-            //订单名称，必填
-            $subject = $_POST['WIDsubject'];
+            //店铺名称，必填
+            $store = $_POST['WIDsubject'];
             //付款金额，必填
-            $total_amount = $_POST['WIDtotal_amount'];
+            $goods_money = $_POST['WIDtotal_amount'] * 100;
 
             //商品描述，可空
-            $body = $_POST['WIDbody'];*/
+            $goods_id = $_POST['WIDbody'];
 
 
             header("Content-type: text/html; charset=utf-8");
             ini_set('date.timezone', 'Asia/Shanghai');
 
             include("../extend/WxpayAPI/lib/WxPay.Api.php");
-            include('../extend/WxpayAPI/example/WxPay.NativePay.php');
-            include('../extend/WxpayAPI/example/log.php');
+            include("../extend/WxpayAPI/example/WxPay.NativePay.php");
+            include("../extend/WxpayAPI/example/log.php");
 
             /**
              * 流程：
@@ -769,9 +801,6 @@ class Goods extends Controller{
              * 6、在支付成功通知中需要查单确认是否真正支付成功（见：notify.php）
              */
             $notify = new \NativePay();
-//$url1 = $notify->GetPrePayUrl("123456789");
-
-//模式二
             /**
              * 流程：
              * 1、调用统一下单，取得code_url，生成二维码
@@ -785,7 +814,7 @@ class Goods extends Controller{
             /**
              * 设置商品或支付单简要描述
              */
-            $input->SetBody("测试商品支付");
+            $input->SetBody($store);
             /**
              * 设置附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
              */
@@ -793,12 +822,12 @@ class Goods extends Controller{
             /**
              * 设置商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
              */
-            $input->SetOut_trade_no(\WxPayConfig::MCHID . date("YmdHis"));
+            $input->SetOut_trade_no(\WxPayConfig::MCHID.date("YmdHis"));
             /**
              * 设置订单总金额，只能为整数，详见支付金额
              * @param string $value
              **/
-            $input->SetTotal_fee("1");
+            $input->SetTotal_fee($goods_money);
             /**
              * 设置订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
              * @param string $value
@@ -818,7 +847,7 @@ class Goods extends Controller{
              * 设置接收微信支付异步通知回调地址
              * @param string $value
              **/
-            $input->SetNotify_url("http://automobile.siring.com.cn/indexs");
+            $input->SetNotify_url("http://automobile.siring.com.cn/admin/goods_wx_notify");
             /**
              * 设置取值如下：JSAPI，NATIVE，APP，详细说明见参数规定
              * @param string $value
@@ -828,7 +857,7 @@ class Goods extends Controller{
              * 设置trade_type=NATIVE，此参数必传。此id为二维码中包含的商品ID，商户自行定义。
              * @param string $value
              **/
-            $input->SetProduct_id("123456789");
+            $input->SetProduct_id($goods_id);
             /**
              * 生成直接支付url，支付url有效期为2小时,模式二
              * @param UnifiedOrderInput $input
@@ -837,7 +866,7 @@ class Goods extends Controller{
             $result = $notify->GetPayUrl($input);
             $url2 = $result["code_url"];
 
-            return ajax_success("获取成功", $url2);
+            return ajax_success("获取成功", urlencode($url2));
             //return view("WeiAlpay_code",["url2"=>urlencode(url2)]);
         }
         return view("WeiAlpay_code");
@@ -846,12 +875,32 @@ class Goods extends Controller{
     }
 
 
+
+    /**
+     * 进行二维码扫码
+     * 陈绪
+     */
     public function qrcode(){
 
         error_reporting(E_ERROR);
         include ('../extend/WxpayAPI/example/phpqrcode/phpqrcode.php');
         $url = urldecode($_GET["url2"]);
-        \QRcode::png($url);
+        $errorCorrectionLevel = 'H';
+        $matrixPointSize = 10;
+        \QRcode::png($url,false,$errorCorrectionLevel, $matrixPointSize,3);
+
+    }
+
+
+
+    /**
+     * 微信回调
+     * 陈绪
+     */
+    public function wx_notify(Request $request){
+
+        $goods_id = $_GET["WIDtotal_amount"];
+        halt($goods_id);
 
     }
 

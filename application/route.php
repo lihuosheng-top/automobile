@@ -80,6 +80,12 @@ Route::group("",[
     "consume_message"=>"index/My/consume_message",       //消费详情
     /*TODO:登录结束*/
 
+    /*TODO:经纬度开始*/
+    "lglt_save"=>"index/LgLt/save",//经纬度刷新保存
+    "lglt_read"=>"index/LgLt/read",//经纬度读取
+
+    /*TODO:经纬度结束*/
+
     /*TODO:卖家我的页面开始*/
     "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
     /*TODO:卖家我的页面结束*/
@@ -91,10 +97,10 @@ Route::group("",[
      * 钱包
      * 陈绪
      */
-    "wallet_index"=>"index/Wallet/index",           //钱包首页
-    "wallet_recharge"=>"index/Wallet/recharge",     //钱包充值
-    "wallet_block"=>"index/Wallet/block",           //添加银行卡
-    "wallet_verification"=>"index/Wallet/verification",   //银行卡验证
+    "wallet_index"=>"index/wallet/index",           //钱包首页
+    "wallet_recharge"=>"index/wallet/recharge",     //钱包充值
+    "wallet_block"=>"index/wallet/block",           //添加银行卡
+    "wallet_verification"=>"index/wallet/verification",   //银行卡验证
 
 
 
@@ -315,11 +321,12 @@ Route::group("admin",[
     "goods_property_name"=>"admin/Goods/property_name",                                       //专用属性入库
     "goods_property_show"=>"admin/Goods/property_show",                                       //专用属性显示
     "goods_alipay"=>"admin/Goods/alipay",                                       //支付
-    "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付后调
+    "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付宝回调地址
     "goods_edit_show"=>"admin/Goods/edit_show",                                       //专用适用车型编辑显示
     "goods_seach"=>"admin/Goods/seach",                                                //商品模糊搜索
     "goods_WeiAlpay"=>"admin/Goods/WeiAlpay",                                             //微信支付
     "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
+    "goods_wx_notify"=>"admin/Goods/wx_notify",                                                //微信支付回调地址
 
 
 

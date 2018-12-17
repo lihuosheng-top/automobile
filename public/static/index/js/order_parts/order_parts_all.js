@@ -58,7 +58,6 @@ $.ajax({
                 </div>`
             }else if(statusTxt == '待收货'){
                 str +=`<div class="button-box">
-                            <button class="cancel-order-btn">取消订单</button>
                             <button class="check-logistics-btn">查看物流</button>
                             <button class="conf-receipt-btn">确认收货</button>
                         </div>
@@ -94,29 +93,36 @@ $.ajax({
         $('.cancel-order-btn').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
-            layer.open({
-                content: '您确定取消订单？',
-                btn: ['确定', '取消'],
-                yes: function (index) {
-                    layer.close(index);
-                    $.ajax({
-                        url: 'ios_api_order_parts_no_pay_cancel',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: {
-                            'parts_order_number': parts_order_number,
-                            'store_id': store_id
-                        },
-                        success: function(res){
-                            console.log(res);
-                            location.reload();
-                        },
-                        error: function(){
-                            console.log('error');
-                        }
-                    })
-                }
-            });
+            $('.cancel-order-pop').animate({'bottom': '0'});
+            $('.mask').show();
+            $('.select-reason-btn').click(function(){
+                var cancel_order_description = $('.reason-selected')[0].innerText;
+                $.ajax({
+                    url: 'ios_api_order_parts_no_pay_cancel',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'parts_order_number': parts_order_number,
+                        'store_id': store_id,
+                        'cancel_order_description': cancel_order_description
+                    },
+                    success: function(res){
+                        console.log(res);
+                        location.reload();
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            })
+        })
+        // 选择取消订单原因 
+        $('.reason-li').click(function(){
+            $(this).addClass('reason-selected').siblings().removeClass('reason-selected');
+        })
+        $('.close-cancel-order').click(function(){
+            $('.cancel-order-pop').animate({'bottom': '-100%'});
+            $('.mask').hide();
         })
         // 删除订单
         $('.del-order-btn').click(function(){
@@ -194,6 +200,27 @@ $.ajax({
                 }
             });
         })
+        // 查看订单详情
+        $('.all-goods-box').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            $.ajax({
+                url: 'order_parts_save_record',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'parts_order_number': parts_order_number,
+                    'store_id': store_id
+                },
+                success: function(res){
+                    console.log(res);
+                    location.href = 'order_parts_detail'; 
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
         
     },
     error: function(){
@@ -215,4 +242,5 @@ $('.tabs button').click(function(){
             location.href = 'order_parts_return_goods';break;
     }
 })
+
 

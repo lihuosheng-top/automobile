@@ -142,7 +142,7 @@
 					success: function(data) {
 						var data = eval("(" + data + ")");
 						console.log(data);
-						var datas = "goods_qrcode?url2=" + data.data;
+						var datas = data.data;
 						qrcode.makeCode(datas);
 					},
 		
@@ -154,7 +154,7 @@
 //						qrcode.makeCode(datas);
 		}
 		makeCode();
-		
+
 	</script>
 	{/block}
 
