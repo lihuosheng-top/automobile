@@ -745,6 +745,7 @@ class Goods extends Controller{
 
         $result = $notify->GetPayUrl($input);
         $url2 = $result["code_url"];
+        halt($url2);
 
         //return ajax_success("获取成功", $url2);
         return view("WeiAlpay_code",["url2"=>urlencode($url2)]);
