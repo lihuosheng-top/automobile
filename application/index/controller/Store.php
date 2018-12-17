@@ -90,6 +90,10 @@ class Store extends Controller{
             }
             $input_data = $_POST;
             $store_name =trim($input_data['store_name']);
+            $is_set_store_name =Db::name("store")->where("store_name",$store_name)->find();
+            if(!empty($is_set_store_name)){
+                return ajax_success("店铺名已存在",["status"=>0]);
+            }
             $real_name =trim($input_data['real_name']);
             $phone_num =trim($input_data['phone_num']);
             $store_owner_seat_num =trim($input_data['store_owner_seat_num']);
@@ -467,8 +471,6 @@ class Store extends Controller{
                 }else{
                     return ajax_success('删除失败',['status'=>0]);
                 }
-
-
 
             }
         }

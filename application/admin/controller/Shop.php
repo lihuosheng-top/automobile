@@ -146,8 +146,6 @@ class Shop extends Controller{
         }
     }
 
-
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -201,28 +199,61 @@ class Shop extends Controller{
             $store_data  =Db::name('store')
                 ->where($condition)
                 ->where("store_is_button",1)
+                ->where("del_status",1)
                 ->select();
+            foreach ($store_data as $k=>$v){
+                $store_data[$k]['store_id'] =$v['store_id'];
+                $store_data[$k]['store_name'] =$v['store_name'];
+                $store_data[$k]['store_detailed_address'] =$v['store_detailed_address'];
+                $store_data[$k]['store_is_pay'] =$v['store_is_pay'];
+                $store_data[$k]['operation_status'] =$v['operation_status'];
+                $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
+                $store_data[$k]['real_name']=$user_data['real_name'];
+                $store_data[$k]['phone_num']=$user_data['phone_num'];
+                $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
+                $store_data[$k]['role_name']=$role_datas['name'];
+            }
         }else{
-            $store_data  =Db::name('store')
-                ->where("store_is_button",1)
-                ->select();
+            if(!empty($keyword)){
+            $conditions  = "`real_name` like '%{$keyword}%'";
+                $store_data  =Db::table('tb_store')
+                    ->join("tb_user", "tb_store.user_id=tb_user.id", 'left')
+                    ->where($conditions)
+                    ->where("del_status",1)
+                    ->where("store_is_button",1)
+                    ->select();
+                foreach ($store_data as $k=>$v){
+                    $store_data[$k]['store_id'] =$v['store_id'];
+                    $store_data[$k]['store_name'] =$v['store_name'];
+                    $store_data[$k]['store_detailed_address'] =$v['store_detailed_address'];
+                    $store_data[$k]['store_is_pay'] =$v['store_is_pay'];
+                    $store_data[$k]['operation_status'] =$v['operation_status'];
+                    $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
+                    $store_data[$k]['real_name']=$user_data['real_name'];
+                    $store_data[$k]['phone_num']=$user_data['phone_num'];
+                    $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
+                    $store_data[$k]['role_name']=$role_datas['name'];
+                }
+        }else{
+                $store_data  =Db::name('store')
+                    ->where("store_is_button",1)
+                    ->where("del_status",1)
+                    ->select();
+                foreach ($store_data as $k=>$v){
+                    $store_data[$k]['store_id'] =$v['store_id'];
+                    $store_data[$k]['store_name'] =$v['store_name'];
+                    $store_data[$k]['store_detailed_address'] =$v['store_detailed_address'];
+                    $store_data[$k]['store_is_pay'] =$v['store_is_pay'];
+                    $store_data[$k]['operation_status'] =$v['operation_status'];
+                    $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
+                    $store_data[$k]['real_name']=$user_data['real_name'];
+                    $store_data[$k]['phone_num']=$user_data['phone_num'];
+                    $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
+                    $store_data[$k]['role_name']=$role_datas['name'];
+                }
+            }
         }
-//        if(!empty($keyword)){
-//            $conditions  = "`real_name` like '%{$keyword}%'";
-//
-//        }
-        foreach ($store_data as $k=>$v){
-            $store_data[$k]['store_id'] =$v['store_id'];
-            $store_data[$k]['store_name'] =$v['store_name'];
-            $store_data[$k]['store_detailed_address'] =$v['store_detailed_address'];
-            $store_data[$k]['store_is_pay'] =$v['store_is_pay'];
-            $store_data[$k]['operation_status'] =$v['operation_status'];
-            $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
-            $store_data[$k]['real_name']=$user_data['real_name'];
-            $store_data[$k]['phone_num']=$user_data['phone_num'];
-            $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
-            $store_data[$k]['role_name']=$role_datas['name'];
-        }
+
         $all_idents =$store_data ;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
         $listRow = 3;//每页3行记录
@@ -235,7 +266,7 @@ class Shop extends Controller{
         ]);
         $store_data->appends($_GET);
         $this->assign('listpage', $store_data->render());
-//        return view("shop_index",['store_data'=>$store_datas]);
+        return view("shop_index",['store_data'=>$store_data]);
     }
 
 
