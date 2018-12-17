@@ -58,6 +58,16 @@ class  Express extends  Controller{
     public function express_completed(){
         return view("express_completed");
     }
+ /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:快递详情页面
+     **************************************
+     * @return \think\response\View
+     */
+    public function express_detail(){
+        return view("express_detail");
+    }
 
 
 

@@ -150,6 +150,7 @@ Route::group("",[
     "express_wait_for_take"=>"index/Express/express_wait_for_take",//待取货
     "express_distribution"=>"index/Express/express_distribution",//配送中
     "express_completed"=>"index/Express/express_completed",//已完成
+    "express_detail"=>"index/Express/express_detail",//快递详情
     /*TODO:快递结束*/
 
 
@@ -602,6 +603,7 @@ Route::group("admin",[
     "shop_index"=>"admin/Shop/index",//店铺列表
     "shop_add"=>"admin/Shop/add",//店铺详情
     "shop_update"=>"admin/Shop/update",//店铺详情更新
+    "store_hot_status"=>"admin/Shop/store_hot_status",//店铺热门店铺修改（-1为正常，1为热门店铺）
     "shop_del"=>"admin/Shop/del",//店铺列表删除
     "shop_dels"=>"admin/Shop/dels",//店铺列表批量删除
     "shop_search"=>"admin/Shop/search",//店铺列表模糊查询

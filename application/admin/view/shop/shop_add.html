@@ -261,9 +261,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">是否设为热门店铺：</label>
             <div class="layui-input-block">
-                <input type="radio" name="operation_status" value="1" title="是" >
-                <input type="radio" name="operation_status" value="-1" title="否" >
-              
+                {if $vo.is_hot_store ==1}
+                <input type="radio" name="is_hot_store" value="1" title="是"  checked="">
+                <input type="radio" name="is_hot_store" value="-1" title="否" >
+                {/if}
+                {if $vo.is_hot_store ==-1}
+                <input type="radio" name="is_hot_store" value="1" title="是" >
+                <input type="radio" name="is_hot_store" value="-1" title="否" checked="" >
+                {/if}
             </div>
         </div>
         <div class="layui-form-item">
