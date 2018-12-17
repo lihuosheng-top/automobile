@@ -63,6 +63,21 @@ class  SellMy extends Controller{
     public function sell_parts_order_detail(){
         return view("sell_parts_order_detail");
     }
+    public function sell_service_record(){
+        return view("sell_service_record");
+    }
+    public function sell_parts_record(){
+        return view("sell_parts_record");
+    }
+    public function sell_order_bill(){
+        return view("sell_order_bill");
+    }
+    public function sell_wallet(){
+        return view("sell_wallet");
+    }
+    public function sell_application(){
+        return view("sell_application");
+    }
 
 
 
