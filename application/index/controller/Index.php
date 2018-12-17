@@ -48,7 +48,6 @@ class Index extends Controller
     }
 
 
-
     /*
         用户扫码后会请求这个方法 记得要写到前台去 获取单独设置这个方法不用登录都可以有权限访问 不然微信访问不了
         到这里就可以调起微信扫码支付了
@@ -179,11 +178,6 @@ class Index extends Controller
         $returnXml = $notify->returnXml();
         echo $returnXml;
     }
-
-
-
-
-
 
 
 }
