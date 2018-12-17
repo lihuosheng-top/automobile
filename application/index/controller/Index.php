@@ -58,7 +58,11 @@ class Index extends Controller
         include_once(EXTEND_PATH ."lib/payment/wxpay/WxPayPubHelper.php");
         $nativeCall = new \NativeCall_pub();
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        //file_put_contents(S_ROOT . 'data/data_wx_qrcode_pay.txt', $xml);
+        $die = EXTEND_PATH.'data';
+        if(is_dir($die)){
+            mkdir($die,0777);
+        }
+        file_put_contents(EXTEND_PATH . 'data/data_wx_qrcode_pay.txt', $xml);
         $nativeCall->saveData($xml);
         if ($nativeCall->checkSign() == FALSE) {
             $nativeCall->setReturnParameter("return_code", "FAIL"); //返回状态码
