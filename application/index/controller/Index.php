@@ -62,6 +62,7 @@ class Index extends Controller
         //初始化日志
         $logHandler = new \CLogFileHandler("./logs/" . date('Y-m-d') . '.log');
         $log = \Log::Init($logHandler, 15);
+        file_put_contents(EXTEND_PATH."lib/data/data.txt",$log);
         if(isset($_REQUEST["transaction_id"]) && $_REQUEST["transaction_id"] != ""){
             $transaction_id = $_REQUEST["transaction_id"];
             $input = new \WxPayOrderQuery();
