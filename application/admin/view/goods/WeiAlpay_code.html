@@ -86,12 +86,14 @@
 		/*
 				获取微信扫描支付链接
 				*/
-//		var goods_id = $("#J_order_id").val();
+		var goods_id = $("#J_order_id").val();
 			function _do_huidiao(){
 					$.ajax({
 						type: "POST",
-						url: "{:url('index/index/saoma_callback')}",
-						data: {},
+						url: "{:url('admin/Goods/get_weixin_status')}",
+						data: {
+							"goods_id":goods_id
+						},
 						success: function(data) {
 							console.log(data);
 							if(data.status == 1) {
