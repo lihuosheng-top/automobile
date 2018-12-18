@@ -139,6 +139,9 @@
     color: #fff;
     font-size: .3rem;
 }
+.reset-payment-btn[disabled]{
+    background-color: #e2e2e2;
+}
 .change-role-pop div{
     width: 35%;
     margin: 0 auto .2rem;
@@ -162,4 +165,5 @@
     font-size: .3rem;
     color: #333;
     outline: none;
+    border-left: 1px solid #eee;
 }
