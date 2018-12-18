@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use think\Controller;
+use think\Paginator;
 use think\Request;
 use think\Session;
 
@@ -16,6 +17,8 @@ class Index extends Controller
     public function index(Request $request)
     {
 
+        $goods_id = Session::get("goods_id");
+        halt($goods_id);
         if($request->isPost()) {
             $user_id = Session::get("user");
             if (!empty($user_id)) {
@@ -52,14 +55,36 @@ class Index extends Controller
      * 微信回调
      * 陈绪
      */
-    public function saoma_callback()
+    public function saoma_callback(Request $request)
     {
-        //扫码支付，接收微信请求
+        //扫码支付，接收微信请求;
 
-        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
-        $val = json_decode(json_encode($xml_data),true);
-        file_put_contents(EXTEND_PATH."lib/data/data.txt",$val);
+        if($request->isPost()){
+            $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+            $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $val = json_decode(json_encode($xml_data), true);
+            $goods_id = $request->only(["goods_id"])["goods_id"];
+            if($val){
+                file_put_contents(EXTEND_PATH . "lib/data/data.txt", $goods_id);
+                exit();
+            }
+
+        }
+        exit();
+        if($request->isPost()) {
+
+
+            exit();
+            if($val["result_code"] == 'SUCCESS'){
+
+
+                $bool = db("goods")->where("id",$goods_id)->update(["putaway_status"=>1,"goods_status"=>1]);
+
+                return ajax_success("成功",$bool);
+            }else{
+                return ajax_error("失败");
+            }
+        }
     }
 
 
@@ -73,7 +98,7 @@ class Index extends Controller
 
         //存储微信的回调
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        $notify->saveData($xml);
+
 
         //验证签名，并回应微信。
         //对后台通知交互时，如果微信收到商户的应答不是成功或超时，微信认为通知失败，
