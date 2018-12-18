@@ -24,10 +24,10 @@ class  Advertisement extends  Controller{
     {
         if ($request->isPost()){
             $area = $request->only(['area'])['area'];
-           // $resdata = Db::name("goods_type")->field('name,icon_image,color,id')->where('pid', $id)->where("status", 1)->select();
+            $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
             
-            if (!empty($area)) {
-                return ajax_success('传输成功', $area);
+            if (!empty($area_data)) {
+                return ajax_success('传输成功', $area_data);
             } else {
                 return ajax_error("数据为空");
 
