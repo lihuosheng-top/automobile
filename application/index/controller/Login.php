@@ -45,7 +45,18 @@ class Login extends Controller{
             $res = Db::name('user')->field('password')->where('phone_num',$user_mobile)->find();
             if(!$res)
             {
-                return ajax_error('手机号不存在',['status'=>0]);
+                $is_express =Db::name("delivery")->where("account",$user_mobile)->find();
+               if(!$is_express){
+                   return ajax_error('手机号不存在',['status'=>0]);
+               }else{
+                   if(password_verify($password , $is_express["passwords"])){
+                        Session::set("delivery_id",$is_express["id"]);
+                       exit(json_encode(array("status" => 2, "info" => "登录成功")));
+                   }else{
+                       return ajax_error('密码错误',['status'=>0]);
+                   }
+
+               }
             }
             $datas =[
                 'phone_num'=> $user_mobile,
@@ -55,7 +66,7 @@ class Login extends Controller{
                     $ress =Db::name('user')->where('phone_num',$user_mobile)->where('status',1)->field("id")->find();
                     if($ress)
                     {
-                        Session("user",$ress["id"]);
+                        session("user",$ress["id"]);
                         session('member',$datas);
                         return ajax_success('登录成功',$datas);
                     }else{
