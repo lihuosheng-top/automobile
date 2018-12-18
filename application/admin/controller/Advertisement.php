@@ -87,6 +87,7 @@ class  Advertisement extends  Controller{
             $id = $user_phone[0]["id"];
             $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
             $store_name = db("store")->where("user_id",$user)->value("store_name");
+            $area = db("store")->where("user_id",$user)->value("store_city_address");
                
             //插入配件商表
             if ($show_images) {
@@ -99,6 +100,7 @@ class  Advertisement extends  Controller{
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
             $data["pgone"] = $id;
+            $data["area"] = $area;
             $userId = db('accessories')->insertGetId($data);
 
             //插入平台列表
