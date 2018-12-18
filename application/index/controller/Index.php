@@ -16,7 +16,7 @@ class Index extends Controller
      */
     public function index(Request $request)
     {
-        
+
         if($request->isPost()) {
             $user_id = Session::get("user");
             if (!empty($user_id)) {
