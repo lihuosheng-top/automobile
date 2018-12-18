@@ -100,6 +100,7 @@ class  Advertisement extends  Controller{
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
             $data["pgone"] = $id;
+            $data["area"] = $area;
             $userId = db('accessories')->insertGetId($data);
 
             //插入平台列表
