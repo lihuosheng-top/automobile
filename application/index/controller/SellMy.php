@@ -63,18 +63,58 @@ class  SellMy extends Controller{
     public function sell_parts_order_detail(){
         return view("sell_parts_order_detail");
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:卖家服务记录
+     **************************************
+     * @return \think\response\View
+     */
     public function sell_service_record(){
         return view("sell_service_record");
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:卖家商品记录
+     **************************************
+     * @return \think\response\View
+     */
     public function sell_parts_record(){
         return view("sell_parts_record");
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:卖家账单
+     **************************************
+     * @return \think\response\View
+     */
     public function sell_order_bill(){
         return view("sell_order_bill");
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:卖家钱包
+     **************************************
+     * @return \think\response\View
+     */
     public function sell_wallet(){
         return view("sell_wallet");
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:卖家提现申请
+     **************************************
+     * @return \think\response\View
+     */
     public function sell_application(){
         return view("sell_application");
     }
