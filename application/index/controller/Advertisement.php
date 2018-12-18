@@ -22,16 +22,7 @@ class  Advertisement extends  Controller{
      */
     public function advertisement_index(Request $request)
     {
-        if ($request->isPost()){
 
-            $tea = Db::name("goods_type")->field('name,icon_image,color,id')->where('pid', 0)->where("status", 1)->select();
-            foreach($tea as $key => $value){
-                $res = db("goods_type")->where("pid",$value['id'])->field("name,id")->find();
-                $tea[$key]["tid"] = $res["id"];
-                $tea[$key]["activity_name"] = $res["name"];
-               
-            }
-       }
 
     }
 
