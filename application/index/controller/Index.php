@@ -16,9 +16,7 @@ class Index extends Controller
      */
     public function index(Request $request)
     {
-
-        $goods_id = Session::get("goods_id");
-        halt($goods_id);
+        
         if($request->isPost()) {
             $user_id = Session::get("user");
             if (!empty($user_id)) {
@@ -63,10 +61,11 @@ class Index extends Controller
             $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
             $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
             $val = json_decode(json_encode($xml_data), true);
+            file_put_contents(EXTEND_PATH . "lib/data/data.txt", $val);
+            exit();
             $goods_id = $request->only(["goods_id"])["goods_id"];
             if($val){
-                file_put_contents(EXTEND_PATH . "lib/data/data.txt", $goods_id);
-                exit();
+
             }
 
         }
