@@ -271,4 +271,6 @@ class  Member extends Controller{
     public function member_collection(){
         return view('member_collection');
     }
+
+
 }

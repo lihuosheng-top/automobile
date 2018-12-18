@@ -78,13 +78,15 @@
 		获取微信扫描支付链接
 		*/
 		var goods_id = $("#J_order_id").val();
-		console.log(goods_id);
         $.ajax({
             type: "POST",
             url: "{:url('index/index/saoma_callback')}",
             data: {},
             success: function(data) {
 				console.log(data);
+				if(data.status == 1){
+				    location.href="goods_index";
+				}
             },
 
             error: function() {

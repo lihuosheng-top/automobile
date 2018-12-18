@@ -109,7 +109,7 @@
 						<td>{$vo.integral_operation|show_integral_operation}</td>
 						<td>{$vo.integral_balance}</td>
 						<td>{$vo.integral_type|show_integral_type}</td>
-						<td>{$vo.operation_time|date="Y-m-d H:i:s",###}</td>
+						<td>{$vo.operation_time}</td>
 						<td>{$vo.integral_remarks} </td>
 						<td>
 							<a href="{:url('admin/integral/del',['id'=>$vo.integral_id])}" onclick="if(!confirm('确定要删除吗？')) return false"

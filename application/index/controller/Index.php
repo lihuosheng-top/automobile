@@ -16,7 +16,6 @@ class Index extends Controller
      */
     public function index(Request $request)
     {
-
         if($request->isPost()) {
             $user_id = Session::get("user");
             if (!empty($user_id)) {
@@ -56,34 +55,22 @@ class Index extends Controller
     public function saoma_callback(Request $request)
     {
         //扫码支付，接收微信请求;
-
         if($request->isPost()){
             $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-            file_put_contents(EXTEND_PATH . "lib/data/data.txt", $xml);
-            exit();
             $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
             $val = json_decode(json_encode($xml_data), true);
-
-            $goods_id = $request->only(["goods_id"])["goods_id"];
-            if($val){
-
-            }
-
-        }
-        exit();
-        if($request->isPost()) {
-
-
-            exit();
-            if($val["result_code"] == 'SUCCESS'){
-
-
+            if($val["result_code"] == "SUCCESS" ){
+                $goods = strstr($val["out_trade_no"],"g");
+                $goods_id = substr($goods,1);
                 $bool = db("goods")->where("id",$goods_id)->update(["putaway_status"=>1,"goods_status"=>1]);
+                if($bool){
+                    return ajax_success("成功",$bool);
+                }else{
+                    return ajax_error("失败");
+                }
 
-                return ajax_success("成功",$bool);
-            }else{
-                return ajax_error("失败");
             }
+
         }
     }
 
