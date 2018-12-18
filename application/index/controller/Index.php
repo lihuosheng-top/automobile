@@ -64,7 +64,6 @@ class Index extends Controller
                 $goods_id = substr($goods,1);
                 $bool = db("goods")->where("id",$goods_id)->update(["putaway_status"=>1,"goods_status"=>1]);
                 if($bool){
-                    file_put_contents(EXTEND_PATH."lib/data/data.txt",$bool);
                     return ajax_success("成功",$bool);
                 }else{
                     return ajax_error("失败");
