@@ -52,14 +52,16 @@ class Index extends Controller
      * 微信回调
      * 陈绪
      */
-    public function saoma_callback()
+    public function saoma_callback(Request $request)
     {
         //扫码支付，接收微信请求
 
-        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
-        $val = json_decode(json_encode($xml_data),true);
-        file_put_contents(EXTEND_PATH."lib/data/data.txt",$val["result_code"]);
+        if($request->isPost()) {
+            $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+            $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $val = json_decode(json_encode($xml_data), true);
+            file_put_contents(EXTEND_PATH . "lib/data/data.txt", $val["result_code"]);
+        }
     }
 
 
