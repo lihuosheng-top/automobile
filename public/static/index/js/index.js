@@ -577,10 +577,11 @@ map.plugin([
     AMap.event.addListener(geolocation, 'complete', onComplete);
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
-        // console.log(e)
+        console.log(e)
         // $('.gec-curr-txt').text(e.addressComponent.city);
         $('.curr_city').text(e.addressComponent.district);
-        getAdvertisment(e.addressComponent.district);
+        var threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
+        getAdvertisment(threeAdress);
     };
     function onError(e){
         // console.log(e)
@@ -615,7 +616,8 @@ $.ajax({
                 if (status === 'complete' && result.info === 'OK') {
                     // result为对应的地理位置详细信息
                     console.log(result);
-                    var area = result.regeocode.addressComponent.district
+                    var addressComponent = result.regeocode.addressComponent;
+                    var area = addressComponent.province+','+addressComponent.city+','+addressComponent.district;
                     $('.curr_city').text(area);
                     getAdvertisment(area);
                 }
