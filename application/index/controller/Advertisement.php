@@ -22,7 +22,19 @@ class  Advertisement extends  Controller{
      */
     public function advertisement_index(Request $request)
     {
+        if ($request->isPost()){
+            $area = $request->only(['area'])['area'];
+           // $resdata = Db::name("goods_type")->field('name,icon_image,color,id')->where('pid', $id)->where("status", 1)->select();
+            
+            if (!empty($area)) {
+                return ajax_success('传输成功', $area);
+            } else {
+                return ajax_error("数据为空");
 
+            }
+
+
+        }
 
     }
 
