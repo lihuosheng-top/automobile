@@ -286,6 +286,8 @@ Route::group("",[
     /*TODO:前端积分结束*/
 
 
+    /*汽车广告管理前端开始*/
+    "advertisement_index"=>"index/Advertisement/advertisement_index", //汽车广告显示
     
 ]);
 

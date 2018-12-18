@@ -67,10 +67,15 @@
             <h3>修改支付密码</h3>
         </header>
         <div class="reset-payment-box">
-            <input type="text" placeholder="输入新的密码" class="reset-payment-input">
-            <input type="text" placeholder="确认新密码" class="repeat-payment-input">
+            <div class="reset-payment-phone">
+                <input type="text" placeholder="输入手机号码" class="reset-payment-input phone">
+                <button class="get-code">获取验证码</button>
+            </div>
+            <input type="text" placeholder="输入验证码" class="reset-payment-input phone-code">
+            <input type="text" placeholder="输入新的密码" class="reset-payment-input new-pwd">
+            <input type="text" placeholder="确认新密码" class="repeat-payment-input repeat-pwd">
         </div>
-        <button class="reset-payment-btn">确认</button>
+        <button class="reset-payment-btn" disabled>确认</button>
     </div>
 
     <!-- 选择角色 -->
@@ -194,6 +199,63 @@
         $('.reset-payment-back').click(function(){
             $('.reset-payment-pop').hide();
             $('.wrapper').show();
+        })
+        $('.get-code').click(function(){
+            var phone = $('.phone').val();
+            var reg = /^1[34578]\d{9}$/;
+            if(phone!== '' && phone.match(reg)){
+                buttonCountdown($(this), 1000 * 60 * 1, "ss");
+                $.ajax({
+                    url: 'sendMobileCode',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'mobile': phone
+                    },
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    style: 'bottom:100px;',
+                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                    skin: 'msg',
+                    content: '号码格式不正确',
+                    time: 2
+                })
+            }
+        })
+        $('.phone-code').blur(function(){
+            if($(this).val() !== ''){
+                $('.reset-payment-btn').attr('disabled', false);
+            }
+        })
+        $('.reset-payment-btn').click(function(){
+            var phone = $('.phone').val();
+            var phoneCode = $('.phone-code').val();
+            var newPwd = $('.new-pwd').val();
+            var repeatPwd = $('.repeat-pwd').val();
+            $.ajax({
+                url: 'sendMobileCode',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'phone': phone,
+                    'phoneCode': phoneCode,
+                    'newPwd': newPwd,
+                    'repeatPwd': repeatPwd
+                },
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
     </script>
     <!-- 选择角色 -->
