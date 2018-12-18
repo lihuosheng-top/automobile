@@ -20,6 +20,6 @@ class  About extends  Controller{
      * @return mixed
      */
     public function index(){
-        return viwe('index');
+        return view('index');
     }
 }

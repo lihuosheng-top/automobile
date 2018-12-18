@@ -7,6 +7,7 @@
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <!-- <link rel="stylesheet" href="__STATIC__/index/js/plugin/layui/css/layui.css"> -->
     <link rel="stylesheet" href="__STATIC__/index/css/plugin/swiper-4.3.5.min.css">
     <link rel="stylesheet" href="__STATIC__/index/css/index/reservation_detail.css">
     <title>店铺详情</title>
@@ -29,27 +30,102 @@
                 </div>
                 <div class="swiper-slide">
                     <img src="__STATIC__/index/image/my_bg2.jpg">
-
                 </div>
             </div>
             <!-- 如果需要分页器 -->
             <div class="swiper-pagination"></div>
         </div>
         <div class="shop_info_box">
-            <a href="reservation_info" class="order_confirm">
+            <!-- <a href="reservation_info" class="order_confirm">
                 <i class="spr icon_order"></i>
                 <span>确定预约</span>
-            </a>
-            <!-- <p class="shop_name">得朋宝马汽车销售维修中心（景田店）</p>
-            <i class="spr star"></i>
-            <p class="nature">汽车维修</p> -->
+            </a> -->
+            <p class="shop_name txt-hid-two">得朋宝马汽车销售维修中心（景田店）</p>
+            <div class="star-time">
+                <i class="spr star star5"></i>
+                <p class="open-time">营业时间：00:00 - 24:00</p>
+            </div>
+            <p class="addr_p"><i class="spr icon_addr"></i>深圳市福田区景田路3号景文阁右侧1楼深圳市福田区景田路3号景文阁右侧1楼</p>
+            <p class="shop-describe">店铺描述店铺描述店铺描述店铺描述店铺描述店铺描述店铺描述店铺描述</p>
         </div>
-        <div class="addr_phone_box">
-            <!-- <p class="addr_p"><i class="spr icon_addr"></i>深圳市福田区景田路3号景文阁右侧1楼</p>
-            <p class="phone_p"><i class="spr icon_phone"></i>0755-85242377</p> -->
+        <div class="service-section">
+            <ul class="service-tab-title">
+                <li class="service-this">服务项目</li>
+                <li>本店商品</li>
+            </ul>
+            <div class="service-content" style="display: block;">
+                <div class="service-colla-item">
+                    <div class="service-colla-title">
+                        <!-- <img src="__STATIC__/index/image/b1.png"> -->
+                        <p class="service-subtitle">洗车服务</p>
+                        <p class="service-money"></p>
+                        <i class="spr icon-uncheck"></i>
+                    </div>
+                    <div class="service-colla-content" style="display:none;">
+                        <ul>
+                            <li>
+                                <p class="service-car-type">五菱宏光</p>
+                                <div class="content-money-div">
+                                    <p class="sale">￥<span>99</span></p>
+                                    <p class="thro">￥<span>199</span></p>
+                                </div>
+                                <i class="spr icon-uncheck"></i>
+                            </li>
+                            <li>
+                                <p class="service-car-type">五菱宏光</p>
+                                <div class="content-money-div">
+                                    <p class="sale">￥<span>99</span></p>
+                                    <!-- <p class="thro">￥<span>199</span></p> -->
+                                </div>
+                                <i class="spr icon-uncheck"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="goods-content" style="display: none;">
+                <div class="goods-colla-item">
+                    <div class="goods-img-box">
+                        <img src="__STATIC__/index/image/15.jpg">
+                    </div>
+                    <div class="goods-info-box">
+                        <p class="goods-name txt-hid-two">
+                            普利司通轮胎 泰然者 T001 225/55R17 97W Bridgestone【适配君威/君越/雪佛兰迈锐宝/奥迪A6L】
+                        </p>
+                        <p class="goods-selling txt-hid-two">冬季胎大放送！普利司通大促！亦动亦稳 掌控自如！领券最高减400！更有精选轮胎送定制好礼！具体商品点击页面查看>></p>
+                        <p class="goods-spec">规格</p>
+                        <p class="goods-price">￥99</p>
+                    </div>
+                </div>
+                <a href="goods_list" class="more-goods">查看更多商品</a>
+            </div>
         </div>
         <div class="comment_box">
-            <h3 class="comment_title">评论（<span>2000</span>）</h3>
+            <h3 class="comment_title" style="display:none;">评论（<span>2000</span>）</h3>
+            <div class="comment-filter" style="display: block;">
+                <ul class="filter-ul">
+                    <li class="filter-this">
+                        <p class="com-num">9999</p>
+                        <p class="com-type">洗车</p>
+                    </li>
+                    <li>
+                        <p class="com-num">9999</p>
+                        <p class="com-type">修车</p>
+                    </li>
+                    <li>
+                        <p class="com-num">9999</p>
+                        <p class="com-type">保养</p>
+                    </li>
+                    <li>
+                        <p class="com-num">9999</p>
+                        <p class="com-type">美容</p>
+                    </li>
+                    <li>
+                        <p class="com-num">9999</p>
+                        <p class="com-type">保险</p>
+                    </li>
+                </ul>
+            </div>
             <ul class="comment_ul">
                 <li class="comment_li">
                     <div class="comment_user_info">
@@ -61,7 +137,7 @@
                                 <span class="phone_box">13691853045</span>
                                 <span class="time_box">2018-11-5</span>
                             </div>
-                            <span class="spr star"></span>
+                            <span class="spr star star5"></span>
                         </div>
                     </div>
                     <div class="comment_text_box">
@@ -98,96 +174,17 @@
                         </div>
                     </div>
                 </li>
-                <li class="comment_li">
-                    <div class="comment_user_info">
-                        <div class="comment_user_headimg">
-                            <img src="__STATIC__/index/image/icon6.png">
-                        </div>
-                        <div class="comment_phone_time">
-                            <div class="phone_time clearfix">
-                                <span class="phone_box">13691853045</span>
-                                <span class="time_box">2018-11-5</span>
-                            </div>
-                            <span class="spr star"></span>
-                        </div>
-                    </div>
-                    <div class="comment_text_box">
-                        <a href="javascript:;" class="comment_text_a">
-                            <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>
-                        </a>
-                        <ul class="comment_img_ul">
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                        </ul>
-                        <div class="reply_box">
-                            <i class="triangle"></i>
-                            <p class="reply_text">
-                                商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分
-                                感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。
-                            </p>
-                        </div>
-                        <div class="bottom_time_box">
-                            <p class="buy_time">购买时间: <span>2018-11-05</span></p>
-                            <div>
-                                <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
-                                <!-- <a href="javascript:;" class="discuss"><i class="spr icon_comment"></i><span class="comment_num">55</span></a> -->
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="comment_li">
-                    <div class="comment_user_info">
-                        <div class="comment_user_headimg">
-                            <img src="__STATIC__/index/image/icon6.png">
-                        </div>
-                        <div class="comment_phone_time">
-                            <div class="phone_time clearfix">
-                                <span class="phone_box">13691853045</span>
-                                <span class="time_box">2018-11-5</span>
-                            </div>
-                            <span class="spr star"></span>
-                        </div>
-                    </div>
-                    <div class="comment_text_box">
-                        <a href="javascript:;" class="comment_text_a">
-                            <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>
-                        </a>
-                        <ul class="comment_img_ul">
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                            <li class="comment_img_li">
-                                <img src="__STATIC__/index/image/img1.jpg">
-                            </li>
-                        </ul>
-                        <div class="reply_box">
-                            <i class="triangle"></i>
-                            <p class="reply_text">
-                                商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分
-                                感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。
-                            </p>
-                        </div>
-                        <div class="bottom_time_box">
-                            <p class="buy_time">购买时间: <span>2018-11-05</span></p>
-                            <div>
-                                <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
-                                <!-- <a href="javascript:;" class="discuss"><i class="spr icon_comment"></i><span class="comment_num">55</span></a> -->
-                            </div>
-                        </div>
-                    </div>
-                </li>
                 <!-- 超过3条显示按钮 查看更多 -->
                 <li class="more_comment_box">
                     <a href="javascript:showPop('.pop');">查看全部评论</a>
                 </li>
             </ul>
+        </div>
+        <div class="balance-box">
+            <div class="bespeak-money-box">
+                合计：<span class="bespeak-money">￥99</span>
+            </div>
+            <button class="bespeak-btn" disabled>确定预约</button>
         </div>
     </div>
     <!-- 全部评论弹窗 -->
@@ -196,19 +193,42 @@
             <a href="javascript:hidePop();" class="spr back"></a>
             <h3>全部评价</h3>
         </div>
-        <ul class="comment_classify_box">
-            <li class="all_comment active">
-                <p>全部</p>
-                <span>999+</span>
-            </li>
-            <li class="has_picture">
-                <p>晒图</p>
-                <span>999+</span>
-            </li>
-        </ul>
+        <div class="filter-service">
+            <ul class="filter-service-ul">
+                <li class="filter-service-li">
+                    <p class="com-number">2000</p>
+                    <p class="com-name">洗车</p>
+                </li>
+                <li>
+                    <p class="com-number">2000</p>
+                    <p class="com-name">洗车</p>
+                </li>
+                <li>
+                    <p class="com-number">2000</p>
+                    <p class="com-name">洗车</p>
+                </li>
+                <li>
+                    <p class="com-number">2000</p>
+                    <p class="com-name">洗车</p>
+                </li>
+                <li>
+                    <p class="com-number">2000</p>
+                    <p class="com-name">洗车</p>
+                </li>
+            </ul>
+        </div>
+        <div class="filter-com">
+            <ul class="filter-com-ul clearfix">
+                <li class="filter-li-this">全部（2000）</li>
+                <li>好评（2000）</li>
+                <li>中评（2000）</li>
+                <li class="negative">差评（2000）</li>
+                <li>有图（2000）</li>
+            </ul>
+        </div>
         <div class="comment_box">
             <ul class="comment_ul">
-                <!-- <li class="comment_li">
+                <li class="comment_li">
                     <div class="comment_user_info">
                         <div class="comment_user_headimg">
                             <img src="__STATIC__/index/image/icon6.png">
@@ -254,7 +274,7 @@
                             </div>
                         </div>
                     </div>
-                </li> -->
+                </li>
             </ul>
         </div>
     </div>
@@ -266,60 +286,8 @@
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
+    <!-- <script src="__STATIC__/index/js/plugin/layui/layui.js"></script> -->
     <script src="__STATIC__/index/js/reservation_detail.js"></script>
-    <!-- 全部评价插入（暂时） -->
-    <script>
-        var str = '';
-        for(var i = 0; i < 10; i++){
-            str += '<li class="comment_li">\
-                        <div class="comment_user_info">\
-                            <div class="comment_user_headimg">\
-                                <img src="__STATIC__/index/image/icon6.png">\
-                            </div>\
-                            <div class="comment_phone_time">\
-                                <div class="phone_time clearfix">\
-                                    <span class="phone_box">13691853045</span>\
-                                    <span class="time_box">2018-11-5</span>\
-                                </div>\
-                                <span class="spr star"></span>\
-                            </div>\
-                        </div>\
-                        <div class="comment_text_box">\
-                            <a href="javascript:;" class="comment_text_a">\
-                                <p class="comment_text_p">今天刚刚安装，第一次使用这个牌子的轮胎，效果非常理想，值得信赖，，速度很快，服务很好，轮胎质量也很好；很满意，发货很快快快</p>\
-                            </a>\
-                            <ul class="comment_img_ul">\
-                                <li class="comment_img_li">\
-                                    <img src="__STATIC__/index/image/img1.jpg">\
-                                </li>\
-                                <li class="comment_img_li">\
-                                    <img src="__STATIC__/index/image/img1.jpg">\
-                                </li>\
-                                <li class="comment_img_li">\
-                                    <img src="__STATIC__/index/image/img1.jpg">\
-                                </li>\
-                                <li class="comment_img_li">\
-                                    <img src="__STATIC__/index/image/img1.jpg">\
-                                </li>\
-                            </ul>\
-                            <div class="reply_box">\
-                                <i class="triangle"></i>\
-                                <p class="reply_text">\
-                                    商家回复：十分感谢你的评价，谢谢，十分感谢你的评价，谢谢 十分\
-                                    感谢你的评价，谢谢 十分感谢你的评价，谢谢十分感谢你的评价。\
-                                </p>\
-                            </div>\
-                            <div class="bottom_time_box">\
-                                <p class="buy_time">购买时间: <span>2018-11-05</span></p>\
-                                <div>\
-                                    <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>\
-                                </div>\
-                            </div>\
-                        </div>\
-                    </li>'
-        }
-        $('.pop .comment_ul').append(str);
-    </script>
     <!-- swiper初始化 -->
     <script>        
         var mySwiper = new Swiper ('.swiper-container', {
@@ -333,7 +301,7 @@
             pagination: {
                 el: '.swiper-pagination',
             },
-        })        
+        })  
     </script>
 </body>
 </html>

@@ -20,8 +20,9 @@ Route::group("",[
     /*首页*/
     "/$"=>"index/index/home",
     "index"=>"index/index/index",
+    "saoma_callback"=>"index/index/saoma_callback",
+    "weixin_notify"=>"index/index/weixin_notify",
 
-    "indexs"=>"index/Indexs/index",
 
 
 
@@ -50,17 +51,17 @@ Route::group("",[
     "ios_api_order_service_button"=>"index/OrderService/ios_api_order_service_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
-    'index_aliPay'=>"index/Apppay/index_aliPay",
-    'index_pay_code'=>"index/Apppay/index_pay_code",
+    'index_aliPay'=>"index/Apppay/index_aliPay", //服务商提交支付（付款）（弹窗支付）
+    'index_pay_code'=>"index/Apppay/index_pay_code", //状态修改(回调地址修改状态)
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/
-//    "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
+    "parts_notifyurl"=>"index/Apppay/parts_notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
-//    "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
-//    "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
-//    'index_aliPay'=>"index/Apppay/index_aliPay",
-//    'index_pay_code'=>"index/Apppay/index_pay_code",
+//    "ios_api_alipay"=>"index/OrderParts/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
+   "ios_return_parts_num"=>"index/OrderParts/ios_return_parts_num",//生成订单(未用)
+    'index_parts_aliPay'=>"index/Apppay/index_parts_aliPay", //配件商支付接口（弹窗支付）
+    'index_parts_pay_code'=>"index/Apppay/index_parts_pay_code",//配件商支付回调修改订单状态
     /*TODO:配件商订单结束*/
 
     /*TODO：登录开始*/
@@ -75,12 +76,36 @@ Route::group("",[
     "member_information_update"=>"index/My/member_information_update",//个人信息用户个人信息更新（头像,真实姓名，昵称，性别）
     "member_information_data"=>"index/My/member_information_data",//个人信息用户个人信息返回（头像,真实姓名，昵称，性别）
     "member_update_mobiles"=>"index/My/member_update_mobiles",//个人信息修改手机
-    "my_integral"=>"index/My/integral",            //我的积分
+    "my_integral"=>"index/My/integral",            //我的积分页面(积分记录ajax)
     "setting"=>"index/My/setting",              //设置
     "my_nickname"=>"index/My/nickname",         //昵称
     "my_consume"=>"index/My/consume",         //我的消费
     "consume_message"=>"index/My/consume_message",       //消费详情
     /*TODO:登录结束*/
+
+    /*TODO:经纬度开始*/
+    "lglt_save"=>"index/LgLt/save",//经纬度刷新保存
+    "lglt_read"=>"index/LgLt/read",//经纬度读取
+
+    /*TODO:经纬度结束*/
+
+    /*TODO:卖家我的页面开始*/
+    "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
+    "sell_service_order"=>"index/SellMy/sell_service_order",//卖家服务订单
+    "sell_parts_order"=>"index/SellMy/sell_parts_order",//卖家商品订单
+    "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
+    "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
+
+
+    "sell_service_record"=>"index/SellMy/sell_service_record",//卖家服务记录
+    "sell_parts_record"=>"index/SellMy/sell_parts_record",//卖家商品记录
+    "sell_order_bill"=>"index/SellMy/sell_order_bill",//卖家账单
+    "sell_wallet"=>"index/SellMy/sell_wallet",//卖家钱包
+    "sell_application"=>"index/SellMy/sell_application",//卖家提现申请
+
+
+
+    /*TODO:卖家我的页面结束*/
 
 
 
@@ -89,10 +114,10 @@ Route::group("",[
      * 钱包
      * 陈绪
      */
-    "wallet_index"=>"index/Wallet/index",           //钱包首页
-    "wallet_recharge"=>"index/Wallet/recharge",     //钱包充值
-    "wallet_block"=>"index/Wallet/block",           //添加银行卡
-    "wallet_verification"=>"index/Wallet/verification",   //银行卡验证
+    "wallet_index"=>"index/wallet/index",           //钱包首页
+    "wallet_recharge"=>"index/wallet/recharge",     //钱包充值
+    "wallet_block"=>"index/wallet/block",           //添加银行卡
+    "wallet_verification"=>"index/wallet/verification",   //银行卡验证
 
 
 
@@ -124,6 +149,27 @@ Route::group("",[
     "member_address_edit"=>"index/member/member_address_edit",//地址管理编辑功能(ajax)
     "member_collection"=>"index/member/member_collection",//我的收藏
     /*TODO:我的页面结束*/
+
+
+    /*TODO:收藏开始*/
+    "collection_index"=>"index/Collection/collection_index",//（收藏数据返回）(ajax)
+    "collection_add"=>"index/Collection/collection_add",//（添加收藏）（ajax）
+    "collection_del"=>"index/Collection/collection_del",//（删除收藏）（ajax）
+    "show_collection"=>"index/Collection/show_collection",//收藏样式返回的数据库状态值（ajax）
+    /*TODO:收藏结束*/
+
+
+    /*TODO:快递开始*/
+    "express_wait_for_order"=>"index/Express/express_wait_for_order",//待接单
+    "express_wait_for_take"=>"index/Express/express_wait_for_take",//待取货
+    "express_distribution"=>"index/Express/express_distribution",//配送中
+    "express_completed"=>"index/Express/express_completed",//已完成
+    "express_detail"=>"index/Express/express_detail",//快递详情
+    /*TODO:快递结束*/
+
+
+
+
     /*TODO:消息开始*/
     "information_index"=>"index/Information/index",//消息页面
     "information_details"=>"index/Information/information_details",//订单助手消息页面详情
@@ -138,10 +184,7 @@ Route::group("",[
 
 
 
-    /**
-     * 店铺
-     * 陈绪
-     */
+    /*TODO：店铺开始*/
     "store_index"=>"index/Store/index",             //店铺首页
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
@@ -151,7 +194,16 @@ Route::group("",[
     "store_update"=>"index/Store/update",           //店铺编辑更新(也是第二页完善店铺信息)
     "url_img_del"=>"index/Store/url_img_del",           //店铺编辑更新(也是第二页信息多图的删除)
     "return_store_information"=>"index/Store/return_store_information",    //店铺信息
+    /*TODO:店铺结束*/
 
+    /*TODO：我要推广开始*/
+    "spread_index"=>"index/Extension/spread_index",//我要推广
+    /*TODO：我要推广结束*/
+
+    /*TODO：配件商评价开始*/
+    "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面(ajax)
+    "evaluate_parts_add"=>"index/Evaluate/evaluate_parts_add",//评价页面(ajax)
+    /*TODO：配件商评价结束*/
 
 
 
@@ -181,8 +233,13 @@ Route::group("",[
 
 
     /*TODO:配件商订单状态开始*/
+    "order_parts_save_record"=>"index/OrderParts/order_parts_save_record",//配件商订单进入详情需要存储的订单编号和店铺id
     "ios_api_order_parts_firm_order"=>"index/OrderParts/ios_api_order_parts_firm_order",//确认订单页面
+
     "order_parts_detail"=>"index/OrderParts/order_parts_detail",//订单详情
+    "get_goods_id_save"=>"index/OrderParts/get_goods_id_save",//立即购买存储需要传到订单提交页面信息，方便确定订单提交
+    "return_order_buy_information"=>"index/OrderParts/return_order_buy_information",//提交订单页面返回购买页面传过来的数据
+
     "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单页面
     "ios_api_order_parts_all"=>"index/OrderParts/ios_api_order_parts_all",//全部订单接口（ajax）
     "order_parts_wait_pay"=>"index/OrderParts/order_parts_wait_pay",//待付款页面
@@ -194,8 +251,17 @@ Route::group("",[
     "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货页面
     "ios_api_order_parts_return_goods"=>"index/OrderParts/ios_api_order_parts_return_goods",//退货接口ajax
     "ios_api_order_parts_no_pay_cancel"=>"index/OrderParts/ios_api_order_parts_no_pay_cancel",//买家未付款取消订单接口(ajax)
+    "order_parts_detail_cancel"=>"index/OrderParts/order_parts_detail_cancel",//买家未付款超过后台设置的时间未付款，系统取消订单接口(ajax)
+    "ios_api_order_parts_del"=>"index/OrderParts/ios_api_order_parts_del",//买家删除订单接口(ajax)
     "ios_api_order_parts_collect_goods"=>"index/OrderParts/ios_api_order_parts_collect_goods",//配件商订单状态修改（买家确认收货）（ajax）
     /*TODO:配件商订单状态结束*/
+    /*TODO：查看物流信息开始*/
+    "logistics_index"=>"index/Logistics/logistics_index",//查看物流页面
+    /*TODO：查看物流信息结束*/
+
+
+
+
 
     /*TODO:服务商订单状态开始*/
     "order_service_detail"=>"index/OrderService/order_service_detail",//订单详情
@@ -213,10 +279,11 @@ Route::group("",[
     "ios_api_order_service_no_pay_cancel"=>"index/OrderService/ios_api_order_service_no_pay_cancel",//买家未付款取消订单接口(ajax)
     "ios_api_order_service_already_served"=>"index/OrderService/ios_api_order_service_already_served",//买家服务商订单买家确认服务（ajax）
 
-
-
     /*TODO:服务商订单状态结束*/
 
+    /*TODO:前端积分开始*/
+    "return_integral_information"=>"index/Integral/return_integral_information", //消费满3元可使用3积分，3积分抵3元（ 返回给前端显示）
+    /*TODO:前端积分结束*/
 
 
     
@@ -294,9 +361,13 @@ Route::group("admin",[
     "goods_property_name"=>"admin/Goods/property_name",                                       //专用属性入库
     "goods_property_show"=>"admin/Goods/property_show",                                       //专用属性显示
     "goods_alipay"=>"admin/Goods/alipay",                                       //支付
-    "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付后调
+    "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付宝回调地址
     "goods_edit_show"=>"admin/Goods/edit_show",                                       //专用适用车型编辑显示
     "goods_seach"=>"admin/Goods/seach",                                                //商品模糊搜索
+    "goods_WeiAlpay"=>"admin/Goods/WeiAlpay",                                             //微信支付
+    "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
+    "goods_alipay_pay"=>"admin/Goods/alipay_pay",                                                //微信支付回调地址
+    "goods_get_weixin_pay_url"=>"admin/Goods/get_weixin_pay_url",                              //获取微信扫描链接
 
 
 
@@ -405,6 +476,7 @@ Route::group("admin",[
     /*订单管理：TODO:配件商订单开始*/
     "order_index"=>"admin/Order/index", //配件商订单列表
     "order_processing"=>"admin/Order/order_processing", //配件商订单列表弹窗接口（ajax）
+    "order_update_status"=>"admin/Order/order_update_status", //配件商订单列表弹窗修改状态值（ajax）
     "order_search"=>"admin/Order/search", //配件商订单列表模糊搜索
     "order_dels"=>"admin/Order/dels", //配件商订单列表批量删除
     "order_edit"=>"admin/Order/edit", //*********配件商订单设置（未做）
@@ -508,6 +580,8 @@ Route::group("admin",[
     "service_updata"=>"admin/Install/service_updata",
     "service_del"=>"admin/Install/service_del", //服务设置之删除
 
+    "invoice_setting"=>"admin/Install/invoice_setting",//设置之发票手续费设置
+
 
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
@@ -543,6 +617,7 @@ Route::group("admin",[
     "shop_index"=>"admin/Shop/index",//店铺列表
     "shop_add"=>"admin/Shop/add",//店铺详情
     "shop_update"=>"admin/Shop/update",//店铺详情更新
+    "store_hot_status"=>"admin/Shop/store_hot_status",//店铺热门店铺修改（-1为正常，1为热门店铺）
     "shop_del"=>"admin/Shop/del",//店铺列表删除
     "shop_dels"=>"admin/Shop/dels",//店铺列表批量删除
     "shop_search"=>"admin/Shop/search",//店铺列表模糊查询

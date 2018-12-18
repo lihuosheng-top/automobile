@@ -21,7 +21,10 @@ class Shop extends Controller{
      **************************************
      */
     public function index(){
-        $store_data  =Db::name('store')->where("store_is_button",1)->select();
+        $store_data  =Db::name('store')
+            ->where("store_is_button",1)
+            ->where("del_status",1)
+            ->select();
        foreach ($store_data as $k=>$v){
            $store_data[$k]['store_id'] =$v['store_id'];
            $store_data[$k]['store_name'] =$v['store_name'];
@@ -82,7 +85,6 @@ class Shop extends Controller{
             }
         }
         $service_setting_data =Db::name('service_setting')->where('service_setting_status',1)->select();
-//        dump($store_datas);
         return view("shop_add",['data'=>$store_datas,'service_setting_data'=>$service_setting_data,'imgs'=>$imgs,'address'=>$address,'service_setting_id'=>$service_setting_id]);
     }
 
@@ -118,6 +120,36 @@ class Shop extends Controller{
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:设置为热门店铺
+     **************************************
+     */
+    public function store_hot_status(Request $request){
+        if($request->isPost()) {
+            $status = $request->only(["status"])["status"];
+            if($status == -1) {
+                $id = $request->only(["id"])["id"];
+                $bool = Db::name("store")->where("store_id", $id)->update(["is_hot_store" => -1]);
+                if ($bool) {
+                    return ajax_success('修改成功',['status'=>1]);
+                } else {
+                    return ajax_error('修改失败',['status'=>0]);
+                }
+            }
+            if($status == 1){
+                $id = $request->only(["id"])["id"];
+                $bool = Db::name("store")->where("store_id", $id)->update(["is_hot_store" => 1]);
+                if ($bool) {
+                    return ajax_success('修改成功',['status'=>1]);
+                } else {
+                    return ajax_error('修改失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
 
     /**
      **************李火生*******************
@@ -129,13 +161,14 @@ class Shop extends Controller{
     public function del($id){
         if($id>0){
             $user_id =Db::name("store")->field('user_id')->where('store_id',$id)->find();
-            $phone =Db::name("user")->field('phone_num')->where('user_id',$user_id["user_id"])->find();
+            $phone =Db::name("user")->field('phone_num')->where('id',$user_id["user_id"])->find();
             $datas =Db::name("admin")->where('phone',$phone['phone_num'])->find();
             if(!empty($datas)){
-                Db::name("admin")->where('phone',$phone['phone_num'])->delete();
+                Db::name("admin")->where('phone',$phone['phone_num'])->update(["status"=>0]);//账号删除(伪删除)
             }
-            $bool =Db::name('store')->where('store_id',$id)->delete();
+            $bool =Db::name('store')->where('store_id',$id)->update(["del_status"=>-1,"operation_status"=>-1]);//店铺删除（伪删除）
             if($bool){
+                //所有的订单删除
                 $this->success('删除成功','admin/Shop/index');
             }else{
                 $this->error('删除失败');
@@ -143,12 +176,10 @@ class Shop extends Controller{
         }
     }
 
-
-
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:批量删除
+     * Notes:批量删除(伪删除)
      **************************************
      * @param Request $request
      */
@@ -158,7 +189,8 @@ class Shop extends Controller{
             if(is_array($id)){
                 $where ='store_id in('.implode(',',$id).')';
                 foreach ($id as $ks=>$vs){
-                    $phone_data =Db::name("store")->field('phone_num')->where('store_id',$vs)->find();
+                    $user_id =Db::name("store")->field('user_id')->where('store_id',$vs)->find();
+                    $phone_data =Db::name("user")->field('phone_num')->where('id',$user_id["user_id"])->find();
                     $phone[] =$phone_data['phone_num'];
                 }
                 if(!empty($phone)){
@@ -166,14 +198,15 @@ class Shop extends Controller{
                 }
             }else{
                 $where ='store_id='.$id;
-                $phone_data =Db::name("store")->field('phone_num')->where('store_id',$id)->find();
+                $user_id =Db::name("store")->field('user_id')->where('store_id',$id)->find();
+                $phone_data =Db::name("user")->field('phone_num')->where('id',$user_id["user_id"])->find();
                 $phones ='phone='.$phone_data['phone_num'];
 
             }
-            $list =  Db::name('store')->where($where)->delete();
+            $list =  Db::name('store')->where($where)->update(["status"=>0]);
             if($list!==false)
             {
-                Db::name('admin')->where($phones)->delete();
+                Db::name('admin')->where($phones)->update(["del_status"=>-1,"operation_status"=>-1]);
                 return ajax_success('成功删除!',['status'=>1]);
             }else{
                 return ajax_error('删除失败',['status'=>0]);
@@ -196,28 +229,61 @@ class Shop extends Controller{
             $store_data  =Db::name('store')
                 ->where($condition)
                 ->where("store_is_button",1)
+                ->where("del_status",1)
                 ->select();
+            foreach ($store_data as $k=>$v){
+                $store_data[$k]['store_id'] =$v['store_id'];
+                $store_data[$k]['store_name'] =$v['store_name'];
+                $store_data[$k]['store_detailed_address'] =$v['store_detailed_address'];
+                $store_data[$k]['store_is_pay'] =$v['store_is_pay'];
+                $store_data[$k]['operation_status'] =$v['operation_status'];
+                $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
+                $store_data[$k]['real_name']=$user_data['real_name'];
+                $store_data[$k]['phone_num']=$user_data['phone_num'];
+                $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
+                $store_data[$k]['role_name']=$role_datas['name'];
+            }
         }else{
-            $store_data  =Db::name('store')
-                ->where("store_is_button",1)
-                ->select();
+            if(!empty($keyword)){
+            $conditions  = "`real_name` like '%{$keyword}%'";
+                $store_data  =Db::table('tb_store')
+                    ->join("tb_user", "tb_store.user_id=tb_user.id", 'left')
+                    ->where($conditions)
+                    ->where("del_status",1)
+                    ->where("store_is_button",1)
+                    ->select();
+                foreach ($store_data as $k=>$v){
+                    $store_data[$k]['store_id'] =$v['store_id'];
+                    $store_data[$k]['store_name'] =$v['store_name'];
+                    $store_data[$k]['store_detailed_address'] =$v['store_detailed_address'];
+                    $store_data[$k]['store_is_pay'] =$v['store_is_pay'];
+                    $store_data[$k]['operation_status'] =$v['operation_status'];
+                    $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
+                    $store_data[$k]['real_name']=$user_data['real_name'];
+                    $store_data[$k]['phone_num']=$user_data['phone_num'];
+                    $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
+                    $store_data[$k]['role_name']=$role_datas['name'];
+                }
+        }else{
+                $store_data  =Db::name('store')
+                    ->where("store_is_button",1)
+                    ->where("del_status",1)
+                    ->select();
+                foreach ($store_data as $k=>$v){
+                    $store_data[$k]['store_id'] =$v['store_id'];
+                    $store_data[$k]['store_name'] =$v['store_name'];
+                    $store_data[$k]['store_detailed_address'] =$v['store_detailed_address'];
+                    $store_data[$k]['store_is_pay'] =$v['store_is_pay'];
+                    $store_data[$k]['operation_status'] =$v['operation_status'];
+                    $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
+                    $store_data[$k]['real_name']=$user_data['real_name'];
+                    $store_data[$k]['phone_num']=$user_data['phone_num'];
+                    $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
+                    $store_data[$k]['role_name']=$role_datas['name'];
+                }
+            }
         }
-//        if(!empty($keyword)){
-//            $conditions  = "`real_name` like '%{$keyword}%'";
-//
-//        }
-        foreach ($store_data as $k=>$v){
-            $store_data[$k]['store_id'] =$v['store_id'];
-            $store_data[$k]['store_name'] =$v['store_name'];
-            $store_data[$k]['store_detailed_address'] =$v['store_detailed_address'];
-            $store_data[$k]['store_is_pay'] =$v['store_is_pay'];
-            $store_data[$k]['operation_status'] =$v['operation_status'];
-            $user_data =Db::name("user")->field("real_name,phone_num")->where('id',$v['user_id'])->find();
-            $store_data[$k]['real_name']=$user_data['real_name'];
-            $store_data[$k]['phone_num']=$user_data['phone_num'];
-            $role_datas =Db::name("role")->field('name')->where('id',$v['role_id'])->find();
-            $store_data[$k]['role_name']=$role_datas['name'];
-        }
+
         $all_idents =$store_data ;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
         $listRow = 3;//每页3行记录
@@ -230,7 +296,7 @@ class Shop extends Controller{
         ]);
         $store_data->appends($_GET);
         $this->assign('listpage', $store_data->render());
-//        return view("shop_index",['store_data'=>$store_datas]);
+        return view("shop_index",['store_data'=>$store_data]);
     }
 
 

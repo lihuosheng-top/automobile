@@ -58,6 +58,7 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
+
         $.ajax({
             url: 'member_address_information',
             type: 'POST',
@@ -151,7 +152,7 @@
                                             });
                                             setTimeout(function(){
                                                 location.reload();
-                                            },1100);
+                                            },1000);
                                         }
                                     },
                                     error: function(){
@@ -191,6 +192,42 @@
                             }
                         })
                     })
+                    
+                    // 判断是否确定订单页面跳转过来
+                    var url = location.search;
+                    var id, preId;
+                    if(url.indexOf('?') != -1){
+                        id = url.substr(1).split('&&')[0].split('=')[1];
+                        preId = url.substr(1).split('&&')[1].split('=')[1];
+                        // 返回确认订单url
+                        $('.icon-back').prop('href', 'ios_api_order_parts_firm_order?id='+ id + '&&preid=' + preId);
+                        // 隐藏编辑 删除
+                        $('.edit-btn').hide();
+                        $('.del-btn').hide();
+                        $('.add-address-btn').click(function(){
+                            location.href = 'member_address_add?id='+ id + '&&preid=' + preId + '&&gid=1';
+                        })
+                        // 选择地址
+                        $('.address-div').click(function(e){
+                            e.preventDefault();
+                            var addressId = $(this).find('.set-default-btn')[0].id.split('-')[1];
+                            $.ajax({
+                                url: 'member_save_address_id',
+                                type: 'POST',
+                                dataType: 'JSON',
+                                data: {
+                                    'id': addressId
+                                },
+                                success: function(res){
+                                    console.log(res);
+                                    location.href = 'ios_api_order_parts_firm_order?id='+ id + '&&preid=' + preId;
+                                },
+                                error: function(){
+                                    console.log('error');
+                                }
+                            })
+                        })
+                    }
                 }
             },
             error: function(){
@@ -209,6 +246,7 @@
             location.href = 'member_address_add';
         })
         
+       
 
     </script>
 </body>

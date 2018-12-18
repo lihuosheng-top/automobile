@@ -1038,18 +1038,14 @@ html{
     padding: .2rem;
     border-bottom: 1px solid #eee;
 }
-.select-ser-pop .spec-wrap p,
-.select-ser-pop .spec-wrap p,
 .select-ser-pop .spec-wrap p{
     font-size: .3rem;
     color: #666;
     margin: .1rem 0 .2rem;
 }
-.select-ser-pop .spec-wrap span,
-.select-ser-pop .spec-wrap span,
-.select-ser-pop .spec-wrap span{
+.select-ser-pop .spec-wrap .select-item{
     display: inline-block;
-    width: 1.4rem;
+    padding: 0 .25rem;
     height: .7rem;
     border-radius: .1rem;
     background-color: #f5f5f5;
@@ -1059,7 +1055,11 @@ html{
     color: #666;
     margin-right: .2rem;
 }
-.select-ser-pop .spec-wrap span.select-on{
+.select-ser-pop .spec-wrap button{
+    border: 0;
+    outline: none;
+}
+.select-ser-pop .spec-wrap .select-item.select-on{
     background-color: #504cfb !important;
     color: #fff !important;
 }
@@ -1097,6 +1097,7 @@ html{
 }
 .select-trade .select-add-cart{
     color: #666;
+    background-color: #fff;
 }
 .select-trade .select-buy{
     color: #fff;

@@ -113,10 +113,12 @@
                         <label class="sr-only" for="city3">City</label>
                         <select  class="form-control" id="city3" data-city="{$address[1]}" disabled="disabled"></select>
                     </div>
+                    {if !empty($address[2])}
                     <div class="form-group">
                         <label class="sr-only" for="district3">District</label>
                         <select  class="form-control" id="district3" data-district="{$address[2]}" disabled="disabled"></select>
                     </div>
+                    {/if}
                 </div>
             </div>
         </div>
@@ -239,7 +241,7 @@
                 {/if}
             </div>
         </div>
-        <div class="layui-form-item">
+           <div class="layui-form-item">
             <label class="layui-form-label">当前可操作：</label>
             <div class="layui-input-block">
                 {if $vo.operation_status ==0}
@@ -253,6 +255,19 @@
                 {if $vo.operation_status ==-1}
                 <input type="radio" name="operation_status" value="1" title=" 通过" >
                 <input type="radio" name="operation_status" value="-1" title="拒绝" checked="">
+                {/if}
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否设为热门店铺：</label>
+            <div class="layui-input-block">
+                {if $vo.is_hot_store ==1}
+                <input type="radio" name="is_hot_store" value="1" title="是"  checked="">
+                <input type="radio" name="is_hot_store" value="-1" title="否" >
+                {/if}
+                {if $vo.is_hot_store ==-1}
+                <input type="radio" name="is_hot_store" value="1" title="是" >
+                <input type="radio" name="is_hot_store" value="-1" title="否" checked="" >
                 {/if}
             </div>
         </div>

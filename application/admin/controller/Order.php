@@ -64,6 +64,39 @@ class Order extends Controller{
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:弹窗返回对应修改的状态值
+     **************************************
+     */
+    public function order_update_status(Request $request){
+        if($request->isPost()){
+            $id =$request->only("id")["id"];
+            $sell_message =$request->only("sell_message")["sell_message"];//卖家留言
+            $sell_message_time =time(); //回复时间
+            $status =$request->only("status")["status"];//状态值
+            $pay_type_content =$request->only("pay_type_content")["pay_type_content"];//支付方式（微信,支付宝）
+            $refund_amount =$request->only("refund_amount")["refund_amount"];//退款金额
+            if(!empty($id)){
+                $data =[
+                    "sell_message"=>$sell_message,
+                    "sell_message_time"=>$sell_message_time,
+                    "status"=>$status,
+                    "pay_type_content"=>$pay_type_content,
+                    "refund_amount"=>$refund_amount
+                ];
+                $bool =Db::name("order_parts")->where("id",$id)->update($data);
+                if($bool){
+                    return ajax_success("修改成功",["status"=>1]);
+                }else{
+                    return ajax_error("修改失败",["status"=>0]);
+                }
+
+            }
+
+        }
+    }
 
     /**
      **************李火生*******************
@@ -301,7 +334,9 @@ class Order extends Controller{
      **************************************
      */
     public function evaluate(){
-        $evaluate_data =Db::name('order_parts_evaluate')->order('create_time','desc')->paginate(3);
+        $evaluate_data =Db::name('order_parts_evaluate')
+            ->order('create_time','desc')
+            ->paginate(3);
         return view('evaluate',['evaluate_data'=>$evaluate_data]);
     }
 

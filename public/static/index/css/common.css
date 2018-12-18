@@ -13,6 +13,7 @@ html, body {
 .clearfix::after{content: ''; display: block; clear: both;}
 .spr{background: url(../image/spr.png) no-repeat center center;background-size: 8rem 6rem;}
 .spr-parts{background: url(../image/spr-parts.png) no-repeat center center;background-size: 3.66rem 3.65rem;}
+.spr-sell{background: url(../image/spr-sell.png) no-repeat center center; background-size: 4.86rem 4.66rem;}
 .bgw{background-color: #fff;}
 .mgr0{margin-right: 0 !important;}
 .br0{border-right: 0 !important;}

@@ -93,7 +93,7 @@
     box-shadow: 0 2px 10px rgba(200, 200, 200, 1);
 }
 .order-goods-info .order-shop-box{
-    margin-bottom: .1rem;
+    margin-bottom: .3rem;
 }
 .order-goods-info .icon-shop{
     display: inline-block;
@@ -104,7 +104,7 @@
 }
 .order-goods-info .order-goods-detail{
     display: flex;
-    margin-bottom: .3rem;
+    margin-bottom: .4rem;
 }
 .order-goods-detail .order-goods-img{
     width: 2.2rem;
@@ -174,12 +174,17 @@
     line-height: .88rem;
     background-color: #fff;
     box-shadow: 0 2px 10px rgba(200, 200, 200, 1);
-    padding-right: .3rem;
     box-sizing: border-box;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end
 }
-.order-payment-box .order-cancel-btn,
-.order-payment-box .order-payment-btn{
+.order-payment-box .cancel-order-btn,
+.order-payment-box .to-payment-btn,
+.del-order-btn,
+.check-logistics-btn,
+.conf-receipt-btn,
+.evaluation-btn{
     width: 1.8rem;
     height: .6rem;
     border: 0;
@@ -188,8 +193,11 @@
     font-size: .2rem;
     outline: none;
     border-radius: .3rem;
+    margin-right: .2rem;
 }
-.order-payment-box .order-cancel-btn{
+.order-payment-box .cancel-order-btn,
+.del-order-btn,
+.check-logistics-btn{
     background-color: #fff;
     border: 1px solid #999999;
     color: #999999;
