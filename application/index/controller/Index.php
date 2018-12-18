@@ -58,10 +58,10 @@ class Index extends Controller
         //扫码支付，接收微信请求;
 
         if($request->isPost()){
+            $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
             $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
             $val = json_decode(json_encode($xml_data), true);
-            $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-            file_put_contents(EXTEND_PATH . "lib/data/data.txt", $xml);
+            file_put_contents(EXTEND_PATH . "lib/data/data.txt", $val);
             exit();
             $goods_id = $request->only(["goods_id"])["goods_id"];
             if($val){
