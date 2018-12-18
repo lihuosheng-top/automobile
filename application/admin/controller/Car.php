@@ -7,6 +7,7 @@
  */
 namespace app\admin\controller;
 use think\Controller;
+use think\Request;
 
 class Car extends Controller{
 
@@ -17,7 +18,8 @@ class Car extends Controller{
      */
     public function index(){
 
-        return view("car_index");
+        $car_data = db("car_images")->select();
+        return view("car_index",["car_data"=>$car_data]);
 
     }
 
@@ -27,9 +29,10 @@ class Car extends Controller{
      * 汽车品牌添加
      * 陈绪
      */
-    public function add(){
+    public function add(Request $request){
 
-        return view("car_add");
+        $brand_name = db("car_series")->distinct(true)->field("brand")->select();
+        return view("car_add",["brand_name"=>$brand_name]);
 
     }
 
@@ -39,9 +42,21 @@ class Car extends Controller{
      * 汽车品牌入库
      * 陈绪
      */
-    public function save(){
+    public function save(Request $request){
 
 
+        $brand_data = $request->param();
+        $images = $request->file("brand_images");
+        if(!empty($images)){
+            $brand_images = $images->move(ROOT_PATH . 'public' . DS . 'uploads');
+            $brand_data["brand_images"] = str_replace("\\", "/", $brand_images->getSaveName());
+        }
+        $bool = db("car_images")->insert($brand_data);
+        if($bool){
+            $this->success("添加成功",url("admin/Car/index"));
+        }else{
+            $this->error("添加失败",url("admin/Car/index"));
+        }
 
     }
 

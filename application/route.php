@@ -170,6 +170,8 @@ Route::group("",[
     "express_distribution"=>"index/Express/express_distribution",//配送中
     "express_completed"=>"index/Express/express_completed",//已完成
     "express_detail"=>"index/Express/express_detail",//快递详情
+    "express_info"=>"index/Express/express_info",//快递信息返回
+
     /*TODO:快递结束*/
 
 
@@ -374,7 +376,7 @@ Route::group("admin",[
     "goods_WeiAlpay"=>"admin/Goods/WeiAlpay",                                             //微信支付
     "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
     "goods_alipay_pay"=>"admin/Goods/alipay_pay",                                                //微信支付回调地址
-    "goods_get_weixin_pay_url"=>"admin/Goods/get_weixin_pay_url",                              //获取微信扫描链接
+    "goods_get_weixin_pay_url"=>"admin/Goods/get_weixin_status",                              //微信是否上架检测
 
 
 
@@ -422,6 +424,7 @@ Route::group("admin",[
     "car_save"=>"admin/Car/save",
     "car_edit"=>"admin/Car/edit",
     "car_updata"=>"admin/Car/updata",
+    "car_search"=>"admin/Car/search",
 
 
     /*充值和提现*/
