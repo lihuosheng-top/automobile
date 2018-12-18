@@ -199,7 +199,35 @@
             $('.reset-payment-pop').hide();
             $('.wrapper').show();
         })
-        $('.')
+        $('.get-code').click(function(){
+            var phone = $('.reg-phone-num').val();
+            var reg = /^1[34578]\d{9}$/;
+            if(phone!== '' && phone.match(reg)){
+                buttonCountdown($(this), 1000 * 60 * 1, "ss");
+                $.ajax({
+                    url: 'sendMobileCode',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'mobile': phone
+                    },
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    style: 'bottom:100px;',
+                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                    skin: 'msg',
+                    content: '号码格式不正确',
+                    time: 2
+                })
+            }
+        })
     </script>
     <!-- 选择角色 -->
     <script>

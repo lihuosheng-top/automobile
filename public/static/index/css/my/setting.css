@@ -162,4 +162,5 @@
     font-size: .3rem;
     color: #333;
     outline: none;
+    border-left: 1px solid #eee;
 }
