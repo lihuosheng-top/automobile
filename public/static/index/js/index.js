@@ -562,55 +562,84 @@ var map = new AMap.Map('container', {
     zoom: 12, //级别
     center: [114.07, 22.62]
 });
-map.plugin([
-    // 'AMap.CitySearch',
-    'AMap.Geolocation',
-], function () {
-    // 城市获取服务，获取用户所在城市信息或根据给定IP参数查询城市信息
-    // var citySearch = new AMap.CitySearch()
-    // citySearch.getLocalCity(function (status, result) {
-    //     if (status === 'complete' && result.info === 'OK') {
-    //         // 查询成功，result即为当前所在城市信息
-    //         $('.gec-curr-txt').text(result.city);
-    //         $('.curr_city').text(result.city);
-    //         console.log(result);
-    //     }
-    // })
 
+map.plugin([
+    'AMap.Geolocation',
+    'AMap.Geocoder',//逆地理编码
+], function () {
     var geolocation = new AMap.Geolocation({
         enableHighAccuracy: true,
         timeout: 1000,
-        buttonPosition: 'RB',
-        buttonOffset: new AMap.Pixel(10, 20),
         zoomToAccuracy: true,
-        // useNative: true,
-        // noIpLocate: 1,
-        // noGeoLocation: 1,
     })
     map.addControl(geolocation);
     geolocation.getCurrentPosition();
     AMap.event.addListener(geolocation, 'complete', onComplete);
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
-        console.log(e)
-        $('.gec-curr-txt').text(e.addressComponent.city);
+        // console.log(e)
+        // $('.gec-curr-txt').text(e.addressComponent.city);
         $('.curr_city').text(e.addressComponent.district);
+        getAdvertisment(e.addressComponent.district);
     };
     function onError(e){
-        console.log(e)
+        // console.log(e)
     };
 })
 
-// 城市定位 弹窗
-$('.map').click(function(){
-    $('.wrapper').hide();
-    $('.geclocation-pop').show();
+// // 城市定位 弹窗
+// $('.map').click(function(){
+//     $('.wrapper').hide();
+//     $('.geclocation-pop').show();
+// })
+// // 城市定位弹窗 返回
+// $('.gec-back').click(function(){
+//     $('.geclocation-pop').hide();
+//     $('.wrapper').show();
+// })
+// 原生经纬度
+$.ajax({
+    url: 'lglt_read',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+        if(res.status == 1){
+            var data = res.data[0];
+            var geocoder = new AMap.Geocoder({
+                // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
+                city: '010'
+            })
+            var lnglat = [data.longitude, data.latitude];
+            geocoder.getAddress(lnglat, function(status, result) {
+                if (status === 'complete' && result.info === 'OK') {
+                    // result为对应的地理位置详细信息
+                    console.log(result);
+                    var area = result.regeocode.addressComponent.district
+                    $('.curr_city').text(area);
+                    getAdvertisment(area);
+                }
+            })
+        }
+    },
+    error: function(){
+        console.log('error');
+    }
 })
-// 城市定位弹窗 返回
-$('.gec-back').click(function(){
-    $('.geclocation-pop').hide();
-    $('.wrapper').show();
-})
-
-
+function getAdvertisment(area){
+    $.ajax({
+        url: 'advertisement_index',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'area': area
+        },
+        success: function(res){
+            console.log(res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
 
