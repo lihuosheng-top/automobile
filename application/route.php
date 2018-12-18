@@ -170,6 +170,8 @@ Route::group("",[
     "express_distribution"=>"index/Express/express_distribution",//配送中
     "express_completed"=>"index/Express/express_completed",//已完成
     "express_detail"=>"index/Express/express_detail",//快递详情
+    "express_info"=>"index/Express/express_info",//快递信息返回
+
     /*TODO:快递结束*/
 
 

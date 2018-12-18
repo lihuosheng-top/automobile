@@ -11,6 +11,9 @@ namespace  app\index\controller;
 
 
 use think\Controller;
+use think\Request;
+use think\Db;
+use think\Session;
 
 class  Express extends  Controller{
     /**
@@ -67,6 +70,26 @@ class  Express extends  Controller{
      */
     public function express_detail(){
         return view("express_detail");
+    }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:快递员信息返回
+     **************************************
+     * @param Request $request
+     */
+    public function express_info(Request $request){
+        if($request->isPost()){
+           $delivery_id = Session::get("delivery_id");
+            $data =Db::name("delivery")->where("id",$delivery_id)->find();
+            if(!empty($data)){
+                return ajax_success("数据返回成功",$data);
+            }else{
+                return ajax_error("没有这个快递信息",['status'=>0]);
+            }
+        }
     }
 
 
