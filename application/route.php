@@ -78,7 +78,7 @@ Route::group("",[
     "member_update_mobiles"=>"index/My/member_update_mobiles",//个人信息修改手机
     "my_integral"=>"index/My/integral",            //我的积分页面(积分记录ajax)
     "setting"=>"index/My/setting",              //设置(所有页面)
-    "is_business"=>"index/My/is_business",      //判断是否是商家还是只是车主（ajax）
+    "is_business"=>"index/My/is_business",      //判断是否是商家还是只是车主（ajax）（隐藏切换角色的按钮）
     "select_role_owner"=>"index/My/select_role_owner",      //选择车主）通过判断是否是商家或者是车主（ajax）
     "select_role_business"=>"index/My/select_role_business",      //（选择商家）通过判断是否是商家或者是车主（ajax）
     "select_role_get"=>"index/My/select_role_get",//获取商家的信息，如果存在则是商家角色，不存在则为车主

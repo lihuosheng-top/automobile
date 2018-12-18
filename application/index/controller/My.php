@@ -333,7 +333,7 @@ class My extends Controller
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:判断是否申请为商家
+     * Notes:判断是否申请为商家（隐藏切换角色的按钮）
      **************************************
      * @param Request $request
      */
@@ -362,7 +362,7 @@ class My extends Controller
      */
     public  function select_role_owner(Request $request){
         if($request->isPost()){
-            Session::set("role_name",null);
+            Session::set("role_name_store_id",null);
             return ajax_success('切换角色成功',['status'=>1]);
         }
     }
@@ -376,8 +376,8 @@ class My extends Controller
     public  function select_role_business(Request $request){
         if($request->isPost()){
             $user_id = Session::get("user");
-            $store_info = Db::name("store")->where("user_id",$user_id)->find();
-            Session::set("role_name",$store_info);
+            $store_info = Db::name("store")->field("store_id")->where("user_id",$user_id)->where("del_status",1)->find();
+            Session::set("role_name_store_id",$store_info);
             return ajax_success("切换角色成功",["status"=>1]);
         }
     }
@@ -392,7 +392,7 @@ class My extends Controller
      */
     public function select_role_get(Request $request){
         if($request->isPost()){
-            $data =Session::get("role_name");
+            $data =Session::get("role_name_store_id");
             if(!empty($data)){
                 return ajax_success("这是个商家",$data);
             }else{
