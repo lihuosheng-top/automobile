@@ -68,13 +68,14 @@
         </header>
         <div class="reset-payment-box">
             <div class="reset-payment-phone">
-                <input type="text" placeholder="输入手机号码" class="reset-payment-input">
+                <input type="text" placeholder="输入手机号码" class="reset-payment-input phone">
                 <button class="get-code">获取验证码</button>
             </div>
-            <input type="text" placeholder="输入新的密码" class="reset-payment-input">
-            <input type="text" placeholder="确认新密码" class="repeat-payment-input">
+            <input type="text" placeholder="输入验证码" class="reset-payment-input phone-code">
+            <input type="text" placeholder="输入新的密码" class="reset-payment-input new-pwd">
+            <input type="text" placeholder="确认新密码" class="repeat-payment-input repeat-pwd">
         </div>
-        <button class="reset-payment-btn">确认</button>
+        <button class="reset-payment-btn" disabled>确认</button>
     </div>
 
     <!-- 选择角色 -->
@@ -200,7 +201,7 @@
             $('.wrapper').show();
         })
         $('.get-code').click(function(){
-            var phone = $('.reg-phone-num').val();
+            var phone = $('.phone').val();
             var reg = /^1[34578]\d{9}$/;
             if(phone!== '' && phone.match(reg)){
                 buttonCountdown($(this), 1000 * 60 * 1, "ss");
@@ -227,6 +228,34 @@
                     time: 2
                 })
             }
+        })
+        $('.phone-code').blur(function(){
+            if($(this).val() !== ''){
+                $('.reset-payment-btn').attr('disabled', false);
+            }
+        })
+        $('.reset-payment-btn').click(function(){
+            var phone = $('.phone').val();
+            var phoneCode = $('.phone-code').val();
+            var newPwd = $('.new-pwd').val();
+            var repeatPwd = $('.repeat-pwd').val();
+            $.ajax({
+                url: 'sendMobileCode',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'phone': phone,
+                    'phoneCode': phoneCode,
+                    'newPwd': newPwd,
+                    'repeatPwd': repeatPwd
+                },
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
     </script>
     <!-- 选择角色 -->
