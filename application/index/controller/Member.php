@@ -271,4 +271,14 @@ class  Member extends Controller{
     public function member_collection(){
         return view('member_collection');
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes: 修改支付密码
+     **************************************
+     */
+//    public function  pay_password_update(){
+//
+//    }
 }

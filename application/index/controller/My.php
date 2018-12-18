@@ -328,6 +328,79 @@ class My extends Controller
      */
     public function consume_message(){
         return view("consume_message");
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:判断是否申请为商家
+     **************************************
+     * @param Request $request
+     */
+    public function is_business(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $store_info = Db::name("store")->where("user_id",$user_id)->where("del_status",1)->find();
+            if(!empty($store_info)){
+                return ajax_success("这是商家",["status"=>1]);
+             }else{
+                return ajax_error("这只是车主",["status"=>0]);
+            }
+        }
 
     }
+
+
+
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:（选择车主）通过判断是否是商家或者是车主
+     **************************************
+     */
+    public  function select_role_owner(Request $request){
+        if($request->isPost()){
+            Session::set("role_name",null);
+            return ajax_success('切换角色成功',['status'=>1]);
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:（选择商家）通过判断是否是商家或者是车主
+     **************************************
+     */
+    public  function select_role_business(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $store_info = Db::name("store")->where("user_id",$user_id)->find();
+            Session::set("role_name",$store_info);
+            return ajax_success("切换角色成功",["status"=>1]);
+        }
+    }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:判断获取角色
+     **************************************
+     * @param Request $request
+     */
+    public function select_role_get(Request $request){
+        if($request->isPost()){
+            $data =Session::get("role_name");
+            if(!empty($data)){
+                return ajax_success("这是个商家",$data);
+            }else{
+                return ajax_error("车主",["status"=>0]);
+            }
+        }
+    }
+
+
+
 }
