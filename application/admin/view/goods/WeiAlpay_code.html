@@ -46,7 +46,6 @@
 	{block name="content"}
 		<div class="all">
 			<input type="hidden" readonly="true" id="J_order_id"/>
-			<input type="hidden" readonly="true" id="J_pay_url" />
 			<h2 class="static">待支付......</h2>
 			<p>商家名称：<span id="shop_name"></span></p>
 			<p>支付金额：<span id="repay_money"></span></p>
@@ -78,24 +77,20 @@
 		/*
 		获取微信扫描支付链接
 		*/
-		$('.J_show_weixin_img').click(function(){
-			var int_order_id = parseInt($('#J_order_id').val());
-			$.ajax({
-				type: "POST",
-				url: "{:url('admin/Goods/get_weixin_pay_url')}",
-				data: {'order_id': int_order_id},
-				success: function(_data) {
-					var _data = $.parseJSON(_data);
-					$('#J_weixin_pay_url').attr('src','/index/qrcode?text='+_data.data.pay_url+'&size=8');
-                                    	_pay_huidiao();//回调 检测订单是否已支付和二维码是否超时
-				},
+		var goods_id = $("#J_order_id").val();
+		console.log(goods_id);
+        $.ajax({
+            type: "POST",
+            url: "{:url('index/index/saoma_callback')}",
+            data: {},
+            success: function(data) {
+				console.log(data);
+            },
 
-				error: function() {
-					console.log("错误")
-				}
-			});
-		});
-
+            error: function() {
+                console.log("错误")
+            }
+        });
 
 
 		function _pay_huidiao(){
