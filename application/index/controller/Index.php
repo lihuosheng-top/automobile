@@ -58,34 +58,20 @@ class Index extends Controller
 
         if($request->isPost()){
             $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-            file_put_contents(EXTEND_PATH . "lib/data/data.txt", $xml);
-            exit();
             $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
             $val = json_decode(json_encode($xml_data), true);
-
-            $goods_id = $request->only(["goods_id"])["goods_id"];
-            if($val){
-                $str = "148840755220181218g272";
-                $goods = strstr($str,"g");
+            if($val["result_code"] == "SUCCESS" ){
+                $goods = strstr($val["out_trade_no"],"g");
                 $goods_id = substr($goods,1);
-                halt($goods_id);
-            }
-
-        }
-        exit();
-        if($request->isPost()) {
-
-
-            exit();
-            if($val["result_code"] == 'SUCCESS'){
-
-
                 $bool = db("goods")->where("id",$goods_id)->update(["putaway_status"=>1,"goods_status"=>1]);
+                if($bool){
+                    return ajax_success("成功",$bool);
+                }else{
+                    return ajax_error("失败");
+                }
 
-                return ajax_success("成功",$bool);
-            }else{
-                return ajax_error("失败");
             }
+
         }
     }
 
