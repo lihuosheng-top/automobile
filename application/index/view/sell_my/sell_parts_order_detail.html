@@ -10,17 +10,21 @@
     <link rel="stylesheet" href="__STATIC__/index/css/plugin/swiper-4.3.5.min.css">
     <link rel="stylesheet" href="__STATIC__/index/css/order_parts/order_parts_detail.css">
     <title>配件商-订单详情</title>
+    <style>
+        .order-detail-box{
+            padding-bottom: .2rem;
+        }
+    </style>
 </head>
 <body>
     <div class="place-order-pop">
         <header class="place-order-header">
-            <a href="order_parts_all" class="spr place-order-back"></a>
+            <a href="sell_parts_order" class="spr place-order-back"></a>
             <h3 class="place-order-title">订单详情</h3>
         </header>
         <div class="order-detail-box">
             <div class="order-detail-bg">
                 <div class="status">待付款</div>
-                <div class="time-count-down" id="time-count-down" style="display:none;"></div>
             </div>
             <div class="user-info-box">
                 <div class="order-num">订单编号：<span>20181130412</span></div>
@@ -38,7 +42,7 @@
                     <i class="spr icon-shop"></i>
                     <span class="order-shop-namp">米其林轮胎旗舰店</span>
                 </div>
-                <!-- <div class="order-goods-detail">
+                <div class="order-goods-detail">
                     <div class="order-goods-img">
                         <img src="__STATIC__/index/image/14.png">
                     </div>
@@ -50,7 +54,7 @@
                             <p class="quantity-p">×1</p>
                         </div>
                     </div>
-                </div> -->
+                </div>
                 <div class="cal-price-box">
                     <div class="cal-total">
                         <span>商品总额</span>
@@ -78,14 +82,6 @@
                     <a href="javascript:;" class="spr icon-phone"></a>
                     联系卖家
                 </div> -->
-            </div>
-            <div class="order-payment-box">
-                <button class="cancel-order-btn" style="display:none;">取消订单</button>
-                <button class="to-payment-btn" style="display:none;">立即付款</button>
-                <button class="del-order-btn" style="display:none;">删除订单</button>
-                <button class="check-logistics-btn" style="display:none;">查看物流</button>
-                <button class="conf-receipt-btn" style="display:none;">确认收货</button>
-                <button class="evaluation-btn" style="display:none;">去评价</button>
             </div>
         </div>
     </div>
