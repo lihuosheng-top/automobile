@@ -644,4 +644,3 @@ function getAdvertisment(area){
         }
     })
 }
-
