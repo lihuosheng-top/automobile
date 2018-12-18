@@ -52,10 +52,10 @@
 
 	{block name="content"}
 	<div class="all">
-		<input type="hidden" readonly="true" id="J_order_id" value="{$goods_id}"/>
+		<input type="hidden" readonly="true" id="J_order_id" value="{$goods_id}" />
 		<h2 class="static">待支付......</h2>
 		<p>商家名称：<span id="shop_name">{$store}</span></p>
-	    <p>支付金额：<span id="repay_money">{$goods_money}</span></p>
+		<p>支付金额：<span id="repay_money">{$goods_money}</span></p>
 		<!--<p>商家名称：<span id="shop_name"></span></p>
 		<p>支付金额：<span id="repay_money"></span></p>-->
 		<div class="doms">
@@ -84,111 +84,114 @@
 	<script type="text/javascript" src="__STATIC__/admin/common/js/qrcode.js"></script>
 	<script type="text/javascript">
 		/*
-				获取微信扫描支付链接
-				*/
-//		var goods_id = $("#J_order_id").val();
-			function _do_huidiao(){
-					$.ajax({
-						type: "POST",
-						url: "{:url('index/index/saoma_callback')}",
-						data: {},
-						success: function(data) {
-							console.log(data);
-							if(data.status == 1) {
-								location.href = "goods_index";
-							}
-						},
-			
-						error: function() {
-							console.log("错误")
-						}
-					});
-				};
-			setInterval(function(){
-				_do_huidiao();
-		          }, 1000);
+						获取微信扫描支付链接
+						*/
+		var goods_id = $("#J_order_id").val();
 
+		function _do_huidiao() {
+			$.ajax({
+				type: "POST",
+				url: "{:url('admin/Goods/get_weixin_status')}",
+				data: {
+					"goods_id": goods_id
+				},
+				success: function(data) {
 
+					var data = eval('(' + data + ')');
+					console.log(data.status);
+					if(data.status == 1) {
+						location.href = "goods_index";
+					}
+				},
 
-//		var loc = location.href;
-//		var n1 = loc.length; //地址的总长度
-//		var n2 = loc.indexOf("="); //取得=号的位置
-//		var id = decodeURI(loc.substr(n2 + 1, n1 - n2)); //从=号后面的内容
-//		var text = id.replace(/(.*)&.*/, '$1');
-//		var WIDsubject = text.replace(/(.*)&.*/, '$1');
-//
-//		function GetQueryString(name) {
-//			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-//			var r = window.location.search.substr(1).match(reg); //获取url中"?"符后的字符串并正则匹配
-//			var context = "";
-//			if(r != null)
-//				context = r[2];
-//			reg = null;
-//			r = null;
-//			return context == null || context == "" || context == "undefined" ? "" : context;
-//		}
-//		var WIDbody = GetQueryString("WIDbody");
-//		var WIDtotal_amount = GetQueryString("WIDtotal_amount");
-//		$("#shop_name").html(WIDsubject);
-//		$("#repay_money").html("￥" + WIDtotal_amount);
-//		微信支付
-//		$.ajax({
-//			type: "POST",
-//			url: "{:url('admin/Goods/WeiAlpay')}",
-//			data: {
-//				"WIDbody": WIDbody,
-//				"WIDsubject": WIDsubject,
-//				"WIDtotal_amount": WIDtotal_amount,
-//			},
-//			success: function(data) {
-//				console.log(data);
-//				var data = eval("(" + data + ")");
-//				console.log(data);
-//				var datas = "goods_qrcode?url2=" + data.data;
-//				$("#img_url").attr("src", datas);
-//			},
-//
-//			error: function(data) {
-//				console.log("错误")
-//			}
-//		});
-//		$(".weixin_ico").click(function() {
-//			$(".doms1").addClass("noshow");
-//			$(".doms").removeClass("noshow");
-//
-//		});
-//		$(".zhifubao_ico").click(function() {
-//			$(".doms").addClass("noshow");
-//			$(".doms1").removeClass("noshow");
-//
-//		});
-//		var qrcode = new QRCode(document.getElementById("qrcode"), {
-//			width: 230,
-//			height: 230
-//		});
+				error: function() {
+					console.log("错误")
+				}
+			});
+		};
+		setInterval(function() {
+			_do_huidiao();     
+		}, 1000);
 
-//		function makeCode() {
-//			$.ajax({
-//				type: "POST",
-//				url: "{:url('admin/Goods/alipay')}",
-//				data: {
-//					"WIDbody": WIDbody,
-//					"WIDsubject": WIDsubject,
-//					"WIDtotal_amount": WIDtotal_amount,
-//				},
-//				success: function(data) {
-//					var data = eval("(" + data + ")");
-//					console.log(data);
-//					var datas = data.data;
-//					qrcode.makeCode(datas);
-//				},
-//
-//				error: function(data) {
-//					console.log("错误")
-//				}
-//			});
-//		}
-//		makeCode();
+		//		var loc = location.href;
+		//		var n1 = loc.length; //地址的总长度
+		//		var n2 = loc.indexOf("="); //取得=号的位置
+		//		var id = decodeURI(loc.substr(n2 + 1, n1 - n2)); //从=号后面的内容
+		//		var text = id.replace(/(.*)&.*/, '$1');
+		//		var WIDsubject = text.replace(/(.*)&.*/, '$1');
+		//
+		//		function GetQueryString(name) {
+		//			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		//			var r = window.location.search.substr(1).match(reg); //获取url中"?"符后的字符串并正则匹配
+		//			var context = "";
+		//			if(r != null)
+		//				context = r[2];
+		//			reg = null;
+		//			r = null;
+		//			return context == null || context == "" || context == "undefined" ? "" : context;
+		//		}
+		//		var WIDbody = GetQueryString("WIDbody");
+		//		var WIDtotal_amount = GetQueryString("WIDtotal_amount");
+		//		$("#shop_name").html(WIDsubject);
+		//		$("#repay_money").html("￥" + WIDtotal_amount);
+		//		微信支付
+		//		$.ajax({
+		//			type: "POST",
+		//			url: "{:url('admin/Goods/WeiAlpay')}",
+		//			data: {
+		//				"WIDbody": WIDbody,
+		//				"WIDsubject": WIDsubject,
+		//				"WIDtotal_amount": WIDtotal_amount,
+		//			},
+		//			success: function(data) {
+		//				console.log(data);
+		//				var data = eval("(" + data + ")");
+		//				console.log(data);
+		//				var datas = "goods_qrcode?url2=" + data.data;
+		//				$("#img_url").attr("src", datas);
+		//			},
+		//
+		//			error: function(data) {
+		//				console.log("错误")
+		//			}
+		//		});
+		//		$(".weixin_ico").click(function() {
+		//			$(".doms1").addClass("noshow");
+		//			$(".doms").removeClass("noshow");
+		//
+		//		});
+		//		$(".zhifubao_ico").click(function() {
+		//			$(".doms").addClass("noshow");
+		//			$(".doms1").removeClass("noshow");
+		//
+		//		});
+		//		var qrcode = new QRCode(document.getElementById("qrcode"), {
+		//			width: 230,
+		//			height: 230
+		//		});
+
+		//		function makeCode() {
+		//			$.ajax({
+		//				type: "POST",
+		//				url: "{:url('admin/Goods/alipay')}",
+		//				data: {
+		//					"WIDbody": WIDbody,
+		//					"WIDsubject": WIDsubject,
+		//					"WIDtotal_amount": WIDtotal_amount,
+		//				},
+		//				success: function(data) {
+		//					var data = eval("(" + data + ")");
+		//					console.log(data);
+		//					var datas = data.data;
+		//					qrcode.makeCode(datas);
+		//				},
+		//
+		//				error: function(data) {
+		//					console.log("错误")
+		//				}
+		//			});
+		//		}
+		//		makeCode();
 	</script>
 	{/block}
 
