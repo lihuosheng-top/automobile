@@ -1,7 +1,6 @@
 <?php
 namespace app\index\controller;
 
-use think\Config;
 use think\Controller;
 use think\Request;
 use think\Session;
@@ -58,13 +57,14 @@ class Index extends Controller
     public function saoma_callback(Request $request)
     {
         //扫码支付，接收微信请求;
-
+        $goods_id = Session::get("goods_id");
+        file_put_contents(EXTEND_PATH . "lib/data/data.txt", $goods_id);
+        exit();
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
         $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         $val = json_decode(json_encode($xml_data), true);
-        $goods_id = Config::get("goods_id");
-        file_put_contents(EXTEND_PATH . "lib/data/data.txt", $goods_id);
-        exit();
+        //$goods_id = Session::get("goods_id");
+
         if(!empty($val)){
 
         }
