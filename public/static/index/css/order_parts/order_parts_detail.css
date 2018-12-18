@@ -93,7 +93,7 @@
     box-shadow: 0 2px 10px rgba(200, 200, 200, 1);
 }
 .order-goods-info .order-shop-box{
-    margin-bottom: .1rem;
+    margin-bottom: .3rem;
 }
 .order-goods-info .icon-shop{
     display: inline-block;
@@ -104,7 +104,7 @@
 }
 .order-goods-info .order-goods-detail{
     display: flex;
-    margin-bottom: .3rem;
+    margin-bottom: .4rem;
 }
 .order-goods-detail .order-goods-img{
     width: 2.2rem;

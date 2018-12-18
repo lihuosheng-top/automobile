@@ -55,31 +55,11 @@ class Index extends Controller
     public function saoma_callback()
     {
         //扫码支付，接收微信请求
-        ini_set('date.timezone', 'Asia/Shanghai');
-        error_reporting(E_ERROR);
-        include("../extend/WxpayAPI/lib/WxPay.Api.php");
-        include('../extend/WxpayAPI/example/log.php');
-        //初始化日志
-        $logHandler = new \CLogFileHandler("./logs/" . date('Y-m-d') . '.log');
-        $log = \Log::Init($logHandler, 15);
-        if (isset($_REQUEST["transaction_id"]) && $_REQUEST["transaction_id"] != "") {
-            $transaction_id = $_REQUEST["transaction_id"];
-            $input = new \WxPayOrderQuery();
-            $input->SetTransaction_id($transaction_id);
-            file_put_contents(EXTEND_PATH."lib/data/data.txt",\WxPayApi::orderQuery($input));
-            exit();
-            
-        }
 
-        if (isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != "") {
-            file_put_contents(EXTEND_PATH."lib/data.txt",$_REQUEST["transaction_id"]);
-            exit();
-            $out_trade_no = $_REQUEST["out_trade_no"];
-            $input = new \WxPayOrderQuery();
-            $input->SetOut_trade_no($out_trade_no);
-            echo json_encode(\WxPayApi::orderQuery($input));
-            exit();
-        }
+        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $val = json_decode(json_encode($xml_data),true);
+        file_put_contents(EXTEND_PATH."lib/data/data.txt",$val);
     }
 
 

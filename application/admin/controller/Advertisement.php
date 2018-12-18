@@ -28,14 +28,14 @@ class  Advertisement extends  Controller{
         $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
         $store_name = db("store")->where("user_id",$user)->value("store_name");
 
-        $platform = db("accessories") -> select();
+        $platform = db("accessories")->where("pgone",$user_phone[0]["id"]) -> select();
         foreach ($platform as $key => $value) {
             if ($value["id"]) {
                 $platform[$key]["shop_name"] = $store_name;
                 $platform[$key]["pid"] = $value["id"];
             }
         }
-
+    
         $all_idents = $platform;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
         $listRow = 20;//每页20行记录
@@ -84,10 +84,11 @@ class  Advertisement extends  Controller{
             $show_images = $request->file("advert_picture");
 
             $user_phone = Session::get("user_info");
+            $id = $user_phone[0]["id"];
             $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
             $store_name = db("store")->where("user_id",$user)->value("store_name");
                
-
+            //插入配件商表
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
@@ -97,11 +98,14 @@ class  Advertisement extends  Controller{
 
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
-
+            $data["pgone"] = $id;
             $userId = db('accessories')->insertGetId($data);
+
+            //插入平台列表
             $data["pid"] = $userId;
             $data["department"] = $user_phone[0]["department"];
             $data["shop_name"] = $store_name;
+            unset($data["pgone"]);
             $boole = db("platform")->insert($data);
             if ($userId && $boole) {
                 $this->success("添加成功", url("admin/Advertisement/accessories_business_advertising"));

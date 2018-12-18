@@ -1,10 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>已完成</title>
+    <style>
+        html, body{background-color: #f2f2f2;}
+        .courier-bg{height: 3.3rem; background-color: #3169f6; display: flex; align-items: center;}
+        .courier-bg .avatar{margin-left: .5rem; width: 1rem; height: 1rem; border-radius: 50%; overflow: hidden;}
+        .courier-bg .avatar img{width: 100%; height: 100%;}
+        .info{display: flex; flex-direction: column; line-height: normal; margin-left: .3rem;}
+        .info span{color: #fff; font-size: .3rem;}
+        .status-bar{background-color: #fff; height: 1.2rem; border-radius: .15rem; margin-top: -.8rem; display: flex; align-items: center; justify-content: space-around; box-shadow: 0 1px 5px 0 rgba(220, 220, 220, .6); margin-bottom: .2rem;}
+        .status-bar .status-a{position: relative; font-size: .3rem; color: #333;}
+        .status-bar .status-on{color: #3169f6;}
+        .status-bar .status-on::after{position: absolute; bottom: -0.34rem; left: 0; content: ' '; border: 1px solid #3169f6; width: 100%;}
+        .order-item{padding: .3rem .2rem; background-color: #fff; width: 7.2rem; margin: 0 auto .3rem; border-radius: .15rem; box-sizing: border-box;}
+        .distance-container{display: flex; align-items: center; justify-content: space-around; border-bottom: 1px solid #eee; padding-bottom: .3rem; margin-bottom: .2rem;}
+        .distance-container i{display: inline-block; width: .44rem; height: .5rem;}
+        .distance-container i.icon-me{background-position: -4.55rem -.35rem;}
+        .distance-container i.icon-get{background-position: -5.05rem -.35rem;}
+        .distance-container i.icon-send{background-position: -5.55rem -.35rem;}
+        .distance-container .distance-box{font-size: .24rem; color: #999;}
+        .address-container{margin-bottom: .3rem;}
+        .get-goods{display: flex; justify-content: space-around; line-height: normal;}
+        .get-goods>span{font-size: .32rem; color: #ff0600; margin-right: .2rem;}
+        .get-goods .shop-name{font-size: .32rem; color: #333;}
+        .get-goods div{display: flex; flex-direction: column; line-height: normal; flex: 1;}
+        .get-goods .shop-address{font-size: .28rem; color: #999;}
+        .get-goods .shop-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -4.15rem}
+        .send-goods{display: flex; justify-content: space-around; align-items: center;}
+        .send-goods span:first-of-type{font-size: .32rem; color: #09b10d;}
+        .send-goods .send-address{flex: 1; font-size: .32rem; color: #333;}
+        .send-goods .customer-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -5.05rem}
+        .time-container{display: flex; justify-content: space-between; align-items: center; margin-bottom: .4rem;}
+        .time-container>span{border: 1px solid #39a3f5; font-size: .24rem; color: #678;padding: 0 .15rem; border-radius: .3rem; height: .4rem;}
+        .button-container button{width: 100%;height: .8rem; border-radius: .1rem; border: 0; background-color: #3169f6; font-size: .3rem; color: #fff;}
+    </style>
 </head>
 <body>
-已完成
+    <div class="container">
+        <div class="courier-bg">
+            <div class="avatar">
+                <img src="__STATIC__/index/image/icon6.png">
+            </div>
+            <div class="info">
+                <span>黄飞鸿</span>
+                <span>13691853045</span>
+            </div>
+        </div>
+        <div class="status-bar">
+            <a href="express_wait_for_order" class="status-a">待接单</a>
+            <a href="express_wait_for_take" class="status-a">待取货</a>
+            <a href="express_distribution" class="status-a">配送中</a>
+            <a href="express_completed" class="status-a status-on">已完成</a>
+        </div>
+        <div class="order-container">
+            <div class="order-item">
+                <div class="distance-container">
+                    <i class="spr icon-me"></i>
+                    <div class="distance-box"><span>1.5</span>km</div>
+                    <i class="spr icon-get"></i>
+                    <div class="distance-box"><span>1.5</span>km</div>
+                    <i class="spr icon-send"></i>
+                </div>
+                <div class="address-container">
+                    <div class="get-goods">
+                        <span>取：</span>
+                        <div>
+                            <span class="shop-name">德鹏汽车维修店</span>
+                            <span class="shop-address">深圳市福田区中电信息大厦</span>
+                        </div>
+                        <a href="javascript:;" class="spr shop-phone"></a>
+                    </div>
+                    <div class="send-goods">
+                        <span>送：</span>
+                        <span class="send-address">深圳市福田区中电信息大厦</span>
+                        <a href="javascript:;" class="spr customer-phone"></a>
+                    </div>
+                </div>
+                <div class="time-container">
+                    <span class="order-time">下单时间：<span>12-17 19:00</span></span>
+                    <span class="accept-time">预计送达时间：<span>12-17 19:00</span></span>
+                </div>
+                <div class="button-container">
+                    <button>已完成</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+
 </body>
 </html>

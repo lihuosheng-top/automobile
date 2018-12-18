@@ -91,6 +91,20 @@ Route::group("",[
 
     /*TODO:卖家我的页面开始*/
     "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
+    "sell_service_order"=>"index/SellMy/sell_service_order",//卖家服务订单
+    "sell_parts_order"=>"index/SellMy/sell_parts_order",//卖家商品订单
+    "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
+    "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
+
+
+    "sell_service_record"=>"index/SellMy/sell_service_record",//卖家服务记录
+    "sell_parts_record"=>"index/SellMy/sell_parts_record",//卖家商品记录
+    "sell_order_bill"=>"index/SellMy/sell_order_bill",//卖家账单
+    "sell_wallet"=>"index/SellMy/sell_wallet",//卖家钱包
+    "sell_application"=>"index/SellMy/sell_application",//卖家提现申请
+
+
+
     /*TODO:卖家我的页面结束*/
 
 
@@ -150,6 +164,7 @@ Route::group("",[
     "express_wait_for_take"=>"index/Express/express_wait_for_take",//待取货
     "express_distribution"=>"index/Express/express_distribution",//配送中
     "express_completed"=>"index/Express/express_completed",//已完成
+    "express_detail"=>"index/Express/express_detail",//快递详情
     /*TODO:快递结束*/
 
 
@@ -602,6 +617,7 @@ Route::group("admin",[
     "shop_index"=>"admin/Shop/index",//店铺列表
     "shop_add"=>"admin/Shop/add",//店铺详情
     "shop_update"=>"admin/Shop/update",//店铺详情更新
+    "store_hot_status"=>"admin/Shop/store_hot_status",//店铺热门店铺修改（-1为正常，1为热门店铺）
     "shop_del"=>"admin/Shop/del",//店铺列表删除
     "shop_dels"=>"admin/Shop/dels",//店铺列表批量删除
     "shop_search"=>"admin/Shop/search",//店铺列表模糊查询
