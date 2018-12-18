@@ -880,6 +880,7 @@ class Goods extends Controller{
         if($request->isPost()){
             $id = $request->only(["goods_id"])["goods_id"];
             $goods_id = explode("g",$id);
+            halt($goods_id);
             foreach ($goods_id as $value){
                 $bool = db("goods")->where("id",$value)->where("putaway_status",1)->select();
             }

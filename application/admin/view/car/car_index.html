@@ -62,23 +62,29 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
+				{volist name="car_data" id="value"}
 					<tr>
 						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id=""></td>
-						<td>1000001</td>
-						<td>1000001</td>
+						<td>{$value.id}</td>
+						<td>{$value.brand}</td>
 						<td class="">
-							<div class="tdimg"><img src="11" /></div>
+							<div class="tdimg"><img src="__UPLOADS__/{$value.brand_images}" /></div>
 						</td>
 						<td>
-							<input type="checkbox" class="Status" name="" value="" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
+							{if $value.status == 1}
+							<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
+							{else}
+							<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
+							{/if}
 						</td>
 						<td>
-							<a class="layui-btn layui-btn-mini edit" href="car_edit"><i class="iconfont icon-edit"></i> 编辑
+							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Car/edit',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 编辑
 							</a>
 							
 							<a href="{:url('admin/Category/del')}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 						</td>
 					</tr>
+				{/volist}
 				</tbody>
 			</table>
 			<div id="page">
