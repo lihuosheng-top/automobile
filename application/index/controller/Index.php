@@ -16,7 +16,6 @@ class Index extends Controller
      */
     public function index(Request $request)
     {
-
         if($request->isPost()) {
             $user_id = Session::get("user");
             if (!empty($user_id)) {
@@ -66,7 +65,10 @@ class Index extends Controller
 
             $goods_id = $request->only(["goods_id"])["goods_id"];
             if($val){
-
+                $str = "148840755220181218g272";
+                $goods = strstr($str,"g");
+                $goods_id = substr($goods,1);
+                halt($goods_id);
             }
 
         }
