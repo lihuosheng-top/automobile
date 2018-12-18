@@ -64,7 +64,7 @@ class Index extends Controller
             $goods_id = Session::get("goods_id");
             file_put_contents(EXTEND_PATH . "lib/data/data.txt", $goods_id);
             exit();
-            if($val["result_code"] == SUCCESS){
+            if($val["result_code"] == 'SUCCESS'){
 
                 $bool = db("goods")->where("id",$goods_id)->update(["putaway_status"=>1,"goods_status"=>1]);
 
