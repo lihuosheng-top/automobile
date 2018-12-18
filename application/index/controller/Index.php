@@ -62,7 +62,11 @@ class Index extends Controller
             if($val["result_code"] == "SUCCESS" ){
                 $goods = strstr($val["out_trade_no"],"g");
                 $goods_id = substr($goods,1);
-                $bool = db("goods")->where("id",$goods_id)->update(["putaway_status"=>1,"goods_status"=>1]);
+                $ids = explode("g",$goods_id);
+                foreach ($ids as $value){
+                    $bool = db("goods")->where("id",$value)->update(["putaway_status"=>1,"goods_status"=>1]);
+                }
+
                 if($bool){
                     return ajax_success("成功",$bool);
                 }else{

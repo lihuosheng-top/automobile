@@ -33,7 +33,7 @@ class PayPassword extends  Controller{
             $user_id = Session::get("user");
             $is_set_mobile =Db::name('user')->where('id',$user_id)->where('phone_num',$mobile)->find();
             if(empty($is_set_mobile)){
-                return ajax_error("此手机未注册",['status'=>0]);
+                return ajax_error("请输入登录的手机号",['status'=>0]);
             }
             $mobileCode = rand(100000, 999999);
             $arr = json_decode($mobile, true);

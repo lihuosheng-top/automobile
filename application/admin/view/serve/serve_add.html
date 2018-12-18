@@ -133,7 +133,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">服务类型：</label>
 			<div class="layui-input-block">
-				<select name="service_setting_id">
+				<select name="service_setting_id" lay-filter="service_setting_id">
 					{if !empty($service_setting)}
 					{volist name="service_setting" id="val"}
 					<option value="{$val.service_setting_id}">{$val.service_setting_name}</option>
@@ -159,13 +159,13 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 价格：</label>
 			<div class="layui-input-block">
-				<input type="text" name="service_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="service_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="money">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">划线价：</label>
 			<div class="layui-input-block">
-				<input type="text" name="ruling_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="ruling_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="line_money">
 			</div>
 		</div>
 
@@ -206,6 +206,18 @@
 				layer = parent.layer === undefined ? layui.layer : parent.layer,
 				laypage = layui.laypage,
 				$ = layui.jquery;
+				 form.on('select(service_setting_id)', function(data) {
+				 	if(data.value==10){
+				 		
+				 		
+				 		$("#money").removeAttr("disabled");
+				 		$("#line_money").removeAttr("disabled");
+				 	}
+				 	else{
+				 		$("#money").attr("disabled","disabled");
+				 		$("#line_money").attr("disabled","disabled");
+				 	}
+				 })
 
 			
 		})
