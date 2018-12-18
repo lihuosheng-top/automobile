@@ -822,7 +822,7 @@ class Goods extends Controller{
             /**
              * 设置商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
              */
-            $input->SetOut_trade_no(\WxPayConfig::MCHID.date("Ymd")."g".$goods_id);
+            $input->SetOut_trade_no(date("YmdHis")."g".$goods_id);
             /**
              * 设置订单总金额，只能为整数，详见支付金额
              * @param string $value
