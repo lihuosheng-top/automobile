@@ -449,13 +449,12 @@ class Install extends Controller{
             $addressed = [$express_data["economize"], $express_data["market"], $express_data["distinguish"]];
             $express_data["areas"] = implode("", $addressed);
             $express_data["area"] = implode(",", $addressed);
-
+            $express_data["passwords"] = password_hash($express_data["password"],PASSWORD_DEFAULT);
             foreach ($express_data as $k => $v) {
                 if (in_array($v, $addressed)) {
                     unset($express_data[$k]);
                 }
             }
-            
             $bool = db("delivery") -> insert($express_data);
             if ($bool) {
                 $this->success("添加成功", url("admin/Install/express_index"));
@@ -498,7 +497,7 @@ class Install extends Controller{
             $addressed = [$data["economize"], $data["market"], $data["distinguish"]];
             $data["areas"] = implode("", $addressed);
             $data["area"] = implode(",", $addressed);
-
+            $data["passwords"] = password_hash($data["password"],PASSWORD_DEFAULT);
             foreach ($data as $k => $v) {
                 if (in_array($v, $addressed)) {
                     unset($data[$k]);
