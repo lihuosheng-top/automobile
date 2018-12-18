@@ -16,6 +16,8 @@ class Index extends Controller
     public function index(Request $request)
     {
 
+        $goods_id = Session::get("goods_id");
+        halt($goods_id);
         if($request->isPost()) {
             $user_id = Session::get("user");
             if (!empty($user_id)) {
@@ -63,8 +65,9 @@ class Index extends Controller
 
             if($val["result_code"] == "SUCCESS"){
                 $goods_id = Session::get("goods_id");
+                file_put_contents(EXTEND_PATH . "lib/data/data.txt", $goods_id);
+                exit();
                 $bool = db("goods")->where("id",$goods_id)->update(["putaway_status"=>1,"goods_status"=>1]);
-                file_put_contents(EXTEND_PATH . "lib/data/data.txt", $bool);
 
                 return ajax_success("成功",$bool);
             }else{
