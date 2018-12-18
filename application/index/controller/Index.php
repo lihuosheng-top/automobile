@@ -68,7 +68,6 @@ class Index extends Controller
                 }
 
                 if($bool){
-                    file_put_contents(EXTEND_PATH."lib/data/data.txt",$bool);
                     return ajax_success("成功",$bool);
                 }else{
                     return ajax_error("失败");
