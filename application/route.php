@@ -77,7 +77,11 @@ Route::group("",[
     "member_information_data"=>"index/My/member_information_data",//个人信息用户个人信息返回（头像,真实姓名，昵称，性别）
     "member_update_mobiles"=>"index/My/member_update_mobiles",//个人信息修改手机
     "my_integral"=>"index/My/integral",            //我的积分页面(积分记录ajax)
-    "setting"=>"index/My/setting",              //设置
+    "setting"=>"index/My/setting",              //设置(所有页面)
+    "is_business"=>"index/My/is_business",      //判断是否是商家还是只是车主（ajax）（隐藏切换角色的按钮）
+    "select_role_owner"=>"index/My/select_role_owner",      //选择车主）通过判断是否是商家或者是车主（ajax）
+    "select_role_business"=>"index/My/select_role_business",      //（选择商家）通过判断是否是商家或者是车主（ajax）
+    "select_role_get"=>"index/My/select_role_get",//获取商家的信息，如果存在则是商家角色，不存在则为车主
     "my_nickname"=>"index/My/nickname",         //昵称
     "my_consume"=>"index/My/consume",         //我的消费
     "consume_message"=>"index/My/consume_message",       //消费详情
@@ -96,15 +100,11 @@ Route::group("",[
     "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
     "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
 
-
     "sell_service_record"=>"index/SellMy/sell_service_record",//卖家服务记录
     "sell_parts_record"=>"index/SellMy/sell_parts_record",//卖家商品记录
     "sell_order_bill"=>"index/SellMy/sell_order_bill",//卖家账单
     "sell_wallet"=>"index/SellMy/sell_wallet",//卖家钱包
     "sell_application"=>"index/SellMy/sell_application",//卖家提现申请
-
-
-
     /*TODO:卖家我的页面结束*/
 
 
@@ -149,6 +149,10 @@ Route::group("",[
     "member_address_edit"=>"index/member/member_address_edit",//地址管理编辑功能(ajax)
     "member_collection"=>"index/member/member_collection",//我的收藏
     /*TODO:我的页面结束*/
+
+    /*TODO:支付密码开始*/
+    "pay_password_update"=>"index/PayPassword/pay_password_update",//修改支付密码
+    /*TODO:支付密码结束*/
 
 
     /*TODO:收藏开始*/
