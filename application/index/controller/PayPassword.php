@@ -73,7 +73,36 @@ class PayPassword extends  Controller{
      * Notes: 修改支付密码
      **************************************
      */
-//    public function  pay_password_update(){
-//
-//    }
+    public function  pay_password_update(Request $request){
+        if($request->isPost()){
+            $mobile =trim($_POST['phone']);
+            $code =trim($_POST['phoneCode']);
+            $password =trim($_POST['newPwd']);
+            $password_second =trim($_POST['repeatPwd']);
+            $data=[
+                'phone_number'=>$mobile,
+                'password'=>$password,
+                'code'=>$code,
+            ];
+            if(!empty($data)){
+                $res =Db::name('user')->field('phone_num')->where('phone_num',$mobile)->select();
+                if(empty($res)){
+                    return ajax_error('此手机号不能存在，请前往注册',$mobile);
+                }else{
+                    if (session('mobileCode') != $code) {
+                        return ajax_error("验证码不正确",$mobile);
+                    }else{
+                        $passwords =password_hash($password,PASSWORD_DEFAULT);
+                        $password_bool =Db::name('user')->where('phone_num',$mobile)->update(['pay_passwd'=>$passwords]);
+                        if($password_bool){
+                            return ajax_success('密码修改成功',["status"=>1]);
+                        }else{
+                            return ajax_error('密码修改失败',["status"=>0]);
+                        }
+                    }
+                }
+            }
+
+        }
+    }
 }

@@ -151,6 +151,7 @@ Route::group("",[
     /*TODO:我的页面结束*/
 
     /*TODO:支付密码开始*/
+    "sendMobileCodes"=>"index/PayPassword/sendMobileCodes",//支付密码修改验证码
     "pay_password_update"=>"index/PayPassword/pay_password_update",//修改支付密码
     /*TODO:支付密码结束*/
 
