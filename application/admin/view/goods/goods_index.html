@@ -292,7 +292,6 @@
 				<div id="page">
 					<div class="opation" style="width: 200px; float: left;">
 						<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-
 							<option check="" value="0">请选择</option>
 							<option value="1">批量删除</option>
 							<option value="2">批量上架</option>
@@ -516,15 +515,18 @@
                     });
 
 
-                } else if (opration_val == 2) {
+                } 
+                else if (opration_val == 2) {
+                	var j=0;
                     var nmdata_id = [];
-                    var mdata_id = [];
+                    var mdata_id = "";
                     var all_price = 0;
                     var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
                     for (var i = 0; i < child.length; i++) {
                         data_id.push($(child[i])[0].dataset.id);
                         if ($(child[i])[0].dataset.action == 0) {
-                            mdata_id.push($(child[i])[0].dataset.id);
+                        	j++;
+                            mdata_id+=$(child[i])[0].dataset.id+"q";
                             all_price += parseFloat($(child[i])[0].dataset.title);
                         } else {
                             nmdata_id.push($(child[i])[0].dataset.id);
@@ -568,7 +570,6 @@
                             // 当角色为服务商时
                             else if (role_id == 5) {
                                 if (mdata_id.length > 0) {
-                                 
                                     layer.confirm('付费商品需付费后才能上架！', {
                                         btn: ['确定付费', '取消付费！'] //按钮
                                     }, function() {
@@ -576,7 +577,7 @@
                                         $(".tanchuang").removeClass("noshow");
                                         $("#shop").val(shop);
                                         $("#price").val(all_price);
-                                        $("#num").val(mdata_id.length);
+                                        $("#num").val(j);
                                         $("#good-id").val(mdata_id);
 
                                     });
