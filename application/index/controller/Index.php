@@ -61,10 +61,11 @@ class Index extends Controller
             $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
             $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
             $val = json_decode(json_encode($xml_data), true);
-            //$goods_id = Session::get("goods_id");
-            file_put_contents(EXTEND_PATH . "lib/data/data.txt", $val);
+            $goods_id = Session::get("goods_id");
+            file_put_contents(EXTEND_PATH . "lib/data/data.txt", $goods_id);
             exit();
             if($val["result_code"] == 'SUCCESS'){
+
 
                 $bool = db("goods")->where("id",$goods_id)->update(["putaway_status"=>1,"goods_status"=>1]);
 
