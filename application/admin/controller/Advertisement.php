@@ -87,6 +87,7 @@ class  Advertisement extends  Controller{
             $id = $user_phone[0]["id"];
             $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
             $store_name = db("store")->where("user_id",$user)->value("store_name");
+            $area = db("store")->where("user_id",$user)->value("store_city_address");
                
             //插入配件商表
             if ($show_images) {
