@@ -167,3 +167,8 @@ $('.filter-ul').on('click', 'li', function(){
     $(this).siblings().removeClass('filter-this');
     $(this).addClass('filter-this');
 })
+
+// 确定预约
+$('.bespeak-btn').click(function(){
+    location.href = 'reservation_info';
+})

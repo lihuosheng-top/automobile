@@ -100,15 +100,11 @@ Route::group("",[
     "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
     "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
 
-
     "sell_service_record"=>"index/SellMy/sell_service_record",//卖家服务记录
     "sell_parts_record"=>"index/SellMy/sell_parts_record",//卖家商品记录
     "sell_order_bill"=>"index/SellMy/sell_order_bill",//卖家账单
     "sell_wallet"=>"index/SellMy/sell_wallet",//卖家钱包
     "sell_application"=>"index/SellMy/sell_application",//卖家提现申请
-
-
-
     /*TODO:卖家我的页面结束*/
 
 
@@ -153,6 +149,10 @@ Route::group("",[
     "member_address_edit"=>"index/member/member_address_edit",//地址管理编辑功能(ajax)
     "member_collection"=>"index/member/member_collection",//我的收藏
     /*TODO:我的页面结束*/
+
+    /*TODO:支付密码开始*/
+    "pay_password_update"=>"index/PayPassword/pay_password_update",//修改支付密码
+    /*TODO:支付密码结束*/
 
 
     /*TODO:收藏开始*/

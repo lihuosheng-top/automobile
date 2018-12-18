@@ -113,6 +113,8 @@ $.ajax({
         $('.total-box span').text(val.all_goods_pays);
         // 抵扣金额
         $('.discount-box span').text(val.integral_deductible);
+        // 买家留言
+        $('.leave-message').text(val.buy_message);
         // 需付款
         $('.pay-amount-span span').text(val.all_order_real_pay);
         // 创建时间

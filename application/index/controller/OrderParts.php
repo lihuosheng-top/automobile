@@ -62,6 +62,7 @@ class OrderParts extends Controller{
                 ->select();
             if (!empty($data)) {
                 $datas["store_id"] = $data[0]["store_id"];//店铺id
+                $datas["buy_message"] = $data[0]["buy_message"];//买家留言
                 $datas["store_name"] = $data[0]["store_name"];//店铺名称
                 $datas["create_time"] = $data[0]["order_create_time"];//订单创建时间
                 $datas["parts_order_number"] = $data[0]["parts_order_number"];//订单编号
