@@ -57,10 +57,10 @@ class Index extends Controller
         //扫码支付，接收微信请求
 
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        file_put_contents(EXTEND_PATH."lib/data/data.txt",$xml);
-        exit();
-        $xml_data = simplexml_load_file($xml);
 
+        $xml_data = simplexml_load_file($xml);
+        file_put_contents(EXTEND_PATH."lib/data/data.txt",$xml_data->result_code);
+        exit();
         //$val = json_decode(json_encode($xml_data),true);
 
     }
