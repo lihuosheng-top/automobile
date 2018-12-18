@@ -247,7 +247,7 @@
             if(phone!== '' && phone.match(reg)){
                 buttonCountdown($(this), 1000 * 60 * 1, "ss");
                 $.ajax({
-                    url: 'sendMobileCode',
+                    url: 'sendMobileCodes',
                     type: 'POST',
                     dataType: 'JSON',
                     data: {
@@ -281,7 +281,7 @@
             var newPwd = $('.new-pwd').val();
             var repeatPwd = $('.repeat-pwd').val();
             $.ajax({
-                url: 'sendMobileCode',
+                url: 'pay_password_update',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
