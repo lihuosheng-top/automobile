@@ -7,6 +7,7 @@
  */
 namespace app\admin\controller;
 use think\Controller;
+use think\Request;
 
 class Car extends Controller{
 
@@ -27,9 +28,10 @@ class Car extends Controller{
      * 汽车品牌添加
      * 陈绪
      */
-    public function add(){
+    public function add(Request $request){
 
-        return view("car_add");
+        $brand_name = db("car_series")->distinct(true)->field("brand")->select();
+        return view("car_add",["brand_name"=>$brand_name]);
 
     }
 

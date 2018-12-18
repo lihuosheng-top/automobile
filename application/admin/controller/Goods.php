@@ -865,7 +865,32 @@ class Goods extends Controller{
 
             $result = $notify->GetPayUrl($input);
             $url2 = $result["code_url"];
-            return view("WeiAlpay_code",["url2"=>$url2,"goods_money"=>$goods_money,"store"=>$store]);
+            return view("WeiAlpay_code",["goods_id"=>$goods_id,"url2"=>$url2,"goods_money"=>$goods_money,"store"=>$store]);
+
+    }
+
+
+
+    /**
+     * 微信上架状态检测
+     * 陈绪
+     */
+    public function get_weixin_status(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["goods_id"])["goods_id"];
+            $goods_id = explode("g",$id);
+            foreach ($goods_id as $value){
+                $bool = db("goods")->where("id",$value)->where("putaway_status",1)->select();
+            }
+
+            if($bool){
+                return ajax_success("成功",$bool);
+            }else{
+                return ajax_error("失败");
+            }
+
+        }
 
     }
 
