@@ -45,7 +45,7 @@
 
 	{block name="content"}
 		<div class="all">
-			<input type="hidden" readonly="true" id="J_order_id" value="{$goods_id}"/>
+			<input type="hidden" readonly="true" id="J_order_id"/>
 			<h2 class="static">待支付......</h2>
 			<p>商家名称：<span id="shop_name"></span></p>
 			<p>支付金额：<span id="repay_money"></span></p>
@@ -84,7 +84,7 @@
             url: "{:url('index/index/saoma_callback')}",
             data: {'goods_id': goods_id},
             success: function(_data) {
-				
+
             },
 
             error: function() {

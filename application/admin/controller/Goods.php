@@ -822,7 +822,7 @@ class Goods extends Controller{
             /**
              * 设置商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
              */
-            $input->SetOut_trade_no(\WxPayConfig::MCHID.date("YmdHis"));
+            $input->SetOut_trade_no(\WxPayConfig::MCHID.date("YmdHis")."goods_id=".$goods_id);
             /**
              * 设置订单总金额，只能为整数，详见支付金额
              * @param string $value
@@ -865,7 +865,8 @@ class Goods extends Controller{
 
             $result = $notify->GetPayUrl($input);
             $url2 = $result["code_url"];
-            return view("WeiAlpay_code",["url2"=>$url2,["goods_id"=>$goods_id]]);
+            Session("goods_id",$goods_id);
+            return view("WeiAlpay_code",["url2"=>$url2]);
 
     }
 
