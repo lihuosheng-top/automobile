@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use think\Controller;
+use think\Paginator;
 use think\Request;
 use think\Session;
 
@@ -58,16 +59,15 @@ class Index extends Controller
     {
         //扫码支付，接收微信请求;
 
-        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
-        $val = json_decode(json_encode($xml_data), true);
-        $goods_id = Session::get("goods_id");
-        if($val){
-            file_put_contents(EXTEND_PATH . "lib/data/data.txt", $goods_id);
-            exit();
-        }
-
-        if(!empty($val)){
+        if($request->isPost()){
+            $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+            $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $val = json_decode(json_encode($xml_data), true);
+            $goods_id = $request->only(["goods_id"])["goods_id"];
+            if($val){
+                file_put_contents(EXTEND_PATH . "lib/data/data.txt", $goods_id);
+                exit();
+            }
 
         }
         exit();
