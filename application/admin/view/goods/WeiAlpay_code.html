@@ -82,9 +82,9 @@
         $.ajax({
             type: "POST",
             url: "{:url('index/index/saoma_callback')}",
-            data: {'goods_id': goods_id},
-            success: function(_data) {
-
+            data: {},
+            success: function(data) {
+				console.log(data);
             },
 
             error: function() {
