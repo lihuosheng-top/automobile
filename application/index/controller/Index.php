@@ -57,7 +57,7 @@ class Index extends Controller
     public function saoma_callback(Request $request)
     {
         //扫码支付，接收微信请求;
-        if($request->isGet()) {
+        if($request->isPost()) {
             $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
             $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
             $val = json_decode(json_encode($xml_data), true);
