@@ -414,7 +414,7 @@ Route::group("admin",[
     /*会员管理 ：TODO*/
     "user_index"=>"admin/User/index", //会员概况
     "user_edit"=>"admin/User/edit",     //会员编辑
-    "user_grade"=>"admin/User/grade",  //会员等级
+    "user_grade"=>"admin/User/grade",  //会员等级(ajax)
     "user_static"=>"admin/User/status", //会员页面的账户状态修改
     "user_del"=>"admin/User/del", //会员删除
     "user_dels"=>"admin/User/dels", //会员批量删除
