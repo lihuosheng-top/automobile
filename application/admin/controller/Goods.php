@@ -822,7 +822,7 @@ class Goods extends Controller{
             /**
              * 设置商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
              */
-            $input->SetOut_trade_no(date("YmdHis")."g".$goods_id);
+            $input->SetOut_trade_no("g".$goods_id);
             /**
              * 设置订单总金额，只能为整数，详见支付金额
              * @param string $value
@@ -880,11 +880,9 @@ class Goods extends Controller{
         if($request->isPost()){
             $id = $request->only(["goods_id"])["goods_id"];
             $goods_id = explode("g",$id);
-            halt($goods_id);
             foreach ($goods_id as $value){
                 $bool = db("goods")->where("id",$value)->where("putaway_status",1)->select();
             }
-
             if($bool){
                 return ajax_success("成功",$bool);
             }else{

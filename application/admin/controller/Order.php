@@ -126,7 +126,7 @@ class Order extends Controller{
                     ->join("tb_goods", "tb_order_parts.goods_id=tb_goods.id", "left")
                     ->where("tb_order_parts.parts_goods_name", "like","%" .$goods_name ."%")
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -137,7 +137,7 @@ class Order extends Controller{
                     ->join("tb_goods", "tb_order_parts.goods_id=tb_goods.id", "left")
                     ->where("tb_user.phone_num", "like", "%" . $phone_num . "%")
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -148,7 +148,7 @@ class Order extends Controller{
                     ->join("tb_goods", "tb_order_parts.goods_id=tb_goods.id", "left")
                     ->where("tb_order_parts.status", "like", "%" . $order_status . "%")
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -159,7 +159,7 @@ class Order extends Controller{
                     ->join("tb_goods", "tb_order_parts.goods_id=tb_goods.id", "left")
                     ->where('tb_order_parts.order_create_time','>=',"$timemin")
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -170,7 +170,7 @@ class Order extends Controller{
                     ->join("tb_goods", "tb_order_parts.goods_id=tb_goods.id", "left")
                     ->where('tb_order_parts.order_create_time','<=',"timemax")
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -182,7 +182,7 @@ class Order extends Controller{
                     ->join("tb_goods", "tb_order_parts.goods_id=tb_goods.id", "left")
                     ->where($res)
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -194,7 +194,7 @@ class Order extends Controller{
                     ->where("tb_order_parts.parts_goods_name", "like","%" .$goods_name ."%")
                     ->whereOr("tb_user.phone_num", "like", "%" . $phone_num . "%")
                     ->order('tb_order_parts.order_create_time','desc')
-                    ->paginate(3);
+                    ->paginate(20);
             }
             else if((empty($goods_name)) && (empty($phone_num)) && (empty($order_status)) && (empty($timemin)) && (empty($time_max_data))){
                 $order_parts_data =Db::table('tb_order_parts')
@@ -202,7 +202,7 @@ class Order extends Controller{
                     ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
                     ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
                     ->order('tb_order_parts.order_create_time','desc')
-                    ->paginate(3);
+                    ->paginate(20);
             }
             return view('index', ['order_parts_data' => $order_parts_data]);
         }
@@ -215,7 +215,7 @@ class Order extends Controller{
                     ->where("tb_order_parts.parts_goods_name", "like","%" .$goods_name ."%")
                     ->whereOr("tb_order_parts.parts_order_number", "like", "%" . $keywords . "%")
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -227,7 +227,7 @@ class Order extends Controller{
                     ->where("tb_user.phone_num", "like", "%" . $phone_num . "%")
                     ->whereOr("tb_order_parts.parts_order_number", "like", "%" . $keywords . "%")
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -239,7 +239,7 @@ class Order extends Controller{
                     ->where("tb_order_parts.status", "like", "%" . $order_status . "%")
                     ->whereOr("tb_order_parts.parts_order_number", "like", "%" . $keywords . "%")
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -251,7 +251,7 @@ class Order extends Controller{
                     ->where('tb_order_parts.order_create_time','>=',"$timemin")
                     ->whereOr("tb_order_parts.parts_order_number", "like", "%" . $keywords . "%")
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -263,7 +263,7 @@ class Order extends Controller{
                     ->where('tb_order_parts.order_create_time','<=',"$timemax")
                     ->whereOr("tb_order_parts.parts_order_number", "like", "%" . $keywords . "%")
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -276,7 +276,7 @@ class Order extends Controller{
                     ->whereOr("tb_order_parts.parts_goods_name", "like","%" .$goods_name ."%")
                     ->whereOr("tb_user.phone_num", "like", "%" . $phone_num . "%")
                     ->order('tb_order_parts.order_create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -287,7 +287,7 @@ class Order extends Controller{
                     ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
                     ->where("tb_order_parts.parts_order_number", "like", "%" . $keywords . "%")
                     ->order('tb_order_parts.order_create_time','desc')
-                    ->paginate(3);
+                    ->paginate(20);
             }
             return view('index', ['order_parts_data' => $order_parts_data]);
         }
@@ -441,7 +441,7 @@ class Order extends Controller{
                 ->where($condition)
                 ->where($user_condition)
                 ->order('create_time', 'desc')
-                ->paginate(3, false, [
+                ->paginate(20, false, [
                     'query' => request()->param(),
                 ]);
         } else {
@@ -451,13 +451,13 @@ class Order extends Controller{
                 $evaluate_data = Db::name('order_parts_evaluate')
                     ->order('create_time', 'desc')
                     ->where($condition)
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             } else {
                 $evaluate_data = Db::name('order_parts_evaluate')
                     ->order('create_time', 'desc')
-                    ->paginate(3, false, [
+                    ->paginate(20, false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -593,7 +593,7 @@ class Order extends Controller{
             ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
             ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
             ->order('tb_order_parts.order_create_time','desc')
-            ->paginate(3 );
+            ->paginate(20);
         return view('platform_order_parts_index',['order_parts_data'=>$order_parts_data]);
     }
 
@@ -648,7 +648,7 @@ class Order extends Controller{
                     ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
                     ->where($time_condition)
                     ->order('tb_order_parts.order_create_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }else if((!empty($timemin))&&(empty($time_max_data))){
@@ -659,7 +659,7 @@ class Order extends Controller{
                     ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
                     ->where($time_condition)
                     ->order('tb_order_parts.order_create_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }else if((empty($timemin))&&(!empty($time_max_data))){
@@ -671,7 +671,7 @@ class Order extends Controller{
 
                     ->where($time_condition)
                     ->order('tb_order_parts.order_create_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }else{
@@ -680,7 +680,7 @@ class Order extends Controller{
                     ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
                     ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
                     ->order('tb_order_parts.order_create_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -697,7 +697,7 @@ class Order extends Controller{
                         ->where($condition)
                         ->where($time_condition)
                         ->order('tb_order_parts.order_create_time','desc')
-                        ->paginate(3 ,false, [
+                        ->paginate(20 ,false, [
                             'query' => request()->param(),
                         ]);
                 }else if((!empty($timemin))&&(empty($time_max_data))){
@@ -710,7 +710,7 @@ class Order extends Controller{
                         ->where($condition)
                         ->where($time_condition)
                         ->order('tb_order_parts.order_create_time','desc')
-                        ->paginate(3 ,false, [
+                        ->paginate(20 ,false, [
                             'query' => request()->param(),
                         ]);
                 }else if((empty($timemin))&&(!empty($time_max_data))){
@@ -723,7 +723,7 @@ class Order extends Controller{
                         ->where($condition)
                         ->where($time_condition)
                         ->order('tb_order_parts.order_create_time','desc')
-                        ->paginate(3 ,false, [
+                        ->paginate(20 ,false, [
                             'query' => request()->param(),
                         ]);
                 }else{
@@ -734,7 +734,7 @@ class Order extends Controller{
                         ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
                         ->where($condition)
                         ->order('tb_order_parts.order_create_time','desc')
-                        ->paginate(3 ,false, [
+                        ->paginate(20 ,false, [
                             'query' => request()->param(),
                         ]);
                 }
@@ -746,7 +746,7 @@ class Order extends Controller{
                     ->join("tb_user","tb_order_parts.user_id=tb_user.id",'left')
                     ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
                     ->order('tb_order_parts.order_create_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
 
@@ -819,7 +819,7 @@ class Order extends Controller{
      **************************************
      */
     public function platform_order_evaluate(){
-        $evaluate_data =Db::name('order_parts_evaluate')->order('create_time','desc')->paginate(3);
+        $evaluate_data =Db::name('order_parts_evaluate')->order('create_time','desc')->paginate(20);
         return view('platform_order_evaluate',['evaluate_data'=>$evaluate_data]);
     }
 
@@ -840,7 +840,7 @@ class Order extends Controller{
      **************************************
      */
     public function platform_order_service_evaluate(){
-        $service_order_evaluate =Db::name('order_service_evaluate')->order('create_time','desc')->paginate(5);
+        $service_order_evaluate =Db::name('order_service_evaluate')->order('create_time','desc')->paginate(20);
         return view('platform_order_service_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
     }
 
@@ -957,7 +957,7 @@ class Order extends Controller{
      **************************************
      */
     public function service_order_evaluate(){
-        $service_order_evaluate =Db::name('order_service_evaluate')->order('create_time','desc')->paginate(5);
+        $service_order_evaluate =Db::name('order_service_evaluate')->order('create_time','desc')->paginate(20);
         return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
     }
 

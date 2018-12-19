@@ -27,7 +27,7 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="{:url('admin/Category/search')}">
+			<form class="layui-form" action="{:url('admin/Car/search')}" method="post">
 				<div class="seach">
 					<div class="seach_list">
 						<div class="seach_laber">品牌名称</div>
@@ -81,7 +81,7 @@
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Car/edit',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 编辑
 							</a>
 							
-							<a href="{:url('admin/Category/del')}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+							<a href="{:url('admin/Car/del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 						</td>
 					</tr>
 				{/volist}
