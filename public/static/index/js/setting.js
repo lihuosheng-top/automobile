@@ -232,10 +232,33 @@ $('.change-role-back').click(function(){
 $('.change-role-pop').on('change', 'input', function(){
     var role = $(this).attr('id');
     $('.change-role-btn').click(function(){
+        console.log(role)
         if(role == 'customer'){
-            location.href = 'my_index';
+            $.ajax({
+                url: 'select_role_owner',
+                type: 'POST',
+                dataType: 'JSON',
+                success: function(res){
+                    console.log(res);
+                    location.href = 'my_index';
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         }else if(role == 'supplier'){
-            location.href = 'sell_my_index';
+            $.ajax({
+                url: 'select_role_business',
+                type: 'POST',
+                dataType: 'JSON',
+                success: function(res){
+                    console.log(res);
+                    location.href = 'sell_my_index';
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         }
     })
 })
@@ -247,6 +270,28 @@ $.ajax({
     dataType: 'JSON',
     success: function(res){
         console.log(res);
+        if(res.status == 0){
+            $('.change-role-li').hide();
+        }
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+// 获取商家的信息，如果存在则是商家角色，不存在则为车主
+$.ajax({
+    url: 'select_role_get',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log('获取商家的信息，如果存在则是商家角色，不存在则为车主',res);
+        $('.icon-back').click(function(){
+            if(res.status == 1){
+                location.href = 'sell_my_index';
+            }else{
+                location.href = 'my_index';
+            }
+        })
     },
     error: function(){
         console.log('error');
