@@ -583,7 +583,7 @@ class Goods extends Controller{
 
         if($request->isPost()){
             $standard_name = $request->only(["goods_name"])["goods_name"];
-            $standard_bool =  db("goods_property_name")->where("property_name",$standard_name)->select();
+            $standard_bool =  db("goods_property_name")->where("property_name",$standard_name)->delete();
             if($standard_bool){
                 return ajax_success("删除成功");
             }else{
