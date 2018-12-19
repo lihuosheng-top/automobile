@@ -245,7 +245,11 @@
             <label class="layui-form-label">排序：</label>
             <div class="layui-input-block">
                 {if !empty($vo.store_order_num)}
-              <input type="text" name="store_order_num" value="{$vo.store_order_num}" placeholder="" class="layui-input" >
+              <input type="number" name="store_order_num" value="{$vo.store_order_num}" placeholder="" class="layui-input" >
+                {/if}
+                
+                  {if empty($vo.store_order_num)}
+              <input type="number" name="store_order_num" value="" placeholder="" class="layui-input" >
                 {/if}
             </div>
         </div>
