@@ -138,7 +138,7 @@ Route::group("",[
     /*TODO:找回密码验证码结束*/
 
     /*TODO:我的页面开始*/
-    "member_equity"=>"index/member/member_equity",//会员权益
+    "member_equity"=>"index/member/member_equity",//会员权益(ajax)
     "member_address"=>"index/member/member_address",//地址管理
     "member_default_address_return"=>"index/member/member_default_address_return",//购买页面默认地址返回或者选择其他地址
     "member_address_information"=>"index/member/member_address_information",//地址管理列表数据返回
