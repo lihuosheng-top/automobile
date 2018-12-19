@@ -96,6 +96,20 @@
                 $('.alipay-pop').animate({'bottom': '0'});
                 var rechargeAmount = $('.recharge-box input').val();
                 $('#WIDtotal_amount').val(rechargeAmount);
+                $.ajax({
+                    url: 'wallet_recharge',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'recharge_money': rechargeAmount
+                    },
+                    success: function(res){
+                        console.log(res);
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
             }else{
                 layer.open({
                     style: 'bottom:100px;',
