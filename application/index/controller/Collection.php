@@ -19,7 +19,7 @@ class  Collection extends Controller{
      * Notes:我的收藏
      **************************************
      */
-    public function index(){
+    public function collection_index(){
         $user_id =Session::get("user");
         if(!empty($user_id)){
             $data=Db::table("tb_collection")
@@ -46,7 +46,7 @@ class  Collection extends Controller{
      **************************************
      * @param Request $request
      */
-    public function  add(Request $request){
+    public function  collection_add(Request $request){
         if($request->isPost()){
             $user_id =Session::get("user");
             if(!empty($member)){
@@ -90,7 +90,7 @@ class  Collection extends Controller{
      **************************************
      * @param Request $request
      */
-    public function del(Request $request){
+    public function collection_del(Request $request){
         if($request->isPost()){
             $id =$_POST['id'];
             $user_id =Session::get("user");
