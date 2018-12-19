@@ -49,10 +49,10 @@ class  Collection extends Controller{
     public function  collection_add(Request $request){
         if($request->isPost()){
             $user_id =Session::get("user");
-            if(!empty($member)){
-                $datas =$_POST;
+            if(!empty($user_id)){
+                $datas =$request->only("id")["id"];
                 if(!empty($datas)){
-                    $goods_id = $datas['id'];//商品id
+                    $goods_id = $datas;//商品id
                     $history_res =Db::name('collection')->where('user_id',$user_id)->where('goods_id',$goods_id)->find();
                     if($history_res){
                         $res = Db::name('collection')->where('user_id',$user_id)->where('goods_id',$goods_id)->delete();
