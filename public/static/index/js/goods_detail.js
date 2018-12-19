@@ -148,67 +148,6 @@ $('.comment_classify_box li').click(function(){
     $(this).addClass('active').siblings().removeClass('active');
 })
 
-// 图片展示 start
-var index, curr_container, curr_img_len;
-$(function(){
-    $('.comment_img_ul comment_img_li').click(function(e){
-        index = $(this).index();// 当前被点击的索引值
-        curr_container = e.liveFired;//被点击li的父级
-        curr_img_len = $(curr_container).children().length;//被点击容器中li的length
-        $('.show_img .img_num').html(index+1+'/'+curr_img_len);//显示图片数量
-        loadImage(e.target);//执行 传参
-    })
-})
-// 屏幕比例
-var proportion = $(window).height() / $(window).width();
-// 放大图片
-function loadImage(obj){
-    $('.show_img').show();// 显示容器
-    $('.img_box').empty();
-    $('html').css('overflow', 'hidden');
-    var oImg = new Image();// 实例化img
-        oImg.src =  obj.src;//  给新建img 赋值src
-    oImg.onload = function(){//图片加载完显示
-        // 计算图片宽高比
-        var img_h = this.height,
-            img_w = this.width;
-        if(img_h / img_w > proportion){// 图片的高度宽度比例大于 屏幕比例  图片高度100%
-            $(oImg).appendTo($('.img_box')).css('height', '100%');
-        }else{// 图片的高度宽度比例小于 屏幕比例  图片宽度100%
-            $(oImg).appendTo($('.img_box')).css('width', '100%');
-        }
-    }
-}
-$('.img_box').click(function(e){
-    e.cancelBubble = true;
-    if(!$(e.targeet).hasClass('.img_box')){
-        $('.show_img').hide();
-    }
-    if($('.pop').css('transform') != 'translateX(0px)'){
-        $('html').css('overflow', 'auto');
-    }
-
-}).on('swipeLeft', function(){//用户左划
-    index++;
-    if(index > curr_img_len - 1){//如果index大于总长度 显示最后一张
-        index = curr_img_len - 1;
-    }else{
-        //  在父级容器中 选中对应index 中的img元素
-        var nextImg = $(curr_container).find('img').eq(index)[0];
-        $('.show_img .img_num').html(index+1+'/'+curr_img_len);
-        loadImage(nextImg);
-    }
-}).on('swipeRight', function(){//用户右划
-    index--;
-    if(index < 0){
-        index = 0;
-    }else{
-        var preImg = $(curr_container).find('img').eq(index)[0];
-        $('.show_img .img_num').html(index+1+'/'+curr_img_len);
-        loadImage(preImg);
-    }
-})
-// 图片展示 end
 
 // 商品详情， 评价切换
 $('.switch-detail').click(function(){
@@ -375,3 +314,62 @@ $(function(){
     })
 })
 
+// 收藏
+$.ajax({
+    url: 'show_collection',
+    type: 'POST',
+    dataType: 'JSON',
+    data: {
+        'id': id
+    },
+    success: function(res){
+        console.log(res);
+    },
+    error: function(){
+        console.log('error')
+    }
+})
+$('.collect').click(function(){
+    $(this).toggleClass('collect-on');
+    if($(this).hasClass('collect-on')){
+        $.ajax({
+            url: 'collection_add',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'id': id
+            },
+            success: function(res){
+                console.log(res);
+                layer.open({
+                    skin: 'msg',
+                    content: '收藏成功',
+                    time: 1
+                })
+            },
+            error: function(){
+                console.log('error')
+            }
+        })
+    }else{
+        $.ajax({
+            url: 'collection_del',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'id': id
+            },
+            success: function(res){
+                console.log(res);
+                layer.open({
+                    skin: 'msg',
+                    content: '取消收藏',
+                    time: 1
+                })
+            },
+            error: function(){
+                console.log('error')
+            }
+        })
+    }
+})

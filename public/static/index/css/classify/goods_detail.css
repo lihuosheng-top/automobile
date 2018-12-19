@@ -823,11 +823,18 @@ html{
 }
 .footbar .collect .icon-star{
     display: block;
-    width: .4rem;
-    height: .4rem;
+    width: .5rem;
+    height: .5rem;
     margin: .15rem auto 0;
-    background-position: -1.3rem -4.9rem;
+    background-position: -1.25rem -4.85rem;
 }
+.footbar .collect-on .icon-star{
+    background-position: -1.25rem -5.45rem;
+}
+.footbar .collect-on{
+    color: #ffd12c;
+}
+
 .footbar .cart{
     height: 1rem;
     line-height: normal;
@@ -837,10 +844,10 @@ html{
 }
 .footbar .cart .icon-cart{
     display: block;
-    width: .4rem;
-    height: .4rem;
+    width: .5rem;
+    height: .5rem;
     margin: .15rem auto 0;
-    background-position: -1.85rem -4.9rem;
+    background-position: -1.8rem -4.85rem;
 }
 .footbar .trade{
     display: flex;
