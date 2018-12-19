@@ -76,3 +76,23 @@ $.ajax({
         console.log('error');
     }
 })
+
+// 获取商家的信息，如果存在则是商家角色，不存在则为车主
+$.ajax({
+    url: 'select_role_get',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log('获取商家的信息，如果存在则是商家角色，不存在则为车主',res);
+        $('.my').click(function(){
+            if(res.status == 1){
+                location.href = 'sell_my_index';
+            }else{
+                location.href = 'my_index';
+            }
+        })
+    },
+    error: function(){
+        console.log('error');
+    }
+})
