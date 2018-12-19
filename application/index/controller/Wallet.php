@@ -26,7 +26,7 @@ class Wallet extends Controller{
             if(!empty($user_id)){
                 $money =Db::name("user")->field("user_wallet")->where("id",$user_id)->find();
                 if(!empty($money)){
-                    exit(json_encode(array("status" => 1, "info" => "我的钱包余额返回成功")));
+                    exit(json_encode(array("status" => 1, "info" => "我的钱包余额返回成功","data"=>$money)));
                 }else{
                     exit(json_encode(array("status" => 0, "info" => "我的钱包余额返回失败")));
                 }
