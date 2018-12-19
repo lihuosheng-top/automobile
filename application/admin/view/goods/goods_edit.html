@@ -678,53 +678,51 @@
     {block name="bottom"}
     <script src="__STATIC__/admin/index/common/formSelects-v4.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
-        var times_id = new Array();
-        var displacements_id = new Array();
-        var years_id = new Array();
-        $.ajax({
-            type: "POST",
-            url: "{:url('admin/Goods/add')}",
-            data: {},
-            dataType: "json",
-            success: function(data) {
-                var datas = data.data
-                for (var i = 0; i < datas.car_series.length; i++) {
-                    var series = new Array();
-                    var displacement = new Array();
-                    var year = new Array();
-                    for (var j = 0; j < datas.car_brand.length; j++) {
-                        if (datas.car_brand[j].brand == datas.car_series[i].brand) {
-                            series.push({
-                                "series": datas.car_brand[j].series
-                            });
-                            displacement.push({
-                                "series": datas.car_brand[j].displacement
-                            });
-                            year.push({
-                                "series": datas.car_brand[j].year
-                            });
-                        }
+       // TODO获取车牌Ajax
+		var times_id = new Array();
+		var displacements_id = new Array();
+		var years_id = new Array();
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Goods/add')}",
+			data: {},
+			dataType: "json",
+			success: function(data) {
+				var datas = data.data;
+				console.log(datas);
+				for(var i = 0; i < datas.car_series.length; i++) {
+					var series = new Array();
+					var displacement = new Array();
+					var year = new Array();
+					for(var j = 0; j < datas.car_brand.length; j++) {
+						if(datas.car_brand[j].brand == datas.car_series[i].brand) {
+							series.push({
+								"series": datas.car_brand[j].series
+							});
+							displacement.push({
+								"series": datas.car_brand[j].displacement
+							});
+							year.push({
+								"series": datas.car_brand[j].year
+							});
+						}
 
-                    }
-                    times_id[datas.car_series[i].brand] = series;
-                    displacements_id[datas.car_series[i].brand] = displacement;
-                    years_id[datas.car_series[i].brand] = year;
-                }
+					}
+					times_id[datas.car_series[i].brand] = series;
+					displacements_id[datas.car_series[i].brand] = displacement;
+					years_id[datas.car_series[i].brand] = year;
+				}
 
-                var city_obj = times_id;
-                console.log(times_id);
-                //				$("#province").append("<option value='请选择'>请选择 </option>");
-                for (var key in city_obj) {
-                    //					$("#province").append("<option value='" + key + "'>" + key + "</option>");
-                }
+				var city_obj = times_id;
+				for(var key in city_obj) {
+					$("#province").append("<option value='" + key + "'>" + key + "</option>");
+				}
 
-
-
-            },
-            error: function(data) {
-                console.log("错误");
-            }
-        });
+			},
+			error: function(data) {
+				console.log("错误");
+			}
+		});
     </script>
     <script type="text/javascript">
         // 取当前页面名称(不带后缀名)
