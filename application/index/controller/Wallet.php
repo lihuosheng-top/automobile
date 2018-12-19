@@ -64,7 +64,7 @@ class Wallet extends Controller{
                    ];
                    $recharge_id =Db::name("recharge_record")->insertGetId($data);
                    if(!empty($recharge_id)){
-                       exit(json_encode(array("status" => 1, "info" => "下单成功,返回订单编号","data"=>$recharge_id)));
+                       exit(json_encode(array("status" => 1, "info" => "下单成功,返回订单编号" , "data"=>$recharge_id),JSON_UNESCAPED_UNICODE));
                    }else{
                        exit(json_encode(array("status" => 0, "info" => "下单不成功")));
                    }
