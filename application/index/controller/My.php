@@ -340,7 +340,7 @@ class My extends Controller
     public function is_business(Request $request){
         if($request->isPost()){
             $user_id = Session::get("user");
-            $store_info = Db::name("store")->where("user_id",$user_id)->where("del_status",1)->find();
+            $store_info = Db::name("store")->where("user_id",$user_id)->where("operation_status",1)->where("del_status",1)->find();
             if(!empty($store_info)){
                 return ajax_success("这是商家",["status"=>1]);
              }else{
@@ -376,7 +376,7 @@ class My extends Controller
     public  function select_role_business(Request $request){
         if($request->isPost()){
             $user_id = Session::get("user");
-            $store_info = Db::name("store")->field("store_id")->where("user_id",$user_id)->where("del_status",1)->find();
+            $store_info = Db::name("store")->field("store_id")->where("user_id",$user_id)->where("operation_status",1)->where("del_status",1)->find();
             Session::set("role_name_store_id",$store_info);
             return ajax_success("切换角色成功",["status"=>1]);
         }
