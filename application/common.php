@@ -741,9 +741,9 @@ function operation_status($status){
     if($status==1){
         echo '通过';
     }elseif ($status==-1){
-        echo '拒绝';
+        echo '<span class="gray">拒绝</span>';
     }else{
-        echo '待审核';
+        echo '<span class="red">待审核</sapn>';
     }
 }
 
