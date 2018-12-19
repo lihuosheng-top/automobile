@@ -367,9 +367,6 @@ $.ajax({
     }
 })
 
-
-
-
 // 模糊搜索
 $(function(){
     // 汽车搜索框
@@ -397,8 +394,6 @@ $('.add_mycar a').click(function(){
     $('.select-car').show();
     $('.wrapper').hide();
 })
-
-
 
 // 城市定位 首字母匹配 start
 $(function(){
@@ -660,6 +655,20 @@ $.ajax({
                 location.href = 'my_index';
             }
         })
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+
+// 热门店铺
+$.ajax({
+    url: 'index_shop',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log('热门店铺',res);
+        
     },
     error: function(){
         console.log('error');
