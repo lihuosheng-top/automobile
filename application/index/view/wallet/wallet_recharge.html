@@ -105,6 +105,28 @@
                     },
                     success: function(res){
                         console.log(res);
+
+                        $('.close-alipay').click(function(e){
+                            e.preventDefault();
+                            $('.mask').hide();
+                            $('.alipay-pop').animate({'bottom': '-100%'});
+                            var id = $(this).attr('id');
+                            $.ajax({
+                                url: 'wallet_recharge_del',
+                                type: 'POST',
+                                dataType: 'JSON',
+                                data: {
+                                    'recharge_id': res.data,
+                                    'recharge_money': rechargeAmount
+                                },
+                                success: function(res){
+                                    console.log(res);
+                                },
+                                error: function(){
+                                    console.log('error');
+                                }
+                            })
+                        })
                     },
                     error: function(){
                         console.log('error');
@@ -121,12 +143,8 @@
             }
         })
         
-        $('.close-alipay').click(function(e){
-            e.preventDefault();
-            $('.mask').hide();
-            $('.alipay-pop').animate({'bottom': '-100%'});
-        })
         
+
         $('#WIDsubject').click(function(){
             $('.alipay-pop').animate({'bottom': '-100%'});
             $('.chose-payment').animate({'bottom': '0'});
