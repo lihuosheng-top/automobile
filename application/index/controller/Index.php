@@ -89,7 +89,7 @@ class Index extends Controller
     public function shop(Request $request){
 
         if($request->isPost()){
-            $where ="`is_hot_store` = '1' and `store_is_button` = '1' and `del_status` = '1' and `store_examine_status` = '1' ";
+            $where ="`is_hot_store` = '1' and `store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1' ";
             $shop = db("store")->where($where)->select();
             $shop_data  = [];
             foreach ($shop as $key=>$value){

@@ -50,9 +50,10 @@ class Reservation extends Controller{
         if($request->isPost()) {
             $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
             $serve_goods = db("serve_goods")->where("service_setting_id", $service_setting_id)->select();
+            $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
             foreach ($serve_goods as $key=>$value){
                 $serve_goods[$key]["name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
-                $serve_goods[$key]["store"] = db("store")->where("store_id",$value["store_id"])->find();
+                $serve_goods[$key]["store"] = db("store")->where($where)->where("store_id",$value["store_id"])->find();
                 unset($serve_goods[$key]["ruling_money"]);
             }
             if ($serve_goods) {
@@ -60,7 +61,6 @@ class Reservation extends Controller{
             } else {
                 return ajax_error("获取失败");
             }
-
         }
 
         return view("reservation");
