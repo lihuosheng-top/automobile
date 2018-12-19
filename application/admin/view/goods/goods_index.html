@@ -146,7 +146,7 @@
 						
 						</div>
 					</div>
-						<div class="seach_list">
+						<div class="seach_list noshow" id="shop_seach">
 						<div class="seach_laber">店铺名称：</div>
 						<div class="seach_input">
 							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
@@ -328,6 +328,28 @@
                 laypage = layui.laypage,
                 $ = layui.jquery;
             var vals = $("input").data("id");
+            //店铺搜索是否显示
+            	$.ajax({
+							type: "POST",
+							url: "{:url('admin/Goods/role_name')}",
+							data: {},
+							success: function(data){	
+								var data=$.parseJSON( data ); 
+								var role_id=data.data.admin[0].role_id;
+								// 当角色为平台时
+								if(role_id==2){
+									$("#shop_seach").removeClass("noshow");
+								}
+								else{
+									$("#shop_seach").addClass("noshow");
+								}
+								
+                        },
+                        error: function(data) {
+                            console.log("错误")
+                        }
+                    });
+            //
             //是否上架展示
             form.on('switch(isShow)', function(data) {
                 if ($(this).val() == 0) {
