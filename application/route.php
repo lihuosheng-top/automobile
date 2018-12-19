@@ -110,14 +110,13 @@ Route::group("",[
 
 
 
-    /**
-     * 钱包
-     * 陈绪
-     */
-    "wallet_index"=>"index/wallet/index",           //钱包首页
+
+    /*TODO:钱包开始*/
+    "wallet_index"=>"index/wallet/index",           //钱包首页（ajax）
     "wallet_recharge"=>"index/wallet/recharge",     //钱包充值
     "wallet_block"=>"index/wallet/block",           //添加银行卡
     "wallet_verification"=>"index/wallet/verification",   //银行卡验证
+    /*TODO:钱包结束*/
 
 
 
