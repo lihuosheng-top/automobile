@@ -64,7 +64,7 @@ class Wallet extends Controller{
                    ];
                    $recharge_id =Db::name("recharge_record")->insertGetId($data);
                    if(!empty($recharge_id)){
-                       exit(json_encode(array("status" => 1, "info" => "下单成功,返回订单编号" , ["data"=>$recharge_id])));
+                       exit(json_encode(array("status" => 1, "info" => "下单成功,返回订单编号" , "data"=>$data["recharge_order_number"])));
                    }else{
                        exit(json_encode(array("status" => 0, "info" => "下单不成功")));
                    }
@@ -91,7 +91,7 @@ class Wallet extends Controller{
             if(!empty($user_id)){
                 $recharge_id =$request->only("recharge_id")["recharge_id"];//充值订单编号
                 if(!empty($recharge_id)){
-                    $bool =Db::name("recharge_record")->where("id",$recharge_id)->delete();
+                    $bool =Db::name("recharge_record")->where("recharge_order_number",$recharge_id)->delete();
                     if($bool){
                         exit(json_encode(array("status" => 1, "info" => "取消成功")));
                     }else{
