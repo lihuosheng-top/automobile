@@ -71,7 +71,7 @@ $('.reg-send-code').click(function(){
             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
             skin: 'msg',
             content: '号码格式不正确',
-            time: 2
+            time: 1
         })
     }
 })
@@ -117,7 +117,7 @@ $('.reg-confirm').click(function(){
                     type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                     skin: 'msg',
                     content: data.info,
-                    time: 2
+                    time: 1
                 })
             }else{
                 layer.open({
@@ -235,7 +235,7 @@ $('.send-code').click(function(){
             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
             skin: 'msg',
             content: '号码格式不正确',
-            time: 2
+            time: 1
         })
     }
 })
@@ -263,7 +263,7 @@ $('.find-confirm').click(function(){
                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: data.info,
-                        time: 2
+                        time: 1
                     })
                 }else if(data.status == 1){
                     layer.open({
@@ -271,7 +271,7 @@ $('.find-confirm').click(function(){
                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: data.info,
-                        time: 2
+                        time: 1
                     })
                     setTimeout(function(){
                         $('.find-password').hide();
@@ -289,7 +289,7 @@ $('.find-confirm').click(function(){
             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
             skin: 'msg',
             content: '两次输入密码不一致',
-            time: 2
+            time: 1
         })
     }
 })

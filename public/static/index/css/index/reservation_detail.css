@@ -60,7 +60,7 @@ html{
     width: .53rem;
     height: .53rem;
     background-position: -2.65rem -2.45rem;
-    margin-bottom: .1rem;
+    margin-bottom: .2rem;
 }
 .shop_info_box .order_confirm span{
     color: #333;
@@ -69,12 +69,12 @@ html{
 .shop_info_box .shop_name{
     font-size: .3rem;
     color: #333;
-    margin-bottom: .1rem;
+    margin-bottom: .2rem;
 }
 .shop_info_box .star-time{
     display: flex;
     align-items: center;
-    margin-bottom: .15rem;
+    margin-bottom: .2rem;
 }
 .shop_info_box .star-time .open-time{
     font-size: .24rem;

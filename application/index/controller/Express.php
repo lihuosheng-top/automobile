@@ -16,6 +16,32 @@ use think\Db;
 use think\Session;
 
 class  Express extends  Controller{
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:快递员退出登录
+     **************************************
+     * @param Request $request
+     */
+    public function express_logout(Request $request){
+        if($request->isPost()){
+            Session('delivery_id',null);
+            return ajax_success('退出成功',['status'=>1]);
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:设置
+     **************************************
+     * @return \think\response\View
+     */
+    public function express_setting(){
+        return view("express_setting");
+    }
     /**
      **************李火生*******************
      * @param Request $request

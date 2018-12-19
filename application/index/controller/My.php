@@ -261,7 +261,7 @@ class My extends Controller
                ->select();
           $datas =array(
               "january"=>[],
-              "sebruary"=>[],
+              "february"=>[],
               "march"=>[],
               "april"=>[],
               "may"=>[],
@@ -347,12 +347,7 @@ class My extends Controller
                 return ajax_error("这只是车主",["status"=>0]);
             }
         }
-
     }
-
-
-
-
 
     /**
      **************李火生*******************
