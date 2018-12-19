@@ -20,7 +20,7 @@
         .info-box{line-height: normal; flex: 1; display: flex; flex-direction: column; justify-content: space-evenly;}
         .info-box .goods-name{font-size: .26rem;}
         .price-del .price{font-size: .34rem; color: #f00;}
-        .price-del .del-btn{background: transparent; border: 1px solid #999; color: #999; border-radius: .1rem; font-size: .24rem;}
+        .price-del .del-btn{background: transparent; border: 1px solid #999; color: #999; border-radius: .1rem; font-size: .24rem; outline: none;}
         .price-del{display: flex; align-items: center;justify-content: space-between;}
     </style>
 </head>
@@ -31,7 +31,7 @@
             <h3>我的收藏</h3>
         </header>
         <div class="collect-box">
-            <div class="col">
+            <!-- <div class="col">
                 <div class="img-box">
                     <img src="__STATIC__/index/image/02.png">
                 </div>
@@ -43,12 +43,73 @@
                         <button class="del-btn">删除</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $.ajax({
+            url: 'collection_index',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                var str = '';
+                if(res.status == 1){
+                    $.each(res.data, function(idx, val){
+                        str += `<div class="col">
+                                    <div class="img-box">
+                                        <img src="uploads/`+val.goods_show_images+`">
+                                    </div>
+                                    <div class="info-box">
+                                        <p class="goods-name txt-hid-two">`+val.goods_name+`</p>
+                                        <p class="goods-selling txt-hid-two">`+val.goods_selling+`</p>
+                                        <div class="price-del">
+                                            <span class="price">￥`+val.goods_adjusted_money+`</span>
+                                            <button class="del-btn" id="`+val.goods_id+`">删除</button>
+                                        </div>
+                                    </div>
+                                </div>`
+                    })
+                    $('.collect-box').append(str);
+                
+                    $('.del-btn').click(function(){
+                        var id = $(this).attr('id');
+                        $.ajax({
+                            url: 'collection_del',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'id': id
+                            },
+                            success: function(res){
+                                console.log(res);
+                                layer.open({
+                                    skin: 'msg',
+                                    content: '取消收藏',
+                                    time: .8
+                                })
+                                setTimeout(function(){
+                                    location.reload();
+                                }, 1000)
+                            },
+                            error: function(){
+                                console.log('error')
+                            }
+                        })
 
+                    })
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+        function deleteMyCollect(){
+
+        }
+    </script>
 </body>
 </html>
