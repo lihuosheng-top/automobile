@@ -324,6 +324,9 @@ $.ajax({
     },
     success: function(res){
         console.log(res);
+        if(res.status == 1){
+            $('.collect').addClass('collect-on');
+        }
     },
     error: function(){
         console.log('error')

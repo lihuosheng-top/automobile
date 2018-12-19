@@ -39,7 +39,7 @@ class Shop extends Controller{
        }
         $all_idents =$store_data ;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
-        $listRow = 3;//每页3行记录
+        $listRow = 20;//每页3行记录
         $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
         $store_data = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
             'var_page' => 'page',
@@ -286,7 +286,7 @@ class Shop extends Controller{
 
         $all_idents =$store_data ;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
-        $listRow = 3;//每页3行记录
+        $listRow = 20;//每页3行记录
         $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
         $store_data = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
             'var_page' => 'page',

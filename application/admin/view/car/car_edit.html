@@ -40,12 +40,16 @@
 	{block name="content"}
 
 
-	<form class="layui-form layui-form-lists" action="{:url('admin/Category/save')}" method="post" enctype="multipart/form-data">
+	<form class="layui-form layui-form-lists" action="{:url('admin/Car/updata')}" method="post" enctype="multipart/form-data">
+		{volist name="brand" id="value"}
 		<div class="form-item">
 			<label class="form-label">品牌名称</label>
 			<div class="form-input">
-				<input type="text" name="" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-				
+				<select name="brand" class="role_list">
+					{volist name="brand_name" id="val"}
+					<option value="{$value.brand}">{$val.brand}</option>
+					{/volist}
+				</select><br/>
 			</div>
 		</div>
 		<div class="form-item">
@@ -53,8 +57,8 @@
 			<div class="img-edit">
 				 <div class="imgcontent" >
                     <span class="img">
-						<img src="__STATIC__/admin/common/img/a11.png" width="100%">
-						<i class="remove-img" name="icon_image" value="" data-id="" data-value="2"><img src="__STATIC__/admin/common/img/a7.png"></i>
+						<img src="__UPLOADS__/{$value.brand_images}" width="100%">
+						<i class="remove-img" name="icon_image" value="{$value.brand_images}" data-id="{$value.id}" data-value="2"><img src="__STATIC__/admin/common/img/a7.png"></i>
 					</span>
                 </div>
 			<div class="form-input">
@@ -63,7 +67,7 @@
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="icon_image" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="1" />
+								<input type="file" name="brand_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="1" />
 							</section>
 						</div>
 					</section>
@@ -83,17 +87,19 @@
 		<div class="form-item">
 			<label class="form-label">热门推荐</label>
 			<div class="form-input">
-				<input type="radio" name="a" value="1" title="是" checked="">
-				<input type="radio" name="a" value="0" title="否">
+				<input type="radio" name="status" value="1" title="是" checked="">
+				<input type="radio" name="status" value="0" title="否">
 			</div>
 		</div>
 
 		<div class="layui-form-item">
 			<div class="layui-input-block">
+				<input type="hidden" name="id" value="{$value.id}">
 				<button class="layui-btn layui-btn-normal" type="submit">确认提交</button>
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);">返回</button>
 			</div>
 		</div>
+		{/volist}
 	</form>
 
 	{/block}
@@ -123,9 +129,10 @@
             console.log(id);
                 $.ajax({
                     type: "POST",
-                    url: "{:url('')}",
+                    url: "{:url('admin/Car/images')}",
                     data: {
-                        "id": id
+                        "id": id,
+						"images":value
                     },
                     dataType: "json",
                     success: function(data) {
