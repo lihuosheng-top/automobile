@@ -689,7 +689,6 @@
 			dataType: "json",
 			success: function(data) {
 				var datas = data.data;
-				console.log(datas);
 				for(var i = 0; i < datas.car_series.length; i++) {
 					var series = new Array();
 					var displacement = new Array();
@@ -759,7 +758,6 @@
                 },
                 success: function(data) {
                     var data = eval('(' + data + ')');
-                    console.log(data);
                     for (var i = 0; i < data.data[0].goods_car_series.length; i++) {
                         city.push(data.data[0].goods_car_series[i]);
                     }
@@ -771,6 +769,7 @@
 
                         production.push(data.data[0].goods_car_year[i]);
                     }
+                    console.log(city)
 
                     layui.formSelects.value('city', city);
                     layui.formSelects.value('displacement', displacement);
@@ -849,7 +848,6 @@
             function car_append() {
                 var now_province = $("#province option:selected").text();
                 var tim_id = quchong(times_id[now_province]);
-                console.log(times_id[now_province]);
                 var displacemen_id = quchong(displacements_id[now_province]);
                 var year_id = quchong(years_id[now_province]);
                 for (var k in tim_id) {
@@ -876,14 +874,12 @@
                 // TODO点击添加页面
             form.on('select(guige_name)', function(data) {
                 var text = data.elem.id.replace('universal_standard_name', '')
-                console.log()
                 $(".add_name_" + text).val(data.value);
             });
             // TODO点击添加页面
             form.on('select(guige_name)', function(data) {
                 alert(111);
                 var text = data.elem.id.replace('universal_standard_name', '')
-                console.log(text);
                 $(".add_name_" + text).val(data.value);
             });
             // TODO限制分组和品牌
@@ -1198,7 +1194,6 @@
             //TODO点击属性添加按钮
             $(".shuxingbtu-add").click(function() {
                 var text = $(".add-attributes").children("input").val();
-                console.log(text);
                 $.ajax({
                     type: "POST",
                     url: "goods_property_name",
