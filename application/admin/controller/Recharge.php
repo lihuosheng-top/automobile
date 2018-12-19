@@ -23,7 +23,7 @@ class Recharge extends Controller{
             ->field("tb_recharge_reflect.*,tb_user.user_name tname")
             ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
             ->order('tb_recharge_reflect.operation_time','desc')
-            ->paginate(3);
+            ->paginate(20);
         return view('index',['reg_data'=>$reg_data]);
     }
 
@@ -103,7 +103,7 @@ class Recharge extends Controller{
                     ->where('tb_recharge_reflect.operation_type', $operation_type)
                     ->where('tb_recharge_reflect.pay_type_content',$pay_type_content)
                     ->order('tb_recharge_reflect.operation_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }else if((empty($pay_type_content))&&(empty($operation_type))){
@@ -113,7 +113,7 @@ class Recharge extends Controller{
                     ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
                     ->where($condition)
                     ->order('tb_recharge_reflect.operation_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }else if((!empty($pay_type_content))&&(empty($operation_type))) {
@@ -124,7 +124,7 @@ class Recharge extends Controller{
                     ->where($condition)
                     ->where('tb_recharge_reflect.pay_type_content',$pay_type_content)
                     ->order('tb_recharge_reflect.operation_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }else{
@@ -135,7 +135,7 @@ class Recharge extends Controller{
                     ->where($condition)
                     ->where('tb_recharge_reflect.operation_type', $operation_type)
                     ->order('tb_recharge_reflect.operation_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -149,7 +149,7 @@ class Recharge extends Controller{
                         ->where('tb_recharge_reflect.operation_type', $operation_type)
                         ->where('tb_recharge_reflect.pay_type_content',$pay_type_content)
                         ->order('tb_recharge_reflect.operation_time','desc')
-                        ->paginate(3 ,false, [
+                        ->paginate(20 ,false, [
                             'query' => request()->param(),
                         ]);
                 }else if((empty($pay_type_content))&&(empty($operation_type))){
@@ -157,14 +157,14 @@ class Recharge extends Controller{
                         ->field("tb_recharge_reflect.*,tb_user.user_name tname")
                         ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
                         ->order('tb_recharge_reflect.operation_time','desc')
-                        ->paginate(3);
+                        ->paginate(20);
                 }else if((!empty($pay_type_content))&&(empty($operation_type))) {
                     $reg_data= Db::table("tb_recharge_reflect")
                         ->field("tb_recharge_reflect.*,tb_user.user_name tname")
                         ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
                         ->where('tb_recharge_reflect.pay_type_content',$pay_type_content)
                         ->order('tb_recharge_reflect.operation_time','desc')
-                        ->paginate(3 ,false, [
+                        ->paginate(20 ,false, [
                             'query' => request()->param(),
                         ]);
                 }else{
@@ -173,7 +173,7 @@ class Recharge extends Controller{
                         ->join("tb_user","tb_recharge_reflect.user_id=tb_user.id",'left')
                         ->where('tb_recharge_reflect.operation_type', $operation_type)
                         ->order('tb_recharge_reflect.operation_time','desc')
-                        ->paginate(3 ,false, [
+                        ->paginate(20 ,false, [
                             'query' => request()->param(),
                         ]);
                 }

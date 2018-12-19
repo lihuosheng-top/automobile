@@ -95,9 +95,9 @@ class  Collection extends Controller{
             $id =$_POST['id'];
             $user_id =Session::get("user");
             if(is_array($id)){
-                $where ='id in('.implode(',',$id).')';
+                $where ='goods_id in('.implode(',',$id).')';
             }else{
-                $where ='id='.$id;
+                $where ='goods_id='.$id;
             }
             $list =  Db::name('collection')->where($where)->where("user_id",$user_id)->delete();
             if($list!==false)
@@ -132,9 +132,9 @@ class  Collection extends Controller{
                         'goods_id'=>$goods_id,
                         'status'=>1
                     ];
-                    $see_status = Db::name('collection')->field('status')->where($data)->find();
+                    $see_status = Db::name('collection')->field("status")->where($data)->find();
                     if($see_status){
-                        return ajax_success('有收藏',$see_status);
+                        return ajax_success('有收藏',['status'=>1]);
                     }else{
                         return ajax_error('没有收藏',['status'=>0]);
                     }

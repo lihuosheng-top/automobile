@@ -19,7 +19,7 @@ class User extends Controller{
      **************************************
      */
     public function index(){
-        $user_data =Db::name('user')->order('create_time','desc')->paginate(3);
+        $user_data =Db::name('user')->order('create_time','desc')->paginate(20);
         return view('index',['user_data'=>$user_data]);
     }
 
@@ -157,7 +157,7 @@ class User extends Controller{
                 $user_data=Db::name("user")
                     ->where($time_condition)
                     ->order('create_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
                 }else if((empty($timemin))&&(!empty($time_max_data))){
@@ -166,7 +166,7 @@ class User extends Controller{
                     $user_data=Db::name("user")
                         ->where($time_condition)
                         ->order('create_time','desc')
-                        ->paginate(3 ,false, [
+                        ->paginate(20 ,false, [
                             'query' => request()->param(),
                         ]);
                 }else if((!empty($timemin))&&(!empty($time_max_data))){
@@ -175,13 +175,13 @@ class User extends Controller{
                     $user_data=Db::name("user")
                         ->where($time_condition)
                         ->order('create_time','desc')
-                        ->paginate(3 ,false, [
+                        ->paginate(20 ,false, [
                             'query' => request()->param(),
                         ]);
                 }else {
                     $user_data=Db::name("user")
                         ->order('create_time','desc')
-                        ->paginate(3 ,false, [
+                        ->paginate(20 ,false, [
                             'query' => request()->param(),
                         ]);
                 }
@@ -196,14 +196,14 @@ class User extends Controller{
                     ->where($condition)
                     ->where($time_condition)
                     ->order('create_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }else if((!empty($timemin))&&(empty($time_max_data)) ||(empty($timemin))&&(!empty($time_max_data)) ||(empty($timemin))&&(empty($time_max_data))){
                 $user_data=Db::name("user")
                     ->where($condition)
                     ->order('create_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }
