@@ -127,6 +127,38 @@ if(url.indexOf('?') != -1){
 //     }
 // })
 
+// 铺商品
+$.ajax({
+    url: 'index_shop_goods',
+    type: 'POST',
+    dataType: 'JSON',
+    data: {
+        'id': id
+    },
+    success: function(res){
+        console.log('获取店铺商品',res);
+        if(res.status == 1){
+            var str = '';
+            $.each(res.data, function(idx, val){
+                str += `<div class="goods-colla-item">
+                            <div class="goods-img-box">
+                                <img src="uploads/`+val.goods_show_images+`">
+                            </div>
+                            <div class="goods-info-box">
+                                <p class="goods-name txt-hid-two">`+val.goods_name+`</p>
+                                <p class="goods-selling txt-hid-two">`+val.goods_describe+`</p>
+                                <p class="goods-price">￥`+val.goods_adjusted_money+`</p>
+                            </div>
+                        </div>`
+            })
+            $('.goods-content').prepend(str);
+        }
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+
 // 切换服务项目 本店商品
 $('.service-tab-title').on('click', 'li', function(){
     $(this).siblings().removeClass('service-this');

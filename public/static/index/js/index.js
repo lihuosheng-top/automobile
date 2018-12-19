@@ -668,9 +668,52 @@ $.ajax({
     dataType: 'JSON',
     success: function(res){
         console.log('热门店铺',res);
-        
+        if(res.status == 1){
+            var str = '';
+            $.each(res.data, function(idx, val){
+                str += `<li class="hot-item" id="`+val.id+`">
+                            <div class="hot-headimg">
+                                <img src="uploads/`+val.shop_images+`">
+                            </div>
+                            <div class="hotshop-info">
+                                <p class="hot-name">`+val.shop_name+`</p>
+                                <div class="star-time">
+                                    <!-- star2=二星 以此类推 -->
+                                    <i class="spr star1"></i>
+                                    <span>营业时间：`+val.shop_time+`</span>
+                                </div>
+                                <p class="txt-hid-two hotshop-detail">`+val.shop_address.split(',').join('')+`</p>
+                            </div>
+                        </li>`
+            })
+            $('.hot-ul').append(str);
+            $('.hot-item').click(function(){
+                var id = $(this).attr('id');
+                intoHotShop(id);
+            })
+        }
     },
     error: function(){
         console.log('error');
     }
 })
+// 进入 热门店铺
+function intoHotShop(id){
+    $.ajax({
+        url: 'index_shop_goods',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id
+        },
+        success: function(res){
+            console.log(res);
+            if(res.status == 1){
+                location.href = 'reservation_detail?id='+id;
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
