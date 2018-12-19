@@ -574,6 +574,26 @@ class Goods extends Controller{
     }
 
 
+    /**
+     * 专用属性名称删除
+     * 陈绪
+     * @param Request $request
+     */
+    public function property_name_del(Request $request){
+
+        if($request->isPost()){
+            $standard_name = $request->only(["goods_name"])["goods_name"];
+            $standard_bool =  db("goods_property_name")->where("property_name",$standard_name)->delete();
+            if($standard_bool){
+                return ajax_success("删除成功");
+            }else{
+                return ajax_error("删除失败");
+            }
+        }
+
+    }
+
+
 
 
 

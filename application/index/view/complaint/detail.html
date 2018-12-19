@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>投诉记录</title>
+    <style>
+        html, body, .wrapper{background-color: #f2f2f2;}
+        .header{position: relative;width: 100%;height: .88rem;background-color: #fff; border-bottom: 1px solid #eee;}
+        .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
+        .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .complain-tab{padding: .3rem; background-color: #fff; margin-bottom: .2rem;}
+        .user-container{display: flex; align-items: center; margin-bottom: .2rem;}
+        .avator{width: 1.05rem; height: 1.05rem; border-radius: 50%;}
+        .tag-container{display: flex; flex-direction: column; margin-left: .25rem;}
+        .phone{font-size: .26rem; color: #333;}
+        .tag{font-size: .26rem; color: #3169f6; background-color: #c7e4f8; border-radius: .25rem; text-align: center;}
+        .complain-txt{line-height: normal; color: #7d7d7d; font-size: .3rem; margin-bottom: .2rem;}
+        .complain-img img{width: 2.1rem; height: 2.1rem; margin-right: .1rem;}
+    </style>
 </head>
 <body>
+    <div class="wrapper">
+        <header class="header">
+            <a href="complaint_index" class="spr icon-back"></a>
+            <h3>投诉记录</h3>
+        </header>
+        <div class="complain-container">
+            <div class="complain-tab">
+                <div class="user-container">
+                    <img src="__STATIC__/index/image/avatar.png" class="avator">
+                    <div class="tag-container">
+                        <span class="phone">13691853045</span>
+                        <span class="tag">质量问题</span>
+                    </div>
+                </div>
+                <div class="complain-txt">
+                    投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容
+                </div>
+                <div class="complain-img">
+                    <img src="__STATIC__/index/image/15.jpg">
+                    <img src="__STATIC__/index/image/15.jpg">
+                    <img src="__STATIC__/index/image/15.jpg">
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+   
 </body>
 </html>

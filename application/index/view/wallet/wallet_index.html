@@ -31,7 +31,7 @@
             <img src="__STATIC__/index/image/money.png">
         </div>
         <p class="money-title">可用金额</p>
-        <p class="money-txt">￥<span>999.99</span></p>
+        <p class="money-txt">￥<span></span></p>
         <button class="recharge">充值</button>
     </div>
 
@@ -39,6 +39,20 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
+        $.ajax({
+            url: 'wallet_index',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status === 1){
+                    $('.money-txt span').text(res.data.user_wallet);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
         $('.recharge').click(function(){
             location.href = 'wallet_recharge';
         })

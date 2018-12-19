@@ -501,7 +501,9 @@
                         <label class="layui-form-label">属性</label>
                         <div class="layui-input-inline">
                             <select name="dedicated_property" class="dedicated_property" lay-filter="dedicated_property">
-								<option value="{$value.dedicated_property}" selected="">{$value.dedicated_property}</option>
+
+								<option value="" selected="">{$value.dedicated_property}</option>
+
 							</select>
                         </div>
                         <div class="layui-input-inline add-attribute " style="">
@@ -802,7 +804,7 @@
                 var texts = $(".add-attribute_input").val();
                 $.ajax({
                     type: "POST",
-                    url: "{:url('admin/Goods/namesss')}",
+                    url: "{:url('admin/Goods/property_name_del')}",
                     data: {
                         "goods_name": texts
                     },
