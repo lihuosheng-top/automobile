@@ -120,9 +120,11 @@
                             <!--<input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"-->
                             <!--data-id="{$vo.store_id}">-->
                         </td>
+
                         <td>
                             {$vo.operation_status|operation_status}
                         </td>
+
                         <td>
                             {if $vo.is_hot_store == -1}
                             <input type="checkbox" class="Status" name="show" value="-1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"

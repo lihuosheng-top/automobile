@@ -131,7 +131,7 @@ class Store extends Controller{
                        'store_detailed_address'=>$store_detailed_address,//店铺具体地址
                        'store_owner_seat_num'=>$store_owner_seat_num,
                        'store_is_pay'=>0, //是否付费上架（0是没付费，1是付费）
-                       'store_examine_status'=>0, //平台审核状态（-1为未通过，0为待审核，1为审核通过）
+//                       'operation_status'=>0, //平台审核状态（-1为未通过，0为待审核，1为审核通过）
                        'store_logo_images'=>$evaluation_images,
                        'store_do_bussiness_time'=>$store_do_bussiness_time,
                        'service_setting_id'=>$service_setting_id,

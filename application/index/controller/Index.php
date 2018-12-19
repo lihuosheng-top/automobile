@@ -6,6 +6,7 @@ use think\Paginator;
 use think\Request;
 use think\Session;
 
+use think\Db;
 class Index extends Controller
 {
 
@@ -88,7 +89,8 @@ class Index extends Controller
     public function shop(Request $request){
 
         if($request->isPost()){
-            $shop = db("store")->where("is_hot_store",1)->select();
+            $where ="`is_hot_store` = '1' and `store_is_button` = '1' and `del_status` = '1' and `store_examine_status` = '1' ";
+            $shop = db("store")->where($where)->select();
             $shop_data  = [];
             foreach ($shop as $key=>$value){
                 $shop_data[$key]["shop_address"] = $value["store_city_address"].",".$value["store_street_address"];

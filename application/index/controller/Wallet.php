@@ -75,19 +75,47 @@ class Wallet extends Controller{
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
         }
-
-
         return view("wallet_recharge");
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:充值下单未付款自动关闭取消删除
+     **************************************
+     * @param Request $request
+     */
+    public function recharge_del(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");//用户的id
+            if(!empty($user_id)){
+                $recharge_id =$request->only("recharge_id")["recharge_id"];//充值订单编号
+                if(!empty($recharge_id)){
+                    $bool =Db::name("recharge_record")->where("id",$recharge_id)->delete();
+                    if($bool){
+                        exit(json_encode(array("status" => 1, "info" => "取消成功")));
+                    }else{
+                        exit(json_encode(array("status" => 0, "info" => "取消失败")));
+                    }
+                }
+            }else{
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+        }
+    }
 
 
     /**
-     * 添加银行卡
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:添加银行卡
+     **************************************
+     * @return \think\response\View
      */
-    public function block(){
+    public function block(Request $request){
+        if($request->isPost()){
 
+        }
         return view("wallet_block");
 
     }
