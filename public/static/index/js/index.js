@@ -11,7 +11,7 @@ $.ajax({
         $.each(hotBrand, function(idx, val){
             hotBrandStr += '<li class="hot-brand-li">\
                                 <img src="static/index/image/bmw.png">\
-                                <span>'+val.brand+'</span>\
+                                <span class="txt-hid-one">'+val.brand+'</span>\
                             </li>';
         })
         $('.hot-brand-ul').append(hotBrandStr);
