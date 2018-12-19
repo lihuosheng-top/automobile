@@ -31,7 +31,7 @@
             <h3>我的收藏</h3>
         </header>
         <div class="collect-box">
-            <div class="col">
+            <!-- <div class="col">
                 <div class="img-box">
                     <img src="__STATIC__/index/image/02.png">
                 </div>
@@ -43,12 +43,47 @@
                         <button class="del-btn">删除</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $.ajax({
+            url: 'collection_index',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                var str = '';
+                $.each(res.data, function(idx, val){
+                    str += `<div class="col">
+                                <div class="img-box">
+                                    <img src="uploads/`+val.goods_show_images+`">
+                                </div>
+                                <div class="info-box">
+                                    <p class="goods-name txt-hid-two">`+val.goods_name+`</p>
+                                    <p class="goods-selling txt-hid-two">`+val.goods_selling+`</p>
+                                    <div class="price-del">
+                                        <span class="price">￥`+val.goods_adjusted_money+`</span>
+                                        <button class="del-btn" id="`+val.goods_id+`">删除</button>
+                                    </div>
+                                </div>
+                            </div>`
+                })
+                $('.collect-box').append(str);
+                $('.del-btn').click(function(){
 
+                })
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+        function deleteMyCollect(){
+            
+        }
+    </script>
 </body>
 </html>
