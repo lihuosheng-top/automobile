@@ -32,7 +32,7 @@
 					<div class="seach_list">
 						<div class="seach_laber">品牌名称</div>
 						<div class="seach_input">
-							<input type="text" name="" lay-verify="title" autocomplete="off" placeholder="请输入品牌名称" class="layui-input">
+							<input type="text" name="brand" lay-verify="title" autocomplete="off" placeholder="请输入品牌名称" class="layui-input">
 
 						</div>
 					</div>
@@ -62,29 +62,55 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
-				{volist name="car_data" id="value"}
-					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id=""></td>
-						<td>{$value.id}</td>
-						<td>{$value.brand}</td>
-						<td class="">
-							<div class="tdimg"><img src="__UPLOADS__/{$value.brand_images}" /></div>
-						</td>
-						<td>
-							{if $value.status == 1}
-							<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
-							{else}
-							<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
-							{/if}
-						</td>
-						<td>
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Car/edit',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 编辑
-							</a>
-							
-							<a href="{:url('admin/Car/del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
-						</td>
-					</tr>
+				{if !empty($brand)}
+				{volist name="brand" id="value"}
+				<tr>
+					<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id=""></td>
+					<td>{$value.id}</td>
+					<td>{$value.brand}</td>
+					<td class="">
+						<div class="tdimg"><img src="__UPLOADS__/{$value.brand_images}" /></div>
+					</td>
+					<td>
+						{if $value.status == 1}
+						<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
+						{else}
+						<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
+						{/if}
+					</td>
+					<td>
+						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Car/edit',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 编辑
+						</a>
+
+						<a href="{:url('admin/Car/del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+					</td>
+				</tr>
 				{/volist}
+				{else}
+				{volist name="car_data" id="value"}
+				<tr>
+					<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose" data-id=""></td>
+					<td>{$value.id}</td>
+					<td>{$value.brand}</td>
+					<td class="">
+						<div class="tdimg"><img src="__UPLOADS__/{$value.brand_images}" /></div>
+					</td>
+					<td>
+						{if $value.status == 1}
+						<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
+						{else}
+						<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
+						{/if}
+					</td>
+					<td>
+						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Car/edit',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 编辑
+						</a>
+
+						<a href="{:url('admin/Car/del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+					</td>
+				</tr>
+				{/volist}
+				{/if}
 				</tbody>
 			</table>
 			<div id="page">
@@ -98,6 +124,11 @@
 					<button type="button" id="opration_btu" style="width: 60px; background: #fff; color: #333333;border:#CCCCCC solid 1px;height: 38px;line-height: 38px;">确定
 					</button>
 				</div>
+				{if !empty($brand)}
+				{$brand->render()}
+				{else}
+				{$car_data->render()}
+				{/if}
 			</div>
 
 		</div>

@@ -280,29 +280,29 @@ $.ajax({
                                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: data.info,
-                                        time: 1.5
+                                        time: 1
                                     })
                                     setTimeout(function(){
                                         location.href = 'love_list';
-                                    }, 2000);
+                                    }, 1100);
                                 }else if(data.status == 2){
                                     layer.open({
                                         style: 'bottom:100px;',
                                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: data.info,
-                                        time: 1.5
+                                        time: 1
                                     })
                                     setTimeout(function(){
                                         location.href = 'login';
-                                    },2000)
+                                    },1100)
                                 }else if(data.status == 0){
                                     layer.open({
                                         style: 'bottom:100px;',
                                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: data.info,
-                                        time: 1.5
+                                        time: 1
                                     })
                                 }
                             },

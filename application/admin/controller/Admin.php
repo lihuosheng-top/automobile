@@ -18,6 +18,7 @@ class Admin extends Controller
         }
         //halt($account_list);
         $roleList = getSelectList("role");
+        //分页
         $all_idents =$account_list ;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
         $listRow = 20;//每页3行记录

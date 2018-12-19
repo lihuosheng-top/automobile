@@ -831,9 +831,6 @@ html{
 .footbar .collect-on .icon-star{
     background-position: -1.25rem -5.45rem;
 }
-.footbar .collect-on{
-    color: #ffd12c;
-}
 
 .footbar .cart{
     height: 1rem;
@@ -858,11 +855,11 @@ html{
 }
 .footbar .trade .add-cart{
     color: #fff;
-    background-color: #ff6d7e;
+    background-color: #a7ccf6;
 }
 .footbar .trade .buy{
     color: #fff;
-    background-color: #fc0421;
+    background-color: #504cfb;
 }
 
 /* 评价详情 start */
