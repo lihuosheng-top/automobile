@@ -174,6 +174,7 @@ Route::group("",[
     "express_detail"=>"index/Express/express_detail",//快递详情
     "express_info"=>"index/Express/express_info",//快递信息返回
     "express_logout"=>"index/Express/express_logout",//快递员退出登录
+    "express_setting"=>"index/Express/express_setting",//快递员页面设置
 
     /*TODO:快递结束*/
 

@@ -35,6 +35,16 @@ class  Express extends  Controller{
     /**
      **************李火生*******************
      * @param Request $request
+     * Notes:设置
+     **************************************
+     * @return \think\response\View
+     */
+    public function express_setting(){
+        return view("express_setting");
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
      * Notes:待接单页面
      **************************************
      * @return \think\response\View
