@@ -50,7 +50,7 @@ class Wallet extends Controller{
             $user_id = Session::get("user");//用户的id
             if(!empty($user_id)){
                $recharge_money =$request->only("recharge_money")["recharge_money"];
-               if(!empty($money)){
+               if(!empty( $recharge_money)){
                    $time=date("Y-m-d",time());
                    $v=explode('-',$time);
                    $time_second=date("H:i:s",time());
