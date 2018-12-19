@@ -5,7 +5,7 @@
  * Date: 2018/12/17 0017
  * Time: 16:51
  */
-namespace app\admin\controller;
+namespace app\index\controller;
 use think\Controller;
 use think\Db;
 use think\Request;
