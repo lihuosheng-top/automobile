@@ -7,18 +7,34 @@
  */
 namespace app\index\controller;
 use think\Controller;
-
+use think\Request;
+use think\Session;
+use think\Db;
 class Wallet extends Controller{
 
 
     /**
-     * 钱包首页
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:我的钱包页面和可用金额（接口）
+     **************************************
+     * @return \think\response\View
      */
-    public function index(){
-        
+    public function index(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");//用户的id
+            if(!empty($user_id)){
+                $money =Db::name("user")->field("user_wallet")->where("user_id",$user_id)->find();
+                if(!empty($money)){
+                    exit(json_encode(array("status" => 1, "info" => "我的钱包余额返回成功")));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "我的钱包余额返回失败")));
+                }
+            }else{
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+        }
         return view("wallet_index");
-        
     }
     
     
