@@ -146,8 +146,8 @@
 						
 						</div>
 					</div>
-						<div class="seach_list">
-						<div class="seach_laber">商品名称：</div>
+						<div class="seach_list noshow" id="shop_seach">
+						<div class="seach_laber">店铺名称：</div>
 						<div class="seach_input">
 							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 						
@@ -328,6 +328,28 @@
                 laypage = layui.laypage,
                 $ = layui.jquery;
             var vals = $("input").data("id");
+            //店铺搜索是否显示
+            	$.ajax({
+							type: "POST",
+							url: "{:url('admin/Goods/role_name')}",
+							data: {},
+							success: function(data){	
+								var data=$.parseJSON( data ); 
+								var role_id=data.data.admin[0].role_id;
+								// 当角色为平台时
+								if(role_id==2){
+									$("#shop_seach").removeClass("noshow");
+								}
+								else{
+									$("#shop_seach").addClass("noshow");
+								}
+								
+                        },
+                        error: function(data) {
+                            console.log("错误")
+                        }
+                    });
+            //
             //是否上架展示
             form.on('switch(isShow)', function(data) {
                 if ($(this).val() == 0) {
@@ -342,14 +364,13 @@
                 var price=$(this).data("title");
 			    var shop=$(".shop_name")[0].innerHTML;
 			    var putaway_status=$(this).data("action");
-								var years=$(this).data("text");
-								// 年限转化函数
-							
-								var myDate = new Date();
-								var year = myDate.getFullYear()+years;
-								var month = myDate.getMonth() + 1;
-								var date = myDate.getDate();
-								var present = year + '-' + month + '-' + date;
+				var years=$(this).data("text");
+				// 年限转化函数	
+				var myDate = new Date();
+				var year = myDate.getFullYear()+years;
+				var month = myDate.getMonth() + 1;
+				var date = myDate.getDate();
+				var present = year + '-' + month + '-' + date;
 				// 当上架时
 				if(status==1){
 					$.ajax({
@@ -570,17 +591,26 @@
                             // 当角色为服务商时
                             else if (role_id == 5) {
                                 if (mdata_id.length > 0) {
-                                    layer.confirm('付费商品需付费后才能上架！', {
-                                        btn: ['确定付费', '取消付费！'] //按钮
-                                    }, function() {
-                                        layer.close(layer.index);
-                                        $(".tanchuang").removeClass("noshow");
-                                        $("#shop").val(shop);
-                                        $("#price").val(all_price);
-                                        $("#num").val(j);
-                                        $("#good-id").val(mdata_id);
-
-                                    });
+                                	if(j<=5){
+	                                    layer.confirm('付费商品需付费后才能上架！', {
+	                                        btn: ['确定付费', '取消付费！'] //按钮
+	                                    }, function() {
+	                                        layer.close(layer.index);
+	                                        $(".tanchuang").removeClass("noshow");
+	                                        $("#shop").val(shop);
+	                                        $("#price").val(all_price);
+	                                        $("#num").val(j);
+	                                        $("#good-id").val(mdata_id);
+	
+	                                    });
+                                	}
+                                	else{
+                                		   layer.confirm('最多批量上架5个商品！', {
+	                                        btn: ['确定', '取消'] //按钮
+	                                    }, function() {
+	                                        layer.close(layer.index);
+	                                    });
+                                	}
 
                                 }
                                 if(nmdata_id.length > 0){
@@ -629,28 +659,12 @@
                 var  WIDsubject=$("input[name='WIDsubject']").val();
                 var  WIDtotal_amount=$("input[name='WIDtotal_amount']").val();
                window.location="goods_WeiAlpay?WIDsubject=" +encodeURI(WIDsubject)+"&WIDbody=" +WIDbody+"&WIDtotal_amount=" +WIDtotal_amount+"";
-//              	$.ajax({
-//							type: "POST",
-//							url: "{:url('admin/Goods/WeiAlpay')}",
-//							data: {
-//								"WIDbody":WIDbody,
-//								"WIDsubject":WIDsubject,
-//								"WIDtotal_amount":WIDtotal_amount,
-//							},
-//							success: function(data){
-//								console.log(data);
-////								$(".tantan").removeClass("noshow");
-//                         },
-//
-//                      error: function(data) {
-//                          console.log("错误")
-//                      }
-//                  });
+
              
             });
            
 
-        })
+        }) 
     </script>
 
     {/block}

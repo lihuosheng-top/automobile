@@ -27,6 +27,8 @@
         .order-shop-name .icon-shop{display: inline-block;width: .4rem;height: .38rem;background-position: -5.55rem -.95rem;margin-right: .15rem;vertical-align: text-bottom;}        
         .order-item{font-size: .3rem;color: #333;margin-bottom: .3rem;padding-left: .5rem;}
         .order-item span{display: inline-block;width: .2rem;height: .2rem;border-radius: 50%;background-color: #999999;vertical-align: baseline;margin-right: .15rem;}
+        .button-box{text-align: right;}
+        .receipt{background-color: #504cfb; color: #fff; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none; border: 0;}
     </style>
 </head>
 <body>
@@ -56,6 +58,9 @@
                 <div class="order-item">
                     <span></span>预约洗车
                 </div>
+                <div class="button-box">
+                    <button class="receipt">接单</button>
+                </div>
             </div>
         </div>
     </div>
@@ -63,6 +68,8 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-
+        $('.reservation-tab').click(function(){
+            location.href = 'sell_service_order_detail';
+        })
     </script>
 </html>

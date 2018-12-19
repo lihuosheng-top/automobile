@@ -5,7 +5,7 @@
  * Date: 2018/12/17 0017
  * Time: 16:51
  */
-namespace app\admin\controller;
+namespace app\index\controller;
 use think\Controller;
 use think\Db;
 use think\Request;
@@ -19,7 +19,7 @@ class  Collection extends Controller{
      * Notes:我的收藏
      **************************************
      */
-    public function index(){
+    public function collection_index(){
         $user_id =Session::get("user");
         if(!empty($user_id)){
             $data=Db::table("tb_collection")
@@ -46,13 +46,13 @@ class  Collection extends Controller{
      **************************************
      * @param Request $request
      */
-    public function  add(Request $request){
+    public function  collection_add(Request $request){
         if($request->isPost()){
             $user_id =Session::get("user");
-            if(!empty($member)){
-                $datas =$_POST;
+            if(!empty($user_id)){
+                $datas =$request->only("id")["id"];
                 if(!empty($datas)){
-                    $goods_id = $datas['id'];//商品id
+                    $goods_id = $datas;//商品id
                     $history_res =Db::name('collection')->where('user_id',$user_id)->where('goods_id',$goods_id)->find();
                     if($history_res){
                         $res = Db::name('collection')->where('user_id',$user_id)->where('goods_id',$goods_id)->delete();
@@ -90,7 +90,7 @@ class  Collection extends Controller{
      **************************************
      * @param Request $request
      */
-    public function del(Request $request){
+    public function collection_del(Request $request){
         if($request->isPost()){
             $id =$_POST['id'];
             $user_id =Session::get("user");

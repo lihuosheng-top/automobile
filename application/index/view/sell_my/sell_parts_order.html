@@ -34,7 +34,8 @@
         .single-goods-box .order-info-box .unit-price-p{font-size: .34rem;color: #f00;}
         .single-goods-box .order-info-box .quantity-p{font-size: .24rem;color: #999;}
         .total-button-box .total-p{text-align: right;font-size: .28rem;color: #666;margin-bottom: .1rem;}
-
+        .button-box{text-align: right;}
+        .receipt{background-color: #504cfb; color: #fff; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none; border: 0;}
     </style>
 </head>
 <body>
@@ -73,6 +74,9 @@
                 </div>
                 <div class="total-button-box">
                     <p class="total-p">共计1件商品 合计：￥0.1</p>
+                    <div class="button-box">
+                        <button class="receipt">接单</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,6 +85,8 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-
+        $('.single-shop-box').click(function(){
+            location.href = 'sell_parts_order_detail';
+        })
     </script>
 </html>

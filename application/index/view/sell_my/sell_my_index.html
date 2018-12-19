@@ -43,49 +43,49 @@
             <div class="function-item">
                 <a href="sell_service_order">
                     <i class="spr-sell icon-order"></i>
-                    <span href="sell_service_order" class="item-txt">今日订单</span>
+                    <span class="item-txt">今日订单</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="javascript:;">
+                <a href="sell_service_order">
                     <i class="spr-sell icon-out"></i>
-                    <span href="javascript:;" class="item-txt">已发货</span>
+                    <span class="item-txt">已发货</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="javascript:;">
+                <a href="sell_service_order">
                     <i class="spr-sell icon-return"></i>
-                    <span href="javascript:;" class="item-txt">已退货</span>
+                    <span class="item-txt">已退货</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="javascript:;">
+                <a href="sell_service_order">
                     <i class="spr-sell icon-service"></i>
-                    <span href="javascript:;" class="item-txt">待服务</span>
+                    <span class="item-txt">待服务</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="javascript:;">
+                <a href="sell_service_order">
                     <i class="spr-sell icon-cancel"></i>
-                    <span href="javascript:;" class="item-txt">已取消</span>
+                    <span class="item-txt">已取消</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="javascript:;">
+                <a href="sell_service_order">
                     <i class="spr-sell icon-complete"></i>
-                    <span href="javascript:;" class="item-txt">已完成</span>
+                    <span class="item-txt">已完成</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="javascript:;">
+                <a href="sell_service_record">
                     <i class="spr-sell icon-monthly"></i>
-                    <span href="javascript:;" class="item-txt">月销</span>
+                    <span class="item-txt">月销</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="javascript:;">
+                <a href="sell_service_order">
                     <i class="spr-sell icon-new"></i>
-                    <span href="javascript:;" class="item-txt">新订单</span>
+                    <span class="item-txt">新订单</span>
                 </a>
             </div>
         </div>
@@ -121,5 +121,13 @@
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $('.monthly-bill').click(function(){
+            location.href = 'sell_service_record';
+        })
+        $('.last-bill').click(function(){
+            location.href = 'sell_service_record';
+        })
+    </script>
 </body>
 </html>

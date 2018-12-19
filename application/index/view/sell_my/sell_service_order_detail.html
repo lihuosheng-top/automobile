@@ -1,10 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/order_service/order_service_detail.css">
+    <title>服务商-商品详情</title>
+    <style>
+        .discount-amount-span{
+            margin-right: 0 !important;
+        }
+        .user-info-box>div{
+            margin-bottom: .1rem;
+        }
+        .service-item-amount .service-total-sum{
+            margin-bottom: .4rem;
+        }
+        .service-total-sum span{
+            color: #333;
+            font-size: .28rem;
+        }
+        .service-total-sum input{
+            width: 1.2rem;
+            outline: none;
+            color: #333;
+        }
+        .service-total-sum div{
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-服务详情
+    <div id="app">
+        <div class="place-order-pop">
+            <header class="place-order-header">
+                <a href="sell_service_order" class="spr place-order-back"></a>
+                <h3 class="place-order-title">订单详情</h3>
+            </header>
+            <div class="order-detail-box">
+                <div class="order-detail-bg">
+                    <div class="status">待付款</div>
+                </div>
+                <div class="user-info-box">
+                    <div class="order-num">订单编号：20181130412</div>
+                    <div class="user-name-phone">
+                        <span class="user-name">收货人：叶问</span>
+                        <span class="user-phone">13691853045</span>
+                    </div>
+                    <div class="service-car">
+                        <span class="address-title">到店车辆：粤B66666</span>
+                    </div>
+                    <div class="car-info">宝骏 560 1.8L 2015年产</div>
+                </div>
+    
+                <div class="order-shop">
+                    <p>服务门店</p>
+                    <p class="shop-address">深圳福田区得朋汽车服务中心</p>
+                    <p class="service-time">到店时间：<span>2018-11-30 星期五 20:00-21:00</span></p>
+                </div>
+                <div class="service-item-box">
+                    <p class="service-item-title">服务项目</p>
+                    <div class="service-item">
+                        <span>预约洗车</span>
+                        <span class="service-item-price">￥0.01</span>
+                    </div>
+                    <div class="service-item-amount">
+                        <div class="service-total-sum">
+                            <span>服务总价值</span>
+                            <div>￥<input type="text" placeholder="输入价格"></div>
+                        </div>
+                        <!-- <div class="discount-amount">
+                            <span>积分抵扣</span>
+                            <span class="discount-amount-span">-￥0</span>
+                        </div> -->
+                        <!-- <div class="pay-amount">
+                            <span>实付款</span>
+                            <span>￥0.01</span>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="order-payment-box">
+                    <button class="order-payment-btn">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
 </body>
 </html>
