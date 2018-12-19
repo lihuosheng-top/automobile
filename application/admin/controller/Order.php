@@ -35,7 +35,7 @@ class Order extends Controller{
             ->join("tb_goods","tb_order_parts.goods_id=tb_goods.id","left")
             ->where('tb_order_parts.store_id',$store_id['store_id'])
             ->order('tb_order_parts.order_create_time','desc')
-            ->paginate(3);
+            ->paginate(20);
        return view('index',['order_parts_data'=>$order_parts_data]);
     }
 
