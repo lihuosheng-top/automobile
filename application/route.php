@@ -369,6 +369,7 @@ Route::group("admin",[
     "goods_role_name"=>"admin/Goods/role_name",                                       //商品角色检测
     "goods_property_name"=>"admin/Goods/property_name",                                       //专用属性入库
     "goods_property_show"=>"admin/Goods/property_show",                                       //专用属性显示
+    "goods_property_name_del"=>"admin/Goods/property_name_del",                              //专用属性名称删除
     "goods_alipay"=>"admin/Goods/alipay",                                       //支付
     "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付宝回调地址
     "goods_edit_show"=>"admin/Goods/edit_show",                                       //专用适用车型编辑显示
@@ -377,6 +378,7 @@ Route::group("admin",[
     "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
     "goods_alipay_pay"=>"admin/Goods/alipay_pay",                                                //微信支付回调地址
     "goods_get_weixin_pay_url"=>"admin/Goods/get_weixin_status",                              //微信是否上架检测
+
 
 
 
