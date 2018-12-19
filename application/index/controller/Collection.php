@@ -132,7 +132,7 @@ class  Collection extends Controller{
                         'goods_id'=>$goods_id,
                         'status'=>1
                     ];
-                    $see_status = Db::name('collection')->field('status')->where($data)->find();
+                    $see_status = Db::name('collection')->where($data)->find();
                     if($see_status){
                         return ajax_success('有收藏',$see_status);
                     }else{
