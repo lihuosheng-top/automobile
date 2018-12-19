@@ -22,6 +22,8 @@ Route::group("",[
     "index"=>"index/index/index",
     "saoma_callback"=>"index/index/saoma_callback",
     "weixin_notify"=>"index/index/weixin_notify",
+    "index_shop"=>"index/index/shop",
+    "index_shop_goods"=>"index/index/shop_goods",
 
 
 
