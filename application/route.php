@@ -113,7 +113,8 @@ Route::group("",[
 
     /*TODO:钱包开始*/
     "wallet_index"=>"index/wallet/index",           //钱包首页（ajax）
-    "wallet_recharge"=>"index/wallet/recharge",     //钱包充值
+    "wallet_recharge"=>"index/wallet/recharge",     //钱包充值(ajax)
+    "wallet_recharge_del"=>"index/wallet/recharge_del",     //钱包充值下单未付款自动关闭取消删除(ajax)
     "wallet_block"=>"index/wallet/block",           //添加银行卡
     "wallet_verification"=>"index/wallet/verification",   //银行卡验证
     /*TODO:钱包结束*/
@@ -170,6 +171,7 @@ Route::group("",[
     "express_completed"=>"index/Express/express_completed",//已完成
     "express_detail"=>"index/Express/express_detail",//快递详情
     "express_info"=>"index/Express/express_info",//快递信息返回
+    "express_logout"=>"index/Express/express_logout",//快递员退出登录
 
     /*TODO:快递结束*/
 
