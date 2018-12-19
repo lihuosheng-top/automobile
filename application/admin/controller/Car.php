@@ -19,7 +19,7 @@ class Car extends Controller{
      */
     public function index(){
 
-        $car_data = db("car_images")->select();
+        $car_data = db("car_images")->paginate(20);
         return view("car_index",["car_data"=>$car_data]);
 
     }
@@ -143,8 +143,13 @@ class Car extends Controller{
      * 模糊搜索
      * 陈绪
      */
-    public function search(){
+    public function search(Request $request){
 
+        $brand_name = $request->only(["brand"])["brand"];
+        if(!empty($brand_name)){
+            $brand = db("car_images")->where("brand","like","%".$brand_name."%")->paginate(20, false, ['query' => request()->param()]);
+        }
+        return view("car_index",["brand"=>$brand]);
 
 
     }

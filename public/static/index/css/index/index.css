@@ -541,9 +541,6 @@ html{
     margin-bottom: .2rem;
     line-height: normal;
 }
-.hot-brand .hot-brand-ul .hot-brand-li span{
-    flex: 1;
-}
 .hot-brand-li img{
     width: .6rem;
     height: .6rem;

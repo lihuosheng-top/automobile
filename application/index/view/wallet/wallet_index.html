@@ -9,69 +9,16 @@
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
     <title>我的钱包</title>
     <style>
-        html, body, .wrapper{
-            background-color: #fff;
-        }
-        .header{
-            position: relative;
-            width: 100%;
-            height: .88rem;
-            background-color: #fff;
-            margin-bottom: 2rem;
-        }
-        .header h3{
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            line-height: .88rem;
-            font-size: .36rem;
-            color: #333;
-            font-weight: normal;
-        }
-        .header .icon-back{
-            position: absolute;
-            left: .2rem;
-            top: 50%;
-            width: .25rem;
-            height: .43rem;
-            margin-top: -.22rem;
-            background-position: -.5rem -.5rem;
-        }
-        .icon-money{
-            width: 2.34rem;
-            height: 2.34rem;
-            margin: 0 auto .1rem;
-        }
-        .icon-money img{
-            width: 100%;
-            height: 100%;
-        }
-        .money-title{
-            text-align: center;
-            font-size: .3rem;
-            color: #333;
-        }
-        .money-txt{
-            text-align: center;
-            font-size: .3rem;
-            color: #222;
-            margin-bottom: .5rem;
-        }
-        .money-txt span{
-            font-size: .72rem;
-        }
-        .recharge{
-            display: block;
-            width: 94%;
-            height: 1rem;
-            border: 0;
-            outline: none;
-            color: #fff;
-            background-color: #3169f6;
-            border-radius: .15rem;
-            margin: 0 auto;
-            font-size: .36rem;
-        }
+        html, body, .wrapper{background-color: #fff;}
+        .header{position: relative;width: 100%;height: .88rem;background-color: #fff;margin-bottom: 2rem;}
+        .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
+        .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .icon-money{width: 2.34rem;height: 2.34rem;margin: 0 auto .1rem;}
+        .icon-money img{width: 100%;height: 100%;}
+        .money-title{text-align: center;font-size: .3rem;color: #333;}
+        .money-txt{text-align: center;font-size: .3rem;color: #222;margin-bottom: .5rem;}
+        .money-txt span{font-size: .72rem;}
+        .recharge{display: block;width: 94%;height: 1rem;border: 0;outline: none;color: #fff;background-color: #3169f6;border-radius: .15rem;margin: 0 auto;font-size: .36rem;}
     </style>
 </head>
 <body>
@@ -84,7 +31,7 @@
             <img src="__STATIC__/index/image/money.png">
         </div>
         <p class="money-title">可用金额</p>
-        <p class="money-txt">￥<span>999.99</span></p>
+        <p class="money-txt">￥<span></span></p>
         <button class="recharge">充值</button>
     </div>
 
@@ -92,6 +39,20 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
+        $.ajax({
+            url: 'wallet_index',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status === 1){
+                    $('.money-txt span').text(res.data.user_wallet);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
         $('.recharge').click(function(){
             location.href = 'wallet_recharge';
         })

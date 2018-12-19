@@ -221,9 +221,8 @@ $.ajax({
                 }
             }
             if(store_name !== undefined && real_name !== undefined &&
-            store_logo_images !== undefined && store_city_address !== undefined &&
-            store_street_address !== undefined && role_id !== undefined){
-
+            store_city_address !== undefined && store_street_address !== undefined 
+            && role_id !== undefined){
                 var formData = new FormData();
                 formData.append('store_name', store_name);
                 formData.append('real_name', real_name);
