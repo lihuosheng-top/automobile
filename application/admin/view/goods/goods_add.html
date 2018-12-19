@@ -752,15 +752,16 @@
 				var texts = $(".add-attribute_input").val();
 				$.ajax({
 					type: "POST",
-					url: "{:url('admin/Goods/namesss')}",
+					url: "{:url('admin/Goods/property_name_del')}",
 					data: {
 						"goods_name": texts
 					},
 					success: function(data) {
 						var data = eval('(' + data + ')');
 						layer.msg(data.info);
-						if(data.info == "成功") {
+						if(data.info == "删除成功") {
 							$(".dedicated_property option[value='" + texts + "']").remove();
+							   $(".add-attribute_input").val('');
 							form.render('select');
 						}
 					},

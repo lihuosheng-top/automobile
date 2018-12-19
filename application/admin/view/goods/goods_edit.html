@@ -811,8 +811,9 @@
                     success: function(data) {
                         var data = eval('(' + data + ')');
                         layer.msg(data.info);
-                        if (data.info == "成功") {
+                        if (data.info == "删除成功") {
                             $(".dedicated_property option[value='" + texts + "']").remove();
+                            $(".add-attribute_input").val('');
                             form.render('select');
                         }
                     },
