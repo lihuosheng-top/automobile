@@ -132,6 +132,7 @@ class My extends Controller
             $user_id =Session::get("user");//用户id
             //头像
             $user_img = $request->file('user_img');
+            halt($user_img);
             if(!empty($user_img)){
                 $info = $user_img->move(ROOT_PATH . 'public' . DS . 'userimg');
                 $user_img_url = str_replace("\\","/",$info->getSaveName());

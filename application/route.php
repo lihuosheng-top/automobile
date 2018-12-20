@@ -22,8 +22,9 @@ Route::group("",[
     "index"=>"index/index/index",
     "saoma_callback"=>"index/index/saoma_callback",
     "weixin_notify"=>"index/index/weixin_notify",
-    "index_shop"=>"index/index/shop",
-    "index_shop_goods"=>"index/index/shop_goods",
+    "index_shop"=>"index/index/shop",                               //热门配件店铺
+    "index_shop_goods"=>"index/index/shop_goods",                   //热门配件店铺商品
+    "index_serve_shop"=>"index/index/serve_shop",                   //热门配件店铺商品
 
 
 
@@ -55,6 +56,8 @@ Route::group("",[
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
     'index_aliPay'=>"index/Apppay/index_aliPay", //服务商提交支付（付款）（弹窗支付）
     'index_pay_code'=>"index/Apppay/index_pay_code", //状态修改(回调地址修改状态)
+    "recharge_aliPay"=>"index/Apppay/recharge_aliPay",     //充值订单提交支付（付款）
+    "recharge_pay_code"=>"index/Apppay/recharge_pay_code",     //充值订单支付（成功回调修改状态）
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/
@@ -299,6 +302,15 @@ Route::group("",[
 
     /*汽车广告管理前端开始*/
     "advertisement_index"=>"index/Advertisement/advertisement_index", //汽车广告显示
+
+
+
+    /**
+     * 运营管理
+     * 陈绪
+     */
+    "operation_index"=>"index/Operation/complaint",             //投诉中心
+    "rescue_index"=>"index/Operation/rescue",             //紧急救援
     
 ]);
 

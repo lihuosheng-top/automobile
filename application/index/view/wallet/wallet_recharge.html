@@ -25,7 +25,7 @@
 
     <div class="mask" style="display: none;"></div>
     <!-- 支付弹窗 -->
-    <form name=alipayment action="{:url('index/Apppay/index_aliPay')}" method="post">
+    <form name=alipayment action="{:url('index/Apppay/recharge_aliPay')}" method="post">
         <div class="alipay-pop">
             <header>
                 <a href="javascript:;" class="close-alipay">×</a>
@@ -38,10 +38,13 @@
                 </div>
                 <ul class="content">
                     <li>
-                        订单信息: <input id="WIDout_trade_no" name="WIDout_trade_no" value="充值" readonly>
+                        订单信息: <input id="WIDsubject" name="WIDsubject" value="充值" readonly>
                     </li>
                     <li>
-                        付款方式: <input id="WIDsubject" name="WIDsubject" value="中国银行(1234)" readonly><i class="spr icon-more"></i>
+                        订单编号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="" readonly>
+                    </li>
+                    <li>
+                        付款方式: <input id="WIDbody" name="WIDbody" value="支付宝" readonly><i class="spr icon-more"></i>
                     </li>
                 </ul>
             </div>
@@ -75,14 +78,14 @@
                 <img src="__STATIC__/index/image/wechat.png">
             </div>
             <p>微信支付</p>
-            <a href="javascript:;" class="spr check-a icon-check"></a>
+            <a href="javascript:;" class="spr check-a"></a>
         </div>
         <div class="method-div">
             <div class="icon-div">
                 <img src="__STATIC__/index/image/alipay.png">
             </div>
             <p>支付宝支付</p>
-            <a href="javascript:;" class="spr check-a"></a>
+            <a href="javascript:;" class="spr check-a icon-check"></a>
         </div>
     </div>
 
@@ -105,6 +108,29 @@
                     },
                     success: function(res){
                         console.log(res);
+                        if(res.status === 1){
+                            $('#WIDout_trade_no').val(res.data)
+                        }
+                        $('.close-alipay').click(function(e){
+                            e.preventDefault();
+                            $('.mask').hide();
+                            $('.alipay-pop').animate({'bottom': '-100%'});
+                            var id = $(this).attr('id');
+                            $.ajax({
+                                url: 'wallet_recharge_del',
+                                type: 'POST',
+                                dataType: 'JSON',
+                                data: {
+                                    'recharge_id': res.data,
+                                },
+                                success: function(res){
+                                    console.log(res);
+                                },
+                                error: function(){
+                                    console.log('error');
+                                }
+                            })
+                        })
                     },
                     error: function(){
                         console.log('error');
@@ -121,29 +147,7 @@
             }
         })
 
-        $('.close-alipay').click(function(e){
-            e.preventDefault();
-            $('.mask').hide();
-            $('.alipay-pop').animate({'bottom': '-100%'});
-            var id = $(this).attr('id');
-            $.ajax({
-                url: 'wallet_recharge_del',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    'recharge_id': res.data,
-                },
-                success: function(res){
-                    console.log(res);
-                },
-                error: function(){
-                    console.log('error');
-                }
-            })
-        })
-        
-
-        $('#WIDsubject').click(function(){
+        $('#WIDbody').click(function(){
             $('.alipay-pop').animate({'bottom': '-100%'});
             $('.chose-payment').animate({'bottom': '0'});
         })
@@ -157,7 +161,7 @@
             $(this).siblings().find('.check-a').removeClass('icon-check');
             $(this).find('.check-a').addClass('icon-check');
             var paymentMethod = $(this).find('p').text();
-            $('#WIDsubject').val(paymentMethod);
+            $('#WIDbody').val(paymentMethod);
             backMethod();
         })
         $('.chose-payment-back').click(function(){

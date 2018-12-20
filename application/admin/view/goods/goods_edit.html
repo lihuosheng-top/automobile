@@ -26,7 +26,9 @@
 	.layui-form-item {
 		width: 54%;
 	}
-	
+	#special_content .layui-input-block{
+		margin-left: 0px;
+	}
 	.biaoji .layui-form-radioed span {
 		color: #fff;
 		background: red;
@@ -40,10 +42,44 @@
 	/*.car .layui-unselect{
 		display: none !important;
 	}*/
+	/*.car select{
+		    width: 100%;
+            height: 38px;
+	}
+	#city{
+		display: block;
+	}
+	#province{
+		display: block;
+	}*/
+	    table .full {
+        width: 60px !important;
+        min-width: 0px !important;
+    }
+    
+    table input {
+        width: 60px !important;
+        min-width: 60px !important;
+    }
+    
+    table .z_photo {
+        padding: 0;
+    }
+    
+    table th {
+        text-align: center;
+    }
+    
+    table td {
+        text-align: center;
+        margin: 0 auto;
+    }
 	
-	.car select {
-		width: 100%;
-		height: 38px;
+	.err {
+		border: solid 1px red;
+	}
+	.lv1 input{
+		height: 30px;
 	}
 </style>
 <style type="text/css">
@@ -71,7 +107,6 @@
 	.general-kuang {
 		border: solid 1px #E4E4E4;
 		width: 1000px;
-		padding-left: 10px;
 	}
 	
 	.btus {
@@ -89,6 +124,7 @@
 	
 	.sky-blue {
 		color: #0099FF;
+		border: 0;
 	}
 	
 	.bgwhite {
@@ -120,6 +156,7 @@
 		height: 40px;
 		border-radius: 3px;
 		color: #fff;
+		border: 0;
 	}
 	
 	.btu-delet {
@@ -135,27 +172,12 @@
 	.num-content {
 		overflow: hidden;
 	}
-	/*#city{
+	/*#displacement {
 		display: block;
 	}
-	#province{
+	#production{
 		display: block;
 	}*/
-	/* 数据库展现图片样式 */
-	
-	.img {
-		position: relative;
-		display: inline-block;
-		width: 100px;
-	}
-	
-	.img>i {
-		display: inline-block;
-		width: 20px;
-		position: absolute;
-		right: 0;
-		top: 0;
-	}
 	
 	.big_div {
 		position: relative;
@@ -167,6 +189,28 @@
 		position: absolute;
 		top: 0;
 		right: 0;
+	}
+	table .upimg-div .up-section{
+		width: 60px;
+		height: 60px;
+	}
+	table .up-section .close-upimg{
+		width: 20px;
+		height: 20px;
+	}
+	table .img-box .upimg-div .z_file{
+		width: 60px;
+		height: 60px;
+	}
+	table .z_file .add-img{
+		width: 60px;
+		height: 60px;
+	}
+	table .z_photo{
+	border: 0;	
+	}
+	table .img-box{
+		margin: 0;
 	}
 </style>
 
@@ -357,48 +401,90 @@
 		<div>
 			{if $value.goods_standard == "通用"}
 			<div class="layui-form-item general ">
-				<label class="layui-form-label"></label>
 				<div class="layui-input-block general-kuang">
-					<div id="general_content">
-						{volist name="$goods_standard_name" id="name"}
-						<div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格名</label>
-								<div class="layui-input-inline guige_name">
-									<select id="universal_standard_name_a" class="universal_standard_name" name="goods_standard_name[]" lay-filte "guige_name">
-										<option value="{$name.goods_standard_name}" selected="">{$name.goods_standard_name}</option>
-									</select>
-								</div>
-								<!--<div class="layui-input-inline add-name" style="">
-                                    <button type="button" class="sky-blue bgwhite">+添加规格名</button>
-                                </div>
-                                <div class="layui-input-inline noshow add-names" style="">
-                                    <input type="text" name="" id="" value="" class="add_name_a"/>
-                                </div>
-                                <div class="layui-input-inline noshow add-names" style="">
-                                    <button type="button" class="operation-btus btu-delet" data-id="a">删除</button>
-                                    <button type="button" class="operation-btus btu-cancel">取消</button>
-                                    <button type="button" class="operation-btus btu-add guibtu-add">添加</button>
-                                </div>-->
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格值：</label>
-								<div class="num-content">
-									{volist name="$name.goods_standard_value" id="standard_value"}
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="{$standard_value}" placeholder="" style="padding-left:10px;" />
-									</div>
-									{/volist}
-								</div>
+
+					<div id="lv_table_con" class="control-group" style="">
+						<label class="control-label">规格项目表</label>
+						<div class="controls" style="">
+							<div id="lv_table" style="padding: 10px;">
+								<table class="table table-bordered">
+									<thead>
+
+										<tr>
+											<!--//循环这里规格名称-->
+											{if !empty($res)} {volist name="res" id="val"}
+											<th width="50">
+												<input name="lv1" value="{$val}" readonly="" style="border:0;">
+											</th>
+											{/volist} {/if}
+
+											<!--//循环这里-->
+											<th width="100px"><input value="价格（元）" readonly="" style="border:0;"></th>
+											<th width="100px"><input value="库存" readonly="" style="border:0;"></th>
+											<th width="100px"><input value="规格编码" readonly="" style="border:0;"></th>
+											<th width="100px"><input value="成本价" readonly="" style="border:0;"></th>
+											<th width="100px"><input value="图片" readonly="" style="border:0;"></th>
+											<th width="100px"><input value="开关" readonly="" style="border:0;"></th>
+										</tr>
+
+									</thead>
+									<tbody>
+										{if !empty($goods_standard)} {volist name="goods_standard" id="ve"}
+										<!--//规格值循环这里-->
+										<tr data-row="1">
+											{volist name="$ve['title']" id="vs"}
+											<td width="50" rowspan="1" data-rc="1_1">
+												<input value="{$vs}" readonly="" style="border:0;">
+											</td>
+											{/volist}
+											<td width="100px"><input type="text" name="sss1521[price]" value="{$ve.price}" data-id="{$ve.id}" data-value="price" class="inputs" required="required"></td>
+											<td width="100px"><input type="text" name="sss1521[stock]" value="{$ve.stock}" data-id="{$ve.id}" data-value="stock" class="inputs" required="required"></td>
+											<td width="100px"><input type="text" name="sss1521[coding]" value="{$ve.coding}" data-id="{$ve.id}" data-value="coding" class="inputs" required="required"></td>
+											<td width="100px"><input type="text" name="sss1521[cost]" value="{$ve.cost}" data-id="{$ve.id}" data-value="cost" class="inputs" required="required"> </td>
+											<td width="100px">
+												<div class="img-box full">
+													<section class=" img-section">
+														<div class="z_photo upimg-div clear">
+															<section class="up-section fl">
+																<span class="up-span"></span><img class="close-upimg" src="/siring_ow/public/static/admin/common/upfile/img/a7.png">
+																<!--图片放这里-->
+
+																<img class="up-img" src="__UPLOADS__/{$ve.images}">
+																<!--图片放这里-->
+
+																<p class="img-name-p">u4594.png</p><input id="taglocation" name="images" value="__UPLOADS__/{$ve.images}" type="hidden">
+																<input id="tags" name="" value="" type="hidden"></section>
+															<section class="z_file fl" style="display: none;"> <img src="/teahouse/public/static/admin/common/upfile/img/a11.png" class="add-img">
+																<input type="file" name="goods_show_images[]" id="file_0" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple="" data-id="1" required="required" data-value="images" data-name="{$ve.id}"> </section>
+
+														</div>
+													</section>
+												</div>
+												<aside class="mask works-mask">
+													<div class="mask-content">
+														<p class="del-p ">您确定要删除作品图片吗？</p>
+														<p class="check-p">
+															<span class="del-com wsdel-ok list_delet_img" data-id="{$ve.id}" data-value="images">确定</span>
+															<span class="wsdel-no">取消</span>
+														</p>
+													</div>
+												</aside>
+											</td>
+											<td>
+												{if $ve.status == 0}
+												<input type="checkbox" class="Status" name="status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" data-id="{$ve.id}" data-value="status"> {else}
+												<input type="checkbox" class="Status" name="status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" checked data-id="{$ve.id}" data-value="status"> {/if}
+											</td>
+										</tr>
+										{/volist} {/if}
+										<!--//规格值循环这里-->
+									</tbody>
+								</table>
 							</div>
 						</div>
-						{/volist}
-
-					</div>
-					<div class="add-content content" id="add_general_buts">
-						<button type="button" class="btus general_buts">添加规格项目</button>
 					</div>
 				</div>
+
 			</div>
 			<div class="layui-form-item special noshow">
 				<label class="layui-form-label"></label>
@@ -439,7 +525,7 @@
 						<div class="layui-input-inline noshow add-attributes">
 							<input type="text" name="" id="" value="" class="add-attribute_input" style="height: 35px;" />
 						</div>
-						<div class="layui-input-inline noshow add-attributes">
+						<div class="layui-input-inline noshow add-attributes" style="width: 260px;">
 							<button type="button" class="operation-btus btu-delet attributes_delect">删除</button>
 							<button type="button" class="operation-btus btu-cancel">取消</button>
 							<button type="button" class="operation-btus btu-add shuxingbtu-add">添加</button>
@@ -448,9 +534,7 @@
 
 					<div id="special_content">
 					</div>
-					<div class="add-content content" id="add_special_buts">
-						<button type="button" class="btus special_buts">添加规格项目</button>
-					</div>
+
 				</div>
 			</div>
 			{/if} {if $value.goods_standard == "专用"}
@@ -459,9 +543,7 @@
 				<div class="layui-input-block general-kuang">
 					<div id="general_content">
 					</div>
-					<div class="add-content content" id="add_general_buts">
-						<button type="button" class="btus general_buts">添加规格项目</button>
-					</div>
+
 				</div>
 			</div>
 			<div class="layui-form-item special ">
@@ -518,43 +600,92 @@
 					</div>
 
 					<div id="special_content">
-						{volist name="$goods_standard_name" id="name"}
-						<div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格名</label>
-								<div class="layui-input-inline guige_name">
-									<select class="universal_standard_namea" name="goods_standard_name[]" lay-filte "guige_name">
-										<option value="{$name.goods_standard_name}" selected="">{$name.goods_standard_name}</option>
-									</select>
-								</div>
-								<!--<div class="layui-input-inline add-name" style="">
-                                    <button type="button" class="sky-blue bgwhite">+添加规格名</button>
-                                </div>
-                                <div class="layui-input-inline noshow add-names" style="">
-                                    <input type="text" name="" id="" value="" class="add_name_a"/>
-                                </div>
-                                <div class="layui-input-inline noshow add-names" style="">
-                                    <button type="button" class="operation-btus btu-delet" data-id="a">删除</button>
-                                    <button type="button" class="operation-btus btu-cancel">取消</button>
-                                    <button type="button" class="operation-btus btu-add guibtu-add" data-id="a">添加</button>
-                                </div>-->
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">规格值：</label>
-								<div class="num-content">
-									{volist name="$name.goods_standard_value" id="standard_value"}
-									<div class="layui-input-inline list" style="padding-bottom:10px;margin-right: 25px;">
-										<input type="text" name="goods_standard_value[]" value="{$standard_value}" placeholder="" style="padding-left:10px;" />
+						<div class="layui-input-block general-kuang">
+
+							<div id="lv_table_con" class="control-group" style="">
+								<label class="control-label">规格项目表</label>
+								<div class="controls" style="">
+									<div id="lv_table" style="padding: 10px;">
+										<table class="table table-bordered">
+											<thead>
+
+												<tr>
+													<!--//循环这里规格名称-->
+													{if !empty($res)} {volist name="res" id="val"}
+													<th width="50">
+														<input name="lv1" value="{$val}" readonly="" style="border:0;">
+													</th>
+													{/volist} {/if}
+
+													<!--//循环这里-->
+													<th width="100px"><input value="价格（元）" readonly="" style="border:0;"></th>
+													<th width="100px"><input value="库存" readonly="" style="border:0;"></th>
+													<th width="100px"><input value="规格编码" readonly="" style="border:0;"></th>
+													<th width="100px"><input value="成本价" readonly="" style="border:0;"></th>
+													<th width="100px"><input value="图片" readonly="" style="border:0;"></th>
+													<th width="100px"><input value="开关" readonly="" style="border:0;"></th>
+												</tr>
+
+											</thead>
+											<tbody>
+												{if !empty($goods_standard)} {volist name="goods_standard" id="ve"}
+												<!--//规格值循环这里-->
+												<tr data-row="1">
+													{volist name="$ve['title']" id="vs"}
+													<td width="50" rowspan="1" data-rc="1_1">
+														<input value="{$vs}" readonly="" style="border:0;">
+													</td>
+													{/volist}
+													<td width="100px"><input type="text" name="sss1521[price]" value="{$ve.price}" data-id="{$ve.id}" data-value="price" class="inputs" required="required"></td>
+													<td width="100px"><input type="text" name="sss1521[stock]" value="{$ve.stock}" data-id="{$ve.id}" data-value="stock" class="inputs" required="required"></td>
+													<td width="100px"><input type="text" name="sss1521[coding]" value="{$ve.coding}" data-id="{$ve.id}" data-value="coding" class="inputs" required="required"></td>
+													<td width="100px"><input type="text" name="sss1521[cost]" value="{$ve.cost}" data-id="{$ve.id}" data-value="cost" class="inputs" required="required"> </td>
+													<td width="100px">
+														<div class="img-box full">
+															<section class=" img-section">
+																<div class="z_photo upimg-div clear">
+																	<section class="up-section fl">
+																		<span class="up-span"></span><img class="close-upimg" src="/siring_ow/public/static/admin/common/upfile/img/a7.png">
+																		<!--图片放这里-->
+
+																		<img class="up-img" src="__UPLOADS__/{$ve.images}">
+																		<!--图片放这里-->
+
+																		<p class="img-name-p">u4594.png</p><input id="taglocation" name="images" value="__UPLOADS__/{$ve.images}" type="hidden">
+																		<input id="tags" name="" value="" type="hidden"></section>
+																	<section class="z_file fl" style="display: none;"> <img src="/teahouse/public/static/admin/common/upfile/img/a11.png" class="add-img">
+																		<input type="file" name="goods_show_images[]" id="file_0" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple="" data-id="1" required="required" data-value="images" data-name="{$ve.id}"> </section>
+
+																</div>
+															</section>
+														</div>
+														<aside class="mask works-mask">
+															<div class="mask-content">
+																<p class="del-p ">您确定要删除作品图片吗？</p>
+																<p class="check-p">
+																	<span class="del-com wsdel-ok list_delet_img" data-id="{$ve.id}" data-value="images">确定</span>
+																	<span class="wsdel-no">取消</span>
+																</p>
+															</div>
+														</aside>
+													</td>
+													<td>
+														{if $ve.status == 0}
+														<input type="checkbox" class="Status" name="status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" data-id="{$ve.id}" data-value="status"> {else}
+														<input type="checkbox" class="Status" name="status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" checked data-id="{$ve.id}" data-value="status"> {/if}
+													</td>
+												</tr>
+												{/volist} {/if}
+												<!--//规格值循环这里-->
+											</tbody>
+										</table>
 									</div>
-									{/volist}
 								</div>
 							</div>
 						</div>
-						{/volist}
+
 					</div>
-					<div class="add-content content" id="add_special_buts">
-						<button type="button" class="btus special_buts">添加规格项目</button>
-					</div>
+
 				</div>
 
 			</div>
@@ -722,7 +853,7 @@
 				console.log("错误");
 			}
 		});
-	
+
 		// 取当前页面名称(不带后缀名)
 		function pageName() {
 			var a = location.href;
@@ -790,6 +921,100 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 			layedit.build('demo');
+			//			价格库存等修改事件
+            $(".inputs").change(function() {
+                var change_val = $(this).val();
+                var location_x = $(this).data("id");
+                var location_y = $(this).data("value");
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('admin/Goods/value')}",
+                    data: {
+                        "id": location_x,
+                        "value": change_val,
+                        "key": location_y,
+                    },
+                    success: function(data) {
+                        data = eval("(" + data + ")");
+                        layer.msg(data.info);
+                        form.render('select');
+                    },
+                    error: function(data) {
+                        console.log("失败")
+                    }
+                });
+            });
+            //			  开关修改事件
+            form.on('switch(isshelves)', function(data) {
+                if ($(this).val() == 0) {
+                    $(this).val(1);
+                } else {
+                    $(this).val(0);
+                }
+                var value = data.value;
+                if (value == 0) {
+                    value = 1;
+                } else {
+                    value = 0;
+                }
+                var id = data.elem.dataset.id;
+
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('admin/Goods/switches')}",
+                    data: {
+                        "id": id,
+                        "status": value,
+                    },
+                    success: function(data) {
+                        layer.msg("修改成功");
+                    },
+                    error: function(data) {
+                        console.log("失败")
+                    }
+                });
+
+            });
+            //          删除图片事件
+            $(".list_delet_img").click(function() {
+                var id = $(this).data("id");
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('admin/Goods/photos')}",
+                    data: {
+                        "id": id,
+                    },
+                    success: function(data) {
+                        layer.msg("修改成功");
+                    },
+                    error: function(data) {
+                        console.log("失败")
+                    }
+                });
+            });
+            //			添加图片
+            $(".file").change(function() {
+                //				alert(111);
+                var formData = new FormData();
+                var filess = $(this)[0].files[0];
+                var id = $(this).data("name");
+                formData.append("id", id);
+                formData.append("file", filess);
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('admin/Goods/addphoto')}",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function(data) {
+                        layer.msg("修改成功");
+                    },
+                    error: function(data) {
+                        console.log("失败")
+                    }
+                });
+            });
+
 
 			// TODO限制分组和品牌
 			form.on('select(goods_type_id)', function(data) {
@@ -1006,7 +1231,7 @@
 			form.render('select');
 			// end商品规格变化
 		})
-			setTimeout(insertHtml, 1000);
+		setTimeout(insertHtml, 1000);
 
 		//实例化编辑器
 		//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
@@ -1072,9 +1297,7 @@
 			$(".btu").attr("type", "submit");
 
 		}
-	
 	</script>
-
 
 	{/block}
 

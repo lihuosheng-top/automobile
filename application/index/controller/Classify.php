@@ -51,7 +51,9 @@ class Classify extends Controller
             $goods_data = [];
             $goods = db("goods")->where("goods_type_id",$goods_type_id)->whereOr("goods_brand_id",$goods_type_id)->select();
             foreach ($goods as $kye=>$value){
-                if($value["goods_status"] == 1){
+                $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
+                $store = db("store")->where("store_id",$value["store_id"])->where($where)->find();
+                if($value["goods_status"] == 1 && !empty($store)){
                     unset($goods[$kye]);
                     $goods_data[] = $value;
                 }

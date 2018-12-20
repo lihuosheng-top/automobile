@@ -6,7 +6,7 @@ $(function(){
 	};
 	
 		/*点击图片的文本框*/
-	$(".file").change(function(){	 
+	$("body").on('change','.file',function(){	
 		var maximg=$(this).data("id");
 	
 		var idFile = $(this).attr("id");
@@ -72,7 +72,7 @@ $(function(){
      	  delParent = $(this).parent();
 	});
 		
-	$(".wsdel-ok").click(function(){
+	$("body").on('click','.wsdel-ok',function(){
 		var max=delParent.parent().find(".z_file").children("input").data("id")+1;
 		$(".works-mask").hide();
 		var numUp = delParent.siblings().length;
@@ -81,6 +81,7 @@ $(function(){
 		}
 		 delParent.remove();
 	});
+	
 	
 	$(".wsdel-no").click(function(){
 		$(".works-mask").hide();
