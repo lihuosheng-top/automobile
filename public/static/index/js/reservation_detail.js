@@ -136,7 +136,51 @@ if(urlLen > 1){
                 var str2 = '';
                 $.each(data.data.store, function(idx, val){
                     $('.shop_name').text(val.store_name);
+                    $('.addr_p span').text(val.store_detailed_address);
+                    $('.shop-describe').text(val.store_information);
+
+                    str2 += `<div class="service-colla-item">
+                                <div class="service-colla-title">
+                                    <p class="service-subtitle">`+val.serve_name+`</p>
+                                    <p class="service-money"></p>
+                                    <i class="spr icon-uncheck"></i>
+                                </div>
+                                <div class="service-colla-content" style="display:none;">
+                                    <ul>`
+                    $.each(val.goods, function(idx, val){
+                        if(val.service_money === null && val.ruling_money === null){
+                            str2 += `<li>
+                                        <p class="service-car-type">`+val.vehicle_model+`</p>
+                                        <div class="content-money-div">
+                                            <p class="sale"><span>面议</span></p>
+                                        </div>
+                                        <i class="spr icon-uncheck"></i>
+                                    </li>`
+                        }else if(val.service_money !== null && val.ruling_money === null){
+                            str2 += `<li>
+                                        <p class="service-car-type">`+val.vehicle_model+`</p>
+                                        <div class="content-money-div">
+                                            <p class="sale">￥<span>`+val.service_money+`</span></p>
+                                        </div>
+                                        <i class="spr icon-uncheck"></i>
+                                    </li>`
+                        }else if(val.service_money !== null && val.ruling_money !== null){
+                            str2 += `<li>
+                                        <p class="service-car-type">`+val.vehicle_model+`</p>
+                                        <div class="content-money-div">
+                                            <p class="sale">￥<span>`+val.service_money+`</span></p>
+                                            <p class="thro">￥<span>`+val.ruling_money+`</span></p>
+                                        </div>
+                                        <i class="spr icon-uncheck"></i>
+                                    </li>`
+                        }
+                        str2 += `</ul>
+                            </div>
+                        </div>`
+                    })
                 })
+                $('.service-content').append(str2);
+                selectEvent();
             }
         },
         error: function(){
@@ -214,28 +258,7 @@ if(urlLen > 1){
                     </div>`              
                 })
                 $('.service-content').append(str2);
-                // 选择
-                $('.service-colla-title').click(function(e){
-                    e.preventDefault();
-                    $(this).find('.icon-uncheck').toggleClass('icon-check');
-                    if($(this).find('.icon-uncheck').hasClass('icon-check')){
-                        $(this).siblings('.service-colla-content').show();
-                        // 合并打开的service-colla-content
-                        $(this).parent().siblings().find('.service-colla-content').hide();
-                        $(this).parent().siblings().find('.icon-uncheck').removeClass('icon-check');
-                    }else{
-                        $(this).siblings('.service-colla-content').hide();
-                    }
-                })
-                $('.service-colla-content li').click(function(){
-                    $(this).find('.icon-uncheck').toggleClass('icon-check');
-                    if($(this).find('.icon-uncheck').hasClass('icon-check')){
-                        $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
-                        $('.bespeak-btn').removeAttr('disabled')
-                    }else{
-                        $('.bespeak-btn').prop('disabled', 'disabled');
-                    }
-                })
+                selectEvent();
             }
         },
         error: function(){
@@ -243,6 +266,31 @@ if(urlLen > 1){
         }
     })
 
+}
+
+function selectEvent(){
+    // 选择
+    $('.service-colla-title').click(function(e){
+        e.preventDefault();
+        $(this).find('.icon-uncheck').toggleClass('icon-check');
+        if($(this).find('.icon-uncheck').hasClass('icon-check')){
+            $(this).siblings('.service-colla-content').show();
+            // 合并打开的service-colla-content
+            $(this).parent().siblings().find('.service-colla-content').hide();
+            $(this).parent().siblings().find('.icon-uncheck').removeClass('icon-check');
+        }else{
+            $(this).siblings('.service-colla-content').hide();
+        }
+    })
+    $('.service-colla-content li').click(function(){
+        $(this).find('.icon-uncheck').toggleClass('icon-check');
+        if($(this).find('.icon-uncheck').hasClass('icon-check')){
+            $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
+            $('.bespeak-btn').removeAttr('disabled')
+        }else{
+            $('.bespeak-btn').prop('disabled', 'disabled');
+        }
+    })
 }
 
 // 切换服务项目 本店商品
