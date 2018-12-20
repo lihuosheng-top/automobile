@@ -47,7 +47,7 @@ class Reservation extends Controller{
      */
     public function reservation(Request $request)
     {
-        
+
         if($request->isPost()) {
             $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
             $user_id = Session::get("user");
@@ -78,12 +78,16 @@ class Reservation extends Controller{
      */
     public function reservation_detail(Request $request)
     {
+
         if($request->isPost()){
+            $user_id = Session::get("user");
+            $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
+            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->where("year",$user_car["production_time"])->where("displacement",$user_car["displacement"])->field("vehicle_model")->find();
             $serve_goods_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("store_id",$serve_goods_id)->select();
             $store = db("store")->where("store_id",$serve_goods_id)->select();
             foreach ($store as $key=>$value){
-                $store[$key]["goods"] = db("serve_goods")->where("store_id",$value["store_id"])->select();
+                $store[$key]["goods"] = db("serve_goods")->where("store_id",$value["store_id"])->where("vehicle_model",$car_series["vehicle_model"])->select();
                 $store[$key]["serve_name"] = db("service_setting")->where("service_setting_id",$store[$key]["goods"][0]["service_setting_id"])->value("service_setting_name");
             }
             return ajax_success("获取成功",array("goods"=>$goods,"store"=>$store));
