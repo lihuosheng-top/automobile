@@ -23,7 +23,8 @@ class  Advertisement extends  Controller{
     public function advertisement_index(Request $request)
     {
         if ($request->isGet()){
-            $area = $request->only(['area'])['area'];
+            //$area = $request->only(['area'])['area'];
+            $area = "广东省,深圳市,福田区";
             $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
             halt($area_data);
             if (!empty($area_data)) {
