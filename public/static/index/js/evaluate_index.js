@@ -126,7 +126,7 @@ $('.publish-btn').click(function(){
     $.ajax({
         url: 'evaluate_parts_add',
         type: 'POST',
-        dataType: 'JSON',
+        dataType: 'formData',
         processData: false,
         contentType: false,
         data: formData,
