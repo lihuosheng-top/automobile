@@ -113,13 +113,23 @@ class Index extends Controller
      */
     public function shop_goods(Request $request){
 
-        if($request->isPost()){
+        if($request->isPost()) {
             $shop_id = $request->only(["id"])["id"];
-            $goods = db("goods")->where("store_id",$shop_id)->where("goods_status",1)->select();
-            $serve_goods = db("serve_goods")->where("store_id",$shop_id)->where("status",1)->select();
-            if($goods){
-                return ajax_success("获取成功",array("goods"=>$goods,"serve_goods"=>$serve_goods));
-            }else{
+            $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+            $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
+            $service_setting = db("service_setting")->select();
+            $serve_data = [];
+            foreach ($service_setting as $key => $value) {
+                foreach ($serve_goods as $val) {
+                    if ($value["service_setting_id"] == $val["service_setting_id"]) {
+                        $serve_data[$key]["serve_name"] = $value["service_setting_name"];
+                        $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id", $val["service_setting_id"])->where("store_id", $shop_id)->select();
+                    }
+                }
+            }
+            if ($goods) {
+                return ajax_success("获取成功", array("goods" => $goods, "serve_data" => $serve_data));
+            } else {
                 return ajax_error("获取失败");
             }
         }
