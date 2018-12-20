@@ -46,7 +46,6 @@ class Reservation extends Controller{
      */
     public function reservation(Request $request)
     {
-
         if($request->isPost()) {
             $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
             $serve_goods = db("serve_goods")->where("service_setting_id", $service_setting_id)->select();
@@ -75,7 +74,6 @@ class Reservation extends Controller{
      */
     public function reservation_detail(Request $request)
     {
-
         if($request->isPost()){
             $serve_goods_id = $request->only(["id"])["id"];
             $serve_goods = db("serve_goods")->where("id",$serve_goods_id)->select();

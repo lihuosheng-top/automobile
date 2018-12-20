@@ -113,7 +113,6 @@ class Index extends Controller
      */
     public function shop_goods(Request $request){
 
-
         if($request->isPost()){
             $shop_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("store_id",$shop_id)->where("goods_status",1)->select();
