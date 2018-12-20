@@ -48,8 +48,13 @@ class Evaluate extends  Controller{
      */
     public function evaluate_parts_add(Request $request){
         if($request->isPost()){
-            $img =$request->file("filesArr");
-            dump($img);
+            $img = $request->file("filesArr");
+            if(!empty($img)){
+                return ajax_success("有数据",$img);
+            }else{
+                return ajax_success("没有有数据",$img);
+            }
+//            dump($img);
 //            $user_id = Session::get("user");//用户id
 //            $order_id =$request->only("order_id")["order_id"];//订单排序号（数组）
 ////            dump($order_id);
