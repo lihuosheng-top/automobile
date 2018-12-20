@@ -203,6 +203,9 @@ $.ajax({
                 $(this).find('.icon-uncheck').toggleClass('icon-check');
                 if($(this).find('.icon-uncheck').hasClass('icon-check')){
                     $(this).siblings('.service-colla-content').show();
+                    // 合并打开的service-colla-content
+                    $(this).parent().siblings().find('.service-colla-content').hide();
+                    $(this).parent().siblings().find('.icon-uncheck').removeClass('icon-check');
                 }else{
                     $(this).siblings('.service-colla-content').hide();
                 }
