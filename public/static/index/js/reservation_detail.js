@@ -111,7 +111,8 @@ if(urlLen > 1){
         type: 'POST',
         dataType: 'JSON',
         data: {
-            'id': storeId
+            'id': storeId,
+            'service_setting_id': serviceSettingId
         },
         success: function(data){
             console.log(data);
@@ -131,6 +132,11 @@ if(urlLen > 1){
                             </div>`
                 })
                 $('.goods-content').prepend(str);
+                // 服务项目
+                var str2 = '';
+                $.each(data.data.store, function(idx, val){
+                    $('.shop_name').text(val.store_name);
+                })
             }
         },
         error: function(){
