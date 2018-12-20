@@ -603,12 +603,12 @@
 				var checkval = data.value;
 				if(checkval == "通用") {
 					$("#special_content").children().children(".lv1").remove();
-                    $("#special_content").children().children("#lv_table_con1").remove();
+                    $("#special_content").children().children("#lv_table_con1").children().children().children().remove();
 					$(".general").removeClass("noshow");
 					$(".special").addClass("noshow");
 				} else {
 					$(".general").children().children(".lv1").remove();
-                    $(".general").children().children("#lv_table_con").remove();
+                    $(".general").children().children("#lv_table_con").children().children().children().remove();
 					$(".special").removeClass("noshow");
 					$(".general ").addClass("noshow");
 				}
@@ -660,7 +660,6 @@
                 });
                 $('#update_table').on('click', function() {
                 	var lv1Arr = $(".general").children().children(".lv1").children().children('input[class="lvv3"]');
-                   
                     console.log(lv1Arr);
                     if (!lv1Arr || lv1Arr.length == 0) {
                         $('#lv_table_con').hide();
@@ -801,7 +800,7 @@
                 });
                 $('#update_table1').on('click', function() {
                     var lv1Arr = $("#special_content").children().children(".lv1").children().children('input[class="lvv3"]');
-                   
+                 
                     if (!lv1Arr || lv1Arr.length == 0) {
                         $('#lv_table_con').hide();
                         $('#lv_table').html('');
@@ -891,7 +890,7 @@
                         tableHTML += '	                        <div class="z_photo upimg-div clear">';
                         tableHTML += '	                            <section class="z_file fl">';
                         tableHTML += '	                                <img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">';
-                        tableHTML += '	                                <input type="file" name="imgs[]" id="file_' + i + '" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="1" />';
+                        tableHTML += '	                                <input type="file" name="imgs[]" id="file'+ i + '" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="1" />';
                         tableHTML += '	                            </section>';
                         tableHTML += '	                        </div>';
                         tableHTML += '                    </section>';
