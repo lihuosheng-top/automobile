@@ -472,7 +472,7 @@
 						<div class="layui-input-inline">
 							<select name="dedicated_vehicle" id="province" lay-filter="province">
 								{volist name="car_series" id="car"} {if $value.dedicated_vehicle == $car.brand}
-								<option value="{$value.dedicated_vehicle}">{$value.dedicated_vehicle}</option>
+								<option value="{$value.dedicated_vehicle}" selected>{$value.dedicated_vehicle}</option>
 								{else}
 								<option value="{$car.brand}">{$car.brand}</option>
 								{/if} {/volist}

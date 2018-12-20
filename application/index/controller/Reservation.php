@@ -74,18 +74,14 @@ class Reservation extends Controller{
      */
     public function reservation_detail(Request $request)
     {
+        
         if($request->isPost()){
             $serve_goods_id = $request->only(["id"])["id"];
-            $serve_goods = db("serve_goods")->where("id",$serve_goods_id)->select();
-            foreach ($serve_goods as $key=>$value){
-                $serve_goods[$key]["store"] = db("store")->where("store_id",$value["store_id"])->find();
-                $serve_goods[$key]["service_setting_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
+            $store = db("store")->where("store_id",$serve_goods_id)->select();
+            foreach ($store as $key=>$value){
+                $store[$key]["goods"] = db("serve_goods")->where("store_id",$value["store_id"])->select();
             }
-            if($serve_goods){
-                return ajax_success("获取成功",$serve_goods);
-            }else{
-                return ajax_error("获取失败");
-            }
+            return view("获取成功",$store);
         }
         return view("reservation_detail");
     }
