@@ -302,6 +302,15 @@ Route::group("",[
 
     /*汽车广告管理前端开始*/
     "advertisement_index"=>"index/Advertisement/advertisement_index", //汽车广告显示
+
+
+
+    /**
+     * 运营管理
+     * 陈绪
+     */
+    "operation_index"=>"index/Operation/complaint",             //投诉中心
+    "rescue_index"=>"index/Operation/rescue",             //紧急救援
     
 ]);
 
