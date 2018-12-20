@@ -26,7 +26,9 @@
 	.layui-form-item {
 		width: 54%;
 	}
-	
+	#special_content .layui-input-block{
+		margin-left: 0px;
+	}
 	.biaoji .layui-form-radioed span {
 		color: #fff;
 		background: red;
@@ -40,10 +42,44 @@
 	/*.car .layui-unselect{
 		display: none !important;
 	}*/
+	/*.car select{
+		    width: 100%;
+            height: 38px;
+	}
+	#city{
+		display: block;
+	}
+	#province{
+		display: block;
+	}*/
+	    table .full {
+        width: 60px !important;
+        min-width: 0px !important;
+    }
+    
+    table input {
+        width: 60px !important;
+        min-width: 60px !important;
+    }
+    
+    table .z_photo {
+        padding: 0;
+    }
+    
+    table th {
+        text-align: center;
+    }
+    
+    table td {
+        text-align: center;
+        margin: 0 auto;
+    }
 	
-	.car select {
-		width: 100%;
-		height: 38px;
+	.err {
+		border: solid 1px red;
+	}
+	.lv1 input{
+		height: 30px;
 	}
 </style>
 <style type="text/css">
@@ -71,7 +107,6 @@
 	.general-kuang {
 		border: solid 1px #E4E4E4;
 		width: 1000px;
-		padding-left: 10px;
 	}
 	
 	.btus {
@@ -89,6 +124,7 @@
 	
 	.sky-blue {
 		color: #0099FF;
+		border: 0;
 	}
 	
 	.bgwhite {
@@ -120,6 +156,7 @@
 		height: 40px;
 		border-radius: 3px;
 		color: #fff;
+		border: 0;
 	}
 	
 	.btu-delet {
@@ -135,27 +172,12 @@
 	.num-content {
 		overflow: hidden;
 	}
-	/*#city{
+	/*#displacement {
 		display: block;
 	}
-	#province{
+	#production{
 		display: block;
 	}*/
-	/* 数据库展现图片样式 */
-	
-	.img {
-		position: relative;
-		display: inline-block;
-		width: 100px;
-	}
-	
-	.img>i {
-		display: inline-block;
-		width: 20px;
-		position: absolute;
-		right: 0;
-		top: 0;
-	}
 	
 	.big_div {
 		position: relative;
@@ -168,27 +190,27 @@
 		top: 0;
 		right: 0;
 	}
-	
-	.table .full {
-		width: 100px !important;
-		min-width: 100px !important;
+	table .upimg-div .up-section{
+		width: 60px;
+		height: 60px;
 	}
-	
-	table input {
-		width: 80px !important;
-		min-width: 80px !important;
+	table .up-section .close-upimg{
+		width: 20px;
+		height: 20px;
 	}
-	
-	table .z_photo {
-		padding: 0;
+	table .img-box .upimg-div .z_file{
+		width: 60px;
+		height: 60px;
 	}
-	
-	table th {
-		text-align: center;
+	table .z_file .add-img{
+		width: 60px;
+		height: 60px;
 	}
-	
-	table td {
-		text-align: center;
+	table .z_photo{
+	border: 0;	
+	}
+	table .img-box{
+		margin: 0;
 	}
 </style>
 
@@ -503,7 +525,7 @@
 						<div class="layui-input-inline noshow add-attributes">
 							<input type="text" name="" id="" value="" class="add-attribute_input" style="height: 35px;" />
 						</div>
-						<div class="layui-input-inline noshow add-attributes">
+						<div class="layui-input-inline noshow add-attributes" style="width: 260px;">
 							<button type="button" class="operation-btus btu-delet attributes_delect">删除</button>
 							<button type="button" class="operation-btus btu-cancel">取消</button>
 							<button type="button" class="operation-btus btu-add shuxingbtu-add">添加</button>
