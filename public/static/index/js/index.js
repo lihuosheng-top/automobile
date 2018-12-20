@@ -276,33 +276,27 @@ $.ajax({
                                 console.log(data);
                                 if(data.status == 1){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: data.info,
-                                        time: 1
+                                        time: .8
                                     })
                                     setTimeout(function(){
                                         location.href = 'love_list';
-                                    }, 1100);
+                                    }, 1000);
                                 }else if(data.status == 2){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: data.info,
-                                        time: 1
+                                        time: .8
                                     })
                                     setTimeout(function(){
                                         location.href = 'login';
-                                    },1100)
+                                    },1000)
                                 }else if(data.status == 0){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: data.info,
-                                        time: 1
+                                        time: .8
                                     })
                                 }
                             },
@@ -355,11 +349,23 @@ $.ajax({
     type: 'POST',
     dataType: 'JSON',
     success: function(res){
-        console.log(res);
+        console.log('爱车', res);
+
         if(res.status == 1){
             var res = res.data[0];
             $('.txt-div p').html(res.brand);
             $('.txt-div span').html(res.series + ' ' + res.displacement + ' ' + res.production_time);
+        }else{
+            $('.service-container').on('click', 'li', function(e){
+                e.preventDefault();
+                if($(this).index() === 0){
+                    layer.open({
+                        skin: 'msg',
+                        content: '请先添加爱车',
+                        time: .8
+                    })
+                }
+            })
         }
     },
     error: function(){
