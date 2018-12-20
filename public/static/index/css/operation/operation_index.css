@@ -13,4 +13,5 @@ div{ letter-spacing:0.01rem; }
 .box_bottom div{ text-align: center; flex: 1; line-height: 0.8rem; }
 .send_add{ color: #F33649; font-weight: 500; border-right: solid 0.01rem #ddd; }
 .cell{ color: #41A5E5; }
-         
+.amap-touch-toolbar .amap-zoomcontrol { right: 0 !important; bottom: -40px !important; }
+.amap-logo, .amap-copyright { display: none !important; }
