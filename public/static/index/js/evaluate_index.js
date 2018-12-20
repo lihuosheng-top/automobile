@@ -57,6 +57,8 @@ $.ajax({
         $('.switch-span').on('change', 'input', function(){
             var inputElem = $(this)[0];
             var switchSpan = $(this).parent();
+            var id = $(this).parents('.evaluation-subject').attr('id');
+            console.log(id)
             changeEvent(inputElem, switchSpan);
         })
     },
@@ -64,6 +66,7 @@ $.ajax({
         console.log('error');
     }
 })
+
 function changeEvent(inputElem, clickObj){
     var imgArrDom = [];
     var str = '';
@@ -91,6 +94,12 @@ function changeEvent(inputElem, clickObj){
             time: 2
         })
     }
+    // 删除图片
+    $('.upload-item').on('click', '.del-img', function(){
+        var $index = $('.del-img').index($(this));
+        console.log($index);
+        $(this).parent().remove();
+    })
 }
 // 在浏览器上预览本地图片
 function getObjectURL(file) {
