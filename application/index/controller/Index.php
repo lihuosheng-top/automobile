@@ -117,6 +117,7 @@ class Index extends Controller
             $shop_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
             $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
+            $store = db("store")->where("store_id",$shop_id)->select();
             $service_setting = db("service_setting")->select();
             $serve_data = [];
             foreach ($service_setting as $key => $value) {
@@ -128,7 +129,7 @@ class Index extends Controller
                 }
             }
             if ($goods) {
-                return ajax_success("获取成功", array("goods" => $goods, "serve_data" => $serve_data));
+                return ajax_success("获取成功", array("store"=>$store,"goods" => $goods, "serve_data" => $serve_data));
             } else {
                 return ajax_error("获取失败");
             }
