@@ -137,7 +137,7 @@ $('.reg-confirm').click(function(){
                 setTimeout(function(){
                     $('.register-pop').css('display', 'none');
                     $('.wrapper').css('display', 'block');
-                },1100)
+                },1000)
             }
         },
         error: function(){
@@ -277,7 +277,7 @@ $('.find-confirm').click(function(){
                     setTimeout(function(){
                         $('.find-password').hide();
                         $('.wrapper').show();
-                    }, 2200)
+                    }, 1000)
                 }
             },
             error: function(){
