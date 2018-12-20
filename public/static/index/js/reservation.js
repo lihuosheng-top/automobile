@@ -19,7 +19,7 @@ $.ajax({
             if(val.store !== null){
                 if(val.service_money !== null){
                     str += '<div>\
-                                <a href="reservation_detail?id='+val.id+'" class="shop_box">\
+                                <a href="reservation_detail?id='+val.store_id+'" class="shop_box">\
                                     <div class="addr_info_box">\
                                         <p class="shop_name_p">'+val.store.store_name+'</p>\
                                         <div class="comment_box">\
@@ -39,7 +39,7 @@ $.ajax({
                             </div>'
                 }else{
                     str += '<div>\
-                            <a href="reservation_detail?id='+val.id+'" class="shop_box">\
+                            <a href="reservation_detail?id='+val.store_id+'" class="shop_box">\
                                 <div class="addr_info_box">\
                                     <p class="shop_name_p">'+val.store.store_name+'</p>\
                                     <div class="comment_box">\

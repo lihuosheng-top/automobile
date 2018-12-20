@@ -49,7 +49,6 @@ class Evaluate extends  Controller{
     public function evaluate_parts_add(Request $request){
         if($request->isPost()){
             $img = $request->file("filesArr");
-            dump($img);
             if(!empty($img)){
                 return ajax_success("有数据",$img);
             }else{
