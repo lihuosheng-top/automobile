@@ -139,7 +139,7 @@ $.ajax({
         console.log('获取店铺商品',res);
         if(res.status == 1){
             var str = '';
-            $.each(res.data, function(idx, val){
+            $.each(res.data.goods, function(idx, val){
                 str += `<div class="goods-colla-item">
                             <div class="goods-img-box">
                                 <img src="uploads/`+val.goods_show_images+`">
