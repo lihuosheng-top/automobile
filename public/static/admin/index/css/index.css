@@ -11,6 +11,9 @@
 .bg_red{
 	background: red;
 }
+.button{
+	border: 0 !important;
+}
 /*修改layui样式*/
 /*.layui-btn{
 	line-height: 35px !important;
