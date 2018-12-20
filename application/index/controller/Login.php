@@ -66,8 +66,8 @@ class Login extends Controller{
                     $ress =Db::name('user')->where('phone_num',$user_mobile)->where('status',1)->field("id")->find();
                     if($ress)
                     {
-                        session("user",$ress["id"]);
-                        session('member',$datas);
+                        Session::set("user",$ress["id"]);
+                        Session::set('member',$datas);
                         return ajax_success('登录成功',$datas);
                     }else{
                         ajax_error('此用户已被管理员设置停用',$datas);
