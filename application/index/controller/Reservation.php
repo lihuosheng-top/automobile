@@ -47,7 +47,7 @@ class Reservation extends Controller{
      */
     public function reservation(Request $request)
     {
-
+        
         if($request->isPost()) {
             $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
             $user_id = Session::get("user");
@@ -55,7 +55,7 @@ class Reservation extends Controller{
             $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->where("year",$user_car["production_time"])->where("displacement",$user_car["displacement"])->field("vehicle_model")->find();
             $serve_goods = db("serve_goods")->where("vehicle_model",$car_series["vehicle_model"])->where("service_setting_id",$service_setting_id)->select();
             foreach ($serve_goods as $key=>$value){
-                $serve_goods[$key]["serve_name"] = db("store")->where("store_id",$value["store_id"])->select();
+                $serve_goods[$key]["serve_name"] = db("store")->where("store_id",$value["store_id"])->find();
                 $serve_goods[$key]["service_setting_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
             }
 
