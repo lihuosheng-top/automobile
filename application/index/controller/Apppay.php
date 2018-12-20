@@ -263,12 +263,12 @@ class Apppay extends Controller
             'merchant_private_key' =>"MIIEogIBAAKCAQEAvqOSFhdmTUUJWalNisHAsPaaejz24dyZcWJAHfBYK9T2b/W+T6VJfB84cuuxUqAkNXCS74fgVRdp1ty1AqprQnyIVnBiSMqxNbTFyKaZalW4WjpGq0zKnj/DrT+VF8gTYQuS263wkB06FbYTFp4bsriSGGT94N7CsOLDlR4cD0tsck2uuKXBIfqqmoGPEiz31vYOKht3cEiS4y/bLGN92nQx9/v5Ew8D3xdeqch0NaVWVaSgTQ0f3OzZJer7nnlSvLj2U3SwCbVJ/6+E15jQDl+HqHjVi71oAnh8Qj6lZKUyFwiWk4WTxxqYj94/v3IJ6bQxq3m+StQbIv+J/w6kAwIDAQABAoIBAGi5rqzYGejkveg1a1WIbnRIZEA2cWFOMDTrRlGsEKOzj9WdZ/iU0jOPaxEmjPjY5Es/Fljjicb0372a7Q0T1WxmwPbLMhLO1l6seeJqMukJQga+8Md1nfElEjeAMEUqMgsjsn9fpEFm7Nu0c/P+0zRw1ED2ack4VjeZutuV+NAlKivD0bmZDxu1Kf1KIFNLJnE7yrXOVPwytyimNLUxSrvzCBbrSEfD7eB3mei8abe7+yKjeSighE99+1vqNHY01NB74pkLt+0DMcvpyDSmpdNUwqUwMRtU109t3P1fQyu2vYgGPvqtbYZMX9qW9H0jB+An9KbLeDqyOBC9zTIYTFECgYEA3aHF3pTQ25IfEoOxXisGbQuFUERdWUMbZHq9WkbEGM1mbFjS5MRx/eCbwq3SXfDJWaHJWxtwxJ8ZHRqSBxnZ0TsgQY4dLKMaPHRp7W2h0LveztELSWUU93hUe04eqxQsE+PXBQfqsX0yL0G2U++vp6Gkozj2+JCSyRwb1k+1Z08CgYEA3DN0cnQMlTSVK/XY3mw5ZtNyBalhJZFeXRKyUdQLga8jGpS2UWxgmV4yYWdb91J1CDBnS8Ns6DRL8TgQEVBDyNwq90N/d/YpvriR8gtFwJPU+E/n67jwoyM2N+khRKDspN8amAJvuG/dlnc4wGvbb1QM9l9IV+w2PIu0UQgYCw0CgYBpisU4hrOjLEWBwpbvWhvYR9k3bSbrAAsGYXDUkciGayHwTKg5atdB5/kkzzPTqnuoJGRH75xW9dC2zFVn7kaM3dQxg6SfAhjXWzSqbT/Wr/Cdmmz+iZVfd7z7byspmxSWcDSP38JCvXTtjiRuekCy2kYVuGXb3rUX8jvLZe/j/wKBgErp1nv5ry4zrWw/P4CsIPsyhGAYt8woIIpZigD8us1r3+1zGnOpA1QqD8nDeC40B0y56uqDmdGFuTBfelfpjqYPAS8N75fIT3trH3vRCfHyWUoBJU20pWla2V88GO1YMioFHO8KJSgCJsjB1rTf/M9rMN3AnMQMwIbooHfQ4R0hAoGAc4KU+jSNXM4GPDhqtFVC9CIOtPPDIan/779rAyehLmVRtadHSY0PtD0XGXRFQXW9dEx8jcQj6MkEYUkeTvR4ulT1mK3DL/VT3ut27xaJTPhBCqisYLznbRFrVN0Wf1TSydJ3N5VbFgweZouiVZLd3CoOzy+BuA3eHkd44BBMjF4=",
             //异步通知地址
 //            'notify_url' => "http://www.zlh188.cn/recharge_pay_code",
-//            'notify_url' => "https://automobile.siring.com.cn/index_parts_pay_code",
-            'notify_url' => "localhost/automobile/public/recharge_pay_code",
+            'notify_url' => "https://automobile.siring.com.cn/recharge_pay_code",
+//            'notify_url' => "localhost/automobile/public/recharge_pay_code",
             //同步跳转
 //            'return_url' => "http://www.zlh188.cn/recharge_pay_code",
-//            'return_url' => "https://automobile.siring.com.cn/index_parts_pay_code",
-            'return_url' => "localhost/automobile/public/recharge_pay_code",
+            'return_url' => "https://automobile.siring.com.cn/recharge_pay_code",
+//            'return_url' => "localhost/automobile/public/recharge_pay_code",
             //编码格式
             'charset' => "UTF-8",
             //签名方式
@@ -317,23 +317,33 @@ class Apppay extends Controller
             $user_id = Session::get("user");
             $data['status'] = 1;
             $pay_time = time();
+            $pay_times = date("Y-m-d H:i:s");
             $data['pay_time']=$pay_time;
             $data["pay_type_name"] ="支付宝";
             if(!empty($_GET['out_trade_no'])){
                 $bool = Db::name("recharge_record")->where("recharge_order_number",$_GET['out_trade_no'])->update($data);
                 if($bool){
-
                     $recharge_record_data = Db::name("recharge_record")->where("recharge_order_number",$_GET['out_trade_no'])->find();
-                    $datas["operation_time"] =$pay_time; //操作时间
+                    $datas["operation_time"] =$pay_times; //操作时间
                     $datas["user_id"] =$user_id; //用户id
                     $datas["operation_type"] =1; //操作类型（-1,1）
-                    $datas["operation_amount"] =$recharge_record_data["recharge_money"]; //操作金额
                     $datas["pay_type_content"] =$recharge_record_data["pay_type_name"]; //支付方式
                     $datas["money_status"] =1; //到款状态
-                    $datas["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元"; //描述
-                    Db::name("recharge_reflect")->insert($datas);//插到记录
-                    $user_wallet =Db::name("user")->field("user_wallet")->where("id",$user_id)->find();
-                    Db::name("user")->where("id",$user_id)->update(["user_wallet"=>$user_wallet+$recharge_record_data["recharge_money"]]);
+                    $datas["img_url"] ="index/image/alipay.png"; //描述
+                    $list =Db::name("recharge_setting")->field("send_money")->where("recharge_full",0.01)->find();
+                    if(!empty($list)){
+                        $datas["operation_amount"] =$recharge_record_data["recharge_money"]+$list['send_money']; //操作金额
+                        $datas["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元,送了".$list['send_money']; //描述
+                        Db::name("recharge_reflect")->insert($datas);//插到记录
+                        $user_wallet =Db::name("user")->field("user_wallet")->where("id",$user_id)->find();
+                        Db::name("user")->where("id",$user_id)->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $list["send_money"]]);
+                    }else{
+                        $datas["operation_amount"] =$recharge_record_data["recharge_money"]; //操作金额
+                        $datas["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元"; //描述
+                        Db::name("recharge_reflect")->insert($datas);//插到记录
+                        $user_wallet =Db::name("user")->field("user_wallet")->where("id",$user_id)->find();
+                        Db::name("user")->where("id",$user_id)->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]]);
+                    }
                     $this->redirect('index/wallet/index');
                 }
             }
