@@ -16,8 +16,29 @@ $.ajax({
         console.log(data);
         var str = '';
         $.each(data.data, function(idx, val){
-            if(val.service_money !== null){
-                str += '<div>\
+            if(val.store !== null){
+                if(val.service_money !== null){
+                    str += '<div>\
+                                <a href="reservation_detail?id='+val.id+'" class="shop_box">\
+                                    <div class="addr_info_box">\
+                                        <p class="shop_name_p">'+val.store.store_name+'</p>\
+                                        <div class="comment_box">\
+                                            <i class="spr icon_star"></i>\
+                                            <p class="statistic_member">汽车维修<span class="member_num">2000</span>人去过</p>\
+                                        </div>\
+                                        <p class="distance_addr_box">\
+                                            <span class="distance_span">500米</span>\
+                                            <span class="addr_span">'+val.store.store_detailed_address+'</span>\
+                                        </p>\
+                                    </div>\
+                                    <div class="service_type">\
+                                        <p class="service_price">￥'+val.service_money+'</p>\
+                                        <p class="service_text">'+val.name+'</p>\
+                                    </div>\
+                                </a>\
+                            </div>'
+                }else{
+                    str += '<div>\
                             <a href="reservation_detail?id='+val.id+'" class="shop_box">\
                                 <div class="addr_info_box">\
                                     <p class="shop_name_p">'+val.store.store_name+'</p>\
@@ -31,40 +52,20 @@ $.ajax({
                                     </p>\
                                 </div>\
                                 <div class="service_type">\
-                                    <p class="service_price">￥'+val.service_money+'</p>\
+                                    <p class="service_price">面议</p>\
                                     <p class="service_text">'+val.name+'</p>\
                                 </div>\
                             </a>\
                         </div>'
-            }else{
-                str += '<div>\
-                        <a href="reservation_detail?id='+val.id+'" class="shop_box">\
-                            <div class="addr_info_box">\
-                                <p class="shop_name_p">'+val.store.store_name+'</p>\
-                                <div class="comment_box">\
-                                    <i class="spr icon_star"></i>\
-                                    <p class="statistic_member">汽车维修<span class="member_num">2000</span>人去过</p>\
-                                </div>\
-                                <p class="distance_addr_box">\
-                                    <span class="distance_span">500米</span>\
-                                    <span class="addr_span">'+val.store.store_detailed_address+'</span>\
-                                </p>\
-                            </div>\
-                            <div class="service_type">\
-                                <p class="service_price">面议</p>\
-                                <p class="service_text">'+val.name+'</p>\
-                            </div>\
-                        </a>\
-                    </div>'
-            }
-            
-            // 店铺经纬度
-            if(val.store.longitude !== null && val.store.latitude !== null){
-                markerList[idx] = new AMap.Marker({
-                    position: new AMap.LngLat(val.store.longitude,val.store.latitude),
-                    title: val.store.store_detailed_address,
-                    offset: new AMap.Pixel(-20, -62),
-                });
+                }
+                // 店铺经纬度
+                if(val.store.longitude !== null && val.store.latitude !== null){
+                    markerList[idx] = new AMap.Marker({
+                        position: new AMap.LngLat(val.store.longitude,val.store.latitude),
+                        title: val.store.store_detailed_address,
+                        offset: new AMap.Pixel(-20, -62),
+                    });
+                }
             }
         })
         console.log(markerList);
