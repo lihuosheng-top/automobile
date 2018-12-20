@@ -33,7 +33,7 @@ class  LgLt extends  Controller{
              if($res){
                  return ajax_success("经纬度刷新成功",["status"=>1]);
              }else{
-                 return ajax_error("经纬度刷新失败",["status"=>0]);
+                 return ajax_success("经纬度不变",["status"=>1]);
              }
             }else{
                 return ajax_error("经纬度不能为空",["status"=>0]);
