@@ -122,7 +122,7 @@ $('.publish-btn').click(function(){
     $.each(evaluationSubjectArr, function(idx, val){
         orderId.push(val.id);
     })
-    formData.append('filesArr', filesArr);
+    formData.append('filesArr[]', filesArr);
     $.ajax({
         url: 'evaluate_parts_add',
         type: 'POST',
