@@ -111,6 +111,26 @@
                         if(res.status === 1){
                             $('#WIDout_trade_no').val(res.data)
                         }
+                        $('.close-alipay').click(function(e){
+                            e.preventDefault();
+                            $('.mask').hide();
+                            $('.alipay-pop').animate({'bottom': '-100%'});
+                            var id = $(this).attr('id');
+                            $.ajax({
+                                url: 'wallet_recharge_del',
+                                type: 'POST',
+                                dataType: 'JSON',
+                                data: {
+                                    'recharge_id': res.data,
+                                },
+                                success: function(res){
+                                    console.log(res);
+                                },
+                                error: function(){
+                                    console.log('error');
+                                }
+                            })
+                        })
                     },
                     error: function(){
                         console.log('error');
@@ -126,28 +146,6 @@
                 })
             }
         })
-
-        $('.close-alipay').click(function(e){
-            e.preventDefault();
-            $('.mask').hide();
-            $('.alipay-pop').animate({'bottom': '-100%'});
-            var id = $(this).attr('id');
-            $.ajax({
-                url: 'wallet_recharge_del',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    'recharge_id': res.data,
-                },
-                success: function(res){
-                    console.log(res);
-                },
-                error: function(){
-                    console.log('error');
-                }
-            })
-        })
-        
 
         $('#WIDbody').click(function(){
             $('.alipay-pop').animate({'bottom': '-100%'});
