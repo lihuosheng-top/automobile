@@ -28,8 +28,8 @@ class  LgLt extends  Controller{
             $user_id = Session::get("user");
             $longitude =$request->only("longitude")["longitude"];//经度
             $latitude =$request->only("latitude")["latitude"];//纬度
-            if(!empty($longitude) && !empty($latitude)){
-             $res =   Db::name("user")->where("id",$user_id)->update(["longitude"=>$longitude,"latitude"=>$latitude]);
+            if((!empty($longitude)) && (!empty($latitude))){
+             $res =  Db::name("user")->where("id",$user_id)->update(["longitude"=>$longitude,"latitude"=>$latitude]);
              if($res){
                  return ajax_success("经纬度刷新成功",["status"=>1]);
              }else{
