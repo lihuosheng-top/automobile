@@ -412,6 +412,17 @@ function getSelectList($table , $pid = 0 ,&$result = [] , $spac = -4){
     return $result;
 }
 
+function selectList($table , $pid = 0 ,&$result = [] , $spac = -4){
+    $spac += 4;
+    $list = db($table)->where(["pid"=>$pid])->field("pid,id,name")->select();     //传递条件数组
+    $list = objectToArray($list);
+    foreach($list as $value){
+        $value["name"] = str_repeat("&nbsp;",$spac).$value["name"];
+        $result[] = $value;
+        selectList($table , $value["id"] , $result , $spac);
+    }
+    return $result;
+}
 
 //递归循环
 function recursionArr($arr,$pid = 0) {

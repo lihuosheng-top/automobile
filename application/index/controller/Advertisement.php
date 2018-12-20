@@ -22,10 +22,10 @@ class  Advertisement extends  Controller{
      */
     public function advertisement_index(Request $request)
     {
-        if ($request->isPost()){
+        if ($request->isGet()){
             $area = $request->only(['area'])['area'];
             $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
-            
+            halt($area_data);
             if (!empty($area_data)) {
                 return ajax_success('传输成功', $area_data);
             } else {

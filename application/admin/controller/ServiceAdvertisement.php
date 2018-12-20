@@ -24,19 +24,19 @@ class  ServiceAdvertisement extends  Controller
      * 郭杨
      */
 
-    public function service_business_advertising(Request $request){
+    public function service_business_advertising(Request $request)
+    {
         $user_phone = Session::get("user_info");
         $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
         $store_name = db("store")->where("user_id",$user)->value("store_name");
 
-        $platform = db("facilitator") -> select();
+        $platform = db("facilitator")->where("pgone",$user_phone[0]["id"]) -> select();
         foreach ($platform as $key => $value) {
             if ($value["id"]) {
                 $platform[$key]["shop_name"] = $store_name;
-                $platform[$key]["pid"] = $value["id"];
             }
         }
-
+    
         $all_idents = $platform;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
         $listRow = 20;//每页20行记录
@@ -57,8 +57,13 @@ class  ServiceAdvertisement extends  Controller
      * [汽车服务商广告添加]
      * 郭杨
      */
-    public function service_business_add(){
-        return view('service_business_add');
+    public function service_business_add($pid = 0)
+    {
+        $goods_liste = [];
+        if ($pid == 0) {
+            $goods_liste = selectList("position");
+        }
+        return view('service_business_add', ["goods_liste" => $goods_liste]);
     }
 
 
@@ -67,10 +72,15 @@ class  ServiceAdvertisement extends  Controller
      * [汽车服务商广告编辑]
      * 郭杨
      */
-    public function service_business_edit($id){
+    public function service_business_edit($id,$pid=0)
+    {
 
+        $goods_liste = [];
+        if ($pid == 0) {
+            $goods_liste = selectList("position");
+        }
         $plat = db("facilitator")->where("id",$id)->select();
-        return view('service_business_edit',['plat'=>$plat]);
+        return view('service_business_edit',['plat'=>$plat,"goods_liste" => $goods_liste]);
     }
 
 
@@ -85,10 +95,13 @@ class  ServiceAdvertisement extends  Controller
             $show_images = $request->file("advert_picture");
 
             $user_phone = Session::get("user_info");
+            $id = $user_phone[0]["id"];
             $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
             $store_name = db("store")->where("user_id",$user)->value("store_name");
-               
+            $area = db("store")->where("user_id",$user)->value("store_city_address");
+            $position = db("position") -> where("id",$data["pid"])->value("name");
 
+            //插入配件商表
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
@@ -98,11 +111,18 @@ class  ServiceAdvertisement extends  Controller
 
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
-
+            $data["pgone"] = $id;
+            $data["area"] = $area;
+            $data["location"] = $position;
             $userId = db('facilitator')->insertGetId($data);
+
+            //插入平台列表
             $data["pfd"] = $userId;
             $data["department"] = $user_phone[0]["department"];
             $data["shop_name"] = $store_name;
+            unset($data["pgone"]);
+            unset($data["pid"]);
+
             $boole = db("platform")->insert($data);
             if ($userId && $boole) {
                 $this->success("添加成功", url("admin/service_advertisement/service_business_advertising"));
@@ -145,8 +165,8 @@ class  ServiceAdvertisement extends  Controller
      * 汽车服务商广告删除
      * 郭杨
      */
-    public function service_business_del($id){
-
+    public function service_business_del($id)
+    {       
         $bool = db("facilitator")->where("id", $id)->delete();
         $boole = db("platform")->where("pfd", $id)->delete();
         if ($bool && $boole) {
@@ -162,14 +182,15 @@ class  ServiceAdvertisement extends  Controller
      * 汽车服务商广告模糊搜索
      * 郭杨
      */
-    public function service_business_search(){
+    public function service_business_search()
+    {
         $ppd = input('key');          //广告名称
         $interest = input('keys');    //广告位置
 
         if ((!empty($ppd)) || (!empty($interest))) {
             $activ = db("facilitator")->where("name", "like", "%" . $ppd . "%")->where("location", "like", "%" . $interest . "%")->paginate(2);    
         }else{
-            $activ = db("facilitator")->paginate(2);
+            $activ = db("facilitator")->paginate(20);
         }
         if(!empty($activ)){
             return view('service_business_advertising',['platform'=>$activ]);
