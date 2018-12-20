@@ -614,8 +614,8 @@ $.ajax({
                     console.log('原生经纬度',result);
                     var addressComponent = result.regeocode.addressComponent;
                     var area = addressComponent.province+','+addressComponent.city+','+addressComponent.district;
-                    var city = addressComponent.city;
-                    $('.curr_city').text(city);
+                    var district = addressComponent.district;
+                    $('.curr_city').text(district);
                     getAdvertisment(area);
                 }
             })
