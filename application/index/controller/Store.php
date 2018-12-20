@@ -449,7 +449,7 @@ class Store extends Controller{
      */
     public function url_img_del(Request $request){
         if($request->isPost()){
-            $img_url =$request->only(['image_del'])['image_del'];
+            $img_url =$request->only('image_del')['image_del'];
             if(!empty($img_url)){
                 $user_id = Session::get("user");
                 $data =Db::name('store')->field('verifying_physical_storefront_two')->where('user_id',$user_id)->find();
