@@ -23,10 +23,38 @@ class  Advertisement extends  Controller{
     public function advertisement_index(Request $request)
     {
         if ($request->isGet()){
-            $area = $request->only(['area'])['area'];
+            //$area = $request->only("area")["area"];
+            $area = "广东省,深圳市,福田区";
             $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
-            $data = Db::name("position")->field("id","name")->select();
-            halt($area_data);
+            $data = Db::name("position")->select();
+             dump($data);
+ 
+            $res = array();
+            $rest = array();
+            foreach($data as $k => $v){
+                foreach($v as $s => $z){
+               
+                    $er[$k] = $z;
+                
+                }
+        }
+        halt($er);
+
+        foreach($area_data as $key => $value)
+        {
+
+            $res[$value['location']][$key] = $value; 
+                            
+        }
+
+        foreach($res as $k => $v)
+        {
+
+ 
+                            
+        }
+        
+           // halt($res);
             if (!empty($area_data)) {
                 return ajax_success('传输成功', $area_data);
             } else {
