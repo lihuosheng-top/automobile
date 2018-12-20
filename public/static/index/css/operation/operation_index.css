@@ -1,0 +1,16 @@
+img{ width: 100%; }
+div{ letter-spacing:0.01rem; }
+.wrapper{height: 100vh; background-color: #eee;}
+.title{width: 100%; height: .88rem;background-color: #fff; position: relative; border-bottom: 1px solid #e1e1e1;}
+.title .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+.title .title-txt{font-size: .36rem; width: 100%; height: .88rem; text-align: center; color: #333; line-height: .88rem; font-weight: normal;}
+.container { width: 100%; height: 9.4rem; }
+.shop_list{background: #fff;/* height: 1rem; */padding: 0.25rem;box-sizing: border-box;font-size: 0.3rem;color: #333;border-bottom: solid 0.01rem #ddd;}
+.shop_lists{ background: #fff; padding: 0.2rem; box-sizing: border-box; color: #bbb;  margin-bottom: 0.8rem;}
+.shop_lists .shop_tip_title { font-size: 0.25rem; }
+.shop_lists .shop_tip_content{ font-size: 0.23rem; }
+.box_bottom{ width: 100%; height: 0.8rem; font-size: 0.3rem; display: flex; background: #fff; align-items: center; position: fixed; bottom: 0; }
+.box_bottom div{ text-align: center; flex: 1; line-height: 0.8rem; }
+.send_add{ color: #F33649; font-weight: 500; border-right: solid 0.01rem #ddd; }
+.cell{ color: #41A5E5; }
+         
