@@ -29,7 +29,7 @@ $config = array (
 
 
 //配件商订单
-$cons = array (
+$conss = array (
     //应用ID,您的APPID。
     'app_id' => "2018120762470526",
 
@@ -58,7 +58,7 @@ $cons = array (
 );
 
 //充值
-$confs = array (
+$confss = array (
     //应用ID,您的APPID。
     'app_id' => "2018120762470526",
 
