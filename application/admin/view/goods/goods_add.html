@@ -53,13 +53,13 @@
 		display: block;
 	}*/
 	    table .full {
-        width: 100px !important;
-        min-width: 100px !important;
+        width: 60px !important;
+        min-width: 0px !important;
     }
     
     table input {
-        width: 80px !important;
-        min-width: 80px !important;
+        width: 60px !important;
+        min-width: 60px !important;
     }
     
     table .z_photo {
@@ -72,10 +72,14 @@
     
     table td {
         text-align: center;
+        margin: 0 auto;
     }
 	
 	.err {
 		border: solid 1px red;
+	}
+	.lv1 input{
+		height: 30px;
 	}
 </style>
 <style type="text/css">
@@ -183,6 +187,28 @@
 		position: absolute;
 		top: 0;
 		right: 0;
+	}
+	table .upimg-div .up-section{
+		width: 60px;
+		height: 60px;
+	}
+	table .up-section .close-upimg{
+		width: 20px;
+		height: 20px;
+	}
+	table .img-box .upimg-div .z_file{
+		width: 60px;
+		height: 60px;
+	}
+	table .z_file .add-img{
+		width: 60px;
+		height: 60px;
+	}
+	table .z_photo{
+	border: 0;	
+	}
+	table .img-box{
+		margin: 0;
 	}
 </style>
 
@@ -679,14 +705,14 @@
                     tableHTML += '	<thead>';
                     tableHTML += '		<tr>';
                     for (var i = 0; i < lv1Arr.length; i++) {
-                        tableHTML += '			<th width="50"><input value="' + $(lv1Arr[i]).val() + '"  readonly style="border:0;"></th>';
+                        tableHTML += '			<th style="width:50px"><input value="' + $(lv1Arr[i]).val() + '"  readonly style="border:0;"></th>';
                     }
-                    tableHTML += '			<th width="100px"><input value="价格（元）"  readonly style="border:0;"></th>';
-                    tableHTML += '			<th width="100px"><input value="库存"  readonly style="border:0;"></th>';
-                    tableHTML += '			<th width="100px"><input value="规格编码"  readonly style="border:0;"></th>';
-                    tableHTML += '			<th width="100px"><input value="成本价"  readonly style="border:0;"></th>';
-                    tableHTML += '			<th width="100px"><input value="图片"  readonly style="border:0;"></th>';
-                    tableHTML += '			<th width="100px"><input value="开关"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="价格（元）"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="库存"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="规格编码"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="成本价"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="图片"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="开关"  readonly style="border:0;"></th>';
                     tableHTML += '		</tr>';
                     tableHTML += '	</thead>';
                     tableHTML += '	<tbody>';
@@ -740,11 +766,11 @@
                             }
                         }
 
-                        tableHTML += '			<td width="100px"><input type="text" name="sss' + name + '[price]" /></td>';
-                        tableHTML += '			<td width="100px"><input type="text" name="sss' + name + '[stock]" /></td>';
-                        tableHTML += '			<td width="100px"><input type="text" name="sss' + name + '[coding]" /></td>';
-                        tableHTML += '			<td width="100px"><input type="text" name="sss' + name + '[cost]" /></td>';
-                        tableHTML += '			<td width="100px">';
+                        tableHTML += '			<td style="width:80px"><input type="text" name="sss' + name + '[price]" /></td>';
+                        tableHTML += '			<td style="width:80px"><input type="text" name="sss' + name + '[stock]" /></td>';
+                        tableHTML += '			<td style="width:80px"><input type="text" name="sss' + name + '[coding]" /></td>';
+                        tableHTML += '			<td style="width:80px"><input type="text" name="sss' + name + '[cost]" /></td>';
+                        tableHTML += '			<td style="width:80px">';
                         tableHTML += '                         <div class="img-box full">';
                         tableHTML += '	                    <section class=" img-section">';
                         tableHTML += '	                        <div class="z_photo upimg-div clear">';
@@ -762,7 +788,7 @@
                         tableHTML += '                 </div>';
                         tableHTML += '            </aside>';
                         tableHTML += '             </td>';
-                        tableHTML += '			<td width="100px"><input type="checkbox" class="Status" name="sss' + name + '[status]" value="0" lay-skin="switch" lay-text="是|否" lay-filter="isShow" name="sss' + name + '[static]"></td>';
+                        tableHTML += '			<td style="width:80px"><input type="checkbox" class="Status" name="sss' + name + '[status]" value="0" lay-skin="switch" lay-text="是|否" lay-filter="isShow" name="sss' + name + '[static]"></td>';
                         tableHTML += '		</tr>';
                     }
                     tableHTML += '	</tbody>';
@@ -821,12 +847,12 @@
                     for (var i = 0; i < lv1Arr.length; i++) {
                         tableHTML += '			<th width="50"><input value="' + $(lv1Arr[i]).val() + '"  readonly style="border:0;"></th>';
                     }
-                    tableHTML += '			<th width="100px"><input value="价格（元）"  readonly style="border:0;"></th>';
-                    tableHTML += '			<th width="100px"><input value="库存"  readonly style="border:0;"></th>';
-                    tableHTML += '			<th width="100px"><input value="规格编码"  readonly style="border:0;"></th>';
-                    tableHTML += '			<th width="100px"><input value="成本价"  readonly style="border:0;"></th>';
-                    tableHTML += '			<th width="100px"><input value="图片"  readonly style="border:0;"></th>';
-                    tableHTML += '			<th width="100px"><input value="开关"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="价格（元）"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="库存"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="规格编码"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="成本价"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="图片"  readonly style="border:0;"></th>';
+                    tableHTML += '			<th style="width:80px"><input value="开关"  readonly style="border:0;"></th>';
                     tableHTML += '		</tr>';
                     tableHTML += '	</thead>';
                     tableHTML += '	<tbody>';
@@ -880,11 +906,11 @@
                             }
                         }
 
-                        tableHTML += '			<td width="100px"><input type="text" name="sss' + name + '[price]" /></td>';
-                        tableHTML += '			<td width="100px"><input type="text" name="sss' + name + '[stock]" /></td>';
-                        tableHTML += '			<td width="100px"><input type="text" name="sss' + name + '[coding]" /></td>';
-                        tableHTML += '			<td width="100px"><input type="text" name="sss' + name + '[cost]" /></td>';
-                        tableHTML += '			<td width="100px">';
+                        tableHTML += '			<td style="width:80px"><input type="text" name="sss' + name + '[price]" /></td>';
+                        tableHTML += '			<td style="width:80px"><input type="text" name="sss' + name + '[stock]" /></td>';
+                        tableHTML += '			<td style="width:80px"><input type="text" name="sss' + name + '[coding]" /></td>';
+                        tableHTML += '			<td style="width:80px"><input type="text" name="sss' + name + '[cost]" /></td>';
+                        tableHTML += '			<td style="width:80px">';
                         tableHTML += '                         <div class="img-box full">';
                         tableHTML += '	                    <section class=" img-section">';
                         tableHTML += '	                        <div class="z_photo upimg-div clear">';
@@ -902,7 +928,7 @@
                         tableHTML += '                 </div>';
                         tableHTML += '            </aside>';
                         tableHTML += '             </td>';
-                        tableHTML += '			<td width="100px"><input type="checkbox" class="Status" name="sss' + name + '[status]" value="0" lay-skin="switch" lay-text="是|否" lay-filter="isShow" name="sss' + name + '[static]"></td>';
+                        tableHTML += '			<td style="width:80px"><input type="checkbox" class="Status" name="sss' + name + '[status]" value="0" lay-skin="switch" lay-text="是|否" lay-filter="isShow" name="sss' + name + '[static]"></td>';
                         tableHTML += '		</tr>';
                     }
                     tableHTML += '	</tbody>';
