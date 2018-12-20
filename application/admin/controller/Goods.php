@@ -576,7 +576,7 @@ class Goods extends Controller{
 
     /**
      * 专用属性名称删除
-     *  陈绪
+     * 陈绪
      * @param Request $request
      */
     public function property_name_del(Request $request){
