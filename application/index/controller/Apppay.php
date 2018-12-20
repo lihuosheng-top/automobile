@@ -206,7 +206,7 @@ class Apppay extends Controller
                        $titles[] = $vs["parts_goods_name"];
                    }
                    $title =implode("",$titles);
-                    $money =Db::name("order_parts")->sum("order_real_pay");
+                    $money =Db::name("order_parts")->where("parts_order_number",$_GET['out_trade_no'])->sum("order_real_pay");
 //                    $money = array_sum(array_map(create_function('$vals','return $vals["order_real_pay"];'),$parts));
                     $user_id = Session::get("user");
                     $datas["user_id"] =$user_id; //用户ID
