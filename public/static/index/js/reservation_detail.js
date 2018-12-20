@@ -97,7 +97,112 @@ $('.img_box').on('click', function(e){
 
 // 获取url地址id
 var url = location.search;
-var id;
+var storeId, serviceSettingId;
+var urlLen = url.substr(1).split('&').length;
+if(urlLen > 1){
+    // 选择服务类型进来
+    
+}else{
+    // 首页热门店铺进来
+    $.ajax({
+        url: 'index_shop_goods',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id
+        },
+        success: function(res){
+            console.log('获取店铺商品',res);
+            if(res.status == 1){
+                // 商品
+                var str = '';
+                $.each(res.data.goods, function(idx, val){
+                    str += `<div class="goods-colla-item">
+                                <div class="goods-img-box">
+                                    <img src="uploads/`+val.goods_show_images+`">
+                                </div>
+                                <div class="goods-info-box">
+                                    <p class="goods-name txt-hid-two">`+val.goods_name+`</p>
+                                    <p class="goods-selling txt-hid-two">`+val.goods_describe+`</p>
+                                    <p class="goods-price">￥`+val.goods_adjusted_money+`</p>
+                                </div>
+                            </div>`
+                })
+                $('.goods-content').prepend(str);
+                // 服务项目
+                var str2 = '';
+                $.each(res.data.serve_data, function(idx, val){
+                    str2 += `<div class="service-colla-item">
+                                <div class="service-colla-title">
+                                    <p class="service-subtitle">`+val.serve_name+`</p>
+                                    <p class="service-money"></p>
+                                    <i class="spr icon-uncheck"></i>
+                                </div>
+                                <div class="service-colla-content" style="display:none;">
+                                    <ul>`
+                    $.each(val.serve_goods, function(idx, val){
+                        if(val.service_money === null && val.ruling_money === null){
+                            str2 += `<li>
+                                        <p class="service-car-type">`+val.vehicle_model+`</p>
+                                        <div class="content-money-div">
+                                            <p class="sale"><span>面议</span></p>
+                                        </div>
+                                        <i class="spr icon-uncheck"></i>
+                                    </li>`
+                        }else if(val.service_money !== null && val.ruling_money === null){
+                            str2 += `<li>
+                                        <p class="service-car-type">`+val.vehicle_model+`</p>
+                                        <div class="content-money-div">
+                                            <p class="sale">￥<span>`+val.service_money+`</span></p>
+                                        </div>
+                                        <i class="spr icon-uncheck"></i>
+                                    </li>`
+                        }else if(val.service_money !== null && val.ruling_money !== null){
+                            str2 += `<li>
+                                        <p class="service-car-type">`+val.vehicle_model+`</p>
+                                        <div class="content-money-div">
+                                            <p class="sale">￥<span>`+val.service_money+`</span></p>
+                                            <p class="thro">￥<span>`+val.ruling_money+`</span></p>
+                                        </div>
+                                        <i class="spr icon-uncheck"></i>
+                                    </li>`
+                        }
+                    })
+                    str2 += `</ul>
+                        </div>
+                    </div>`              
+                })
+                $('.service-content').append(str2);
+                // 选择
+                $('.service-colla-title').click(function(e){
+                    e.preventDefault();
+                    $(this).find('.icon-uncheck').toggleClass('icon-check');
+                    if($(this).find('.icon-uncheck').hasClass('icon-check')){
+                        $(this).siblings('.service-colla-content').show();
+                        // 合并打开的service-colla-content
+                        $(this).parent().siblings().find('.service-colla-content').hide();
+                        $(this).parent().siblings().find('.icon-uncheck').removeClass('icon-check');
+                    }else{
+                        $(this).siblings('.service-colla-content').hide();
+                    }
+                })
+                $('.service-colla-content li').click(function(){
+                    $(this).find('.icon-uncheck').toggleClass('icon-check');
+                    if($(this).find('.icon-uncheck').hasClass('icon-check')){
+                        $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
+                        $('.bespeak-btn').removeAttr('disabled')
+                    }else{
+                        $('.bespeak-btn').prop('disabled', 'disabled');
+                    }
+                })
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+
+}
 if(url.indexOf('?') != -1){
     id = url.substr(1).split('=')[1];
 }
@@ -127,104 +232,6 @@ if(url.indexOf('?') != -1){
 //     }
 // })
 
-// 铺商品
-$.ajax({
-    url: 'index_shop_goods',
-    type: 'POST',
-    dataType: 'JSON',
-    data: {
-        'id': id
-    },
-    success: function(res){
-        console.log('获取店铺商品',res);
-        if(res.status == 1){
-            // 商品
-            var str = '';
-            $.each(res.data.goods, function(idx, val){
-                str += `<div class="goods-colla-item">
-                            <div class="goods-img-box">
-                                <img src="uploads/`+val.goods_show_images+`">
-                            </div>
-                            <div class="goods-info-box">
-                                <p class="goods-name txt-hid-two">`+val.goods_name+`</p>
-                                <p class="goods-selling txt-hid-two">`+val.goods_describe+`</p>
-                                <p class="goods-price">￥`+val.goods_adjusted_money+`</p>
-                            </div>
-                        </div>`
-            })
-            $('.goods-content').prepend(str);
-            // 服务项目
-            var str2 = '';
-            $.each(res.data.serve_data, function(idx, val){
-                str2 += `<div class="service-colla-item">
-                            <div class="service-colla-title">
-                                <p class="service-subtitle">`+val.serve_name+`</p>
-                                <p class="service-money"></p>
-                                <i class="spr icon-uncheck"></i>
-                            </div>
-                            <div class="service-colla-content" style="display:none;">
-                                <ul>`
-                $.each(val.serve_goods, function(idx, val){
-                    if(val.service_money === null && val.ruling_money === null){
-                        str2 += `<li>
-                                    <p class="service-car-type">`+val.vehicle_model+`</p>
-                                    <div class="content-money-div">
-                                        <p class="sale"><span>面议</span></p>
-                                    </div>
-                                    <i class="spr icon-uncheck"></i>
-                                </li>`
-                    }else if(val.service_money !== null && val.ruling_money === null){
-                        str2 += `<li>
-                                    <p class="service-car-type">`+val.vehicle_model+`</p>
-                                    <div class="content-money-div">
-                                        <p class="sale">￥<span>`+val.service_money+`</span></p>
-                                    </div>
-                                    <i class="spr icon-uncheck"></i>
-                                </li>`
-                    }else if(val.service_money !== null && val.ruling_money !== null){
-                        str2 += `<li>
-                                    <p class="service-car-type">`+val.vehicle_model+`</p>
-                                    <div class="content-money-div">
-                                        <p class="sale">￥<span>`+val.service_money+`</span></p>
-                                        <p class="thro">￥<span>`+val.ruling_money+`</span></p>
-                                    </div>
-                                    <i class="spr icon-uncheck"></i>
-                                </li>`
-                    }
-                })
-                str2 += `</ul>
-                    </div>
-                </div>`              
-            })
-            $('.service-content').append(str2);
-            // 选择
-            $('.service-colla-title').click(function(e){
-                e.preventDefault();
-                $(this).find('.icon-uncheck').toggleClass('icon-check');
-                if($(this).find('.icon-uncheck').hasClass('icon-check')){
-                    $(this).siblings('.service-colla-content').show();
-                    // 合并打开的service-colla-content
-                    $(this).parent().siblings().find('.service-colla-content').hide();
-                    $(this).parent().siblings().find('.icon-uncheck').removeClass('icon-check');
-                }else{
-                    $(this).siblings('.service-colla-content').hide();
-                }
-            })
-            $('.service-colla-content li').click(function(){
-                $(this).find('.icon-uncheck').toggleClass('icon-check');
-                if($(this).find('.icon-uncheck').hasClass('icon-check')){
-                    $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
-                    $('.bespeak-btn').removeAttr('disabled')
-                }else{
-                    $('.bespeak-btn').prop('disabled', 'disabled');
-                }
-            })
-        }
-    },
-    error: function(){
-        console.log('error');
-    }
-})
 
 // 切换服务项目 本店商品
 $('.service-tab-title').on('click', 'li', function(){
