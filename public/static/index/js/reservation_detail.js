@@ -138,8 +138,9 @@ $.ajax({
     success: function(res){
         console.log('获取店铺商品',res);
         if(res.status == 1){
+            // 商品
             var str = '';
-            $.each(res.data, function(idx, val){
+            $.each(res.data.goods, function(idx, val){
                 str += `<div class="goods-colla-item">
                             <div class="goods-img-box">
                                 <img src="uploads/`+val.goods_show_images+`">
@@ -152,6 +153,11 @@ $.ajax({
                         </div>`
             })
             $('.goods-content').prepend(str);
+            // 服务项目
+            var str2 = '';
+            $.each(res.data.serve_data, function(idx, val){
+                // str2 += ``
+            })
         }
     },
     error: function(){

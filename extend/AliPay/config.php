@@ -29,7 +29,7 @@ $config = array (
 
 
 //配件商订单
-$con = array (
+$cons = array (
     //应用ID,您的APPID。
     'app_id' => "2018120762470526",
 
@@ -58,7 +58,7 @@ $con = array (
 );
 
 //充值
-$conf = array (
+$confs = array (
     //应用ID,您的APPID。
     'app_id' => "2018120762470526",
 
@@ -67,10 +67,12 @@ $conf = array (
 
     //异步通知地址
 //    'notify_url' => "https://automobile.siring.com.cn/index_pay_code",
-    'notify_url' => "http://www.zlh188.cn/index_parts_pay_code",
+//    'notify_url' => "http://www.zlh188.cn/recharge_pay_code",
+    'notify_url' => "localhost/automobile/public/recharge_pay_code",
     //同步跳转
 //    'return_url' => "https://automobile.siring.com.cn/index_pay_code",
-    'return_url' => "http://www.zlh188.cn/index_parts_pay_code",
+//    'return_url' => "http://www.zlh188.cn/recharge_pay_code",
+    'return_url' => "localhost/automobile/public/recharge_pay_code",
     //编码格式
     'charset' => "UTF-8",
 
