@@ -611,10 +611,11 @@ $.ajax({
             geocoder.getAddress(lnglat, function(status, result) {
                 if (status === 'complete' && result.info === 'OK') {
                     // result为对应的地理位置详细信息
-                    console.log(result);
+                    console.log('原生经纬度',result);
                     var addressComponent = result.regeocode.addressComponent;
                     var area = addressComponent.province+','+addressComponent.city+','+addressComponent.district;
-                    $('.curr_city').text(area);
+                    var city = addressComponent.city;
+                    $('.curr_city').text(city);
                     getAdvertisment(area);
                 }
             })
