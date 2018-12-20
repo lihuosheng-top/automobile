@@ -67,10 +67,12 @@ $confs = array (
 
     //异步通知地址
 //    'notify_url' => "https://automobile.siring.com.cn/index_pay_code",
-    'notify_url' => "http://www.zlh188.cn/recharge_pay_code",
+//    'notify_url' => "http://www.zlh188.cn/recharge_pay_code",
+    'notify_url' => "localhost/automobile/public/recharge_pay_code",
     //同步跳转
 //    'return_url' => "https://automobile.siring.com.cn/index_pay_code",
-    'return_url' => "http://www.zlh188.cn/recharge_pay_code",
+//    'return_url' => "http://www.zlh188.cn/recharge_pay_code",
+    'return_url' => "localhost/automobile/public/recharge_pay_code",
     //编码格式
     'charset' => "UTF-8",
 
