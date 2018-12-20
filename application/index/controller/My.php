@@ -62,13 +62,23 @@ class My extends Controller
     }
 
 
-
-
     /**
-     * 我的消费
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:我的消费
+     **************************************
+     * @return \think\response\View
      */
-    public function consume(){
+    public function consume(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");//用户id
+        $data =    Db::name("wallet")->where("user_id",$user_id)->select();
+        if(!empty($data)){
+            return ajax_success("我的消费信息返回成功",$data);
+        }else{
+            return ajax_error("没有消费记录",["status"=>0]);
+        }
+        }
         return view("my_consume");
 
     }

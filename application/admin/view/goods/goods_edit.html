@@ -926,6 +926,9 @@
                 var change_val = $(this).val();
                 var location_x = $(this).data("id");
                 var location_y = $(this).data("value");
+                 if(change_val==''){
+                	change_val=0;
+                }
                 $.ajax({
                     type: "POST",
                     url: "{:url('admin/Goods/value')}",
@@ -975,24 +978,13 @@
                 });
 
             });
+            var phone_delect_id='';
             //          删除图片事件
             $(".list_delet_img").click(function() {
-                var id = $(this).data("id");
-                $.ajax({
-                    type: "POST",
-                    url: "{:url('admin/Goods/photos')}",
-                    data: {
-                        "id": id,
-                    },
-                    success: function(data) {
-                        layer.msg("修改成功");
-                    },
-                    error: function(data) {
-                        console.log("失败")
-                    }
-                });
+                phone_delect_id = $(this).data("id");
+            
             });
-            //			添加图片
+                    //			添加图片
             $(".file").change(function() {
                 //				alert(111);
                 var formData = new FormData();
@@ -1000,20 +992,34 @@
                 var id = $(this).data("name");
                 formData.append("id", id);
                 formData.append("file", filess);
-                $.ajax({
-                    type: "POST",
-                    url: "{:url('admin/Goods/addphoto')}",
-                    processData: false,
-                    contentType: false,
-                    data: formData,
-                    success: function(data) {
-                        layer.msg("修改成功");
+			                $.ajax({
+			                    type: "POST",
+			                    url: "{:url('admin/Goods/addphoto')}",
+			                    processData: false,
+			                    contentType: false,
+			                    data: formData,
+			                    success: function(data) {
+			                    	    $.ajax({
+			                    type: "POST",
+			                    url: "{:url('admin/Goods/photos')}",
+			                    data: {
+			                        "id": id,
+			                    },
+			                    success: function(data) {
+			                        layer.msg("修改成功");
+			                    },
+			                    error: function(data) {
+			                        console.log("失败")
+			                    }
+			                });
                     },
                     error: function(data) {
                         console.log("失败")
                     }
                 });
             });
+            
+
 
 
 			// TODO限制分组和品牌

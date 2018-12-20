@@ -201,6 +201,21 @@ class Apppay extends Controller
             if(!empty($_GET['out_trade_no'])){
                 $bool = Db::name("order_parts")->where("parts_order_number",$_GET['out_trade_no'])->update($data);
                 if($bool){
+                    $parts =Db::name("order_parts")->field("parts_goods_name")->where("parts_order_number",$_GET['out_trade_no'])->select();
+                   foreach($parts as $ks=>$vs){
+                       $titles[] = $vs["parts_goods_name"];
+                   }
+                   $title =implode("",$titles);
+                    $money =Db::name("order_parts")->where("parts_order_number",$_GET['out_trade_no'])->sum("order_real_pay");
+                    $user_id = Session::get("user");
+                    $datas["user_id"] =$user_id; //用户ID
+                    $datas["wallet_operation"] = -$money; //消费金额
+                    $datas["wallet_type"] = -1; //消费操作(1入，-1出)
+                    $datas["operation_time"] = date("Y-m-d H:i:s"); //操作时间
+                    $datas["wallet_remarks"] = "订单号：".$_GET['out_trade_no']."，支付宝消费".$money; //消费备注
+                    $datas["wallet_img"] = "index/image/alipay.png"; //图标
+                    $datas["title"] = $title; //标题（消费内容）
+                    Db::name("wallet")->insert($datas);
                    $this->redirect('index/OrderParts/order_wait_deliver');
                 }
             }
@@ -330,14 +345,19 @@ class Apppay extends Controller
                     $datas["pay_type_content"] =$recharge_record_data["pay_type_name"]; //支付方式
                     $datas["money_status"] =1; //到款状态
                     $datas["img_url"] ="index/image/alipay.png"; //描述
-                    Db::name("recharge_reflect")->insert($datas);//插到记录
-                    $list =Db::name("recharge_setting")->field("send_money")->where("recharge_full",$recharge_record_data["recharge_money"])->find();
-                    if(!empty($list)){
-                        $datas["operation_amount"] =$recharge_record_data["recharge_money"]+$list['send_money']; //操作金额
-                        $datas["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元,送了".$list['send_money']; //描述
+                    $list =Db::name("recharge_setting")->field("recharge_full,send_money")->select();
+                    $lists =null;
+                    foreach($list as $k=>$v){
+                        if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
+                            $lists =$v["send_money"];
+                        }
+                    }
+                    if(!empty($lists)){
+                        $datas["operation_amount"]=$recharge_record_data["recharge_money"]+$lists; //操作金额
+                        $datas["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元,送了".$lists; //描述
                         Db::name("recharge_reflect")->insert($datas);//插到记录
                         $user_wallet =Db::name("user")->field("user_wallet")->where("id",$user_id)->find();
-                        Db::name("user")->where("id",$user_id)->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $list["send_money"]]);
+                        Db::name("user")->where("id",$user_id)->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $lists]);
                     }else{
                         $datas["operation_amount"] =$recharge_record_data["recharge_money"]; //操作金额
                         $datas["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元"; //描述
@@ -350,6 +370,7 @@ class Apppay extends Controller
             }
         }
     }
+
 
 
 
