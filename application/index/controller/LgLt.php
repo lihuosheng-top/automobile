@@ -53,7 +53,7 @@ class  LgLt extends  Controller{
         if($request->isPost()){
             $user_id = Session::get("user");
             if(!empty($user_id)){
-                $res =   Db::name("user")->field("longitude,latitude")->where("id",$user_id)->select();
+                $res = Db::name("user")->field("longitude,latitude")->where("id",$user_id)->select();
                 if($res){
                     return ajax_success("经纬度获取成功",$res);
                 }else{
