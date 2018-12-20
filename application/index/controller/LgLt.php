@@ -24,7 +24,7 @@ class  LgLt extends  Controller{
      **************************************
      */
     public function save(Request $request){
-        if($request->isGet()){
+        if($request->isPost()){
             $user_id = Session::get("user");
             $longitude =$request->only('longitude')['longitude'];//经度
             $latitude =$request->only('latitude')['latitude'];//纬度
