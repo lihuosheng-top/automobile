@@ -330,7 +330,7 @@ class Apppay extends Controller
                     $datas["pay_type_content"] =$recharge_record_data["pay_type_name"]; //支付方式
                     $datas["money_status"] =1; //到款状态
                     $datas["img_url"] ="index/image/alipay.png"; //描述
-                    $list =Db::name("recharge_setting")->field("send_money")->where("recharge_full",0.01)->find();
+                    $list =Db::name("recharge_setting")->field("send_money")->where("recharge_full","0.01")->find();
                     if(!empty($list)){
                         $datas["operation_amount"] =$recharge_record_data["recharge_money"]+$list['send_money']; //操作金额
                         $datas["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元,送了".$list['send_money']; //描述
