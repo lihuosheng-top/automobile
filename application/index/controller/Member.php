@@ -19,7 +19,15 @@ class  Member extends Controller{
      **************************************
      * @return \think\response\View
      */
-    public function member_equity(){
+    public function member_equity(Request $request){
+        if($request->isPost()){
+            $user_grade_data =Db::name('user_grade')->order('grade_id','asc')->select();
+            if(!empty($user_grade_data)){
+                return ajax_success("会员等级返回成功",$user_grade_data);
+            }else{
+                return ajax_error("会员等级返回失败",["status"=>0]);
+            }
+        }
         return view('member_equity');
     }
 
@@ -271,6 +279,8 @@ class  Member extends Controller{
     public function member_collection(){
         return view('member_collection');
     }
+
+
 
 
 }

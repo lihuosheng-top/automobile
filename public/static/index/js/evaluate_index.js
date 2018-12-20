@@ -54,8 +54,8 @@ $.ajax({
         // 初始化star
         initStar();
         // 上传图片
-        $('.switch-span').on('click', 'input', function(){
-            var inputElem = $(this).attr('id');
+        $('.switch-span').on('change', 'input', function(){
+            var inputElem = $(this)[0];
             var switchSpan = $(this).parent();
             changeEvent(inputElem, switchSpan);
         })
@@ -65,35 +65,32 @@ $.ajax({
     }
 })
 function changeEvent(inputElem, clickObj){
-    $('#'+inputElem).change(function(){
-        var imgArrDom = [];
-        var str = '';
-        var len =  this.files.length;
-        console.log(this.files)
-        // 限制上传图片
-        var uploadItemLen = $(clickObj).siblings('.upload-item').length;
-        if(uploadItemLen + len <= 4){
-            for(var i = 0; i < len; i++){
-                // 存图片地址
-                imgArrDom.push(getObjectURL(this.files[i]));
-            }
-            $.each(imgArrDom, function(idx, val){
-                str += `<div class="upload-item">
-                            <img src="`+val+`">
-                            <button class="del-img">×</button>
-                        </div>`
-            })
-            $(clickObj).before(str);
-        }else{
-            layer.open({
-                style: 'bottom:100px;',
-                type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
-                skin: 'msg',
-                content: '最多上传4张图片',
-                time: 2
-            })
+    var imgArrDom = [];
+    var str = '';
+    var len =  inputElem.files.length;
+    // // 限制上传图片
+    var uploadItemLen = $(clickObj).siblings('.upload-item').length;
+    if(uploadItemLen + len <= 4){
+        for(var i = 0; i < len; i++){
+            // 存图片地址
+            imgArrDom.push(getObjectURL(inputElem.files[i]));
         }
-    })
+        $.each(imgArrDom, function(idx, val){
+            str += `<div class="upload-item">
+                        <img src="`+val+`">
+                        <button class="del-img">×</button>
+                    </div>`
+        })
+        $(clickObj).before(str);
+    }else{
+        layer.open({
+            style: 'bottom:100px;',
+            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+            skin: 'msg',
+            content: '最多上传4张图片',
+            time: 2
+        })
+    }
 }
 // 在浏览器上预览本地图片
 function getObjectURL(file) {

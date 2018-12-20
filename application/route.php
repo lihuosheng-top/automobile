@@ -138,7 +138,7 @@ Route::group("",[
     /*TODO:找回密码验证码结束*/
 
     /*TODO:我的页面开始*/
-    "member_equity"=>"index/member/member_equity",//会员权益
+    "member_equity"=>"index/member/member_equity",//会员权益(ajax)
     "member_address"=>"index/member/member_address",//地址管理
     "member_default_address_return"=>"index/member/member_default_address_return",//购买页面默认地址返回或者选择其他地址
     "member_address_information"=>"index/member/member_address_information",//地址管理列表数据返回
@@ -414,7 +414,7 @@ Route::group("admin",[
     /*会员管理 ：TODO*/
     "user_index"=>"admin/User/index", //会员概况
     "user_edit"=>"admin/User/edit",     //会员编辑
-    "user_grade"=>"admin/User/grade",  //会员等级
+    "user_grade"=>"admin/User/grade",  //会员等级(ajax)
     "user_static"=>"admin/User/status", //会员页面的账户状态修改
     "user_del"=>"admin/User/del", //会员删除
     "user_dels"=>"admin/User/dels", //会员批量删除
