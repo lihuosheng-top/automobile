@@ -9,7 +9,7 @@ div{ letter-spacing:0.01rem; }
 .shop_lists{ background: #fff; padding: 0.2rem; box-sizing: border-box; color: #bbb;  margin-bottom: 0.8rem;}
 .shop_lists .shop_tip_title { font-size: 0.25rem; }
 .shop_lists .shop_tip_content{ font-size: 0.23rem; }
-.box_bottom{ width: 100%; height: 0.8rem; font-size: 0.3rem; display: flex; background: #fff; align-items: center; position: fixed; bottom: 0; }
+.box_bottom{border-top: 0.01rem #eee solid;width: 100%;height: 0.8rem;font-size: 0.3rem;display: flex;background: #fff;align-items: center;position: fixed;bottom: 0;}
 .box_bottom div{ text-align: center; flex: 1; line-height: 0.8rem; }
 .send_add{ color: #F33649; font-weight: 500; border-right: solid 0.01rem #ddd; }
 .cell{ color: #41A5E5; }
