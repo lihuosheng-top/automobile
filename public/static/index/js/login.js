@@ -50,7 +50,6 @@ $('.reg-send-code').click(function(){
     var phone = $('.reg-phone-num').val();
     var reg = /^1[34578]\d{9}$/;
     if(phone!== '' && phone.match(reg)){
-        buttonCountdown($(this), 1000 * 60 * 1, "ss");
         $.ajax({
             url: 'sendMobileCode',
             type: 'POST',
@@ -60,6 +59,20 @@ $('.reg-send-code').click(function(){
             },
             success: function(data){
                 console.log(data);
+                if(data.status == 0){
+                    layer.open({
+                        skin: 'msg',
+                        content: data.info,
+                        time: .8
+                    })
+                }else{
+                    layer.open({
+                        skin: 'msg',
+                        content: data.info,
+                        time: .8
+                    })
+                    buttonCountdown($(this), 1000 * 60 * 1, "ss");
+                }
             },
             error: function(){
                 console.log('error');
@@ -67,11 +80,9 @@ $('.reg-send-code').click(function(){
         })
     }else{
         layer.open({
-            style: 'bottom:100px;',
-            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
             skin: 'msg',
             content: '号码格式不正确',
-            time: 1
+            time: .8
         })
     }
 })
@@ -113,24 +124,20 @@ $('.reg-confirm').click(function(){
             console.log(data);
             if(data.status == 0){
                 layer.open({
-                    style: 'bottom:100px;',
-                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                     skin: 'msg',
                     content: data.info,
-                    time: 1
+                    time: .8
                 })
             }else{
                 layer.open({
-                    style: 'bottom:100px;',
-                    type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                     skin: 'msg',
                     content: '注册成功',
-                    time: 1
+                    time: .8
                 })
                 setTimeout(function(){
                     $('.register-pop').css('display', 'none');
                     $('.wrapper').css('display', 'block');
-                },1200)
+                },1100)
             }
         },
         error: function(){
@@ -165,7 +172,7 @@ $('.login-btn').click(function(){
                 layer.open({
                     skin: 'msg',
                     content: data.info,
-                    time: 1
+                    time: .8
                 })
             }else if(data.status === 2){
                 layer.open({
@@ -231,11 +238,9 @@ $('.send-code').click(function(){
         })
     }else{
         layer.open({
-            style: 'bottom:100px;',
-            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
             skin: 'msg',
             content: '号码格式不正确',
-            time: 1
+            time: .8
         })
     }
 })
@@ -259,19 +264,15 @@ $('.find-confirm').click(function(){
             success: function(data){
                 if(data.status == 0){
                     layer.open({
-                        style: 'bottom:100px;',
-                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: data.info,
-                        time: 1
+                        time: .8
                     })
                 }else if(data.status == 1){
                     layer.open({
-                        style: 'bottom:100px;',
-                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: data.info,
-                        time: 1
+                        time: .8
                     })
                     setTimeout(function(){
                         $('.find-password').hide();
@@ -285,11 +286,9 @@ $('.find-confirm').click(function(){
         })
     }else{
         layer.open({
-            style: 'bottom:100px;',
-            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
             skin: 'msg',
             content: '两次输入密码不一致',
-            time: 1
+            time: .8
         })
     }
 })
