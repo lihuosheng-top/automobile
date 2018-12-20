@@ -55,6 +55,8 @@ Route::group("",[
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
     'index_aliPay'=>"index/Apppay/index_aliPay", //服务商提交支付（付款）（弹窗支付）
     'index_pay_code'=>"index/Apppay/index_pay_code", //状态修改(回调地址修改状态)
+    "recharge_aliPay"=>"index/Apppay/recharge_aliPay",     //充值订单提交支付（付款）
+    "recharge_pay_code"=>"index/Apppay/recharge_pay_code",     //充值订单支付（成功回调修改状态）
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/
@@ -117,8 +119,6 @@ Route::group("",[
     "wallet_index"=>"index/wallet/index",           //钱包首页（ajax）
     "wallet_recharge"=>"index/wallet/recharge",     //钱包充值(ajax)
     "wallet_recharge_del"=>"index/wallet/recharge_del",     //钱包充值下单未付款自动关闭取消删除(ajax)
-    "recharge_aliPay"=>"index/wallet/recharge_aliPay",     //充值订单提交支付（付款）
-    "recharge_pay_code"=>"index/wallet/recharge_pay_code",     //充值订单支付（成功回调修改状态）
     "wallet_block"=>"index/wallet/block",           //添加银行卡
     "wallet_verification"=>"index/wallet/verification",   //银行卡验证
     /*TODO:钱包结束*/
