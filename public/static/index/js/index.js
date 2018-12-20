@@ -595,36 +595,36 @@ map.plugin([
 // })
 
 // 原生经纬度
-$.ajax({
-    url: 'lglt_read',
-    type: 'POST',
-    dataType: 'JSON',
-    success: function(res){
-        console.log(res);
-        if(res.status == 1){
-            var data = res.data[0];
-            var geocoder = new AMap.Geocoder({
-                // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
-                city: '010'
-            })
-            var lnglat = [data.longitude, data.latitude];
-            geocoder.getAddress(lnglat, function(status, result) {
-                if (status === 'complete' && result.info === 'OK') {
-                    // result为对应的地理位置详细信息
-                    console.log('原生经纬度',result);
-                    var addressComponent = result.regeocode.addressComponent;
-                    var area = addressComponent.province+','+addressComponent.city+','+addressComponent.district;
-                    var district = addressComponent.district;
-                    $('.curr_city').text(district);
-                    getAdvertisment(area);
-                }
-            })
-        }
-    },
-    error: function(){
-        console.log('error');
-    }
-})
+// $.ajax({
+//     url: 'lglt_read',
+//     type: 'POST',
+//     dataType: 'JSON',
+//     success: function(res){
+//         console.log(res);
+//         if(res.status == 1){
+//             var data = res.data[0];
+//             var geocoder = new AMap.Geocoder({
+//                 // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
+//                 city: '010'
+//             })
+//             var lnglat = [data.longitude, data.latitude];
+//             geocoder.getAddress(lnglat, function(status, result) {
+//                 if (status === 'complete' && result.info === 'OK') {
+//                     // result为对应的地理位置详细信息
+//                     console.log('原生经纬度',result);
+//                     var addressComponent = result.regeocode.addressComponent;
+//                     var area = addressComponent.province+','+addressComponent.city+','+addressComponent.district;
+//                     var district = addressComponent.district;
+//                     $('.curr_city').text(district);
+//                     getAdvertisment(area);
+//                 }
+//             })
+//         }
+//     },
+//     error: function(){
+//         console.log('error');
+//     }
+// })
 function getAdvertisment(area){
     $.ajax({
         url: 'advertisement_index',
@@ -710,7 +710,7 @@ function intoHotShop(id){
         success: function(res){
             console.log(res);
             if(res.status == 1){
-                location.href = 'reservation_detail?id='+id;
+                location.href = 'reservation_detail?store_id='+id;
             }
         },
         error: function(){
