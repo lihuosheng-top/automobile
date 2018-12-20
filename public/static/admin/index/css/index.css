@@ -11,7 +11,7 @@
 .bg_red{
 	background: red;
 }
-.button{
+button{
 	border: 0 !important;
 }
 /*修改layui样式*/
