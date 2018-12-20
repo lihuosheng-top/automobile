@@ -83,7 +83,7 @@ class Index extends Controller
 
 
     /**
-     * 热门店铺
+     * 热门配件店铺
      * 陈绪
      */
     public function shop(Request $request){
@@ -108,7 +108,7 @@ class Index extends Controller
 
 
     /**
-     * 热门店铺中的商品
+     * 热门配件店铺中的商品
      * 陈绪
      */
     public function shop_goods(Request $request){
@@ -116,11 +116,27 @@ class Index extends Controller
         if($request->isPost()){
             $shop_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("store_id",$shop_id)->where("goods_status",1)->select();
+            $serve_goods = db("serve_goods")->where("store_id",$shop_id)->where("status",1)->select();
             if($goods){
-                return ajax_success("获取成功",$goods);
+                return ajax_success("获取成功",array("goods"=>$goods,"serve_goods"=>$serve_goods));
             }else{
                 return ajax_error("获取失败");
             }
+        }
+
+    }
+
+
+
+
+    /**
+     * 热门服务店铺
+     * 陈绪
+     */
+    public function serve_shop(Request $request){
+
+        if($request->isPost()){
+
         }
 
     }
