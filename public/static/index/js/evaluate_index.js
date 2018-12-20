@@ -57,14 +57,18 @@ $.ajax({
         $('.switch-span').on('change', 'input', function(){
             var inputElem = $(this)[0];
             var switchSpan = $(this).parent();
-            changeEvent(inputElem, switchSpan);
+            var id = $(this).parents('.evaluation-subject').attr('id');
+            console.log(id);
+            changeEvent(inputElem, switchSpan, id);
+            console.log(filesArr);
         })
     },
     error: function(){
         console.log('error');
     }
 })
-function changeEvent(inputElem, clickObj){
+var filesArr = [];
+function changeEvent(inputElem, clickObj, id){
     var imgArrDom = [];
     var str = '';
     var len =  inputElem.files.length;
@@ -74,6 +78,8 @@ function changeEvent(inputElem, clickObj){
         for(var i = 0; i < len; i++){
             // 存图片地址
             imgArrDom.push(getObjectURL(inputElem.files[i]));
+            console.log(inputElem.files[i]['id'] = id);
+            filesArr.push(inputElem.files[i]);
         }
         $.each(imgArrDom, function(idx, val){
             str += `<div class="upload-item">
@@ -91,6 +97,12 @@ function changeEvent(inputElem, clickObj){
             time: 2
         })
     }
+    // 删除图片
+    $('.upload-item').on('click', '.del-img', function(){
+        var $index = $('.del-img').index($(this));
+        console.log($index);
+        $(this).parent().remove();
+    })
 }
 // 在浏览器上预览本地图片
 function getObjectURL(file) {
@@ -102,7 +114,7 @@ function getObjectURL(file) {
     }
     return url;
 }
-
+var formData = new FormData();
 // 发布
 $('.publish-btn').click(function(){
     var orderId = [];
@@ -110,13 +122,14 @@ $('.publish-btn').click(function(){
     $.each(evaluationSubjectArr, function(idx, val){
         orderId.push(val.id);
     })
+    formData.append('filesArr', filesArr);
     $.ajax({
         url: 'evaluate_parts_add',
         type: 'POST',
         dataType: 'JSON',
-        data: {
-            'order_id': orderId,
-        },
+        processData: false,
+        contentType: false,
+        data: formData,
         success: function(res){
             console.log(res);
         },
