@@ -118,7 +118,7 @@ if(urlLen > 1){
             if(data.status == 1){
                 // 商品
                 var str = '';
-                $.each(res.data.goods, function(idx, val){
+                $.each(data.data.goods, function(idx, val){
                     str += `<div class="goods-colla-item">
                                 <div class="goods-img-box">
                                     <img src="uploads/`+val.goods_show_images+`">
