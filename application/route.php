@@ -242,8 +242,10 @@ Route::group("",[
 
 
 
-    // 购物车
-    "cart_index"=>"index/Cart/cart_index",
+    /*购物车开始*/
+    "cart_index"=>"index/Cart/cart_index",//首页（ajax）
+    /*购物车结束*/
+
 
 
     /*TODO:配件商订单状态开始*/
