@@ -54,6 +54,7 @@ class Cart extends Controller
                 $store_id = $request->only(['store_id'])['store_id'];//店铺id
                 $goods_id = intval($goods_id);
                 $goods = db("goods")->where("id",$goods_id)->find();
+                $store_name =Db::name("store")->field("store_name")->where("store_id",$store_id)->find();
                 $shopping_data = db("shopping")
                     ->where("user_id",$user_id)
                     ->where("goods_id", $goods_id)
@@ -61,20 +62,22 @@ class Cart extends Controller
                     ->select();
                 foreach ($shopping_data as $key=>$value) {
                     if (in_array($goods_id,$value)) {
-                        $money = array($value['money'], $goods['goods_bottom_money']);
+                        $money = array($value['money'], $goods['goods_adjusted_money']);
                         $shopping[$key]['money'] = array_sum($money);
                         $shopping[$key]['goods_unit'] = $value['goods_unit'] + 1;
                         unset($shopping[$key]['id']);
-                        $bool = db("shopping")->where("goods_id", $goods_id)->where("user_id",$user_id['id'])->update($shopping[0]);
+                        $bool = db("shopping")->where("goods_id", $goods_id)->where("user_id",$user_id)->update($shopping[0]);
                         return ajax_success("成功", $bool);
                     }
                 }
                 $data['goods_name'] = $goods['goods_name'];
                 $data['goods_images'] = $goods['goods_show_images'];
-                $data['money'] = $goods['goods_bottom_money'];
+                $data['money'] = $goods['goods_adjusted_money'];
                 $data['goods_unit'] = 1;
-                $data['user_id'] = $user_id['id'];
+                $data['user_id'] = $user_id;
                 $data['goods_id'] = $goods['id'];
+                $data['store_id'] = $goods['store_id'];
+                $data['store_name'] = $store_name["store_name"];
                 $bool = db("shopping")->insert($data);
                 return ajax_success("获取成功", $bool);
             }

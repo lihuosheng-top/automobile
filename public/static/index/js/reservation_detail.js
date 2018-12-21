@@ -286,9 +286,13 @@ function selectEvent(){
         $(this).find('.icon-uncheck').toggleClass('icon-check');
         if($(this).find('.icon-uncheck').hasClass('icon-check')){
             $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
-            $('.bespeak-btn').removeAttr('disabled')
+            $('.bespeak-btn').removeAttr('disabled');
+            var userSelectMoney = $(this).find('.sale').text();
+            console.log(userSelectMoney);
+            $('.bespeak-money').text(userSelectMoney);
         }else{
             $('.bespeak-btn').prop('disabled', 'disabled');
+            $('.bespeak-money').text('');
         }
     })
 }
