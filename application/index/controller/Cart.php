@@ -52,6 +52,7 @@ class Cart extends Controller
                 //存入购物车
                 $goods_id = $request->only(['goods_id'])['goods_id'];//商品id
                 $store_id = $request->only(['store_id'])['store_id'];//店铺id
+                $goods_unit = $request->only(['goods_unit'])['goods_unit'];//商品数量
                 $goods_id = intval($goods_id);
                 $goods = db("goods")->where("id",$goods_id)->find();
                 $store_name =Db::name("store")->field("store_name")->where("store_id",$store_id)->find();
@@ -82,5 +83,39 @@ class Cart extends Controller
                 return ajax_success("获取成功", $bool);
             }
     }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:购物车下订单
+     **************************************
+     * @param Request $request
+     */
+    public function place_an_order_by_cart(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");//用户id
+            if(empty($user_id)){
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+            if(!empty($user_id)){
+                $id = $request->only(['id'])['id'];//shopping表的主键id
+                $goods_unit = $request->only(['goods_unit'])['goods_unit'];//商品数量
+                $money = $request->only(['money'])['money'];//商品的总价
+                foreach ($id as $key => $val) {
+                    db("shopping")->where("id", $val)->update(['goods_unit' => $goods_unit[$key]]);
+                }
+                //存储到购物车订单表中
+                $data['money'] = $money;
+                $data['shopping_id'] = implode(",", $id);
+                $data['user_id'] = $user_id;
+                db("shopping_shop")->insert($data);
+                $shopping_id['id'] = db("shopping_shop")->getLastInsID();
+                Session("shopping", $shopping_id);
+                return ajax_success("获取成功", $shopping_id);
+            }
+        }
+    }
+
 
 }
