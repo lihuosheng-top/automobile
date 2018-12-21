@@ -15,6 +15,15 @@ html{
     border-bottom: 1px solid #eee;
     background-color: #fff;
 }
+.head .icon-back{
+    position: absolute;
+    top: 50%;
+    left: .2rem;
+    margin-top: -.22rem;
+    width: .25rem;
+    height: .43rem;
+    background-position: -.5rem -.5rem;
+}
 .head h3,
 .reg-head h3{
     width: 100%;

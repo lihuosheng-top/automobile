@@ -983,10 +983,6 @@ html{
     z-index: 9;
     padding: 0 .22rem;
     box-sizing: border-box;
-    transition: all .3s ease-out;
-}
-.select-ser-pop.select-ser-easeout{
-    bottom: 0;
 }
 .select-goods-wrap{
     width: 100%;
@@ -1038,7 +1034,6 @@ html{
     width: 0;
 }
 .select-ser-pop .spec-box{
-    height: 2rem;
     padding: .2rem;
     border-bottom: 1px solid #eee;
 }
@@ -1057,7 +1052,7 @@ html{
     line-height: .7rem;
     font-size: .3rem;
     color: #666;
-    margin-right: .2rem;
+    margin: 0 .2rem .2rem 0;
 }
 .select-ser-pop .spec-wrap button{
     border: 0;
