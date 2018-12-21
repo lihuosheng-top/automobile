@@ -10,16 +10,16 @@ function toFixed(num, s) {
 
 // 获取url地址id
 var url = location.search;
-var id, preId;
+var id, preId, specId;
 if (url.indexOf('?') != -1) {
-    id = url.substr(1).split('&&')[0].split('=')[1];
-    preId = url.substr(1).split('&&')[1].split('=')[1];
+    id = url.substr(1).split('&')[0].split('=')[1];
+    preId = url.substr(1).split('&')[1].split('=')[1];
+    specId = url.substr(1).split('&')[2].split('=')[1];
 }
 // 返回商品详情
 $('.place-order-back').click(function () {
-    location.href = 'goods_detail?id=' + id + '&&preid=' + preId;
+    location.href = 'goods_detail?id=' + id + '&preid=' + preId;
 })
-
 // 地址返回
 $.ajax({
     url: 'member_default_address_return',
@@ -33,7 +33,7 @@ $.ajax({
             var addr = res.data.address_name.split(',').join('');
             $('.address-txt').text(addr + res.data.harvester_real_address);
             $('.user-info-box').click(function () {
-                location.href = 'member_address?id=' + id + '&&preid=' + preId;
+                location.href = 'member_address?id=' + id + '&preid=' + preId;
             })
         }
     },
@@ -41,9 +41,6 @@ $.ajax({
         console.log('error');
     }
 })
-
-
-
 // 商品详情 传过来的数据
 $.ajax({
     url: 'return_order_buy_information',

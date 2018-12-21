@@ -22,7 +22,7 @@ $.ajax({
         $.each(res.data, function(idx, val){
             if(idx % 2 == 0){
                 str += '<li>\
-                            <a href="goods_detail?id='+val.id+'&&preid='+id+'">\
+                            <a href="goods_detail?id='+val.id+'&preid='+id+'">\
                                 <div class="img_div">\
                                     <img src="uploads/'+val.goods_show_images+'">\
                                 </div>\
@@ -37,7 +37,7 @@ $.ajax({
                         </li>'
             }else{
                 str += '<li class="mgr0">\
-                            <a href="goods_detail?id='+val.id+'&&preid='+id+'">\
+                            <a href="goods_detail?id='+val.id+'&preid='+id+'">\
                                 <div class="img_div">\
                                     <img src="uploads/'+val.goods_show_images+'">\
                                 </div>\

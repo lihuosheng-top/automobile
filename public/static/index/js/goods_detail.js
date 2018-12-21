@@ -1,9 +1,9 @@
 // 获取url地址id
 var url = location.search;
-var id, preId;
+var id, preId, specId;
 if(url.indexOf('?') != -1){
-    id = url.substr(1).split('&&')[0].split('=')[1];
-    preId = url.substr(1).split('&&')[1].split('=')[1];
+    id = url.substr(1).split('&')[0].split('=')[1];
+    preId = url.substr(1).split('&')[1].split('=')[1];
 }
 $('.wrapper').find('a.back').click(function(){
     location.href = 'goods_list?id=' + preId;
@@ -43,22 +43,34 @@ $.ajax({
             $('.parameter-series').text(val.goods_car_series.split(',').join('  '));
             $('.parameter-year').text(val.goods_car_year.split(',').join('  '));
             $('.parameter-displacement').text(val.goods_car_displacement.split(',').join('  '));
-            // 选择服务弹窗
-            $('.select-goods-img img')[0].src = 'uploads/' + val.goods_show_images;
-            $('.select-goods-price').text('￥' + val.goods_adjusted_money);
-            $('.select-goods-stock').text('库存' + val.goods_repertory + '件');
-
+            
             // 规格值
             var specStr = '';
             $.each(val.goods_standard, function(idx, val){
                 if(idx === 0){
-                    specStr += `<span class="select-item select-on">`+val.name.split(',').join('')+`</span>`;
+                    // 选择服务弹窗
+                    $('.select-goods-img img')[0].src = 'uploads/' + val.images;
+                    $('.select-goods-price span').text(val.price);
+                    $('.select-goods-stock span').text(val.stock);
+                    specId = val.id;
+                    specStr += `<span class="select-item select-on" id="`+val.id+`">`+val.name.split(',').join('')+`</span>`;
                 }else{
-                    specStr += `<span class="select-item">`+val.name.split(',').join('')+`</span>`;
+                    specStr += `<span class="select-item" id="`+val.id+`">`+val.name.split(',').join('')+`</span>`;
                 }
             })
             $('.select-container').append(specStr);
-
+            $('.select-container span').click(function(){
+                // 用户选择规格的index 改变图片 库存 单价
+                var $index = $(this).index();
+                specId = $(this).attr('id');
+                $.each(val.goods_standard, function(idx, val){
+                    if($index === idx){
+                        $('.select-goods-img img')[0].src = 'uploads/' + val.images;
+                        $('.select-goods-price span').text(val.price);
+                        $('.select-goods-stock span').text(val.stock);
+                    }
+                })
+            })
             // 安装方式
             var installationArr = val.goods_delivery.split(',');
             var installationStr = '';
@@ -69,20 +81,13 @@ $.ajax({
                     installationStr += `<button class="select-item btn-item">`+installationArr[j]+`</button>`;
                 }
             }
-            $('.installation').append(installationStr);
+            $('.way-container').append(installationStr);
             // 立即购买 身上放商品id
             $('.select-buy').prop('id', val.id);
             // 选择切换class
             $('.spec-wrap').on('click', '.select-item', function(){
                 $(this).addClass('select-on');
                 $(this).siblings('.select-item').removeClass('select-on');
-                // if($(this).hasClass('btn-item')){
-                //     if($(this)[0].innerText === '无需安装'){
-                //         $('.select-shop').hide();
-                //     }else{
-                //         $('.select-shop').show();
-                //     }
-                // }
                 var selectSpec = '';
                 $.each($('.select-on'), function(idx, val){
                     selectSpec += $(val).text() + ' ';
@@ -181,7 +186,7 @@ $('.select-buy').click(function(){
                     btn: ['确定', '取消'],
                     yes: function (index) {
                         layer.close(index);
-                        location.href = 'member_address_add?id=271&&preid=10';
+                        location.href = 'member_address_add?id=271&preid=10';
                     }
                 });
             }else if(res.status == 2){
@@ -206,10 +211,11 @@ $('.select-buy').click(function(){
                             'goods_id': goods_id,
                             'goods_number': goods_number,
                             'goods_standard': goods_standard,
+                            'goods_standard_id': specId
                         },
                         success: function(res){
                             console.log(res);
-                            location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
+                            location.href = 'ios_api_order_parts_firm_order?id=' + id + '&preid=' + preId;
                         },
                         error: function(){
                             console.log('error')
