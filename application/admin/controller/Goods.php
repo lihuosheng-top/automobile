@@ -185,7 +185,7 @@ class Goods extends Controller
                 }
             }
 
-            $goods_id = db('goods')->insertGetId($goods_special);
+            //$goods_id = db('goods')->insertGetId($goods_special);
             if (!empty($goods_data)) {
                 foreach ($goods_data as $kn => $nl) {
                     if (substr($kn, 0, 3) == "sss") {
@@ -220,7 +220,7 @@ class Goods extends Controller
                                 $values[$k]["status"] = $status[$k];
                                 $values[$k]["cost"] = $cost[$k];
                                 $values[$k]["images"] = $tab;
-                                $values[$k]["goods_id"] = $goods_id;
+                                //$values[$k]["goods_id"] = $goods_id;
 
                             }
 
@@ -228,7 +228,7 @@ class Goods extends Controller
                     }
 
                 }
-
+                halt($values);
                 foreach ($values as $kz => $vw) {
                     $rest = db('special')->insert($vw);
 
@@ -546,6 +546,7 @@ class Goods extends Controller
     {
 
         $goods = db("goods")->where("id", $id)->select();
+        $goods_standard = db("special")->where("goods_id", $id)->select();
         foreach ($goods as $key => $value) {
             $goods[$key]["goods_standard_name"] = explode(",", $value["goods_standard_name"]);
             $goods_standard_value = explode(",", $value["goods_standard_value"]);
@@ -554,6 +555,7 @@ class Goods extends Controller
             $goods[$key]["goods_images"] = db("goods_images")->where("goods_id", $value["id"])->select();
 
         }
+        
         $goods_standard_name = array();
         foreach ($goods as $k => $val) {
             foreach ($val["goods_standard_name"] as $k_1 => $v_2) {
@@ -563,6 +565,12 @@ class Goods extends Controller
                 );
             }
         }
+
+        foreach ($goods_standard as $k => $v) {
+            $goods_standard[$k]["title"] = explode('_', $v["name"]);
+            $res = explode(',', $v["lv1"]);
+        }
+
         $goods_list = getSelectList("goods_type");
         $goods_brand = getSelectList("brand");
         $year = db("year")->select();
@@ -571,7 +579,7 @@ class Goods extends Controller
             $car_brand = db("car_series")->field("series,brand")->select();
             return ajax_success("获取成功", array("car_series" => $car_series, "car_brand" => $car_brand));
         }
-        return view("goods_look", ["year" => $year, "goods_brand" => $goods_brand, "goods_standard_name" => $goods_standard_name, "goods" => $goods, "goods_list" => $goods_list, "goods_brand" => $goods_brand]);
+        return view("goods_look", ["year" => $year, "goods_brand" => $goods_brand, "goods_standard_name" => $goods_standard_name, "goods" => $goods, "goods_list" => $goods_list, "goods_brand" => $goods_brand,"res" => $res,"goods_standard" => $goods_standard]);
     }
 
 
