@@ -96,28 +96,28 @@ $.ajax({
                 $('.select-goods-spec').text('规格：' + selectSpec);
             })
         })
-        
-        // swiper初始化
-        var mySwiper = new Swiper ('.swiper-container', {
-            direction: 'horizontal', // 垂直切换选项
-            loop: true, // 循环模式选项
-            autoplay: {
-                delay: 2000,
-                disableOnInteraction: false,//用户操作swiper后，不禁止autoplay
-            },
-            // 如果需要分页器
-            pagination: {
-                el: '.swiper-pagination',
-            },
-        }) 
-
+        swiperEvent();
     },
     error: function(){
         console.log('error');
     }
 })
 
-
+// swiper初始化
+function swiperEvent(){
+    var mySwiper = new Swiper ('.swiper-container', {
+        direction: 'horizontal', // 垂直切换选项
+        loop: true, // 循环模式选项
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false,//用户操作swiper后，不禁止autoplay
+        },
+        // 如果需要分页器
+        pagination: {
+            el: '.swiper-pagination',
+        },
+    }) 
+}
 
 // 产品参数
 $('.product-parameter').click(function(){
@@ -130,8 +130,6 @@ $('.parameter-btn').click(function(){
     $('.product-parameter-pop').animate({'bottom': '-100%'});
     $('html').css('overflow', 'auto');
 })
-
-
 
 // 显示 隐藏 评价弹窗 
 function showPop(){
@@ -147,7 +145,6 @@ function hidePop(){
 $('.comment_classify_box li').click(function(){
     $(this).addClass('active').siblings().removeClass('active');
 })
-
 
 // 商品详情， 评价切换
 $('.switch-detail').click(function(){
@@ -196,54 +193,54 @@ $('.select-buy').click(function(){
         dataType: 'JSON',
         success: function(res){
             console.log(res);
-            if(res.status == 0){
-                layer.open({
-                    content: res.info,
-                    btn: ['确定', '取消'],
-                    yes: function (index) {
-                        layer.close(index);
-                        location.href = 'member_address_add?id=271&&preid=10';
-                    }
-                });
-            }else if(res.status == 2){
-                layer.open({
-                    content: res.info,
-                    btn: ['确定', '取消'],
-                    yes: function (index) {
-                        layer.close(index);
-                        location.href = 'login';
-                    }
-                });
-            }else{
-                if($('.select-goods-spec').text() !== '选择规格'){
-                    var goods_id = $($this)[0].id;
-                    var goods_number = $('.select-calculator_val').val();
-                    var goods_standard = $('.select-goods-spec').text();
-                    $.ajax({
-                        url: 'get_goods_id_save',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: {
-                            'goods_id': goods_id,
-                            'goods_number': goods_number,
-                            'goods_standard': goods_standard,
-                        },
-                        success: function(res){
-                            console.log(res);
-                            location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
-                        },
-                        error: function(){
-                            console.log('error')
-                        }
-                    })
-                }else{
-                    layer.open({
-                        skin: 'msg',
-                        content: '请选择规格',
-                        time: 1
-                    })
-                }
-            }
+            // if(res.status == 0){
+            //     layer.open({
+            //         content: res.info,
+            //         btn: ['确定', '取消'],
+            //         yes: function (index) {
+            //             layer.close(index);
+            //             location.href = 'member_address_add?id=271&&preid=10';
+            //         }
+            //     });
+            // }else if(res.status == 2){
+            //     layer.open({
+            //         content: res.info,
+            //         btn: ['确定', '取消'],
+            //         yes: function (index) {
+            //             layer.close(index);
+            //             location.href = 'login';
+            //         }
+            //     });
+            // }else{
+            //     if($('.select-goods-spec').text() !== '选择规格'){
+            //         var goods_id = $($this)[0].id;
+            //         var goods_number = $('.select-calculator_val').val();
+            //         var goods_standard = $('.select-goods-spec').text();
+            //         $.ajax({
+            //             url: 'get_goods_id_save',
+            //             type: 'POST',
+            //             dataType: 'JSON',
+            //             data: {
+            //                 'goods_id': goods_id,
+            //                 'goods_number': goods_number,
+            //                 'goods_standard': goods_standard,
+            //             },
+            //             success: function(res){
+            //                 console.log(res);
+            //                 location.href = 'ios_api_order_parts_firm_order?id=' + id + '&&preid=' + preId;
+            //             },
+            //             error: function(){
+            //                 console.log('error')
+            //             }
+            //         })
+            //     }else{
+            //         layer.open({
+            //             skin: 'msg',
+            //             content: '请选择规格',
+            //             time: 1
+            //         })
+            //     }
+            // }
         },
         error: function(){
             console.log('error');
@@ -376,3 +373,18 @@ $('.collect').click(function(){
         })
     }
 })
+
+// 判断有没有登录
+function isLogin(){
+    $.ajax({
+        url: 'isLogin',
+        type: 'POST',
+        dataType: 'JSON',
+        success: function(res){
+            console.log(res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}

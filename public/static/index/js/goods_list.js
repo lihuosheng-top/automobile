@@ -32,7 +32,6 @@ $.ajax({
                                 <div class="goods_price">\
                                     <span class="price">￥'+val.goods_adjusted_money+'</span>\
                                     <span class="pay_num">1500人购买</span>\
-                                    <i class="spr icon_cart"></i>\
                                 </div>\
                             </a>\
                         </li>'
@@ -48,7 +47,6 @@ $.ajax({
                                 <div class="goods_price">\
                                     <span class="price">￥'+val.goods_adjusted_money+'</span>\
                                     <span class="pay_num">1500人购买</span>\
-                                    <i class="spr icon_cart"></i>\
                                 </div>\
                             </a>\
                         </li>'
