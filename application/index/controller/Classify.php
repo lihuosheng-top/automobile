@@ -85,8 +85,9 @@ class Classify extends Controller
                 $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
                 $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
             }
-            
+
             $commodity = array_merge($goods,$goods_standard);
+            
             if($commodity){
                 return ajax_success("获取成功",$commodity);
             }else{
