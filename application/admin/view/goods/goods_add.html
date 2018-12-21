@@ -1150,7 +1150,14 @@
 					}
 				});
 			});
-	
+	          form.on('switch(isShow)', function(data) {
+                if ($(this).val() == 0) {
+                    $(this).val(1);
+                } else {
+                    $(this).val(0);
+                }
+
+            });
 			// end商品规格变化
 			// TODO获取车牌Ajax
 			$.ajax({
