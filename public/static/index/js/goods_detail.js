@@ -183,6 +183,7 @@ $('.ser-type').add('#buy').click(function(){
     })
     $('.select-goods-spec').text('规格：' + selectSpec);
 })
+
 // 立即购买 弹窗
 $('.select-buy').click(function(){
     // 地址返回
