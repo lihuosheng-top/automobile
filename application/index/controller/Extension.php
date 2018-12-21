@@ -33,12 +33,13 @@ class Extension extends  Controller{
 //                $domain_name = 'http://automobile.siring.com.cn';//域名
                 $domain_name = 'http://localhost/automobile/public';//域名
                 $reg = 'register';  //注册地址
-                $share_url = $domain_name."/".$reg."/".$user_invitation["invitation"];
+                $share_url = $domain_name."/".$reg."?a=".$user_invitation["invitation"];
                 /*二维码*/
                 $share_code ='http://b.bshare.cn/barCode?site=weixin&url='.$share_url;
                     $data =[
-                        "invitation"=>$user_invitation["invitation"],
-                        "invitation_images_url"=> $share_code,
+                        "invitation"=>$user_invitation["invitation"],//邀请码
+                        "invitation_images_url"=> $share_code, //邀请码二维码
+                        "register_url"=>$share_url,   //注册链接
                     ];
                    if(!empty($data)){
                        exit(json_encode(array("status" => 1, "info" => "数据返回成功","data"=>$data)));
@@ -46,7 +47,6 @@ class Extension extends  Controller{
                        exit(json_encode(array("status" => 0, "info" => "没有该用户信息")));
                    }
             }
-
         }
         return view("spread_index");
     }
