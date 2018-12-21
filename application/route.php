@@ -127,7 +127,7 @@ Route::group("",[
 
 
     /*TODO:注册开始*/
-    "register"=>"index/Register/index",//注册页面
+    "register"=>"index/Register/index",//h5注册页面
     "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
     /*TODO:注册结束*/
@@ -211,7 +211,7 @@ Route::group("",[
     /*TODO:店铺结束*/
 
     /*TODO：我要推广开始*/
-    "spread_index"=>"index/Extension/spread_index",//我要推广
+    "spread_index"=>"index/Extension/spread_index",//我要推广（ajax）
     /*TODO：我要推广结束*/
 
     /*TODO：配件商评价开始*/
