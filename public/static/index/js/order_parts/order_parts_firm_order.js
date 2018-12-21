@@ -10,11 +10,10 @@ function toFixed(num, s) {
 
 // 获取url地址id
 var url = location.search;
-var id, preId, specId;
+var id, preId;
 if (url.indexOf('?') != -1) {
     id = url.substr(1).split('&')[0].split('=')[1];
     preId = url.substr(1).split('&')[1].split('=')[1];
-    specId = url.substr(1).split('&')[2].split('=')[1];
 }
 // 返回商品详情
 $('.place-order-back').click(function () {
