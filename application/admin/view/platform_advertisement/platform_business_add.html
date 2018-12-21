@@ -34,26 +34,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label">广告位置：</label>
             <div class="layui-input-block">
-                <select name="location">
-					<option value="首页轮播图1px750*420" selected="selected">首页轮播图1px750*420</option>
-					<option value="首页轮播图2">首页轮播图2</option>
-					<option value="首页轮播图3">首页轮播图3</option>
-					<option value="首页固定广告">首页固定广告</option>
-					<option value="热门推荐左1">热门推荐左1</option>
-					<option value="热门推荐右1">热门推荐右1</option>
-					<option value="热门推荐左下">热门推荐左下</option>
-					<option value="热门推荐右中">热门推荐右中</option>
-					<option value="热门推荐右下1">热门推荐右下1</option>
-					<option value="热门推荐右下2">热门推荐右下2</option>
-					<option value="特惠配件左">特惠配件左</option>
-					<option value="特惠配件中">特惠配件中</option>
-					<option value="特惠配件右">特惠配件右</option>
-					<option value="配件商城轮播图1">配件商城轮播图1</option>
-					<option value="配件商城轮播图2">配件商城轮播图2</option>
-					<option value="配件商城轮播图3">配件商城轮播图3</option>
-					<option value="配件商城优惠推荐">配件商城优惠推荐</option>
-				</select>
-                <!--<input type="text" name="location" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">-->
+                {if !empty($goods_liste)}
+                <select name="pid" id="admin_role" class="role_list">
+                {volist name="goods_liste" id="value"}
+                <option value="{$value.id}">{$value.name}</option>
+                {/volist}
+                </select><br/> {else}
+                <select name="pid" class="role_list">
+               </select><br/> {/if}
+                </select>
             </div>
         </div>
         <div class="layui-form-item">

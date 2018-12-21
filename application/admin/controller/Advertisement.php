@@ -32,7 +32,6 @@ class  Advertisement extends  Controller{
         foreach ($platform as $key => $value) {
             if ($value["id"]) {
                 $platform[$key]["shop_name"] = $store_name;
-                $platform[$key]["pid"] = $value["id"];
             }
         }
     
@@ -56,8 +55,13 @@ class  Advertisement extends  Controller{
      * [汽车配件商广告添加]
      * 郭杨
      */
-    public function accessories_business_add(){
-        return view('accessories_business_add');
+    public function accessories_business_add($pid = 0)
+    {
+        $goods_liste = [];
+        if ($pid == 0) {
+            $goods_liste = selectList("position");
+        }
+        return view('accessories_business_add', ["goods_liste" => $goods_liste]);
     }
 
 
@@ -66,10 +70,16 @@ class  Advertisement extends  Controller{
      * [汽车配件商广告编辑]
      * 郭杨
      */
-    public function accessories_business_edit($id){
-
+    public function accessories_business_edit($id,$pid=0)
+    {
+        
+        $goods_liste = [];
+        if ($pid == 0) {
+            $goods_liste = selectList("position");
+        }
         $plat = db("accessories")->where("id",$id)->select();
-        return view('accessories_business_edit',['plat'=>$plat]);
+
+        return view('accessories_business_edit',['plat'=>$plat,"goods_liste" => $goods_liste]);
     }
 
 
@@ -88,7 +98,8 @@ class  Advertisement extends  Controller{
             $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
             $store_name = db("store")->where("user_id",$user)->value("store_name");
             $area = db("store")->where("user_id",$user)->value("store_city_address");
-               
+            $position = db("position") -> where("id",$data["pid"])->value("name");
+
             //插入配件商表
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
@@ -101,13 +112,16 @@ class  Advertisement extends  Controller{
             $data["end_time"] = strtotime($data["end_time"]);
             $data["pgone"] = $id;
             $data["area"] = $area;
+            $data["location"] = $position;
             $userId = db('accessories')->insertGetId($data);
 
             //插入平台列表
-            $data["pid"] = $userId;
+            $data["pgd"] = $userId;
             $data["department"] = $user_phone[0]["department"];
             $data["shop_name"] = $store_name;
             unset($data["pgone"]);
+            unset($data["pid"]);
+
             $boole = db("platform")->insert($data);
             if ($userId && $boole) {
                 $this->success("添加成功", url("admin/Advertisement/accessories_business_advertising"));
@@ -131,10 +145,9 @@ class  Advertisement extends  Controller{
 
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
-            
             $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
             unset($data["id"]);
-            $boole = db("platform")->where('pid', $request->only(["id"])["id"])->update($data);
+            $boole = db("platform")->where('pgd', $request->only(["id"])["id"])->update($data);
 
             if ($bool && $boole) {
                 $this->success("编辑成功", url("admin/Advertisement/accessories_business_advertising"));
@@ -153,7 +166,7 @@ class  Advertisement extends  Controller{
     public function accessories_business_del($id){
 
         $bool = db("accessories")->where("id", $id)->delete();
-        $boole = db("platform")->where("pid", $id)->delete();
+        $boole = db("platform")->where("pgd", $id)->delete();
         if ($bool && $boole) {
             $this->success("删除成功", url("admin/Advertisement/accessories_business_advertising"));
         } else {

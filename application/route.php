@@ -88,7 +88,7 @@ Route::group("",[
     "select_role_business"=>"index/My/select_role_business",      //（选择商家）通过判断是否是商家或者是车主（ajax）
     "select_role_get"=>"index/My/select_role_get",//获取商家的信息，如果存在则是商家角色，不存在则为车主
     "my_nickname"=>"index/My/nickname",         //昵称
-    "my_consume"=>"index/My/consume",         //我的消费
+    "my_consume"=>"index/My/consume",         //我的消费(ajax)
     "consume_message"=>"index/My/consume_message",       //消费详情
     /*TODO:登录结束*/
 
@@ -265,6 +265,7 @@ Route::group("",[
     "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货页面
     "ios_api_order_parts_return_goods"=>"index/OrderParts/ios_api_order_parts_return_goods",//退货接口ajax
     "ios_api_order_parts_no_pay_cancel"=>"index/OrderParts/ios_api_order_parts_no_pay_cancel",//买家未付款取消订单接口(ajax)
+    "ios_api_order_parts_yes_pay_cancel"=>"index/OrderParts/ios_api_order_parts_yes_pay_cancel",//买家已付款取消订单接口(ajax)（未接）
     "order_parts_detail_cancel"=>"index/OrderParts/order_parts_detail_cancel",//买家未付款超过后台设置的时间未付款，系统取消订单接口(ajax)
     "ios_api_order_parts_del"=>"index/OrderParts/ios_api_order_parts_del",//买家删除订单接口(ajax)
     "ios_api_order_parts_collect_goods"=>"index/OrderParts/ios_api_order_parts_collect_goods",//配件商订单状态修改（买家确认收货）（ajax）
