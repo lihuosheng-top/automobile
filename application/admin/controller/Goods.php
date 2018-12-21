@@ -544,7 +544,6 @@ class Goods extends Controller
      */
     public function look(Request $request, $id)
     {
-
         $goods = db("goods")->where("id", $id)->select();
         $goods_standard = db("special")->where("goods_id", $id)->select();
         foreach ($goods as $key => $value) {
