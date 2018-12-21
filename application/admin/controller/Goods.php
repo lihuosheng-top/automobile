@@ -567,7 +567,7 @@ class Goods extends Controller
         }
 
         foreach ($goods_standard as $k => $v) {
-            $goods_standard[$k]["title"] = explode('_', $v["name"]);
+            $goods_standard[$k]["title"] = explode(',', $v["name"]);
             $res = explode(',', $v["lv1"]);
         }
         $goods_list = getSelectList("goods_type");
