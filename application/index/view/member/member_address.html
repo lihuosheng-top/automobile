@@ -197,15 +197,15 @@
                     var url = location.search;
                     var id, preId;
                     if(url.indexOf('?') != -1){
-                        id = url.substr(1).split('&&')[0].split('=')[1];
-                        preId = url.substr(1).split('&&')[1].split('=')[1];
+                        id = url.substr(1).split('&')[0].split('=')[1];
+                        preId = url.substr(1).split('&')[1].split('=')[1];
                         // 返回确认订单url
-                        $('.icon-back').prop('href', 'ios_api_order_parts_firm_order?id='+ id + '&&preid=' + preId);
+                        $('.icon-back').prop('href', 'ios_api_order_parts_firm_order?id='+ id + '&preid=' + preId);
                         // 隐藏编辑 删除
                         $('.edit-btn').hide();
                         $('.del-btn').hide();
                         $('.add-address-btn').click(function(){
-                            location.href = 'member_address_add?id='+ id + '&&preid=' + preId + '&&gid=1';
+                            location.href = 'member_address_add?id='+ id + '&preid=' + preId + '&gid=1';
                         })
                         // 选择地址
                         $('.address-div').click(function(e){
@@ -220,7 +220,7 @@
                                 },
                                 success: function(res){
                                     console.log(res);
-                                    location.href = 'ios_api_order_parts_firm_order?id='+ id + '&&preid=' + preId;
+                                    location.href = 'ios_api_order_parts_firm_order?id='+ id + '&preid=' + preId;
                                 },
                                 error: function(){
                                     console.log('error');
