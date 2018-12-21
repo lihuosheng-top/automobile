@@ -395,6 +395,10 @@ Route::group("admin",[
     "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
     "goods_alipay_pay"=>"admin/Goods/alipay_pay",                                                //微信支付回调地址
     "goods_get_weixin_pay_url"=>"admin/Goods/get_weixin_status",                              //微信是否上架检测
+    "goods_photos"=>"admin/Goods/photos",     //商品列表规格图片删除
+    "goods_value"=>"admin/Goods/value",       //商品列表规格值修改
+    "goods_switches"=>"admin/Goods/switches", //商品列表规格开关
+    "goods_addphoto"=>"admin/Goods/addphoto", //商品列表规格图片添加
 
 
 
