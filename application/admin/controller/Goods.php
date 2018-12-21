@@ -185,7 +185,7 @@ class Goods extends Controller
                 }
             }
 
-            //$goods_id = db('goods')->insertGetId($goods_special);
+            $goods_id = db('goods')->insertGetId($goods_special);
             if (!empty($goods_data)) {
                 foreach ($goods_data as $kn => $nl) {
                     if (substr($kn, 0, 3) == "sss") {
@@ -220,7 +220,7 @@ class Goods extends Controller
                                 $values[$k]["status"] = $status[$k];
                                 $values[$k]["cost"] = $cost[$k];
                                 $values[$k]["images"] = $tab;
-                                //$values[$k]["goods_id"] = $goods_id;
+                                $values[$k]["goods_id"] = $goods_id;
 
                             }
 
@@ -228,7 +228,7 @@ class Goods extends Controller
                     }
 
                 }
-                halt($values);
+
                 foreach ($values as $kz => $vw) {
                     $rest = db('special')->insert($vw);
 

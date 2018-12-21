@@ -306,7 +306,7 @@
 			<div class="layui-input-block">
 				<div class="imgcontent">
 
-					<span class="img">
+					<!--<span class="img">
 						<img src="" width="100%">
 						<i class="remove-img" data-id="" data-value="2"><img src="__STATIC__/admin/common/img/a7.png"></i>
                     </span>
@@ -321,13 +321,13 @@
 					<span class="img">
 						<img src="" width="100%">
 						<i class="remove-img" data-id="" data-value="2"><img src="__STATIC__/admin/common/img/a7.png"></i>
-                    </span>
-					<!-- {volist name="$value.goods_images" id="val"}
+                    </span>-->
+				   {volist name="$value.goods_images" id="val"}
                     <span class="img">
 						<img src="__UPLOADS__/{$val.goods_images}" width="100%">
 						<i class="remove-img" data-id="{$val.id}" data-value="2"><img src="__STATIC__/admin/common/img/a7.png"></i>
                     </span>
-                     {/volist} -->
+                     {/volist}
 				</div>
 			</div>
 			<div class="layui-input-block">
