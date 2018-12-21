@@ -76,6 +76,8 @@ class Classify extends Controller
         if($request->isPost()){
             $goods_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("id",$goods_id)->select();
+            $goods_standard = db("special")->where("goods_id", $goods_id)->select();
+            
             foreach ($goods as $key=>$value){
                 $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
                 $goods_standard_value = explode(",",$value["goods_standard_value"]);
@@ -83,8 +85,10 @@ class Classify extends Controller
                 $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
                 $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
             }
-            if($goods){
-                return ajax_success("获取成功",$goods);
+            
+            $commodity = array_merge($goods,$goods_standard);
+            if($commodity){
+                return ajax_success("获取成功",$commodity);
             }else{
                 return ajax_error("获取失败");
             }
