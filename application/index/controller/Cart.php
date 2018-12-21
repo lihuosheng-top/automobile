@@ -43,10 +43,11 @@ class Cart extends Controller
      **************************************
      * @param Request $request
      */
-    public function get_goods_id_save(Request $request){
+    public function get_goods_id_to_cart(Request $request){
         if ($request->isPost()){
             $user_id = Session::get("user");
             if(empty($user_id)){
+                return ajax_error("请登录",["status"=>0]);
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
                 //存入购物车
@@ -55,6 +56,7 @@ class Cart extends Controller
                 $goods_unit = $request->only(['goods_unit'])['goods_unit'];//商品数量
                 $goods_id = intval($goods_id);
                 $goods = db("goods")->where("id",$goods_id)->find();
+
                 $store_name =Db::name("store")->field("store_name")->where("store_id",$store_id)->find();
                 $shopping_data = db("shopping")
                     ->where("user_id",$user_id)
@@ -80,7 +82,7 @@ class Cart extends Controller
                 $data['store_id'] = $goods['store_id'];
                 $data['store_name'] = $store_name["store_name"];
                 $bool = db("shopping")->insert($data);
-                return ajax_success("获取成功", $bool);
+                 exit(json_encode(array("status" => 1, "info" => "加入购物车成功" ,"data"=>$bool)));
             }
     }
 
@@ -88,7 +90,7 @@ class Cart extends Controller
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:购物车下订单
+     * Notes:购物车存储到shopping_shop表（ajax）
      **************************************
      * @param Request $request
      */
