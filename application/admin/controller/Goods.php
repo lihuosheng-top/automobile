@@ -179,6 +179,7 @@ class Goods extends Controller
             $goods_data["store_id"] = $store_id;
             $result = implode(",", $goods_data["lv1"]);
 
+            
             foreach ($goods_data as $kt => $vq) {
                 if (!(is_array($vq))) {
                     $goods_special[$kt] = $vq;
@@ -234,7 +235,6 @@ class Goods extends Controller
 
                 }
             }
-
             if ($goods_id) {
                 //取出图片在存到数据库
                 $goods_images = [];
@@ -287,7 +287,7 @@ class Goods extends Controller
         }
 
         foreach ($goods_standard as $k => $v) {
-            $goods_standard[$k]["title"] = explode('_', $v["name"]);
+            $goods_standard[$k]["title"] = explode(',', $v["name"]);
             $res = explode(',', $v["lv1"]);
         }
         $goods_list = getSelectList("goods_type");
