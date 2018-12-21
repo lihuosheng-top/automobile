@@ -26,33 +26,31 @@ class  Advertisement extends  Controller{
             //$area = $request->only("area")["area"];
             $area = "广东省,深圳市,福田区";
             $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
-            $data = Db::name("position")->select();
-             dump($data);
+            $data = Db::name("position") -> where("pid",0) ->field("name")->select();
+             
  
-            $res = array();
+            $res = [];
             $rest = array();
+
+            dump($area_data);
+
+            foreach($area_data as $key => $value)
+            {
+    
+                $rest[$value['location']][$key] = $value; 
+                                
+            }
+
+            halt($rest);
             foreach($data as $k => $v){
-                foreach($v as $s => $z){
-               
-                    $er[$k] = $z;
+                $res[$v['name']] = $v;
                 
-                }
-        }
-        halt($er);
+            }
+        
+             dump($res);
 
-        foreach($area_data as $key => $value)
-        {
 
-            $res[$value['location']][$key] = $value; 
-                            
-        }
 
-        foreach($res as $k => $v)
-        {
-
- 
-                            
-        }
         
            // halt($res);
             if (!empty($area_data)) {
