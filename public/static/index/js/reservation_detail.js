@@ -286,7 +286,8 @@ function selectEvent(){
         $(this).find('.icon-uncheck').toggleClass('icon-check');
         if($(this).find('.icon-uncheck').hasClass('icon-check')){
             $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
-            $('.bespeak-btn').removeAttr('disabled')
+            $('.bespeak-btn').removeAttr('disabled');
+            console.log($(this).find('.sale').text())
         }else{
             $('.bespeak-btn').prop('disabled', 'disabled');
         }
