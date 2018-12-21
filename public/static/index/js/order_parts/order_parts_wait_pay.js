@@ -50,7 +50,7 @@ $.ajax({
                         </div>`
             })
             str += `<div class="total-button-box">
-                        <p class="total-p">共计`+val.all_numbers+`件商品 合计：￥`+val.all_order_real_pay+`</p>
+                        <p class="total-p">共计`+val.all_numbers+`件商品 合计：￥<span class="total-money-span">`+val.all_order_real_pay+`<span></p>
                         <div class="button-box">
                             <button class="cancel-order-btn">取消订单</button>
                             <button class="to-payment-btn">去付款</button>
@@ -94,24 +94,25 @@ $.ajax({
             $('.cancel-order-pop').animate({'bottom': '-100%'});
             $('.mask').hide();
         })
-        // 去付款
+        // 去付款 √
         $('.to-payment-btn').click(function(){
-            var store_id = $(this).parents('.single-shop-box').attr('data-id');
-            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
-            $.ajax({
-                url: 'ios_api_order_parts_no_pay_cancel',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    'parts_order_number': parts_order_number,
-                    'store_id': store_id
-                },
-                success: function(res){
-                    console.log(res);
-                },
-                error: function(){
-                    console.log('error');
-                }
+            $('.mask').show();
+            $('.alipay-pop').animate({ 'bottom': '0' });
+            $('html').css('overflow', 'hidden');
+            // 付款金额
+            var totalAmount = $(this).parents('.total-button-box').find('.total-money-span').text();
+            var outTradeNo = $(this).parents('.single-shop-box').attr('name');
+            var subjuect = $(this).parents('.single-shop-box').find('.goods-name-p').text();
+            var body = $(this).parents('.single-shop-box').find('.goods-selling-point').text();
+            $('#WIDtotal_amount').val(totalAmount);
+            $('#WIDout_trade_no').val(outTradeNo);
+            $('#WIDsubject').val(subjuect);
+            $('#WIDbody').val(body);
+
+            $('.close-alipay').click(function () {
+                $('.mask').hide();
+                $('.alipay-pop').animate({ 'bottom': '-100%' });
+                $('html').css('overflow', 'auto');
             })
         })
         // 查看订单详情
