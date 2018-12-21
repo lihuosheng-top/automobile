@@ -93,6 +93,7 @@ html{
     margin-right: .2rem;
     background-color: #fff;
     margin-bottom: .3rem;
+    padding-bottom: .15rem;
 }
 .list_cont li .img_div{
     width: 100%;
@@ -107,15 +108,12 @@ html{
 }
 .list_cont .goods_name p{
     width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    font-size: .24rem;
+    font-size: .28rem;
     color: #333;
     padding: 0 .16rem;
     box-sizing: border-box;
+    line-height: normal;
+    margin: .1rem 0;
 }
 .list_cont .goods_price{
     padding-right: .3rem;

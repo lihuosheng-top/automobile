@@ -27,7 +27,7 @@ $.ajax({
                                     <img src="uploads/'+val.goods_show_images+'">\
                                 </div>\
                                 <div class="goods_name">\
-                                    <p>'+val.goods_name+'</p>\
+                                    <p class="txt-hid-two">'+val.goods_name+'</p>\
                                 </div>\
                                 <div class="goods_price">\
                                     <span class="price">￥'+val.goods_adjusted_money+'</span>\
@@ -43,7 +43,7 @@ $.ajax({
                                     <img src="uploads/'+val.goods_show_images+'">\
                                 </div>\
                                 <div class="goods_name">\
-                                    <p>'+val.goods_name+'</p>\
+                                    <p class="txt-hid-two">'+val.goods_name+'</p>\
                                 </div>\
                                 <div class="goods_price">\
                                     <span class="price">￥'+val.goods_adjusted_money+'</span>\
