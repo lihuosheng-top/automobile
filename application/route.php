@@ -242,8 +242,12 @@ Route::group("",[
 
 
 
-    // 购物车
-    "cart_index"=>"index/Cart/cart_index",
+    /*购物车开始*/
+    "cart_index"=>"index/Cart/cart_index",//首页（ajax）
+    "get_goods_id_to_cart"=>"index/Cart/get_goods_id_to_cart",//获取商品id 存入购物车（ajax）
+    "place_an_order_by_cart"=>"index/Cart/place_an_order_by_cart",//购物车存储到shopping_shop表（ajax）
+    /*购物车结束*/
+
 
 
     /*TODO:配件商订单状态开始*/
