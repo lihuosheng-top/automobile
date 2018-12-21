@@ -1440,11 +1440,13 @@ class OrderParts extends Controller{
             $goods_id =$request->only('goods_id')['goods_id'];//商品id
             $goods_number=$request->only('goods_number')['goods_number'];//数量
             $goods_standard=$request->only('goods_standard')['goods_standard'];//规格
+            $goods_standard_id=$request->only('goods_standard_id')['goods_standard_id'];//通用专用规格id
             if(!empty($goods_id)){
                 $data =[
                     "goods_id"=>$goods_id,
                     "goods_number"=>$goods_number,
-                    "goods_standard"=>$goods_standard
+                    "goods_standard"=>$goods_standard,
+                    "goods_standard_id"=>$goods_standard_id,
                 ];
                 Session::set('part_goods_info',$data);
                 return ajax_success('保存商品id成功',$data);
@@ -1472,6 +1474,7 @@ class OrderParts extends Controller{
                    $goods[$key]["goods_standard_value"] = array_chunk($goods_standard_value,"8");
                    $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
                    $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
+                   $goods[$key]["goods_standard_id"] =db("special")->where("id",$part_goods_info["goods_standard_id"])->find();
                }
                if(!empty($goods)){
                    $part_goods_info['goods'] =$goods;
