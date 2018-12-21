@@ -52,7 +52,7 @@ $.ajax({
     success: function (res) {
         console.log(res);
         // 数量
-        $('.quantity-p').text('×' + res.data.goods_number)
+        $('.quantity-p span').text(res.data.goods_number)
         $('.sundry-cal-val').val(res.data.goods_number)
         // 用户选择的规格
         $('.standard').text(res.data.goods_standard);
@@ -81,7 +81,7 @@ $.ajax({
             $('.sundry-minus').click(function () {
                 if (calculator_val.value > 1) {
                     calculator_val.value -= 1;
-                    $('.quantity-p').text(calculator_val.value);
+                    $('.quantity-p span').text(calculator_val.value);
                     $('.total-num').text(calculator_val.value);
                     // 数量*单价
                     var minusP = toFixed(calculator_val.value * res.data.goods[0].goods_adjusted_money, 2)
@@ -106,7 +106,7 @@ $.ajax({
                 var add = calculator_val.value - 0;
                 add += 1;
                 calculator_val.value = add;
-                $('.quantity-p').text(calculator_val.value);
+                $('.quantity-p span').text(calculator_val.value);
                 $('.total-num').text(calculator_val.value);
                 // 数量*单价
                 var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_adjusted_money, 2)
@@ -286,9 +286,4 @@ $('.method-div').click(function(){
 })
 $('.chose-payment-back').click(function(){
     backMethod();
-})
-
-// 添加银行卡付款
-$('.add-bank-card').click(function(){
-    location.href = 'wallet_block';
 })

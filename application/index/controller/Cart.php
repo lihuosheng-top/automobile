@@ -11,57 +11,111 @@ class Cart extends Controller
 
 
     /**
-     * 购物车
-     * 陈绪
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
+     **************李火生*******************
+     * @param Request $request
+     * Notes:购物车页面跟数据
+     **************************************
+     * @param Request $request
+     * @return \think\response\View|void
      */
-    public function Cart_index()
+    public function cart_index(Request $request)
     {
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            if(empty($user_id)){
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+            $shopping_data = db("shopping")->where("user_id",$user_id)->select();
+            if(!empty($shopping_data)){
+                exit(json_encode(array("status" => 1, "info" => "购物车数据返回成功","data"=>$shopping_data)));
+            }else{
+                exit(json_encode(array("status" => 0, "info" => "购物车未添加商品")));
+            }
+        }
         return view("cart_index");
     }
 
 
-
-
     /**
-     * 获取商品id 存入购物车
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:获取商品id 存入购物车
+     **************************************
+     * @param Request $request
      */
-    public function ajax_id(Request $request){
+    public function get_goods_id_save(Request $request){
         if ($request->isPost()){
-            $data = Session::get("member");
-            $user_id =Db::name('user')->field('id')->where('phone_num',$data['phone_num'])->find();
-
-            unset($data);
-            if(empty($user_id['id'])){
-                return ajax_error("请登录");
+            $user_id = Session::get("user");
+            if(empty($user_id)){
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
-            if(!empty($user_id['id'])) {
                 //存入购物车
-                $goods_id = $request->only(['id'])['id'];
+                $goods_id = $request->only(['goods_id'])['goods_id'];//商品id
+                $store_id = $request->only(['store_id'])['store_id'];//店铺id
+                $goods_unit = $request->only(['goods_unit'])['goods_unit'];//商品数量
                 $goods_id = intval($goods_id);
                 $goods = db("goods")->where("id",$goods_id)->find();
-                $shopping = db("shopping")->where("user_id",$user_id['id'])->where("goods_id", $goods_id)->select();
-                foreach ($shopping as $key=>$value) {
+                $store_name =Db::name("store")->field("store_name")->where("store_id",$store_id)->find();
+                $shopping_data = db("shopping")
+                    ->where("user_id",$user_id)
+                    ->where("goods_id", $goods_id)
+                    ->where("store_id",$store_id)
+                    ->select();
+                foreach ($shopping_data as $key=>$value) {
                     if (in_array($goods_id,$value)) {
-                        $money = array($value['money'], $goods['goods_bottom_money']);
+                        $money = array($value['money'], $goods['goods_adjusted_money']);
                         $shopping[$key]['money'] = array_sum($money);
                         $shopping[$key]['goods_unit'] = $value['goods_unit'] + 1;
                         unset($shopping[$key]['id']);
-                        $bool = db("shopping")->where("goods_id", $goods_id)->where("user_id",$user_id['id'])->update($shopping[0]);
+                        $bool = db("shopping")->where("goods_id", $goods_id)->where("user_id",$user_id)->update($shopping[0]);
                         return ajax_success("成功", $bool);
                     }
                 }
                 $data['goods_name'] = $goods['goods_name'];
                 $data['goods_images'] = $goods['goods_show_images'];
-                $data['money'] = $goods['goods_bottom_money'];
+                $data['money'] = $goods['goods_adjusted_money'];
                 $data['goods_unit'] = 1;
-                $data['user_id'] = $user_id['id'];
+                $data['user_id'] = $user_id;
                 $data['goods_id'] = $goods['id'];
+                $data['store_id'] = $goods['store_id'];
+                $data['store_name'] = $store_name["store_name"];
                 $bool = db("shopping")->insert($data);
                 return ajax_success("获取成功", $bool);
             }
+    }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:购物车下订单
+     **************************************
+     * @param Request $request
+     */
+    public function place_an_order_by_cart(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");//用户id
+            if(empty($user_id)){
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+            if(!empty($user_id)){
+                $id = $request->only(['id'])['id'];//shopping表的主键id
+                $goods_unit = $request->only(['goods_unit'])['goods_unit'];//商品数量
+                $money = $request->only(['money'])['money'];//商品的总价
+                foreach ($id as $key => $val) {
+                    db("shopping")->where("id", $val)->update(['goods_unit' => $goods_unit[$key]]);
+                }
+                //存储到购物车订单表中
+                $data['money'] = $money;
+                $data['shopping_id'] = implode(",", $id);
+                $data['user_id'] = $user_id;
+                db("shopping_shop")->insert($data);
+                $shopping_id['id'] = db("shopping_shop")->getLastInsID();
+                Session("shopping", $shopping_id);
+                return ajax_success("获取成功", $shopping_id);
+            }
         }
     }
+
 
 }

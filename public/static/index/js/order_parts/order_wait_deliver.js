@@ -52,7 +52,6 @@ $.ajax({
             str += `<div class="total-button-box">
                         <p class="total-p">共计`+val.all_numbers+`件商品 合计：￥`+val.all_order_real_pay+`</p>
                         <div class="button-box">
-                            <button class="cancel-order-btn">取消订单</button>
                             <button class="check-logistics-btn">查看物流</button>
                             <button class="conf-receipt-btn">确认收货</button>
                         </div>
@@ -60,6 +59,7 @@ $.ajax({
                 </div>`
         })
         $('.shops-goods-wrap').append(str);
+        
         // 查看物流
         $('.check-logistics-btn').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
@@ -80,6 +80,34 @@ $.ajax({
             //         console.log('error');
             //     }
             // })
+        })
+        // 确认收货 √
+        $('.conf-receipt-btn').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            layer.open({
+                content: '您确认收货？',
+                btn: ['确认', '取消'],
+                yes: function (index) {
+                    layer.close(index);
+                    $.ajax({
+                        url: 'ios_api_order_parts_collect_goods',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'parts_order_number': parts_order_number,
+                            'store_id': store_id
+                        },
+                        success: function(res){
+                            console.log(res);
+                            location.reload();
+                        },
+                        error: function(){
+                            console.log('error');
+                        }
+                    })
+                }
+            });
         })
         // 查看订单详情
         $('.all-goods-box').click(function(){

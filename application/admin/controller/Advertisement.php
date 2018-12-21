@@ -142,11 +142,14 @@ class  Advertisement extends  Controller{
     {
         if ($request->isPost()) {
             $data = $request->param();
-
+            $position = db("position") -> where("id",$data["pid"])->value("name");
+            $data["location"] = $position;
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
             $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
+            
             unset($data["id"]);
+            unset($data["pid"]);
             $boole = db("platform")->where('pgd', $request->only(["id"])["id"])->update($data);
 
             if ($bool && $boole) {

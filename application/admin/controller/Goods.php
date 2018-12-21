@@ -544,12 +544,14 @@ class Goods extends Controller
      */
     public function look(Request $request, $id)
     {
-
         $goods = db("goods")->where("id", $id)->select();
+        $goods_standard = db("special")->where("goods_id", $id)->select();
         foreach ($goods as $key => $value) {
             $goods[$key]["goods_standard_name"] = explode(",", $value["goods_standard_name"]);
             $goods_standard_value = explode(",", $value["goods_standard_value"]);
             $goods_standard_value = array_chunk($goods_standard_value, 8);
+            $goods_delivery = explode(",", $value["goods_delivery"]);
+            $goods[$key]["goods_delivery"] = $goods_delivery;
             $goods[$key]["goods_standard_value"] = $goods_standard_value;
             $goods[$key]["goods_images"] = db("goods_images")->where("goods_id", $value["id"])->select();
 
@@ -563,15 +565,22 @@ class Goods extends Controller
                 );
             }
         }
+
+        foreach ($goods_standard as $k => $v) {
+            $goods_standard[$k]["title"] = explode('_', $v["name"]);
+            $res = explode(',', $v["lv1"]);
+        }
         $goods_list = getSelectList("goods_type");
         $goods_brand = getSelectList("brand");
         $year = db("year")->select();
+        $car_series = db("car_series")->distinct(true)->field("brand")->select();
         if ($request->isPost()) {
             $car_series = db("car_series")->distinct(true)->field("brand")->select();
-            $car_brand = db("car_series")->field("series,brand")->select();
+            $car_brand = db("car_series")->field("series,brand")->select(); 
             return ajax_success("获取成功", array("car_series" => $car_series, "car_brand" => $car_brand));
         }
-        return view("goods_look", ["year" => $year, "goods_brand" => $goods_brand, "goods_standard_name" => $goods_standard_name, "goods" => $goods, "goods_list" => $goods_list, "goods_brand" => $goods_brand]);
+
+        return view("goods_edit", ["car_series" => $car_series, "year" => $year, "goods_brand" => $goods_brand, "goods_standard_name" => $goods_standard_name, "goods" => $goods, "goods_list" => $goods_list, "goods_brand" => $goods_brand,"goods_standard" => $goods_standard,"res" => $res]);
     }
 
 
