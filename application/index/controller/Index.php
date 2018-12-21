@@ -128,7 +128,7 @@ class Index extends Controller
                     }
                 }
             }
-            if ($goods) {
+            if ($goods || $store || $serve_data) {
                 return ajax_success("获取成功", array("store"=>$store,"goods" => $goods, "serve_data" => $serve_data));
             } else {
                 return ajax_error("获取失败");
@@ -137,19 +137,5 @@ class Index extends Controller
 
     }
 
-
-
-
-    /**
-     * 热门服务店铺
-     * 陈绪
-     */
-    public function serve_shop(Request $request){
-
-        if($request->isPost()){
-
-        }
-
-    }
 
 }
