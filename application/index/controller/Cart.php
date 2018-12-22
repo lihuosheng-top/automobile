@@ -31,14 +31,45 @@ class Cart extends Controller
                         $store_all_id[] =$val["store_id"];
                     }
                 $da_store_id = array_unique($store_all_id); //去重之后的商户
+                //购物车信息
                 foreach ($da_store_id as $keys=>$vals){
 //                    $da_store_ids[] =$vals; //去重之后的id数组
-                    $order_undate['info'][] = Db::name('order_parts')
+                    $shopping_datas[] = Db::name('shopping')
                         ->where('store_id', $vals)
                         ->where('user_id',  $user_id)
                         ->select();
                 }
-                exit(json_encode(array("status" => 1, "info" => "购物车数据返回成功","data"=>$shopping_data)));
+                //店铺id和店铺名称
+                if(!empty($shopping_datas)){
+                    foreach ($shopping_datas as $k=>$v){
+                        $shopping_informations[$k]["info"] =$v;
+                            foreach ($v as  $ks=>$vs){
+                                $store_ids[$k] =$vs["store_id"];
+                                $store_names[$k] =$vs["store_name"];
+                            }
+                    }
+                }
+
+                if(!empty($store_ids) && (!empty($store_names))){
+                    //店铺id
+                    foreach ($store_ids as $i => $j) {
+                        if(!empty($j)){
+                            $shopping_informations[$i]["store_id"] =$j;
+                        }
+                    }
+                    //店铺名称
+                    foreach ($store_names as $i => $j) {
+                        if(!empty($j)){
+                            $shopping_informations[$i]["store_name"] =$j;
+                        }
+                    }
+                }
+                if(!empty($shopping_informations)){
+                    exit(json_encode(array("status" => 1, "info" => "购物车数据返回成功","data"=>$shopping_informations)));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "购物车未添加商品")));
+                }
+
             }else{
                 exit(json_encode(array("status" => 0, "info" => "购物车未添加商品")));
             }
