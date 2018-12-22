@@ -12,14 +12,13 @@ function toFixed(num, s) {
 var url = location.search;
 var id, preId;
 if (url.indexOf('?') != -1) {
-    id = url.substr(1).split('&&')[0].split('=')[1];
-    preId = url.substr(1).split('&&')[1].split('=')[1];
+    id = url.substr(1).split('&')[0].split('=')[1];
+    preId = url.substr(1).split('&')[1].split('=')[1];
 }
 // 返回商品详情
 $('.place-order-back').click(function () {
-    location.href = 'goods_detail?id=' + id + '&&preid=' + preId;
+    location.href = 'goods_detail?id=' + id + '&preid=' + preId;
 })
-
 // 地址返回
 $.ajax({
     url: 'member_default_address_return',
@@ -33,7 +32,7 @@ $.ajax({
             var addr = res.data.address_name.split(',').join('');
             $('.address-txt').text(addr + res.data.harvester_real_address);
             $('.user-info-box').click(function () {
-                location.href = 'member_address?id=' + id + '&&preid=' + preId;
+                location.href = 'member_address?id=' + id + '&preid=' + preId;
             })
         }
     },
@@ -41,9 +40,6 @@ $.ajax({
         console.log('error');
     }
 })
-
-
-
 // 商品详情 传过来的数据
 $.ajax({
     url: 'return_order_buy_information',
@@ -58,16 +54,17 @@ $.ajax({
         $('.standard').text(res.data.goods_standard);
         $.each(res.data.goods, function (idx, val) {
             // 店铺名
-            $('.order-shop-namp').text(val.goods_brand.name);
+            $('.order-shop-namp').text(val.store_name);
             // 商品名
             $('.order-goods-p').text(val.goods_name);
             // 商品描述
             $('.order-selling-point').text(val.goods_describe);
             // 价格
-            $('.unit-price-p').text('￥' + val.goods_adjusted_money);
+            $('.unit-price-p span').text(val.goods_standard_id.price);
             // 总价
-            $('.total-money').text(toFixed(res.data.goods_number * val.goods_adjusted_money, 2));
-
+            $('.total-money').text(toFixed(res.data.goods_number * val.goods_standard_id.price, 2));
+            // 图片
+            $('.order-goods-img img').attr('src', 'uploads/' + val.goods_standard_id.images);
         })
         // 总数量
         $('.total-num').text(res.data.goods_number);
@@ -84,8 +81,10 @@ $.ajax({
                     $('.quantity-p span').text(calculator_val.value);
                     $('.total-num').text(calculator_val.value);
                     // 数量*单价
-                    var minusP = toFixed(calculator_val.value * res.data.goods[0].goods_adjusted_money, 2)
+                    var minusP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.price, 2)
                     console.log(minusP)
+                    $('.discount').text('不使用积分');
+                    $('.default').click();
                     // 用户选择抵扣金额后  增加购买数量
                     if ($('.discount').text() != '不使用积分') {
                         // 保存用户选择的抵扣金额
@@ -96,7 +95,6 @@ $.ajax({
                     }
                     // 保存没有抵扣的金额
                     finalMoney = parseFloat(minusP);
-                    // console.log('未抵扣钱：' + finalMoney)
                 } else {
                     calculator_val.value = 1;
                 }
@@ -109,7 +107,7 @@ $.ajax({
                 $('.quantity-p span').text(calculator_val.value);
                 $('.total-num').text(calculator_val.value);
                 // 数量*单价
-                var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_adjusted_money, 2)
+                var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.price, 2)
                 // 用户选择抵扣金额后  增加购买数量
                 if ($('.discount').text() != '不使用积分') {
                     // 保存用户选择的抵扣金额
@@ -119,10 +117,8 @@ $.ajax({
                 } else {
                     $('.total-money').text(increaseP);
                 }
-
                 // 保存没有抵扣的金额
                 finalMoney = parseFloat(increaseP);
-                // console.log('未抵扣钱：' + finalMoney)
             })
         })
 
