@@ -1,41 +1,61 @@
 
 // 店铺选中样式
-// console.log($('.shop-circle'))
-$('.shop-circle').click(function(){
-    $(this).toggleClass('circle-on');
-    if($(this).hasClass('circle-on')){
-        $(this).parents('.goods_wrap').find('.goods-circle').addClass('circle-on');
-    }else{
-        $(this).parents('.goods_wrap').find('.goods-circle').removeClass('circle-on');
-    }
-})
-// 单选商品
-$('.goods-circle').click(function(){
-    $(this).toggleClass('circle-on');
-})
-// 全选
-$('.all-select').click(function(){
-    $(this).toggleClass('circle-on');
-    if($(this).hasClass('circle-on')){
-        $('.shop-circle').add('.goods-circle').addClass('circle-on');
-    }else{
-        $('.shop-circle').add('.goods-circle').removeClass('circle-on');
-    }
-})
+function myCircleClass(){
+    $('.shop-circle').click(function(){
+        $(this).toggleClass('circle-on');
+        if($(this).hasClass('circle-on')){
+            $(this).parents('.goods_wrap').find('.goods-circle').addClass('circle-on');
+        }else{
+            $(this).parents('.goods_wrap').find('.goods-circle').removeClass('circle-on');
+        }
+    })
+    // 单选商品
+    $('.goods-circle').click(function(){
+        $(this).toggleClass('circle-on');
+    })
+    // 全选
+    $('.all-select').click(function(){
+        $(this).toggleClass('circle-on');
+        if($(this).hasClass('circle-on')){
+            $('.shop-circle').add('.goods-circle').addClass('circle-on');
+        }else{
+            $('.shop-circle').add('.goods-circle').removeClass('circle-on');
+        }
+    })
+}
 
 //  加减商品数量
-$('.minus').click(function(){
-    var val = $(this).next().val(); 
-    if(val > 1){
-        val --;
-        $(this).siblings('input').val(val);
-    }
-})  
-$('.increase').click(function(){
-    var val = $(this).prev().val(); 
-    val ++;
-    $(this).prev().val(val); 
-})
+function calculator(){
+    $('.minus').click(function(){
+        var val = $(this).next().val(); 
+        if(val > 1){
+            val --;
+            $(this).siblings('input').val(val);
+
+        }
+    })  
+    $('.increase').click(function(){
+        var val = $(this).prev().val(); 
+        val ++;
+        $(this).prev().val(val);
+        var shopping_id = $(this).parents('.goods_info_wrap').find('.circle').attr('id');
+        $.ajax({
+            url: 'cart_information_add',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'shopping_id': shopping_id,
+                'goods_unit': 1
+            },
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
+        }) 
+    })
+}
 
 // 编辑  完成切换
 $('.edit').click(function(){
@@ -110,7 +130,7 @@ $.ajax({
                                     </div>
                                     <div class="goods_desc_right">
                                         <p class="cart_goods_name">`+val.goods_name+`</p>
-                                        <p class="cart_sub1">专用轮胎：205/55R16 91V</p>
+                                        <p class="cart_sub1">`+val.special_name.split(',').join('')+`</p>
                                         <div class="price_num_wrap">
                                             <span class="cart_price">￥<span>`+val.money+`</span></span>
                                             <div class="calculator_num">
@@ -126,6 +146,8 @@ $.ajax({
                 str += `</div>`;
             })
             $('.exist').prepend(str);
+            calculator();
+            myCircleClass();
         }
     },
     error: function(){
