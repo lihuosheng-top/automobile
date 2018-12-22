@@ -265,7 +265,6 @@ if(urlLen > 1){
             console.log('error');
         }
     })
-
 }
 
 function selectEvent(){
