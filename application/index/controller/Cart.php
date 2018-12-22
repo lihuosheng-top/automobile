@@ -27,6 +27,9 @@ class Cart extends Controller
             }
             $shopping_data = db("shopping")->where("user_id",$user_id)->select();
             if(!empty($shopping_data)){
+
+
+
                 exit(json_encode(array("status" => 1, "info" => "购物车数据返回成功","data"=>$shopping_data)));
             }else{
                 exit(json_encode(array("status" => 0, "info" => "购物车未添加商品")));
