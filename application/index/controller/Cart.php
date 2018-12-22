@@ -34,7 +34,10 @@ class Cart extends Controller
                 //购物车信息
                 foreach ($da_store_id as $keys=>$vals){
 //                    $da_store_ids[] =$vals; //去重之后的id数组
-                    $shopping_datas[] = Db::name('shopping')
+
+                    $shopping_datas[] =Db::table('tb_shopping')
+                        ->field("tb_shopping.*,tb_special.name special_name")
+                        ->join("tb_special","tb_shopping.goods_standard_id=tb_special.id",'left')
                         ->where('store_id', $vals)
                         ->where('user_id',  $user_id)
                         ->select();

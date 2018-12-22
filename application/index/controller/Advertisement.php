@@ -25,7 +25,8 @@ class  Advertisement extends  Controller{
     {
         if ($request->isPost())
         {
-            $area = $request->only(["area"])["area"];    
+            $area = $request->only(["area"])["area"];
+            Session::set("area",$area);    
             $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
             $data = Db::name("position") -> where("pid",0) ->field("name,id")->select();           
               

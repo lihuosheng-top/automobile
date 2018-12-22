@@ -57,7 +57,7 @@ class Goods extends Controller
                 $goods_adjusted_price[] = $val["price"] + ($val["price"] * $goods_price[$k]["ratio"]);
                 db("special")->where("id", $val["id"])->update(["goods_adjusted_price" => $goods_adjusted_price[$k]]);
             }
-
+            
             $year = db("year")->select();
             $user_id = Session::get("user_id");
             $role_name = db("admin")->where("id", $user_id)->select();
