@@ -1470,6 +1470,8 @@ class OrderParts extends Controller{
                $goods = db("goods")->where("id",$goods_id)->select();
                foreach ($goods as $key=>$value){
                    $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
+                   $store_name =Db::name("store")->field("store_name")->where("store_id",$value["store_id"])->find();
+                   $goods[$key]["store_name"] =$store_name["store_name"];
                    $goods_standard_value = explode(",",$value["goods_standard_value"]);
                    $goods[$key]["goods_standard_value"] = array_chunk($goods_standard_value,"8");
                    $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
