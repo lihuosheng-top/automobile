@@ -222,9 +222,9 @@ class Cart extends Controller
                     ->where("user_id",$user_id)
                     ->update(["goods_unit"=>$goods_units]);
                 if($bool){
-                    exit(json_encode(array("status" => 1, "info" => "添加成功","data"=>$bool)));
+                    exit(json_encode(array("status" => 1, "info" => "删除成功","data"=>$bool)));
                 }else{
-                    exit(json_encode(array("status" => 0, "info" => "添加失败","data"=>["status"=>0])));
+                    exit(json_encode(array("status" => 0, "info" => "删除失败","data"=>["status"=>0])));
                 }
             }
         }
@@ -255,7 +255,6 @@ class Cart extends Controller
             }
         }
     }
-
 
 
     /**
