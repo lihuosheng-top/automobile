@@ -287,7 +287,7 @@ function selectEvent(){
             $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
             $('.bespeak-btn').removeAttr('disabled');
             var userSelectMoney = $(this).find('.sale').text();
-            console.log(userSelectMoney);
+            // console.log(userSelectMoney);
             $('.bespeak-money').text(userSelectMoney);
         }else{
             $('.bespeak-btn').prop('disabled', 'disabled');
@@ -321,6 +321,20 @@ $('.filter-ul').on('click', 'li', function(){
 
 // 确定预约
 $('.bespeak-btn').click(function(){
-    
+    var id = $('.service-colla-content').find('.icon-check').attr('id');
+    $.ajax({
+        url: 'reservation_info',
+        type: 'JSON',
+        dataType: 'POST',
+        data: {
+            'id': id
+        },
+        success: function(res){
+            console.log(res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
     // location.href = 'reservation_info';
 })
