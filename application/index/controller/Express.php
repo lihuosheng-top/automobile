@@ -73,8 +73,9 @@ class  Express extends  Controller{
         $store = db("store")->select();
         foreach ($order_data as $key=>$value){
             foreach ($store as $val){
-                $delivery[$key]["order_id"] = $value["id"];
-                $delivery[$key]["store_name"] = $value[""];
+                if($value["store_id"] == $val["store_id"]){
+
+                }
             }
 
         }
