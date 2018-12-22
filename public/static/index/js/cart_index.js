@@ -1,41 +1,61 @@
 
 // 店铺选中样式
-// console.log($('.shop-circle'))
-$('.shop-circle').click(function(){
-    $(this).toggleClass('circle-on');
-    if($(this).hasClass('circle-on')){
-        $(this).parents('.goods_wrap').find('.goods-circle').addClass('circle-on');
-    }else{
-        $(this).parents('.goods_wrap').find('.goods-circle').removeClass('circle-on');
-    }
-})
-// 单选商品
-$('.goods-circle').click(function(){
-    $(this).toggleClass('circle-on');
-})
-// 全选
-$('.all-select').click(function(){
-    $(this).toggleClass('circle-on');
-    if($(this).hasClass('circle-on')){
-        $('.shop-circle').add('.goods-circle').addClass('circle-on');
-    }else{
-        $('.shop-circle').add('.goods-circle').removeClass('circle-on');
-    }
-})
+function myCircleClass(){
+    $('.shop-circle').click(function(){
+        $(this).toggleClass('circle-on');
+        if($(this).hasClass('circle-on')){
+            $(this).parents('.goods_wrap').find('.goods-circle').addClass('circle-on');
+        }else{
+            $(this).parents('.goods_wrap').find('.goods-circle').removeClass('circle-on');
+        }
+    })
+    // 单选商品
+    $('.goods-circle').click(function(){
+        $(this).toggleClass('circle-on');
+    })
+    // 全选
+    $('.all-select').click(function(){
+        $(this).toggleClass('circle-on');
+        if($(this).hasClass('circle-on')){
+            $('.shop-circle').add('.goods-circle').addClass('circle-on');
+        }else{
+            $('.shop-circle').add('.goods-circle').removeClass('circle-on');
+        }
+    })
+}
 
 //  加减商品数量
-$('.minus').click(function(){
-    var val = $(this).next().val(); 
-    if(val > 1){
-        val --;
-        $(this).siblings('input').val(val);
-    }
-})  
-$('.increase').click(function(){
-    var val = $(this).prev().val(); 
-    val ++;
-    $(this).prev().val(val); 
-})
+function calculator(){
+    $('.minus').click(function(){
+        var val = $(this).next().val(); 
+        if(val > 1){
+            val --;
+            $(this).siblings('input').val(val);
+
+        }
+    })  
+    $('.increase').click(function(){
+        var val = $(this).prev().val(); 
+        val ++;
+        $(this).prev().val(val);
+        var shopping_id = $(this).parents('.goods_info_wrap').find('.circle').attr('id');
+        $.ajax({
+            url: 'cart_information_add',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'shopping_id': shopping_id,
+                'goods_unit': 1
+            },
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
+        }) 
+    })
+}
 
 // 编辑  完成切换
 $('.edit').click(function(){
@@ -87,6 +107,48 @@ $.ajax({
     dataType: 'JSON',
     success: function(res){
         console.log(res);
+        var str = '';
+        if(res.status === 1){
+            $.each(res.data, function(idx, val){
+                str += `<div class="goods_wrap">
+                            <div class="shop_name_wrap">
+                                <i class="spr circle shop-circle"></i>
+                                <a href="javascript:;">
+                                    <i class="spr icon_shop"></i>
+                                    <span class="shop_name">`+val.store_name+`</span>
+                                    <i class="spr icon_more"></i>
+                                </a>
+                            </div>`
+                $.each(val.info, function(idx, val){
+                    str += `<div class="goods_info_wrap">
+                                <i class="spr circle goods-circle" id="`+val.id+`"></i>
+                                <div class="goods_detail_info">
+                                    <div class="goods_img_wrap">
+                                        <a href="javascript:;">
+                                            <img src="uploads/`+val.goods_images+`">
+                                        </a>
+                                    </div>
+                                    <div class="goods_desc_right">
+                                        <p class="cart_goods_name">`+val.goods_name+`</p>
+                                        <p class="cart_sub1">`+val.special_name.split(',').join('')+`</p>
+                                        <div class="price_num_wrap">
+                                            <span class="cart_price">￥<span>`+val.money+`</span></span>
+                                            <div class="calculator_num">
+                                                <a href="javascript:;" class="minus">-</a>
+                                                <input type="text" value="`+val.goods_unit+`" class="calculator_val" readonly>
+                                                <a href="javascript:;" class="increase">+</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
+                })
+                str += `</div>`;
+            })
+            $('.exist').prepend(str);
+            calculator();
+            myCircleClass();
+        }
     },
     error: function(){
         console.log('error');

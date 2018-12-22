@@ -181,7 +181,7 @@ class Cart extends Controller
                     ->where("id",$shopping_id)
                     ->where("user_id",$user_id)
                     ->find();
-                $goods_units =$goods_unit+$shopping_data["goods_units"];
+                $goods_units =$goods_unit+$shopping_data["goods_unit"];
                 $bool = Db::name("shopping")
                     ->where("id",$shopping_id)
                     ->where("user_id",$user_id)
@@ -216,7 +216,7 @@ class Cart extends Controller
                     ->where("id",$shopping_id)
                     ->where("user_id",$user_id)
                     ->find();
-                $goods_units =$shopping_data["goods_units"]-$goods_unit;
+                $goods_units =$shopping_data["goods_unit"]-$goods_unit;
                 $bool = Db::name("shopping")
                     ->where("id",$shopping_id)
                     ->where("user_id",$user_id)
@@ -229,6 +229,34 @@ class Cart extends Controller
             }
         }
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:购物车删除
+     **************************************
+     * @param Request $request
+     */
+    public function  carts_del(Request $request){
+        if($request->isPost()){
+            $id =$request->only("id")["id"];
+            if(is_array($id)){
+                $where ='id in('.implode(',',$id).')';
+            }else{
+                $where ='id='.$id;
+            }
+            $list =  Db::name('shopping')->where($where)->delete();
+            if($list!==false)
+            {
+                exit(json_encode(array("status" => 1, "info" => "成功删除","data"=>$list)));
+            }else{
+                exit(json_encode(array("status" => 0, "info" => "删除失败","data"=>["status"=>0])));
+
+            }
+        }
+    }
+
+
 
     /**
      **************李火生*******************

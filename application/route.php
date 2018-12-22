@@ -248,6 +248,7 @@ Route::group("",[
     "get_goods_id_to_cart"=>"index/Cart/get_goods_id_to_cart",//获取商品id 存入购物车（ajax）
     "cart_information_add"=>"index/Cart/cart_information_add",//购物车添加按钮（+）（ajax）
     "cart_information_del"=>"index/Cart/cart_information_del",//购物车添加按钮（-）（ajax）
+    "carts_del"=>"index/Cart/carts_del",//购物车删除（ajax）
     "place_an_order_by_cart"=>"index/Cart/place_an_order_by_cart",//购物车存储到shopping_shop表（ajax）
     /*购物车结束*/
 
