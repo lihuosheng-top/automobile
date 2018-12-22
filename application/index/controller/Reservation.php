@@ -105,7 +105,7 @@ class Reservation extends Controller{
     public function reservation_info(Request $request)
     {
         if($request->isPost()) {
-            $serve_goods_id = $request->only(["serve_goods_id"])["serve_goods_id"];
+            $serve_goods_id = $request->only(["id"])["id"];
             $user_id = Session::get("user");
             $user = db("user")->where("id", $user_id)->select();
             $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
