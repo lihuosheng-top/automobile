@@ -28,8 +28,16 @@ class Cart extends Controller
             $shopping_data = db("shopping")->where("user_id",$user_id)->select();
             if(!empty($shopping_data)){
                     foreach ($shopping_data as $key=>$val){
-
+                        $store_all_id[] =$val["store_id"];
                     }
+                $da_store_id = array_unique($store_all_id); //去重之后的商户
+                foreach ($da_store_id as $keys=>$vals){
+//                    $da_store_ids[] =$vals; //去重之后的id数组
+                    $order_undate['info'][] = Db::name('order_parts')
+                        ->where('store_id', $vals)
+                        ->where('user_id',  $user_id)
+                        ->select();
+                }
                 exit(json_encode(array("status" => 1, "info" => "购物车数据返回成功","data"=>$shopping_data)));
             }else{
                 exit(json_encode(array("status" => 0, "info" => "购物车未添加商品")));
