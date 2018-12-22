@@ -32,6 +32,7 @@ class  Express extends  Controller{
         }
     }
 
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -42,6 +43,9 @@ class  Express extends  Controller{
     public function express_setting(){
         return view("express_setting");
     }
+
+
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -50,6 +54,7 @@ class  Express extends  Controller{
      * @return \think\response\View
      */
     public function express_wait_for_order(){
+
         return view("express_wait_for_order");
     }
 
@@ -62,6 +67,29 @@ class  Express extends  Controller{
      * @return \think\response\View
      */
     public function express_wait_for_take(){
+        $delivery_data = db("delivery")->select();
+        $order_data = db("order_parts")->select();
+        $delivery = [];
+        $store = db("store")->select();
+        foreach ($order_data as $key=>$value){
+            foreach ($store as $val){
+                if($value["store_id"] == $val["store_id"]){
+
+                }
+            }
+
+        }
+       /* foreach ($store as $val){
+            foreach ($delivery_data as $v){
+                if($val["store_city_address"] == $v["area"]){
+                    $delivery[$key]["order_id"] = $value["id"];
+                    $delivery[$key]["store_name"] = $val["store_name"];
+                    $delivery[$key]["store_address"] = $val["store_detailed_address"];
+                    $delivery[$key]["order_address"] = $value["harvester_address"];
+                }
+            }
+        }*/
+        halt($delivery);
         return view("express_wait_for_take");
     }
 
