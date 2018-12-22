@@ -615,11 +615,9 @@ function getAdvertisment(area){
                 mySwiper();
                 // 首页固定广告
                 var indexFixStr = '';
-                $.each(res.data.fixed, function(idx, val){
-                    indexFixStr += `<a href="`+val.url+`">
-                                        <img src="uploads/`+val.advert_picture+`">
-                                    </a>`
-                })
+                indexFixStr += `<a href="`+res.data.fixed[0].url+`">
+                                    <img src="uploads/`+res.data.fixed[0].advert_picture+`">
+                                </a>`
                 $('.banner').append(indexFixStr);
             }
         },
