@@ -84,6 +84,7 @@ $.ajax({
                         installationStr += `<button class="select-item btn-item">`+installationArr[j]+`</button>`;
                     }
                 }
+                $('.installation').show();
                 $('.way-container').append(installationStr);
             }
             // 立即购买 身上放商品id
