@@ -72,7 +72,7 @@ class My extends Controller
     public function consume(Request $request){
         if($request->isPost()){
             $user_id =Session::get("user");//用户id
-        $data =    Db::name("wallet")->where("user_id",$user_id)->select();
+        $data = Db::name("wallet")->where("user_id",$user_id)->select();
         if(!empty($data)){
             return ajax_success("我的消费信息返回成功",$data);
         }else{
