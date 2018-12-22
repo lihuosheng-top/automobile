@@ -198,4 +198,18 @@ class Index extends Controller
     }
 
 
+    /**
+     * 广告位置地区获取地址
+     * GY
+     */
+    public function add_address(Request $request){
+
+        if($request->isPost()){
+            $area = $request->only("area")["area"];
+            Session::set("area",$area);
+            return ajax_success("获取地址成功",$area);
+        }
+
+    }
+
 }

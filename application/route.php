@@ -25,6 +25,7 @@ Route::group("",[
     "index_shop"=>"index/index/shop",                               //热门配件店铺
     "index_shop_goods"=>"index/index/shop_goods",                   //热门配件店铺商品
     "index_serve_shop"=>"index/index/serve_shop",                   //热门配件店铺商品
+    "index_add_address"=>"index/index/add_address",                 //广告位置地区获取地址
 
 
 
@@ -307,6 +308,7 @@ Route::group("",[
 
     /*汽车广告管理前端开始*/
     "advertisement_index"=>"index/Advertisement/advertisement_index", //汽车广告显示
+    "machine_index"=>"index/Advertisement/machine_index",             //汽车配件商广告显示
 
 
 
