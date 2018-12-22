@@ -80,7 +80,18 @@ $.ajax({
     }
 })
 
-
+// 购物车页面信息
+$.ajax({
+    url: 'cart_index',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+    },
+    error: function(){
+        console.log('error');
+    }
+})
 
 
 
