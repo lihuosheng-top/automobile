@@ -181,7 +181,7 @@ class Cart extends Controller
                     ->where("id",$shopping_id)
                     ->where("user_id",$user_id)
                     ->find();
-                $goods_units =$goods_unit+$shopping_data["goods_units"];
+                $goods_units =$goods_unit+$shopping_data["goods_unit"];
                 $bool = Db::name("shopping")
                     ->where("id",$shopping_id)
                     ->where("user_id",$user_id)
@@ -216,7 +216,7 @@ class Cart extends Controller
                     ->where("id",$shopping_id)
                     ->where("user_id",$user_id)
                     ->find();
-                $goods_units =$shopping_data["goods_units"]-$goods_unit;
+                $goods_units =$shopping_data["goods_unit"]-$goods_unit;
                 $bool = Db::name("shopping")
                     ->where("id",$shopping_id)
                     ->where("user_id",$user_id)
