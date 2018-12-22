@@ -313,6 +313,24 @@ $(function(){
                 $('.select-ser-pop').animate({'bottom': '0'});
                 $('.mask').hide();
                 myLayer('加入购物车成功');
+                var goods_id = $('.select-buy').attr('id');
+                $.ajax({
+                    url: 'get_goods_id_to_cart',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'goods_id': goods_id,
+                        'store_id': store_id,
+                        'goods_unit': goods_unit,
+                        'goods_standard_id': goods_standard_id
+                    },
+                    success: function(res){
+                        console.log(res);
+                    },
+                    erro: function(){
+                        console.log('error');
+                    }
+                })
             })
             // 加入购物车图标
             $('.cart').click(function(e){

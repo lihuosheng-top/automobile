@@ -54,7 +54,7 @@ $.ajax({
         $('.standard').text(res.data.goods_standard);
         $.each(res.data.goods, function (idx, val) {
             // 店铺名
-            $('.order-shop-namp').text(val.goods_brand.name);
+            $('.order-shop-namp').text(val.store_name);
             // 商品名
             $('.order-goods-p').text(val.goods_name);
             // 商品描述
