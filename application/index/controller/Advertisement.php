@@ -22,42 +22,44 @@ class  Advertisement extends  Controller{
      */
     public function advertisement_index(Request $request)
     {
-        if ($request->isGet()){
-            //$area = $request->only("area")["area"];
-            $area = "广东省,深圳市,福田区";
+        if ($request->isPost())
+        {
+            $area = $request->only("area")["area"];
             $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
-            $data = Db::name("position") -> where("pid",0) ->field("name,id")->select();
-             
-            
-            $res = array();
-            $rest = array();
- 
-
-            foreach($data as $k => $v){
-                $res[$v['name']] = $v;
-                
-            }
+            $data = Db::name("position") -> where("pid",0) ->field("name,id")->select();           
               
-                foreach($data as $k => $v){
-                    // dump($v);
-                    foreach($area_data as $key => $value)
-                    {
-    
-                    // $rest[$value['location']][$key] = $value;
-                    if( $value['pid'] == $v['id']){
-                                     
-                    }
-                                
+            foreach($area_data as $key => $value)
+            {
+
+            if( $value['pid'] == 18) //首页轮播
+            { 
+                $home[] = $value;          
             }
-        }
-        
+            if( $value['pid'] == 19) //首页固定
+            {
+                $fixed[] = $value;         
+            }
+            if( $value['pid'] == 20) //热门推荐
+            {
+                $hot[] = $value;          
+            }
+            if( $value['pid'] == 21) //配件商城
+            {
+                $machine[] = $value;          
+            }   
+            }
+       
+            $reste['home'] = $home;
+            $reste["fixed"] = $fixed;
+            $reste["hot"] = $hot;
+            $reste["machine"] = $machine; 
+            
             if (!empty($area_data)) {
                 return ajax_success('传输成功', $area_data);
             } else {
                 return ajax_error("数据为空");
 
             }
-
 
         }
 
