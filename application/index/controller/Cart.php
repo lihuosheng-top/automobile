@@ -78,8 +78,7 @@ class Cart extends Controller
                         return ajax_success("成功", $bool);
                     }
                 }
-
-
+            
                 $data['goods_name'] = $goods['goods_name'];
                 $data['goods_images'] = $goods['goods_show_images'];
                 $goods_end_money =Db::name("special")
