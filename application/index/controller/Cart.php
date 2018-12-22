@@ -57,40 +57,54 @@ class Cart extends Controller
                 $goods_standard_id = $request->only(['goods_standard_id'])['goods_standard_id'];//商品通用专用规格id
                 $goods_id = intval($goods_id);
                 $goods = db("goods")->where("id",$goods_id)->find();
-
                 $store_name =Db::name("store")->field("store_name")->where("store_id",$store_id)->find();
+
                 $shopping_data = db("shopping")
                     ->where("user_id",$user_id)
                     ->where("goods_id", $goods_id)
                     ->where("store_id",$store_id)
                     ->select();
+
                 foreach ($shopping_data as $key=>$value) {
-                    if (in_array($goods_id,$value)) {
-                        $goods_end_money =Db::name("special")
-                            ->field("id",$goods_standard_id)
-                            ->where("goods_id",$goods_id)
-                            ->find();
-                        $money = array($value['money'], $goods_end_money["price"]);
-                        $shopping[$key]['money'] = array_sum($money);
-                        $shopping[$key]['goods_unit'] = $value['goods_unit'] + 1;
-                        unset($shopping[$key]['id']);
-                        $bool = db("shopping")->where("goods_id", $goods_id)->where("user_id",$user_id)->update($shopping[0]);
-                        return ajax_success("成功", $bool);
+                    if (in_array($goods_standard_id,$value)) {
+//                        $goods_end_money =Db::name("special")
+//                            ->field("price")
+//                            ->where("id",$goods_standard_id)
+//                            ->where("goods_id",$goods_id)
+//                            ->find();
+//                        dump($value);
+//                        dump($goods_end_money);
+//                        $money = array($value['money'],$goods_end_money["price"]);
+//                        $shopping[$key]['money'] = array_sum($money);
+                        $shopping_num = $value['goods_unit'] + $goods_unit;
                     }
                 }
-            
+                if(!empty($shopping_num)){
+                    $bool = Db::name("shopping")
+                        ->where("goods_id", $goods_id)
+                        ->where("user_id",$user_id)
+                        ->where("goods_standard_id",$goods_standard_id)
+                        ->update(["goods_unit"=>$shopping_num]);
+                    if($bool){
+                        return ajax_success("成功", $bool);
+                    }else{
+                        return ajax_error("失败",["status"=>0]);
+                    }
+                }
                 $data['goods_name'] = $goods['goods_name'];
                 $data['goods_images'] = $goods['goods_show_images'];
                 $goods_end_money =Db::name("special")
-                    ->field("id",$goods_standard_id)
+                    ->field("price")
+                    ->where("id",$goods_standard_id)
                     ->where("goods_id",$goods_id)
                     ->find();
                 $data['money'] =  $goods_end_money["price"];
-                $data['goods_unit'] = 1;
+                $data['goods_unit'] = $goods_unit;
                 $data['user_id'] = $user_id;
                 $data['goods_id'] = $goods['id'];
                 $data['store_id'] = $goods['store_id'];
                 $data['store_name'] = $store_name["store_name"];
+                $data['goods_standard_id'] =$goods_standard_id;
                 $bool = db("shopping")->insert($data);
                  exit(json_encode(array("status" => 1, "info" => "加入购物车成功" ,"data"=>$bool)));
             }
