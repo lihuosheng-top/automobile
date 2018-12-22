@@ -232,7 +232,7 @@ if(urlLen > 1){
                                         <div class="content-money-div">
                                             <p class="sale"><span>面议</span></p>
                                         </div>
-                                        <i class="spr icon-uncheck"></i>
+                                        <i class="spr icon-uncheck" id="`+val.id+`"></i>
                                     </li>`
                         }else if(val.service_money !== null && val.ruling_money === null){
                             str2 += `<li>
@@ -240,7 +240,7 @@ if(urlLen > 1){
                                         <div class="content-money-div">
                                             <p class="sale">￥<span>`+val.service_money+`</span></p>
                                         </div>
-                                        <i class="spr icon-uncheck"></i>
+                                        <i class="spr icon-uncheck" id="`+val.id+`"></i>
                                     </li>`
                         }else if(val.service_money !== null && val.ruling_money !== null){
                             str2 += `<li>
@@ -249,7 +249,7 @@ if(urlLen > 1){
                                             <p class="sale">￥<span>`+val.service_money+`</span></p>
                                             <p class="thro">￥<span>`+val.ruling_money+`</span></p>
                                         </div>
-                                        <i class="spr icon-uncheck"></i>
+                                        <i class="spr icon-uncheck" id="`+val.id+`"></i>
                                     </li>`
                         }
                     })
@@ -287,7 +287,7 @@ function selectEvent(){
             $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
             $('.bespeak-btn').removeAttr('disabled');
             var userSelectMoney = $(this).find('.sale').text();
-            console.log(userSelectMoney);
+            // console.log(userSelectMoney);
             $('.bespeak-money').text(userSelectMoney);
         }else{
             $('.bespeak-btn').prop('disabled', 'disabled');
@@ -321,5 +321,20 @@ $('.filter-ul').on('click', 'li', function(){
 
 // 确定预约
 $('.bespeak-btn').click(function(){
-    location.href = 'reservation_info';
+    var id = $('.service-colla-content').find('.icon-check').attr('id');
+    $.ajax({
+        url: 'reservation_info',
+        type: 'JSON',
+        dataType: 'POST',
+        data: {
+            'id': id
+        },
+        success: function(res){
+            console.log(res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+    // location.href = 'reservation_info';
 })
