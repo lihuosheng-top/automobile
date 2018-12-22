@@ -214,6 +214,12 @@ if(urlLen > 1){
                             </div>`
                 })
                 $('.goods-content').prepend(str);
+                // 店铺信息
+                $.each(res.data.store, function(idx, val){
+                    $('.shop_name').text(val.store_name);
+                    $('.addr_p span').text(val.store_detailed_address);
+                    $('.shop-describe').text(val.store_information);
+                })
                 // 服务项目
                 var str2 = '';
                 $.each(res.data.serve_data, function(idx, val){
@@ -324,8 +330,8 @@ $('.bespeak-btn').click(function(){
     var id = $('.service-colla-content').find('.icon-check').attr('id');
     $.ajax({
         url: 'reservation_info',
-        type: 'JSON',
-        dataType: 'POST',
+        type: 'POST',
+        dataType: 'JSON',
         data: {
             'id': id
         },
