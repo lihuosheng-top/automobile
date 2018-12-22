@@ -219,13 +219,13 @@ if(urlLen > 1){
                 $.each(res.data.serve_data, function(idx, val){
                     str2 += `<div class="service-colla-item">
                                 <div class="service-colla-title">
-                                    <p class="service-subtitle">`+val.serve_name+`</p>
+                                    <p class="service-subtitle">`+val[0].serve_name+`</p>
                                     <p class="service-money"></p>
                                     <i class="spr icon-uncheck"></i>
                                 </div>
                                 <div class="service-colla-content" style="display:none;">
                                     <ul>`
-                    $.each(val.serve_goods, function(idx, val){
+                    $.each(val, function(idx, val){
                         if(val.service_money === null && val.ruling_money === null){
                             str2 += `<li>
                                         <p class="service-car-type">`+val.vehicle_model+`</p>

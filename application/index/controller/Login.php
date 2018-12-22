@@ -89,6 +89,7 @@ class Login extends Controller{
     public function logout(Request $request){
        if($request->isPost()){
           Session('member',null);
+          Session::delete("user");
           return ajax_success('退出成功',['status'=>1]);
        }
     }
