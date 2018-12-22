@@ -54,8 +54,8 @@ class  Advertisement extends  Controller{
             $reste["hot"] = $hot;
             $reste["machine"] = $machine; 
             
-            if (!empty($area_data)) {
-                return ajax_success('传输成功', $area_data);
+            if (!empty($reste)) {
+                return ajax_success('传输成功', $reste);
             } else {
                 return ajax_error("数据为空");
 
