@@ -54,6 +54,7 @@ class Cart extends Controller
                 $goods_id = $request->only(['goods_id'])['goods_id'];//商品id
                 $store_id = $request->only(['store_id'])['store_id'];//店铺id
                 $goods_unit = $request->only(['goods_unit'])['goods_unit'];//商品数量
+                $goods_standard_id = $request->only(['goods_standard_id'])['goods_standard_id'];//商品通用专用规格id
                 $goods_id = intval($goods_id);
                 $goods = db("goods")->where("id",$goods_id)->find();
 
@@ -65,7 +66,11 @@ class Cart extends Controller
                     ->select();
                 foreach ($shopping_data as $key=>$value) {
                     if (in_array($goods_id,$value)) {
-                        $money = array($value['money'], $goods['goods_adjusted_money']);
+                        $goods_end_money =Db::name("special")
+                            ->field("id",$goods_standard_id)
+                            ->where("goods_id",$goods_id)
+                            ->find();
+                        $money = array($value['money'], $goods_end_money["price"]);
                         $shopping[$key]['money'] = array_sum($money);
                         $shopping[$key]['goods_unit'] = $value['goods_unit'] + 1;
                         unset($shopping[$key]['id']);
