@@ -19,20 +19,20 @@ class LoveCar extends Controller{
      */
     public function love_car(Request $request){
 
-        if($request->isPost()){
+        if($request->isPost()) {
             $brand = db("car_series")->distinct(true)->field("brand")->select();
             $series = db("car_series")->select();
             $car_images = db("car_images")->select();
-            foreach ($brand as $key=>$value){
-                foreach ($car_images as $val){
-                    if($value["brand"] == $val["brand"]){
+            foreach ($brand as $key => $value) {
+                foreach ($car_images as $val) {
+                    if ($value["brand"] == $val["brand"]) {
                         $brand[$key]["images"] = $val["brand_images"];
                     }
                 }
             }
-            if($brand){
-                return ajax_success("获取成功",array("brand"=>$brand,"series"=>$series));
-            }else{
+            if ($brand) {
+                return ajax_success("获取成功", array("brand" => $brand, "series" => $series));
+            } else {
                 return ajax_error("获取失败");
             }
 
