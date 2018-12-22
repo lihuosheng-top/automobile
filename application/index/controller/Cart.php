@@ -78,9 +78,15 @@ class Cart extends Controller
                         return ajax_success("成功", $bool);
                     }
                 }
+
+
                 $data['goods_name'] = $goods['goods_name'];
                 $data['goods_images'] = $goods['goods_show_images'];
-                $data['money'] = $goods['goods_adjusted_money'];
+                $goods_end_money =Db::name("special")
+                    ->field("id",$goods_standard_id)
+                    ->where("goods_id",$goods_id)
+                    ->find();
+                $data['money'] =  $goods_end_money["price"];
                 $data['goods_unit'] = 1;
                 $data['user_id'] = $user_id;
                 $data['goods_id'] = $goods['id'];
