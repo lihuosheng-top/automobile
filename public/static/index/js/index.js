@@ -578,7 +578,8 @@ map.plugin([
     AMap.event.addListener(geolocation, 'complete', onComplete);
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
-        console.log(e)
+        // console.log(e)
+        alert(JSON.stringify(e))
         // $('.gec-curr-txt').text(e.addressComponent.city);
         $('.curr_city').text(e.addressComponent.district);
         var threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
@@ -586,6 +587,7 @@ map.plugin([
     };
     function onError(e){
         // console.log(e)
+        alert(JSON.stringify(e))
     };
 })
 
