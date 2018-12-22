@@ -570,7 +570,7 @@ map.plugin([
 ], function () {
     var geolocation = new AMap.Geolocation({
         enableHighAccuracy: true,
-        timeout: 10000,
+        // timeout: 5000,
         zoomToAccuracy: true,
     })
     map.addControl(geolocation);
