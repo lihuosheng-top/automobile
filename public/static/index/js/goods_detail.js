@@ -1,6 +1,6 @@
 // 获取url地址id
 var url = location.search;
-var id, preId, specId;
+var id, preId, specId, store_id;
 if(url.indexOf('?') != -1){
     id = url.substr(1).split('&')[0].split('=')[1];
     preId = url.substr(1).split('&')[1].split('=')[1];
@@ -26,6 +26,8 @@ $.ajax({
         })
         $('.swiper-wrapper').append(swiperImgStr);
         $.each(res.data, function(idx, val){
+            // 店铺id
+            store_id = val.store_id;
             // 商品名字
             $('.goods_cont .goods_name').html(val.goods_name);
             // 卖点
@@ -33,9 +35,9 @@ $.ajax({
             // 划线价
             $('.through').html('￥' + val.goods_bottom_money);
             // 售价
-            $('.sale').html('￥' + val.goods_adjusted_money);
+            $('.sale').html('￥' + val.goods_standard[0].price);
             // 库存
-            $('.stock').html('库存' + val.goods_repertory + '件');
+            $('.stock').html('库存' + val.goods_standard[0].stock + '件');
             // 商品详情
             $('.detail-img-box').html(val.goods_text);
             // 专用参数
@@ -241,7 +243,7 @@ $('.select-buy').click(function(){
 $('.close-select-pop').click(function(){
     $('html').css('overflow','auto');
     $('.mask').hide();
-    $('.select-ser-pop').animate({'bottom': '0'});
+    $('.select-ser-pop').animate({'bottom': '-100%'});
 })
 
 // 购买数量
@@ -310,9 +312,29 @@ $(function(){
             })
             // 购买弹窗  加入购物车
             $('.select-add-cart').click(function(){
-                $('.select-ser-pop').animate({'bottom': '0'});
+                $('.select-ser-pop').animate({'bottom': '-100%'});
                 $('.mask').hide();
-                myLayer('加入购物车成功');
+                var goods_id = $('.select-buy').attr('id');
+                var goods_unit = $('.select-calculator_val').val();
+                var goods_standard_id = $('.select-container').find('.select-on').attr('id');
+                $.ajax({
+                    url: 'get_goods_id_to_cart',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'goods_id': goods_id,
+                        'store_id': store_id,
+                        'goods_unit': goods_unit,
+                        'goods_standard_id': goods_standard_id
+                    },
+                    success: function(res){
+                        console.log(res);
+                        myLayer(res.info);
+                    },
+                    erro: function(){
+                        console.log('error');
+                    }
+                })
             })
             // 加入购物车图标
             $('.cart').click(function(e){

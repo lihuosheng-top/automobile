@@ -570,7 +570,7 @@ map.plugin([
 ], function () {
     var geolocation = new AMap.Geolocation({
         enableHighAccuracy: true,
-        timeout: 1000,
+        // timeout: 5000,
         zoomToAccuracy: true,
     })
     map.addControl(geolocation);
@@ -579,6 +579,7 @@ map.plugin([
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
         console.log(e)
+        // alert(JSON.stringify(e))
         // $('.gec-curr-txt').text(e.addressComponent.city);
         $('.curr_city').text(e.addressComponent.district);
         var threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
@@ -586,6 +587,7 @@ map.plugin([
     };
     function onError(e){
         // console.log(e)
+        // alert(JSON.stringify(e))
     };
 })
 
