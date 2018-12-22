@@ -317,6 +317,7 @@ $(function(){
                 var goods_id = $('.select-buy').attr('id');
                 var goods_unit = $('.select-calculator_val').val();
                 var goods_standard_id = $('.select-container').find('.select-on').attr('id');
+                var goods_delivery = $('.way-container').find('.select-on').text();
                 $.ajax({
                     url: 'get_goods_id_to_cart',
                     type: 'POST',
@@ -325,7 +326,8 @@ $(function(){
                         'goods_id': goods_id,
                         'store_id': store_id,
                         'goods_unit': goods_unit,
-                        'goods_standard_id': goods_standard_id
+                        'goods_standard_id': goods_standard_id,
+                        'goods_delivery': goods_delivery
                     },
                     success: function(res){
                         console.log(res);
