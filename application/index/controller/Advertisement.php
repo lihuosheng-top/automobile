@@ -13,6 +13,7 @@ use think\Controller;
 use think\Db;
 use think\Request;
 use think\Image;
+use think\Session;
 
 class  Advertisement extends  Controller{
 
@@ -24,7 +25,7 @@ class  Advertisement extends  Controller{
     {
         if ($request->isPost())
         {
-            $area = $request->only("area")["area"];
+            $area = Session::get("area");
             $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
             $data = Db::name("position") -> where("pid",0) ->field("name,id")->select();           
               
@@ -54,7 +55,42 @@ class  Advertisement extends  Controller{
             $reste["hot"] = $hot;
             $reste["machine"] = $machine; 
             
-            if (!empty($reste)) {
+            if ( (!empty($reste)) && (!empty($area)) ) {
+                return ajax_success('传输成功', $reste);
+            } else {
+                return ajax_error("数据为空");
+
+            }
+
+        }
+
+    }
+
+
+    /**
+     * [汽车广告配件商城显示]
+     * 郭杨
+     */
+    public function machine_index(Request $request)
+    {
+        if ($request->isPost())
+        {
+            $area = Session::get("area");
+            $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
+            $data = Db::name("position") -> where("pid",0) ->field("name,id")->select();           
+              
+            foreach($area_data as $key => $value)
+            {
+
+            if( $value['pid'] == 21) //配件商城
+            {
+                $machine[] = $value;          
+            }   
+            }
+       
+            $reste["machine"] = $machine; 
+            
+            if ( (!empty($reste)) && (!empty($area)) ) {
                 return ajax_success('传输成功', $reste);
             } else {
                 return ajax_error("数据为空");
