@@ -73,17 +73,20 @@ $.ajax({
                     }
                 })
             })
-            // 安装方式
-            var installationArr = val.goods_delivery.split(',');
-            var installationStr = '';
-            for(var j = 0; j < installationArr.length; j++){
-                if(j === 0){
-                    installationStr += `<button class="select-on select-item btn-item">`+installationArr[j]+`</button>`;
-                }else{
-                    installationStr += `<button class="select-item btn-item">`+installationArr[j]+`</button>`;
+            if(val.goods_delivery !== null){
+                // 安装方式
+                var installationArr = val.goods_delivery.split(',');
+                var installationStr = '';
+                for(var j = 0; j < installationArr.length; j++){
+                    if(j === 0){
+                        installationStr += `<button class="select-on select-item btn-item">`+installationArr[j]+`</button>`;
+                    }else{
+                        installationStr += `<button class="select-item btn-item">`+installationArr[j]+`</button>`;
+                    }
                 }
+                $('.installation').show();
+                $('.way-container').append(installationStr);
             }
-            $('.way-container').append(installationStr);
             // 立即购买 身上放商品id
             $('.select-buy').prop('id', val.id);
             // 选择切换class

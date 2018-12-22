@@ -601,7 +601,27 @@ function getAdvertisment(area){
         },
         success: function(res){
             console.log('广告',res);
-            
+            if(res.status == 1){
+                var topSwiperStr = '';
+                // 首页轮播图
+                $.each(res.data.home, function(idx, val){
+                    topSwiperStr += `<div class="swiper-slide">
+                                        <a href="`+val.url+`">
+                                            <img src="uploads/`+val.advert_picture+`">
+                                        </a>
+                                    </div>`;
+                })
+                $('.swiper-wrapper').append(topSwiperStr);
+                mySwiper();
+                // 首页固定广告
+                var indexFixStr = '';
+                $.each(res.data.fixed, function(idx, val){
+                    indexFixStr += `<a href="`+val.url+`">
+                                        <img src="uploads/`+val.advert_picture+`">
+                                    </a>`
+                })
+                $('.banner').append(indexFixStr);
+            }
         },
         error: function(){
             console.log('error');
