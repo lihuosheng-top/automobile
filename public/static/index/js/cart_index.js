@@ -8,10 +8,17 @@ function myCircleClass(){
         }else{
             $(this).parents('.goods_wrap').find('.goods-circle').removeClass('circle-on');
         }
+
     })
     // 单选商品
     $('.goods-circle').click(function(){
         $(this).toggleClass('circle-on');
+        if($('.circle-on').length > 0){
+            $('.total_box').show();
+            $('.totalprice').text()
+        }else{
+            $('.total_box').hide();
+        }
     })
     // 全选
     $('.all-select').click(function(){
@@ -31,7 +38,22 @@ function calculator(){
         if(val > 1){
             val --;
             $(this).siblings('input').val(val);
-
+            var shopping_id = $(this).parents('.goods_info_wrap').find('.circle').attr('id');
+            $.ajax({
+                url: 'cart_information_del',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'shopping_id': shopping_id,
+                    'goods_unit': 1
+                },
+                success: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            }) 
         }
     })  
     $('.increase').click(function(){
@@ -76,7 +98,29 @@ $('.settle_button').click(function(){
 
 })
 $('.del-btn').click(function(){
-    
+    var id = [];
+    $.each($('.goods-circle'), function(idx, val){
+        if($(val).hasClass('circle-on')){
+            id.push($(val).attr('id'));
+        }
+    })
+    $.ajax({
+        url: 'carts_del',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id
+        },
+        success: function(res){
+            console.log(res);
+            if(res.status === 1){
+                location.reload();
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    }) 
 })
 
 

@@ -68,7 +68,6 @@ class  Express extends  Controller{
                     $delivery[$key]["store_name"] = $val["store_name"];
                     $delivery[$key]["store_address"] = $val["store_street_address"];
                     $delivery[$key]["store_city_address"] = $val["store_city_address"];
-
                 }
             }
 
@@ -86,6 +85,8 @@ class  Express extends  Controller{
                 unset($delivery[$k_1]);
             }
         }
+
+
 
         return view("express_wait_for_order");
     }
