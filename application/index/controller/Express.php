@@ -55,6 +55,38 @@ class  Express extends  Controller{
      */
     public function express_wait_for_order(){
 
+        $delivery_id = Session::get("delivery_id");
+        $delivery_data = db("delivery")->select();
+        $order_data = db("order_parts")->select();
+        $delivery = [];
+        $store = db("store")->select();
+        foreach ($order_data as $key=>$value){
+            foreach ($store as $val){
+                if($value["store_id"] == $val["store_id"]){
+                    $delivery[$key]["order_id"] = $value["id"];
+                    $delivery[$key]["order_address"] = $value["harvester_address"];
+                    $delivery[$key]["store_name"] = $val["store_name"];
+                    $delivery[$key]["store_address"] = $val["store_street_address"];
+                    $delivery[$key]["store_city_address"] = $val["store_city_address"];
+
+                }
+            }
+
+        }
+        foreach ($delivery as $k=>$v) {
+            foreach ($delivery_data as $v_1) {
+                if($v["store_city_address"] == $v_1["area"]){
+                    $delivery[$k]["delivery_user_id"] = $v_1['id'];
+                }
+            }
+        }
+        halt($delivery);
+        foreach ($delivery as $k_1=>$v_2){
+            if($delivery_id != $v_2["delivery_user_id"]){
+                unset($delivery[$k_1]);
+            }
+        }
+
         return view("express_wait_for_order");
     }
 
@@ -67,29 +99,6 @@ class  Express extends  Controller{
      * @return \think\response\View
      */
     public function express_wait_for_take(){
-        $delivery_data = db("delivery")->select();
-        $order_data = db("order_parts")->select();
-        $delivery = [];
-        $store = db("store")->select();
-        foreach ($order_data as $key=>$value){
-            foreach ($store as $val){
-                if($value["store_id"] == $val["store_id"]){
-
-                }
-            }
-
-        }
-       /* foreach ($store as $val){
-            foreach ($delivery_data as $v){
-                if($val["store_city_address"] == $v["area"]){
-                    $delivery[$key]["order_id"] = $value["id"];
-                    $delivery[$key]["store_name"] = $val["store_name"];
-                    $delivery[$key]["store_address"] = $val["store_detailed_address"];
-                    $delivery[$key]["order_address"] = $value["harvester_address"];
-                }
-            }
-        }*/
-        halt($delivery);
         return view("express_wait_for_take");
     }
 

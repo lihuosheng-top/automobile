@@ -167,9 +167,9 @@ class Index extends Controller
                     }
 
                     if ($goods || $store || $serve_goods) {
-                        return ajax_success("获取成功", array("store" => $store, "goods" => $goods, "serve_data" => $serve_data));
+                        exit(array("info"=>"获取成功","status"=>"2","data"=>array("store"=>$store,"goods" => $goods, "serve_data" => $serve_data)));
                     } else {
-                        return ajax_error("获取失败");
+                        exit(array("info"=>"获取成功","status"=>"3"));
                     }
                 }else {
                     $shop_id = $request->only(["id"])["id"];
@@ -187,9 +187,9 @@ class Index extends Controller
                         }
                     }
                     if ($goods || $store || $serve_data) {
-                        return ajax_success("获取成功", array("store"=>$store,"goods" => $goods, "serve_data" => $serve_data));
+                         exit(array("info"=>"获取成功","status"=>"4","data"=>array("store"=>$store,"goods" => $goods, "serve_data" => $serve_data)));
                     } else {
-                        return ajax_error("获取失败");
+                        exit(array("info"=>"获取成功","status"=>"5"));
                     }
                 }
             }
