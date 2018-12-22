@@ -232,7 +232,7 @@ if(urlLen > 1){
                                         <div class="content-money-div">
                                             <p class="sale"><span>面议</span></p>
                                         </div>
-                                        <i class="spr icon-uncheck"></i>
+                                        <i class="spr icon-uncheck" id="`+val.id+`"></i>
                                     </li>`
                         }else if(val.service_money !== null && val.ruling_money === null){
                             str2 += `<li>
@@ -240,7 +240,7 @@ if(urlLen > 1){
                                         <div class="content-money-div">
                                             <p class="sale">￥<span>`+val.service_money+`</span></p>
                                         </div>
-                                        <i class="spr icon-uncheck"></i>
+                                        <i class="spr icon-uncheck" id="`+val.id+`"></i>
                                     </li>`
                         }else if(val.service_money !== null && val.ruling_money !== null){
                             str2 += `<li>
@@ -249,7 +249,7 @@ if(urlLen > 1){
                                             <p class="sale">￥<span>`+val.service_money+`</span></p>
                                             <p class="thro">￥<span>`+val.ruling_money+`</span></p>
                                         </div>
-                                        <i class="spr icon-uncheck"></i>
+                                        <i class="spr icon-uncheck" id="`+val.id+`"></i>
                                     </li>`
                         }
                     })
@@ -321,5 +321,6 @@ $('.filter-ul').on('click', 'li', function(){
 
 // 确定预约
 $('.bespeak-btn').click(function(){
-    location.href = 'reservation_info';
+    
+    // location.href = 'reservation_info';
 })
