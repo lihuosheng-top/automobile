@@ -269,17 +269,6 @@ class Install extends Controller{
 
 
     /**
-     * 服务入库
-     * 陈绪
-     */
-//    public function service_save(){
-//
-//
-//
-//    }
-
-
-    /**
      **************李火生*******************
      * @param Request $request
      * Notes:设置之服务项目设置编辑功能
