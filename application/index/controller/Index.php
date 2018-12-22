@@ -22,12 +22,13 @@ class Index extends Controller
             if (!empty($user_id)) {
                 $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->select();
                 if ($user_car) {
+
                     return ajax_success("获取成功", $user_car);
                 } else {
                     return ajax_error("获取失败");
                 }
 
-            } else {
+            }else {
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
         }
