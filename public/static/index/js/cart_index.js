@@ -1,6 +1,4 @@
 
-
-
 // 店铺选中样式
 // console.log($('.shop-circle'))
 $('.shop-circle').click(function(){
