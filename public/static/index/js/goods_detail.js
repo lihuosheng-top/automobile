@@ -33,9 +33,9 @@ $.ajax({
             // 划线价
             $('.through').html('￥' + val.goods_bottom_money);
             // 售价
-            $('.sale').html('￥' + val.goods_adjusted_money);
+            $('.sale').html('￥' + val.goods_standard[0].price);
             // 库存
-            $('.stock').html('库存' + val.goods_repertory + '件');
+            $('.stock').html('库存' + val.goods_standard[0].stock + '件');
             // 商品详情
             $('.detail-img-box').html(val.goods_text);
             // 专用参数
@@ -241,7 +241,7 @@ $('.select-buy').click(function(){
 $('.close-select-pop').click(function(){
     $('html').css('overflow','auto');
     $('.mask').hide();
-    $('.select-ser-pop').animate({'bottom': '0'});
+    $('.select-ser-pop').animate({'bottom': '-100%'});
 })
 
 // 购买数量
