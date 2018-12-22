@@ -50,6 +50,14 @@ class Goods extends Controller
                 db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
             }
 
+            $adjusted_price = db("special")->field("price,id")->select();
+            //halt($adjusted_price);
+            foreach ($adjusted_price as $k => $val) {
+                $goods_price[] = db("goods_ratio")->where("min_money", "<=", $val["price"])->where("max_money", ">=", $val["price"])->field("ratio")->find();
+                $goods_adjusted_price[] = $val["price"] + ($val["price"] * $goods_price[$k]["ratio"]);
+                db("special")->where("id", $val["id"])->update(["goods_adjusted_price" => $goods_adjusted_price[$k]]);
+            }
+
             $year = db("year")->select();
             $user_id = Session::get("user_id");
             $role_name = db("admin")->where("id", $user_id)->select();
