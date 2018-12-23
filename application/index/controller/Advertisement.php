@@ -87,7 +87,7 @@ class  Advertisement extends  Controller{
             {
                 $machine[] = $value;          
             }
-            if( $value['pid'] == 27) //配件商城
+            if( $value['pid'] == 27) //配件商城优惠推荐
             {
                 $discounts[] = $value;          
             }   
