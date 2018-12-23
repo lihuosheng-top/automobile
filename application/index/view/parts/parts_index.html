@@ -184,6 +184,15 @@
                     })
                     $('.swiper-container .swiper-wrapper').append(topSwiper);
                     swiper1();
+                    $.each(res.data.discounts, function(idx, val){
+                        topSwiper += `<div class="swiper-slide">
+                                        <a href="`+val.url+`">
+                                            <img src="uploads/`+val.advert_picture+`">
+                                        </a>
+                                    </div>`
+                    })
+                    $('.swiper-container2 .swiper-wrapper').append(topSwiper);
+                    swiper2();
                 }
             },
             error: function(){
