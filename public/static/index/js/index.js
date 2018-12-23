@@ -3,26 +3,26 @@ $.ajax({
     type: 'POST',
     dataType: 'JSON',
     success: function(res){
-        console.log(res);
+        console.log('汽车列表', res);
         var hotBrand = res.data.brand.slice(0, 10);
         var hotBrandStr = '';
         var carBrandStr = '';
         // 爱车热门品牌
         $.each(hotBrand, function(idx, val){
-            hotBrandStr += '<li class="hot-brand-li">\
-                                <img src="static/index/image/bmw.png">\
-                                <span class="txt-hid-one">'+val.brand+'</span>\
-                            </li>';
+            hotBrandStr += `<li class="hot-brand-li">\
+                                <img src="uploads/`+val.images+`">\
+                                <span class="txt-hid-one">`+val.brand+`</span>\
+                            </li>`;
         })
         $('.hot-brand-ul').append(hotBrandStr);
         // 爱车品牌
         $.each(res.data.brand, function(idx, val){
-            carBrandStr += '<div class="sort_list">\
+            carBrandStr += `<div class="sort_list">\
                                 <div class="num_logo">\
-                                    <img src="static/index/image/bmw.png">\
+                                    <img src="uploads/`+val.images+`">\
                                 </div>\
-                                <div class="num_name">'+val.brand+'</div>\
-                            </div>'
+                                <div class="num_name">`+val.brand+`</div>\
+                            </div>`;
         })
         $('.sort_box').append(carBrandStr);
         // 添加车首字母匹配 start
@@ -570,7 +570,7 @@ map.plugin([
 ], function () {
     var geolocation = new AMap.Geolocation({
         enableHighAccuracy: true,
-        timeout: 1000,
+        // timeout: 5000,
         zoomToAccuracy: true,
     })
     map.addControl(geolocation);
@@ -579,6 +579,7 @@ map.plugin([
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
         console.log(e)
+        // alert(JSON.stringify(e))
         // $('.gec-curr-txt').text(e.addressComponent.city);
         $('.curr_city').text(e.addressComponent.district);
         var threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
@@ -586,51 +587,10 @@ map.plugin([
     };
     function onError(e){
         // console.log(e)
+        // alert(JSON.stringify(e))
     };
 })
-
-// // 城市定位 弹窗
-// $('.map').click(function(){
-//     $('.wrapper').hide();
-//     $('.geclocation-pop').show();
-// })
-// // 城市定位弹窗 返回
-// $('.gec-back').click(function(){
-//     $('.geclocation-pop').hide();
-//     $('.wrapper').show();
-// })
-
-// 原生经纬度
-// $.ajax({
-//     url: 'lglt_read',
-//     type: 'POST',
-//     dataType: 'JSON',
-//     success: function(res){
-//         console.log(res);
-//         if(res.status == 1){
-//             var data = res.data[0];
-//             var geocoder = new AMap.Geocoder({
-//                 // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
-//                 city: '010'
-//             })
-//             var lnglat = [data.longitude, data.latitude];
-//             geocoder.getAddress(lnglat, function(status, result) {
-//                 if (status === 'complete' && result.info === 'OK') {
-//                     // result为对应的地理位置详细信息
-//                     console.log('原生经纬度',result);
-//                     var addressComponent = result.regeocode.addressComponent;
-//                     var area = addressComponent.province+','+addressComponent.city+','+addressComponent.district;
-//                     var district = addressComponent.district;
-//                     $('.curr_city').text(district);
-//                     getAdvertisment(area);
-//                 }
-//             })
-//         }
-//     },
-//     error: function(){
-//         console.log('error');
-//     }
-// })
+// 获取广告
 function getAdvertisment(area){
     $.ajax({
         url: 'advertisement_index',
@@ -640,7 +600,26 @@ function getAdvertisment(area){
             'area': area
         },
         success: function(res){
-            console.log(res);
+            console.log('广告',res);
+            if(res.status == 1){
+                var topSwiperStr = '';
+                // 首页轮播图
+                $.each(res.data.home, function(idx, val){
+                    topSwiperStr += `<div class="swiper-slide">
+                                        <a href="`+val.url+`">
+                                            <img src="uploads/`+val.advert_picture+`">
+                                        </a>
+                                    </div>`;
+                })
+                $('.swiper-wrapper').append(topSwiperStr);
+                mySwiper();
+                // 首页固定广告
+                var indexFixStr = '';
+                indexFixStr += `<a href="`+res.data.fixed[0].url+`">
+                                    <img src="uploads/`+res.data.fixed[0].advert_picture+`">
+                                </a>`
+                $('.banner').append(indexFixStr);
+            }
         },
         error: function(){
             console.log('error');
@@ -721,6 +700,23 @@ function intoHotShop(id){
         },
         error: function(){
             console.log('error');
+        }
+    })
+}
+// swiper初始化 
+function mySwiper(){
+    var mySwiper = new Swiper ('.swiper-container', {
+        direction: 'horizontal', // 垂直切换选项
+        autoplay: true, //自动播放
+        delay: 3000,
+        // 禁止滑动添加类名swiper-no-swiping
+        // 如果需要分页器
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        // 滑动后 切换也不停止
+        autoplay: {
+            disableOnInteraction: false
         }
     })
 }

@@ -13,6 +13,7 @@ use think\Controller;
 use think\Db;
 use think\Request;
 use think\Image;
+use think\Session;
 
 class  Advertisement extends  Controller{
 
@@ -22,46 +23,85 @@ class  Advertisement extends  Controller{
      */
     public function advertisement_index(Request $request)
     {
-        if ($request->isGet()){
-            //$area = $request->only("area")["area"];
-            $area = "广东省,深圳市,福田区";
+        if ($request->isPost())
+        {
+            $area = $request->only(["area"])["area"];
+            Session::set("area",$area);    
             $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
-            $data = Db::name("position")->select();
-             dump($data);
- 
-            $res = array();
-            $rest = array();
-            foreach($data as $k => $v){
-                foreach($v as $s => $z){
-               
-                    $er[$k] = $z;
-                
-                }
-        }
-        halt($er);
+            $data = Db::name("position") -> where("pid",0) ->field("name,id")->select();           
+              
+            foreach($area_data as $key => $value)
+            {
 
-        foreach($area_data as $key => $value)
-        {
-
-            $res[$value['location']][$key] = $value; 
-                            
-        }
-
-        foreach($res as $k => $v)
-        {
-
- 
-                            
-        }
-        
-           // halt($res);
-            if (!empty($area_data)) {
-                return ajax_success('传输成功', $area_data);
+            if( $value['pid'] == 18) //首页轮播
+            { 
+                $home[] = $value;          
+            }
+            if( $value['pid'] == 19) //首页固定
+            {
+                $fixed[] = $value;         
+            }
+            if( $value['pid'] == 20) //热门推荐
+            {
+                $hot[] = $value;          
+            }
+            if( $value['pid'] == 21) //配件商城
+            {
+                $machine[] = $value;          
+            }   
+            }
+       
+            $reste['home'] = $home;
+            $reste["fixed"] = $fixed;
+            $reste["hot"] = $hot;
+            $reste["machine"] = $machine; 
+            
+            if ( (!empty($reste)) && (!empty($area)) ) {
+                return ajax_success('传输成功', $reste);
             } else {
                 return ajax_error("数据为空");
 
             }
 
+        }
+
+    }
+
+
+    /**
+     * [汽车广告配件商城显示]
+     * 郭杨
+     */
+    public function machine_index(Request $request)
+    {
+        if ($request->isPost())
+        {
+            $area = Session::get("area");
+            $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
+            $data = Db::name("position") -> where("pid",0) ->field("name,id")->select();           
+              
+            foreach($area_data as $key => $value)
+            {
+
+            if( $value['pid'] == 21) //配件商城
+            {
+                $machine[] = $value;          
+            }
+            if( $value['pid'] == 27) //配件商城优惠推荐
+            {
+                $discounts[] = $value;          
+            }    
+            }
+       
+            $reste["machine"] = $machine; 
+            $reste["discounts"] = $discounts; 
+            
+            if ( (!empty($reste)) && (!empty($area)) ) {
+                return ajax_success('传输成功', $reste);
+            } else {
+                return ajax_error("数据为空");
+
+            }
 
         }
 

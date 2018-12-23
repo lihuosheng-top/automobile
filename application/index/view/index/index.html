@@ -31,20 +31,16 @@
                 <input type="text" placeholder="输入你要搜索的内容">
             </div>
             <div class="message">
-                <i class="spr icon_message"></i>
+                <a href="information_index" class="spr icon_message"></a>
             </div>
         </div>
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/banner1.png">
-                </div>
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/banner1-2.png">
-                </div>
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/banner1-3.png">
-                </div>
+                <!-- <div class="swiper-slide">
+                    <a href="javascript:;">
+                        <img src="__STATIC__/index/image/banner1.png">
+                    </a>
+                </div> -->
             </div>
             <!-- 如果需要分页器 -->
             <div class="swiper-pagination"></div>
@@ -129,7 +125,9 @@
             </ul>
         </div>
         <div class="banner">
-            <img src="__STATIC__/index/image/banner2.jpg">
+            <!-- <a href="javascript:;">
+                <img src="__STATIC__/index/image/banner2.jpg">
+            </a> -->
         </div>
         <!-- 热门推荐 -->
         <div class="hot_recommend">
@@ -401,22 +399,5 @@
     <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
-    <!-- swiper初始化 -->
-    <script>
-        var mySwiper = new Swiper ('.swiper-container', {
-            direction: 'horizontal', // 垂直切换选项
-            autoplay: true, //自动播放
-            delay: 3000,
-            // 禁止滑动添加类名swiper-no-swiping
-            // 如果需要分页器
-            pagination: {
-                el: '.swiper-pagination',
-            },
-            // 滑动后 切换也不停止
-            autoplay: {
-                disableOnInteraction: false
-            }
-        })
-    </script>
 </body>
 </html>

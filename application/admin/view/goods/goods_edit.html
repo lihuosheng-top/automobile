@@ -1,5 +1,6 @@
 {extend name="layout"} {block name="css"}
 <link rel="stylesheet" type="text/css" href="__STATIC__/admin/index/common/formSelects-v4.css" />
+ <link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/css/bootstrap.min.css"/>
 <style type="text/css">
 	body {
 		background: #fff;
@@ -26,9 +27,11 @@
 	.layui-form-item {
 		width: 54%;
 	}
-	#special_content .layui-input-block{
+	
+	#special_content .layui-input-block {
 		margin-left: 0px;
 	}
+	
 	.biaoji .layui-form-radioed span {
 		color: #fff;
 		background: red;
@@ -52,55 +55,56 @@
 	#province{
 		display: block;
 	}*/
-	    table .full {
-        width: 60px !important;
-        min-width: 0px !important;
-    }
-    
-    table input {
-        width: 60px !important;
-        min-width: 60px !important;
-    }
-    
-    table .z_photo {
-        padding: 0;
-    }
-    
-    table th {
-        text-align: center;
-    }
-    
-    table td {
-        text-align: center;
-        margin: 0 auto;
-    }
+	
+	table .full {
+		width: 60px !important;
+		min-width: 0px !important;
+	}
+	
+	table input {
+		width: 60px !important;
+		min-width: 60px !important;
+	}
+	
+	table .z_photo {
+		padding: 0;
+	}
+	
+	table th {
+		text-align: center;
+	}
+	
+	table td {
+		text-align: center;
+		margin: 0 auto;
+	}
 	
 	.err {
 		border: solid 1px red;
 	}
-	.lv1 input{
+	
+	.lv1 input {
 		height: 30px;
 	}
 	/* 数据库展现图片样式 */
-
-.img {
-	position: relative;
-	display: inline-block;
-	width: 100px;
-}
-
-.imgcontent {
-	margin: 10px;
-}
-
-.img>i {
-	display: inline-block;
-	width: 20px;
-	position: absolute;
-	right: 0;
-	top: 0;
-}</style>
-
+	
+	.img {
+		position: relative;
+		display: inline-block;
+		width: 100px;
+	}
+	
+	.imgcontent {
+		margin: 10px;
+	}
+	
+	.img>i {
+		display: inline-block;
+		width: 20px;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
 </style>
 <style type="text/css">
 	.title {
@@ -210,26 +214,32 @@
 		top: 0;
 		right: 0;
 	}
-	table .upimg-div .up-section{
+	
+	table .upimg-div .up-section {
 		width: 60px;
 		height: 60px;
 	}
-	table .up-section .close-upimg{
+	
+	table .up-section .close-upimg {
 		width: 20px;
 		height: 20px;
 	}
-	table .img-box .upimg-div .z_file{
+	
+	table .img-box .upimg-div .z_file {
 		width: 60px;
 		height: 60px;
 	}
-	table .z_file .add-img{
+	
+	table .z_file .add-img {
 		width: 60px;
 		height: 60px;
 	}
-	table .z_photo{
-	border: 0;	
+	
+	table .z_photo {
+		border: 0;
 	}
-	table .img-box{
+	
+	table .img-box {
 		margin: 0;
 	}
 </style>
@@ -297,7 +307,7 @@
 			<div class="layui-input-block">
 				<div class="imgcontent">
 
-					<span class="img">
+					<!--<span class="img">
 						<img src="" width="100%">
 						<i class="remove-img" data-id="" data-value="2"><img src="__STATIC__/admin/common/img/a7.png"></i>
                     </span>
@@ -312,13 +322,13 @@
 					<span class="img">
 						<img src="" width="100%">
 						<i class="remove-img" data-id="" data-value="2"><img src="__STATIC__/admin/common/img/a7.png"></i>
-                    </span>
-					<!-- {volist name="$value.goods_images" id="val"}
+                    </span>-->
+				   {volist name="$value.goods_images" id="val"}
                     <span class="img">
 						<img src="__UPLOADS__/{$val.goods_images}" width="100%">
 						<i class="remove-img" data-id="{$val.id}" data-value="2"><img src="__STATIC__/admin/common/img/a7.png"></i>
                     </span>
-                     {/volist} -->
+                     {/volist}
 				</div>
 			</div>
 			<div class="layui-input-block">
@@ -434,7 +444,7 @@
 											<!--//循环这里规格名称-->
 											{if !empty($res)} {volist name="res" id="val"}
 											<th width="50">
-												<input name="lv1" value="{$val}" readonly="" style="border:0;">
+												<input value="{$val}" readonly="" style="border:0;">
 											</th>
 											{/volist} {/if}
 
@@ -457,10 +467,10 @@
 												<input value="{$vs}" readonly="" style="border:0;">
 											</td>
 											{/volist}
-											<td width="100px"><input type="text" name="sss1521[price]" value="{$ve.price}" data-id="{$ve.id}" data-value="price" class="inputs" required="required"></td>
-											<td width="100px"><input type="text" name="sss1521[stock]" value="{$ve.stock}" data-id="{$ve.id}" data-value="stock" class="inputs" required="required"></td>
-											<td width="100px"><input type="text" name="sss1521[coding]" value="{$ve.coding}" data-id="{$ve.id}" data-value="coding" class="inputs" required="required"></td>
-											<td width="100px"><input type="text" name="sss1521[cost]" value="{$ve.cost}" data-id="{$ve.id}" data-value="cost" class="inputs" required="required"> </td>
+											<td width="100px"><input type="text" value="{$ve.price}" data-id="{$ve.id}" data-value="price" class="inputs" required="required"></td>
+											<td width="100px"><input type="text" value="{$ve.stock}" data-id="{$ve.id}" data-value="stock" class="inputs" required="required"></td>
+											<td width="100px"><input type="text" value="{$ve.coding}" data-id="{$ve.id}" data-value="coding" class="inputs" required="required"></td>
+											<td width="100px"><input type="text" value="{$ve.cost}" data-id="{$ve.id}" data-value="cost" class="inputs" required="required"> </td>
 											<td width="100px">
 												<div class="img-box full">
 													<section class=" img-section">
@@ -472,7 +482,7 @@
 																<img class="up-img" src="__UPLOADS__/{$ve.images}">
 																<!--图片放这里-->
 
-																<p class="img-name-p">u4594.png</p><input id="taglocation" name="images" value="__UPLOADS__/{$ve.images}" type="hidden">
+																<p class="img-name-p">u4594.png</p><input id="taglocation" value="__UPLOADS__/{$ve.images}" type="hidden">
 																<input id="tags" name="" value="" type="hidden"></section>
 															<section class="z_file fl" style="display: none;"> <img src="/teahouse/public/static/admin/common/upfile/img/a11.png" class="add-img">
 																<input type="file" name="goods_show_images[]" id="file_0" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple="" data-id="1" required="required" data-value="images" data-name="{$ve.id}"> </section>
@@ -492,8 +502,8 @@
 											</td>
 											<td>
 												{if $ve.status == 0}
-												<input type="checkbox" class="Status" name="status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" data-id="{$ve.id}" data-value="status"> {else}
-												<input type="checkbox" class="Status" name="status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" checked data-id="{$ve.id}" data-value="status"> {/if}
+												<input type="checkbox" class="Status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" data-id="{$ve.id}" data-value="status"> {else}
+												<input type="checkbox" class="Status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" checked data-id="{$ve.id}" data-value="status"> {/if}
 											</td>
 										</tr>
 										{/volist} {/if}
@@ -633,7 +643,7 @@
 													<!--//循环这里规格名称-->
 													{if !empty($res)} {volist name="res" id="val"}
 													<th width="50">
-														<input name="lv1" value="{$val}" readonly="" style="border:0;">
+														<input value="{$val}" readonly="" style="border:0;">
 													</th>
 													{/volist} {/if}
 
@@ -656,10 +666,10 @@
 														<input value="{$vs}" readonly="" style="border:0;">
 													</td>
 													{/volist}
-													<td width="100px"><input type="text" name="sss1521[price]" value="{$ve.price}" data-id="{$ve.id}" data-value="price" class="inputs" required="required"></td>
-													<td width="100px"><input type="text" name="sss1521[stock]" value="{$ve.stock}" data-id="{$ve.id}" data-value="stock" class="inputs" required="required"></td>
-													<td width="100px"><input type="text" name="sss1521[coding]" value="{$ve.coding}" data-id="{$ve.id}" data-value="coding" class="inputs" required="required"></td>
-													<td width="100px"><input type="text" name="sss1521[cost]" value="{$ve.cost}" data-id="{$ve.id}" data-value="cost" class="inputs" required="required"> </td>
+													<td width="100px"><input type="text" value="{$ve.price}" data-id="{$ve.id}" data-value="price" class="inputs" required="required"></td>
+													<td width="100px"><input type="text" value="{$ve.stock}" data-id="{$ve.id}" data-value="stock" class="inputs" required="required"></td>
+													<td width="100px"><input type="text" value="{$ve.coding}" data-id="{$ve.id}" data-value="coding" class="inputs" required="required"></td>
+													<td width="100px"><input type="text" value="{$ve.cost}" data-id="{$ve.id}" data-value="cost" class="inputs" required="required"> </td>
 													<td width="100px">
 														<div class="img-box full">
 															<section class=" img-section">
@@ -671,10 +681,9 @@
 																		<img class="up-img" src="__UPLOADS__/{$ve.images}">
 																		<!--图片放这里-->
 
-																		<p class="img-name-p">u4594.png</p><input id="taglocation" name="images" value="__UPLOADS__/{$ve.images}" type="hidden">
 																		<input id="tags" name="" value="" type="hidden"></section>
 																	<section class="z_file fl" style="display: none;"> <img src="/teahouse/public/static/admin/common/upfile/img/a11.png" class="add-img">
-																		<input type="file" name="goods_show_images[]" id="file_0" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple="" data-id="1" required="required" data-value="images" data-name="{$ve.id}"> </section>
+																		<input type="file" name="goods_show_images[]" id="file_0" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple="" data-id="1" data-value="images" data-name="{$ve.id}"> </section>
 
 																</div>
 															</section>
@@ -691,8 +700,8 @@
 													</td>
 													<td>
 														{if $ve.status == 0}
-														<input type="checkbox" class="Status" name="status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" data-id="{$ve.id}" data-value="status"> {else}
-														<input type="checkbox" class="Status" name="status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" checked data-id="{$ve.id}" data-value="status"> {/if}
+														<input type="checkbox" class="Status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" data-id="{$ve.id}" data-value="status"> {else}
+														<input type="checkbox" class="Status" value="{$ve.status}" lay-skin="switch" lay-text="是|否" lay-filter="isshelves" checked data-id="{$ve.id}" data-value="status"> {/if}
 													</td>
 												</tr>
 												{/volist} {/if}
@@ -942,105 +951,102 @@
 				$ = layui.jquery;
 			layedit.build('demo');
 			//			价格库存等修改事件
-            $(".inputs").change(function() {
-                var change_val = $(this).val();
-                var location_x = $(this).data("id");
-                var location_y = $(this).data("value");
-                 if(change_val==''){
-                	change_val=0;
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "{:url('admin/Goods/value')}",
-                    data: {
-                        "id": location_x,
-                        "value": change_val,
-                        "key": location_y,
-                    },
-                    success: function(data) {
-                        data = eval("(" + data + ")");
-                        layer.msg(data.info);
-                        form.render('select');
-                    },
-                    error: function(data) {
-                        console.log("失败")
-                    }
-                });
-            });
-            //			  开关修改事件
-            form.on('switch(isshelves)', function(data) {
-                if ($(this).val() == 0) {
-                    $(this).val(1);
-                } else {
-                    $(this).val(0);
-                }
-                var value = data.value;
-                if (value == 0) {
-                    value = 1;
-                } else {
-                    value = 0;
-                }
-                var id = data.elem.dataset.id;
+			$(".inputs").change(function() {
+				var change_val = $(this).val();
+				var location_x = $(this).data("id");
+				var location_y = $(this).data("value");
+				if(change_val == '') {
+					change_val = 0;
+				}
+				$.ajax({
+					type: "POST",
+					url: "{:url('admin/Goods/value')}",
+					data: {
+						"id": location_x,
+						"value": change_val,
+						"key": location_y,
+					},
+					success: function(data) {
+						data = eval("(" + data + ")");
+						layer.msg(data.info);
+						form.render('select');
+					},
+					error: function(data) {
+						console.log("失败")
+					}
+				});
+			});
+			//			  开关修改事件
+			form.on('switch(isshelves)', function(data) {
+				if($(this).val() == 0) {
+					$(this).val(1);
+				} else {
+					$(this).val(0);
+				}
+				var value = data.value;
+				if(value == 0) {
+					value = 1;
+				} else {
+					value = 0;
+				}
+				var id = data.elem.dataset.id;
 
-                $.ajax({
-                    type: "POST",
-                    url: "{:url('admin/Goods/switches')}",
-                    data: {
-                        "id": id,
-                        "status": value,
-                    },
-                    success: function(data) {
-                        layer.msg("修改成功");
-                    },
-                    error: function(data) {
-                        console.log("失败")
-                    }
-                });
+				$.ajax({
+					type: "POST",
+					url: "{:url('admin/Goods/switches')}",
+					data: {
+						"id": id,
+						"status": value,
+					},
+					success: function(data) {
+						layer.msg("修改成功");
+					},
+					error: function(data) {
+						console.log("失败")
+					}
+				});
 
-            });
-            var phone_delect_id='';
-            //          删除图片事件
-            $(".list_delet_img").click(function() {
-                phone_delect_id = $(this).data("id");
-            
-            });
-                    //			添加图片
-            $(".file").change(function() {
-                //				alert(111);
-                var formData = new FormData();
-                var filess = $(this)[0].files[0];
-                var id = $(this).data("name");
-                formData.append("id", id);
-                formData.append("file", filess);
-			                $.ajax({
-			                    type: "POST",
-			                    url: "{:url('admin/Goods/addphoto')}",
-			                    processData: false,
-			                    contentType: false,
-			                    data: formData,
-			                    success: function(data) {
-			                    	    $.ajax({
-			                    type: "POST",
-			                    url: "{:url('admin/Goods/photos')}",
-			                    data: {
-			                        "id": id,
-			                    },
-			                    success: function(data) {
-			                        layer.msg("修改成功");
-			                    },
-			                    error: function(data) {
-			                        console.log("失败")
-			                    }
-			                });
-                    },
-                    error: function(data) {
-                        console.log("失败")
-                    }
-                });
-            });
-            
+			});
+			var phone_delect_id = '';
+			//          删除图片事件
+			$(".list_delet_img").click(function() {
+				phone_delect_id = $(this).data("id");
 
-
+			});
+			//			添加图片
+			$(".file").change(function() {
+				//				alert(111);
+				var formData = new FormData();
+				var filess = $(this)[0].files[0];
+				var id = $(this).data("name");
+				formData.append("id", id);
+				formData.append("file", filess);
+				$.ajax({
+					type: "POST",
+					url: "{:url('admin/Goods/addphoto')}",
+					processData: false,
+					contentType: false,
+					data: formData,
+					success: function(data) {
+						$.ajax({
+							type: "POST",
+							url: "{:url('admin/Goods/photos')}",
+							data: {
+								"id": id,
+							},
+							success: function(data) {
+								layer.msg("修改成功");
+							},
+							error: function(data) {
+								console.log("失败")
+							}
+						});
+					},
+					error: function(data) {
+						console.log("失败")
+					}
+				});
+			});
 
 			// TODO限制分组和品牌
 			form.on('select(goods_type_id)', function(data) {

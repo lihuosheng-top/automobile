@@ -18,7 +18,6 @@ class Shopping extends Base {
      * 陈绪
      */
     public function index(Request $request){
-
         if($request->isPost()){
             $user_id = Session::get("user");
             $shopping = db("shopping")->where("user_id",$user_id['id'])->select();

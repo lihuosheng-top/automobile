@@ -78,6 +78,7 @@ class  Advertisement extends  Controller{
             $goods_liste = selectList("position");
         }
         $plat = db("accessories")->where("id",$id)->select();
+        halt($goods_liste);
 
         return view('accessories_business_edit',['plat'=>$plat,"goods_liste" => $goods_liste]);
     }
@@ -116,11 +117,12 @@ class  Advertisement extends  Controller{
             $userId = db('accessories')->insertGetId($data);
 
             //插入平台列表
+            $data["pid"] = db("position") -> where("id",$data["pid"])->value("pid"); //找到广告位置pid
             $data["pgd"] = $userId;
             $data["department"] = $user_phone[0]["department"];
             $data["shop_name"] = $store_name;
             unset($data["pgone"]);
-            unset($data["pid"]);
+            
 
             $boole = db("platform")->insert($data);
             if ($userId && $boole) {
@@ -142,11 +144,14 @@ class  Advertisement extends  Controller{
     {
         if ($request->isPost()) {
             $data = $request->param();
-
+            $position = db("position") -> where("id",$data["pid"])->value("name");
+            $data["location"] = $position;
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
             $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
+
             unset($data["id"]);
+            unset($data["pid"]);
             $boole = db("platform")->where('pgd', $request->only(["id"])["id"])->update($data);
 
             if ($bool && $boole) {

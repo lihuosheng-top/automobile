@@ -44,11 +44,21 @@ class Goods extends Controller
                 }
             }
             $goods_money = db("goods")->field("goods_new_money,id")->select();
+            
             foreach ($goods_money as $k => $val) {
                 $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
                 $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
                 db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
             }
+   
+            //调整规格后的价格显示
+            $adjusted_price = db("special")->field("price,id")->select();           
+            foreach ($adjusted_price as $k => $val) {
+                $ratio[] = db("goods_ratio")->where("min_money", "<=", $val["price"])->where("max_money", ">=", $val["price"])->field("ratio")->find();
+                $goods_adjusted_money[] = $val["price"] + ($val["price"] * $ratio[$k]["ratio"]);
+                db("special")->where("id", $val["id"])->update(["goods_adjusted_price" => $goods_adjusted_money[$k]]);
+            }
+
 
             $year = db("year")->select();
             $user_id = Session::get("user_id");
@@ -74,6 +84,13 @@ class Goods extends Controller
                 $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
                 $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
                 db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
+            }
+            //调整规格后的价格显示
+            $adjusted_price = db("special")->field("price,id")->select();           
+            foreach ($adjusted_price as $k => $val) {
+                $ratio[] = db("goods_ratio")->where("min_money", "<=", $val["price"])->where("max_money", ">=", $val["price"])->field("ratio")->find();
+                $goods_adjusted_money[] = $val["price"] + ($val["price"] * $ratio[$k]["ratio"]);
+                db("special")->where("id", $val["id"])->update(["goods_adjusted_price" => $goods_adjusted_money[$k]]);
             }
 
             $year = db("year")->select();
@@ -179,6 +196,7 @@ class Goods extends Controller
             $goods_data["store_id"] = $store_id;
             $result = implode(",", $goods_data["lv1"]);
 
+            
             foreach ($goods_data as $kt => $vq) {
                 if (!(is_array($vq))) {
                     $goods_special[$kt] = $vq;
@@ -234,7 +252,6 @@ class Goods extends Controller
 
                 }
             }
-
             if ($goods_id) {
                 //取出图片在存到数据库
                 $goods_images = [];
@@ -249,7 +266,7 @@ class Goods extends Controller
                 $booldata = model("goods_images")->saveAll($goods_images);
             }
             
-            if ($booldata && $bool) {
+            if ($booldata && $goods_id) {
                 $this->success("添加成功", url("admin/Goods/index"));
             } else {
                 $this->success("添加失败", url('admin/Goods/add'));
@@ -265,6 +282,7 @@ class Goods extends Controller
     public function edit(Request $request, $id)
     {
         $goods = db("goods")->where("id", $id)->select();
+        $goods_standard = db("special")->where("goods_id", $id)->select();
         foreach ($goods as $key => $value) {
             $goods[$key]["goods_standard_name"] = explode(",", $value["goods_standard_name"]);
             $goods_standard_value = explode(",", $value["goods_standard_value"]);
@@ -284,6 +302,11 @@ class Goods extends Controller
                 );
             }
         }
+
+        foreach ($goods_standard as $k => $v) {
+            $goods_standard[$k]["title"] = explode(',', $v["name"]);
+            $res = explode(',', $v["lv1"]);
+        }
         $goods_list = getSelectList("goods_type");
         $goods_brand = getSelectList("brand");
         $year = db("year")->select();
@@ -294,7 +317,7 @@ class Goods extends Controller
             return ajax_success("获取成功", array("car_series" => $car_series, "car_brand" => $car_brand));
         }
 
-        return view("goods_edit", ["car_series" => $car_series, "year" => $year, "goods_brand" => $goods_brand, "goods_standard_name" => $goods_standard_name, "goods" => $goods, "goods_list" => $goods_list, "goods_brand" => $goods_brand]);
+        return view("goods_edit", ["car_series" => $car_series, "year" => $year, "goods_brand" => $goods_brand, "goods_standard_name" => $goods_standard_name, "goods" => $goods, "goods_list" => $goods_list, "goods_brand" => $goods_brand,"goods_standard" => $goods_standard,"res" => $res]);
     }
 
 
@@ -538,12 +561,14 @@ class Goods extends Controller
      */
     public function look(Request $request, $id)
     {
-
         $goods = db("goods")->where("id", $id)->select();
+        $goods_standard = db("special")->where("goods_id", $id)->select();
         foreach ($goods as $key => $value) {
             $goods[$key]["goods_standard_name"] = explode(",", $value["goods_standard_name"]);
             $goods_standard_value = explode(",", $value["goods_standard_value"]);
             $goods_standard_value = array_chunk($goods_standard_value, 8);
+            $goods_delivery = explode(",", $value["goods_delivery"]);
+            $goods[$key]["goods_delivery"] = $goods_delivery;
             $goods[$key]["goods_standard_value"] = $goods_standard_value;
             $goods[$key]["goods_images"] = db("goods_images")->where("goods_id", $value["id"])->select();
 
@@ -557,15 +582,22 @@ class Goods extends Controller
                 );
             }
         }
+
+        foreach ($goods_standard as $k => $v) {
+            $goods_standard[$k]["title"] = explode(',', $v["name"]);
+            $res = explode(',', $v["lv1"]);
+        }
         $goods_list = getSelectList("goods_type");
         $goods_brand = getSelectList("brand");
         $year = db("year")->select();
+        $car_series = db("car_series")->distinct(true)->field("brand")->select();
         if ($request->isPost()) {
             $car_series = db("car_series")->distinct(true)->field("brand")->select();
-            $car_brand = db("car_series")->field("series,brand")->select();
+            $car_brand = db("car_series")->field("series,brand")->select(); 
             return ajax_success("获取成功", array("car_series" => $car_series, "car_brand" => $car_brand));
         }
-        return view("goods_look", ["year" => $year, "goods_brand" => $goods_brand, "goods_standard_name" => $goods_standard_name, "goods" => $goods, "goods_list" => $goods_list, "goods_brand" => $goods_brand]);
+
+        return view("goods_edit", ["car_series" => $car_series, "year" => $year, "goods_brand" => $goods_brand, "goods_standard_name" => $goods_standard_name, "goods" => $goods, "goods_list" => $goods_list, "goods_brand" => $goods_brand,"goods_standard" => $goods_standard,"res" => $res]);
     }
 
 
@@ -1109,6 +1141,97 @@ class Goods extends Controller
         $obj_alipay->log($arr_log_data);   //记录日志
     }
 
+
+
+    /**
+     * [汽车商品列表规格图片删除]
+     * 郭杨
+     */
+    public function photos(Request $request)
+    {
+        if ($request->isPost()) {
+            $id = $request->only(["id"])["id"];
+            if (!empty($id)) {
+                $photo = db("special")->where("id", $id)->update(["images" => null]);
+            }
+            if ($photo) {
+                return ajax_success('更新成功!');
+            } else {
+                return ajax_error('更新失败');
+            }
+        }
+
+    }
+
+
+    /**
+     * [汽车商品列表规格值修改]
+     * 郭杨
+     */
+    public function value(Request $request)
+    {
+        if ($request->isPost()) {
+
+            $id = $request->only(["id"])["id"];
+            $value = $request->only(["value"])["value"];
+            $key = $request->only(["key"])["key"];
+            $valuet = db("special")->where("id", $id)->update([$key => $value]);
+
+            if (!empty($valuet)) {
+                return ajax_success('更新成功!');
+            } else {
+                return ajax_error('更新失败');
+            }
+        }
+
+    }
+
+
+    /**
+     * [汽车商品列表规格开关]
+     * 郭杨
+     */
+    public function switches(Request $request)
+    {
+        if ($request->isPost()) {
+            $id = $request->only(["id"])["id"];
+            $status = $request->only(["status"])["status"];
+
+            if (!empty($id)) {
+                $ture = db("special")->where("id", $id)->update(["status" => $status]);
+            }
+            if ($ture) {
+                return ajax_success('更新成功!');
+            } else {
+                return ajax_error('更新失败');
+            }
+        }
+
+    }
+
+
+    /**
+     * [汽车商品列表规格图片添加]
+     * 郭杨
+     */
+    public function addphoto(Request $request)
+    {
+        if ($request->isPost()) {
+            $id = $request->only(["id"])["id"];
+            $imag = $request->file("file") -> move(ROOT_PATH . 'public' . DS . 'uploads');
+            $images = str_replace("\\", "/", $imag->getSaveName());
+
+            if(!empty($id)){
+                $bool = db("special")->where("id", $id)->update(["images" => $images]);
+            }
+             if ($bool) {
+                 return ajax_success('添加图片成功!');
+             } else {
+                 return ajax_error('添加图片失败');
+             }
+        }
+
+    }
 
 
 }

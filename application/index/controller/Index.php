@@ -22,12 +22,13 @@ class Index extends Controller
             if (!empty($user_id)) {
                 $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->select();
                 if ($user_car) {
+
                     return ajax_success("获取成功", $user_car);
                 } else {
                     return ajax_error("获取失败");
                 }
 
-            } else {
+            }else {
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
         }
@@ -114,42 +115,89 @@ class Index extends Controller
     public function shop_goods(Request $request){
 
         if($request->isPost()) {
-            $shop_id = $request->only(["id"])["id"];
-            $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
-            $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
-            $store = db("store")->where("store_id",$shop_id)->select();
-            $service_setting = db("service_setting")->select();
-            $serve_data = [];
-            foreach ($service_setting as $key => $value) {
-                foreach ($serve_goods as $val) {
-                    if ($value["service_setting_id"] == $val["service_setting_id"]) {
-                        $serve_data[$key]["serve_name"] = $value["service_setting_name"];
-                        $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id", $val["service_setting_id"])->where("store_id", $shop_id)->select();
+            $user_id = Session::get("user");
+            if(empty($user_id)){
+                $shop_id = $request->only(["id"])["id"];
+                $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+                $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
+                $store = db("store")->where("store_id",$shop_id)->select();
+                $service_setting = db("service_setting")->select();
+                $serve_data = [];
+                foreach ($service_setting as $key => $value) {
+                    foreach ($serve_goods as $val) {
+                        if ($value["service_setting_id"] == $val["service_setting_id"]) {
+                            $serve_data[$key]["serve_name"] = $value["service_setting_name"];
+                            $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id", $val["service_setting_id"])->where("store_id", $shop_id)->select();
+                        }
+                    }
+                }
+                if ($goods || $store || $serve_data) {
+                    return ajax_success("获取成功", array("store"=>$store,"goods" => $goods, "serve_data" => $serve_data));
+                } else {
+                    return ajax_error("获取失败");
+                }
+            }else {
+                $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
+                $car_series = db("car_series")->where("brand", $user_car["brand"])->where("series", $user_car["series"])->where("year", $user_car["production_time"])->where("displacement", $user_car["displacement"])->field("vehicle_model")->find();
+                if (!empty($car_series)) {
+                    $shop_id = $request->only(["id"])["id"];
+                    $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+                    $serve_vehicle_model = db("serve_goods")->where("store_id",$shop_id)->where("vehicle_model",$car_series["vehicle_model"])->find();
+                    $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
+                    $store = db("store")->where("store_id", $shop_id)->select();
+                    $serve_data = [];
+                    foreach ($serve_goods as $k=>$val){
+                        if($val["service_setting_id"] == $serve_vehicle_model["service_setting_id"]){
+                            unset($serve_goods[$k]);
+                        }
+                    }
+
+                    $serve_goods[] = $serve_vehicle_model;
+                    foreach ($serve_goods as $key=>$value){
+                        $serve_goods[$key]["serve_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
+                    }
+
+                    //相同数组合并
+                    foreach ($serve_goods as $k_1=>$v_1){
+                        if(!isset($serve_data[$v_1['service_setting_id']])){
+                            $serve_data[$v_1['service_setting_id']][]=$v_1;
+                        }else{
+                            $serve_data[$v_1['service_setting_id']][]=$v_1;
+                        }
+                    }
+
+                    if ($goods || $store || $serve_goods) {
+                        exit(array("info"=>"获取成功","status"=>"2","data"=>array("store"=>$store,"goods" => $goods, "serve_data" => $serve_data)));
+                    } else {
+                        exit(array("info"=>"获取成功","status"=>"3"));
+                    }
+                }else {
+                    $shop_id = $request->only(["id"])["id"];
+                    $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+                    $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
+                    $store = db("store")->where("store_id",$shop_id)->select();
+                    $service_setting = db("service_setting")->select();
+                    $serve_data = [];
+                    foreach ($service_setting as $key => $value) {
+                        foreach ($serve_goods as $val) {
+                            if ($value["service_setting_id"] == $val["service_setting_id"]) {
+                                $serve_data[$key]["serve_name"] = $value["service_setting_name"];
+                                $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id", $val["service_setting_id"])->where("store_id", $shop_id)->select();
+                            }
+                        }
+                    }
+                    if ($goods || $store || $serve_data) {
+                         exit(array("info"=>"获取成功","status"=>"4","data"=>array("store"=>$store,"goods" => $goods, "serve_data" => $serve_data)));
+                    } else {
+                        exit(array("info"=>"获取成功","status"=>"5"));
                     }
                 }
             }
-            if ($goods) {
-                return ajax_success("获取成功", array("store"=>$store,"goods" => $goods, "serve_data" => $serve_data));
-            } else {
-                return ajax_error("获取失败");
-            }
         }
 
     }
 
 
 
-
-    /**
-     * 热门服务店铺
-     * 陈绪
-     */
-    public function serve_shop(Request $request){
-
-        if($request->isPost()){
-
-        }
-
-    }
 
 }

@@ -1,5 +1,8 @@
-{extend name="layout"} {block name="css"}
+{extend name="layout"} 
+
+{block name="css"}
 <link rel="stylesheet" type="text/css" href="__STATIC__/admin/index/common/formSelects-v4.css" />
+
 <style type="text/css">
 	body {
 		background: #fff;
@@ -81,6 +84,9 @@
 	.lv1 input{
 		height: 30px;
 	}
+	.red{
+		color: red;
+	}
 </style>
 <style type="text/css">
 	.title {
@@ -106,7 +112,7 @@
 	
 	.general-kuang {
 		border: solid 1px #E4E4E4;
-		width: 1000px;
+		width: 1076px;
 	}
 	
 	.btus {
@@ -212,6 +218,14 @@
 	table .img-box{
 		margin: 0;
 	}
+	    .tanchuang {
+        width: 100%;
+        min-height: 1000px;
+        background: RGBA(0, 0, 0, 0.3);
+        position: fixed;
+        z-index: 9999;
+    }
+    
 </style>
 
 {/block}
@@ -219,9 +233,12 @@
 <body>
 
 	{block name="content"}
-	<div class="open">
+ <div class="tanchuang noshow">
+        <div style="width: 395px;height: 527px;margin: 10% auto;">
+            <img src="" class="tanimg" />
+        </div>
 
-	</div>
+    </div>
 	<form class="layui-form" action="{:url('admin/Goods/save')}" method="post" enctype="multipart/form-data">
 
 		<div class="basic-information title"> 基本信息
@@ -354,7 +371,7 @@
                     <div class="controls" style="padding: 10px;">
                         <button id="add_lv1" class="btn btn-primary" type="button">添加规格项</button>
                         <button id="update_table" class="btn btn-success" type="button">刷新规格项目表</button>
-                        <span class="red">*注意：请添加完规格值和规格参数，刷新后，添加价格组才会显示！</span>
+                        <span class="red">*注意：请全部添加完“规格名称”及“规格值”后，再点击【刷新规格项目表】，就可对各种规格进行价格等编辑，手机前端显示<span class="tan" style="color: #0E90D2;" data-id="__STATIC__/admin/common/img/u27291.png">查看实例</span></span>
                     </div>
                 </div>
                 <div id="lv_table_con" class="control-group" style="display: none; ">
@@ -429,7 +446,8 @@
 				                    <div class="controls" style="padding: 10px;">
 				                        <button id="add_lv11" class="btn btn-primary" type="button">添加规格项</button>
 				                        <button id="update_table1" class="btn btn-success" type="button">刷新规格项目表</button>
-				                        <span class="red">*注意：请添加完规格值和规格参数，刷新后，添加价格组才会显示！</span>
+				                            <span class="red">*注意：请全部添加完“规格名称”及“规格值”后，再点击【刷新规格项目表】，就可对各种规格进行价格等编辑，手机前端显示<span class="tan" style="color: #0E90D2;" data-id="__STATIC__/admin/common/img/u27291.png">查看实例</span></span>
+                   
 				                    </div>
 				                </div>
 				                <div id="lv_table_con1" class="control-group" style="display: none; ">
@@ -758,7 +776,7 @@
 
                             var text = $(lv1Arr[j]).parents('.lv1').find('input[class="lvv4"]').eq(n).val();
                             if (j != lv1Arr.length - 1) {
-                                name += text + '_';
+                                name += text + ',';
                             } else {
                                 name += text;
                             }
@@ -898,7 +916,7 @@
 
                             var text = $(lv1Arr[j]).parents('.lv1').find('input[class="lvv4"]').eq(n).val();
                             if (j != lv1Arr.length - 1) {
-                                name += text + '_';
+                                name += text + ',';
                             } else {
                                 name += text;
                             }
@@ -1150,7 +1168,14 @@
 					}
 				});
 			});
-	
+	          form.on('switch(isShow)', function(data) {
+                if ($(this).val() == 0) {
+                    $(this).val(1);
+                } else {
+                    $(this).val(0);
+                }
+
+            });
 			// end商品规格变化
 			// TODO获取车牌Ajax
 			$.ajax({
@@ -1171,6 +1196,15 @@
 					console.log(data)
 				}
 			});
+			$(".tan").click(function() {
+                src = $(this).data("id");
+                $(".tanchuang").removeClass("noshow");
+                $(".tanimg").attr("src", src);
+            });
+            $(".tanchuang").click(function() {
+                $(".tanchuang").addClass("noshow");
+            });
+
 		})
 	</script>
 

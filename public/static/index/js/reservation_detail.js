@@ -214,25 +214,31 @@ if(urlLen > 1){
                             </div>`
                 })
                 $('.goods-content').prepend(str);
+                // 店铺信息
+                $.each(res.data.store, function(idx, val){
+                    $('.shop_name').text(val.store_name);
+                    $('.addr_p span').text(val.store_detailed_address);
+                    $('.shop-describe').text(val.store_information);
+                })
                 // 服务项目
                 var str2 = '';
                 $.each(res.data.serve_data, function(idx, val){
                     str2 += `<div class="service-colla-item">
                                 <div class="service-colla-title">
-                                    <p class="service-subtitle">`+val.serve_name+`</p>
+                                    <p class="service-subtitle">`+val[0].serve_name+`</p>
                                     <p class="service-money"></p>
                                     <i class="spr icon-uncheck"></i>
                                 </div>
                                 <div class="service-colla-content" style="display:none;">
                                     <ul>`
-                    $.each(val.serve_goods, function(idx, val){
+                    $.each(val, function(idx, val){
                         if(val.service_money === null && val.ruling_money === null){
                             str2 += `<li>
                                         <p class="service-car-type">`+val.vehicle_model+`</p>
                                         <div class="content-money-div">
                                             <p class="sale"><span>面议</span></p>
                                         </div>
-                                        <i class="spr icon-uncheck"></i>
+                                        <i class="spr icon-uncheck" id="`+val.id+`"></i>
                                     </li>`
                         }else if(val.service_money !== null && val.ruling_money === null){
                             str2 += `<li>
@@ -240,7 +246,7 @@ if(urlLen > 1){
                                         <div class="content-money-div">
                                             <p class="sale">￥<span>`+val.service_money+`</span></p>
                                         </div>
-                                        <i class="spr icon-uncheck"></i>
+                                        <i class="spr icon-uncheck" id="`+val.id+`"></i>
                                     </li>`
                         }else if(val.service_money !== null && val.ruling_money !== null){
                             str2 += `<li>
@@ -249,7 +255,7 @@ if(urlLen > 1){
                                             <p class="sale">￥<span>`+val.service_money+`</span></p>
                                             <p class="thro">￥<span>`+val.ruling_money+`</span></p>
                                         </div>
-                                        <i class="spr icon-uncheck"></i>
+                                        <i class="spr icon-uncheck" id="`+val.id+`"></i>
                                     </li>`
                         }
                     })
@@ -265,7 +271,6 @@ if(urlLen > 1){
             console.log('error');
         }
     })
-
 }
 
 function selectEvent(){
@@ -286,9 +291,13 @@ function selectEvent(){
         $(this).find('.icon-uncheck').toggleClass('icon-check');
         if($(this).find('.icon-uncheck').hasClass('icon-check')){
             $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
-            $('.bespeak-btn').removeAttr('disabled')
+            $('.bespeak-btn').removeAttr('disabled');
+            var userSelectMoney = $(this).find('.sale').text();
+            // console.log(userSelectMoney);
+            $('.bespeak-money').text(userSelectMoney);
         }else{
             $('.bespeak-btn').prop('disabled', 'disabled');
+            $('.bespeak-money').text('');
         }
     })
 }
@@ -318,5 +327,20 @@ $('.filter-ul').on('click', 'li', function(){
 
 // 确定预约
 $('.bespeak-btn').click(function(){
-    location.href = 'reservation_info';
+    var id = $('.service-colla-content').find('.icon-check').attr('id');
+    $.ajax({
+        url: 'reservation_info',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id
+        },
+        success: function(res){
+            console.log(res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+    // location.href = 'reservation_info';
 })

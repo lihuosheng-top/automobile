@@ -1309,7 +1309,7 @@ class OrderParts extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:配件商提交订单接口
+     * Notes:配件商提交订单接口（正常流程过来）
      **************************************
      */
     public function  ios_api_order_parts_button(Request $request){
@@ -1404,7 +1404,6 @@ class OrderParts extends Controller{
                                 Db::name("user")->where("id",$user_id)->update(["user_integral_wallet"=>$user_integral_wallets,"user_integral_wallet_consumed"=>$setting_data["integral_full"]+$user_information["user_wallet_consumed"]]);
                                     Db::name("integral")->insert($integral_data); //插入积分消费记录
                             }
-
                             return ajax_success('下单成功',$order_datas);
                         }else{
                             return ajax_error('失败',['status'=>0]);
@@ -1415,6 +1414,92 @@ class OrderParts extends Controller{
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:购物车提交订单
+     **************************************
+     * @param Request $request
+     */
+    public function  ios_api_order_button_by_shop(Request $request){
+        if ($request->isPost()) {
+//            $user_id =Session::get("user");
+            $member_data = session('member');
+            $member = Db::name('user')->field('id,harvester,harvester_phone_num,city,address')->where('phone_num', $member_data['phone_num'])->find();
+            if (empty($member['harvester']) || empty($member['harvester_phone_num']) || empty($member['city']) || empty($member['address'])) {
+                return ajax_error('请填写收货人信息',['status'=>0]);
+            }
+            if (!empty($member['city'])) {
+                $my_position = explode(",", $member['city']);
+                $position = $my_position[0] . $my_position[1] . $my_position[2] . $member['address'];
+            }else{
+                return ajax_error('请填写收货地址',['status'=>0]);
+            }
+            //从购物车过来的
+            $shopping_id = $_POST['shopping_id'];
+            if (!empty($shopping_id)) {
+                $shopping = Db::name('shopping_shop')->where('id', $shopping_id)->find();
+                if(!empty($shopping)){
+                    $shop_id = explode(',', $shopping['shopping_id']);
+                    if (is_array($shop_id)) {
+                        $where = 'id in(' . implode(',', $shop_id) . ')';
+                    } else {
+                        $where = 'id=' . $shop_id;
+                    }
+                    $list = Db::name('shopping')->where($where)->select();
+                    if(!empty($list)){
+                        $create_time = time();
+                        foreach ($list as $k => $v) {
+                            $data = $_POST;
+                            $datas = [
+                                'goods_img' => $v['goods_images'],
+                                'goods_name' => $data['goods_name'][$k],
+                                'order_num' => $data['order_num'][$k],
+                                'user_id' => $member['id'],
+                                'harvester' => $member['harvester'],
+                                'harvest_phone_num' => $member['harvester_phone_num'],
+                                'harvest_address' => $position,
+                                'create_time' => $create_time,
+                                'pay_money' => $data['all_pay'],
+                                'status' => 1,
+                                'goods_id' => $v['goods_id'],
+                                'send_money' => $data['express_fee'],
+                                'order_information_number' => $create_time . $member['id'],//时间戳+用户id构成订单号
+                                'shopping_shop_id' => $v['id']
+                            ];
+                            $res =Db::name('order')->insertGetId($datas);
+                            /*下单成功对购物车里面对应的商品进行删除*/
+                        }
+                        if($res){
+                            $order_information_numbers =Db::name('order')->field('order_information_number')->where('id',$res)->find();
+                            $res_one = Db::name('shopping')->where($where)->delete();
+                            if($res_one){
+                                $res_tow = Db::name('shopping_shop')->where('id',$shopping_id)->delete();
+                                if($res_tow){
+                                    return ajax_success('下单成功',$order_information_numbers['order_information_number']);
+                                }else{
+                                    return ajax_success('下单成功',2);
+                                }
+                            }else{
+                                return ajax_success('下单成功', 3);
+                            }
+                        }else{
+                            return ajax_success('下单失败',['status'=>0]);
+                        }
+
+                    }else{
+                        return ajax_error('错误',['status'=>0]);
+                    }
+                }else{
+                    return ajax_error('没有数据返回',['status'=>0]);
+                }
+            }else{
+                return ajax_error('没有数据返回',['status'=>0]);
+            }
+
+        }
+
+    }
 
     /**
      **************李火生*******************
@@ -1440,11 +1525,13 @@ class OrderParts extends Controller{
             $goods_id =$request->only('goods_id')['goods_id'];//商品id
             $goods_number=$request->only('goods_number')['goods_number'];//数量
             $goods_standard=$request->only('goods_standard')['goods_standard'];//规格
+            $goods_standard_id=$request->only('goods_standard_id')['goods_standard_id'];//通用专用规格id
             if(!empty($goods_id)){
                 $data =[
                     "goods_id"=>$goods_id,
                     "goods_number"=>$goods_number,
-                    "goods_standard"=>$goods_standard
+                    "goods_standard"=>$goods_standard,
+                    "goods_standard_id"=>$goods_standard_id,
                 ];
                 Session::set('part_goods_info',$data);
                 return ajax_success('保存商品id成功',$data);
@@ -1468,10 +1555,13 @@ class OrderParts extends Controller{
                $goods = db("goods")->where("id",$goods_id)->select();
                foreach ($goods as $key=>$value){
                    $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
+                   $store_name =Db::name("store")->field("store_name")->where("store_id",$value["store_id"])->find();
+                   $goods[$key]["store_name"] =$store_name["store_name"];
                    $goods_standard_value = explode(",",$value["goods_standard_value"]);
                    $goods[$key]["goods_standard_value"] = array_chunk($goods_standard_value,"8");
                    $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
                    $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
+                   $goods[$key]["goods_standard_id"] =db("special")->where("id",$part_goods_info["goods_standard_id"])->find();
                }
                if(!empty($goods)){
                    $part_goods_info['goods'] =$goods;

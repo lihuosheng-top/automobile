@@ -83,6 +83,34 @@ $.ajax({
                 }
             })
         })
+        // 删除订单 √
+        $('.del-order-btn').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            layer.open({
+                content: '您确定删除订单？',
+                btn: ['确定', '取消'],
+                yes: function (index) {
+                    layer.close(index);
+                    $.ajax({
+                        url: 'ios_api_order_parts_del',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'parts_order_number': parts_order_number,
+                            'store_id': store_id
+                        },
+                        success: function(res){
+                            console.log(res);
+                            location.reload();
+                        },
+                        error: function(){
+                            console.log('error');
+                        }
+                    })
+                }
+            });
+        })
         // 查看订单详情
         $('.all-goods-box').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');

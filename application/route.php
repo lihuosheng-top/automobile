@@ -25,6 +25,7 @@ Route::group("",[
     "index_shop"=>"index/index/shop",                               //热门配件店铺
     "index_shop_goods"=>"index/index/shop_goods",                   //热门配件店铺商品
     "index_serve_shop"=>"index/index/serve_shop",                   //热门配件店铺商品
+ 
 
 
 
@@ -63,6 +64,7 @@ Route::group("",[
     /*TODO:配件商订单开始*/
     "parts_notifyurl"=>"index/Apppay/parts_notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
+    "ios_api_order_button_by_shop"=>"index/OrderParts/ios_api_order_button_by_shop",//购物车提交订单
 //    "ios_api_alipay"=>"index/OrderParts/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
    "ios_return_parts_num"=>"index/OrderParts/ios_return_parts_num",//生成订单(未用)
     'index_parts_aliPay'=>"index/Apppay/index_parts_aliPay", //配件商支付接口（弹窗支付）
@@ -127,7 +129,7 @@ Route::group("",[
 
 
     /*TODO:注册开始*/
-    "register"=>"index/Register/index",//注册页面
+    "register"=>"index/Register/index",//h5注册页面
     "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
     /*TODO:注册结束*/
@@ -211,7 +213,7 @@ Route::group("",[
     /*TODO:店铺结束*/
 
     /*TODO：我要推广开始*/
-    "spread_index"=>"index/Extension/spread_index",//我要推广
+    "spread_index"=>"index/Extension/spread_index",//我要推广（ajax）
     /*TODO：我要推广结束*/
 
     /*TODO：配件商评价开始*/
@@ -242,8 +244,15 @@ Route::group("",[
 
 
 
-    // 购物车
-    "cart_index"=>"index/Cart/cart_index",
+    /*购物车开始*/
+    "cart_index"=>"index/Cart/cart_index",//首页（ajax）
+    "get_goods_id_to_cart"=>"index/Cart/get_goods_id_to_cart",//获取商品id 存入购物车（ajax）
+    "cart_information_add"=>"index/Cart/cart_information_add",//购物车添加按钮（+）（ajax）
+    "cart_information_del"=>"index/Cart/cart_information_del",//购物车添加按钮（-）（ajax）
+    "carts_del"=>"index/Cart/carts_del",//购物车删除（ajax）
+    "place_an_order_by_cart"=>"index/Cart/place_an_order_by_cart",//购物车存储到shopping_shop表（ajax）
+    /*购物车结束*/
+
 
 
     /*TODO:配件商订单状态开始*/
@@ -303,6 +312,7 @@ Route::group("",[
 
     /*汽车广告管理前端开始*/
     "advertisement_index"=>"index/Advertisement/advertisement_index", //汽车广告显示
+    "machine_index"=>"index/Advertisement/machine_index",             //汽车配件商广告显示
 
 
 
@@ -395,6 +405,10 @@ Route::group("admin",[
     "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
     "goods_alipay_pay"=>"admin/Goods/alipay_pay",                                                //微信支付回调地址
     "goods_get_weixin_pay_url"=>"admin/Goods/get_weixin_status",                              //微信是否上架检测
+    "goods_photos"=>"admin/Goods/photos",     //商品列表规格图片删除
+    "goods_value"=>"admin/Goods/value",       //商品列表规格值修改
+    "goods_switches"=>"admin/Goods/switches", //商品列表规格开关
+    "goods_addphoto"=>"admin/Goods/addphoto", //商品列表规格图片添加
 
 
 

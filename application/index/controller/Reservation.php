@@ -102,8 +102,20 @@ class Reservation extends Controller{
      * 填写预约信息
      * 陈绪
      */
-    public function reservation_info()
+    public function reservation_info(Request $request)
     {
+        if($request->isPost()) {
+            $serve_goods_id = $request->only(["id"])["id"];
+            $user_id = Session::get("user");
+            $user = db("user")->where("id", $user_id)->select();
+            $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
+            $serve_goods = db("serve_goods")->where("id", $serve_goods_id)->select();
+            if ($serve_goods) {
+                return ajax_success("获取成功", array("user" => $user, "user_car" => $user_car, "serve_goods" => $serve_goods));
+            } else {
+                return ajax_error("获取失败");
+            }
+        }
         return view("reservation_info");
     }
 
