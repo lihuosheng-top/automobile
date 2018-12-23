@@ -86,15 +86,10 @@ class  Advertisement extends  Controller{
             if( $value['pid'] == 21) //配件商城
             {
                 $machine[] = $value;          
-            }
-            if( $value['pid'] == 27) //配件商城优惠推荐
-            {
-                $discounts[] = $value;          
-            }    
+            }   
             }
        
             $reste["machine"] = $machine; 
-            $reste["discounts"] = $discounts; 
             
             if ( (!empty($reste)) && (!empty($area)) ) {
                 return ajax_success('传输成功', $reste);
