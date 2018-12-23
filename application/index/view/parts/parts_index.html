@@ -19,15 +19,11 @@
         </header>
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/my_bg5.png">
-                </div>
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/my_bg5.png">
-                </div>
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/my_bg5.png">
-                </div>
+                <!-- <div class="swiper-slide">
+                    <a href="javascript:;">
+                        <img src="__STATIC__/index/image/my_bg5.png">
+                    </a>
+                </div> -->
             </div>
             <!-- 如果需要分页器 -->
             <div class="swiper-pagination"></div>
@@ -171,34 +167,61 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
     <script>
-        var mySwiper = new Swiper ('.swiper-container', {
-            direction: 'horizontal', // 垂直切换选项
-            autoplay: true, //自动播放
-            delay: 3000,
-            // 禁止滑动添加类名swiper-no-swiping
-            // 如果需要分页器
-            pagination: {
-                el: '.swiper-pagination',
+        $.ajax({
+            url: 'machine_index',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status ==1){
+                    var topSwiper = '';
+                    $.each(res.data.machine, function(idx, val){
+                        topSwiper += `<div class="swiper-slide">
+                                        <a href="`+val.url+`">
+                                            <img src="uploads/`+val.advert_picture+`">
+                                        </a>
+                                    </div>`
+                    })
+                    $('.swiper-container .swiper-wrapper').append(topSwiper);
+                    swiper1();
+                }
             },
-            // 滑动后 切换也不停止
-            autoplay: {
-                disableOnInteraction: false
+            error: function(){
+                console.log('error');
             }
         })
-        var mySwiper2 = new Swiper ('.swiper-container2', {
-            direction: 'horizontal', // 垂直切换选项
-            autoplay: true, //自动播放
-            delay: 1000,
-            // 禁止滑动添加类名swiper-no-swiping
-            // 如果需要分页器
-            pagination: {
-                el: '.swiper-pagination',
-            },
-            // 滑动后 切换也不停止
-            autoplay: {
-                disableOnInteraction: false
-            }
-        })
+        function swiper1(){
+            var mySwiper = new Swiper ('.swiper-container', {
+                direction: 'horizontal', // 垂直切换选项
+                autoplay: true, //自动播放
+                delay: 3000,
+                // 禁止滑动添加类名swiper-no-swiping
+                // 如果需要分页器
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+                // 滑动后 切换也不停止
+                autoplay: {
+                    disableOnInteraction: false
+                }
+            })
+        }
+        function swiper2(){
+            var mySwiper2 = new Swiper ('.swiper-container2', {
+                direction: 'horizontal', // 垂直切换选项
+                autoplay: true, //自动播放
+                delay: 1000,
+                // 禁止滑动添加类名swiper-no-swiping
+                // 如果需要分页器
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+                // 滑动后 切换也不停止
+                autoplay: {
+                    disableOnInteraction: false
+                }
+            })
+        }
     </script>
 </body>
 </html>
