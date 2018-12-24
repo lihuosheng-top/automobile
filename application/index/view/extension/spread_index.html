@@ -72,7 +72,7 @@
                 <p>QQ</p>
             </li>
         </ul>
-        <button class="cancel-share">取消</button>
+        <button class="cancel-share" >取消</button>
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
@@ -98,6 +98,25 @@
                 content: '复制成功',
                 time: .8
             })
+        })
+        $.ajax({
+            url: 'spread_index',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+
+            },
+            success: function(res){
+                console.log(res);
+                if(res.status ===1){
+                    $('#code-number').val(res.data.invitation);
+                    $('.code-box img').attr('src', res.data.invitation_images_url);
+                    
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
         })
     </script>
 </body>

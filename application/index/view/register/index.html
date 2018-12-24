@@ -30,7 +30,7 @@
                 <button class="reg-send-code">发送验证码</button>
             </div>
             <input type="password" placeholder="输入密码" class="reg-psw">
-            <input type="password" placeholder="邀请码" class="reg-invite-code">
+            <input type="text" placeholder="邀请码" class="reg-invite-code">
         </div>
         <div class="agree">
             <input type="checkbox" id="agree-input">
@@ -103,6 +103,12 @@
                 }
             }
         })
+        var url = location.search;
+        if(url.indexOf('?') !== -1){
+            var registerCode = url.substr(1).split('=')[1];
+            $('.reg-invite-code').val(registerCode);
+        }
+
         // 注册确定按钮
         $('.reg-confirm').click(function(){
             var mobile = $('.reg-phone-num').val(),
