@@ -1,4 +1,6 @@
 
+var totalPriceArr = [];
+var totalPrice = 0;
 // 店铺选中样式
 function myCircleClass(){
     $('.shop-circle').click(function(){
@@ -13,6 +15,7 @@ function myCircleClass(){
     $('.goods-circle').click(function(){
         $(this).toggleClass('circle-on');
         if($('.circle-on').length > 0){
+            
             $('.total_box').show();
             $('.totalprice').text()
         }else{
@@ -28,6 +31,13 @@ function myCircleClass(){
             $('.shop-circle').add('.goods-circle').removeClass('circle-on');
         }
     })
+}
+// 解决计算精度问题
+function toFixed(num, s) {
+    var times = Math.pow(10, s)
+    var des = num * times + 0.5
+    des = parseInt(des, 10) / times
+    return des + ''
 }
 
 //  加减商品数量
@@ -175,7 +185,7 @@ $.ajax({
                                         <p class="cart_goods_name">`+val.goods_name+`</p>
                                         <p class="cart_sub1">`+val.special_name.split(',').join('')+`</p>
                                         <div class="price_num_wrap">
-                                            <span class="cart_price">￥<span>`+val.money+`</span></span>
+                                            <span class="cart_price">￥<span>`+val.goods_prices+`</span></span>
                                             <div class="calculator_num">
                                                 <a href="javascript:;" class="minus">-</a>
                                                 <input type="text" value="`+val.goods_unit+`" class="calculator_val" readonly>
