@@ -563,7 +563,7 @@ var map = new AMap.Map('container', {
     zoom: 12, //级别
     center: [114.07, 22.62]
 });
-
+var threeAdress;
 map.plugin([
     'AMap.Geolocation',
     'AMap.Geocoder',//逆地理编码
@@ -582,14 +582,19 @@ map.plugin([
         // alert(JSON.stringify(e))
         // $('.gec-curr-txt').text(e.addressComponent.city);
         $('.curr_city').text(e.addressComponent.district);
-        var threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
+        threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
         getAdvertisment(threeAdress);
+        setCookie('area', threeAdress, 7); //保存地址到cookie，有效期7天
     };
     function onError(e){
         // console.log(e)
         // alert(JSON.stringify(e))
     };
 })
+ //页面初始化时，如果帐号密码cookie存在则填充
+ if (getCookie('area')) {
+    getAdvertisment(getCookie('area'));
+}
 // 获取广告
 function getAdvertisment(area){
     $.ajax({
@@ -626,7 +631,6 @@ function getAdvertisment(area){
         }
     })
 }
-
 // 获取商家的信息，如果存在则是商家角色，不存在则为车主
 $.ajax({
     url: 'select_role_get',
@@ -718,3 +722,19 @@ function mySwiper(){
         }
     })
 }
+//设置cookie
+function setCookie(name, value, day) {
+    var date = new Date();
+    date.setDate(date.getDate() + day);
+    document.cookie = name + '=' + value + ';expires=' + date;
+};
+//获取cookie
+function getCookie(name) {
+    var reg = RegExp(name + '=([^;]+)');
+    var arr = document.cookie.match(reg);
+    if (arr) {
+        return arr[1];
+    } else {
+        return '';
+    }
+};
