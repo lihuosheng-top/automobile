@@ -52,12 +52,13 @@ class Goods extends Controller
             }
    
             //调整规格后的价格显示
-            $adjusted_price = db("special")->field("price,id")->select();           
+            $adjusted_price = db("special")->field("price,id")->select();          
             foreach ($adjusted_price as $k => $val) {
                 $ratio[] = db("goods_ratio")->where("min_money", "<=", $val["price"])->where("max_money", ">=", $val["price"])->field("ratio")->find();
-                $goods_adjusted_money[] = $val["price"] + ($val["price"] * $ratio[$k]["ratio"]);
-                db("special")->where("id", $val["id"])->update(["goods_adjusted_price" => $goods_adjusted_money[$k]]);
+                $goods_adjusted_moneys[] = $val["price"] + ($val["price"] * $ratio[$k]["ratio"]);
+                db("special")->where("id", $val["id"])->update(["goods_adjusted_price" => $goods_adjusted_moneys[$k]]);
             }
+
 
 
             $year = db("year")->select();
@@ -89,8 +90,8 @@ class Goods extends Controller
             $adjusted_price = db("special")->field("price,id")->select();           
             foreach ($adjusted_price as $k => $val) {
                 $ratio[] = db("goods_ratio")->where("min_money", "<=", $val["price"])->where("max_money", ">=", $val["price"])->field("ratio")->find();
-                $goods_adjusted_money[] = $val["price"] + ($val["price"] * $ratio[$k]["ratio"]);
-                db("special")->where("id", $val["id"])->update(["goods_adjusted_price" => $goods_adjusted_money[$k]]);
+                $goods_adjusted_moneys[] = $val["price"] + ($val["price"] * $ratio[$k]["ratio"]);
+                db("special")->where("id", $val["id"])->update(["goods_adjusted_price" => $goods_adjusted_moneys[$k]]);
             }
 
             $year = db("year")->select();
