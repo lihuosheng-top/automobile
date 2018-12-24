@@ -213,7 +213,8 @@ $.ajax({
             })
             $('.user-info-box').after(str);
             // 折扣
-            finalMoney = $('.total-money').text();
+            $('.total-money').text(res.data[0].total_price);
+            finalMoney = parseFloat($('.total-money').text());
             // 返回商品详情
             $('.place-order-back').click(function () {
                 location.href = 'cart_index';
