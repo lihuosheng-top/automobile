@@ -583,7 +583,9 @@ map.plugin([
         // $('.gec-curr-txt').text(e.addressComponent.city);
         $('.curr_city').text(e.addressComponent.district);
         threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
-        getAdvertisment(threeAdress);
+        if (!getCookie('area')) {
+            getAdvertisment(threeAdress);
+        }
         setCookie('area', threeAdress, 7); //保存地址到cookie，有效期7天
     };
     function onError(e){
