@@ -35,7 +35,7 @@ $.ajax({
             // 划线价
             $('.through').html('￥' + val.goods_bottom_money);
             // 售价
-            $('.sale').html('￥' + val.goods_standard[0].price);
+            $('.sale').html('￥' + val.goods_standard[0].goods_adjusted_price);
             // 库存
             $('.stock').html('库存' + val.goods_standard[0].stock + '件');
             // 商品详情
@@ -52,7 +52,7 @@ $.ajax({
                 if(idx === 0){
                     // 选择服务弹窗
                     $('.select-goods-img img')[0].src = 'uploads/' + val.images;
-                    $('.select-goods-price span').text(val.price);
+                    $('.select-goods-price span').text(val.goods_adjusted_price);
                     $('.select-goods-stock span').text(val.stock);
                     specId = val.id;
                     specStr += `<span class="select-item select-on" id="`+val.id+`">`+val.name.split(',').join('')+`</span>`;
@@ -68,7 +68,7 @@ $.ajax({
                 $.each(val.goods_standard, function(idx, val){
                     if($index === idx){
                         $('.select-goods-img img')[0].src = 'uploads/' + val.images;
-                        $('.select-goods-price span').text(val.price);
+                        $('.select-goods-price span').text(val.goods_adjusted_price);
                         $('.select-goods-stock span').text(val.stock);
                     }
                 })

@@ -8,7 +8,6 @@ function myCircleClass(){
         }else{
             $(this).parents('.goods_wrap').find('.goods-circle').removeClass('circle-on');
         }
-
     })
     // 单选商品
     $('.goods-circle').click(function(){
