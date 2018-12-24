@@ -36,7 +36,7 @@ class Cart extends Controller
 //                    $da_store_ids[] =$vals; //去重之后的id数组
 
                     $shopping_datas[] =Db::table('tb_shopping')
-                        ->field("tb_shopping.*,tb_special.name special_name")
+                        ->field("tb_shopping.*,tb_special.name special_name,tb_special.goods_adjusted_price goods_prices")
                         ->join("tb_special","tb_shopping.goods_standard_id=tb_special.id",'left')
                         ->where('store_id', $vals)
                         ->where('user_id',  $user_id)
@@ -222,9 +222,9 @@ class Cart extends Controller
                     ->where("user_id",$user_id)
                     ->update(["goods_unit"=>$goods_units]);
                 if($bool){
-                    exit(json_encode(array("status" => 1, "info" => "添加成功","data"=>$bool)));
+                    exit(json_encode(array("status" => 1, "info" => "删除成功","data"=>$bool)));
                 }else{
-                    exit(json_encode(array("status" => 0, "info" => "添加失败","data"=>["status"=>0])));
+                    exit(json_encode(array("status" => 0, "info" => "删除失败","data"=>["status"=>0])));
                 }
             }
         }
@@ -255,7 +255,6 @@ class Cart extends Controller
             }
         }
     }
-
 
 
     /**
