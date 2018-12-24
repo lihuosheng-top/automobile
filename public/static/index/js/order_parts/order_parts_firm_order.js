@@ -201,9 +201,9 @@ $.ajax({
                                 </div>
                                 <div class="order-info-box">
                                     <p class="order-goods-p txt-hid-two">`+val.goods_name+`</p>
-                                    <p class="standard txt-hid-two"></p>
+                                    <p class="standard txt-hid-two">`+val.special_name+val.goods_delivery+`</p>
                                     <div class="unit-price-quantity">
-                                        <p class="unit-price-p">￥<span></span></p>
+                                        <p class="unit-price-p">￥<span>`+val.money+`</span></p>
                                         <p class="quantity-p">×<span>`+val.goods_unit+`</span></p>
                                     </div>
                                 </div>
