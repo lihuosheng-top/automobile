@@ -1,11 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/my/login.css">
+    <title>登录</title>
 </head>
-<body>
-h5注册页面
 
+<body>
+    <!-- 注册 -->
+    <div class="register-pop">
+        <div class="reg-head">
+            <!-- <a href="javascript:;" class="spr reg-back"></a> -->
+            <h3>注册</h3>
+            <!-- <a href="javascript:;" class="login">登录</a> -->
+        </div>
+        <div class="logo-wrap">
+            <img src="__STATIC__/index/image/icon8.png">
+        </div>
+        <div class="reg-inputbox">
+            <input type="text" placeholder="输入手机号码" class="reg-phone-num">
+            <div class="identifying-code">
+                <input type="text" class="reg-message-code" placeholder="短信验证码">
+                <button class="reg-send-code">发送验证码</button>
+            </div>
+            <input type="password" placeholder="输入密码" class="reg-psw">
+            <input type="password" placeholder="邀请码" class="reg-invite-code">
+        </div>
+        <div class="agree">
+            <input type="checkbox" id="agree-input">
+            <label for="agree-input" class="agree-label">我已阅读并同意《<span>用户服务协议</span>》</label>
+        </div>
+        <button class="reg-confirm" disabled>确定</button>
+        <div class="third-part">
+            <h3 class="third-txt">第三方登录</h3>
+            <a href="javascript:;" class="spr wechat"></a>
+            <a href="javascript:;" class="spr QQ"></a>
+        </div>
+    </div>
+    
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        // 注册发送验证码
+        $('.reg-send-code').click(function(){
+            var phone = $('.reg-phone-num').val();
+            var reg = /^1[34578]\d{9}$/;
+            if(phone!== '' && phone.match(reg)){
+                $.ajax({
+                    url: 'sendMobileCode',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'mobile': phone
+                    },
+                    success: function(data){
+                        console.log(data);
+                        if(data.status == 0){
+                            layer.open({
+                                skin: 'msg',
+                                content: data.info,
+                                time: 1
+                            })
+                        }else{
+                            layer.open({
+                                skin: 'msg',
+                                content: data.info,
+                                time: 1
+                            })
+                            buttonCountdown($(this), 1000 * 60 * 1, "ss");
+                        }
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '号码格式不正确',
+                    time: 1
+                })
+            }
+        })
+
+        $('#agree-input').change(function(){
+            if($(this)[0].checked){
+                if($('.reg-message-code').val() !== ''){
+                    $('.reg-confirm').attr('disabled', false);
+                }
+            }
+        })
+        $('.reg-message-code').blur(function(){
+            if($(this).val() !== ''){
+                if($('#agree-input')[0].checked){
+                    $('.reg-confirm').attr('disabled', false);
+                }
+            }
+        })
+        // 注册确定按钮
+        $('.reg-confirm').click(function(){
+            var mobile = $('.reg-phone-num').val(),
+                mobile_code = $('.reg-message-code').val(),
+                password = $('.reg-psw').val();
+                confirm_password = $('.reg-psw').val();
+                invitation = $('.reg-invite-code').val();
+
+            $.ajax({
+                url: 'doRegByPhone',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'mobile': mobile,
+                    'mobile_code': mobile_code,
+                    'password': password,
+                    'confirm_password': confirm_password,
+                    'invitation': invitation
+                },
+                success: function(data){
+                    console.log(data);
+                    if(data.status == 0){
+                        layer.open({
+                            skin: 'msg',
+                            content: data.info,
+                            time: .8
+                        })
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: '注册成功',
+                            time: .8
+                        })
+                        setTimeout(function(){
+                            $('.register-pop').css('display', 'none');
+                            $('.wrapper').css('display', 'block');
+                        },1000)
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+    </script>
 </body>
 </html>
