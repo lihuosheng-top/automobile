@@ -146,9 +146,9 @@ $('.publish-btn').click(function(){
     })
     
     formData.append('filesArr[]', filesArr);
-    formData.append('orderId', orderId);
-    formData.append('evaluateContent', evaluateContent);
-    formData.append('starArr', starArr);
+    formData.append('orderId[]', orderId);
+    formData.append('evaluateContent[]', evaluateContent);
+    formData.append('starArr[]', starArr);
     formData.append('isOnTime', isOnTime);
     $.ajax({
         url: 'evaluate_parts_add',
