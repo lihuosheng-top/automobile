@@ -72,6 +72,7 @@ class  Express extends  Controller{
             }
 
         }
+
         foreach ($delivery as $k=>$v) {
             foreach ($delivery_data as $v_1) {
                 if($v["store_city_address"] == $v_1["area"]){
@@ -80,13 +81,13 @@ class  Express extends  Controller{
             }
         }
         halt($delivery);
+
         foreach ($delivery as $k_1=>$v_2){
             if($delivery_id != $v_2["delivery_user_id"]){
                 unset($delivery[$k_1]);
             }
         }
-
-
+        halt($delivery);
 
         return view("express_wait_for_order");
     }
