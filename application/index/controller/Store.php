@@ -90,6 +90,10 @@ class Store extends Controller{
             }
             $input_data = $_POST;
             $store_name =trim($input_data['store_name']);
+            $is_set_store_name =Db::name("store")->where("store_name",$store_name)->find();
+            if(!empty($is_set_store_name)){
+                return ajax_success("店铺名已存在",["status"=>0]);
+            }
             $real_name =trim($input_data['real_name']);
             $phone_num =trim($input_data['phone_num']);
             $store_owner_seat_num =trim($input_data['store_owner_seat_num']);
@@ -127,7 +131,7 @@ class Store extends Controller{
                        'store_detailed_address'=>$store_detailed_address,//店铺具体地址
                        'store_owner_seat_num'=>$store_owner_seat_num,
                        'store_is_pay'=>0, //是否付费上架（0是没付费，1是付费）
-                       'store_examine_status'=>0, //平台审核状态（-1为未通过，0为待审核，1为审核通过）
+//                       'operation_status'=>0, //平台审核状态（-1为未通过，0为待审核，1为审核通过）
                        'store_logo_images'=>$evaluation_images,
                        'store_do_bussiness_time'=>$store_do_bussiness_time,
                        'service_setting_id'=>$service_setting_id,
@@ -137,7 +141,8 @@ class Store extends Controller{
                        'store_owner_wechat'=>$store_owner_wechat,
                        'store_information'=>$store_information,
                        'user_id'=> $user_id,
-                       'role_id'=>$role_id
+                       'role_id'=>$role_id,
+                       'is_hot_store'=>-1,
                    ];
                    $bool = db("store")->insertGetId($data);
                    if($bool > 0){
@@ -444,7 +449,7 @@ class Store extends Controller{
      */
     public function url_img_del(Request $request){
         if($request->isPost()){
-            $img_url =$request->only(['image_del'])['image_del'];
+            $img_url =$request->only('image_del')['image_del'];
             if(!empty($img_url)){
                 $user_id = Session::get("user");
                 $data =Db::name('store')->field('verifying_physical_storefront_two')->where('user_id',$user_id)->find();
@@ -467,8 +472,6 @@ class Store extends Controller{
                 }else{
                     return ajax_success('删除失败',['status'=>0]);
                 }
-
-
 
             }
         }

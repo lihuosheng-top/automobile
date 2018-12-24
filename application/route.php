@@ -20,6 +20,13 @@ Route::group("",[
     /*首页*/
     "/$"=>"index/index/home",
     "index"=>"index/index/index",
+    "saoma_callback"=>"index/index/saoma_callback",
+    "weixin_notify"=>"index/index/weixin_notify",
+    "index_shop"=>"index/index/shop",                               //热门配件店铺
+    "index_shop_goods"=>"index/index/shop_goods",                   //热门配件店铺商品
+    "index_serve_shop"=>"index/index/serve_shop",                   //热门配件店铺商品
+ 
+
 
 
 
@@ -50,11 +57,14 @@ Route::group("",[
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
     'index_aliPay'=>"index/Apppay/index_aliPay", //服务商提交支付（付款）（弹窗支付）
     'index_pay_code'=>"index/Apppay/index_pay_code", //状态修改(回调地址修改状态)
+    "recharge_aliPay"=>"index/Apppay/recharge_aliPay",     //充值订单提交支付（付款）
+    "recharge_pay_code"=>"index/Apppay/recharge_pay_code",     //充值订单支付（成功回调修改状态）
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/
     "parts_notifyurl"=>"index/Apppay/parts_notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
+    "ios_api_order_button_by_shop"=>"index/OrderParts/ios_api_order_button_by_shop",//购物车提交订单
 //    "ios_api_alipay"=>"index/OrderParts/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
    "ios_return_parts_num"=>"index/OrderParts/ios_return_parts_num",//生成订单(未用)
     'index_parts_aliPay'=>"index/Apppay/index_parts_aliPay", //配件商支付接口（弹窗支付）
@@ -74,9 +84,13 @@ Route::group("",[
     "member_information_data"=>"index/My/member_information_data",//个人信息用户个人信息返回（头像,真实姓名，昵称，性别）
     "member_update_mobiles"=>"index/My/member_update_mobiles",//个人信息修改手机
     "my_integral"=>"index/My/integral",            //我的积分页面(积分记录ajax)
-    "setting"=>"index/My/setting",              //设置
+    "setting"=>"index/My/setting",              //设置(所有页面)
+    "is_business"=>"index/My/is_business",      //判断是否是商家还是只是车主（ajax）（隐藏切换角色的按钮）
+    "select_role_owner"=>"index/My/select_role_owner",      //选择车主）通过判断是否是商家或者是车主（ajax）
+    "select_role_business"=>"index/My/select_role_business",      //（选择商家）通过判断是否是商家或者是车主（ajax）
+    "select_role_get"=>"index/My/select_role_get",//获取商家的信息，如果存在则是商家角色，不存在则为车主
     "my_nickname"=>"index/My/nickname",         //昵称
-    "my_consume"=>"index/My/consume",         //我的消费
+    "my_consume"=>"index/My/consume",         //我的消费(ajax)
     "consume_message"=>"index/My/consume_message",       //消费详情
     /*TODO:登录结束*/
 
@@ -88,24 +102,34 @@ Route::group("",[
 
     /*TODO:卖家我的页面开始*/
     "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
+    "sell_service_order"=>"index/SellMy/sell_service_order",//卖家服务订单
+    "sell_parts_order"=>"index/SellMy/sell_parts_order",//卖家商品订单
+    "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
+    "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
+
+    "sell_service_record"=>"index/SellMy/sell_service_record",//卖家服务记录
+    "sell_parts_record"=>"index/SellMy/sell_parts_record",//卖家商品记录
+    "sell_order_bill"=>"index/SellMy/sell_order_bill",//卖家账单
+    "sell_wallet"=>"index/SellMy/sell_wallet",//卖家钱包
+    "sell_application"=>"index/SellMy/sell_application",//卖家提现申请
     /*TODO:卖家我的页面结束*/
 
 
 
 
-    /**
-     * 钱包
-     * 陈绪
-     */
-    "wallet_index"=>"index/wallet/index",           //钱包首页
-    "wallet_recharge"=>"index/wallet/recharge",     //钱包充值
+
+    /*TODO:钱包开始*/
+    "wallet_index"=>"index/wallet/index",           //钱包首页（ajax）
+    "wallet_recharge"=>"index/wallet/recharge",     //钱包充值(ajax)
+    "wallet_recharge_del"=>"index/wallet/recharge_del",     //钱包充值下单未付款自动关闭取消删除(ajax)
     "wallet_block"=>"index/wallet/block",           //添加银行卡
     "wallet_verification"=>"index/wallet/verification",   //银行卡验证
+    /*TODO:钱包结束*/
 
 
 
     /*TODO:注册开始*/
-    "register"=>"index/Register/index",//注册页面
+    "register"=>"index/Register/index",//h5注册页面
     "sendMobileCode"=>"index/Register/sendMobileCode",//注册验证码获取接口
     "doRegByPhone"=>"index/Register/doRegByPhone",//注册操作
     /*TODO:注册结束*/
@@ -119,7 +143,7 @@ Route::group("",[
     /*TODO:找回密码验证码结束*/
 
     /*TODO:我的页面开始*/
-    "member_equity"=>"index/member/member_equity",//会员权益
+    "member_equity"=>"index/member/member_equity",//会员权益(ajax)
     "member_address"=>"index/member/member_address",//地址管理
     "member_default_address_return"=>"index/member/member_default_address_return",//购买页面默认地址返回或者选择其他地址
     "member_address_information"=>"index/member/member_address_information",//地址管理列表数据返回
@@ -132,6 +156,36 @@ Route::group("",[
     "member_address_edit"=>"index/member/member_address_edit",//地址管理编辑功能(ajax)
     "member_collection"=>"index/member/member_collection",//我的收藏
     /*TODO:我的页面结束*/
+
+    /*TODO:支付密码开始*/
+    "sendMobileCodes"=>"index/PayPassword/sendMobileCodes",//支付密码修改验证码
+    "pay_password_update"=>"index/PayPassword/pay_password_update",//修改支付密码
+    /*TODO:支付密码结束*/
+
+
+    /*TODO:收藏开始*/
+    "collection_index"=>"index/Collection/collection_index",//（收藏数据返回）(ajax)
+    "collection_add"=>"index/Collection/collection_add",//（添加收藏）（ajax）
+    "collection_del"=>"index/Collection/collection_del",//（删除收藏）（ajax）
+    "show_collection"=>"index/Collection/show_collection",//收藏样式返回的数据库状态值（ajax）
+    /*TODO:收藏结束*/
+
+
+    /*TODO:快递开始*/
+    "express_wait_for_order"=>"index/Express/express_wait_for_order",//待接单
+    "express_wait_for_take"=>"index/Express/express_wait_for_take",//待取货
+    "express_distribution"=>"index/Express/express_distribution",//配送中
+    "express_completed"=>"index/Express/express_completed",//已完成
+    "express_detail"=>"index/Express/express_detail",//快递详情
+    "express_info"=>"index/Express/express_info",//快递信息返回
+    "express_logout"=>"index/Express/express_logout",//快递员退出登录
+    "express_setting"=>"index/Express/express_setting",//快递员页面设置
+
+    /*TODO:快递结束*/
+
+
+
+
     /*TODO:消息开始*/
     "information_index"=>"index/Information/index",//消息页面
     "information_details"=>"index/Information/information_details",//订单助手消息页面详情
@@ -159,12 +213,13 @@ Route::group("",[
     /*TODO:店铺结束*/
 
     /*TODO：我要推广开始*/
-    "spread_index"=>"index/Extension/spread_index",//我要推广
+    "spread_index"=>"index/Extension/spread_index",//我要推广（ajax）
     /*TODO：我要推广结束*/
 
-    /*TODO：评价开始*/
-    "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面
-    /*TODO：评价结束*/
+    /*TODO：配件商评价开始*/
+    "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面(ajax)
+    "evaluate_parts_add"=>"index/Evaluate/evaluate_parts_add",//评价页面(ajax)
+    /*TODO：配件商评价结束*/
 
 
 
@@ -189,8 +244,15 @@ Route::group("",[
 
 
 
-    // 购物车
-    "cart_index"=>"index/Cart/cart_index",
+    /*购物车开始*/
+    "cart_index"=>"index/Cart/cart_index",//首页（ajax）
+    "get_goods_id_to_cart"=>"index/Cart/get_goods_id_to_cart",//获取商品id 存入购物车（ajax）
+    "cart_information_add"=>"index/Cart/cart_information_add",//购物车添加按钮（+）（ajax）
+    "cart_information_del"=>"index/Cart/cart_information_del",//购物车添加按钮（-）（ajax）
+    "carts_del"=>"index/Cart/carts_del",//购物车删除（ajax）
+    "place_an_order_by_cart"=>"index/Cart/place_an_order_by_cart",//购物车存储到shopping_shop表（ajax）
+    /*购物车结束*/
+
 
 
     /*TODO:配件商订单状态开始*/
@@ -212,6 +274,8 @@ Route::group("",[
     "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货页面
     "ios_api_order_parts_return_goods"=>"index/OrderParts/ios_api_order_parts_return_goods",//退货接口ajax
     "ios_api_order_parts_no_pay_cancel"=>"index/OrderParts/ios_api_order_parts_no_pay_cancel",//买家未付款取消订单接口(ajax)
+    "ios_api_order_parts_yes_pay_cancel"=>"index/OrderParts/ios_api_order_parts_yes_pay_cancel",//买家已付款取消订单接口(ajax)（未接）
+    "order_parts_detail_cancel"=>"index/OrderParts/order_parts_detail_cancel",//买家未付款超过后台设置的时间未付款，系统取消订单接口(ajax)
     "ios_api_order_parts_del"=>"index/OrderParts/ios_api_order_parts_del",//买家删除订单接口(ajax)
     "ios_api_order_parts_collect_goods"=>"index/OrderParts/ios_api_order_parts_collect_goods",//配件商订单状态修改（买家确认收货）（ajax）
     /*TODO:配件商订单状态结束*/
@@ -246,6 +310,18 @@ Route::group("",[
     /*TODO:前端积分结束*/
 
 
+    /*汽车广告管理前端开始*/
+    "advertisement_index"=>"index/Advertisement/advertisement_index", //汽车广告显示
+    "machine_index"=>"index/Advertisement/machine_index",             //汽车配件商广告显示
+
+
+
+    /**
+     * 运营管理
+     * 陈绪
+     */
+    "operation_index"=>"index/Operation/complaint",             //投诉中心
+    "rescue_index"=>"index/Operation/rescue",             //紧急救援
     
 ]);
 
@@ -320,13 +396,20 @@ Route::group("admin",[
     "goods_role_name"=>"admin/Goods/role_name",                                       //商品角色检测
     "goods_property_name"=>"admin/Goods/property_name",                                       //专用属性入库
     "goods_property_show"=>"admin/Goods/property_show",                                       //专用属性显示
+    "goods_property_name_del"=>"admin/Goods/property_name_del",                              //专用属性名称删除
     "goods_alipay"=>"admin/Goods/alipay",                                       //支付
     "goods_pay_code"=>"admin/Goods/pay_code",                                       //支付宝回调地址
     "goods_edit_show"=>"admin/Goods/edit_show",                                       //专用适用车型编辑显示
     "goods_seach"=>"admin/Goods/seach",                                                //商品模糊搜索
     "goods_WeiAlpay"=>"admin/Goods/WeiAlpay",                                             //微信支付
     "goods_qrcode"=>"admin/Goods/qrcode",                                                //微信支付二维码
-    "goods_wx_notify"=>"admin/Goods/wx_notify",                                                //微信支付回调地址
+    "goods_alipay_pay"=>"admin/Goods/alipay_pay",                                                //微信支付回调地址
+    "goods_get_weixin_pay_url"=>"admin/Goods/get_weixin_status",                              //微信是否上架检测
+    "goods_photos"=>"admin/Goods/photos",     //商品列表规格图片删除
+    "goods_value"=>"admin/Goods/value",       //商品列表规格值修改
+    "goods_switches"=>"admin/Goods/switches", //商品列表规格开关
+    "goods_addphoto"=>"admin/Goods/addphoto", //商品列表规格图片添加
+
 
 
 
@@ -358,7 +441,7 @@ Route::group("admin",[
     /*会员管理 ：TODO*/
     "user_index"=>"admin/User/index", //会员概况
     "user_edit"=>"admin/User/edit",     //会员编辑
-    "user_grade"=>"admin/User/grade",  //会员等级
+    "user_grade"=>"admin/User/grade",  //会员等级(ajax)
     "user_static"=>"admin/User/status", //会员页面的账户状态修改
     "user_del"=>"admin/User/del", //会员删除
     "user_dels"=>"admin/User/dels", //会员批量删除
@@ -373,7 +456,10 @@ Route::group("admin",[
     "car_add"=>"admin/Car/add",
     "car_save"=>"admin/Car/save",
     "car_edit"=>"admin/Car/edit",
+    "car_del"=>"admin/Car/del",
     "car_updata"=>"admin/Car/updata",
+    "car_search"=>"admin/Car/search",
+    "car_images"=>"admin/Car/images",
 
 
     /*充值和提现*/
@@ -539,6 +625,8 @@ Route::group("admin",[
     "service_updata"=>"admin/Install/service_updata",
     "service_del"=>"admin/Install/service_del", //服务设置之删除
 
+    "invoice_setting"=>"admin/Install/invoice_setting",//设置之发票手续费设置
+
 
     "message_index"=>"admin/Install/message_index",
     "message_del"=>"admin/Install/message_del",
@@ -574,6 +662,7 @@ Route::group("admin",[
     "shop_index"=>"admin/Shop/index",//店铺列表
     "shop_add"=>"admin/Shop/add",//店铺详情
     "shop_update"=>"admin/Shop/update",//店铺详情更新
+    "store_hot_status"=>"admin/Shop/store_hot_status",//店铺热门店铺修改（-1为正常，1为热门店铺）
     "shop_del"=>"admin/Shop/del",//店铺列表删除
     "shop_dels"=>"admin/Shop/dels",//店铺列表批量删除
     "shop_search"=>"admin/Shop/search",//店铺列表模糊查询

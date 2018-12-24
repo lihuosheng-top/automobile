@@ -41,9 +41,14 @@ class  PlatformAdvertisement extends  Controller{
 
 
 
-    public function platform_business_add()
-    {
-        return view('platform_business_add');
+    public function platform_business_add($pid = 0)
+    {      
+        $goods_liste = [];
+        if ($pid == 0) {
+            $goods_liste = selectList("position");
+        }
+        
+        return view('platform_business_add', ["goods_liste" => $goods_liste]);
     }
 
 
@@ -69,6 +74,13 @@ class  PlatformAdvertisement extends  Controller{
             $data = $request->param();
             $show_images = $request->file("advert_picture");
 
+            $user_phone = Session::get("user_info");
+            $id = $user_phone[0]["id"];
+            $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
+            $store_name = db("store")->where("user_id",$user)->value("store_name");
+            $area = db("store")->where("user_id",$user)->value("store_city_address");
+            $position = db("position") -> where("id",$data["pid"])->value("name");
+
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
@@ -78,6 +90,12 @@ class  PlatformAdvertisement extends  Controller{
 
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
+            $data["area"] = $area;
+            $data["shop_name"] = $store_name;           
+            $data["location"] = $position;
+            unset($data["pid"]);
+
+
             $bool = db("platform")->insert($data);
             if ($bool) {
                 $this->success("添加成功", url("admin/platform_advertisement/platform_business_index"));
@@ -100,11 +118,11 @@ class  PlatformAdvertisement extends  Controller{
             $data = $request->param();
             $find = db("platform")->where('id', $request->only(["id"])["id"])->find();
 
-            if($find['pid'])
+            if(isset($find['pgd']))
             {
-               $bools = db("accessories")->where('id', $find['pid'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
+               $bools = db("accessories")->where('id', $find['pgd'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
             }
-            if($find['pfd'])
+            if(isset($find['pfd']))
             {
                $boolse = db("facilitator")->where('id', $find['pfd'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
             }

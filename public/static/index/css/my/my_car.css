@@ -46,10 +46,10 @@ html{
 }
 .box-wrap .car-box{
     background-color: #fff;
+    margin-bottom: .2rem;
 }
 .box-wrap .car-box .car-info-top{
     display: flex;
-    border-bottom: 1px solid #e8e8e8;
     height: 1.65rem;
 }
 .car-box .car-info-top .logo{

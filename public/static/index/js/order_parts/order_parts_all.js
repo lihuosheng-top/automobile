@@ -47,7 +47,7 @@ $.ajax({
                         </div>`
             })
             str += `<div class="total-button-box">
-                        <p class="total-p">共计`+val.all_numbers+`件商品 合计：￥`+val.all_order_real_pay+`</p>`
+                        <p class="total-p">共计<span>`+val.all_numbers+`</span>件商品 合计：￥<span class="total-money-span">`+val.all_order_real_pay+`</span></p>`
 
             if(statusTxt == '待付款'){
                 str +=`<div class="button-box">
@@ -89,7 +89,7 @@ $.ajax({
         })
         $('.shops-goods-wrap').append(str);
 
-        // 取消订单
+        // 取消订单 √
         $('.cancel-order-btn').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
@@ -124,7 +124,7 @@ $.ajax({
             $('.cancel-order-pop').animate({'bottom': '-100%'});
             $('.mask').hide();
         })
-        // 删除订单
+        // 删除订单 √
         $('.del-order-btn').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
@@ -152,27 +152,28 @@ $.ajax({
                 }
             });
         })
-        // 去付款
+        // 去付款 √
         $('.to-payment-btn').click(function(){
-            var store_id = $(this).parents('.single-shop-box').attr('data-id');
-            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
-            $.ajax({
-                url: 'ios_api_order_parts_no_pay_cancel',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    'parts_order_number': parts_order_number,
-                    'store_id': store_id
-                },
-                success: function(res){
-                    console.log(res);
-                },
-                error: function(){
-                    console.log('error');
-                }
+            $('.mask').show();
+            $('.alipay-pop').animate({ 'bottom': '0' });
+            $('html').css('overflow', 'hidden');
+            // 付款金额
+            var totalAmount = $(this).parents('.total-button-box').find('.total-money-span').text();
+            var outTradeNo = $(this).parents('.single-shop-box').attr('name');
+            var subjuect = $(this).parents('.single-shop-box').find('.goods-name-p').text();
+            var body = $(this).parents('.single-shop-box').find('.goods-selling-point').text();
+            $('#WIDtotal_amount').val(totalAmount);
+            $('#WIDout_trade_no').val(outTradeNo);
+            $('#WIDsubject').val(subjuect);
+            $('#WIDbody').val(body);
+
+            $('.close-alipay').click(function () {
+                $('.mask').hide();
+                $('.alipay-pop').animate({ 'bottom': '-100%' });
+                $('html').css('overflow', 'auto');
             })
         })
-        // 确认收货
+        // 确认收货 √
         $('.conf-receipt-btn').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
@@ -200,7 +201,7 @@ $.ajax({
                 }
             });
         })
-        // 查看订单详情
+        // 查看订单详情 √
         $('.all-goods-box').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
@@ -215,6 +216,50 @@ $.ajax({
                 success: function(res){
                     console.log(res);
                     location.href = 'order_parts_detail'; 
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+        // 去评价
+        $('.evaluation-btn').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            $.ajax({
+                url: 'order_parts_save_record',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'parts_order_number': parts_order_number,
+                    'store_id': store_id
+                },
+                success: function(res){
+                    console.log(res);
+                    if(res.data.status === 1){
+                        location.href = 'evaluate_index';
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+        // 查看物流
+        $('.check-logistics-btn').click(function(){
+            var store_id = $(this).parents('.single-shop-box').attr('data-id');
+            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            $.ajax({
+                url: 'ios_api_order_parts_no_pay_cancel',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'parts_order_number': parts_order_number,
+                    'store_id': store_id
+                },
+                success: function(res){
+                    console.log(res);
+                    location.href = 'logistics_index';
                 },
                 error: function(){
                     console.log('error');
@@ -242,4 +287,22 @@ $('.tabs button').click(function(){
             location.href = 'order_parts_return_goods';break;
     }
 })
-
+// 选择支付方式
+$('.widway').click(function(){
+    $('.alipay-pop').animate({'bottom': '-100%'});
+    $('.chose-payment').animate({'bottom': '0'});
+})
+function backMethod(){
+    $('.alipay-pop').animate({'bottom': '0'});
+    $('.chose-payment').animate({'bottom': '-100%'});
+}
+$('.method-div').click(function(){
+    $(this).siblings().find('.check-a').removeClass('icon-check');
+    $(this).find('.check-a').addClass('icon-check');
+    var paymentMethod = $(this).find('p').text();
+    $('.widway').val(paymentMethod);
+    backMethod();
+})
+$('.chose-payment-back').click(function(){
+    backMethod();
+})

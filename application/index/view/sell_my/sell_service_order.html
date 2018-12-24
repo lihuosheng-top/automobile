@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>服务商-服务订单</title>
+    <style>
+        body,html{background-color: #f2f2f2;}
+        .header-container{position: fixed; top: 0;left: 0; width: 100%;height: .88rem; background-color: #fff; border-bottom: 1px solid #eee; text-align: center; line-height: .88rem;box-sizing: border-box;}
+        .header-container .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .header-title{font-size: .36rem; color: #333;}
+        .subtitle-container{position: fixed; top: .88rem; left: 0; width: 100%; height: .8rem; background-color: #fff;border-bottom: 1px solid #eee;display: flex; align-items: center;justify-content: space-around;}
+        .subtitle-container a{position: relative; font-size: .34rem; color: #333;}
+        .subtitle-container a.subtitle-on{color: #504cfb;}
+        .subtitle-container a.subtitle-on::after{content: ''; position: absolute; left: 0;bottom: -.1rem; width: 100%; border: 1px solid #504cfb;}
+        .reservation-container{margin-top: 1.85rem;}
+        .reservation-tab{width: 94%;background-color: #fff;border-radius: .2rem;margin: 0 auto .2rem;box-shadow: 0 1px 10px rgba(230, 230, 230, 1);padding: .32rem .28rem;box-sizing: border-box;}
+        .order-num-status{display: flex;justify-content: space-between;font-size: .3rem;color: #333;margin-bottom: .2rem;}
+        .order-num-status .icon-order-num{display: inline-block;width: .34rem;height: .34rem;background-position: -4.45rem .05rem;margin-right: .15rem;vertical-align: text-bottom;}
+        .order-num-status .status{color: #504cfb;}        
+        .order-time,.order-shop-name{font-size: .3rem;color: #333;margin-bottom: .2rem;}
+        .order-time .icon-time{display: inline-block;width: .34rem;height: .34rem;background-position: -4.95rem .05rem;margin-right: .15rem;vertical-align: text-bottom;}
+        .order-shop-name .icon-shop{display: inline-block;width: .4rem;height: .38rem;background-position: -5.55rem -.95rem;margin-right: .15rem;vertical-align: text-bottom;}        
+        .order-item{font-size: .3rem;color: #333;margin-bottom: .3rem;padding-left: .5rem;}
+        .order-item span{display: inline-block;width: .2rem;height: .2rem;border-radius: 50%;background-color: #999999;vertical-align: baseline;margin-right: .15rem;}
+        .button-box{text-align: right;}
+        .receipt{background-color: #504cfb; color: #fff; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none; border: 0;}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header-container">
+            <a href="sell_my_index" class="spr icon-back"></a>
+            <span class="header-title">今日订单</span>
+        </header>
+        <div class="subtitle-container">
+            <a href="sell_service_order" class="service-order subtitle-on">服务订单</a>
+            <a href="sell_parts_order" class="goods-order">商品订单</a>
+        </div>
+        <div class="reservation-container">
+            <div class="reservation-tab">
+                <div class="order-num-status">
+                    <div class="order-num">
+                        <i class="spr icon-order-num"></i>订单编号：20181129145
+                    </div>
+                    <span class="status">待付款</span>
+                </div>
+                <p class="order-time">
+                    <i class="spr icon-time"></i>11月29日 星期四 19:30
+                </p>
+                <p class="order-shop-name">
+                    <i class="spr icon-shop"></i>深圳福田德鹏汽车保养店
+                </p>
+                <div class="order-item">
+                    <span></span>预约洗车
+                </div>
+                <div class="button-box">
+                    <button class="receipt">接单</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $('.reservation-tab').click(function(){
+            location.href = 'sell_service_order_detail';
+        })
+    </script>
+</html>

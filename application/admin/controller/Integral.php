@@ -84,7 +84,7 @@ class Integral extends Controller{
                 'integral_operation'=>$add_integral,
                 'integral_balance'=>$user_integral_wallet_update['user_integral_wallet'],
                 'integral_type'=>1,
-                'operation_time'=>time(),
+                'operation_time'=>date("Y-m-d H:i:s"),
                 'integral_remarks'=>$integral_remarks
             ];
             $integral_record =Db::name('integral')->insert( $integral_arr);
@@ -94,9 +94,6 @@ class Integral extends Controller{
                 return ajax_error('赠送失败',['status'=>0]);
             }
         }
-
-
-
     }
 
     /**

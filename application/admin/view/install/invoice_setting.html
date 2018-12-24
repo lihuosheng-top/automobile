@@ -1,0 +1,97 @@
+ {include file="template/_meta" /} {block name="css"}
+<style type="text/css">
+	body {
+		background: #fff;
+	}
+	
+	input {
+		width: 40px;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	
+	div {
+		text-align: center;
+		margin-top: 10px;
+	}
+	
+	.text {
+		top: 2px;
+		width: 487px;
+		margin: 20px auto;
+		position: relative;
+	}
+	
+	.layui-icon {
+		position: absolute;
+		right: 0;
+		top: -9px;
+	}
+</style>
+
+{/block} {block name="content"}
+<h4 style="padding: 10px;">发票手续费和税费的设置：</h4>
+
+<form action="{:url('admin/Install/integral_setting_add')}" method="post">
+
+	<div class="addcontents">
+	</div>
+	<div class="bts" style="text-align: center;margin-top: 20px;">
+		<div style="" class="text">开票手续费（订单金额）<input type="text" name="" id="" value=""  />%，税费<input type="text" name="" id="" value="" />%
+	    </div>
+	    	</div>    
+	<div style="margin-top: 30px; text-align: center;">
+		<button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
+		<button class="layui-btn" type="button" id="submits" style="margin-left: 190px;">保存</button>
+	</div>
+</form>
+
+{/block}
+
+<!--_footer 作为公共模版分离出去-->
+{include file="template/_footer" /}
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+{block name="bottom"}
+<script type="text/javascript">
+	layui.config({
+		base: "js/"
+	}).use(['form', 'layer', 'jquery', 'laypage'], function() {
+		var form = layui.form(),
+			layer = parent.layer === undefined ? layui.layer : parent.layer,
+			laypage = layui.laypage,
+			$ = layui.jquery;
+
+		//	点击动态添加出来的删除图片触发
+		$(".addcontents").on('click', '.remove-img', function() {
+			// console.log(this)
+			var remove = $(this).parent();
+			remove.remove();
+		});
+		var num = 0;
+		$("#submits").click(function() {
+			for(var i = 0; i < $(".addcontents input").length; i++) {
+				if($(".addcontents input")[i].value == "") {
+					layer.confirm('填写框不能为空', {
+						btn: ['确认', '取消'] //按钮
+					}, function(index) {
+						num = 0;
+						layer.close(index)
+
+					});
+				} else {
+					num++;
+				}
+			}
+			if(num == $(".addcontents input").length) {
+				$(this).attr("type", "submit");
+			} else {
+				console.log(2223);
+			}
+
+		})
+
+	});
+</script>
+{/block}

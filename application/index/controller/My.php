@@ -62,13 +62,23 @@ class My extends Controller
     }
 
 
-
-
     /**
-     * 我的消费
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:我的消费
+     **************************************
+     * @return \think\response\View
      */
-    public function consume(){
+    public function consume(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");//用户id
+        $data = Db::name("wallet")->where("user_id",$user_id)->select();
+        if(!empty($data)){
+            return ajax_success("我的消费信息返回成功",$data);
+        }else{
+            return ajax_error("没有消费记录",["status"=>0]);
+        }
+        }
         return view("my_consume");
 
     }
@@ -132,6 +142,7 @@ class My extends Controller
             $user_id =Session::get("user");//用户id
             //头像
             $user_img = $request->file('user_img');
+            halt($user_img);
             if(!empty($user_img)){
                 $info = $user_img->move(ROOT_PATH . 'public' . DS . 'userimg');
                 $user_img_url = str_replace("\\","/",$info->getSaveName());
@@ -261,7 +272,7 @@ class My extends Controller
                ->select();
           $datas =array(
               "january"=>[],
-              "sebruary"=>[],
+              "february"=>[],
               "march"=>[],
               "april"=>[],
               "may"=>[],
@@ -328,6 +339,74 @@ class My extends Controller
      */
     public function consume_message(){
         return view("consume_message");
-
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:判断是否申请为商家（隐藏切换角色的按钮）
+     **************************************
+     * @param Request $request
+     */
+    public function is_business(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $store_info = Db::name("store")->where("user_id",$user_id)->where("operation_status",1)->where("del_status",1)->find();
+            if(!empty($store_info)){
+                return ajax_success("这是商家",["status"=>1]);
+             }else{
+                return ajax_error("这只是车主",["status"=>0]);
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:（选择车主）通过判断是否是商家或者是车主
+     **************************************
+     */
+    public  function select_role_owner(Request $request){
+        if($request->isPost()){
+            Session::set("role_name_store_id",null);
+            return ajax_success('切换角色成功',['status'=>1]);
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:（选择商家）通过判断是否是商家或者是车主
+     **************************************
+     */
+    public  function select_role_business(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $store_info = Db::name("store")->field("store_id")->where("user_id",$user_id)->where("operation_status",1)->where("del_status",1)->find();
+            Session::set("role_name_store_id",$store_info);
+            return ajax_success("切换角色成功",["status"=>1]);
+        }
+    }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:判断获取角色
+     **************************************
+     * @param Request $request
+     */
+    public function select_role_get(Request $request){
+        if($request->isPost()){
+            $data =Session::get("role_name_store_id");
+            if(!empty($data)){
+                return ajax_success("这是个商家",$data);
+            }else{
+                return ajax_error("车主",["status"=>0]);
+            }
+        }
+    }
+
+
+
 }

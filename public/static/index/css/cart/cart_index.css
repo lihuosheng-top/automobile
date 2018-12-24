@@ -224,7 +224,7 @@ html{
 }
 .goods_wrap .goods_desc_right .cart_sub1,
 .goods_wrap .goods_desc_right .cart_sub2{
-    font-size: .24rem;
+    font-size: .28rem;
     color: #ccc;
     overflow: hidden;
     text-overflow: ellipsis;

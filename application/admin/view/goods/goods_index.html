@@ -5,27 +5,7 @@
         background: #fff;
     }
     
-    label {
-        text-align: left !important;
-    }
-    
-    .layui-form-item {
-        width: 100%;
-        margin-bottom: 0px;
-        margin-top: 0px;
-    }
-    
-    .layui-form-label {
-        width: 26% !important;
-    }
-    
-    .layui-input-inline {
-        width: 70% !important;
-    }
-    
-    .layui-form-item {
-        max-width: 100% !important;
-    }
+
     
     #page {
         width: 93%;
@@ -137,15 +117,17 @@
 
 			<div class="dom">
 				<h2 align="center">提交订单</h2>
-				<form name=alipayment action="" method="post" style="text-align: center;">
+				<form name=alipayment action="{:url('admin/Goods/WeiAlpay')}" method="post" style="text-align: center;">
 					<input type="hidden" name="WIDbody" id="good-id" value="" />
 					<input type="hidden" name="" id="year" value="" />
-					<div><span style="width: 100px; text-align: right;display: inline-block;">店铺名称：</span><input type="text" name="WIDsubject" id="shop" value="xxxxxx旗舰店"  style="border: 0; background: #fff;" readonly/></div>
+					<div><span style="width: 100px; text-align: right;display: inline-block;">店铺名称：</span>
+						<input type="text" name="WIDsubject" id="shop" value="xxxxxx旗舰店"  style="border: 0; background: #fff;" readonly />
+					</div>
 					<div><span style="width: 100px; text-align: right; display: inline-block;">商品总数：</span><input type="text" name="" id="num" value="20个"  style="border: 0; background: #fff;" readonly/></div>
-					<div><span style="width: 100px; text-align: right; display: inline-block;">合计：</span><span style="color: red;">￥</span><input type="text" name="WIDtotal_amount" id="price" value="2000.00"  style="border: 0; color: red; background: #fff;" readonly/></div>
+					<div><span style="width: 100px; text-align: right; display: inline-block;">合计：</span><span style="color: red;">￥</span><input type="text" name="WIDtotal_amount" id="price" value="2000.00"  style="border: 0; color: red; background: #fff;" readonly /></div>
 					<div class="buts">
 						<button class="layui-btn layui-btn-primary layui-btn-radius close-btus" type="button">取消</button>
-						 <button class="layui-btn layui-btn-normal layui-btn-radius go_pay" type="button">确定</button>
+						 <button class="layui-btn layui-btn-normal layui-btn-radius go_pay" type="submit">确定</button>
 					</div>
 				</form>
 				
@@ -155,36 +137,37 @@
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="">
-				<div class="layui-form-item">
-					<div class="layui-inline">
-						<label class="layui-form-label">输入搜索：</label>
-						<div class="layui-input-inline">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<form class="layui-form" action="">
+				<div class="seach">
+					<div class="seach_list">
+						<div class="seach_laber">输入搜索：</div>
+						<div class="seach_input">
+							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="商品名称/商品货号" class="layui-input">
+						
 						</div>
 					</div>
-					<div class="layui-inline">
-						<label class="layui-form-label">商品名称</label>
-						<div class="layui-input-inline">
+						<div class="seach_list noshow" id="shop_seach">
+						<div class="seach_laber">店铺名称：</div>
+						<div class="seach_input">
 							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+						
 						</div>
 					</div>
-					<div class="layui-inline">
-						<label class="layui-form-label">商品付费</label>
-						<div class="layui-input-inline">
+					<div class="seach_list">
+						<div class="seach_laber">商品付费</div>
+						<div class="seach_input">
 							<select name="interest" id="admin_status">
 								<option value="1" selected="">已付费</option>
 								<option value="2">未付费</option>
 							</select>
 						</div>
 					</div>
-					<div class="layui-inline">
-						<a class="layui-btn search_btn">搜索</a>
-					</div>
+					
+					<button class="layui-btn" type="submit" id="seach">立即搜索</button>
 				</div>
 
 			</form>
-
+		
 		</blockquote>
 		<div class="layui-inline">
 			<a class="layui-btn layui-btn-danger batchDel" href="{:url('admin/Goods/add')}">添加商品</a>
@@ -236,7 +219,7 @@
 						</td>
 						{volist name="store" id="shop"}
 						{if $value.store_id == $shop.store_id}
-						<td  class="shop_name">{$shop.store_name}</td>
+						<td  ><div  class="shop_name overflow">{$shop.store_name}</div></td>
 						{/if}
 						{/volist}
 						<td style="width: 50px; height: 50px;"><img src="__UPLOADS__/{$value.goods_show_images}" /></td>
@@ -297,7 +280,7 @@
 							无
 							{/if}
 						</td>
-						<td style="width: 155px;">
+						<td style="width: 180px;">
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/look',['id'=>$value.id])}"> 查看详情</a>
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit',['id'=>$value.id])}">编辑</a>
 							<a href="{:url('admin/Goods/del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"> 删除</a>
@@ -309,7 +292,6 @@
 				<div id="page">
 					<div class="opation" style="width: 200px; float: left;">
 						<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-
 							<option check="" value="0">请选择</option>
 							<option value="1">批量删除</option>
 							<option value="2">批量上架</option>
@@ -346,6 +328,28 @@
                 laypage = layui.laypage,
                 $ = layui.jquery;
             var vals = $("input").data("id");
+            //店铺搜索是否显示
+            	$.ajax({
+							type: "POST",
+							url: "{:url('admin/Goods/role_name')}",
+							data: {},
+							success: function(data){	
+								var data=$.parseJSON( data ); 
+								var role_id=data.data.admin[0].role_id;
+								// 当角色为平台时
+								if(role_id==2){
+									$("#shop_seach").removeClass("noshow");
+								}
+								else{
+									$("#shop_seach").addClass("noshow");
+								}
+								
+                        },
+                        error: function(data) {
+                            console.log("错误")
+                        }
+                    });
+            //
             //是否上架展示
             form.on('switch(isShow)', function(data) {
                 if ($(this).val() == 0) {
@@ -360,14 +364,13 @@
                 var price=$(this).data("title");
 			    var shop=$(".shop_name")[0].innerHTML;
 			    var putaway_status=$(this).data("action");
-								var years=$(this).data("text");
-								// 年限转化函数
-							
-								var myDate = new Date();
-								var year = myDate.getFullYear()+years;
-								var month = myDate.getMonth() + 1;
-								var date = myDate.getDate();
-								var present = year + '-' + month + '-' + date;
+				var years=$(this).data("text");
+				// 年限转化函数	
+				var myDate = new Date();
+				var year = myDate.getFullYear()+years;
+				var month = myDate.getMonth() + 1;
+				var date = myDate.getDate();
+				var present = year + '-' + month + '-' + date;
 				// 当上架时
 				if(status==1){
 					$.ajax({
@@ -533,15 +536,18 @@
                     });
 
 
-                } else if (opration_val == 2) {
+                } 
+                else if (opration_val == 2) {
+                	var j=0;
                     var nmdata_id = [];
-                    var mdata_id = [];
+                    var mdata_id = "";
                     var all_price = 0;
                     var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
                     for (var i = 0; i < child.length; i++) {
                         data_id.push($(child[i])[0].dataset.id);
                         if ($(child[i])[0].dataset.action == 0) {
-                            mdata_id.push($(child[i])[0].dataset.id);
+                        	j++;
+                            mdata_id+="g"+$(child[i])[0].dataset.id;
                             all_price += parseFloat($(child[i])[0].dataset.title);
                         } else {
                             nmdata_id.push($(child[i])[0].dataset.id);
@@ -585,18 +591,26 @@
                             // 当角色为服务商时
                             else if (role_id == 5) {
                                 if (mdata_id.length > 0) {
-                                 
-                                    layer.confirm('付费商品需付费后才能上架！', {
-                                        btn: ['确定付费', '取消付费！'] //按钮
-                                    }, function() {
-                                        layer.close(layer.index);
-                                        $(".tanchuang").removeClass("noshow");
-                                        $("#shop").val(shop);
-                                        $("#price").val(all_price);
-                                        $("#num").val(mdata_id.length);
-                                        $("#good-id").val(mdata_id);
-
-                                    });
+                                	if(j<=5){
+	                                    layer.confirm('付费商品需付费后才能上架！', {
+	                                        btn: ['确定付费', '取消付费！'] //按钮
+	                                    }, function() {
+	                                        layer.close(layer.index);
+	                                        $(".tanchuang").removeClass("noshow");
+	                                        $("#shop").val(shop);
+	                                        $("#price").val(all_price);
+	                                        $("#num").val(j);
+	                                        $("#good-id").val(mdata_id);
+	
+	                                    });
+                                	}
+                                	else{
+                                		   layer.confirm('最多批量上架5个商品！', {
+	                                        btn: ['确定', '取消'] //按钮
+	                                    }, function() {
+	                                        layer.close(layer.index);
+	                                    });
+                                	}
 
                                 }
                                 if(nmdata_id.length > 0){
@@ -645,28 +659,12 @@
                 var  WIDsubject=$("input[name='WIDsubject']").val();
                 var  WIDtotal_amount=$("input[name='WIDtotal_amount']").val();
                window.location="goods_WeiAlpay?WIDsubject=" +encodeURI(WIDsubject)+"&WIDbody=" +WIDbody+"&WIDtotal_amount=" +WIDtotal_amount+"";
-//              	$.ajax({
-//							type: "POST",
-//							url: "{:url('admin/Goods/WeiAlpay')}",
-//							data: {
-//								"WIDbody":WIDbody,
-//								"WIDsubject":WIDsubject,
-//								"WIDtotal_amount":WIDtotal_amount,
-//							},
-//							success: function(data){
-//								console.log(data);
-////								$(".tantan").removeClass("noshow");
-//                         },
-//
-//                      error: function(data) {
-//                          console.log("错误")
-//                      }
-//                  });
+
              
             });
            
 
-        })
+        }) 
     </script>
 
     {/block}

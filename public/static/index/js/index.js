@@ -3,26 +3,26 @@ $.ajax({
     type: 'POST',
     dataType: 'JSON',
     success: function(res){
-        console.log(res);
+        console.log('汽车列表', res);
         var hotBrand = res.data.brand.slice(0, 10);
         var hotBrandStr = '';
         var carBrandStr = '';
         // 爱车热门品牌
         $.each(hotBrand, function(idx, val){
-            hotBrandStr += '<li class="hot-brand-li">\
-                                <img src="static/index/image/bmw.png">\
-                                <span>'+val.brand+'</span>\
-                            </li>';
+            hotBrandStr += `<li class="hot-brand-li">\
+                                <img src="uploads/`+val.images+`">\
+                                <span class="txt-hid-one">`+val.brand+`</span>\
+                            </li>`;
         })
         $('.hot-brand-ul').append(hotBrandStr);
         // 爱车品牌
         $.each(res.data.brand, function(idx, val){
-            carBrandStr += '<div class="sort_list">\
+            carBrandStr += `<div class="sort_list">\
                                 <div class="num_logo">\
-                                    <img src="static/index/image/bmw.png">\
+                                    <img src="uploads/`+val.images+`">\
                                 </div>\
-                                <div class="num_name">'+val.brand+'</div>\
-                            </div>'
+                                <div class="num_name">`+val.brand+`</div>\
+                            </div>`;
         })
         $('.sort_box').append(carBrandStr);
         // 添加车首字母匹配 start
@@ -276,33 +276,27 @@ $.ajax({
                                 console.log(data);
                                 if(data.status == 1){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: data.info,
-                                        time: 1.5
+                                        time: .8
                                     })
                                     setTimeout(function(){
                                         location.href = 'love_list';
-                                    }, 2000);
+                                    }, 1000);
                                 }else if(data.status == 2){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: data.info,
-                                        time: 1.5
+                                        time: .8
                                     })
                                     setTimeout(function(){
                                         location.href = 'login';
-                                    },2000)
+                                    },1000)
                                 }else if(data.status == 0){
                                     layer.open({
-                                        style: 'bottom:100px;',
-                                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                                         skin: 'msg',
                                         content: data.info,
-                                        time: 1.5
+                                        time: .8
                                     })
                                 }
                             },
@@ -355,20 +349,29 @@ $.ajax({
     type: 'POST',
     dataType: 'JSON',
     success: function(res){
-        console.log(res);
+        console.log('爱车', res);
+
         if(res.status == 1){
             var res = res.data[0];
             $('.txt-div p').html(res.brand);
             $('.txt-div span').html(res.series + ' ' + res.displacement + ' ' + res.production_time);
+        }else{
+            $('.service-container').on('click', 'li', function(e){
+                e.preventDefault();
+                if($(this).index() === 0){
+                    layer.open({
+                        skin: 'msg',
+                        content: '请先添加爱车',
+                        time: .8
+                    })
+                }
+            })
         }
     },
     error: function(){
         console.log('爱车显示：error')
     }
 })
-
-
-
 
 // 模糊搜索
 $(function(){
@@ -397,8 +400,6 @@ $('.add_mycar a').click(function(){
     $('.select-car').show();
     $('.wrapper').hide();
 })
-
-
 
 // 城市定位 首字母匹配 start
 $(function(){
@@ -562,30 +563,15 @@ var map = new AMap.Map('container', {
     zoom: 12, //级别
     center: [114.07, 22.62]
 });
-map.plugin([
-    // 'AMap.CitySearch',
-    'AMap.Geolocation',
-], function () {
-    // 城市获取服务，获取用户所在城市信息或根据给定IP参数查询城市信息
-    // var citySearch = new AMap.CitySearch()
-    // citySearch.getLocalCity(function (status, result) {
-    //     if (status === 'complete' && result.info === 'OK') {
-    //         // 查询成功，result即为当前所在城市信息
-    //         $('.gec-curr-txt').text(result.city);
-    //         $('.curr_city').text(result.city);
-    //         console.log(result);
-    //     }
-    // })
 
+map.plugin([
+    'AMap.Geolocation',
+    'AMap.Geocoder',//逆地理编码
+], function () {
     var geolocation = new AMap.Geolocation({
         enableHighAccuracy: true,
-        timeout: 1000,
-        buttonPosition: 'RB',
-        buttonOffset: new AMap.Pixel(10, 20),
+        // timeout: 5000,
         zoomToAccuracy: true,
-        // useNative: true,
-        // noIpLocate: 1,
-        // noGeoLocation: 1,
     })
     map.addControl(geolocation);
     geolocation.getCurrentPosition();
@@ -593,24 +579,144 @@ map.plugin([
     AMap.event.addListener(geolocation, 'error', onError);
     function onComplete(e){
         console.log(e)
-        $('.gec-curr-txt').text(e.addressComponent.city);
+        // alert(JSON.stringify(e))
+        // $('.gec-curr-txt').text(e.addressComponent.city);
         $('.curr_city').text(e.addressComponent.district);
+        var threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
+        getAdvertisment(threeAdress);
     };
     function onError(e){
-        console.log(e)
+        // console.log(e)
+        // alert(JSON.stringify(e))
     };
 })
+// 获取广告
+function getAdvertisment(area){
+    $.ajax({
+        url: 'advertisement_index',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'area': area
+        },
+        success: function(res){
+            console.log('广告',res);
+            if(res.status == 1){
+                var topSwiperStr = '';
+                // 首页轮播图
+                $.each(res.data.home, function(idx, val){
+                    topSwiperStr += `<div class="swiper-slide">
+                                        <a href="`+val.url+`">
+                                            <img src="uploads/`+val.advert_picture+`">
+                                        </a>
+                                    </div>`;
+                })
+                $('.swiper-wrapper').append(topSwiperStr);
+                mySwiper();
+                // 首页固定广告
+                var indexFixStr = '';
+                indexFixStr += `<a href="`+res.data.fixed[0].url+`">
+                                    <img src="uploads/`+res.data.fixed[0].advert_picture+`">
+                                </a>`
+                $('.banner').append(indexFixStr);
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
 
-// 城市定位 弹窗
-$('.map').click(function(){
-    $('.wrapper').hide();
-    $('.geclocation-pop').show();
+// 获取商家的信息，如果存在则是商家角色，不存在则为车主
+$.ajax({
+    url: 'select_role_get',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log('获取商家的信息，如果存在则是商家角色，不存在则为车主',res);
+        $('.my').click(function(){
+            if(res.status == 1){
+                location.href = 'sell_my_index';
+            }else{
+                location.href = 'my_index';
+            }
+        })
+    },
+    error: function(){
+        console.log('error');
+    }
 })
-// 城市定位弹窗 返回
-$('.gec-back').click(function(){
-    $('.geclocation-pop').hide();
-    $('.wrapper').show();
+
+// 热门店铺
+$.ajax({
+    url: 'index_shop',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log('热门店铺',res);
+        if(res.status == 1){
+            var str = '';
+            $.each(res.data, function(idx, val){
+                str += `<li class="hot-item" id="`+val.id+`">
+                            <div class="hot-headimg">
+                                <img src="uploads/`+val.shop_images+`">
+                            </div>
+                            <div class="hotshop-info">
+                                <p class="hot-name">`+val.shop_name+`</p>
+                                <div class="star-time">
+                                    <!-- star2=二星 以此类推 -->
+                                    <i class="spr star1"></i>
+                                    <span>营业时间：`+val.shop_time+`</span>
+                                </div>
+                                <p class="txt-hid-two hotshop-detail">`+val.shop_address.split(',').join('')+`</p>
+                            </div>
+                        </li>`
+            })
+            $('.hot-ul').append(str);
+            $('.hot-item').click(function(){
+                var id = $(this).attr('id');
+                intoHotShop(id);
+            })
+        }
+    },
+    error: function(){
+        console.log('error');
+    }
 })
-
-
-
+// 进入 热门店铺
+function intoHotShop(id){
+    $.ajax({
+        url: 'index_shop_goods',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id
+        },
+        success: function(res){
+            console.log(res);
+            if(res.status == 1){
+                location.href = 'reservation_detail?store_id='+id;
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
+// swiper初始化 
+function mySwiper(){
+    var mySwiper = new Swiper ('.swiper-container', {
+        direction: 'horizontal', // 垂直切换选项
+        autoplay: true, //自动播放
+        delay: 3000,
+        // 禁止滑动添加类名swiper-no-swiping
+        // 如果需要分页器
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        // 滑动后 切换也不停止
+        autoplay: {
+            disableOnInteraction: false
+        }
+    })
+}

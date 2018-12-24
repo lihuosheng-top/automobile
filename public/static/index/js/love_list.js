@@ -75,7 +75,7 @@ $.ajax({
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: 1.5
+                            time: .8
                         })
                     }else{
                         layer.open({
@@ -83,7 +83,7 @@ $.ajax({
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: 1.5
+                            time: .8
                         })
                     }
                 },
@@ -110,18 +110,18 @@ $.ajax({
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: 1.5
+                            time: .8
                         })
                         setTimeout(function(){
                             window.location.reload();
-                        }, 1500);
+                        }, 1000);
                     }else{
                         layer.open({
                             style: 'bottom:100px;',
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: 1.5
+                            time: .8
                         })
                     }
                 },

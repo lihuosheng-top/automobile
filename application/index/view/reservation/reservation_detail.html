@@ -45,7 +45,7 @@
                 <i class="spr star star5"></i>
                 <p class="open-time">营业时间：00:00 - 24:00</p>
             </div>
-            <p class="addr_p"><i class="spr icon_addr"></i>深圳市福田区景田路3号景文阁右侧1楼深圳市福田区景田路3号景文阁右侧1楼</p>
+            <p class="addr_p"><i class="spr icon_addr"></i><span></span></p>
             <p class="shop-describe">店铺描述店铺描述店铺描述店铺描述店铺描述店铺描述店铺描述店铺描述</p>
         </div>
         <div class="service-section">
@@ -53,10 +53,9 @@
                 <li class="service-this">服务项目</li>
                 <li>本店商品</li>
             </ul>
-            <div class="service-content" style="display: none;">
-                <div class="service-colla-item">
+            <div class="service-content" style="display: block;">
+                <!-- <div class="service-colla-item">
                     <div class="service-colla-title">
-                        <!-- <img src="__STATIC__/index/image/b1.png"> -->
                         <p class="service-subtitle">洗车服务</p>
                         <p class="service-money"></p>
                         <i class="spr icon-uncheck"></i>
@@ -75,16 +74,15 @@
                                 <p class="service-car-type">五菱宏光</p>
                                 <div class="content-money-div">
                                     <p class="sale">￥<span>99</span></p>
-                                    <!-- <p class="thro">￥<span>199</span></p> -->
                                 </div>
                                 <i class="spr icon-uncheck"></i>
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div> -->
             </div>
-            <div class="goods-content" style="display: block;">
-                <div class="goods-colla-item">
+            <div class="goods-content" style="display: none;">
+                <!-- <div class="goods-colla-item">
                     <div class="goods-img-box">
                         <img src="__STATIC__/index/image/15.jpg">
                     </div>
@@ -96,7 +94,7 @@
                         <p class="goods-spec">规格</p>
                         <p class="goods-price">￥99</p>
                     </div>
-                </div>
+                </div> -->
                 <a href="goods_list" class="more-goods">查看更多商品</a>
             </div>
         </div>
@@ -182,7 +180,7 @@
         </div>
         <div class="balance-box">
             <div class="bespeak-money-box">
-                合计：<span class="bespeak-money">￥99</span>
+                合计：<span class="bespeak-money"></span>
             </div>
             <button class="bespeak-btn" disabled>确定预约</button>
         </div>
@@ -288,7 +286,6 @@
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
     <!-- <script src="__STATIC__/index/js/plugin/layui/layui.js"></script> -->
     <script src="__STATIC__/index/js/reservation_detail.js"></script>
-    <!-- swiper初始化 -->
     <script>        
         var mySwiper = new Swiper ('.swiper-container', {
             direction: 'horizontal', // 垂直切换选项

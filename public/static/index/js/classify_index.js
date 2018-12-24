@@ -11,8 +11,11 @@ $.ajax({
             brandLi = '',//左边品牌li
             goodsLi = '';
         $.each(res.data.goods_brand, function(idx, val){//循环品牌
-            brandLi += '<li><a href="#'+hrefId+'">'+val.name+'</a></li>';
-
+            if(idx === 0){
+                brandLi += '<li class="active"><a href="#'+hrefId+'">'+val.name+'</a></li>';
+            }else{
+                brandLi += '<li><a href="#'+hrefId+'">'+val.name+'</a></li>';
+            }
             if(val.brand_describe == '轮胎品牌区'){
                 goodsLi += '<li class="first_li tyre" id="1">\
                                 <div class="adop-box">\
@@ -21,7 +24,7 @@ $.ajax({
                                 </div>\
                                 <ul class="bgw">';
             }else{
-                goodsLi += '<li class="first_li maintain"">\
+                goodsLi += '<li class="first_li maintain">\
                                 <p class="subtitle" id="'+hrefId+'">'+val.brand_describe+'</p>\
                                 <ul class="bgw">';
             }
@@ -70,6 +73,26 @@ $.ajax({
         })
         $('.click-adop').click(function(){
             location.href = 'goods_list';
+        })
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+
+// 获取商家的信息，如果存在则是商家角色，不存在则为车主
+$.ajax({
+    url: 'select_role_get',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log('获取商家的信息，如果存在则是商家角色，不存在则为车主',res);
+        $('.my').click(function(){
+            if(res.status == 1){
+                location.href = 'sell_my_index';
+            }else{
+                location.href = 'my_index';
+            }
         })
     },
     error: function(){

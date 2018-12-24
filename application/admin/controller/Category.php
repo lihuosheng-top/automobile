@@ -41,6 +41,7 @@ class Category extends Controller{
         }else{
             $goods_cate = db("goods_type")->where("id",$pid)->field()->select();
         }
+        
         return view("category_add",["goods_list"=>$goods_list,"goods_cate"=>$goods_cate]);
     }
 

@@ -1,10 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>投诉中心</title>
+    <style>
+        html, body, .wrapper{background-color: #fff;}
+        .header{position: relative;width: 100%;height: .88rem;background-color: #fff; border-bottom: 1px solid #eee;}
+        .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
+        .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .header .complaint-detail{position: absolute; right: .3rem; top: .2rem; color: #3169f6;}
+        .question-container{background-color: #fff; padding: .3rem; border-bottom: .1rem solid #f2f2f2;}
+        .question-container>span{font-size: .3rem; color: #333;}
+        .question-list span{display: inline-block; border: 1px solid #838383; color: #838383; padding: .1rem .2rem; border-radius: .1rem; margin: .1rem .3rem .2rem 0;}
+        .question-list span.question-on{background-color: #3169f6; color: #fff; border-color: #3169f6;}
+        .suggestion-container{background-color: #fff; padding: .3rem; border-bottom: .1rem solid #f2f2f2;}
+        
+        .suggestion-container{display: flex; flex-direction: column;}
+        .suggestion-container .suggestion-title{font-size: .3rem; color: #333; margin-bottom: .3rem;}
+        .suggestion-container textarea{resize: none;margin-bottom: .3rem; height: 1.5rem; border: 0; outline: none; font-size: .3rem;}
+        .suggestion-container textarea::placeholder{color: #828282;}
+        .suggestion-img-container{display: flex;}
+        .vi-camera{display: flex; flex-wrap: wrap; margin-bottom: .3rem;}
+        .switch-span{position: relative; display: block; width: 1.25rem; height: 1.25rem; border: 1px dashed #ccc; text-align: center; line-height: 2.1rem; color: #ccc; font-size: .24rem;}
+        .switch-span::before{position: absolute; left: 50%; top: 50%; transform: translate(-50%, -60%); content: ''; background: url(__STATIC__/index/image/camera.png) no-repeat; width: .72rem; height: .72rem; background-size: 100%;}
+        .switch-span input{position: absolute; top: 0;left: 0; width: 100%;height: 100%; opacity: 0;}
+        .upload-item{position: relative; width: 1.25rem; height: 1.25rem; margin-right: .3rem;}
+        .upload-item img{width: 100%; height: 100%;}
+        .upload-item .del-img{position: absolute; top: -6px; right: -6px; font-size: .3rem; color: #fff; background-color: rgba(0, 0, 0, .6); border: 0; outline: none; width: .3rem; height: .3rem; border-radius: 50%; text-align: center; padding: 0; line-height: .3rem;}
+
+        .connection-container{display: flex; flex-direction: column; padding: .3rem; background-color: #fff; border-bottom: .1rem solid #f2f2f2;}
+        .connection-container span{font-size: .3rem; color: #333; margin-bottom: .2rem;}
+        .connection-container textarea{resize: none; height: .8rem; outline: none; font-size: .3rem;border: 0;}
+        .button-container{text-align: center; padding: .2rem 0; margin-bottom: .2rem;}
+        .button-container .submit-question{width: 90%; background-color: #9aabfd; color: #fff; border-radius: .15rem; height: .78rem; border: 0;outline: none;}
+    </style>
 </head>
 <body>
+    <div class="wrapper">
+        <header class="header">
+            <a href="my_index" class="spr icon-back"></a>
+            <h3>投诉中心</h3>
+            <a href="complaint_detail" class="complaint-detail">投诉记录</a>
+        </header>
+        <div class="question-container">
+            <span>您遇到的问题是？</span>
+            <div class="question-list">
+                <span>无法下单</span>
+                <span>客服服务</span>
+                <span>物流问题</span>
+                <span>型号太少</span>
+                <span>质量问题</span>
+                <span>退换时效慢</span>
+                <span>维修质量</span>
+            </div>
+        </div>
+        <div class="suggestion-container">
+            <span class="suggestion-title">问题和意见</span>
+            <textarea placeholder="抱歉给您造成不便，请将问题告诉我们，以便给您提供更好的服务~"></textarea>
+            <div class="suggestion-img-container">
+                <div class="vi-camera">
+                    <div class="upload-item">
+                        <img src="__STATIC__/index/image/15.jpg">
+                        <button class="del-img">×</button>
+                    </div>
+                </div>
+                <span class="switch-span">添加图片
+                    <input type="file" multiple id="upload">
+                </span>
+            </div>
+        </div>
+        <div class="connection-container">
+            <span>联系方式</span>
+            <textarea placeholder="留下QQ、微信、电话等，方便及时联系您？"></textarea>
+        </div>
+        <div class="button-container">
+            <button class="submit-question">提交反馈</button>
+        </div>
+    </div>
 
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $('.question-list span').click(function(){
+            $(this).siblings().removeClass('question-on');
+            $(this).addClass('question-on');
+        })
+    </script>
 </body>
 </html>

@@ -7,11 +7,22 @@
     url('../font/iconfont1/iconfont.ttf') format('truetype'), /* chromeÃ£â‚¬ÂfirefoxÃ£â‚¬ÂoperaÃ£â‚¬ÂSafari, Android, iOS 4.2+*/
     url('../font/iconfont1/iconfont.svg#uxiconfont') format('svg'); /* iOS 4.1- */
 }
+
+.bg_red{
+	background: red;
+}
+button{
+	border: 0 !important;
+}
 /*修改layui样式*/
+/*.layui-btn{
+	line-height: 35px !important;
+	height: 35px !important;
+}*/
 .tdimg{
-	width: 50px;
-	height: 50px;
-	margin: 0 auto;
+	width: 50px !important;
+	height: 50px !important;
+	margin: 0 auto !important;
 }
 .layui-table th{
     padding: 9px 14px;	
@@ -19,6 +30,9 @@
 .layui-table td{
     padding: 4px 8px;	
     font-size: 10px;
+}
+.operation_three{
+	width: ;
 }
 .overflow{
 	width: 100px;
@@ -620,10 +634,7 @@ a{
 .cancel-btu{
 	background: #990000
 }
-.datetimepicker{
-	height: 28px;
-	border:solid #E6E6E6 1px;
-}
+
 .all {
     min-width: 1400px;
 }

@@ -54,7 +54,17 @@
         <div class="layui-form-item">
             <label class="layui-form-label">广告位置：</label>
             <div class="layui-input-block">
-                <input type="text" name="location" value="{$value.location}" lay-verify="title" class="layui-input">
+                <select name="pid" id="admin_role" class="role_list">
+                            {volist name="goods_liste" id="vl"}
+                            {if $value.pid == $vl.id}
+                            <option value="{$vl.id}" selected="">{$vl.name}</option>
+                            {else}
+                            <option value="{$vl.id}">{$vl.name}</option>
+                            {/if}
+                            {/volist}
+                        </select><br/>
+                </select>
+                <!--  <input type="text" name="location" value="{$value.location}" lay-verify="title" class="layui-input">-->
             </div>
         </div>
         <div class="layui-form-item">
@@ -132,11 +142,8 @@
                 laypage = layui.laypage,
                 $ = layui.jquery;
 
-
         })
     </script>
-
-
 
     {/block}
 

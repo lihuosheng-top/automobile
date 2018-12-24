@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/my/setting.css">
+    <title>设置</title>
+</head>
+<body>
+    <div class="wrapper" style="display:block;">
+        <header class="header">
+            <a href="express_wait_for_order" class="spr icon-back"></a>
+            <h3>设置</h3>
+        </header>
+        <div class="list-box">
+            <ul class="list-ul">
+                <li class="list-li">
+                    <span>通知设置</span>
+                    <div class="switch-box">
+                        <input type="checkbox" class="switch_checkbox" id="switch_checkbox">
+                        <label for="switch_checkbox" class="switch_label">
+                            <span class="switch_circle"></span>
+                        </label>
+                    </div>
+                </li>
+                <li class="list-li clearing-li">
+                    <span>清除缓存</span>
+                    <a href="javascript:;" class="spr icon-more clearing"></a>
+                </li>
+            </ul>
+        </div>
+        <button class="exit">退出登录</button>
+    </div> 
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        // 退出登录 
+        $('.exit').click(function(){
+            $.ajax({
+                url: 'logout',
+                type: 'POST',
+                dataType: 'JSON',
+                success: function(data){
+                    console.log(data);
+                    location.href = 'login';
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+    </script>
+</body>
+</html>

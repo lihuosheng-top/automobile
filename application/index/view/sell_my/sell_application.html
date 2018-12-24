@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>提现申请</title>
+    <style>
+        html, body, .wrapper{background-color: #fff;}
+        .header{position: relative;width: 100%;height: .88rem;background-color: #fff; border-bottom: 1px solid #eee;}
+        .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
+        .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .balance-container{background-color: #fff; padding: .3rem 0 .3rem .55rem; font-size: .3rem; border-bottom: 3px solid #f2f2f2;}
+        .balance-container span{color: #f00;}
+        .info-container div{display: flex; padding: .18rem 0; align-items: center;}
+        .info-container div span{font-size: .3rem; color: #333;}
+        .info-container div span:first-of-type{flex-basis: 35%;text-align: right;}
+        .info-container div span:last-of-type{flex: 65%;}
+        .apply-container{margin-top: .3rem;}
+        .info-container input{border: 1px solid #ddd; height: .6rem; padding-left: .2rem; outline: none; width: 3.5rem}
+        .info-container input::placeholder{font-size: .26rem;}
+        .bank-num-container{margin-bottom: .5rem;}
+        .button-container{margin-bottom: .8rem; text-align: center;}
+        .button-container button{width: 90%;height: .88rem; background-color: #3169f6; color: #fff; font-size: .3rem; border: 0; outline: none; border-radius: .1rem;}
+        .tips-container{padding: 0 .34rem;}
+        .tips-container li{font-size: .24rem; color: #999;}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <a href="my_message" class="spr icon-back"></a>
+            <h3>提现申请</h3>
+        </header>
+        <div class="balance-container">
+            账户可用余额：<span>￥<span class="balance-txt">5000</span></span>
+        </div>
+        <div class="info-container">
+            <div class="apply-container">
+                <span>申请提现金额：</span>
+                <span><input type="text" placeholder="请输入金额，不能小于100">元</span>
+            </div>
+            <div class="name-container">
+                <span>开户名：</span>
+                <span><input type="text" placeholder="需要与绑定身份姓名一致"></span>
+            </div>
+            <div class="bank-container">
+                <span>开户银行：</span>
+                <span><input type="text" placeholder="请填写开户行及支行名称"></span>
+            </div>
+            <div class="bank-num-container">
+                <span>银行卡号：</span>
+                <span><input type="text" placeholder="请输入完整卡号"></span>
+            </div>
+        </div>
+        <div class="button-container">
+            <button>提交申请</button>
+        </div>
+        <ul class="tips-container">
+            <li>温馨提示：</li>
+            <li>① 您申请会员的充值余额，需用于平台消费，不能用于提现</li>
+            <li>② 由于各运营方已收取相应的中间手续费用，为保障用户利益，申请提现只收取2%提现手续费；</li>
+            <li>③ 能申请提现的余额需满100元以上时才可申请提现；</li>
+            <li>④ 当天充值后余额需在7天后方可体现；</li>
+        </ul>
+    </div>
+
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+</body>
+</html>

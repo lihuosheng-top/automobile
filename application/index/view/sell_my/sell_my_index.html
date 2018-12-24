@@ -41,36 +41,52 @@
         </div>
         <div class="main-cont">
             <div class="function-item">
-                <i class="spr-sell icon-order"></i>
-                <p class="item-txt">今日订单</p>
+                <a href="sell_service_order">
+                    <i class="spr-sell icon-order"></i>
+                    <span class="item-txt">今日订单</span>
+                </a>
             </div>
             <div class="function-item">
-                <i class="spr-sell icon-out"></i>
-                <p class="item-txt">已发货</p>
+                <a href="sell_service_order">
+                    <i class="spr-sell icon-out"></i>
+                    <span class="item-txt">已发货</span>
+                </a>
             </div>
             <div class="function-item">
-                <i class="spr-sell icon-return"></i>
-                <p class="item-txt">已退货</p>
+                <a href="sell_service_order">
+                    <i class="spr-sell icon-return"></i>
+                    <span class="item-txt">已退货</span>
+                </a>
             </div>
             <div class="function-item">
-                <i class="spr-sell icon-service"></i>
-                <p class="item-txt">待服务</p>
+                <a href="sell_service_order">
+                    <i class="spr-sell icon-service"></i>
+                    <span class="item-txt">待服务</span>
+                </a>
             </div>
             <div class="function-item">
-                <i class="spr-sell icon-cancel"></i>
-                <p class="item-txt">已取消</p>
+                <a href="sell_service_order">
+                    <i class="spr-sell icon-cancel"></i>
+                    <span class="item-txt">已取消</span>
+                </a>
             </div>
             <div class="function-item">
-                <i class="spr-sell icon-complete"></i>
-                <p class="item-txt">已完成</p>
+                <a href="sell_service_order">
+                    <i class="spr-sell icon-complete"></i>
+                    <span class="item-txt">已完成</span>
+                </a>
             </div>
             <div class="function-item">
-                <i class="spr-sell icon-monthly"></i>
-                <p class="item-txt">月销</p>
+                <a href="sell_service_record">
+                    <i class="spr-sell icon-monthly"></i>
+                    <span class="item-txt">月销</span>
+                </a>
             </div>
             <div class="function-item">
-                <i class="spr-sell icon-new"></i>
-                <p class="item-txt">新订单</p>
+                <a href="sell_service_order">
+                    <i class="spr-sell icon-new"></i>
+                    <span class="item-txt">新订单</span>
+                </a>
             </div>
         </div>
         <!-- footer 样式分离到common.css -->
@@ -105,5 +121,13 @@
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $('.monthly-bill').click(function(){
+            location.href = 'sell_service_record';
+        })
+        $('.last-bill').click(function(){
+            location.href = 'sell_service_record';
+        })
+    </script>
 </body>
 </html>

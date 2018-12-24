@@ -121,7 +121,6 @@
     height: .98rem;
     font-size: .3rem;
     border-bottom: 1px solid #ddd;
-    margin-bottom: .2rem;
     padding-left: .3rem;
     box-sizing: border-box;
     outline: none;
@@ -140,6 +139,9 @@
     color: #fff;
     font-size: .3rem;
 }
+.reset-payment-btn[disabled]{
+    background-color: #e2e2e2;
+}
 .change-role-pop div{
     width: 35%;
     margin: 0 auto .2rem;
@@ -149,4 +151,19 @@
 }
 .supplier-box{
     margin-bottom: 1rem !important;
+}
+.reset-payment-phone{
+    position: relative;
+}
+.reset-payment-phone .get-code{
+    position: absolute;
+    top: 0;
+    right: .3rem;
+    height: 98%;
+    border: 0;
+    background-color: #fff;
+    font-size: .3rem;
+    color: #333;
+    outline: none;
+    border-left: 1px solid #eee;
 }

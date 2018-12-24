@@ -23,7 +23,7 @@
     <div class="wrapper">
         <div class="header">
             <div class="map">
-                <span class="curr_city"></span>
+                <span class="curr_city">请登录</span>
                 <i class="spr icon_location"></i>
             </div> 
             <div class="search">
@@ -31,20 +31,16 @@
                 <input type="text" placeholder="输入你要搜索的内容">
             </div>
             <div class="message">
-                <i class="spr icon_message"></i>
+                <a href="information_index" class="spr icon_message"></a>
             </div>
         </div>
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/banner1.png">
-                </div>
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/banner1-2.png">
-                </div>
-                <div class="swiper-slide">
-                    <img src="__STATIC__/index/image/banner1-3.png">
-                </div>
+                <!-- <div class="swiper-slide">
+                    <a href="javascript:;">
+                        <img src="__STATIC__/index/image/banner1.png">
+                    </a>
+                </div> -->
             </div>
             <!-- 如果需要分页器 -->
             <div class="swiper-pagination"></div>
@@ -59,7 +55,7 @@
                     <i class="spr icon_add"></i>
                 </a>
             </div>
-            <ul>
+            <ul class="service-container">
                 <li>
                     <a href="service_type">
                         <i class="spr order"></i>
@@ -73,55 +69,55 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">
+                    <a href="rescue_index">
                         <i class="spr daily"></i>
                         <span>紧急救援</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">
+                    <a href="about_index">
                         <i class="spr agency"></i>
                         <span>代办业务</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">
+                    <a href="jabout_index">
                         <i class="spr lease"></i>
                         <span>车辆租赁</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">
+                    <a href="about_index">
                         <i class="spr mortgage"></i>
                         <span>汽车抵押</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">
+                    <a href="about_index">
                         <i class="spr insurance"></i>
                         <span>车辆保险</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">
+                    <a href="about_index">
                         <i class="spr designated_driving"></i>
                         <span>寻找代驾</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">
+                    <a href="about_index">
                         <i class="spr used_car"></i>
                         <span>二手车</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">
+                    <a href="about_index">
                         <i class="spr assess"></i>
                         <span>车辆评估</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;">
+                    <a href="about_index">
                         <i class="spr more"></i>
                         <span>更多服务</span>
                     </a>
@@ -129,7 +125,9 @@
             </ul>
         </div>
         <div class="banner">
-            <img src="__STATIC__/index/image/banner2.jpg">
+            <!-- <a href="javascript:;">
+                <img src="__STATIC__/index/image/banner2.jpg">
+            </a> -->
         </div>
         <!-- 热门推荐 -->
         <div class="hot_recommend">
@@ -174,78 +172,21 @@
         <!-- 热门店铺 -->
         <div class="hot_shop">
             <p class="subtitle">热门店铺</p>
-            <!-- <ul class="first_ul">
-                <li>
-                    <div class="shop_info">
-                        <ul>
-                            <li class="spr shop_logo"></li>
-                            <li class="shop_name">大众轮胎专卖店</li>
-                            <li class="into_shop">
-                                <a href="javascript:;">进店</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="shop_goods">
-                        <ul>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
-                            <li>
-                                <img src="__STATIC__/index/image/02.png">
-                                <p class="goods_price">￥249</p>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul> -->
             <ul class="hot-ul">
-                <li class="hot-item">
+                <!-- <li class="hot-item">
                     <div class="hot-headimg">
                         <img src="__STATIC__/index/image/15.jpg">
                     </div>
                     <div class="hotshop-info">
                         <p class="hot-name">大众汽车维修保养店</p>
-                        <div class="star-time">
+                        <div class="star-time"> -->
                             <!-- star2=二星 以此类推 -->
-                            <i class="spr star1"></i>
+                            <!-- <i class="spr star1"></i>
                             <span>营业时间：00:00-24:00</span>
                         </div>
                         <p class="txt-hid-two hotshop-detail">详细信息详细信息详细信息详细信息息详细信息详细信息详细信息详细信息详</p>
                     </div>
-                </li>
-                <li class="hot-item">
-                    <div class="hot-headimg">
-                        <img src="__STATIC__/index/image/15.jpg">
-                    </div>
-                    <div class="hotshop-info">
-                        <p class="hot-name">大众汽车维修保养店</p>
-                        <div class="star-time">
-                            <!-- star2=二星 以此类推 -->
-                            <i class="spr star1"></i>
-                            <span>营业时间：00:00-24:00</span>
-                        </div>
-                        <p class="txt-hid-two hotshop-detail">详细信息详细信息详细信息详细信息息详细信息详细信息详细信息详细信息详</p>
-                    </div>
-                </li>
-                <li class="hot-item">
-                    <div class="hot-headimg">
-                        <img src="__STATIC__/index/image/15.jpg">
-                    </div>
-                    <div class="hotshop-info">
-                        <p class="hot-name">大众汽车维修保养店</p>
-                        <div class="star-time">
-                            <!-- star2=二星 以此类推 -->
-                            <i class="spr star1"></i>
-                            <span>营业时间：00:00-24:00</span>
-                        </div>
-                        <p class="txt-hid-two hotshop-detail">详细信息详细信息详细信息详细信息息详细信息详细信息详细信息详细信息详</p>
-                    </div>
-                </li>
+                </li> -->
             </ul>
         </div>
         <!-- footer 样式分离到common.css -->
@@ -270,7 +211,7 @@
                     </a>
                 </li>
                 <li class="my">
-                    <a href="my_index">
+                    <a href="javascript:;">
                         <i class="spr icon_my"></i>
                         <span class="text_my">我的</span>
                     </a>
@@ -458,27 +399,5 @@
     <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
-    <!-- swiper初始化 -->
-    <script>
-        var mySwiper = new Swiper ('.swiper-container', {
-            direction: 'horizontal', // 垂直切换选项
-            autoplay: true, //自动播放
-            delay: 3000,
-            // 禁止滑动添加类名swiper-no-swiping
-            // 如果需要分页器
-            pagination: {
-                el: '.swiper-pagination',
-            },
-            // 滑动后 切换也不停止
-            autoplay: {
-                disableOnInteraction: false
-            }
-        })
-    </script>
-    <script>
-        $('.first_ul li').click(function(){
-            location.href = 'store_index';
-        })
-    </script>
 </body>
 </html>

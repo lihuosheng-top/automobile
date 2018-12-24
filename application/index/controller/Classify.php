@@ -51,7 +51,9 @@ class Classify extends Controller
             $goods_data = [];
             $goods = db("goods")->where("goods_type_id",$goods_type_id)->whereOr("goods_brand_id",$goods_type_id)->select();
             foreach ($goods as $kye=>$value){
-                if($value["goods_status"] == 1){
+                $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
+                $store = db("store")->where("store_id",$value["store_id"])->where($where)->find();
+                if($value["goods_status"] == 1 && !empty($store)){
                     unset($goods[$kye]);
                     $goods_data[] = $value;
                 }
@@ -74,13 +76,18 @@ class Classify extends Controller
         if($request->isPost()){
             $goods_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("id",$goods_id)->select();
+            $goods_standard = db("special")->where("goods_id", $goods_id)->select();
+            
             foreach ($goods as $key=>$value){
                 $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
                 $goods_standard_value = explode(",",$value["goods_standard_value"]);
                 $goods[$key]["goods_standard_value"] = array_chunk($goods_standard_value,"8");
                 $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
                 $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
-            }
+                $goods[$key]["goods_standard"] = $goods_standard;
+
+            }           
+
             if($goods){
                 return ajax_success("获取成功",$goods);
             }else{

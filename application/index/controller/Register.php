@@ -12,6 +12,20 @@ use think\Session;
 use think\Db;
 
 class Register extends Controller{
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:h5端注册页面
+     **************************************
+     * @return \think\response\View
+     */
+    public function index(){
+        return view("index");
+    }
+
+
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -97,11 +111,17 @@ class Register extends Controller{
                 ];
                 $invitation = $request->only(['invitation'])['invitation'];
                 if(!empty($invitation)) {
+                   $invitation = intval(qr_decode($invitation));
                     $is_user_id =Db::name('user')->where('id',$invitation)->select();
                     if(!empty($is_user_id)){
                         $datas['inviterId']=$invitation;
-                        $res =Db::name('user')->insert($datas);
+                        $res =Db::name('user')->insertGetId($datas);
                         if($res){
+                            $inv_num = createCode($res);
+                           $inv =[
+                              "invitation"=>$inv_num
+                            ];                         //生成邀请码
+                            Db::name("user")->where("id",$res)->update($inv);
                             return ajax_success('注册成功',$datas);
                         }else{
                             return ajax_error('注册失败',['status'=>0]);
@@ -121,7 +141,6 @@ class Register extends Controller{
             }
         }
     }
-
 
 
 }

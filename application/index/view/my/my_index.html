@@ -19,7 +19,7 @@
             </div>
             <div class="user_info clearfix">
                 <div class="user_headimg">
-                    <img src="__STATIC__/index/image/icon6.png">
+                    <img src="__STATIC__/index/image/avatar.png">
                 </div>
                 <!-- 未登录显示 -->
                 <a href="login" class="please_login" style="display:block;">
@@ -178,7 +178,9 @@
                 islogin = data.status;
                 if(data.status == 1){
                     var data = data.data;
-                    $('.user_headimg img')[0].src = 'userimg/' + data.user_img;
+                    if(data.user_img !== null){
+                        $('.user_headimg img')[0].src = 'userimg/' + data.user_img;
+                    }
                     if(data.user_name != null){
                         str += '<p class="user_name">'+data.user_name+'</p>\
                                 <p class="invitation_code">邀请码: <span>'+data.id+'</span></p>\
@@ -281,7 +283,9 @@
                     case 4:
                         location.href = 'about_index';
                         break;
-                    case 5:break;
+                    case 5:
+                        location.href = 'complaint_index'
+                        break;
                 }
             }else{
                 isLoginFun();

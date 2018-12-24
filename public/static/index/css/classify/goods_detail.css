@@ -823,11 +823,15 @@ html{
 }
 .footbar .collect .icon-star{
     display: block;
-    width: .4rem;
-    height: .4rem;
+    width: .5rem;
+    height: .5rem;
     margin: .15rem auto 0;
-    background-position: -1.3rem -4.9rem;
+    background-position: -1.25rem -4.85rem;
 }
+.footbar .collect-on .icon-star{
+    background-position: -1.25rem -5.45rem;
+}
+
 .footbar .cart{
     height: 1rem;
     line-height: normal;
@@ -837,10 +841,10 @@ html{
 }
 .footbar .cart .icon-cart{
     display: block;
-    width: .4rem;
-    height: .4rem;
+    width: .5rem;
+    height: .5rem;
     margin: .15rem auto 0;
-    background-position: -1.85rem -4.9rem;
+    background-position: -1.8rem -4.85rem;
 }
 .footbar .trade{
     display: flex;
@@ -851,11 +855,11 @@ html{
 }
 .footbar .trade .add-cart{
     color: #fff;
-    background-color: #ff6d7e;
+    background-color: #a7ccf6;
 }
 .footbar .trade .buy{
     color: #fff;
-    background-color: #fc0421;
+    background-color: #504cfb;
 }
 
 /* 评价详情 start */
@@ -979,10 +983,6 @@ html{
     z-index: 9;
     padding: 0 .22rem;
     box-sizing: border-box;
-    transition: all .3s ease-out;
-}
-.select-ser-pop.select-ser-easeout{
-    bottom: 0;
 }
 .select-goods-wrap{
     width: 100%;
@@ -1034,7 +1034,6 @@ html{
     width: 0;
 }
 .select-ser-pop .spec-box{
-    height: 2rem;
     padding: .2rem;
     border-bottom: 1px solid #eee;
 }
@@ -1053,7 +1052,7 @@ html{
     line-height: .7rem;
     font-size: .3rem;
     color: #666;
-    margin-right: .2rem;
+    margin: 0 .2rem .2rem 0;
 }
 .select-ser-pop .spec-wrap button{
     border: 0;

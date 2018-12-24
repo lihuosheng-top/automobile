@@ -225,7 +225,7 @@
              </div>
         </div>
 
-        <p class="title">身份认证</p>
+        <p class="title">操作员审核</p>
         <div class="layui-form-item">
             <label class="layui-form-label">是否付费上架：</label>
             <div class="layui-input-block">
@@ -241,7 +241,20 @@
                 {/if}
             </div>
         </div>
-        <div class="layui-form-item">
+              <div class="layui-form-item">
+            <label class="layui-form-label">排序：</label>
+            <div class="layui-input-block">
+                {if !empty($vo.store_order_num)}
+              <input type="number" name="store_order_num" value="{$vo.store_order_num}" placeholder="" class="layui-input" >
+                {/if}
+                
+                  {if empty($vo.store_order_num)}
+              <input type="number" name="store_order_num" value="" placeholder="" class="layui-input" >
+                {/if}
+            </div>
+        </div>
+       
+           <div class="layui-form-item">
             <label class="layui-form-label">当前可操作：</label>
             <div class="layui-input-block">
                 {if $vo.operation_status ==0}
@@ -255,6 +268,19 @@
                 {if $vo.operation_status ==-1}
                 <input type="radio" name="operation_status" value="1" title=" 通过" >
                 <input type="radio" name="operation_status" value="-1" title="拒绝" checked="">
+                {/if}
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否设为热门店铺：</label>
+            <div class="layui-input-block">
+                {if $vo.is_hot_store ==1}
+                <input type="radio" name="is_hot_store" value="1" title="是"  checked="">
+                <input type="radio" name="is_hot_store" value="-1" title="否" >
+                {/if}
+                {if $vo.is_hot_store ==-1}
+                <input type="radio" name="is_hot_store" value="1" title="是" >
+                <input type="radio" name="is_hot_store" value="-1" title="否" checked="" >
                 {/if}
             </div>
         </div>

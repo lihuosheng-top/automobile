@@ -60,7 +60,7 @@ html{
     width: .53rem;
     height: .53rem;
     background-position: -2.65rem -2.45rem;
-    margin-bottom: .1rem;
+    margin-bottom: .2rem;
 }
 .shop_info_box .order_confirm span{
     color: #333;
@@ -69,12 +69,12 @@ html{
 .shop_info_box .shop_name{
     font-size: .3rem;
     color: #333;
-    margin-bottom: .1rem;
+    margin-bottom: .2rem;
 }
 .shop_info_box .star-time{
     display: flex;
     align-items: center;
-    margin-bottom: .15rem;
+    margin-bottom: .2rem;
 }
 .shop_info_box .star-time .open-time{
     font-size: .24rem;
@@ -150,7 +150,6 @@ html{
     left: 0;
 }
 .service-colla-item{
-    padding: .25rem 0;
     border-bottom: 1px solid #eee;
 }
 .service-colla-title{
@@ -176,10 +175,13 @@ html{
     padding: .2rem 0;
     border-top: 1px solid #eee;
 }
+.service-colla-content .service-car-type{
+    flex: 1;
+}
 .service-colla-content .content-money-div{
-    text-align: center;
     font-size: .26rem;
     color: #f00;
+    flex: 1;
 }
 .service-colla-content .content-money-div .thro{
     color: #999;
