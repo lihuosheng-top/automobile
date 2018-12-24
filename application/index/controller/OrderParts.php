@@ -1629,10 +1629,9 @@ class OrderParts extends Controller{
                }else{
                    exit(json_encode(array("status" => 0, "info" => "没有数据")));
                }
-
            }
-           if(0){
-               exit(json_encode(array("status" => 3, "info" => "没有数据")));
+           if(empty($part_goods_info)&&empty($shopping_id)){
+               exit(json_encode(array("status" => 0, "info" => "没有数据")));
            }
         }
     }
