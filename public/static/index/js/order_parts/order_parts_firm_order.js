@@ -212,6 +212,8 @@ $.ajax({
                 str += `</div>`;
             })
             $('.user-info-box').after(str);
+            // 折扣
+            finalMoney = $('.total-money').text();
             // 返回商品详情
             $('.place-order-back').click(function () {
                 location.href = 'cart_index';
