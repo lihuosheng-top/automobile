@@ -193,7 +193,7 @@ Route::group("",[
     "about_index"=>"index/About/index",//关于我们
     /*TODO:消息结束*/
     /*TODO:投诉开始*/
-    "complaint_index"=>"index/Complaint/index",//投诉中心
+    "complaint_home"=>"index/Complaint/home",//投诉中心
     "complaint_detail"=>"index/Complaint/detail",//投诉记录
     /*TODO:投诉结束*/
 
