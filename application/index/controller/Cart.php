@@ -34,7 +34,6 @@ class Cart extends Controller
                 //购物车信息
                 foreach ($da_store_id as $keys=>$vals){
 //                    $da_store_ids[] =$vals; //去重之后的id数组
-
                     $shopping_datas[] =Db::table('tb_shopping')
                         ->field("tb_shopping.*,tb_special.name special_name,tb_special.goods_adjusted_price goods_prices")
                         ->join("tb_special","tb_shopping.goods_standard_id=tb_special.id",'left')
@@ -52,7 +51,6 @@ class Cart extends Controller
                             }
                     }
                 }
-
                 if(!empty($store_ids) && (!empty($store_names))){
                     //店铺id
                     foreach ($store_ids as $i => $j) {
@@ -255,6 +253,28 @@ class Cart extends Controller
             }
         }
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:保存购物车到确认订单页面返回
+     **************************************
+     * @param Request $request
+     */
+    public function save_shopping_id(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");//用户id
+            if(empty($user_id)){
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+            $id = $request->only(['id'])['id'];//shopping表的主键id
+            Session::set("shopping_ids",$id);
+            Session::set('part_goods_info',null); //清空立即购买过来的数据
+            exit(json_encode(array("status" => 1, "info" => "保存id成功")));
+        }
+    }
+
+
 
 
     /**

@@ -250,6 +250,7 @@ Route::group("",[
     "cart_information_add"=>"index/Cart/cart_information_add",//购物车添加按钮（+）（ajax）
     "cart_information_del"=>"index/Cart/cart_information_del",//购物车添加按钮（-）（ajax）
     "carts_del"=>"index/Cart/carts_del",//购物车删除（ajax）
+    "save_shopping_id"=>"index/Cart/save_shopping_id",//保存购物车到确认订单页面返回
     "place_an_order_by_cart"=>"index/Cart/place_an_order_by_cart",//购物车存储到shopping_shop表（ajax）
     /*购物车结束*/
 
