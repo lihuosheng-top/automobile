@@ -47,140 +47,145 @@ $.ajax({
     dataType: 'JSON',
     success: function (res) {
         console.log(res);
-        // 数量
-        $('.quantity-p span').text(res.data.goods_number)
-        $('.sundry-cal-val').val(res.data.goods_number)
-        // 用户选择的规格
-        $('.standard').text(res.data.goods_standard);
-        $.each(res.data.goods, function (idx, val) {
-            // 店铺名
-            $('.order-shop-namp').text(val.store_name);
-            // 商品名
-            $('.order-goods-p').text(val.goods_name);
-            // 商品描述
-            $('.order-selling-point').text(val.goods_describe);
-            // 价格
-            $('.unit-price-p span').text(val.goods_standard_id.price);
-            // 总价
-            $('.total-money').text(toFixed(res.data.goods_number * val.goods_standard_id.price, 2));
-            // 图片
-            $('.order-goods-img img').attr('src', 'uploads/' + val.goods_standard_id.images);
-        })
-        // 总数量
-        $('.total-num').text(res.data.goods_number);
+        if(res.status === 1){
+            // 数量
+            $('.quantity-p span').text(res.data.goods_number)
+            $('.sundry-cal-val').val(res.data.goods_number)
+            // 用户选择的规格
+            $('.standard').text(res.data.goods_standard);
+            $.each(res.data.goods, function (idx, val) {
+                // 店铺名
+                $('.order-shop-namp').text(val.store_name);
+                // 商品名
+                $('.order-goods-p').text(val.goods_name);
+                // 商品描述
+                $('.order-selling-point').text(val.goods_describe);
+                // 价格
+                $('.unit-price-p span').text(val.goods_standard_id.price);
+                // 总价
+                $('.total-money').text(toFixed(res.data.goods_number * val.goods_standard_id.price, 2));
+                // 图片
+                $('.order-goods-img img').attr('src', 'uploads/' + val.goods_standard_id.images);
+            })
+            // 总数量
+            $('.total-num').text(res.data.goods_number);
 
-        finalMoney = parseFloat($('.total-money').text());
+            finalMoney = parseFloat($('.total-money').text());
 
-        // 购买数量按钮
-        $(function () {
-            // 减
-            var calculator_val = document.getElementsByClassName('sundry-cal-val')[0];
-            $('.sundry-minus').click(function () {
-                if (calculator_val.value > 1) {
-                    calculator_val.value -= 1;
+            // 购买数量按钮
+            $(function () {
+                // 减
+                var calculator_val = document.getElementsByClassName('sundry-cal-val')[0];
+                $('.sundry-minus').click(function () {
+                    if (calculator_val.value > 1) {
+                        calculator_val.value -= 1;
+                        $('.quantity-p span').text(calculator_val.value);
+                        $('.total-num').text(calculator_val.value);
+                        // 数量*单价
+                        var minusP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.price, 2)
+                        console.log(minusP)
+                        $('.discount').text('不使用积分');
+                        $('.default').click();
+                        // 用户选择抵扣金额后  增加购买数量
+                        if ($('.discount').text() != '不使用积分') {
+                            // 保存用户选择的抵扣金额
+                            var choseD = $('.discount').text().split('￥')[1];
+                            $('.total-money').text(toFixed(minusP - choseD, 2));
+                        } else {
+                            $('.total-money').text(minusP);
+                        }
+                        // 保存没有抵扣的金额
+                        finalMoney = parseFloat(minusP);
+                    } else {
+                        calculator_val.value = 1;
+                    }
+                })
+                // 加
+                $('.sundry-increase').click(function () {
+                    var add = calculator_val.value - 0;
+                    add += 1;
+                    calculator_val.value = add;
                     $('.quantity-p span').text(calculator_val.value);
                     $('.total-num').text(calculator_val.value);
                     // 数量*单价
-                    var minusP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.price, 2)
-                    console.log(minusP)
-                    $('.discount').text('不使用积分');
-                    $('.default').click();
+                    var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.price, 2)
                     // 用户选择抵扣金额后  增加购买数量
                     if ($('.discount').text() != '不使用积分') {
                         // 保存用户选择的抵扣金额
                         var choseD = $('.discount').text().split('￥')[1];
-                        $('.total-money').text(toFixed(minusP - choseD, 2));
+                        console.log(choseD)
+                        $('.total-money').text(toFixed(increaseP - choseD, 2));
                     } else {
-                        $('.total-money').text(minusP);
+                        $('.total-money').text(increaseP);
                     }
                     // 保存没有抵扣的金额
-                    finalMoney = parseFloat(minusP);
-                } else {
-                    calculator_val.value = 1;
-                }
+                    finalMoney = parseFloat(increaseP);
+                })
             })
-            // 加
-            $('.sundry-increase').click(function () {
-                var add = calculator_val.value - 0;
-                add += 1;
-                calculator_val.value = add;
-                $('.quantity-p span').text(calculator_val.value);
-                $('.total-num').text(calculator_val.value);
-                // 数量*单价
-                var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.price, 2)
-                // 用户选择抵扣金额后  增加购买数量
-                if ($('.discount').text() != '不使用积分') {
-                    // 保存用户选择的抵扣金额
-                    var choseD = $('.discount').text().split('￥')[1];
-                    console.log(choseD)
-                    $('.total-money').text(toFixed(increaseP - choseD, 2));
-                } else {
-                    $('.total-money').text(increaseP);
-                }
-                // 保存没有抵扣的金额
-                finalMoney = parseFloat(increaseP);
-            })
-        })
 
-        // 支付弹窗
-        var goodsId = res.data.goods[0].id;
-        var storeId = res.data.goods[0].store_id;
-        $('#order-buy').click(function () {
-            $('.mask').show();
-            $('.alipay-pop').animate({ 'bottom': '0' });
-            $('html').css('overflow', 'hidden');
+            // 支付弹窗
+            var goodsId = res.data.goods[0].id;
+            var storeId = res.data.goods[0].store_id;
+            $('#order-buy').click(function () {
+                $('.mask').show();
+                $('.alipay-pop').animate({ 'bottom': '0' });
+                $('html').css('overflow', 'hidden');
 
-            var orderAmount = $('.total-money').text();
-            var quantity = $('.total-num').text();
-            var goods_standard = $('.standard').text();
-            var buy_message = $('.leave-msg').val();
-            $.ajax({
-                url: 'ios_api_order_parts_button',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    'goods_id': goodsId,
-                    'store_id': storeId,
-                    'order_amount': orderAmount,
-                    'order_quantity': quantity,
-                    'goods_standard': goods_standard,
-                    'buy_message': buy_message,
-                    'setting_id': deductionId
-                },
-                success: function (res) {
-                    console.log(res);
-                    $('#WIDout_trade_no').val(res.data.parts_order_number);
-                    $('#WIDtotal_amount').val($('.total-money').text());
-                    $('#WIDsubject').val(res.data.parts_goods_name);
-                    $('#WIDbody').val(res.data.parts_goods_name);
+                var orderAmount = $('.total-money').text();
+                var quantity = $('.total-num').text();
+                var goods_standard = $('.standard').text();
+                var buy_message = $('.leave-msg').val();
+                $.ajax({
+                    url: 'ios_api_order_parts_button',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'goods_id': goodsId,
+                        'store_id': storeId,
+                        'order_amount': orderAmount,
+                        'order_quantity': quantity,
+                        'goods_standard': goods_standard,
+                        'buy_message': buy_message,
+                        'setting_id': deductionId
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        $('#WIDout_trade_no').val(res.data.parts_order_number);
+                        $('#WIDtotal_amount').val($('.total-money').text());
+                        $('#WIDsubject').val(res.data.parts_goods_name);
+                        $('#WIDbody').val(res.data.parts_goods_name);
 
-                    $('.close-alipay').click(function () {
-                        $('.mask').hide();
-                        $('.alipay-pop').animate({ 'bottom': '-100%' });
-                        $('html').css('overflow', 'auto');
-                        $.ajax({
-                            url: 'order_parts_save_record',
-                            type: 'POST',
-                            dataType: 'JSON',
-                            data: {
-                                'store_id': storeId,
-                                'parts_order_number': res.data.parts_order_number
-                            },
-                            success: function(res){
-                                console.log(res);
-                                location.href = 'order_parts_detail';
-                            },
-                            error: function(){
-                                console.log('error');
-                            }
+                        $('.close-alipay').click(function () {
+                            $('.mask').hide();
+                            $('.alipay-pop').animate({ 'bottom': '-100%' });
+                            $('html').css('overflow', 'auto');
+                            $.ajax({
+                                url: 'order_parts_save_record',
+                                type: 'POST',
+                                dataType: 'JSON',
+                                data: {
+                                    'store_id': storeId,
+                                    'parts_order_number': res.data.parts_order_number
+                                },
+                                success: function(res){
+                                    console.log(res);
+                                    location.href = 'order_parts_detail';
+                                },
+                                error: function(){
+                                    console.log('error');
+                                }
+                            })
                         })
-                    })
-                },
-                error: function () {
-                    console.log('error');
-                }
+                    },
+                    error: function () {
+                        console.log('error');
+                    }
+                })
             })
-        })
+        }else if(res.status === 3){
+            $('.sundry-ul li').first().hide();
+            
+        }
     },
     error: function () {
         console.log('error');

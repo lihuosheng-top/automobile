@@ -183,7 +183,7 @@
                     }
                     if(data.user_name != null){
                         str += '<p class="user_name">'+data.user_name+'</p>\
-                                <p class="invitation_code">邀请码: <span>'+data.id+'</span></p>\
+                                <p class="invitation_code">邀请码: <span>'+data.invitation+'</span></p>\
                                 <p class="jf_hy_qb">\
                                     <span class="point">积分: <i>'+data.user_integral_wallet+'</i></span>\
                                     <span class="member_grade">会员: <i>'+data.user_grade_content+'</i></span>\
@@ -191,7 +191,7 @@
                                 </p>'
                     }else{
                         str += '<p class="user_name">'+data.phone_num+'</p>\
-                                <p class="invitation_code">邀请码: <span>'+data.id+'</span></p>\
+                                <p class="invitation_code">邀请码: <span>'+data.invitation+'</span></p>\
                                 <p class="jf_hy_qb">\
                                     <span class="point">积分: <i>'+data.user_integral_wallet+'</i></span>\
                                     <span class="member_grade">会员: <i>'+data.user_grade_content+'</i></span>\
@@ -284,7 +284,7 @@
                         location.href = 'about_index';
                         break;
                     case 5:
-                        location.href = 'complaint_index'
+                        location.href = 'complaint_home'
                         break;
                 }
             }else{

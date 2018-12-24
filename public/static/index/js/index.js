@@ -694,9 +694,7 @@ function intoHotShop(id){
         },
         success: function(res){
             console.log(res);
-            if(res.status == 1){
-                location.href = 'reservation_detail?store_id='+id;
-            }
+            location.href = 'reservation_detail?store_id='+id;
         },
         error: function(){
             console.log('error');

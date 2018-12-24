@@ -1877,7 +1877,7 @@ function getOptions() {
 
 
 /**
- * Handle color operations. The object methods are chainable.
+ * Handle color operation. The object methods are chainable.
  * @param {String} input The input color in either rbga or hex format
  */
 var Color = function (input) {
@@ -9267,7 +9267,7 @@ Pointer.prototype = {
 	},
 
 	/**
-	 * Run translation operations for each direction (horizontal and vertical) independently
+	 * Run translation operation for each direction (horizontal and vertical) independently
 	 */
 	pinchTranslateDirection: function (horiz, pinchDown, touches, transform, selectionMarker, clip, lastValidTouch) {
 		var chart = this.chart,

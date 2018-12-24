@@ -1,24 +1,24 @@
 
+var totalPrice = 0;
 // 店铺选中样式
 function myCircleClass(){
     $('.shop-circle').click(function(){
         $(this).toggleClass('circle-on');
         if($(this).hasClass('circle-on')){
             $(this).parents('.goods_wrap').find('.goods-circle').addClass('circle-on');
+            
         }else{
             $(this).parents('.goods_wrap').find('.goods-circle').removeClass('circle-on');
         }
-
+        calPrice();
+        $('.totalprice span').text(totalPrice);
     })
     // 单选商品
     $('.goods-circle').click(function(){
         $(this).toggleClass('circle-on');
-        if($('.circle-on').length > 0){
-            $('.total_box').show();
-            $('.totalprice').text()
-        }else{
-            $('.total_box').hide();
-        }
+        // 遍历所有被选中商品的 单价*数量
+        calPrice();
+        $('.totalprice span').text(totalPrice);
     })
     // 全选
     $('.all-select').click(function(){
@@ -28,7 +28,36 @@ function myCircleClass(){
         }else{
             $('.shop-circle').add('.goods-circle').removeClass('circle-on');
         }
+        calPrice();
+        $('.totalprice span').text(totalPrice);
     })
+}
+
+function calPrice(){
+    var totalPriceArr = [];
+    $.each($('.goods-circle.circle-on'), function(idx, val){
+        var price = parseFloat($(val).siblings().find('.cart_price span').text());
+        var num = parseInt($(val).siblings().find('.calculator_val').val());
+        // 存放所有计算后的价钱
+        totalPriceArr.push(parseFloat(toFixed(price*num, 2)));
+    })
+    console.log(totalPriceArr)
+    if(totalPriceArr.length !== 0){
+        // 存放总价钱  利用数组的方法reduce计算总价钱，toFixed解决计算精度问题
+        totalPrice = toFixed(totalPriceArr.reduce( (pre, curr) => {
+            return pre + curr;
+        }), 2)
+        console.log(totalPrice);
+    }else{
+        totalPrice = 0;
+    }
+}
+// 解决计算精度问题
+function toFixed(num, s) {
+    var times = Math.pow(10, s)
+    var des = num * times + 0.5
+    des = parseInt(des, 10) / times
+    return des + ''
 }
 
 //  加减商品数量
@@ -95,7 +124,34 @@ $('.done').click(function(){
 
 // 结算 删除
 $('.settle_button').click(function(){
-
+    var id = [];
+    $.each($('.goods-circle.circle-on'), function(idx, val){
+        id.push($(val).attr('id'));
+    })
+    var totalMoney = $('.totalprice span').text();
+    var number = [];
+    $.each($('.goods-circle.circle-on'), function(idx, val){
+        number.push($(val).siblings().find('.calculator_val').val());
+    })
+    $.ajax({
+        url: 'save_shopping_id',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id,
+            'goods_unit': number,
+            'money': totalMoney
+        },
+        success: function(res){
+            console.log(res);
+            if(res.status == 1){
+                location.href = 'ios_api_order_parts_firm_order';
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    }) 
 })
 $('.del-btn').click(function(){
     var id = [];
@@ -104,23 +160,30 @@ $('.del-btn').click(function(){
             id.push($(val).attr('id'));
         }
     })
-    $.ajax({
-        url: 'carts_del',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'id': id
-        },
-        success: function(res){
-            console.log(res);
-            if(res.status === 1){
-                location.reload();
-            }
-        },
-        error: function(){
-            console.log('error');
+    layer.open({
+        content: '确认删除商品？',
+        btn: ['确定', '取消'],
+        yes: function (index) {
+            layer.close(index);
+            $.ajax({
+                url: 'carts_del',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': id
+                },
+                success: function(res){
+                    console.log(res);
+                    if(res.status === 1){
+                        location.reload();
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            }) 
         }
-    }) 
+    });
 })
 
 
@@ -175,8 +238,9 @@ $.ajax({
                                     <div class="goods_desc_right">
                                         <p class="cart_goods_name">`+val.goods_name+`</p>
                                         <p class="cart_sub1">`+val.special_name.split(',').join('')+`</p>
+                                        <p class="cart_sub2">`+val.goods_delivery+`</p>
                                         <div class="price_num_wrap">
-                                            <span class="cart_price">￥<span>`+val.money+`</span></span>
+                                            <span class="cart_price">￥<span>`+val.goods_prices+`</span></span>
                                             <div class="calculator_num">
                                                 <a href="javascript:;" class="minus">-</a>
                                                 <input type="text" value="`+val.goods_unit+`" class="calculator_val" readonly>

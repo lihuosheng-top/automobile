@@ -63,13 +63,13 @@ $('.reg-send-code').click(function(){
                     layer.open({
                         skin: 'msg',
                         content: data.info,
-                        time: .8
+                        time: 1
                     })
                 }else{
                     layer.open({
                         skin: 'msg',
                         content: data.info,
-                        time: .8
+                        time: 1
                     })
                     buttonCountdown($(this), 1000 * 60 * 1, "ss");
                 }
@@ -126,13 +126,13 @@ $('.reg-confirm').click(function(){
                 layer.open({
                     skin: 'msg',
                     content: data.info,
-                    time: .8
+                    time: 1
                 })
             }else{
                 layer.open({
                     skin: 'msg',
                     content: '注册成功',
-                    time: .8
+                    time: 1
                 })
                 setTimeout(function(){
                     $('.register-pop').css('display', 'none');
