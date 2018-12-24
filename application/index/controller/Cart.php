@@ -140,7 +140,7 @@ class Cart extends Controller
                 $data['goods_name'] = $goods['goods_name'];
                 $data['goods_images'] = $goods['goods_show_images'];
                 $goods_end_money =Db::name("special")
-                    ->field("price,name")
+                    ->field("price,name,goods_adjusted_price")
                     ->where("id",$goods_standard_id)
                     ->where("goods_id",$goods_id)
                     ->find();
@@ -269,7 +269,9 @@ class Cart extends Controller
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
             $id = $request->only(['id'])['id'];//shopping表的主键id
+            $total_price = $request->only(['money'])['money'];//总价
             Session::set("shopping_ids",$id);
+            Session::set("total_price",$total_price);
             Session::set('part_goods_info',null); //清空立即购买过来的数据
             exit(json_encode(array("status" => 1, "info" => "保存id成功")));
         }

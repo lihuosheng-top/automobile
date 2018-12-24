@@ -1575,6 +1575,8 @@ class OrderParts extends Controller{
            }
            //购物车进来
            $shopping_id =Session::get("shopping_ids");
+           $total_price =Session::get("total_price");
+
            if(!empty($shopping_id)){
                $user_id = Session::get("user");
                foreach ($shopping_id as $k=>$v){
@@ -1619,7 +1621,9 @@ class OrderParts extends Controller{
                        $shopping_info["store_name"][] = $j;
                    }
                    foreach ($shopping_info["info"] as $k=>$v){
+
                        $shopping_information[$k]["info"] =$v;
+                       $shopping_information[$k]["total_price"] =$total_price;
                    }
                    foreach ($shopping_info["store_id"] as $k=>$v){
                        $shopping_information[$k]["store_id"] =$v;
