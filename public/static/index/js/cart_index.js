@@ -124,7 +124,32 @@ $('.done').click(function(){
 
 // 结算 删除
 $('.settle_button').click(function(){
-
+    var id = [];
+    $.each($('.goods-circle.circle-on'), function(idx, val){
+        id.push($(val).attr('id'));
+    })
+    var totalMoney = $('.totalprice span').text();
+    var number = [];
+    $.each($('.goods-circle.circle-on'), function(idx, val){
+        number.push($(val).siblings().find('.calculator_val').val());
+    })
+    $.ajax({
+        url: 'place_an_order_by_cart',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id,
+            'goods_unit': number,
+            'money': totalMoney
+        },
+        success: function(res){
+            console.log(res);
+            location.href = 'ios_api_order_parts_firm_order';
+        },
+        error: function(){
+            console.log('error');
+        }
+    }) 
 })
 $('.del-btn').click(function(){
     var id = [];
@@ -133,23 +158,30 @@ $('.del-btn').click(function(){
             id.push($(val).attr('id'));
         }
     })
-    $.ajax({
-        url: 'carts_del',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'id': id
-        },
-        success: function(res){
-            console.log(res);
-            if(res.status === 1){
-                location.reload();
-            }
-        },
-        error: function(){
-            console.log('error');
+    layer.open({
+        content: '确认删除商品？',
+        btn: ['确定', '取消'],
+        yes: function (index) {
+            layer.close(index);
+            $.ajax({
+                url: 'carts_del',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': id
+                },
+                success: function(res){
+                    console.log(res);
+                    if(res.status === 1){
+                        location.reload();
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            }) 
         }
-    }) 
+    });
 })
 
 

@@ -347,7 +347,7 @@ $(function(){
                 if(loginStatus === 0){
                     location.href = 'login';
                 }else{
-                    myLayer('加入购物车成功');
+                    location.href = 'cart_index';
                 }
             })
             // 收藏商品图标
