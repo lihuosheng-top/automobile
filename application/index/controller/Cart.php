@@ -140,7 +140,7 @@ class Cart extends Controller
                 $data['goods_name'] = $goods['goods_name'];
                 $data['goods_images'] = $goods['goods_show_images'];
                 $goods_end_money =Db::name("special")
-                    ->field("price,name")
+                    ->field("price,name,goods_adjusted_price")
                     ->where("id",$goods_standard_id)
                     ->where("goods_id",$goods_id)
                     ->find();
