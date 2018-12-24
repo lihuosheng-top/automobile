@@ -144,7 +144,9 @@ $('.settle_button').click(function(){
         },
         success: function(res){
             console.log(res);
-            location.href = 'ios_api_order_parts_firm_order';
+            if(res.status == 1){
+                // location.href = 'ios_api_order_parts_firm_order';
+            }
         },
         error: function(){
             console.log('error');
@@ -236,6 +238,7 @@ $.ajax({
                                     <div class="goods_desc_right">
                                         <p class="cart_goods_name">`+val.goods_name+`</p>
                                         <p class="cart_sub1">`+val.special_name.split(',').join('')+`</p>
+                                        <p class="cart_sub2">`+val.goods_delivery+`</p>
                                         <div class="price_num_wrap">
                                             <span class="cart_price">￥<span>`+val.goods_prices+`</span></span>
                                             <div class="calculator_num">
