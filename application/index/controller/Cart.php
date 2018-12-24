@@ -144,7 +144,7 @@ class Cart extends Controller
                     ->where("id",$goods_standard_id)
                     ->where("goods_id",$goods_id)
                     ->find();
-                $data['money'] =  $goods_end_money["price"];
+                $data['money'] =  $goods_end_money["goods_adjusted_price"];
                 $data['goods_unit'] = $goods_unit;
                 $data['user_id'] = $user_id;
                 $data['goods_id'] = $goods['id'];
