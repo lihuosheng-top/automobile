@@ -1,5 +1,7 @@
 
 var totalPriceArr = [];
+var shopTotalPriceArr = [];
+var goodsTotalPriceArr = [];
 var totalPrice = 0;
 // 店铺选中样式
 function myCircleClass(){
@@ -14,13 +16,14 @@ function myCircleClass(){
     // 单选商品
     $('.goods-circle').click(function(){
         $(this).toggleClass('circle-on');
-        if($('.circle-on').length > 0){
+        // if($(this).hasClass('circle-on')){
+        $.each($('.circle-on'), function(idx, val){
+            goodsTotalPriceArr.push($(val).siblings().find('.cart_price span').text())
+            console.log(goodsTotalPriceArr)
+        })
+        // }else{
             
-            $('.total_box').show();
-            $('.totalprice').text()
-        }else{
-            $('.total_box').hide();
-        }
+        // }
     })
     // 全选
     $('.all-select').click(function(){
