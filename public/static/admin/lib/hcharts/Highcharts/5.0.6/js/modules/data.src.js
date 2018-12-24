@@ -164,7 +164,7 @@
 
             /**
              * When the data is parsed into columns, either by CSV, table, GS or direct input,
-             * continue with other operations.
+             * continue with other operation.
              */
             dataFound: function() {
 
