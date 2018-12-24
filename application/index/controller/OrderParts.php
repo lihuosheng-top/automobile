@@ -1594,10 +1594,12 @@ class OrderParts extends Controller{
                                 $order_undate['info'][$keys] = Db::name('shopping')
                                     ->where('user_id',$user_id)
                                     ->where("store_id",$value)
+                                    ->where("goods_delivery",$v["goods_delivery"])
                                     ->select();
                                 $names = Db::name('shopping')
                                     ->where('user_id',$user_id)
                                     ->where("store_id",$value)
+                                    ->where("goods_delivery",$v["goods_delivery"])
                                     ->find();
                                 $order_undate['store_name'][$keys] = $names['store_name'];
                                 $order_undate['store_id'][$keys] = $names['store_id'];
