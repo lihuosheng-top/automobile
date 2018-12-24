@@ -152,21 +152,16 @@ if(urlLen > 1){
                     $('.shop-describe').text(val.store_information);
                 })
                 // 服务项目
-                var str2 = hotMyService(data);
+                var str2 = myService(data);
                 $('.service-content').append(str2);
                 selectEvent();
             }else if(data.status == 2){
                 // 商品
                 var str = myGoods(data);
                 $('.goods-content').prepend(str);
-                // 店铺信息
-                $.each(data.data.store, function(idx, val){
-                    $('.shop_name').text(val.store_name);
-                    $('.addr_p span').text(val.store_detailed_address);
-                    $('.shop-describe').text(val.store_information);
-                })
+                
                 // 服务项目
-                var str2 = hotMyService(data);
+                var str2 = myService(data);
                 $('.service-content').append(str2);
                 selectEvent();
             }
@@ -200,6 +195,8 @@ function myService(data){
         $('.shop_name').text(val.store_name);
         $('.addr_p span').text(val.store_detailed_address);
         $('.shop-describe').text(val.store_information);
+    })
+    $.each(data.data.serve_data, function(idx, val){
         str2 += `<div class="service-colla-item">
                     <div class="service-colla-title">
                         <p class="service-subtitle">`+val.serve_name+`</p>
@@ -208,7 +205,7 @@ function myService(data){
                     </div>
                     <div class="service-colla-content" style="display:none;">
                         <ul>`
-        $.each(val.goods, function(idx, val){
+        $.each(val.serve_goods, function(idx, val){
             if(val.service_money === null && val.ruling_money === null){
                 str2 += `<li>
                             <p class="service-car-type">`+val.vehicle_model+`</p>
@@ -233,61 +230,67 @@ function myService(data){
                                 <p class="thro">￥<span>`+val.ruling_money+`</span></p>
                             </div>
                             <i class="spr icon-uncheck"></i>
-                        </li>`
-            }
-            str2 += `</ul>
-                </div>
-            </div>`
-        })
-    })
-    return str2;
-}
-// 热门店铺进来 服务项目  数据结构不一样
-function hotMyService(data){
-    var str2 = '';
-    $.each(data.data.serve_data, function(idx, val){
-        str2 += `<div class="service-colla-item">
-                    <div class="service-colla-title">
-                        <p class="service-subtitle">`+val[0].serve_name+`</p>
-                        <p class="service-money"></p>
-                        <i class="spr icon-uncheck"></i>
-                    </div>
-                    <div class="service-colla-content" style="display:none;">
-                        <ul>`
-        $.each(val, function(idx, val){
-            if(val.service_money === null && val.ruling_money === null){
-                str2 += `<li>
-                            <p class="service-car-type">`+val.vehicle_model+`</p>
-                            <div class="content-money-div">
-                                <p class="sale"><span>面议</span></p>
-                            </div>
-                            <i class="spr icon-uncheck" id="`+val.id+`"></i>
-                        </li>`
-            }else if(val.service_money !== null && val.ruling_money === null){
-                str2 += `<li>
-                            <p class="service-car-type">`+val.vehicle_model+`</p>
-                            <div class="content-money-div">
-                                <p class="sale">￥<span>`+val.service_money+`</span></p>
-                            </div>
-                            <i class="spr icon-uncheck" id="`+val.id+`"></i>
-                        </li>`
-            }else if(val.service_money !== null && val.ruling_money !== null){
-                str2 += `<li>
-                            <p class="service-car-type">`+val.vehicle_model+`</p>
-                            <div class="content-money-div">
-                                <p class="sale">￥<span>`+val.service_money+`</span></p>
-                                <p class="thro">￥<span>`+val.ruling_money+`</span></p>
-                            </div>
-                            <i class="spr icon-uncheck" id="`+val.id+`"></i>
                         </li>`
             }
         })
         str2 += `</ul>
             </div>
-        </div>`              
+        </div>`
     })
     return str2;
 }
+// 热门店铺进来 服务项目  数据结构不一样
+// function hotMyService(data){
+//     var str2 = '';
+//     // 店铺信息
+//     $.each(data.data.store, function(idx, val){
+//         $('.shop_name').text(val.store_name);
+//         $('.addr_p span').text(val.store_detailed_address);
+//         $('.shop-describe').text(val.store_information);
+//     })
+//     $.each(data.data.serve_data, function(idx, val){
+//         str2 += `<div class="service-colla-item">
+//                     <div class="service-colla-title">
+//                         <p class="service-subtitle">`+val.serve_name+`</p>
+//                         <p class="service-money"></p>
+//                         <i class="spr icon-uncheck"></i>
+//                     </div>
+//                     <div class="service-colla-content" style="display:none;">
+//                         <ul>`
+//         $.each(val.serve_goods, function(idx, val){
+//             if(val.service_money === null && val.ruling_money === null){
+//                 str2 += `<li>
+//                             <p class="service-car-type">`+val.vehicle_model+`</p>
+//                             <div class="content-money-div">
+//                                 <p class="sale"><span>面议</span></p>
+//                             </div>
+//                             <i class="spr icon-uncheck" id="`+val.id+`"></i>
+//                         </li>`
+//             }else if(val.service_money !== null && val.ruling_money === null){
+//                 str2 += `<li>
+//                             <p class="service-car-type">`+val.vehicle_model+`</p>
+//                             <div class="content-money-div">
+//                                 <p class="sale">￥<span>`+val.service_money+`</span></p>
+//                             </div>
+//                             <i class="spr icon-uncheck" id="`+val.id+`"></i>
+//                         </li>`
+//             }else if(val.service_money !== null && val.ruling_money !== null){
+//                 str2 += `<li>
+//                             <p class="service-car-type">`+val.vehicle_model+`</p>
+//                             <div class="content-money-div">
+//                                 <p class="sale">￥<span>`+val.service_money+`</span></p>
+//                                 <p class="thro">￥<span>`+val.ruling_money+`</span></p>
+//                             </div>
+//                             <i class="spr icon-uncheck" id="`+val.id+`"></i>
+//                         </li>`
+//             }
+//         })
+//         str2 += `</ul>
+//             </div>
+//         </div>`              
+//     })
+//     return str2;
+// }
 function selectEvent(){
     // 选择
     $('.service-colla-title').click(function(e){
