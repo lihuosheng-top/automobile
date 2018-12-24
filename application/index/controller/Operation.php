@@ -15,7 +15,7 @@ class Operation extends Controller{
      * 投诉中心
      * 陈绪
      */
-    public function home(){
+    public function complaint(){
 
         return view("operation_index");
 
