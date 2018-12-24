@@ -186,6 +186,7 @@ $.ajax({
             })
         }else if(res.status === 3){
             $('.sundry-ul li').first().hide();
+            
             // 返回商品详情
             $('.place-order-back').click(function () {
                 location.href = 'cart_index';
