@@ -137,6 +137,7 @@ class Index extends Controller
                     return ajax_error("获取失败");
                 }
             }else {
+                $user_id = Session::get("user");
                 $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
                 $car_series = db("car_series")->where("brand", $user_car["brand"])->where("series", $user_car["series"])->where("year", $user_car["production_time"])->where("displacement", $user_car["displacement"])->field("vehicle_model")->find();
                 if (!empty($car_series)) {
@@ -167,9 +168,9 @@ class Index extends Controller
                     }
 
                     if ($goods || $store || $serve_goods) {
-                        exit(array("info"=>"获取成功","status"=>"2","data"=>array("store"=>$store,"goods" => $goods, "serve_data" => $serve_data)));
+                        exit(json_encode(array("info"=>"获取成功","status"=>"2","data"=>["store"=>$store,"goods" => $goods, "serve_data" => $serve_data])));
                     } else {
-                        exit(array("info"=>"获取成功","status"=>"3"));
+                        exit(json_encode(array("info"=>"获取成功","status"=>"3")));
                     }
                 }else {
                     $shop_id = $request->only(["id"])["id"];
@@ -187,9 +188,9 @@ class Index extends Controller
                         }
                     }
                     if ($goods || $store || $serve_data) {
-                         exit(array("info"=>"获取成功","status"=>"4","data"=>array("store"=>$store,"goods" => $goods, "serve_data" => $serve_data)));
+                         exit(json_encode(array("info"=>"获取成功","status"=>"4","data"=>["store"=>$store,"goods" => $goods, "serve_data" => $serve_data])));
                     } else {
-                        exit(array("info"=>"获取成功","status"=>"5"));
+                         exit(json_encode(array("info"=>"获取成功","status"=>"5")));
                     }
                 }
             }
