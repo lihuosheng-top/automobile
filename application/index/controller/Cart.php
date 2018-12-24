@@ -140,7 +140,7 @@ class Cart extends Controller
                 $data['goods_name'] = $goods['goods_name'];
                 $data['goods_images'] = $goods['goods_show_images'];
                 $goods_end_money =Db::name("special")
-                    ->field("price")
+                    ->field("price,name")
                     ->where("id",$goods_standard_id)
                     ->where("goods_id",$goods_id)
                     ->find();
@@ -151,6 +151,7 @@ class Cart extends Controller
                 $data['store_id'] = $goods['store_id'];
                 $data['store_name'] = $store_name["store_name"];
                 $data['goods_standard_id'] =$goods_standard_id;
+                $data["special_name"] =$goods_end_money["name"];
                 $data['goods_delivery'] =$goods_delivery;
                 $bool = db("shopping")->insert($data);
                  exit(json_encode(array("status" => 1, "info" => "加入购物车成功" ,"data"=>$bool)));
