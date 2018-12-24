@@ -48,8 +48,8 @@ class Evaluate extends  Controller{
      */
     public function evaluate_parts_add(Request $request){
         if($request->isPost()){
-            $img = $request->file("filesArr");
-            dump($img);
+//            $img = $request->file("filesArr");
+//            dump($img);
 //            if(!empty($img)){
 //                $images =[];
 //                foreach ($img as $k=>$v) {
@@ -65,32 +65,31 @@ class Evaluate extends  Controller{
                 return ajax_success("没有有数据",$images);
             }*/
 
-//            $user_id = Session::get("user");//用户id
-//            $order_id =$request->only("order_id")["order_id"];//订单排序号（数组）
-////            dump($order_id);
-//            $is_on_time =$request->only("is_on_time")["is_on_time"];//是否准时（是否准时，1为准时,-1为不准时）
-//            $service_attitude_stars =$request->only("service_attitude_stars")["service_attitude_stars"];//服务态度的星星（1为1颗星，...5为5颗星）
-//            $logistics_stars =$request->only("logistics_stars")["logistics_stars"];//物流服务的星星（1为1颗星，...5为5颗星）
-//            $user_info =Db::name("user")->field("user_phone_num,user_name")->where("id",$user_id)->find();
-//            $create_time =time();//创建时间
-//            foreach ($order_id  as $k=>$v){
-//                Db::name("order_parts")->field("parts_goods_name,goods_id,order_information_number")->where("id",$v)->find();
-//            }
-//            $data =[
-//                "evaluate_content"=>1
-//
-//            ];
-//            Db::startTrans();
-//            try{
-//                $a=Db::name("user")->where("id",$user_id)->find();
-//                if(!$a){
-//                    throw  new \Exception("没有查询成功");
-//                }
-//                Db::commit();
-//            }catch(\Exception $e){
-//            Db::rollback();
-//            dump($e->getMessage());
-//            }
+            $user_id = Session::get("user");//用户id
+            $order_id =$request->only("orderId")["orderId"];//订单排序号（数组）
+            $evaluate_content =$request->only("evaluateContent")["evaluateContent"];//评价内容（数组）
+            $is_on_time =$request->only("isOnTime")["isOnTime"];//是否准时（是否准时，1为准时,-1为不准时）
+            $logistics_stars =$request->only("starArr")["starArr"];//物流服务的星星（1为1颗星，...5为5颗星）
+            $user_info =Db::name("user")->field("user_phone_num,user_name")->where("id",$user_id)->find();
+            $create_time =time();//创建时间
+            foreach ($order_id  as $k=>$v){
+                Db::name("order_parts")->field("parts_goods_name,goods_id,order_information_number")->where("id",$v)->find();
+            }
+            $data =[
+                "evaluate_content"=>1
+
+            ];
+            Db::startTrans();
+            try{
+                $a=Db::name("user")->where("id",$user_id)->find();
+                if(!$a){
+                    throw  new \Exception("没有查询成功");
+                }
+                Db::commit();
+            }catch(\Exception $e){
+            Db::rollback();
+            dump($e->getMessage());
+            }
 
         }
     }
