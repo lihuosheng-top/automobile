@@ -1,7 +1,4 @@
 
-var totalPriceArr = [];
-var shopTotalPriceArr = [];
-var goodsTotalPriceArr = [];
 var totalPrice = 0;
 // 店铺选中样式
 function myCircleClass(){
@@ -9,21 +6,19 @@ function myCircleClass(){
         $(this).toggleClass('circle-on');
         if($(this).hasClass('circle-on')){
             $(this).parents('.goods_wrap').find('.goods-circle').addClass('circle-on');
+            
         }else{
             $(this).parents('.goods_wrap').find('.goods-circle').removeClass('circle-on');
         }
+        calPrice();
+        $('.totalprice span').text(totalPrice);
     })
     // 单选商品
     $('.goods-circle').click(function(){
         $(this).toggleClass('circle-on');
-        // if($(this).hasClass('circle-on')){
-        $.each($('.circle-on'), function(idx, val){
-            goodsTotalPriceArr.push($(val).siblings().find('.cart_price span').text())
-            console.log(goodsTotalPriceArr)
-        })
-        // }else{
-            
-        // }
+        // 遍历所有被选中商品的 单价*数量
+        calPrice();
+        $('.totalprice span').text(totalPrice);
     })
     // 全选
     $('.all-select').click(function(){
@@ -33,7 +28,29 @@ function myCircleClass(){
         }else{
             $('.shop-circle').add('.goods-circle').removeClass('circle-on');
         }
+        calPrice();
+        $('.totalprice span').text(totalPrice);
     })
+}
+
+function calPrice(){
+    var totalPriceArr = [];
+    $.each($('.goods-circle.circle-on'), function(idx, val){
+        var price = parseFloat($(val).siblings().find('.cart_price span').text());
+        var num = parseInt($(val).siblings().find('.calculator_val').val());
+        // 存放所有计算后的价钱
+        totalPriceArr.push(parseFloat(toFixed(price*num, 2)));
+    })
+    console.log(totalPriceArr)
+    if(totalPriceArr.length !== 0){
+        // 存放总价钱  利用数组的方法reduce计算总价钱，toFixed解决计算精度问题
+        totalPrice = toFixed(totalPriceArr.reduce( (pre, curr) => {
+            return pre + curr;
+        }), 2)
+        console.log(totalPrice);
+    }else{
+        totalPrice = 0;
+    }
 }
 // 解决计算精度问题
 function toFixed(num, s) {
