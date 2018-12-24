@@ -1615,17 +1615,17 @@ class OrderParts extends Controller{
                        $shopping_info["store_name"][] = $j;
                    }
                    foreach ($shopping_info["info"] as $k=>$v){
-                       $shopping_info[$k]["info"] =$v;
+                       $shopping_information[$k]["info"] =$v;
                    }
                    foreach ($shopping_info["store_id"] as $k=>$v){
-                       $shopping_info[$k]["store_id"] =$v;
+                       $shopping_information[$k]["store_id"] =$v;
                    }
                    foreach ($shopping_info["store_name"] as $k=>$v){
-                       $shopping_info[$k]["store_name"] =$v;
+                       $shopping_information[$k]["store_name"] =$v;
                    }
                }
                if(!empty($shopping_info)){
-                   exit(json_encode(array("status" => 3, "info" => "购物车数据","data"=> $shopping_info)));
+                   exit(json_encode(array("status" => 3, "info" => "购物车数据","data"=> $shopping_information)));
                }else{
                    exit(json_encode(array("status" => 0, "info" => "没有数据")));
                }
