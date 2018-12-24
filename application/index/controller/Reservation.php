@@ -86,11 +86,16 @@ class Reservation extends Controller{
             $serve_goods_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("store_id",$serve_goods_id)->select();
             $store = db("store")->where("store_id",$serve_goods_id)->select();
+            $serve_data = [];
             foreach ($store as $key=>$value){
-                $store[$key]["goods"] = db("serve_goods")->where("store_id",$value["store_id"])->where("vehicle_model",$car_series["vehicle_model"])->select();
-                $store[$key]["serve_name"] = db("service_setting")->where("service_setting_id",$store[$key]["goods"][0]["service_setting_id"])->value("service_setting_name");
+                $serve_data[$key]["serve_goods"] = db("serve_goods")->where("store_id",$value["store_id"])->where("vehicle_model",$car_series["vehicle_model"])->select();
+                $serve_data[$key]["serve_name"] = db("service_setting")->where("service_setting_id",$serve_data[$key]["serve_goods"][0]["service_setting_id"])->value("service_setting_name");
             }
-            return ajax_success("获取成功",array("goods"=>$goods,"store"=>$store));
+            if($serve_data){
+                return ajax_success("获取成功",array("goods"=>$goods,"store"=>$store,"serve_data"=>$serve_data));
+            }else{
+                return ajax_error("获取成功");
+            }
         }
         return view("reservation_detail");
     }
