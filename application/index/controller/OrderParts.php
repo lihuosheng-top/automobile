@@ -1594,10 +1594,12 @@ class OrderParts extends Controller{
                                 $order_undate['info'][$keys] = Db::name('shopping')
                                     ->where('user_id',$user_id)
                                     ->where("store_id",$value)
+                                    ->where("goods_delivery",$v["goods_delivery"])
                                     ->select();
                                 $names = Db::name('shopping')
                                     ->where('user_id',$user_id)
                                     ->where("store_id",$value)
+                                    ->where("goods_delivery",$v["goods_delivery"])
                                     ->find();
                                 $order_undate['store_name'][$keys] = $names['store_name'];
                                 $order_undate['store_id'][$keys] = $names['store_id'];
@@ -1629,10 +1631,9 @@ class OrderParts extends Controller{
                }else{
                    exit(json_encode(array("status" => 0, "info" => "没有数据")));
                }
-
            }
-           if(0){
-               exit(json_encode(array("status" => 3, "info" => "没有数据")));
+           if(empty($part_goods_info)&&empty($shopping_id)){
+               exit(json_encode(array("status" => 0, "info" => "没有数据")));
            }
         }
     }
