@@ -1551,27 +1551,27 @@ class OrderParts extends Controller{
     public function return_order_buy_information(Request $request){
         if($request->isPost()){
             //立即购买过来
-//           $part_goods_info = Session::get("part_goods_info");
-//           if(!empty($part_goods_info)){
-//               $goods_id = $part_goods_info["goods_id"];
-//               $goods = db("goods")->where("id",$goods_id)->select();
-//               foreach ($goods as $key=>$value){
-//                   $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
-//                   $store_name =Db::name("store")->field("store_name")->where("store_id",$value["store_id"])->find();
-//                   $goods[$key]["store_name"] =$store_name["store_name"];
-//                   $goods_standard_value = explode(",",$value["goods_standard_value"]);
-//                   $goods[$key]["goods_standard_value"] = array_chunk($goods_standard_value,"8");
-//                   $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
-//                   $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
-//                   $goods[$key]["goods_standard_id"] =db("special")->where("id",$part_goods_info["goods_standard_id"])->find();
-//               }
-//               if(!empty($goods)){
-//                   $part_goods_info['goods'] =$goods;
-//                   exit(json_encode(array("status" => 1, "info" => "立即购买数据返回成功","data"=>$part_goods_info)));
-//               }else{
-//                   return ajax_error("没有数据",["status"=>0]);
-//               }
-//           }
+           $part_goods_info = Session::get("part_goods_info");
+           if(!empty($part_goods_info)){
+               $goods_id = $part_goods_info["goods_id"];
+               $goods = db("goods")->where("id",$goods_id)->select();
+               foreach ($goods as $key=>$value){
+                   $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
+                   $store_name =Db::name("store")->field("store_name")->where("store_id",$value["store_id"])->find();
+                   $goods[$key]["store_name"] =$store_name["store_name"];
+                   $goods_standard_value = explode(",",$value["goods_standard_value"]);
+                   $goods[$key]["goods_standard_value"] = array_chunk($goods_standard_value,"8");
+                   $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
+                   $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
+                   $goods[$key]["goods_standard_id"] =db("special")->where("id",$part_goods_info["goods_standard_id"])->find();
+               }
+               if(!empty($goods)){
+                   $part_goods_info['goods'] =$goods;
+                   exit(json_encode(array("status" => 1, "info" => "立即购买数据返回成功","data"=>$part_goods_info)));
+               }else{
+                   return ajax_error("没有数据",["status"=>0]);
+               }
+           }
            //购物车进来
            $shopping_id =Session::get("shopping_ids");
            if(!empty($shopping_id)){
