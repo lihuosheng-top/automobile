@@ -16,9 +16,7 @@ class Operation extends Controller{
      * 陈绪
      */
     public function complaint_index(){
-
         return view("complaint_index");
-
     }
 
 
