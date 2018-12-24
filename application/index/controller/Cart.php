@@ -269,7 +269,9 @@ class Cart extends Controller
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
             $id = $request->only(['id'])['id'];//shopping表的主键id
+            $total_price = $request->only(['money'])['money'];//总价
             Session::set("shopping_ids",$id);
+            Session::set("total_price",$total_price);
             Session::set('part_goods_info',null); //清空立即购买过来的数据
             exit(json_encode(array("status" => 1, "info" => "保存id成功")));
         }
