@@ -186,7 +186,32 @@ $.ajax({
             })
         }else if(res.status === 3){
             $('.sundry-ul li').first().hide();
-            
+            $('.comeIndex').hide();
+            var str = '';
+            $.each(res.data, function(idx, val){
+                str += `<div class="order-goods-info" id="`+val.store_id+`">
+                            <div class="order-shop-box">
+                                <i class="spr icon-shop"></i>
+                                <span class="order-shop-namp">`+val.store_name+`</span>
+                            </div>`
+                $.each(val.info, function(idx, val){
+                    str += `<div class="order-goods-detail">
+                                <div class="order-goods-img">
+                                    <img src="uploads/`+val.goods_images+`">
+                                </div>
+                                <div class="order-info-box">
+                                    <p class="order-goods-p txt-hid-two">`+val.goods_name+`</p>
+                                    <p class="standard txt-hid-two"></p>
+                                    <div class="unit-price-quantity">
+                                        <p class="unit-price-p">￥<span></span></p>
+                                        <p class="quantity-p">×<span>`+val.goods_unit+`</span></p>
+                                    </div>
+                                </div>
+                            </div>`
+                })
+                str += `</div>`;
+            })
+            $('.user-info-box').after(str);
             // 返回商品详情
             $('.place-order-back').click(function () {
                 location.href = 'cart_index';
