@@ -130,7 +130,7 @@ $('.on-time').on('change', 'input', function(){
     console.log(isOnTime);
 })
 
-var formData = new FormData();
+
 // 发布
 $('.publish-btn').click(function(){
     var orderId = [];
@@ -144,12 +144,21 @@ $('.publish-btn').click(function(){
     $.each($('textarea'), function(idx, val){
         evaluateContent.push(val.value);
     })
-    
-    formData.append('filesArr[]', filesArr);
-    formData.append('orderId[]', orderId);
-    formData.append('evaluateContent[]', evaluateContent);
-    formData.append('starArr[]', starArr);
+    var formData = new FormData();
+    $.each(filesArr, function(idx, val){
+        formData.append('filesArr[]', val);
+    })
+    $.each(orderId, function(idx, val){
+        formData.append('orderId[]', val);
+    })
+    $.each(evaluateContent, function(idx, val){
+        formData.append('evaluateContent[]', val);
+    })
+    $.each(starArr, function(idx, val){
+        formData.append('starArr[]', val);
+    })
     formData.append('isOnTime', isOnTime);
+
     $.ajax({
         url: 'evaluate_parts_add',
         type: 'POST',

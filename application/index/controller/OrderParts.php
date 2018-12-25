@@ -7,6 +7,7 @@
  */
 namespace app\index\controller;
 
+use app\index\model\shopping_shop;
 use think\Controller;
 use  think\Request;
 use  think\Db;
@@ -1574,6 +1575,8 @@ class OrderParts extends Controller{
            }
            //购物车进来
            $shopping_id =Session::get("shopping_ids");
+           $total_price =Session::get("total_price");
+
            if(!empty($shopping_id)){
                $user_id = Session::get("user");
                foreach ($shopping_id as $k=>$v){
@@ -1582,24 +1585,23 @@ class OrderParts extends Controller{
                        ->where("id",$v)
                        ->find();
                }
-
                //店铺id
                foreach ($shopping_data as $key=>$val){
                    $store_all_id[] =$val["store_id"];
                }
                $da_store_id = array_unique($store_all_id); //去重之后的商户
-               foreach ($da_store_id as $keys=>$value){
                    foreach ($shopping_data as $k=>$v){
+                       foreach ($da_store_id as $keys=>$value){
                             if($v["store_id"]==$value){
-                                $order_undate['info'][$keys] = Db::name('shopping')
+                                $order_undate['info'][$keys][] = Db::name('shopping')
                                     ->where('user_id',$user_id)
                                     ->where("store_id",$value)
-                                    ->where("goods_standard_id",$v["goods_standard_id"])
-                                    ->where("goods_delivery",$v["goods_delivery"])
-                                    ->select();
+                                    ->where("id",$v["id"])
+                                    ->find();
                                 $names = Db::name('shopping')
                                     ->where('user_id',$user_id)
                                     ->where("store_id",$value)
+                                    ->where("id",$v["id"])
                                     ->where("goods_standard_id",$v["goods_standard_id"])
                                     ->where("goods_delivery",$v["goods_delivery"])
                                     ->find();
@@ -1619,7 +1621,9 @@ class OrderParts extends Controller{
                        $shopping_info["store_name"][] = $j;
                    }
                    foreach ($shopping_info["info"] as $k=>$v){
+
                        $shopping_information[$k]["info"] =$v;
+                       $shopping_information[$k]["total_price"] =$total_price;
                    }
                    foreach ($shopping_info["store_id"] as $k=>$v){
                        $shopping_information[$k]["store_id"] =$v;

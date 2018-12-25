@@ -15,10 +15,7 @@ if (url.indexOf('?') != -1) {
     id = url.substr(1).split('&')[0].split('=')[1];
     preId = url.substr(1).split('&')[1].split('=')[1];
 }
-// 返回商品详情
-$('.place-order-back').click(function () {
-    location.href = 'goods_detail?id=' + id + '&preid=' + preId;
-})
+
 // 地址返回
 $.ajax({
     url: 'member_default_address_return',
@@ -123,6 +120,11 @@ $.ajax({
                 })
             })
 
+            // 返回商品详情
+            $('.place-order-back').click(function () {
+                location.href = 'goods_detail?id=' + id + '&preid=' + preId;
+            })
+
             // 支付弹窗
             var goodsId = res.data.goods[0].id;
             var storeId = res.data.goods[0].store_id;
@@ -184,7 +186,39 @@ $.ajax({
             })
         }else if(res.status === 3){
             $('.sundry-ul li').first().hide();
-            
+            $('.comeIndex').hide();
+            var str = '';
+            $.each(res.data, function(idx, val){
+                str += `<div class="order-goods-info" id="`+val.store_id+`">
+                            <div class="order-shop-box">
+                                <i class="spr icon-shop"></i>
+                                <span class="order-shop-namp">`+val.store_name+`</span>
+                            </div>`
+                $.each(val.info, function(idx, val){
+                    str += `<div class="order-goods-detail">
+                                <div class="order-goods-img">
+                                    <img src="uploads/`+val.goods_images+`">
+                                </div>
+                                <div class="order-info-box">
+                                    <p class="order-goods-p txt-hid-two">`+val.goods_name+`</p>
+                                    <p class="standard txt-hid-two">`+val.special_name+val.goods_delivery+`</p>
+                                    <div class="unit-price-quantity">
+                                        <p class="unit-price-p">￥<span>`+val.money+`</span></p>
+                                        <p class="quantity-p">×<span>`+val.goods_unit+`</span></p>
+                                    </div>
+                                </div>
+                            </div>`
+                })
+                str += `</div>`;
+            })
+            $('.user-info-box').after(str);
+            // 折扣
+            $('.total-money').text(res.data[0].total_price);
+            finalMoney = parseFloat($('.total-money').text());
+            // 返回商品详情
+            $('.place-order-back').click(function () {
+                location.href = 'cart_index';
+            })
         }
     },
     error: function () {

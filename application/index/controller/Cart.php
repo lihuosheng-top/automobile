@@ -140,17 +140,18 @@ class Cart extends Controller
                 $data['goods_name'] = $goods['goods_name'];
                 $data['goods_images'] = $goods['goods_show_images'];
                 $goods_end_money =Db::name("special")
-                    ->field("price")
+                    ->field("price,name,goods_adjusted_price")
                     ->where("id",$goods_standard_id)
                     ->where("goods_id",$goods_id)
                     ->find();
-                $data['money'] =  $goods_end_money["price"];
+                $data['money'] =  $goods_end_money["goods_adjusted_price"];
                 $data['goods_unit'] = $goods_unit;
                 $data['user_id'] = $user_id;
                 $data['goods_id'] = $goods['id'];
                 $data['store_id'] = $goods['store_id'];
                 $data['store_name'] = $store_name["store_name"];
                 $data['goods_standard_id'] =$goods_standard_id;
+                $data["special_name"] =$goods_end_money["name"];
                 $data['goods_delivery'] =$goods_delivery;
                 $bool = db("shopping")->insert($data);
                  exit(json_encode(array("status" => 1, "info" => "加入购物车成功" ,"data"=>$bool)));
@@ -268,7 +269,9 @@ class Cart extends Controller
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
             $id = $request->only(['id'])['id'];//shopping表的主键id
+            $total_price = $request->only(['money'])['money'];//总价
             Session::set("shopping_ids",$id);
+            Session::set("total_price",$total_price);
             Session::set('part_goods_info',null); //清空立即购买过来的数据
             exit(json_encode(array("status" => 1, "info" => "保存id成功")));
         }
