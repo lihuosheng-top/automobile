@@ -78,7 +78,6 @@ class Reservation extends Controller{
      */
     public function reservation_detail(Request $request)
     {
-
         if($request->isPost()){
             $user_id = Session::get("user");
             $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
@@ -120,8 +119,9 @@ class Reservation extends Controller{
                 $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
                 $user_car_message = db("user_car_message")->where("user_car_id",$user_car["id"])->select();
                 $serve_goods = db("serve_goods")->where("id", $serve_goods_id)->select();
+                $store = db("store")->where("store_id",$serve_goods[0]["store_id"])->select();
                 if ($serve_goods) {
-                    return ajax_success("获取成功", array("user" => $user, "user_car_message"=>$user_car_message, "user_car" => $user_car, "serve_goods" => $serve_goods));
+                    return ajax_success("获取成功", array("user" => $user,"store"=>$store,"user_car_message"=>$user_car_message, "user_car" => $user_car, "serve_goods" => $serve_goods));
                 } else {
                     return ajax_error("获取失败");
                 }

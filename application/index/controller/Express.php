@@ -91,6 +91,7 @@ class  Express extends  Controller{
      */
     public function express_wait_for_take(Request $request){
 
+        $express_data = $request->param();
 
         return view("express_wait_for_take");
     }
