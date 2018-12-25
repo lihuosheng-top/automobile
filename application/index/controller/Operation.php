@@ -33,5 +33,17 @@ class Operation extends Controller{
 
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:IOS测试地址
+     **************************************
+     * @return \think\response\View
+     */
+
+    public function  ios(){
+        return view("ios");
+    }
+
 
 }
