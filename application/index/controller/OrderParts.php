@@ -77,11 +77,10 @@ class OrderParts extends Controller{
                 }
                 $datas["all_goods_pays"] =array_sum($datas["all_goods_money"]); //商品总额（商品*数量）
                 $datas["normal_future_time"] = $data[0]["normal_future_time"];//正常订单未付款自动关闭的时间
-//                $datas["all_order_real_pay"] = array_sum(array_map(create_function('$val', 'return $val["order_real_pay"];'), $data));//订单实际支付
                 $datas["all_order_real_pay"] = $data[0]["order_real_pay"];//订单实际支付
                 $datas["all_numbers"] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $data));//订单总数量
-                $datas["integral_deductible"] = array_sum(array_map(create_function('$values', 'return $values["integral_deductible"];'), $data));//抵扣积分钱
-
+                $datas["integral_deductible"] = $data[0]["integral_deductible"];//抵扣积分钱
+//                $datas["integral_deductible"] = array_sum(array_map(create_function('$values', 'return $values["integral_deductible"];'), $data));//抵扣积分钱
                 $datas["info"] = $data;
                 if (!empty($datas)) {
                     return ajax_success("数据返回成功", $datas);
@@ -1141,25 +1140,25 @@ class OrderParts extends Controller{
                     if($bool){
                         //取消订单退回积分到积余额
                         if(!empty( $is_use_integral)){
-                            foreach ($is_use_integral as $keys=>$values){
+//                            foreach ($is_use_integral as $keys=>$values){
                                 if(!empty($values["integral_deductible_num"])){
                                 $user_info = Db::name("user")->field("user_integral_wallet,user_integral_wallet_consumed")->where("id",$user_id)->find();
                                 $update_data =[
-                                    "user_integral_wallet"=>$user_info["user_integral_wallet"] + $values["integral_deductible_num"],
-                                    "user_integral_wallet_consumed"=>$user_info["user_integral_wallet_consumed"] - $values["integral_deductible_num"]
+                                    "user_integral_wallet"=>$user_info["user_integral_wallet"] + $is_use_integral[0]["integral_deductible_num"],
+                                    "user_integral_wallet_consumed"=>$user_info["user_integral_wallet_consumed"] - $is_use_integral[0]["integral_deductible_num"]
                                 ];
                                 Db::name("user")->where("id",$user_id)->update($update_data); //积分增加
                                     $integral_data =[
                                     "user_id"=>$user_id,//用户ID
-                                    "integral_operation"=>"+".$values["integral_deductible_num"],//积分操作
+                                    "integral_operation"=>"+".$is_use_integral[0]["integral_deductible_num"],//积分操作
                                     "integral_balance"=>$user_info["user_integral_wallet"] + $values["integral_deductible_num"],//积分余额
                                     "integral_type"=> 1,//积分类型
                                     "operation_time"=>date("Y-m-d H:i:s") ,//操作时间
-                                    "integral_remarks"=>"订单号:".$parts_order_number."取消退回".$values["integral_deductible_num"]."积分",//积分备注
+                                    "integral_remarks"=>"订单号:".$parts_order_number."取消退回".$is_use_integral[0]["integral_deductible_num"]."积分",//积分备注
                                 ];
                                     Db::name("integral")->insert($integral_data); //插入积分消费记录
                                 }
-                            }
+//                            }
                         }
                         return ajax_success("取消成功",["status"=>1]);
                     }else{
