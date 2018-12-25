@@ -1457,6 +1457,22 @@ class OrderParts extends Controller{
                 $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
                 $normal_time =Db::name("order_parts_setting")->find();//订单设置的时间
                 $normal_future_time =strtotime("+". $normal_time['normal_time']." minute");
+                //提前判断金额最大的那个（如果是两家店，则计算金额最多的抵扣）
+                foreach ($shopping_data as $i=>$j){
+                    $total_money[$i]["money"] =$j["money"] * $j["goods_unit"];//总额
+                   $total_money[$i]["store_id"] =$j["store_id"];
+                   $total_money[$i]["id"] =$j["store_id"];
+                   $da_store_ids[] = $j["store_id"];
+                }
+                $da_store_id = array_unique(); //去重之后的商户
+                foreach ($total_money as $k=>$v){
+
+                }
+                halt($total_money);
+
+
+
+
                 foreach ($shopping_data as $key=>$val){
                     $order_amount =$request->only("order_amount")["order_amount"]; //订单总价
                     $buy_messages =$request->only("buy_message")["buy_message"]; //买家留言
