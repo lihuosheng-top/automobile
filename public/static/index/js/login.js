@@ -49,6 +49,7 @@ $('.register').click(function(){
 $('.reg-send-code').click(function(){
     var phone = $('.reg-phone-num').val();
     var reg = /^1[34578]\d{9}$/;
+    var that = this;
     if(phone!== '' && phone.match(reg)){
         $.ajax({
             url: 'sendMobileCode',
@@ -71,7 +72,7 @@ $('.reg-send-code').click(function(){
                         content: data.info,
                         time: 1
                     })
-                    buttonCountdown($(this), 1000 * 60 * 1, "ss");
+                    buttonCountdown($(that), 1000 * 60 * 1, "ss");
                 }
             },
             error: function(){
