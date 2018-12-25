@@ -294,7 +294,7 @@ class Cart extends Controller
             $time_second=date("H:i:s",time());
             $vs=explode(':',$time_second);
             $mun =count($store_id);//长度
-            if($mun>1){
+            if($mun > 1){
                 foreach ($store_id as $key=>$val){
                     $parts_order_number_end =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(10,99).$val.$user_id; //订单编号
                     $number_order = $parts_order_number_end;
