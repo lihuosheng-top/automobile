@@ -103,13 +103,13 @@ class Register extends Controller{
                 return ajax_error("验证码不正确");
             } else {
                 $passwords =password_hash($password,PASSWORD_DEFAULT);
+                $invitation = $request->only(['invitation'])['invitation'];
                 $datas =[
                     'phone_num'=>$mobile,
                     'password'=>$passwords,
                     'create_time'=>strtotime($create_time),
                     "status"=>1,
                 ];
-                $invitation = $request->only(['invitation'])['invitation'];
                 if(!empty($invitation)) {
                    $invitation = intval(qr_decode($invitation));
                     $is_user_id =Db::name('user')->where('id',$invitation)->select();
@@ -130,8 +130,13 @@ class Register extends Controller{
                         return ajax_error('邀请码不正确',['status'=>0]);
                     }
                 }else{
-                    $res =Db::name('user')->insert($datas);
+                    $res =Db::name('user')->insertGetId($datas);
                     if($res){
+                        $inv_num = createCode($res);
+                        $inv =[
+                            "invitation"=>$inv_num
+                        ];                         //生成邀请码
+                        Db::name("user")->where("id",$res)->update($inv);
                         return ajax_success('注册成功',$datas);
                     }else{
                         return ajax_error('注册失败',['status'=>0]);
