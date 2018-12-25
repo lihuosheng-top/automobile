@@ -287,14 +287,14 @@ class Cart extends Controller
     public function cart_store_more_cancel(Request $request){
         if($request->isPost()){
             $user_id =Session::get("user");
-            $store_id =$request->only("store_id")["store_id"];//店铺id（数组）
+            $store_id =$request->only('store_id')['store_id'];//店铺id（数组）
             $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//配件商订单编号
             $time=date("Y-m-d",time());
             $v=explode('-',$time);
             $time_second=date("H:i:s",time());
             $vs=explode(':',$time_second);
             $mun =count($store_id);//长度
-            if($mun>1){
+            if($mun > 1){
                 foreach ($store_id as $key=>$val){
                     $parts_order_number_end =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(10,99).$val.$user_id; //订单编号
                     $number_order = $parts_order_number_end;
