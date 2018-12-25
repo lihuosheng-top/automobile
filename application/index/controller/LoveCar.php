@@ -138,30 +138,28 @@ class LoveCar extends Controller{
      * 陈绪
      */
     public function love_list_save(Request $request){
-
-        $user_car_id = $request->only(["id"])["id"];
-        $user_car_message = db("user_car_messages")->where("user_car_id",$user_car_id)->select();
-        if(!empty($user_car_message)){
-            $user_car_message_data = $request->param();
-            $bool = db("user_car_message")->where("user_car_id",$user_car_id)->update($user_car_message_data);
-            if($bool){
-                return ajax_success("更新成功");
-            }else{
-                return ajax_error("更新失败");
-            }
-        }else{
-            $user_car_data = $request->param();
-            $user_car_data["user_car_id"] = $user_car_id;
-            $bool = db("user_car_message")->insert($user_car_data);
-            if($bool){
-                return ajax_success("添加成功");
-            }else{
-                return ajax_error("添加失败");
-            }
-        }
-
+        
         if($request->isPost()){
-
+            $user_car_id = $request->only(["id"])["id"];
+            $user_car_message = db("user_car_message")->where("user_car_id",$user_car_id)->select();
+            if(!empty($user_car_message)){
+                $user_car_message_data = $request->param();
+                $bool = db("user_car_message")->where("user_car_id",$user_car_id)->update($user_car_message_data);
+                if($bool){
+                    return ajax_success("更新成功");
+                }else{
+                    return ajax_error("更新失败");
+                }
+            }else{
+                $user_car_data = $request->param();
+                $user_car_data["user_car_id"] = $user_car_id;
+                $bool = db("user_car_message")->insert($user_car_data);
+                if($bool){
+                    return ajax_success("添加成功");
+                }else{
+                    return ajax_error("添加失败");
+                }
+            }
         }
 
     }
