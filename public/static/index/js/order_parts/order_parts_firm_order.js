@@ -195,7 +195,7 @@ $.ajax({
                                 <span class="order-shop-namp">`+val.store_name+`</span>
                             </div>`
                 $.each(val.info, function(idx, val){
-                    str += `<div class="order-goods-detail">
+                    str += `<div class="order-goods-detail" id="`+val.id+`">
                                 <div class="order-goods-img">
                                     <img src="uploads/`+val.goods_images+`">
                                 </div>
@@ -215,10 +215,29 @@ $.ajax({
             // 折扣
             $('.total-money').text(res.data[0].total_price);
             finalMoney = parseFloat($('.total-money').text());
+            // 共计商品数量
+            var numberEle = $('.quantity-p span');
+            var totalNum = 0;
+            $.each(numberEle, function(idx, val){
+                if(val.innerText !== ''){
+                    totalNum += parseInt(val.innerText);
+                }
+            })
+            $('.total-num').text(totalNum);
             // 返回商品详情
             $('.place-order-back').click(function () {
                 location.href = 'cart_index';
             })
+            var buy_message = $('.leave-msg').val();
+            var order_amount = $('.total-money').text();
+            var shoppingId = [];
+            var goodDetailEle = $('.order-goods-detail');
+            $.each(goodDetailEle, function(idx, val){
+                if(val.id !== ''){
+                    shoppingId.push(val.id);
+                }
+            })
+            
         }
     },
     error: function () {
