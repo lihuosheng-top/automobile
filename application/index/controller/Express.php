@@ -89,7 +89,9 @@ class  Express extends  Controller{
      **************************************
      * @return \think\response\View
      */
-    public function express_wait_for_take(){
+    public function express_wait_for_take(Request $request){
+
+
         return view("express_wait_for_take");
     }
 
