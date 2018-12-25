@@ -195,7 +195,7 @@ $.ajax({
                                 <span class="order-shop-namp">`+val.store_name+`</span>
                             </div>`
                 $.each(val.info, function(idx, val){
-                    str += `<div class="order-goods-detail">
+                    str += `<div class="order-goods-detail" id="`+val.id+`">
                                 <div class="order-goods-img">
                                     <img src="uploads/`+val.goods_images+`">
                                 </div>
@@ -215,9 +215,76 @@ $.ajax({
             // 折扣
             $('.total-money').text(res.data[0].total_price);
             finalMoney = parseFloat($('.total-money').text());
+            // 共计商品数量
+            var numberEle = $('.quantity-p span');
+            var totalNum = 0;
+            $.each(numberEle, function(idx, val){
+                if(val.innerText !== ''){
+                    totalNum += parseInt(val.innerText);
+                }
+            })
+            $('.total-num').text(totalNum);
             // 返回商品详情
             $('.place-order-back').click(function () {
                 location.href = 'cart_index';
+            })
+            var goodDetailEle = $('.order-goods-detail');
+            var shoppingId = [];
+            $.each(goodDetailEle, function(idx, val){
+                if(val.id !== ''){
+                    shoppingId.push(val.id);
+                }
+            })
+            $('#order-buy').click(function () {
+                // $('.mask').show();
+                // $('.alipay-pop').animate({ 'bottom': '0' });
+                // $('html').css('overflow', 'hidden');
+
+                var buy_message = $('.leave-msg').val();
+                var order_amount = $('.total-money').text();
+                $.ajax({
+                    url: 'ios_api_order_parts_button',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'buy_message': buy_message,
+                        'order_amount': order_amount,
+                        'shoppingId': shoppingId,
+                        'setting_id': deductionId
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        // $('#WIDout_trade_no').val(res.data.parts_order_number);
+                        // $('#WIDtotal_amount').val($('.total-money').text());
+                        // $('#WIDsubject').val(res.data.parts_goods_name);
+                        // $('#WIDbody').val(res.data.parts_goods_name);
+
+                        // $('.close-alipay').click(function () {
+                        //     $('.mask').hide();
+                        //     $('.alipay-pop').animate({ 'bottom': '-100%' });
+                        //     $('html').css('overflow', 'auto');
+                        //     $.ajax({
+                        //         url: 'order_parts_save_record',
+                        //         type: 'POST',
+                        //         dataType: 'JSON',
+                        //         data: {
+                        //             'store_id': storeId,
+                        //             'parts_order_number': res.data.parts_order_number
+                        //         },
+                        //         success: function(res){
+                        //             console.log(res);
+                        //             location.href = 'order_parts_detail';
+                        //         },
+                        //         error: function(){
+                        //             console.log('error');
+                        //         }
+                        //     })
+                        // })
+                    },
+                    error: function () {
+                        console.log('error');
+                    }
+                })
             })
         }
     },
