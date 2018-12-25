@@ -287,7 +287,7 @@ class Cart extends Controller
     public function cart_store_more_cancel(Request $request){
         if($request->isPost()){
             $user_id =Session::get("user");
-            $store_id =$request->only("store_id")["store_id"];//店铺id（数组）
+            $store_id =$request->only('store_id')['store_id'];//店铺id（数组）
             $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//配件商订单编号
             $time=date("Y-m-d",time());
             $v=explode('-',$time);
