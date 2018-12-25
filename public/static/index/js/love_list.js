@@ -71,16 +71,12 @@ $.ajax({
                     console.log(res);
                     if(res.status === 1){
                         layer.open({
-                            style: 'bottom:100px;',
-                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
                             time: .8
                         })
                     }else{
                         layer.open({
-                            style: 'bottom:100px;',
-                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
                             time: .8
@@ -177,6 +173,15 @@ $('.save-btn').click(function(){
         },
         success: function(res){
             console.log(res);
+            if(res.status == 1){
+                layer.open({
+                    skin: 'msg',
+                    content: res.info,
+                    time: .8
+                })
+                $('.wrapper').show();
+                $('.car-detail-pop').hide();
+            }
         },
         error: function(){
             console.log('error');
