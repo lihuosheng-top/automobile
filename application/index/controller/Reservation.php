@@ -120,8 +120,9 @@ class Reservation extends Controller{
                 $user_car_message = db("user_car_message")->where("user_car_id",$user_car["id"])->select();
                 $serve_goods = db("serve_goods")->where("id", $serve_goods_id)->select();
                 $store = db("store")->where("store_id",$serve_goods[0]["store_id"])->select();
+                $store_phone = db("user")->where("id",$store[0]["user_id"])->field("phone_num")->select();
                 if ($serve_goods) {
-                    return ajax_success("获取成功", array("user" => $user,"store"=>$store,"user_car_message"=>$user_car_message, "user_car" => $user_car, "serve_goods" => $serve_goods));
+                    return ajax_success("获取成功", array("store_phone"=>$store_phone,"user" => $user,"store"=>$store,"user_car_message"=>$user_car_message, "user_car" => $user_car, "serve_goods" => $serve_goods));
                 } else {
                     return ajax_error("获取失败");
                 }

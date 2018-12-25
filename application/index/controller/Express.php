@@ -69,6 +69,9 @@ class  Express extends  Controller{
                         "order_address" => $val["harvester_address"],
                         "order_user_number" => $val["user_phone_number"],
                         "store_number" => db("user")->where("id",$value["user_id"])->value("phone_num"),
+                        "order_create_time"=>$val["order_create_time"],
+                        "parts_order_number"=>$val["parts_order_number"],
+                        "store_id"=>$value["store_id"]
                     );
                 }
             }
@@ -82,6 +85,27 @@ class  Express extends  Controller{
     }
 
 
+
+    /**
+     * 待接单入库
+     * 陈绪
+     * @param Request $request
+     */
+    public function express_order_save(Request $request){
+
+        if($request->isPost()) {
+            $express_data = $request->param();
+            $express_data["status"] = 1;
+            $bool = db("delivery_order")->insert($express_data);
+            if ($bool) {
+                return ajax_success("入库成功");
+            } else {
+                return ajax_error("入库失败");
+            }
+        }
+    }
+
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -91,9 +115,37 @@ class  Express extends  Controller{
      */
     public function express_wait_for_take(Request $request){
 
-        $express_data = $request->param();
+        if($request->isPost()) {
+            $delivery_id = Session::get("delivery_id");
+            $express = db("delivery_order")->where("delivery_id", $delivery_id)->where("status", 1)->select();
+            if ($express) {
+                return ajax_success("获取成功", $express);
+            } else {
+                return ajax_error("获取失败");
+            }
+        }
 
         return view("express_wait_for_take");
+    }
+
+
+    /**
+     * 快递人员已取货
+     * 陈绪
+     * @param Request $request
+     */
+    public function express_order_get(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $bool = db("delivery_order")->where("id",$id)->update(["status"=>2]);
+            if($bool){
+                return ajax_success("已取货");
+            }else{
+                return ajax_error("取货失败");
+            }
+        }
+
     }
 
 
@@ -104,9 +156,41 @@ class  Express extends  Controller{
      **************************************
      * @return \think\response\View
      */
-    public function express_distribution(){
+    public function express_distribution(Request $request){
+
+        if($request->isPost()) {
+            $delivery_id = Session::get("delivery_id");
+            $express = db("delivery_order")->where("delivery_id", $delivery_id)->where("status", 2)->select();
+            if ($express) {
+                return ajax_success("获取成功", $express);
+            } else {
+                return ajax_error("获取失败");
+            }
+        }
         return view("express_distribution");
     }
+
+
+
+
+    /**
+     * 配送中状态修改
+     * 陈绪
+     */
+    public function express_distribution_edit(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $bool = db("delivery_order")->where("id",$id)->update(["status"=>3]);
+            if($bool){
+                return ajax_success("已取货");
+            }else{
+                return ajax_error("取货失败");
+            }
+        }
+    }
+
+
 
     /**
      **************李火生*******************
@@ -115,9 +199,21 @@ class  Express extends  Controller{
      **************************************
      * @return \think\response\View
      */
-    public function express_completed(){
+    public function express_completed(Request $request){
+
+        if($request->isPost()) {
+            $delivery_id = Session::get("delivery_id");
+            $express = db("delivery_order")->where("delivery_id", $delivery_id)->where("status",3)->select();
+            if ($express) {
+                return ajax_success("获取成功", $express);
+            } else {
+                return ajax_error("获取失败");
+            }
+        }
         return view("express_completed");
     }
+
+
  /**
      **************李火生*******************
      * @param Request $request
