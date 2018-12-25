@@ -77,7 +77,8 @@ class OrderParts extends Controller{
                 }
                 $datas["all_goods_pays"] =array_sum($datas["all_goods_money"]); //商品总额（商品*数量）
                 $datas["normal_future_time"] = $data[0]["normal_future_time"];//正常订单未付款自动关闭的时间
-                $datas["all_order_real_pay"] = array_sum(array_map(create_function('$val', 'return $val["order_real_pay"];'), $data));//订单实际支付
+//                $datas["all_order_real_pay"] = array_sum(array_map(create_function('$val', 'return $val["order_real_pay"];'), $data));//订单实际支付
+                $datas["all_order_real_pay"] = $data[0]["order_real_pay"];//订单实际支付
                 $datas["all_numbers"] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $data));//订单总数量
                 $datas["integral_deductible"] = array_sum(array_map(create_function('$values', 'return $values["integral_deductible"];'), $data));//抵扣积分钱
 
@@ -212,8 +213,8 @@ class OrderParts extends Controller{
                                 $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
+                                $order_undate["all_order_real_pay"][] = $names["order_real_pay"];
                                 foreach ($order_undate["info"] as  $kk=>$vv){
-                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
                                     $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
                                 }
 
@@ -402,8 +403,9 @@ class OrderParts extends Controller{
                                 $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
+                                $order_undate["all_order_real_pay"][] = $names["order_real_pay"];
                                 foreach ($order_undate["info"] as  $kk=>$vv){
-                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
+//                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
                                     $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
                                 }
                             }
@@ -591,8 +593,9 @@ class OrderParts extends Controller{
                                 $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
+                                $order_undate["all_order_real_pay"][] = $names["order_real_pay"];
                                 foreach ($order_undate["info"] as  $kk=>$vv){
-                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
+//                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
                                     $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
                                 }
                             }
@@ -782,8 +785,9 @@ class OrderParts extends Controller{
                                 $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
+                                $order_undate["all_order_real_pay"][] = $names["order_real_pay"];
                                 foreach ($order_undate["info"] as  $kk=>$vv){
-                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
+//                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
                                     $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
                                 }
                             }
@@ -969,8 +973,9 @@ class OrderParts extends Controller{
                                 $order_undate['store_id'][] = $names['store_id'];
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
+                                $order_undate["all_order_real_pay"][] = $names["order_real_pay"];
                                 foreach ($order_undate["info"] as  $kk=>$vv){
-                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
+//                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
                                     $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
                                 }
                             }
@@ -1464,16 +1469,49 @@ class OrderParts extends Controller{
                    $total_money[$i]["id"] =$j["store_id"];
                    $da_store_ids[] = $j["store_id"];
                 }
-                $da_store_id = array_unique(); //去重之后的商户
+                $da_store_id = array_unique($da_store_ids); //去重之后的商户
                 foreach ($total_money as $k=>$v){
-
+                     foreach ($da_store_id as $key=>$val){
+                         if($v["store_id"]==$val){
+                             $total[$key][] =$v;
+                         }
+                    }
                 }
-                halt($total_money);
-
-
-
+                //这是重组之后的店铺和总价钱
+                foreach ($total as $k=>$v){
+                    $information[$k]["all_price"] = array_sum(array_map(function($val){return $val['money'];}, $v)); //总价钱
+                    $information[$k]["store_id"] =$v[0]["store_id"]; //店铺的id
+                }
+                //计算最大的价额进行减积分抵扣
+                foreach ($information as $s=>$j){
+                    $store_id_price[$j["store_id"]] = $j["all_price"];
+                }
+                $max =max($store_id_price);//最大的钱
+                $all_order_store_id =array_search(max($store_id_price), $store_id_price);//最大钱的store_id
 
                 foreach ($shopping_data as $key=>$val){
+                    //积分抵扣
+                    if(!empty($data["setting_id"])){
+                        $setting_data =Db::name("integral_discount_settings")->where("setting_id",$data["setting_id"])->find();
+                        $integral_deductible =$setting_data["integral_full"];
+                        $integral_discount_setting_id =$data["setting_id"];
+                        $integral_deductible_num =$setting_data["integral_full"];
+                        //假设最大的金额总大于（积分抵扣规则）
+                            if($val["store_id"] == $all_order_store_id ){
+                                $order_real_pay = $max - $setting_data["deductible_money"];//减去积分抵扣之后的价钱(使用积分的情况)
+                            }else if($val["store_id"] != $all_order_store_id){
+                                $integral_deductible = 0;
+                                $integral_discount_setting_id =NULL;
+                                $integral_deductible_num =NULL;
+                                $order_real_pay =$store_id_price[$val["store_id"]]; //其他的原价
+                            }
+                    }else{
+                        $integral_deductible = 0;
+                        $integral_discount_setting_id =NULL;
+                        $integral_deductible_num =NULL;
+                        $order_real_pay =$store_id_price[$val["store_id"]];//价钱(未使用积分的情况)
+                    }
+
                     $order_amount =$request->only("order_amount")["order_amount"]; //订单总价
                     $buy_messages =$request->only("buy_message")["buy_message"]; //买家留言
                     $commodity_id =$val["goods_id"];//商品id
@@ -1486,20 +1524,20 @@ class OrderParts extends Controller{
                         }else{
                             $buy_message = NUll ;
                         }
-                            //积分抵扣
-                            if(!empty($data["setting_id"])){
-                                $setting_data =Db::name("integral_discount_settings")->where("setting_id",$data["setting_id"])->find();
-                                $integral_deductible =$setting_data["integral_full"];
-                                $integral_discount_setting_id =$data["setting_id"];
-                                $integral_deductible_num =$setting_data["integral_full"];
-                                //假设最大的金额总大于（积分抵扣规则）
-                                $order_real_pay =1;
-                            }else{
-                                $integral_deductible = 0;
-                                $integral_discount_setting_id =NULL;
-                                $integral_deductible_num =NULL;
-                                $order_real_pay =$val['money'] * $val['goods_unit'];
-                            }
+//                            //积分抵扣
+//                            if(!empty($data["setting_id"])){
+//                                $setting_data =Db::name("integral_discount_settings")->where("setting_id",$data["setting_id"])->find();
+//                                $integral_deductible =$setting_data["integral_full"];
+//                                $integral_discount_setting_id =$data["setting_id"];
+//                                $integral_deductible_num =$setting_data["integral_full"];
+//                                //假设最大的金额总大于（积分抵扣规则）
+//                                $order_real_pay =1;
+//                            }else{
+//                                $integral_deductible = 0;
+//                                $integral_discount_setting_id =NULL;
+//                                $integral_deductible_num =NULL;
+//                                $order_real_pay =$val['money'] * $val['goods_unit'];
+//                            }
                             $datas = [
                                 'goods_image' => $goods_data['goods_show_images'],//图片
                                 "goods_describe"=>$goods_data["goods_describe"],//卖点
