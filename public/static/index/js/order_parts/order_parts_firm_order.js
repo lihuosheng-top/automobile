@@ -228,16 +228,64 @@ $.ajax({
             $('.place-order-back').click(function () {
                 location.href = 'cart_index';
             })
-            var buy_message = $('.leave-msg').val();
-            var order_amount = $('.total-money').text();
-            var shoppingId = [];
             var goodDetailEle = $('.order-goods-detail');
+            var shoppingId = [];
             $.each(goodDetailEle, function(idx, val){
                 if(val.id !== ''){
                     shoppingId.push(val.id);
                 }
             })
-            
+            $('#order-buy').click(function () {
+                // $('.mask').show();
+                // $('.alipay-pop').animate({ 'bottom': '0' });
+                // $('html').css('overflow', 'hidden');
+
+                var buy_message = $('.leave-msg').val();
+                var order_amount = $('.total-money').text();
+                $.ajax({
+                    url: 'ios_api_order_parts_button',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'buy_message': buy_message,
+                        'order_amount': order_amount,
+                        'shoppingId': shoppingId,
+                        'setting_id': deductionId
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        // $('#WIDout_trade_no').val(res.data.parts_order_number);
+                        // $('#WIDtotal_amount').val($('.total-money').text());
+                        // $('#WIDsubject').val(res.data.parts_goods_name);
+                        // $('#WIDbody').val(res.data.parts_goods_name);
+
+                        // $('.close-alipay').click(function () {
+                        //     $('.mask').hide();
+                        //     $('.alipay-pop').animate({ 'bottom': '-100%' });
+                        //     $('html').css('overflow', 'auto');
+                        //     $.ajax({
+                        //         url: 'order_parts_save_record',
+                        //         type: 'POST',
+                        //         dataType: 'JSON',
+                        //         data: {
+                        //             'store_id': storeId,
+                        //             'parts_order_number': res.data.parts_order_number
+                        //         },
+                        //         success: function(res){
+                        //             console.log(res);
+                        //             location.href = 'order_parts_detail';
+                        //         },
+                        //         error: function(){
+                        //             console.log('error');
+                        //         }
+                        //     })
+                        // })
+                    },
+                    error: function () {
+                        console.log('error');
+                    }
+                })
+            })
         }
     },
     error: function () {
