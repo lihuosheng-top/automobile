@@ -138,7 +138,7 @@ class LoveCar extends Controller{
      * 陈绪
      */
     public function love_list_save(Request $request){
-        
+
         if($request->isPost()){
             $user_car_id = $request->only(["id"])["id"];
             $user_car_message = db("user_car_message")->where("user_car_id",$user_car_id)->select();
@@ -146,7 +146,7 @@ class LoveCar extends Controller{
                 $user_car_message_data = $request->param();
                 $bool = db("user_car_message")->where("user_car_id",$user_car_id)->update($user_car_message_data);
                 if($bool){
-                    return ajax_success("更新成功");
+                    return ajax_success("更新成功",$user_car_message_data);
                 }else{
                     return ajax_error("更新失败");
                 }
