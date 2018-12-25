@@ -34,7 +34,6 @@ class Cart extends Controller
                 //购物车信息
                 foreach ($da_store_id as $keys=>$vals){
 //                    $da_store_ids[] =$vals; //去重之后的id数组
-
                     $shopping_datas[] =Db::table('tb_shopping')
                         ->field("tb_shopping.*,tb_special.name special_name,tb_special.goods_adjusted_price goods_prices")
                         ->join("tb_special","tb_shopping.goods_standard_id=tb_special.id",'left')
@@ -52,7 +51,6 @@ class Cart extends Controller
                             }
                     }
                 }
-
                 if(!empty($store_ids) && (!empty($store_names))){
                     //店铺id
                     foreach ($store_ids as $i => $j) {
@@ -142,17 +140,18 @@ class Cart extends Controller
                 $data['goods_name'] = $goods['goods_name'];
                 $data['goods_images'] = $goods['goods_show_images'];
                 $goods_end_money =Db::name("special")
-                    ->field("price")
+                    ->field("price,name,goods_adjusted_price")
                     ->where("id",$goods_standard_id)
                     ->where("goods_id",$goods_id)
                     ->find();
-                $data['money'] =  $goods_end_money["price"];
+                $data['money'] =  $goods_end_money["goods_adjusted_price"];
                 $data['goods_unit'] = $goods_unit;
                 $data['user_id'] = $user_id;
                 $data['goods_id'] = $goods['id'];
                 $data['store_id'] = $goods['store_id'];
                 $data['store_name'] = $store_name["store_name"];
                 $data['goods_standard_id'] =$goods_standard_id;
+                $data["special_name"] =$goods_end_money["name"];
                 $data['goods_delivery'] =$goods_delivery;
                 $bool = db("shopping")->insert($data);
                  exit(json_encode(array("status" => 1, "info" => "加入购物车成功" ,"data"=>$bool)));
@@ -255,6 +254,30 @@ class Cart extends Controller
             }
         }
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:保存购物车到确认订单页面返回
+     **************************************
+     * @param Request $request
+     */
+    public function save_shopping_id(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");//用户id
+            if(empty($user_id)){
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+            $id = $request->only(['id'])['id'];//shopping表的主键id
+            $total_price = $request->only(['money'])['money'];//总价
+            Session::set("shopping_ids",$id);
+            Session::set("total_price",$total_price);
+            Session::set('part_goods_info',null); //清空立即购买过来的数据
+            exit(json_encode(array("status" => 1, "info" => "保存id成功")));
+        }
+    }
+
+
 
 
     /**

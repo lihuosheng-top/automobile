@@ -1,9 +1,10 @@
-
 // 初始化star
+var starArr = [];
 function initStar(){
     layui.use(['rate'], function(){
         var rate = layui.rate;
         layui.each($('.star'), function(idx, elem){
+            starArr[idx] = 5;
             rate.render({
                 elem: elem,
                 value: 5,
@@ -17,12 +18,15 @@ function initStar(){
                         '5': '很好',
                     };
                     this.span.text(arrs[val]);
+                },
+                choose: (value) => {
+                    starArr[idx] = value;
+                    console.log(starArr);
                 }
             })
         })
     })
 }
-
 // 获取商品信息
 $.ajax({
     url: 'evaluate_index',
@@ -78,7 +82,7 @@ function changeEvent(inputElem, clickObj, id){
         for(var i = 0; i < len; i++){
             // 存图片地址
             imgArrDom.push(getObjectURL(inputElem.files[i]));
-            // inputElem.files[i].id = id;
+            inputElem.files[i].id = id;
             filesArr.push(inputElem.files[i]);
         }
         $.each(imgArrDom, function(idx, val){
@@ -90,17 +94,17 @@ function changeEvent(inputElem, clickObj, id){
         $(clickObj).before(str);
     }else{
         layer.open({
-            style: 'bottom:100px;',
-            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
             skin: 'msg',
             content: '最多上传4张图片',
-            time: 2
+            time: 1
         })
     }
     // 删除图片
     $('.upload-item').on('click', '.del-img', function(){
         var $index = $('.del-img').index($(this));
         console.log($index);
+        filesArr.splice($index, 1);
+        console.log(filesArr)
         $(this).parent().remove();
     })
 }
@@ -114,15 +118,47 @@ function getObjectURL(file) {
     }
     return url;
 }
-var formData = new FormData();
+// 是否准时
+var isOnTime = 1;
+$('.on-time').on('change', 'input', function(){
+    var onTimeText = $(this).attr('id');
+    if(onTimeText === 'late'){
+        isOnTime = -1;
+    }else{
+        isOnTime = 1;
+    }
+    console.log(isOnTime);
+})
+
+
 // 发布
 $('.publish-btn').click(function(){
     var orderId = [];
     var evaluationSubjectArr = $('.evaluation-subject');
+    // 商品id
     $.each(evaluationSubjectArr, function(idx, val){
         orderId.push(val.id);
     })
-    formData.append('filesArr[]', filesArr);
+    // 用户评价内容
+    var evaluateContent = [];
+    $.each($('textarea'), function(idx, val){
+        evaluateContent.push(val.value);
+    })
+    var formData = new FormData();
+    $.each(filesArr, function(idx, val){
+        formData.append('filesArr[]', val);
+    })
+    $.each(orderId, function(idx, val){
+        formData.append('orderId[]', val);
+    })
+    $.each(evaluateContent, function(idx, val){
+        formData.append('evaluateContent[]', val);
+    })
+    $.each(starArr, function(idx, val){
+        formData.append('starArr[]', val);
+    })
+    formData.append('isOnTime', isOnTime);
+
     $.ajax({
         url: 'evaluate_parts_add',
         type: 'POST',

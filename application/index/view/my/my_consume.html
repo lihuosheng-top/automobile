@@ -25,7 +25,6 @@
         .cost-li .cost-info span{font-size: .24rem; color: #999;}
         .cost-li .cost-money{font-size: .34rem;}
         .month-tit{padding: .15rem 0 .15rem .3rem;}
-        
     </style>
 </head>
 <body>
@@ -40,9 +39,9 @@
             <button class="search-btn">搜索</button>
         </div>
         <div class="cost-detail">
-            <h3 class="month-tit">10月</h3>
+            <h3 class="month-tit">12月</h3>
             <ul class="cost-ul">
-                <li class="cost-li">
+                <!-- <li class="cost-li">
                     <div class="cost-method">
                         <img src="__STATIC__/index/image/wechat.png">
                     </div>
@@ -53,19 +52,7 @@
                     <div class="cost-money">
                         -199.00
                     </div>
-                </li>
-                <li class="cost-li">
-                    <div class="cost-method">
-                        <img src="__STATIC__/index/image/alipay.png">
-                    </div>
-                    <div class="cost-info">
-                        <p class="txt-hid-one">米其林轮胎车模清洁套装</p>
-                        <span>12月04日 9:45</span>
-                    </div>
-                    <div class="cost-money">
-                        -199.00
-                    </div>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -75,6 +62,35 @@
     <script>
         $('.cost-li').click(function(){
             location.href = 'consume_message';
+        })
+        $.ajax({
+            url: 'my_consume',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res)
+                if(res.status == 1){
+                    var str = '';
+                    $.each(res.data, function(idx, val){
+                        str += `<li class="cost-li">
+                                    <div class="cost-method">
+                                        <img src="uploads/`+val.wallet_img+`">
+                                    </div>
+                                    <div class="cost-info">
+                                        <p class="txt-hid-one">`+val.title+`</p>
+                                        <span>`+val.operation_time+`</span>
+                                    </div>
+                                    <div class="cost-money">
+                                        `+val.wallet_operation+`
+                                    </div>
+                                </li>`
+                    })
+                    $('.cost-ul').append(str);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
         })
     </script>
 </body>

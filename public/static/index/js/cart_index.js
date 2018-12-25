@@ -134,7 +134,7 @@ $('.settle_button').click(function(){
         number.push($(val).siblings().find('.calculator_val').val());
     })
     $.ajax({
-        url: 'place_an_order_by_cart',
+        url: 'save_shopping_id',
         type: 'POST',
         dataType: 'JSON',
         data: {
@@ -145,7 +145,7 @@ $('.settle_button').click(function(){
         success: function(res){
             console.log(res);
             if(res.status == 1){
-                // location.href = 'ios_api_order_parts_firm_order';
+                location.href = 'ios_api_order_parts_firm_order';
             }
         },
         error: function(){
