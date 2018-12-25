@@ -149,6 +149,21 @@ $.ajax({
                         var data = res.data[0];
                         $('.seat-input').val(data.seat);
                         $('.color-input').val(data.colour);
+                        var selectWord = data.plate_number.split(' ')[0];
+                        var selectNumber = data.plate_number.split(' ')[1];
+                        $('.show-input').val(selectWord);
+                        var selectEle = document.getElementById('word-select');
+                        for(var i = 0, len = selectEle.options.length; i < len; i++){
+                            if(selectEle.options[i].value == selectWord){
+                                selectEle.options[i].selected = 'selected';
+                            }
+                        }
+                        $('.plant-input').val(selectNumber);
+                        $('.mileage-input').val(data.driving_number);
+                        $('.vin-num-input').val(data.carriage_number);
+                        $('.engine-no-input').val(data.engine_number);
+                        $('.insurer-input').val(data.car_insurance);
+                        $('.expiration-date-input').val(data.insurance_time);
                     }
                 },
                 error: function(){
@@ -174,7 +189,7 @@ var id;
 $('.save-btn').click(function(){
     var seat = $('.seat-input').val();
     var colour = $('.color-input').val();
-    var plate_number = $('#word-select option:selected').val()+$('.plant-input').val();
+    var plate_number = $('#word-select option:selected').val()+' '+$('.plant-input').val();
     var driving_number = $('.mileage-input').val();
     var carriage_number = $('.vin-num-input').val();
     var engine_number = $('.engine-no-input').val();
