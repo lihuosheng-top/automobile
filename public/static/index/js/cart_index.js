@@ -11,14 +11,13 @@ function myCircleClass(){
             $(this).parents('.goods_wrap').find('.goods-circle').removeClass('circle-on');
         }
         calPrice();
-        $('.totalprice span').text(totalPrice);
+        // $('.totalprice span').text(totalPrice);
     })
     // 单选商品
     $('.goods-circle').click(function(){
         $(this).toggleClass('circle-on');
         // 遍历所有被选中商品的 单价*数量
         calPrice();
-        $('.totalprice span').text(totalPrice);
     })
     // 全选
     $('.all-select').click(function(){
@@ -29,7 +28,7 @@ function myCircleClass(){
             $('.shop-circle').add('.goods-circle').removeClass('circle-on');
         }
         calPrice();
-        $('.totalprice span').text(totalPrice);
+        // $('.totalprice span').text(totalPrice);
     })
 }
 
@@ -51,6 +50,7 @@ function calPrice(){
     }else{
         totalPrice = 0;
     }
+    $('.totalprice span').text(totalPrice);
 }
 // 解决计算精度问题
 function toFixed(num, s) {
