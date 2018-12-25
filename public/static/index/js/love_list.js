@@ -25,7 +25,7 @@ $.ajax({
         $.each(res.data, function(idx, val){
             if(val.status !== 1){
                 str += `<div class="car-box">
-                            <div class="car-info-top">
+                            <div class="car-info-top" id="`+val.id+`">
                                 <div class="logo"><img src="static/index/image/aodi.png"></div>
                                 <div class="car-info">
                                     <p>`+val.brand+` `+val.series+`</p>
@@ -39,7 +39,7 @@ $.ajax({
                         </div>`
             }else{
                 str += `<div class="car-box">
-                            <div class="car-info-top">
+                            <div class="car-info-top" id="`+val.id+`">
                                 <div class="logo"><img src="static/index/image/aodi.png"></div>
                                 <div class="car-info">
                                     <p>`+val.brand+` `+val.series+`</p>
@@ -71,16 +71,12 @@ $.ajax({
                     console.log(res);
                     if(res.status === 1){
                         layer.open({
-                            style: 'bottom:100px;',
-                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
                             time: .8
                         })
                     }else{
                         layer.open({
-                            style: 'bottom:100px;',
-                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
                             time: .8
@@ -132,8 +128,48 @@ $.ajax({
         })
         // 查看详细信息
         $('.car-info-top').click(function(){
+            id = $(this).attr('id');
+            var myCarInfo = '';
+            $.each($(this).find('.car-info p'), function(idx, val){
+                myCarInfo += val.innerText+' ';
+            })
             $('.wrapper').hide();
             $('.car-detail-pop').show();
+            $.ajax({
+                url: 'love_list_edit',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': id,
+                },
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        $('.info-p').text(myCarInfo);
+                        var data = res.data[0];
+                        $('.seat-input').val(data.seat);
+                        $('.color-input').val(data.colour);
+                        var selectWord = data.plate_number.split(' ')[0];
+                        var selectNumber = data.plate_number.split(' ')[1];
+                        $('.show-input').val(selectWord);
+                        var selectEle = document.getElementById('word-select');
+                        for(var i = 0, len = selectEle.options.length; i < len; i++){
+                            if(selectEle.options[i].value == selectWord){
+                                selectEle.options[i].selected = 'selected';
+                            }
+                        }
+                        $('.plant-input').val(selectNumber);
+                        $('.mileage-input').val(data.driving_number);
+                        $('.vin-num-input').val(data.carriage_number);
+                        $('.engine-no-input').val(data.engine_number);
+                        $('.insurer-input').val(data.car_insurance);
+                        $('.expiration-date-input').val(data.insurance_time);
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
         // 隐藏弹窗
         $('.detail-back').click(function(){
@@ -147,5 +183,51 @@ $.ajax({
     error: function(){
         console.log('error');
     }
+})
+// 保存车辆信息
+var id;
+$('.save-btn').click(function(){
+    var seat = $('.seat-input').val();
+    var colour = $('.color-input').val();
+    var plate_number = $('#word-select option:selected').val()+' '+$('.plant-input').val();
+    var driving_number = $('.mileage-input').val();
+    var carriage_number = $('.vin-num-input').val();
+    var engine_number = $('.engine-no-input').val();
+    var car_insurance = $('.insurer-input').val();
+    var insurance_time = $('.expiration-date-input').val();
+    $.ajax({
+        url: 'love_list_save',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id,
+            'seat': seat,
+            'colour': colour,
+            'plate_number': plate_number,
+            'driving_number': driving_number,
+            'carriage_number': carriage_number,
+            'engine_number': engine_number,
+            'car_insurance': car_insurance,
+            'insurance_time': insurance_time
+        },
+        success: function(res){
+            console.log(res);
+            if(res.status == 1){
+                layer.open({
+                    skin: 'msg',
+                    content: res.info,
+                    time: .8
+                })
+                setTimeout(function(){
+                    location.reload();
+                }, 1000)
+                $('.wrapper').show();
+                $('.car-detail-pop').hide();
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
 })
 

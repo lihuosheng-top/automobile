@@ -138,13 +138,13 @@ class Cart extends Controller
                     }
                 }
                 $data['goods_name'] = $goods['goods_name'];
-                $data['goods_images'] = $goods['goods_show_images'];
                 $goods_end_money =Db::name("special")
-                    ->field("price,name,goods_adjusted_price")
+                    ->field("price,name,goods_adjusted_price,images")
                     ->where("id",$goods_standard_id)
                     ->where("goods_id",$goods_id)
                     ->find();
                 $data['money'] =  $goods_end_money["goods_adjusted_price"];
+                $data['goods_images'] =$goods_end_money['images'];//商品图片
                 $data['goods_unit'] = $goods_unit;
                 $data['user_id'] = $user_id;
                 $data['goods_id'] = $goods['id'];
@@ -277,6 +277,55 @@ class Cart extends Controller
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:多店铺取消付款
+     **************************************
+     * @param Request $request
+     */
+    public function cart_store_more_cancel(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            $store_id =$request->only('store_id')['store_id'];//店铺id（数组）
+            $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//配件商订单编号
+            $time=date("Y-m-d",time());
+            $v=explode('-',$time);
+            $time_second=date("H:i:s",time());
+            $vs=explode(':',$time_second);
+            $mun =count($store_id);//长度
+            if($mun > 1){
+                foreach ($store_id as $key=>$val){
+                    $parts_order_number_end =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(10,99).$val.$user_id; //订单编号
+                    $number_order = $parts_order_number_end;
+                    $bool = Db::name('order_parts')
+                        ->where('store_id', $val)
+                        ->where('user_id', $user_id)
+                        ->where('parts_order_number',$parts_order_number)
+                        ->update(["parts_order_number"=>$number_order]);
+                }
+                if($bool){
+                    return ajax_success("成功",["status"=>1]);
+                }else{
+                    return ajax_error("失败",["status"=>0]);
+                }
+            }else if($mun==1){
+                $parts_order_number_end =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
+                $bool= Db::name('order_parts')
+                    ->where('store_id', $store_id[0])
+                    ->where('user_id', $user_id)
+                    ->where('parts_order_number',$parts_order_number)
+                    ->update(["parts_order_number"=>$parts_order_number_end]);
+                if($bool){
+                    return ajax_success("成功",["status"=>1]);
+                }else{
+                    return ajax_error("失败",["status"=>0]);
+                }
+            }
+
+
+        }
+    }
 
 
 

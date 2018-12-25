@@ -37,6 +37,7 @@ Route::group("",[
     "love_status"=>"index/LoveCar/love_status",                         //我的爱车状态修改
     "love_del"=>"index/LoveCar/love_del",                         //我的爱车列表删除
     "love_list_save"=>"index/LoveCar/love_list_save",                         //我的车辆信息添加，修改
+    "love_list_edit"=>"index/LoveCar/love_list_edit",                          //我的爱车详细信息显示
 
 
     /*服务商品*/
@@ -180,6 +181,10 @@ Route::group("",[
     "express_info"=>"index/Express/express_info",//快递信息返回
     "express_logout"=>"index/Express/express_logout",//快递员退出登录
     "express_setting"=>"index/Express/express_setting",//快递员页面设置
+    "express_order_save"=>"index/Express/express_order_save",//快递员接单入库
+    "express_order_get"=>"index/Express/express_order_get",//快递员已取货
+    "express_distribution_edit"=>"index/Express/express_distribution_edit",//快递员配送中状态修改
+
 
     /*TODO:快递结束*/
 
@@ -252,6 +257,7 @@ Route::group("",[
     "carts_del"=>"index/Cart/carts_del",//购物车删除（ajax）
     "save_shopping_id"=>"index/Cart/save_shopping_id",//保存购物车到确认订单页面返回
     "place_an_order_by_cart"=>"index/Cart/place_an_order_by_cart",//购物车存储到shopping_shop表（ajax）
+    "cart_store_more_cancel"=>"index/Cart/cart_store_more_cancel",//购物车多店铺取消付款
     /*购物车结束*/
 
 
@@ -323,7 +329,10 @@ Route::group("",[
      */
     "operation_index"=>"index/Operation/complaint",             //投诉中心
     "rescue_index"=>"index/Operation/rescue",             //紧急救援
-    
+
+    /*TODO:测试IOS地址开始*/
+    "test_ios"=>"index/Operation/ios",
+    /*TODO:测试IOS地址结束*/
 ]);
 
 /**

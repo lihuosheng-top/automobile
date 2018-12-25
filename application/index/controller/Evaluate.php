@@ -70,7 +70,7 @@ class Evaluate extends  Controller{
             $evaluate_content =$request->only("evaluateContent")["evaluateContent"];//评价内容（数组）
             $is_on_time =$request->only("isOnTime")["isOnTime"];//是否准时（是否准时，1为准时,-1为不准时）
             $logistics_stars =$request->only("starArr")["starArr"];//物流服务的星星（1为1颗星，...5为5颗星）
-            $user_info =Db::name("user")->field("user_phone_num,user_name")->where("id",$user_id)->find();
+            $user_info =Db::name("user")->field("phone_num,user_name")->where("id",$user_id)->find();
             $create_time =time();//创建时间
             foreach ($order_id  as $k=>$v){
                 Db::name("order_parts")->field("parts_goods_name,goods_id,order_information_number")->where("id",$v)->find();

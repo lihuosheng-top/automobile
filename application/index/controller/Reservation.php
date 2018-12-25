@@ -78,13 +78,12 @@ class Reservation extends Controller{
      */
     public function reservation_detail(Request $request)
     {
-
         if($request->isPost()){
             $user_id = Session::get("user");
             $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
             $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->where("year",$user_car["production_time"])->where("displacement",$user_car["displacement"])->field("vehicle_model")->find();
             $serve_goods_id = $request->only(["id"])["id"];
-            $goods = db("goods")->where("store_id",$serve_goods_id)->select();
+            $goods = db("goods")->where("store_id",$serve_goods_id)->where("goods_status",1)->select();
             $store = db("store")->where("store_id",$serve_goods_id)->select();
             $serve_data = [];
             foreach ($store as $key=>$value){
@@ -110,15 +109,23 @@ class Reservation extends Controller{
     public function reservation_info(Request $request)
     {
         if($request->isPost()) {
-            $serve_goods_id = $request->only(["id"])["id"];
             $user_id = Session::get("user");
-            $user = db("user")->where("id", $user_id)->select();
-            $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
-            $serve_goods = db("serve_goods")->where("id", $serve_goods_id)->select();
-            if ($serve_goods) {
-                return ajax_success("获取成功", array("user" => $user, "user_car" => $user_car, "serve_goods" => $serve_goods));
-            } else {
-                return ajax_error("获取失败");
+            if(empty($user_id)){
+                exit(json_encode(array("info"=>"请登录","status"=>"2")));
+            }else {
+                $user_id = Session::get("user");
+                $serve_goods_id = $request->only(["id"])["id"];
+                $user = db("user")->where("id", $user_id)->select();
+                $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
+                $user_car_message = db("user_car_message")->where("user_car_id",$user_car["id"])->select();
+                $serve_goods = db("serve_goods")->where("id", $serve_goods_id)->select();
+                $store = db("store")->where("store_id",$serve_goods[0]["store_id"])->select();
+                $store_phone = db("user")->where("id",$store[0]["user_id"])->field("phone_num")->select();
+                if ($serve_goods) {
+                    return ajax_success("获取成功", array("store_phone"=>$store_phone,"user" => $user,"store"=>$store,"user_car_message"=>$user_car_message, "user_car" => $user_car, "serve_goods" => $serve_goods));
+                } else {
+                    return ajax_error("获取失败");
+                }
             }
         }
         return view("reservation_info");
