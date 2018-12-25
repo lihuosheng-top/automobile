@@ -131,6 +131,20 @@ $.ajax({
             id = $(this).attr('id');
             $('.wrapper').hide();
             $('.car-detail-pop').show();
+            $.ajax({
+                url: 'love_list_edit',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': id,
+                },
+                success: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
         // 隐藏弹窗
         $('.detail-back').click(function(){
@@ -179,6 +193,9 @@ $('.save-btn').click(function(){
                     content: res.info,
                     time: .8
                 })
+                setTimeout(function(){
+                    location.reload();
+                }, 1000)
                 $('.wrapper').show();
                 $('.car-detail-pop').hide();
             }
