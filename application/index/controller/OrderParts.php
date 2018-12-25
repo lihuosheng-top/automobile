@@ -56,7 +56,7 @@ class OrderParts extends Controller{
         if($request->isPost()) {
             $user_id = Session::get("user");
             $store_id = Session::get("store_id");
-            $parts_order_number = Session::get("parts_order_number");;//订单编号
+            $parts_order_number = Session::get("parts_order_number");//订单编号
             $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number;
             $data = Db::name("order_parts")
                 ->where($condition)
