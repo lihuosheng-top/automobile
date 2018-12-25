@@ -25,7 +25,7 @@ $.ajax({
         $.each(res.data, function(idx, val){
             if(val.status !== 1){
                 str += `<div class="car-box">
-                            <div class="car-info-top">
+                            <div class="car-info-top" id="`+val.id+`">
                                 <div class="logo"><img src="static/index/image/aodi.png"></div>
                                 <div class="car-info">
                                     <p>`+val.brand+` `+val.series+`</p>
@@ -39,7 +39,7 @@ $.ajax({
                         </div>`
             }else{
                 str += `<div class="car-box">
-                            <div class="car-info-top">
+                            <div class="car-info-top" id="`+val.id+`">
                                 <div class="logo"><img src="static/index/image/aodi.png"></div>
                                 <div class="car-info">
                                     <p>`+val.brand+` `+val.series+`</p>
@@ -132,6 +132,7 @@ $.ajax({
         })
         // 查看详细信息
         $('.car-info-top').click(function(){
+            id = $(this).attr('id');
             $('.wrapper').hide();
             $('.car-detail-pop').show();
         })
@@ -147,5 +148,39 @@ $.ajax({
     error: function(){
         console.log('error');
     }
+})
+// 保存车辆信息
+var id;
+$('.save-btn').click(function(){
+    var seat = $('.seat-input').val();
+    var colour = $('.color-input').val();
+    var plate_number = $('#word-select option:selected').val()+$('.plant-input').val();
+    var driving_number = $('.mileage-input').val();
+    var carriage_number = $('.vin-num-input').val();
+    var engine_number = $('.engine-no-input').val();
+    var car_insurance = $('.insurer-input').val();
+    var insurance_time = $('.expiration-date-input').val();
+    $.ajax({
+        url: 'love_list_save',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id,
+            'seat': seat,
+            'colour': colour,
+            'plate_number': plate_number,
+            'driving_number': driving_number,
+            'carriage_number': carriage_number,
+            'engine_number': engine_number,
+            'car_insurance': car_insurance,
+            'insurance_time': insurance_time
+        },
+        success: function(res){
+            console.log(res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
 })
 
