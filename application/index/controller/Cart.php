@@ -138,13 +138,13 @@ class Cart extends Controller
                     }
                 }
                 $data['goods_name'] = $goods['goods_name'];
-                $data['goods_images'] = $goods['goods_show_images'];
                 $goods_end_money =Db::name("special")
-                    ->field("price,name,goods_adjusted_price")
+                    ->field("price,name,goods_adjusted_price,images")
                     ->where("id",$goods_standard_id)
                     ->where("goods_id",$goods_id)
                     ->find();
                 $data['money'] =  $goods_end_money["goods_adjusted_price"];
+                $data['goods_images'] =$goods_end_money['images'];//商品图片
                 $data['goods_unit'] = $goods_unit;
                 $data['user_id'] = $user_id;
                 $data['goods_id'] = $goods['id'];
