@@ -303,6 +303,28 @@
         })
     </script>
     <script>
+        var url = location.search;
+        var storeId, service_setting_id,serve_goods_id;
+        if(url.indexOf('?') != -1){
+            storeId = url.substr(1).split('&')[0].split('=')[1];
+            service_setting_id = url.substr(1).split('&')[1].split('=')[1];
+            serve_goods_id = url.substr(1).split('&')[2].split('=')[1];
+        }
+        $.ajax({
+            url: 'reservation_info',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'id': serve_goods_id
+            },
+            success: function(res){
+                console.log(res);
+                
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
         // $('#confirm-info').click(function(){
         //     $.ajax({
         //         url: 'ios_api_order_button',

@@ -240,12 +240,13 @@ html{
     display: block;
     margin: 0 auto;
     width: 6rem;
-    height: .6rem;
+    height: .8rem;
     border-radius: .1rem;
     background-color: #504cfb;
     border: 0;
     color: #fff;
     font-size: .28rem;
+    outline: none;
 }
 
 

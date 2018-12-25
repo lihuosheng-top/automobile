@@ -78,6 +78,7 @@ function calculator(){
                 },
                 success: function(res){
                     console.log(res);
+                    calPrice();
                 },
                 error: function(){
                     console.log('error');
@@ -100,6 +101,7 @@ function calculator(){
             },
             success: function(res){
                 console.log(res);
+                calPrice();
             },
             error: function(){
                 console.log('error');
