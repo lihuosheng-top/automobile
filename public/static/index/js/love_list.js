@@ -161,7 +161,7 @@ $('.save-btn').click(function(){
     var car_insurance = $('.insurer-input').val();
     var insurance_time = $('.expiration-date-input').val();
     $.ajax({
-        url: 'love_list_save',
+        url: 'love_save',
         type: 'POST',
         dataType: 'JSON',
         data: {
