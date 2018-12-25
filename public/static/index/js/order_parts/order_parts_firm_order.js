@@ -242,13 +242,10 @@ $.ajax({
 
                 var buy_message = $('.leave-msg').val();
                 var order_amount = $('.total-money').text();
-                $('#WIDout_trade_no').val(res.data.parts_order_number);
-                $('#WIDtotal_amount').val($('.total-money').text());
-                $('#WIDsubject').val(res.data.parts_goods_name);
-                $('#WIDbody').val(res.data.parts_goods_name);
+                
                 if($('.order-goods-info').length > 2){
                     $.ajax({
-                        url: 'cart_store_more_cancel',
+                        url: 'ios_api_order_button_by_shop',
                         type: 'POST',
                         dataType: 'JSON',
                         data: {
@@ -259,6 +256,10 @@ $.ajax({
                         },
                         success: function (res) {
                             console.log(res);
+                            $('#WIDout_trade_no').val(res.data.parts_order_number);
+                            $('#WIDtotal_amount').val($('.total-money').text());
+                            $('#WIDsubject').val(res.data.parts_goods_name);
+                            $('#WIDbody').val(res.data.parts_goods_name);
                             $('.close-alipay').click(function () {
                                 $('.mask').hide();
                                 $('.alipay-pop').animate({ 'bottom': '-100%' });
@@ -271,7 +272,7 @@ $.ajax({
                                 })
                                 console.log(storeId);
                                 $.ajax({
-                                    url: 'order_parts_save_record',
+                                    url: 'cart_store_more_cancel',
                                     type: 'POST',
                                     dataType: 'JSON',
                                     data: {
@@ -280,7 +281,7 @@ $.ajax({
                                     },
                                     success: function(res){
                                         console.log(res);
-                                        // location.href = 'order_parts_wait_pay';
+                                        location.href = 'order_parts_wait_pay';
                                     },
                                     error: function(){
                                         console.log('error');
@@ -305,6 +306,10 @@ $.ajax({
                         },
                         success: function (res) {
                             console.log(res);
+                            $('#WIDout_trade_no').val(res.data.parts_order_number);
+                            $('#WIDtotal_amount').val($('.total-money').text());
+                            $('#WIDsubject').val(res.data.parts_goods_name);
+                            $('#WIDbody').val(res.data.parts_goods_name);
                             $('.close-alipay').click(function () {
                                 $('.mask').hide();
                                 $('.alipay-pop').animate({ 'bottom': '-100%' });
@@ -326,6 +331,7 @@ $.ajax({
                                     },
                                     success: function(res){
                                         console.log(res);
+                                        location.href = 'order_parts_detail';
                                     },
                                     error: function(){
                                         console.log('error');
