@@ -1447,23 +1447,23 @@ class OrderParts extends Controller{
                        ->where("id",$values)
                        ->find();
                 }
+                $create_time = time();//下单时间
+                $harvest_address_city =str_replace(',','',$is_address_status['address_name']);
+                $harvest_address =$harvest_address_city.$is_address_status['harvester_real_address']; //收货人地址
+                $time=date("Y-m-d",time());
+                $v=explode('-',$time);
+                $time_second=date("H:i:s",time());
+                $vs=explode(':',$time_second);
+                $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
+                $normal_time =Db::name("order_parts_setting")->find();//订单设置的时间
+                $normal_future_time =strtotime("+". $normal_time['normal_time']." minute");
                 foreach ($shopping_data as $key=>$val){
                     $order_amount =$request->only("order_amount")["order_amount"]; //订单总价
                     $buy_messages =$request->only("buy_message")["buy_message"]; //买家留言
                     $commodity_id =$val["goods_id"];//商品id
                     if(!empty($commodity_id)){
                         $goods_data = Db::name('goods')->where('id', $commodity_id)->find();
-                        $create_time = time();//下单时间
-                        $normal_time =Db::name("order_parts_setting")->find();//订单设置的时间
-                        $normal_future_time =strtotime("+". $normal_time['normal_time']." minute");
                         if (!empty($data)) {
-                            $harvest_address_city =str_replace(',','',$is_address_status['address_name']);
-                            $harvest_address =$harvest_address_city.$is_address_status['harvester_real_address']; //收货人地址
-                            $time=date("Y-m-d",time());
-                            $v=explode('-',$time);
-                            $time_second=date("H:i:s",time());
-                            $vs=explode(':',$time_second);
-                            $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
                             //买家留言
                         if(!empty($buy_messages)){
                             $buy_message =$buy_messages;
@@ -1476,10 +1476,13 @@ class OrderParts extends Controller{
                                 $integral_deductible =$setting_data["integral_full"];
                                 $integral_discount_setting_id =$data["setting_id"];
                                 $integral_deductible_num =$setting_data["integral_full"];
+                                //假设最大的金额总大于（积分抵扣规则）
+                                $order_real_pay =1;
                             }else{
                                 $integral_deductible = 0;
                                 $integral_discount_setting_id =NULL;
                                 $integral_deductible_num =NULL;
+                                $order_real_pay =$val['money'] * $val['goods_unit'];
                             }
                             $datas = [
                                 'goods_image' => $goods_data['goods_show_images'],//图片
@@ -1495,7 +1498,7 @@ class OrderParts extends Controller{
                                 'harvester_address' => $harvest_address,//收货人地址
                                 'order_create_time' => $create_time,//订单创建时间
                                 'order_amount' =>$val['money'] * $val['goods_unit'], //订单金额（变动）
-                                "order_real_pay"=>$data["order_amount"],//订单实际支付的金额(即积分抵扣之后的价钱）（变动*）
+                                "order_real_pay"=>$order_real_pay,//订单实际支付的金额(即积分抵扣之后的价钱）（变动*）
                                 'status' => 1,//状态
                                 'goods_id' => $commodity_id,//商品id
                                 'store_id' => $val['store_id'],//店铺id
