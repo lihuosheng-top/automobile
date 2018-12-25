@@ -181,6 +181,10 @@ Route::group("",[
     "express_info"=>"index/Express/express_info",//快递信息返回
     "express_logout"=>"index/Express/express_logout",//快递员退出登录
     "express_setting"=>"index/Express/express_setting",//快递员页面设置
+    "express_order_save"=>"index/Express/express_order_save",//快递员接单入库
+    "express_order_get"=>"index/Express/express_order_get",//快递员已取货
+    "express_distribution_edit"=>"index/Express/express_distribution_edit",//快递员配送中状态修改
+
 
     /*TODO:快递结束*/
 
