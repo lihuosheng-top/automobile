@@ -129,6 +129,10 @@ $.ajax({
         // 查看详细信息
         $('.car-info-top').click(function(){
             id = $(this).attr('id');
+            var myCarInfo = '';
+            $.each($(this).find('.car-info p'), function(idx, val){
+                myCarInfo += val.innerText+' ';
+            })
             $('.wrapper').hide();
             $('.car-detail-pop').show();
             $.ajax({
@@ -140,6 +144,12 @@ $.ajax({
                 },
                 success: function(res){
                     console.log(res);
+                    if(res.status == 1){
+                        $('.info-p').text(myCarInfo);
+                        var data = res.data[0];
+                        $('.seat-input').val(data.seat);
+                        $('.color-input').val(data.colour);
+                    }
                 },
                 error: function(){
                     console.log('error');
