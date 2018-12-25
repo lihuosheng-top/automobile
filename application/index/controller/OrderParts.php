@@ -56,7 +56,7 @@ class OrderParts extends Controller{
         if($request->isPost()) {
             $user_id = Session::get("user");
             $store_id = Session::get("store_id");
-            $parts_order_number = Session::get("parts_order_number");;//订单编号
+            $parts_order_number = Session::get("parts_order_number");//订单编号
             $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number;
             $data = Db::name("order_parts")
                 ->where($condition)
@@ -132,23 +132,23 @@ class OrderParts extends Controller{
                         if($bool){
                             //取消订单退回积分到积余额
                             if(!empty( $is_use_integral)){
-                                    if(!empty($is_use_integral[0]["integral_deductible_num"])){
-                                        $user_info = Db::name("user")->field("user_integral_wallet,user_integral_wallet_consumed")->where("id",$user_id)->find();
-                                        $update_data =[
-                                            "user_integral_wallet"=>$user_info["user_integral_wallet"] + $is_use_integral[0]["integral_deductible_num"],
-                                            "user_integral_wallet_consumed"=>$user_info["user_integral_wallet_consumed"] - $is_use_integral[0]["integral_deductible_num"]
-                                        ];
-                                        Db::name("user")->where("id",$user_id)->update($update_data); //积分增加
-                                        $integral_data =[
-                                            "user_id"=>$user_id,//用户ID
-                                            "integral_operation"=>"+".$is_use_integral[0]["integral_deductible_num"],//积分操作
-                                            "integral_balance"=>$user_info["user_integral_wallet"] + $is_use_integral[0]["integral_deductible_num"],//积分余额
-                                            "integral_type"=> 1,//积分类型
-                                            "operation_time"=>date("Y-m-d H:i:s") ,//操作时间
-                                            "integral_remarks"=>"订单号:".$parts_order_number."因超时未付款，取消退回".$is_use_integral[0]["integral_deductible_num"]."积分",//积分备注
-                                        ];
-                                        Db::name("integral")->insert($integral_data); //插入积分消费记录
-                                    }
+                                if(!empty($is_use_integral[0]["integral_deductible_num"])){
+                                    $user_info = Db::name("user")->field("user_integral_wallet,user_integral_wallet_consumed")->where("id",$user_id)->find();
+                                    $update_data =[
+                                        "user_integral_wallet"=>$user_info["user_integral_wallet"] + $is_use_integral[0]["integral_deductible_num"],
+                                        "user_integral_wallet_consumed"=>$user_info["user_integral_wallet_consumed"] - $is_use_integral[0]["integral_deductible_num"]
+                                    ];
+                                    Db::name("user")->where("id",$user_id)->update($update_data); //积分增加
+                                    $integral_data =[
+                                        "user_id"=>$user_id,//用户ID
+                                        "integral_operation"=>"+".$is_use_integral[0]["integral_deductible_num"],//积分操作
+                                        "integral_balance"=>$user_info["user_integral_wallet"] + $is_use_integral[0]["integral_deductible_num"],//积分余额
+                                        "integral_type"=> 1,//积分类型
+                                        "operation_time"=>date("Y-m-d H:i:s") ,//操作时间
+                                        "integral_remarks"=>"订单号:".$parts_order_number."因超时未付款，取消退回".$is_use_integral[0]["integral_deductible_num"]."积分",//积分备注
+                                    ];
+                                    Db::name("integral")->insert($integral_data); //插入积分消费记录
+                                }
                             }
                             return ajax_success("取消成功",["status"=>1]);
                         }else{
