@@ -146,7 +146,7 @@ class LoveCar extends Controller{
                 $user_car_message_data = $request->param();
                 $bool = db("user_car_message")->where("user_car_id",$user_car_id)->update($user_car_message_data);
                 if($bool){
-                    return ajax_success("更新成功",$user_car_message_data);
+                    return ajax_success("更新成功");
                 }else{
                     return ajax_error("更新失败");
                 }
@@ -162,6 +162,25 @@ class LoveCar extends Controller{
             }
         }
 
+    }
+
+
+    /**
+     * 车辆详细信息显示
+     * 陈绪
+     * @param Request $request
+     */
+    public function love_list_edit(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $user_car_message = db("user_car_message")->where("user_car_id",$id)->select();
+            if($user_car_message){
+                return ajax_success("获取成功",$user_car_message);
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
     }
 
 

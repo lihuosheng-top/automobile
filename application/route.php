@@ -37,6 +37,7 @@ Route::group("",[
     "love_status"=>"index/LoveCar/love_status",                         //我的爱车状态修改
     "love_del"=>"index/LoveCar/love_del",                         //我的爱车列表删除
     "love_list_save"=>"index/LoveCar/love_list_save",                         //我的车辆信息添加，修改
+    "love_list_edit"=>"index/LoveCar/love_list_edit",                          //我的爱车详细信息显示
 
 
     /*服务商品*/

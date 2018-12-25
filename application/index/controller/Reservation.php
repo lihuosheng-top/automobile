@@ -78,7 +78,6 @@ class Reservation extends Controller{
      */
     public function reservation_detail(Request $request)
     {
-
         if($request->isPost()){
             $user_id = Session::get("user");
             $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
