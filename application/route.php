@@ -328,7 +328,10 @@ Route::group("",[
      */
     "operation_index"=>"index/Operation/complaint",             //投诉中心
     "rescue_index"=>"index/Operation/rescue",             //紧急救援
-    
+
+    /*TODO:测试IOS地址开始*/
+    "test_ios"=>"index/Operation/ios",
+    /*TODO:测试IOS地址结束*/
 ]);
 
 /**
