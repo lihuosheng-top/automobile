@@ -243,7 +243,7 @@ $.ajax({
                 var buy_message = $('.leave-msg').val();
                 var order_amount = $('.total-money').text();
                 $.ajax({
-                    url: 'ios_api_order_parts_button',
+                    url: 'ios_api_order_button_by_shop',
                     type: 'POST',
                     dataType: 'JSON',
                     data: {
