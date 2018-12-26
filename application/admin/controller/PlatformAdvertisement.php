@@ -30,7 +30,7 @@ class  PlatformAdvertisement extends  Controller{
         $showdata = array_slice($all_idents, ($curPage - 1) * $listRow, $listRow, true);// 数组中根据条件取出一段值，并返回
         $platform = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
             'var_page' => 'page',
-            'path' => url('admin/service_advertisement/service_business_advertising'),//这里根据需要修改url
+            'path' => url('admin/platform_advertisement/platform_business_index'),//这里根据需要修改url
             'query' => [],
             'fragment' => '',
         ]);
