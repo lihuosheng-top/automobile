@@ -107,12 +107,16 @@ class Shop extends Controller{
                 $user_id =Db::name("store")->field("user_id")->where("store_id",$id)->find();
                 $phone =Db::name("user")->field("phone_num")->where('id',$user_id['user_id'])->find();
                 Db::name('admin')->where('phone',$phone["phone_num"])->update(['status'=>1]);
+                $content = "尊敬的用户您好，您的店铺审核通过，可以上架商品了";
+                phone("qiche", "123qwe", $phone["phone_num"], $content);
             }
             //拒绝不可以登录后台
             if($data['operation_status']==-1){
                 $user_id =Db::name("store")->field("user_id")->where("store_id",$id)->find();
                 $phone =Db::name("user")->field("phone_num")->where('id',$user_id['user_id'])->find();
                 Db::name('admin')->where('phone',$phone["phone_num"])->update(['status'=>0]);
+                $content = "尊敬的用户您好，您的店铺审核不通过，请重新提交店铺信息";
+                phone("qiche", "123qwe", $phone["phone_num"], $content);
             }
             $this->success('修改成功','admin/Shop/index');
         }else{

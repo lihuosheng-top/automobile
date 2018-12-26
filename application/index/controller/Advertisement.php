@@ -27,9 +27,8 @@ class  Advertisement extends  Controller{
         {
             $area = $request->only(["area"])["area"];
             Session::set("area",$area);    
-            $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
-            $data = Db::name("position") -> where("pid",0) ->field("name,id")->select();           
-              
+            $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->order("start_time desc")->select();
+            $adress_data = Db::name("platform")->where('department',"platform_business")->where("status", 1)->order("start_time desc")->select();              
             foreach($area_data as $key => $value)
             {
 
@@ -50,12 +49,57 @@ class  Advertisement extends  Controller{
                 $machine[] = $value;          
             }   
             }
-       
+      
+            $home_length = count($home);
+            $fixed_length = count($fixed);
+            $hot_length = count($hot);
+            $machine_length = count($machine); 
+            
+            foreach($adress_data as $k => $v)
+            {
+
+            if( $v['pid'] == 18) //首页轮播
+            { 
+                $homes[] = $v;          
+            }
+            if( $v['pid'] == 19) //首页固定
+            {
+                $fixeds[] = $v;         
+            }
+            if( $v['pid'] == 20) //热门推荐
+            {
+                $hots[] = $v;          
+            }
+            if( $v['pid'] == 21) //配件商城
+            {
+                $machines[] = $v;          
+            }   
+            }
+      
+
+            foreach($homes as $a => $b)
+            {
+                $home[ $home_length + $a ] = $b;
+            }
+            foreach($fixeds as $c => $d)
+            {
+                $fixed[ $fixed_length + $c ] = $d;
+            }
+            foreach($hots as $f => $g)
+            {
+                $hot[ $hot_length + $f ] = $g;
+            }
+            foreach($machines as $h => $i)
+            {
+                $machine[ $machine_length + $h ] = $i;
+            }
+
+
             $reste['home'] = $home;
             $reste["fixed"] = $fixed;
             $reste["hot"] = $hot;
-            $reste["machine"] = $machine; 
-            
+            $reste["machine"] = $machine;
+
             if ( (!empty($reste)) && (!empty($area)) ) {
                 return ajax_success('传输成功', $reste);
             } else {
@@ -77,9 +121,9 @@ class  Advertisement extends  Controller{
         if ($request->isPost())
         {
             $area = Session::get("area");
-            $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->select();
-            $data = Db::name("position") -> where("pid",0) ->field("name,id")->select();           
-              
+            $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->order("start_time desc")->select();
+            $adress_data = Db::name("platform")->where('department',"platform_business")->where("status", 1)->order("start_time desc")->select();
+                       
             foreach($area_data as $key => $value)
             {
 
@@ -89,13 +133,38 @@ class  Advertisement extends  Controller{
             }
             if( $value['pid'] == 27) //配件商城优惠推荐
             {
-                $discounts[] = $value;          
+                $discount[] = $value;          
             }   
             }
        
-            $reste["machine"] = $machine; 
-            $reste["discounts"] = $discounts; 
+            $machine_length = count($machine); 
+            $discount_length = count($discount); 
             
+            foreach($adress_data as $k => $v)
+            {
+
+            if( $v['pid'] == 21) //平台配件商城
+            {
+                $machines[] = $v;          
+            }
+            if( $v['pid'] == 27) //平台配件商城优惠推荐
+            {
+                $discounts[] = $v;          
+            }   
+            }
+      
+
+            foreach($machines as $h => $i)
+            {
+                $machine[ $machine_length + $h ] = $i;
+            }
+            foreach($discounts as $b => $n)
+            {
+                $discount[ $discount_length + $b ] = $n;
+            }
+            $reste["machine"] = $machine; 
+            $reste["discounts"] = $discount; 
+ 
             if ( (!empty($reste)) && (!empty($area)) ) {
                 return ajax_success('传输成功', $reste);
             } else {
