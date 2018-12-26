@@ -7,27 +7,16 @@
  */
 namespace app\index\controller;
 use think\Controller;
+use think\Request;
 
 class Operation extends Controller{
-
-
-    /**
-     * 投诉中心
-     * 陈绪
-     */
-    public function complaint(){
-
-        return view("operation_index");
-
-    }
-
 
 
     /**
      * 紧急救援
      * 陈绪
      */
-    public function rescue(){
+    public function rescue(Request $request){
 
         return view("rescue_index");
 

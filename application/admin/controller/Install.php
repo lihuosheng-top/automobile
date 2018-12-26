@@ -373,6 +373,40 @@ class Install extends Controller{
 
 
     /**
+     * 消息提醒添加
+     * 陈绪
+     */
+    public function message_add(Request $request){
+
+        return view("message_add");
+
+    }
+
+
+
+    /**
+     * 消息提醒修改
+     * 陈绪
+     */
+    public function message_edit(Request $request){
+
+        return view("message_edit");
+
+    }
+
+
+
+    /**
+     * 消息提醒更新
+     * 陈绪
+     */
+    public function message_updata(Request $request){
+
+
+
+    }
+
+    /**
      * 消息添加
      * 陈绪
      */

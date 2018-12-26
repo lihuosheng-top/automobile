@@ -1523,7 +1523,6 @@ class OrderParts extends Controller{
                         }else{
                             $buy_message = NUll ;
                         }
-                            
                             $datas = [
                                 'goods_image' => $val['goods_images'],//图片
                                 "goods_describe"=>$goods_data["goods_describe"],//卖点
@@ -1578,6 +1577,13 @@ class OrderParts extends Controller{
                         Db::name("user")->where("id",$user_id)->update(["user_integral_wallet"=>$user_integral_wallets,"user_integral_wallet_consumed"=>$setting_data["integral_full"]+$user_information["user_wallet_consumed"]]);
                         Db::name("integral")->insert($integral_data); //插入积分消费记录
                     }
+                    //清空购物车数据
+                    if(is_array($data["shoppingId"])){
+                        $where ='id in('.implode(',',$data["shoppingId"]).')';
+                    }else{
+                        $where ='id='.$data["shoppingId"];
+                    }
+                    $list =  Db::name('shopping')->where($where)->delete();
                     return ajax_success('下单成功',$order_datas);
                 }else{
                     return ajax_error('失败',['status'=>0]);
