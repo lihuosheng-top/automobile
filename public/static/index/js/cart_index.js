@@ -162,30 +162,38 @@ $('.del-btn').click(function(){
             id.push($(val).attr('id'));
         }
     })
-    layer.open({
-        content: '确认删除商品？',
-        btn: ['确定', '取消'],
-        yes: function (index) {
-            layer.close(index);
-            $.ajax({
-                url: 'carts_del',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    'id': id
-                },
-                success: function(res){
-                    console.log(res);
-                    if(res.status === 1){
-                        location.reload();
+    if(id.length !== 0){
+        layer.open({
+            content: '确认删除商品？',
+            btn: ['确定', '取消'],
+            yes: function (index) {
+                layer.close(index);
+                $.ajax({
+                    url: 'carts_del',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'id': id
+                    },
+                    success: function(res){
+                        console.log(res);
+                        if(res.status === 1){
+                            location.reload();
+                        }
+                    },
+                    error: function(){
+                        console.log('error');
                     }
-                },
-                error: function(){
-                    console.log('error');
-                }
-            }) 
-        }
-    });
+                }) 
+            }
+        });
+    }else{
+        layer.open({
+            skin: 'msg',
+            content: '未选中商品',
+            time: 1
+        })
+    }
 })
 
 

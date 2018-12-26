@@ -145,12 +145,6 @@ if(urlLen > 1){
                 // 商品
                 var str = myGoods(data);
                 $('.goods-content').prepend(str);
-                // 店铺信息
-                $.each(data.data.store, function(idx, val){
-                    $('.shop_name').text(val.store_name);
-                    $('.addr_p span').text(val.store_detailed_address);
-                    $('.shop-describe').text(val.store_information);
-                })
                 // 服务项目
                 var str2 = myService(data);
                 $('.service-content').append(str2);
@@ -159,7 +153,6 @@ if(urlLen > 1){
                 // 商品
                 var str = myGoods(data);
                 $('.goods-content').prepend(str);
-                
                 // 服务项目
                 var str2 = myService(data);
                 $('.service-content').append(str2);
@@ -191,11 +184,26 @@ function myGoods(data){
 // 服务项目 选择服务类型进来
 function myService(data){
     var str2 = '';
+    var swiperImgArr = [];
     $.each(data.data.store, function(idx, val){
         $('.shop_name').text(val.store_name);
         $('.addr_p span').text(val.store_detailed_address);
         $('.shop-describe').text(val.store_information);
+        swiperImgArr.push(val.verifying_physical_storefront_one);
+        var storeInnerImg = val.verifying_physical_storefront_two.split(',').splice(0, 3);
+        $.each(storeInnerImg, function(idx, val){
+            swiperImgArr.push(val);
+        }) 
     })
+    // 轮播图
+    var myStr = '';
+    $.each(swiperImgArr, function(idx, val){
+        myStr += `<div class="swiper-slide">
+                    <img src="uploads/`+val+`">
+                </div>`
+    })
+    $('.swiper-wrapper').append(myStr);
+    mySwiper();
     $.each(data.data.serve_data, function(idx, val){
         str2 += `<div class="service-colla-item">
                     <div class="service-colla-title">
@@ -266,6 +274,21 @@ function selectEvent(){
             $('.bespeak-money').text('');
         }
     })
+}
+// swiper
+function mySwiper(){
+    var mySwiper = new Swiper ('.swiper-container', {
+        direction: 'horizontal', // 垂直切换选项
+        loop: true, // 循环模式选项
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false,//用户操作swiper后，不禁止autoplay
+        },
+        // 如果需要分页器
+        pagination: {
+            el: '.swiper-pagination',
+        },
+    }) 
 }
 
 // 切换服务项目 本店商品
