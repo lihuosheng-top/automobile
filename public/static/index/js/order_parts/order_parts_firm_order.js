@@ -49,7 +49,7 @@ $.ajax({
             $('.quantity-p span').text(res.data.goods_number)
             $('.sundry-cal-val').val(res.data.goods_number)
             // 用户选择的规格
-            $('.standard').text(res.data.goods_standard);
+            $('.standard').text(res.data.goods_standard).attr('id', res.data.goods_standard_id);;
             $.each(res.data.goods, function (idx, val) {
                 // 店铺名
                 $('.order-shop-namp').text(val.store_name);
@@ -79,7 +79,7 @@ $.ajax({
                         $('.quantity-p span').text(calculator_val.value);
                         $('.total-num').text(calculator_val.value);
                         // 数量*单价
-                        var minusP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.price, 2)
+                        var minusP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2)
                         console.log(minusP)
                         $('.discount').text('不使用积分');
                         $('.default').click();
@@ -105,7 +105,7 @@ $.ajax({
                     $('.quantity-p span').text(calculator_val.value);
                     $('.total-num').text(calculator_val.value);
                     // 数量*单价
-                    var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.price, 2)
+                    var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2)
                     // 用户选择抵扣金额后  增加购买数量
                     if ($('.discount').text() != '不使用积分') {
                         // 保存用户选择的抵扣金额
@@ -136,6 +136,7 @@ $.ajax({
                 var orderAmount = $('.total-money').text();
                 var quantity = $('.total-num').text();
                 var goods_standard = $('.standard').text();
+                var goods_standard_id = $('.standard').attr('id');
                 var buy_message = $('.leave-msg').val();
                 $.ajax({
                     url: 'ios_api_order_parts_button',
@@ -148,7 +149,8 @@ $.ajax({
                         'order_quantity': quantity,
                         'goods_standard': goods_standard,
                         'buy_message': buy_message,
-                        'setting_id': deductionId
+                        'setting_id': deductionId,
+                        'goods_standard_id': goods_standard_id
                     },
                     success: function (res) {
                         console.log(res);
@@ -201,7 +203,7 @@ $.ajax({
                                 </div>
                                 <div class="order-info-box">
                                     <p class="order-goods-p txt-hid-two">`+val.goods_name+`</p>
-                                    <p class="standard txt-hid-two">`+val.special_name+val.goods_delivery+`</p>
+                                    <p class="standard txt-hid-two" id="`+val.goods_standard_id+`">`+val.special_name+val.goods_delivery+`</p>
                                     <div class="unit-price-quantity">
                                         <p class="unit-price-p">￥<span>`+val.money+`</span></p>
                                         <p class="quantity-p">×<span>`+val.goods_unit+`</span></p>

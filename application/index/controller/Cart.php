@@ -326,40 +326,4 @@ class Cart extends Controller
 
         }
     }
-
-
-
-    /**
-     **************李火生*******************
-     * @param Request $request
-     * Notes:购物车存储到shopping_shop表（ajax）
-     **************************************
-     * @param Request $request
-     */
-    public function place_an_order_by_cart(Request $request){
-        if($request->isPost()){
-            $user_id = Session::get("user");//用户id
-            if(empty($user_id)){
-                exit(json_encode(array("status" => 2, "info" => "请登录")));
-            }
-            if(!empty($user_id)){
-                $id = $request->only(['id'])['id'];//shopping表的主键id
-                $goods_unit = $request->only(['goods_unit'])['goods_unit'];//商品数量
-                $money = $request->only(['money'])['money'];//商品的总价
-                foreach ($id as $key => $val) {
-                    db("shopping")->where("id", $val)->update(['goods_unit' => $goods_unit[$key]]);
-                }
-                //存储到购物车订单表中
-                $data['money'] = $money;
-                $data['shopping_id'] = implode(",", $id);
-                $data['user_id'] = $user_id;
-                db("shopping_shop")->insert($data);
-                $shopping_id['id'] = db("shopping_shop")->getLastInsID();
-                Session("shopping", $shopping_id);
-                return ajax_success("获取成功", $shopping_id);
-            }
-        }
-    }
-
-
 }

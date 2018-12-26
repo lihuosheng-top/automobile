@@ -52,7 +52,6 @@ $.ajax({
                     if($('#'+letter).length>0){//点击的字母 有值
                         var LetterTop = $('#'+letter).position().top;
                         $('.cont').animate({scrollTop: LetterTop-45+'px'}, 300);
-                        // var bodyTop = $('.cont').position().top;
                     }
                     console.log(LetterTop);
                 }
@@ -196,7 +195,6 @@ $.ajax({
                 if(userChoseCarName == val.brand){
                     // 筛选对应品牌车系 插入数组
                     vehicleArr.push(val.series);
-                    // vehicleStr += '<div class="series-txt">'+val.series+'</div>';
                 }
             })
             // 去重后车系
@@ -350,7 +348,6 @@ $.ajax({
     dataType: 'JSON',
     success: function(res){
         console.log('爱车', res);
-
         if(res.status == 1){
             var res = res.data[0];
             $('.txt-div p').html(res.brand);
@@ -425,7 +422,6 @@ $(function(){
             if($('#gec_'+letter).length>0){//点击的字母 有值
                 var LetterTop = $('#gec_'+letter).position().top;
                 $('.gec-cont').animate({scrollTop: LetterTop-45+'px'}, 300);
-                // var bodyTop = $('.gec-cont').position().top;
             }
             console.log(LetterTop);
         }
@@ -446,24 +442,17 @@ function gecInitials() {//公众号排序
     }
 
     var initials = [];
-    // var num=0;
     gecSortList.each(function(i) {
         var initial = makePy($(this).find('.gec-city-name').text().charAt(0))[0].toUpperCase();
         if(initial>='A'&&initial<='Z'){
             if (initials.indexOf(initial) === -1)
                 initials.push(initial);
         }
-        // else{
-        //     num++;
-        // }
-        
     });
 
     $.each(initials, function(index, value) {//添加首字母标签
         gecSortBox.append('<div class="gec-sort-letter" id="gec_'+ value +'">' + value + '</div>');
     });
-    // if(num!=0){SortBox.append('<div class="gec-sort-letter" id="gec-default">#</div>');}
-
     for (var i =0;i<gecSortList.length;i++) {//插入到对应的首字母后面
         var gecLetter=makePy(gecSortList.eq(i).find('.gec-city-name').text().charAt(0))[0].toUpperCase();
         switch(gecLetter){
@@ -626,6 +615,43 @@ function getAdvertisment(area){
                                     <img src="uploads/`+res.data.fixed[0].advert_picture+`">
                                 </a>`
                 $('.banner').append(indexFixStr);
+                // 热门推荐
+                var hot = res.data.hot;
+                var hotStr = `<div class="recommend_top">
+                                <a href="`+hot[0].url+`">
+                                    <img src="uploads/`+hot[0].advert_picture+`">
+                                </a>
+                                <a href="`+hot[1].url+`">
+                                    <img src="uploads/`+hot[1].advert_picture+`">
+                                </a>
+                            </div>
+                            <div class="recommend_bottom">
+                                <div class="recommend_bottom_left">
+                                    <a href="`+hot[2].url+`">
+                                        <img src="uploads/`+hot[2].advert_picture+`">
+                                    </a>
+                                </div>
+                                <div class="recommend_bottom_right">
+                                    <div class="recommend_bottom_right_one">
+                                        <a href="`+hot[3].url+`">
+                                            <img src="uploads/`+hot[3].advert_picture+`">
+                                        </a>
+                                    </div>
+                                    <div class="recommend_bottom_right_two">
+                                        <div class="recommend_bottom_right_three">
+                                            <a href="`+hot[4].url+`">
+                                                <img src="uploads/`+hot[4].advert_picture+`">
+                                            </a>
+                                        </div>
+                                        <div class="recommend_bottom_right_four">
+                                            <a href="`+hot[5].url+`">
+                                                <img src="uploads/`+hot[5].advert_picture+`">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                $('.recommend_goods').append(hotStr);
             }
         },
         error: function(){
