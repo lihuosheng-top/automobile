@@ -208,6 +208,7 @@ $('.select-buy').click(function(){
                     var goods_id = $($this)[0].id;
                     var goods_number = $('.select-calculator_val').val();
                     var goods_standard = $('.select-goods-spec').text();
+                    console.log(specId)
                     $.ajax({
                         url: 'get_goods_id_save',
                         type: 'POST',
