@@ -615,6 +615,43 @@ function getAdvertisment(area){
                                     <img src="uploads/`+res.data.fixed[0].advert_picture+`">
                                 </a>`
                 $('.banner').append(indexFixStr);
+                // 热门推荐
+                var hot = res.data.hot;
+                var hotStr = `<div class="recommend_top">
+                                <a href="`+hot[0].url+`">
+                                    <img src="uploads/`+hot[0].advert_picture+`">
+                                </a>
+                                <a href="`+hot[1].url+`">
+                                    <img src="uploads/`+hot[1].advert_picture+`">
+                                </a>
+                            </div>
+                            <div class="recommend_bottom">
+                                <div class="recommend_bottom_left">
+                                    <a href="`+hot[2].url+`">
+                                        <img src="uploads/`+hot[2].advert_picture+`">
+                                    </a>
+                                </div>
+                                <div class="recommend_bottom_right">
+                                    <div class="recommend_bottom_right_one">
+                                        <a href="`+hot[3].url+`">
+                                            <img src="uploads/`+hot[3].advert_picture+`">
+                                        </a>
+                                    </div>
+                                    <div class="recommend_bottom_right_two">
+                                        <div class="recommend_bottom_right_three">
+                                            <a href="`+hot[4].url+`">
+                                                <img src="uploads/`+hot[4].advert_picture+`">
+                                            </a>
+                                        </div>
+                                        <div class="recommend_bottom_right_four">
+                                            <a href="`+hot[5].url+`">
+                                                <img src="uploads/`+hot[5].advert_picture+`">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                $('.recommend_goods').append(hotStr);
             }
         },
         error: function(){
