@@ -635,10 +635,13 @@ Route::group("admin",[
 
     "invoice_setting"=>"admin/Install/invoice_setting",//设置之发票手续费设置
 
-
+    //消息提醒设置
     "message_index"=>"admin/Install/message_index",
+    "message_add"=>"admin/Install/message_add",
+    "message_edit"=>"admin/Install/message_edit",
     "message_del"=>"admin/Install/message_del",
     "message_save"=>"admin/Install/message_save",
+    "message_updata"=>"admin/Install/message_updata",
 
 
      /*快递员列表*/
