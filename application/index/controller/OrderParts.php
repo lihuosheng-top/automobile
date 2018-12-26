@@ -80,7 +80,6 @@ class OrderParts extends Controller{
                 $datas["all_order_real_pay"] = $data[0]["order_real_pay"];//订单实际支付
                 $datas["all_numbers"] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $data));//订单总数量
                 $datas["integral_deductible"] = $data[0]["integral_deductible"];//抵扣积分钱
-//                $datas["integral_deductible"] = array_sum(array_map(create_function('$values', 'return $values["integral_deductible"];'), $data));//抵扣积分钱
                 $datas["info"] = $data;
                 if (!empty($datas)) {
                     return ajax_success("数据返回成功", $datas);
@@ -784,7 +783,6 @@ class OrderParts extends Controller{
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
                                 $order_undate["all_order_real_pay"][] = $names["order_real_pay"];
                                 foreach ($order_undate["info"] as  $kk=>$vv){
-//                                    $order_undate["all_order_real_pay"][$kk] =array_sum(array_map(create_function('$val','return $val["order_real_pay"];'),$vv));
                                     $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
                                 }
                             }
