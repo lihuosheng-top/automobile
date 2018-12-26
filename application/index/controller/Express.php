@@ -117,9 +117,10 @@ class  Express extends  Controller{
 
         if($request->isPost()) {
             $delivery_id = Session::get("delivery_id");
+            $delivery_data = db("delivery")->where("id", $delivery_id)->select();
             $express = db("delivery_order")->where("delivery_id", $delivery_id)->where("status", 1)->select();
             if ($express) {
-                return ajax_success("获取成功", $express);
+                return ajax_success("获取成功",array(["express"=>$express,"delivery_data"=>$delivery_data]));
             } else {
                 return ajax_error("获取失败");
             }
@@ -160,9 +161,10 @@ class  Express extends  Controller{
 
         if($request->isPost()) {
             $delivery_id = Session::get("delivery_id");
+            $delivery_data = db("delivery")->where("id", $delivery_id)->select();
             $express = db("delivery_order")->where("delivery_id", $delivery_id)->where("status", 2)->select();
             if ($express) {
-                return ajax_success("获取成功", $express);
+                return ajax_success("获取成功", array(["express"=>$express,"delivery_data"=>$delivery_data]));
             } else {
                 return ajax_error("获取失败");
             }
@@ -203,9 +205,10 @@ class  Express extends  Controller{
 
         if($request->isPost()) {
             $delivery_id = Session::get("delivery_id");
+            $delivery_data = db("delivery")->where("id", $delivery_id)->select();
             $express = db("delivery_order")->where("delivery_id", $delivery_id)->where("status",3)->select();
             if ($express) {
-                return ajax_success("获取成功", $express);
+                return ajax_success("获取成功",array(["express"=>$express,"delivery_data"=>$delivery_data]));
             } else {
                 return ajax_error("获取失败");
             }
