@@ -148,9 +148,17 @@ $('.publish-btn').click(function(){
     $.each($('textarea'), function(idx, val){
         evaluateContent.push(val.value);
     })
-    // $.each(filesArr, function(idx, val){
-    //     formData.append('filesArr[]', val);
-    // })
+    var idArr = [];
+    $.each($('.evaluation-subject'), function(idx, val){
+        idArr.push(val.id);
+    })
+    $.each(idArr, function(idx, val){
+        // console.log(filesObj[val])
+        $.each(filesObj[val], function(index, value){
+            console.log(value);
+            formData.append('filesArr['+val+']', value);
+        })
+    })
     $.each(orderId, function(idx, val){
         formData.append('orderId[]', val);
     })
