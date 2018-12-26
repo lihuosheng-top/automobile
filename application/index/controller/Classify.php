@@ -49,14 +49,25 @@ class Classify extends Controller
         if($request->isPost()){
             $goods_type_id = $request->only(["id"])["id"];
             $goods_data = [];
-            $goods = db("goods")->where("goods_type_id",$goods_type_id)->whereOr("goods_brand_id",$goods_type_id)->select();
+            $goods = db("goods")
+                ->where("goods_type_id",$goods_type_id)
+                ->whereOr("goods_brand_id",$goods_type_id)
+                ->select();
             foreach ($goods as $kye=>$value){
                 $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
                 $store = db("store")->where("store_id",$value["store_id"])->where($where)->find();
                 if($value["goods_status"] == 1 && !empty($store)){
+                    $special_data[] =db("special")->where("goods_id",$value["id"])->select();
+                    $statistical_quantity[] =db("order_parts")->where("goods_id",$value["id"])->count();
                     unset($goods[$kye]);
                     $goods_data[] = $value;
                 }
+            }
+            foreach ($special_data as $k=>$v){
+                $goods_data[$k]["special"] =$v;
+            }
+            foreach ($statistical_quantity as $k=>$v){
+                $goods_data[$k]["statistical_quantity"] =$v;
             }
             if($goods_data){
                 return ajax_success("获取成功",$goods_data);
