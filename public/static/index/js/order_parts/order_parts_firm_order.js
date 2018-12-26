@@ -79,7 +79,7 @@ $.ajax({
                         $('.quantity-p span').text(calculator_val.value);
                         $('.total-num').text(calculator_val.value);
                         // 数量*单价
-                        var minusP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.price, 2)
+                        var minusP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2)
                         console.log(minusP)
                         $('.discount').text('不使用积分');
                         $('.default').click();
@@ -105,7 +105,7 @@ $.ajax({
                     $('.quantity-p span').text(calculator_val.value);
                     $('.total-num').text(calculator_val.value);
                     // 数量*单价
-                    var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.price, 2)
+                    var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2)
                     // 用户选择抵扣金额后  增加购买数量
                     if ($('.discount').text() != '不使用积分') {
                         // 保存用户选择的抵扣金额

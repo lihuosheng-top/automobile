@@ -97,11 +97,31 @@
             </div>
             <button class="store-front-button">确定</button>
         </div>
+
+        <!-- 验证真实地址 -->
+        <div class="address-pop">
+            <header class="map-header">
+                <a href="javascript:;" class="spr icon-map-back"></a>
+                <h3 class="header-title">验证真实地址</h3>
+                <button class="confirm-address">确定</button>
+            </header>
+            <div id="container" class="map"></div>
+            <div class="bottom-container">
+                <div class="title">选址结果</div>
+                <div class="c">地址：</div>
+                <div id="address"></div>
+                <div class="c">经纬度：</div>
+                <div id="lnglat"></div>
+            </div>
+        </div>
     </div>
 
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src='https://webapi.amap.com/maps?v=1.4.11&key=210ef80cb0b8bcda1cb68f180bd5dab3'></script>
+    <!-- UI组件库 1.0 -->
+    <script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
     <script src="__STATIC__/index/js/store_verify.js"></script>
 </body>
 </html>

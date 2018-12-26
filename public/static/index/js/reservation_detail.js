@@ -327,7 +327,16 @@ $('.bespeak-btn').click(function(){
         success: function(res){
             console.log(res);
             if(res.status == 1){
-                location.href = 'reservation_info?store_id='+storeId+'&service_setting_id='+serviceSettingId+'&serve_goods_id='+id;
+                if(res.data.user_car_message.length !== 0){
+                    location.href = 'reservation_info?store_id='+storeId+'&service_setting_id='+serviceSettingId+'&serve_goods_id='+id;
+                }else{
+                    layer.open({
+                        skin: 'msg',
+                        content: '未给爱车添加详细信息',
+                        time: .8
+                    })
+                    location.href = 'love_list';                  
+                }
             }else if(res.status == 2){
                 location.href = 'login';
             }
