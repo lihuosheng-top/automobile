@@ -31,7 +31,7 @@ $.ajax({
                                 </div>\
                                 <div class="goods_price">\
                                     <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
-                                    <span class="pay_num">1500人购买</span>\
+                                    <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
                                 </div>\
                             </a>\
                         </li>'
@@ -46,7 +46,7 @@ $.ajax({
                                 </div>\
                                 <div class="goods_price">\
                                     <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
-                                    <span class="pay_num">1500人购买</span>\
+                                    <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
                                 </div>\
                             </a>\
                         </li>'
