@@ -48,8 +48,10 @@ class Evaluate extends  Controller{
      */
     public function evaluate_parts_add(Request $request){
         if($request->isPost()){
-            $img = $request->file("filesArr");
+            $img = $request->file("filesArr433");
+            $imgs = $request->file("filesArr434");
             dump($img);
+            dump($imgs);
             if(!empty($img)){
                 $images =[];
                 foreach ($img as $k=>$v) {
