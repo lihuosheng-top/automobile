@@ -71,7 +71,6 @@ $.ajax({
         console.log('error');
     }
 })
-var filesArr = [];
 var filesObj = {};
 function changeEvent(inputElem, clickObj, id){
     var imgArrDom = [];
@@ -80,13 +79,15 @@ function changeEvent(inputElem, clickObj, id){
     // // 限制上传图片
     var uploadItemLen = $(clickObj).siblings('.upload-item').length;
     if(uploadItemLen + len <= 4){
-        console.log(filesObj[id]);
-        // filesObj[id] = new Array();
+        // 第一次实例化数组
+        if(filesObj[id] === undefined){
+            filesObj[id] = new Array();
+        }
         for(var i = 0; i < len; i++){
             // 存图片地址
-            // filesObj[id].push(inputElem.files[i]);
             imgArrDom.push(getObjectURL(inputElem.files[i]));
-            // filesArr.push(inputElem.files[i]);
+            // 把files用id区分开插入
+            filesObj[id].push(inputElem.files[i]);
         }
         $.each(imgArrDom, function(idx, val){
             str += `<div class="upload-item">
@@ -105,9 +106,8 @@ function changeEvent(inputElem, clickObj, id){
     // 删除图片
     $('.upload-item').on('click', '.del-img', function(){
         var $index = $('.del-img').index($(this));
-        console.log($index);
-        filesArr.splice($index, 1);
-        console.log(filesArr)
+        filesObj[id].splice($index, 1);
+        console.log(filesObj)
         $(this).parent().remove();
     })
 }
