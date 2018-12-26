@@ -30,7 +30,7 @@ $.ajax({
                                     <p class="txt-hid-two">'+val.goods_name+'</p>\
                                 </div>\
                                 <div class="goods_price">\
-                                    <span class="price">￥'+val.goods_adjusted_money+'</span>\
+                                    <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
                                     <span class="pay_num">1500人购买</span>\
                                 </div>\
                             </a>\
@@ -45,7 +45,7 @@ $.ajax({
                                     <p class="txt-hid-two">'+val.goods_name+'</p>\
                                 </div>\
                                 <div class="goods_price">\
-                                    <span class="price">￥'+val.goods_adjusted_money+'</span>\
+                                    <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
                                     <span class="pay_num">1500人购买</span>\
                                 </div>\
                             </a>\
