@@ -1358,11 +1358,16 @@ class OrderParts extends Controller{
                             $integral_discount_setting_id =NULL;
                             $integral_deductible_num =NULL;
                         }
+                        //图片
+                        $special_data =Db::name("special")
+                            ->where("id",$data["goods_standard_id"])
+                            ->find();
+
                         $datas = [
-                            'goods_image' => $goods_data['goods_show_images'],//图片
+                            'goods_image' =>  $special_data['images'],//图片
                             "goods_describe"=>$goods_data["goods_describe"],//卖点
                             'parts_goods_name' => $goods_data['goods_name'],//名字
-                            "goods_money"=>$goods_data['goods_adjusted_money'],//商品价钱
+                            "goods_money"=> $special_data['goods_adjusted_price'],//商品价钱
                             'order_quantity' => $data['order_quantity'],//订单数量
                             'user_id' => $user_id,//用户id
                             "user_account_name"=>$user_information["user_name"],//用户名
@@ -1518,22 +1523,8 @@ class OrderParts extends Controller{
                         }else{
                             $buy_message = NUll ;
                         }
-//                            //积分抵扣
-//                            if(!empty($data["setting_id"])){
-//                                $setting_data =Db::name("integral_discount_settings")->where("setting_id",$data["setting_id"])->find();
-//                                $integral_deductible =$setting_data["integral_full"];
-//                                $integral_discount_setting_id =$data["setting_id"];
-//                                $integral_deductible_num =$setting_data["integral_full"];
-//                                //假设最大的金额总大于（积分抵扣规则）
-//                                $order_real_pay =1;
-//                            }else{
-//                                $integral_deductible = 0;
-//                                $integral_discount_setting_id =NULL;
-//                                $integral_deductible_num =NULL;
-//                                $order_real_pay =$val['money'] * $val['goods_unit'];
-//                            }
                             $datas = [
-                                'goods_image' => $goods_data['goods_show_images'],//图片
+                                'goods_image' => $val['goods_images'],//图片
                                 "goods_describe"=>$goods_data["goods_describe"],//卖点
                                 'parts_goods_name' => $goods_data['goods_name'],//名字
                                 "goods_money"=>$val['money'],//商品价钱（变动）
@@ -1586,6 +1577,13 @@ class OrderParts extends Controller{
                         Db::name("user")->where("id",$user_id)->update(["user_integral_wallet"=>$user_integral_wallets,"user_integral_wallet_consumed"=>$setting_data["integral_full"]+$user_information["user_wallet_consumed"]]);
                         Db::name("integral")->insert($integral_data); //插入积分消费记录
                     }
+                    //清空购物车数据
+                    if(is_array($data["shoppingId"])){
+                        $where ='id in('.implode(',',$data["shoppingId"]).')';
+                    }else{
+                        $where ='id='.$data["shoppingId"];
+                    }
+                    $list =  Db::name('shopping')->where($where)->delete();
                     return ajax_success('下单成功',$order_datas);
                 }else{
                     return ajax_error('失败',['status'=>0]);
