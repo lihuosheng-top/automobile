@@ -89,7 +89,7 @@ $(function(){
                 type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                 skin: 'msg',
                 content: '最多上传20张图片',
-                time: 2
+                time: 1
             })
         }
         // 删除图片
@@ -143,10 +143,10 @@ $('.submit-button').click(function(){
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: 1.2
+                            time: .8
                         })
                         setTimeout(function(){
-                            // location.href = 'my_index';
+                            location.href = 'my_index';
                         }, 1400);
                     }else{
                         layer.open({
@@ -154,7 +154,7 @@ $('.submit-button').click(function(){
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: 1.2
+                            time: .8
                         })
                     }
                 },
@@ -168,7 +168,7 @@ $('.submit-button').click(function(){
                 type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                 skin: 'msg',
                 content: '图片未上传完整',
-                time: 1
+                time: .8
             })
         }
     }else if($(this).text() === '提交修改'){
@@ -208,18 +208,18 @@ $('.submit-button').click(function(){
                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: res.info,
-                        time: 1.2
+                        time: .8
                     })
                     setTimeout(function(){
-                        // location.href = 'my_index';
-                    }, 1400);
+                        location.href = 'my_index';
+                    }, 1000);
                 }else{
                     layer.open({
                         style: 'bottom:100px;',
                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: res.info,
-                        time: 1.2
+                        time: .8
                     })
                 }
             },
