@@ -58,9 +58,9 @@ $.ajax({
                 // 商品描述
                 $('.order-selling-point').text(val.goods_describe);
                 // 价格
-                $('.unit-price-p span').text(val.goods_standard_id.price);
+                $('.unit-price-p span').text(val.goods_standard_id.goods_adjusted_price);
                 // 总价
-                $('.total-money').text(toFixed(res.data.goods_number * val.goods_standard_id.price, 2));
+                $('.total-money').text(toFixed(res.data.goods_number * val.goods_standard_id.goods_adjusted_price, 2));
                 // 图片
                 $('.order-goods-img img').attr('src', 'uploads/' + val.goods_standard_id.images);
             })
@@ -236,55 +236,115 @@ $.ajax({
                 }
             })
             $('#order-buy').click(function () {
-                // $('.mask').show();
-                // $('.alipay-pop').animate({ 'bottom': '0' });
-                // $('html').css('overflow', 'hidden');
+                $('.mask').show();
+                $('.alipay-pop').animate({ 'bottom': '0' });
+                $('html').css('overflow', 'hidden');
 
                 var buy_message = $('.leave-msg').val();
                 var order_amount = $('.total-money').text();
-                $.ajax({
-                    url: 'ios_api_order_button_by_shop',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {
-                        'buy_message': buy_message,
-                        'order_amount': order_amount,
-                        'shoppingId': shoppingId,
-                        'setting_id': deductionId
-                    },
-                    success: function (res) {
-                        console.log(res);
-                        // $('#WIDout_trade_no').val(res.data.parts_order_number);
-                        // $('#WIDtotal_amount').val($('.total-money').text());
-                        // $('#WIDsubject').val(res.data.parts_goods_name);
-                        // $('#WIDbody').val(res.data.parts_goods_name);
-
-                        // $('.close-alipay').click(function () {
-                        //     $('.mask').hide();
-                        //     $('.alipay-pop').animate({ 'bottom': '-100%' });
-                        //     $('html').css('overflow', 'auto');
-                        //     $.ajax({
-                        //         url: 'order_parts_save_record',
-                        //         type: 'POST',
-                        //         dataType: 'JSON',
-                        //         data: {
-                        //             'store_id': storeId,
-                        //             'parts_order_number': res.data.parts_order_number
-                        //         },
-                        //         success: function(res){
-                        //             console.log(res);
-                        //             location.href = 'order_parts_detail';
-                        //         },
-                        //         error: function(){
-                        //             console.log('error');
-                        //         }
-                        //     })
-                        // })
-                    },
-                    error: function () {
-                        console.log('error');
-                    }
-                })
+                
+                if($('.order-goods-info').length > 2){
+                    $.ajax({
+                        url: 'ios_api_order_button_by_shop',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'buy_message': buy_message,
+                            'order_amount': order_amount,
+                            'shoppingId': shoppingId,
+                            'setting_id': deductionId
+                        },
+                        success: function (res) {
+                            console.log(res);
+                            $('#WIDout_trade_no').val(res.data.parts_order_number);
+                            $('#WIDtotal_amount').val($('.total-money').text());
+                            $('#WIDsubject').val(res.data.parts_goods_name);
+                            $('#WIDbody').val(res.data.parts_goods_name);
+                            $('.close-alipay').click(function () {
+                                $('.mask').hide();
+                                $('.alipay-pop').animate({ 'bottom': '-100%' });
+                                $('html').css('overflow', 'auto');
+                                var storeId = [];
+                                $.each($('.order-goods-info'), function(idx, val){
+                                    if(val.id !== ''){
+                                        storeId.push(val.id);
+                                    }
+                                })
+                                console.log(storeId);
+                                $.ajax({
+                                    url: 'cart_store_more_cancel',
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    data: {
+                                        'store_id': storeId,
+                                        'parts_order_number': res.data.parts_order_number
+                                    },
+                                    success: function(res){
+                                        console.log(res);
+                                        location.href = 'order_parts_wait_pay';
+                                    },
+                                    error: function(){
+                                        console.log('error');
+                                    }
+                                })
+                            })
+                        },
+                        error: function () {
+                            console.log('error');
+                        }
+                    })
+                }else{
+                    $.ajax({
+                        url: 'ios_api_order_button_by_shop',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'buy_message': buy_message,
+                            'order_amount': order_amount,
+                            'shoppingId': shoppingId,
+                            'setting_id': deductionId
+                        },
+                        success: function (res) {
+                            console.log(res);
+                            $('#WIDout_trade_no').val(res.data.parts_order_number);
+                            $('#WIDtotal_amount').val($('.total-money').text());
+                            $('#WIDsubject').val(res.data.parts_goods_name);
+                            $('#WIDbody').val(res.data.parts_goods_name);
+                            $('.close-alipay').click(function () {
+                                $('.mask').hide();
+                                $('.alipay-pop').animate({ 'bottom': '-100%' });
+                                $('html').css('overflow', 'auto');
+                                var storeId = 0;
+                                $.each($('.order-goods-info'), function(idx, val){
+                                    if(val.id !== ''){
+                                        storeId = val.id;
+                                    }
+                                })
+                                console.log(storeId);
+                                $.ajax({
+                                    url: 'order_parts_save_record',
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    data: {
+                                        'store_id': storeId,
+                                        'parts_order_number': res.data.parts_order_number
+                                    },
+                                    success: function(res){
+                                        console.log(res);
+                                        location.href = 'order_parts_detail';
+                                    },
+                                    error: function(){
+                                        console.log('error');
+                                    }
+                                })
+                            })
+                        },
+                        error: function () {
+                            console.log('error');
+                        }
+                    })
+                }
+                
             })
         }
     },

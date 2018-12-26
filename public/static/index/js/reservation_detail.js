@@ -305,6 +305,8 @@ $('.bespeak-btn').click(function(){
             console.log(res);
             if(res.status == 1){
                 location.href = 'reservation_info?store_id='+storeId+'&service_setting_id='+serviceSettingId+'&serve_goods_id='+id;
+            }else if(res.status == 2){
+                location.href = 'login';
             }
         },
         error: function(){
