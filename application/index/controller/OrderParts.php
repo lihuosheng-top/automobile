@@ -1523,7 +1523,6 @@ class OrderParts extends Controller{
                         }else{
                             $buy_message = NUll ;
                         }
-
                             $datas = [
                                 'goods_image' => $val['goods_images'],//图片
                                 "goods_describe"=>$goods_data["goods_describe"],//卖点
