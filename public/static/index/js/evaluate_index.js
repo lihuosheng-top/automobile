@@ -62,9 +62,9 @@ $.ajax({
             var inputElem = $(this)[0];
             var switchSpan = $(this).parent();
             var id = $(this).parents('.evaluation-subject').attr('id');
-            console.log(id);
             changeEvent(inputElem, switchSpan, id);
-            console.log(filesArr);
+            // console.log(filesArr);
+            console.log(filesObj)
         })
     },
     error: function(){
@@ -72,6 +72,7 @@ $.ajax({
     }
 })
 var filesArr = [];
+var filesObj = {};
 function changeEvent(inputElem, clickObj, id){
     var imgArrDom = [];
     var str = '';
@@ -79,11 +80,13 @@ function changeEvent(inputElem, clickObj, id){
     // // 限制上传图片
     var uploadItemLen = $(clickObj).siblings('.upload-item').length;
     if(uploadItemLen + len <= 4){
+        console.log(filesObj[id]);
+        // filesObj[id] = new Array();
         for(var i = 0; i < len; i++){
             // 存图片地址
+            // filesObj[id].push(inputElem.files[i]);
             imgArrDom.push(getObjectURL(inputElem.files[i]));
-            inputElem.files[i].id = id;
-            filesArr.push(inputElem.files[i]);
+            // filesArr.push(inputElem.files[i]);
         }
         $.each(imgArrDom, function(idx, val){
             str += `<div class="upload-item">
@@ -132,6 +135,7 @@ $('.on-time').on('change', 'input', function(){
 
 
 // 发布
+var formData = new FormData();
 $('.publish-btn').click(function(){
     var orderId = [];
     var evaluationSubjectArr = $('.evaluation-subject');
@@ -144,10 +148,9 @@ $('.publish-btn').click(function(){
     $.each($('textarea'), function(idx, val){
         evaluateContent.push(val.value);
     })
-    var formData = new FormData();
-    $.each(filesArr, function(idx, val){
-        formData.append('filesArr[]', val);
-    })
+    // $.each(filesArr, function(idx, val){
+    //     formData.append('filesArr[]', val);
+    // })
     $.each(orderId, function(idx, val){
         formData.append('orderId[]', val);
     })
