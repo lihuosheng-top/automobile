@@ -36,7 +36,7 @@
     {/block} {block name="content"}
     <div class="open">
     </div>
-    {if !empty($plat)} {volist name ="plat" id="value"} {if $value.department}
+    {if !empty($plat)} {volist name ="plat" id="value"} {if $value.department != "platform_business"}
     <form class="layui-form" action="{:url('admin/platform_advertisement/platform_business_updata')}" method="post" enctype="multipart/form-data">
         <div class="layui-form-item " style="display:none">
             <label class="layui-form-label"><span>*</span>id</label>
