@@ -327,7 +327,6 @@ Route::group("",[
      * 运营管理
      * 陈绪
      */
-    "operation_index"=>"index/Operation/complaint",             //投诉中心
     "rescue_index"=>"index/Operation/rescue",             //紧急救援
 
     /*TODO:测试IOS地址开始*/

@@ -106,6 +106,7 @@ class  Express extends  Controller{
     }
 
 
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -128,6 +129,7 @@ class  Express extends  Controller{
 
         return view("express_wait_for_take");
     }
+
 
 
     /**
