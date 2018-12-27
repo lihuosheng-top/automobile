@@ -33,7 +33,7 @@ class Goods extends Controller
         $admin_id = Session::get("user_id");
         $admin_role = db("admin")->where("id", $admin_id)->field("role_id")->find();
         if ($admin_role["role_id"] == 2) {
-            $goods = db("goods")->order("id desc")->paginate(10);
+            $goods = db("goods")->order("id desc")->paginate(20);
             $goods_year = db("goods")->field("goods_year_id,id")->select();
             $time = date("Y-m-d");
             foreach ($goods_year as $key => $value) {

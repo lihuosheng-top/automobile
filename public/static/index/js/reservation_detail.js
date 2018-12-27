@@ -102,7 +102,7 @@ var urlLen = url.substr(1).split('&').length;
 
 if(url.indexOf('?') != -1){
     storeId = url.substr(1).split('&')[0].split('=')[1];
-    serviceSettingId = url.substr(1).split('&')[0].split('=')[1];
+    serviceSettingId = url.substr(1).split('&')[1].split('=')[1];
 }
 if(urlLen > 1){
     // 选择服务类型进来
@@ -327,7 +327,18 @@ $('.bespeak-btn').click(function(){
         success: function(res){
             console.log(res);
             if(res.status == 1){
-                location.href = 'reservation_info?store_id='+storeId+'&service_setting_id='+serviceSettingId+'&serve_goods_id='+id;
+                if(res.data.user_car_message.length !== 0){
+                    location.href = 'reservation_info?store_id='+storeId+'&service_setting_id='+serviceSettingId+'&serve_goods_id='+id;
+                }else{
+                    layer.open({
+                        skin: 'msg',
+                        content: '未给爱车添加详细信息',
+                        time: .8
+                    })
+                    setTimeout(function(){
+                        location.href = 'love_list';
+                    }, 1000)
+                }
             }else if(res.status == 2){
                 location.href = 'login';
             }

@@ -7,6 +7,8 @@ $('.verfy-li').click(function(){
             $('.business-license-pop').css('right', '0');break;
         case 2:
             $('.store-front-pop').css('right', '0');break;
+        case 3:
+            $('.address-pop').animate({'right': '0'});break;
     }
 })
 $('.id-card-back').add('.id-card-button').click(function(){
@@ -87,7 +89,7 @@ $(function(){
                 type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                 skin: 'msg',
                 content: '最多上传20张图片',
-                time: 2
+                time: 1
             })
         }
         // 删除图片
@@ -109,7 +111,12 @@ $('.submit-button').click(function(){
         license = $('#portrait-input')[0].files,
         faceInput = $('#portrait-input')[0].files,
         innerInput = imagesFileArr.length;
+    // 经纬度  地址
+    var address = $('#address').text();
+    var lnglat = $('#lnglat').text();
     var formData = new FormData();
+    formData.append('address', address);
+    formData.append('lnglat', lnglat);
     if($(this).text() === '提交申请'){
         if(emblemInput.length !== 0 && portraitInput.length !== 0 && businessLicense.length !== 0 
             && license.length !== 0 && faceInput.length !== 0 && innerInput !== 0){
@@ -136,7 +143,7 @@ $('.submit-button').click(function(){
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: 1.2
+                            time: .8
                         })
                         setTimeout(function(){
                             location.href = 'my_index';
@@ -147,7 +154,7 @@ $('.submit-button').click(function(){
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: 1.2
+                            time: .8
                         })
                     }
                 },
@@ -161,7 +168,7 @@ $('.submit-button').click(function(){
                 type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                 skin: 'msg',
                 content: '图片未上传完整',
-                time: 1
+                time: .8
             })
         }
     }else if($(this).text() === '提交修改'){
@@ -201,18 +208,18 @@ $('.submit-button').click(function(){
                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: res.info,
-                        time: 1.2
+                        time: .8
                     })
                     setTimeout(function(){
                         location.href = 'my_index';
-                    }, 1400);
+                    }, 1000);
                 }else{
                     layer.open({
                         style: 'bottom:100px;',
                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: res.info,
-                        time: 1.2
+                        time: .8
                     })
                 }
             },
@@ -223,6 +230,7 @@ $('.submit-button').click(function(){
     }
 })
 var updateImages = [];
+// var myLngLat = [];
 // 返回数据
 $.ajax({
     url: 'return_store_information',
@@ -231,6 +239,11 @@ $.ajax({
     success: function(res){
         console.log(res);
         var data = res.data;
+        // if(data.longitude !== null && data.latitude !== null){
+        //     myLngLat = [data.longitude, data.latitude];
+        // }else{
+        //     myLngLat = [114.085947,22.547];
+        // }
         if(data.store_identity_card !== null && data.store_reverse_images !== null &&
             data.store_do_bussiness_positive_img !== null && data.store_do_bussiness_side_img !== null &&
             data.verifying_physical_storefront_one !== null){
@@ -270,7 +283,6 @@ $.ajax({
                         console.error(err);
                     }
                 })
-
             })
         }else{
             $('.submit-button').text('提交申请');
@@ -279,4 +291,48 @@ $.ajax({
     error: function(err){
         console.error(err);
     }
+})
+
+AMapUI.loadUI(['misc/PositionPicker'], function(PositionPicker) {
+    var map = new AMap.Map('container', {
+        zoom: 16,
+        scrollWheel: false,
+        resizeEnable: true,
+        // center: [114.085947,22.547]
+    })
+    AMap.plugin([
+        'AMap.ToolBar',
+        'AMap.Geolocation'
+    ], function(){
+        // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
+        map.addControl(new AMap.ToolBar());
+        var geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,
+            timeout: 1000,
+            buttonPosition: 'RB',
+            buttonOffset: new AMap.Pixel(10, 20),
+            zoomToAccuracy: true
+        })
+        map.addControl(geolocation);
+    })
+    var positionPicker = new PositionPicker({
+        mode: 'dragMap',
+        map: map
+    });
+    positionPicker.on('success', function(positionResult) {
+        document.getElementById('lnglat').innerHTML = positionResult.position;
+        document.getElementById('address').innerHTML = positionResult.address;
+    });
+    positionPicker.on('fail', function(positionResult) {
+        document.getElementById('lnglat').innerHTML = ' ';
+        document.getElementById('address').innerHTML = ' ';
+    });
+    var onModeChange = function(e) {
+        positionPicker.setMode(e.target.value)
+    }
+    positionPicker.start();
+    map.panBy(0, 1);
+});
+$('.confirm-address').add('.icon-map-back').click(function(){
+    $('.address-pop').animate({'right': '-100%'});
 })
