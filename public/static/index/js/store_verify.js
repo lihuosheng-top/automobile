@@ -230,6 +230,7 @@ $('.submit-button').click(function(){
     }
 })
 var updateImages = [];
+// var myLngLat = [];
 // 返回数据
 $.ajax({
     url: 'return_store_information',
@@ -238,6 +239,11 @@ $.ajax({
     success: function(res){
         console.log(res);
         var data = res.data;
+        // if(data.longitude !== null && data.latitude !== null){
+        //     myLngLat = [data.longitude, data.latitude];
+        // }else{
+        //     myLngLat = [114.085947,22.547];
+        // }
         if(data.store_identity_card !== null && data.store_reverse_images !== null &&
             data.store_do_bussiness_positive_img !== null && data.store_do_bussiness_side_img !== null &&
             data.verifying_physical_storefront_one !== null){
@@ -290,7 +296,9 @@ $.ajax({
 AMapUI.loadUI(['misc/PositionPicker'], function(PositionPicker) {
     var map = new AMap.Map('container', {
         zoom: 16,
-        scrollWheel: false
+        scrollWheel: false,
+        resizeEnable: true,
+        // center: [114.085947,22.547]
     })
     AMap.plugin([
         'AMap.ToolBar',

@@ -4,7 +4,6 @@ var service_setting_id;
 if(url.indexOf('?') != -1){
     service_setting_id = url.substr(1).split('=')[1];
 }
-var markerList = [];//店铺经纬度
 var userLngLat = [];//用户定位
 
 var map = new AMap.Map('container', {
@@ -20,7 +19,6 @@ AMap.plugin([
     map.addControl(new AMap.Scale());
     // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
     map.addControl(new AMap.ToolBar());
-
     var geolocation = new AMap.Geolocation({
         enableHighAccuracy: true,
         timeout: 1000,
@@ -43,6 +41,7 @@ AMap.plugin([
 })
 
 function showShops(dis){
+    var markerList = [];//店铺经纬度
     $.ajax({
         url: 'reservation',
         type: 'POST',
@@ -116,7 +115,7 @@ function showShops(dis){
                 }
             })
             map.add(markerList);
-            $('.shop_list').append(str);
+            $('.shop_list').html('').append(str);
         },
         error: function(){
             console.log('error');
