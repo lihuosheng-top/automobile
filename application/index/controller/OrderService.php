@@ -318,11 +318,13 @@ class OrderService extends Controller{
             if($request->isPost()){
                     $data =  Session::get("service_data");
                     if(!empty($data)){
-                            $user_id = Session::get("user");
+                            $user_id = Session::get("user");//用户id
+                            //用户的爱车
                             $user_car = db("user_car")
                                 ->where("user_id",$user_id)
                                 ->where("status",1)
                                 ->find();
+                            //服务项目的信息
                             $car_series = db("car_series")
                                 ->where("brand",$user_car["brand"])
                                 ->where("series",$user_car["series"])
@@ -330,12 +332,16 @@ class OrderService extends Controller{
                                 ->where("displacement",$user_car["displacement"])
                                 ->field("vehicle_model")
                                 ->find();
-                            $serve_goods_id = $data["service_goods_id"];
-                            $goods = db("goods")
-                                ->where("store_id",$serve_goods_id)
-                                ->where("goods_status",1)
+                            $serve_goods_id = $data["service_goods_id"]; //商品id
+                            //商品信息
+                            $goods = db("serve_goods")
+                                ->where("id",$serve_goods_id)
+                                ->where("status",1)
                                 ->select();
-                            $store = db("store")->where("store_id",$serve_goods_id)->select();
+                             $serve_store_id = $data["store_id"]; //店铺id
+                            //店铺信息
+                            $store = db("store")->where("store_id",$serve_store_id)->select();
+
                             $serve_data = [];
                             foreach ($store as $key=>$value){
                                 $serve_data[$key]["serve_goods"] = db("serve_goods")
@@ -346,10 +352,23 @@ class OrderService extends Controller{
                                     ->where("service_setting_id",$serve_data[$key]["serve_goods"][0]["service_setting_id"])
                                     ->value("service_setting_name");
                             }
+                            $user_info =Db::name("user")
+                                ->field("user_name,phone_num,real_name")
+                                ->where("id",$user_id)
+                                ->find();
+                            $integral_discount =Db::name("integral_discount_settings")->select();
+                            $ios_data =[
+                                "goods"=>$goods,//商品信息
+                                "store"=>$store,//店铺
+                                "serve_data"=>$serve_data, //服务信息
+                                "time"=>$data["time"],   //预约到店时间
+                                "integral_info"=> $integral_discount, //积分抵扣
+                                "user_info"=> $user_info,//用户信息
+                            ];
                             if($serve_data){
-                                return ajax_success("获取成功",array("goods"=>$goods,"store"=>$store,"serve_data"=>$serve_data));
+                                return ajax_success("获取成功",$ios_data);
                             }else{
-                                return ajax_error("获取成功");
+                                return ajax_error("没有数据");
                             }
                     }
             }
