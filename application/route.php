@@ -47,8 +47,7 @@ Route::group("",[
     "reservation_info"=>"index/reservation/reservation_info",//预约服务 详情
 
 
-    /*服务订单*/
-    "shop_order"=>"index/OrderService/shop_order",//预约服务 详情
+
 
 
     /*TODO:服务商订单开始*/
@@ -249,7 +248,7 @@ Route::group("",[
 
 
 
-    /*购物车开始*/
+    /*TODO:购物车开始*/
     "cart_index"=>"index/Cart/cart_index",//首页（ajax）
     "get_goods_id_to_cart"=>"index/Cart/get_goods_id_to_cart",//获取商品id 存入购物车（ajax）
     "cart_information_add"=>"index/Cart/cart_information_add",//购物车添加按钮（+）（ajax）
@@ -257,7 +256,7 @@ Route::group("",[
     "carts_del"=>"index/Cart/carts_del",//购物车删除（ajax）
     "save_shopping_id"=>"index/Cart/save_shopping_id",//保存购物车到确认订单页面返回
     "cart_store_more_cancel"=>"index/Cart/cart_store_more_cancel",//购物车多店铺取消付款
-    /*购物车结束*/
+    /*TODO:购物车结束*/
 
 
 
@@ -294,6 +293,11 @@ Route::group("",[
 
 
     /*TODO:服务商订单状态开始*/
+    /*服务订单*/
+    "ios_api_order_service_save_information"=>"index/OrderService/ios_api_order_service_save_information",//服务商填写预约信息到达确认订单页面
+    "shop_order"=>"index/OrderService/shop_order",//预约服务 详情(提交订单页面)
+    "ios_api_order_service_get_information"=>"index/OrderService/ios_api_order_service_get_information",//服务商获取预约信息，准备下单
+
     "order_service_detail"=>"index/OrderService/order_service_detail",//订单详情
     "order_service_all"=>"index/OrderService/order_service_all",//全部订单页面
     "ios_api_order_service_all"=>"index/OrderService/ios_api_order_service_all",//全部订单接口（ajax）
