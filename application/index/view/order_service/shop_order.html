@@ -137,18 +137,18 @@
         })
         
         // 订单号
-        // $.ajax({
-        //     url: 'ios_api_order_button',
-        //     type: 'POST',
-        //     dataType: 'JSON',
-        //     success: function(data){
-        //         console.log(data);
-        //         $('#WIDout_trade_no').val(data.data);
-        //     },
-        //     error: function(){
-        //         console.log('error');
-        //     }
-        // })
+        $.ajax({
+            url: 'ios_api_order_service_get_information',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+                console.log(data);
+                // $('#WIDout_trade_no').val(data.data);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
     </script>
 </body>
 </html>
