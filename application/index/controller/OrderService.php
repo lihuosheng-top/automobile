@@ -33,6 +33,14 @@ class OrderService extends Controller{
     public function order_service_all(){
         return view('order_service_all');
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单详情
+     **************************************
+     * @return \think\response\View
+     */
     public function order_service_detail(){
         return view('order_service_detail');
     }
