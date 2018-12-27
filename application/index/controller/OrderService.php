@@ -293,7 +293,7 @@ class OrderService extends Controller{
                 $store_id =$request->only("store_id")["store_id"];
                 $service_setting_id =$request->only("service_setting_id")["service_setting_id"];
                 $service_goods_id =$request->only("serve_goods_id")["serve_goods_id"];
-                $times =$request->only("time")["time"]; //选择到点时间
+                $times =$request->only("time")["time"]; //选择到店时间
                 $data =[
                     "store_id" =>$store_id,
                     "service_setting_id"=>$service_setting_id,
@@ -316,24 +316,59 @@ class OrderService extends Controller{
      */
    public function ios_api_order_service_get_information(Request $request){
             if($request->isPost()){
-                    $data =   Session::get("service_data");
+                    $data =  Session::get("service_data");
                     if(!empty($data)){
+                            $user_id = Session::get("user");//用户id
+                            //用户的爱车
+                            $user_car = db("user_car")
+                                ->where("user_id",$user_id)
+                                ->where("status",1)
+                                ->find();
+                            //服务项目的信息
+                            $car_series = db("car_series")
+                                ->where("brand",$user_car["brand"])
+                                ->where("series",$user_car["series"])
+                                ->where("year",$user_car["production_time"])
+                                ->where("displacement",$user_car["displacement"])
+                                ->field("vehicle_model")
+                                ->find();
+                            $serve_goods_id = $data["service_goods_id"]; //商品id
+                            //商品信息
+                            $goods = db("serve_goods")
+                                ->where("id",$serve_goods_id)
+                                ->where("status",1)
+                                ->select();
+                             $serve_store_id = $data["store_id"]; //店铺id
+                            //店铺信息
+                            $store = db("store")->where("store_id",$serve_store_id)->select();
 
-                            $user_id = Session::get("user");
-                            $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
-                            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->where("year",$user_car["production_time"])->where("displacement",$user_car["displacement"])->field("vehicle_model")->find();
-                            $serve_goods_id = $request->only(["id"])["id"];
-                            $goods = db("goods")->where("store_id",$serve_goods_id)->where("goods_status",1)->select();
-                            $store = db("store")->where("store_id",$serve_goods_id)->select();
                             $serve_data = [];
                             foreach ($store as $key=>$value){
-                                $serve_data[$key]["serve_goods"] = db("serve_goods")->where("store_id",$value["store_id"])->where("vehicle_model",$car_series["vehicle_model"])->select();
-                                $serve_data[$key]["serve_name"] = db("service_setting")->where("service_setting_id",$serve_data[$key]["serve_goods"][0]["service_setting_id"])->value("service_setting_name");
+                                $serve_data[$key]["serve_goods"] = db("serve_goods")
+                                    ->where("store_id",$value["store_id"])
+                                    ->where("vehicle_model",$car_series["vehicle_model"])
+                                    ->select();
+                                $serve_data[$key]["serve_name"] = db("service_setting")
+                                    ->where("service_setting_id",$serve_data[$key]["serve_goods"][0]["service_setting_id"])
+                                    ->value("service_setting_name");
                             }
+                            $user_info =Db::name("user")
+                                ->field("user_name,phone_num,real_name")
+                                ->where("id",$user_id)
+                                ->find();
+                            $integral_discount =Db::name("integral_discount_settings")->select();
+                            $ios_data =[
+                                "goods"=>$goods,//商品信息
+                                "store"=>$store,//店铺
+                                "serve_data"=>$serve_data, //服务信息
+                                "time"=>$data["time"],   //预约到店时间
+                                "integral_info"=> $integral_discount, //积分抵扣
+                                "user_info"=> $user_info,//用户信息
+                            ];
                             if($serve_data){
-                                return ajax_success("获取成功",array("goods"=>$goods,"store"=>$store,"serve_data"=>$serve_data));
+                                return ajax_success("获取成功",$ios_data);
                             }else{
-                                return ajax_error("获取成功");
+                                return ajax_error("没有数据");
                             }
                     }
             }
