@@ -102,7 +102,7 @@ var urlLen = url.substr(1).split('&').length;
 
 if(url.indexOf('?') != -1){
     storeId = url.substr(1).split('&')[0].split('=')[1];
-    serviceSettingId = url.substr(1).split('&')[0].split('=')[1];
+    serviceSettingId = url.substr(1).split('&')[1].split('=')[1];
 }
 if(urlLen > 1){
     // 选择服务类型进来
@@ -335,7 +335,9 @@ $('.bespeak-btn').click(function(){
                         content: '未给爱车添加详细信息',
                         time: .8
                     })
-                    location.href = 'love_list';                  
+                    setTimeout(function(){
+                        location.href = 'love_list';
+                    }, 1000)
                 }
             }else if(res.status == 2){
                 location.href = 'login';

@@ -17,15 +17,10 @@ class OrderService extends Controller{
      * 服务订单首页
      */
     // 提交订单 --店铺洗车
-    public function Shop_order()
+    public function shop_order()
     {
         return view("shop_order");
     }
-
-
-
-
-
 
 
     /**
@@ -38,6 +33,14 @@ class OrderService extends Controller{
     public function order_service_all(){
         return view('order_service_all');
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单详情
+     **************************************
+     * @return \think\response\View
+     */
     public function order_service_detail(){
         return view('order_service_detail');
     }
@@ -278,7 +281,100 @@ class OrderService extends Controller{
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商填写预约信息到达确认订单页面
+     **************************************
+     * @param Request $request
+     */
+   public function ios_api_order_service_save_information(Request $request){
+            if($request->isPost()){
+                $store_id =$request->only("store_id")["store_id"];
+                $service_setting_id =$request->only("service_setting_id")["service_setting_id"];
+                $service_goods_id =$request->only("serve_goods_id")["serve_goods_id"];
+                $times =$request->only("time")["time"]; //选择到店时间
+                $data =[
+                    "store_id" =>$store_id,
+                    "service_setting_id"=>$service_setting_id,
+                    "service_goods_id"=>$service_goods_id,
+                    "time"=>$times,
+                ];
+                if(!empty($data)){
+                        Session::set("service_data",$data);
+                        return ajax_success("保存信息成功",["status"=>1]);
+                }
+            }
+   }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商获取预约信息，准备下单
+     **************************************
+     * @param Request $request
+     */
+   public function ios_api_order_service_get_information(Request $request){
+            if($request->isPost()){
+                    $data =  Session::get("service_data");
+                    if(!empty($data)){
+                            $user_id = Session::get("user");//用户id
+                            //用户的爱车
+                            $user_car = db("user_car")
+                                ->where("user_id",$user_id)
+                                ->where("status",1)
+                                ->find();
+                            //用户爱车信息
+                            $user_love_info =Db::name("user_car_message")->where("user_car_id",$user_car["id"])->find();
+                            //服务项目的信息
+                            $car_series = db("car_series")
+                                ->where("brand",$user_car["brand"])
+                                ->where("series",$user_car["series"])
+                                ->where("year",$user_car["production_time"])
+                                ->where("displacement",$user_car["displacement"])
+                                ->find();
+                            $serve_goods_id = $data["service_goods_id"]; //商品id
+                            //商品信息
+                            $goods = db("serve_goods")
+                                ->where("id",$serve_goods_id)
+                                ->where("status",1)
+                                ->select();
+                             $serve_store_id = $data["store_id"]; //店铺id
+                            //店铺信息
+                            $store = db("store")->where("store_id",$serve_store_id)->select();
+                            $serve_data = [];
+                            foreach ($store as $key=>$value){
+                                $serve_data[$key]["serve_goods"] = db("serve_goods")
+                                    ->where("store_id",$value["store_id"])
+                                    ->where("vehicle_model",$car_series["vehicle_model"])
+                                    ->select();
+                                $serve_data[$key]["serve_name"] = db("service_setting")
+                                    ->where("service_setting_id",$serve_data[$key]["serve_goods"][0]["service_setting_id"])
+                                    ->find();
+                            }
+                            $user_info =Db::name("user")
+                                ->field("user_name,phone_num,real_name")
+                                ->where("id",$user_id)
+                                ->find();
+                            $integral_discount =Db::name("integral_discount_settings")->select();
+                            $ios_data =[
+                                "goods"=>$goods,//商品信息
+                                "store"=>$store,//店铺
+                                "serve_data"=>$serve_data, //服务信息
+                                "time"=>$data["time"],   //预约到店时间
+                                "integral_info"=> $integral_discount, //积分抵扣
+                                "user_info"=> $user_info,//用户信息
+                                "car_series"=>$car_series,//车信息
+                                "user_love_info"=>$user_love_info, //爱车信息（默认）
+                            ];
+                            if($serve_data){
+                                return ajax_success("获取成功",$ios_data);
+                            }else{
+                                return ajax_error("没有数据");
+                            }
+                    }
+            }
+    }
 
 
 
