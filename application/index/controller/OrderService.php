@@ -292,8 +292,8 @@ class OrderService extends Controller{
             if($request->isPost()){
                 $store_id =$request->only("store_id")["store_id"];
                 $service_setting_id =$request->only("service_setting_id")["service_setting_id"];
-                $service_goods_id =$request->only("service_goods_id")["service_goods_id"];
-                $times =$request->only("store_id")["store_id"]; //选择到点时间
+                $service_goods_id =$request->only("serve_goods_id")["serve_goods_id"];
+                $times =$request->only("time")["time"]; //选择到点时间
                 $data =[
                     "store_id" =>$store_id,
                     "service_setting_id"=>$service_setting_id,
