@@ -342,7 +342,6 @@ class OrderService extends Controller{
                              $serve_store_id = $data["store_id"]; //店铺id
                             //店铺信息
                             $store = db("store")->where("store_id",$serve_store_id)->select();
-
                             $serve_data = [];
                             foreach ($store as $key=>$value){
                                 $serve_data[$key]["serve_goods"] = db("serve_goods")
@@ -351,7 +350,7 @@ class OrderService extends Controller{
                                     ->select();
                                 $serve_data[$key]["serve_name"] = db("service_setting")
                                     ->where("service_setting_id",$serve_data[$key]["serve_goods"][0]["service_setting_id"])
-                                    ->value("service_setting_name");
+                                    ->find();
                             }
                             $user_info =Db::name("user")
                                 ->field("user_name,phone_num,real_name")
