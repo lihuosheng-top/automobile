@@ -132,7 +132,7 @@ body,html{
     padding-left: .8rem;
 }
 .footbar .totalprice .txt{
-    color: #fd0000;
+    color: #f20;
     font-size: .36rem;
 }
 .footbar .btn_buy{
@@ -185,8 +185,11 @@ body,html{
 .discount_wrap .dis p{
     font-size: .42rem;
 }
-.discount_wrap .dis span{
+.discount_wrap .dis span.need-inte{
     font-size: .24rem;
+}
+.denomination{
+    line-height: normal;
 }
 /* 支付弹窗 start */
 .alipay-pop{
@@ -294,5 +297,6 @@ body,html{
     font-size: .3rem;
     color: #f00;
 }
+
 
 
