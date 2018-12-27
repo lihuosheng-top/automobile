@@ -601,11 +601,13 @@ function getAdvertisment(area){
                 var topSwiperStr = '';
                 // 首页轮播图
                 $.each(res.data.home, function(idx, val){
-                    topSwiperStr += `<div class="swiper-slide">
-                                        <a href="`+val.url+`">
-                                            <img src="uploads/`+val.advert_picture+`">
-                                        </a>
-                                    </div>`;
+                    if(idx < 5){
+                        topSwiperStr += `<div class="swiper-slide">
+                                            <a href="`+val.url+`">
+                                                <img src="uploads/`+val.advert_picture+`">
+                                            </a>
+                                        </div>`;
+                    }
                 })
                 $('.swiper-wrapper').append(topSwiperStr);
                 mySwiper();
