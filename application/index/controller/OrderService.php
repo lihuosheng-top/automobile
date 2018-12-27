@@ -17,7 +17,7 @@ class OrderService extends Controller{
      * 服务订单首页
      */
     // 提交订单 --店铺洗车
-    public function Shop_order()
+    public function shop_order()
     {
         return view("shop_order");
     }

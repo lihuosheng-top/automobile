@@ -134,8 +134,10 @@ class Register extends Controller{
                     if($res){
                         $inv_num = createCode($res);
                         $inv =[
-                            "invitation"=>$inv_num
-                        ];                         //生成邀请码
+                            "invitation"=>$inv_num,//生成邀请码
+                            "user_name"=>"QC".$inv_num, //默认用户名
+                        ];
+
                         Db::name("user")->where("id",$res)->update($inv);
                         return ajax_success('注册成功',$datas);
                     }else{
