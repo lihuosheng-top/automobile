@@ -43,7 +43,7 @@
             </div>
             <div class="btn_wrap">
                 <div class="totalprice">
-                    合计：<span class="txt">￥0.1</span>
+                    合计：<span class="txt">￥</span>
                 </div>
                 <div class="btn_buy">
                     <a href="shop_order" class="txt" id="confirm-info">确认</a>
@@ -329,6 +329,11 @@
                 // 店铺信息
                 $('.shop_name_box p').text(data.store[0].store_name);
                 $('.call').attr('href', 'call:'+data.store[0].phone_num);
+                if(data.serve_goods[0].service_money !== null){
+                    $('.totalprice span').text('￥'+data.serve_goods[0].service_money);
+                }else{
+                    $('.totalprice span').text('面议');
+                }
             },
             error: function(){
                 console.log('error');
