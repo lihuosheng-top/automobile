@@ -133,6 +133,7 @@ $.ajax({
             $.each($(this).find('.car-info p'), function(idx, val){
                 myCarInfo += val.innerText+' ';
             })
+            console.log(myCarInfo)
             $('.wrapper').hide();
             $('.car-detail-pop').show();
             $.ajax({
@@ -144,13 +145,14 @@ $.ajax({
                 },
                 success: function(res){
                     console.log(res);
+                    $('.info-p').text(myCarInfo);
                     if(res.status == 1){
-                        $('.info-p').text(myCarInfo);
                         var data = res.data[0];
                         $('.seat-input').val(data.seat);
                         $('.color-input').val(data.colour);
                         var selectWord = data.plate_number.split(' ')[0];
                         var selectNumber = data.plate_number.split(' ')[1];
+                        $('.plate-num').text(selectWord+selectNumber);
                         $('.show-input').val(selectWord);
                         var selectEle = document.getElementById('word-select');
                         for(var i = 0, len = selectEle.options.length; i < len; i++){
@@ -175,6 +177,7 @@ $.ajax({
         $('.detail-back').click(function(){
             $('.wrapper').show();
             $('.car-detail-pop').hide();
+            location.reload();
         })
         $('.add-car-btn').click(function(){
             location.href = 'index';
