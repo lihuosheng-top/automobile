@@ -324,6 +324,8 @@ class OrderService extends Controller{
                                 ->where("user_id",$user_id)
                                 ->where("status",1)
                                 ->find();
+                            //用户爱车信息
+                            $user_love_info =Db::name("user_car_message")->where("user_car_id",$user_car["id"])->find();
                             //服务项目的信息
                             $car_series = db("car_series")
                                 ->where("brand",$user_car["brand"])
@@ -364,6 +366,7 @@ class OrderService extends Controller{
                                 "integral_info"=> $integral_discount, //积分抵扣
                                 "user_info"=> $user_info,//用户信息
                                 "car_series"=>$car_series,//车信息
+                                "user_love_info"=>$user_love_info, //爱车信息（默认）
                             ];
                             if($serve_data){
                                 return ajax_success("获取成功",$ios_data);
