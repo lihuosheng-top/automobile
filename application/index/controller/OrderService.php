@@ -364,6 +364,7 @@ class OrderService extends Controller{
                                 "time"=>$data["time"],   //预约到店时间
                                 "integral_info"=> $integral_discount, //积分抵扣
                                 "user_info"=> $user_info,//用户信息
+                                "car_series"=>$car_series,//车信息
                             ];
                             if($serve_data){
                                 return ajax_success("获取成功",$ios_data);
