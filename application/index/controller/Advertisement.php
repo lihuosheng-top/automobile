@@ -23,10 +23,11 @@ class  Advertisement extends  Controller{
      */
     public function advertisement_index(Request $request)
     {
-        if ($request->isPost())
+        if ($request->isGet())
         {
-            $area = $request->only(["area"])["area"];
-            Session::set("area",$area);    
+            // $area = $request->only(["area"])["area"];
+            // Session::set("area",$area); 
+            $area = "广东省,深圳市,福田区";
             $area_data = Db::name("platform")->where('area',$area)->where("status", 1)->order("start_time desc")->select();
             $adress_data = Db::name("platform")->where('department',"platform_business")->where("status", 1)->order("start_time desc")->select();              
             foreach($area_data as $key => $value)
@@ -75,7 +76,11 @@ class  Advertisement extends  Controller{
                 $machines[] = $v;          
             }   
             }
-      
+            
+            $t1 = count($home);
+            $t2 = count($fixed);
+            $t3 = count($hot);
+            $t4 = count($machines);
 
             foreach($homes as $a => $b)
             {
@@ -89,6 +94,7 @@ class  Advertisement extends  Controller{
             {
                 $hot[ $hot_length + $f ] = $g;
             }
+            
             foreach($machines as $h => $i)
             {
                 $machine[ $machine_length + $h ] = $i;
@@ -99,7 +105,7 @@ class  Advertisement extends  Controller{
             $reste["fixed"] = $fixed;
             $reste["hot"] = $hot;
             $reste["machine"] = $machine;
-
+            halt($reste);
             if ( (!empty($reste)) && (!empty($area)) ) {
                 return ajax_success('传输成功', $reste);
             } else {
