@@ -54,18 +54,15 @@ class Evaluate extends  Controller{
             }
 
             foreach ($filesArr as $ks=>$vs){
-                $img = $request->file("$v");
-                dump($img);
+             $str=str_replace('filesArr','',$vs);
+                $img = $request->file("$vs");
                 if(!empty($img)){
-                    $images =[];
                     foreach ($img as $k=>$v) {
                         $info = $v->move(ROOT_PATH . 'public' . DS . 'uploads');
-                        $images[] = str_replace("\\", "/", $info->getSaveName());
+                        $images["$str"][] = str_replace("\\", "/", $info->getSaveName());
                     }
-                    dump($images);
                 }
             }
-            exit;
             /*if(!empty($img)){
                 return ajax_success("有数据",$images);
             }else{
@@ -104,6 +101,23 @@ class Evaluate extends  Controller{
 
               ];
               $bool =Db::name("order_parts_evaluate")->insertGetId($data);
+              if(!empty( $bool)){
+                  Db::name("order_parts")
+                      ->where("id",$v)
+                      ->update(["status"=>8]);
+                  foreach ($images as $ks=>$vs){
+                      if( $v == intval($ks)){
+                          foreach ($vs as $j=>$i){
+                              //插入评价图片数据库
+                              $insert_data =[
+                                  "images"=>$i,
+                                  "evaluate_order_id"=>$bool,
+                              ];
+                             Db::name("order_parts_evaluate_images")->insert($insert_data);
+                          }
+                      }
+                  }
+              }
             }
             if($bool){
                 return ajax_success("评价成功",$bool);
