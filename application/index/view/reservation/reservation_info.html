@@ -46,7 +46,7 @@
                     合计：<span class="txt">￥</span>
                 </div>
                 <div class="btn_buy">
-                    <a href="shop_order" class="txt" id="confirm-info">确认</a>
+                    <button class="txt" id="confirm-info">确认</button>
                 </div>
             </div>
         </div>
@@ -138,6 +138,7 @@
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/vue.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
         var app = new Vue({
             el: '#app',
@@ -339,20 +340,36 @@
                 console.log('error');
             }
         })
-        // $('#confirm-info').click(function(){
-        //     $.ajax({
-        //         url: 'ios_api_order_button',
-        //         type: 'POST',
-        //         dataType: 'JSON',
-        //         success: function(data){
-        //             console.log(data);
-        //             location.href = 'shop_order';
-        //         },
-        //         error: function(){
-        //             console.log('error');
-        //         }
-        //     })
-        // })
+        $('#confirm-info').click(function(){
+            if($('.time_span').text() == '选择时间'){
+                layer.open({
+                    skin: 'msg',
+                    content: '请选择到店时间',
+                    time: 1
+                })
+            }else{
+                var time = $('.time_span').text();
+                $.ajax({
+                    url: 'ios_api_order_service_save_information',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'time': time,
+                        'store_id': storeId,
+                        'service_setting_id': service_setting_id,
+                        'serve_goods_id': serve_goods_id
+                    },
+                    success: function(res){
+                        console.log(res);
+                        // location.href = 'shop_order';
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }
+            
+        })
     </script>
 </body>
 </html>
