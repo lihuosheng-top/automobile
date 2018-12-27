@@ -121,7 +121,7 @@ class  PlatformAdvertisement extends  Controller{
             }
             if(isset($find['pfd']))
             {
-               $boolse = db("facilitator")->where('id', $find['pfd'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
+                $boolse = db("facilitator")->where('id', $find['pfd'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
             }
 
             
