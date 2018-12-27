@@ -335,7 +335,9 @@ $('.bespeak-btn').click(function(){
                         content: '未给爱车添加详细信息',
                         time: .8
                     })
-                    location.href = 'love_list';                  
+                    setTimeout(function(){
+                        location.href = 'love_list';
+                    }, 1000)
                 }
             }else if(res.status == 2){
                 location.href = 'login';
