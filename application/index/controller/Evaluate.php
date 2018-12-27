@@ -63,11 +63,6 @@ class Evaluate extends  Controller{
                     }
                 }
             }
-            /*if(!empty($img)){
-                return ajax_success("有数据",$images);
-            }else{
-                return ajax_success("没有有数据",$images);
-            }*/
             $user_id = Session::get("user");//用户id
             $evaluate_content =$request->only("evaluateContent")["evaluateContent"];//评价内容（数组）
             $is_on_time =$request->only("isOnTime")["isOnTime"];//是否准时（是否准时，1为准时,-1为不准时）
@@ -126,6 +121,7 @@ class Evaluate extends  Controller{
             }
         }
     }
+
 
 
 
