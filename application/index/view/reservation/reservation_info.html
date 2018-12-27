@@ -325,7 +325,11 @@
                 $('.car_num').text(data.user_car_message[0].plate_number.split(' ').join(''));
                 $('.car_info').text(data.user_car.brand+' '+data.user_car.series+' '+data.user_car.production_time+' '+data.user_car.displacement);
                 // 用户信息
-                $('.client_name span').text(data.user[0].user_name);
+                if(data.user[0].real_name !== null){
+                    $('.client_name span').text(data.user[0].real_name);
+                }else{
+                    $('.client_name span').text(data.user[0].user_name);
+                }
                 $('.client_phone span').text(data.user[0].phone_num);
                 // 店铺信息
                 $('.shop_name_box p').text(data.store[0].store_name);
@@ -361,7 +365,9 @@
                     },
                     success: function(res){
                         console.log(res);
-                        // location.href = 'shop_order';
+                        if(res.status == 1){
+                            location.href = 'shop_order?store_id='+storeId+'&service_setting_id='+service_setting_id+'&serve_goods_id='+serve_goods_id+'';
+                        }
                     },
                     error: function(){
                         console.log('error');
