@@ -9,7 +9,6 @@ use think\Db;
 class Cart extends Controller
 {
 
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -77,7 +76,6 @@ class Cart extends Controller
         }
         return view("cart_index");
     }
-
 
     /**
      **************李火生*******************
@@ -157,7 +155,6 @@ class Cart extends Controller
                  exit(json_encode(array("status" => 1, "info" => "加入购物车成功" ,"data"=>$bool)));
             }
     }
-
 
     /**
      **************李火生*******************
