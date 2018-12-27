@@ -90,6 +90,7 @@ class  PlatformAdvertisement extends  Controller{
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);           
             $data["location"] = $position;
+            $data["postid"] = $data["pid"];
             $data["pid"] = db("position") -> where("id",$data["pid"])->value("pid");
             $data["department"] = "platform_business";
 

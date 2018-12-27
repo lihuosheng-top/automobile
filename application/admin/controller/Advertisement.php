@@ -77,9 +77,7 @@ class  Advertisement extends  Controller{
         if ($pid == 0) {
             $goods_liste = selectList("position");
         }
-        $plat = db("accessories")->where("id",$id)->select();
-        halt($goods_liste);
-
+        $plat = db("accessories")->where("id",$id)->select();       
         return view('accessories_business_edit',['plat'=>$plat,"goods_liste" => $goods_liste]);
     }
 
@@ -117,6 +115,7 @@ class  Advertisement extends  Controller{
             $userId = db('accessories')->insertGetId($data);
 
             //插入平台列表
+            $data["postid"] = $data["pid"];
             $data["pid"] = db("position") -> where("id",$data["pid"])->value("pid"); //找到广告位置pid
             $data["pgd"] = $userId;
             $data["department"] = $user_phone[0]["department"];
