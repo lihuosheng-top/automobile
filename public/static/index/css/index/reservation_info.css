@@ -131,19 +131,15 @@ html{
     color: #fd0000;
     font-size: .36rem;
 }
-.btn_wrap .btn_buy{
+.btn_wrap .btn_buy .txt{
     width: 2.9rem;
     height: 1rem;
     line-height: 1rem;
-    text-align: center;
     background-color: #504cfb;
-}
-.btn_wrap .btn_buy .txt{
-    display: inline-block;
-    width: 100%;
-    height: 100%;
     font-size: .3rem;
     color: #fff;
+    border: 0;
+    outline: none;
 }
 /* 预约弹窗开始 */
 /* [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。 */
