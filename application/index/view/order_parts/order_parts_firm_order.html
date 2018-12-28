@@ -71,6 +71,12 @@
         .invoice-type-container .invoice-type-box span{padding: .15rem .4rem; margin: 0 .4rem .2rem 0; display: inline-block; border: 1px solid #999; font-size: .26rem; color: #456; line-height: normal; border-radius: 3px;}
         .invoice-type-container .invoice-type-box span.choose{border-color: #504cfb; background: url(__STATIC__/index/image/choose.png) no-repeat right bottom;}
         .invoice-btn{display: block; margin: .7rem auto 0; height: .88rem; font-size: .3rem; background-color: #504cfb; color: #fff; border: 0; outline: none; border-radius: .1rem; width: 80%;}
+        .invoice-info-container{background-color: #fff; padding: .35rem .3rem; border-bottom: 1px solid #eee;}
+        .invoice-info-container .invoice-info-title{font-size: .32rem; color: #333; margin-bottom: .2rem;}
+        .invoice-info-container .invoice-object{display: flex;}
+        .invoice-object .personal-container{margin-right: 1rem;}
+        .invoice-object input{vertical-align: middle;}
+        .invoice-object label{font-size: .3rem; color: #333;}
     </style>
 </head>
 <body>
@@ -230,6 +236,28 @@
             <div class="invoice-type-box">
                 <span class="choose">不开发票</span>
                 <span>电子发票</span>
+            </div>
+        </div>
+        <div class="need-invoice">
+            <div class="invoice-info-container">
+                <div class="invoice-info-title">发票信息</div>
+                <div class="invoice-object">
+                    <div class="personal-container">
+                        <input type="radio" id="personal" name='obj' checked>
+                        <label for="personal">个人</label>
+                    </div>
+                    <div class="company-container">
+                        <input type="radio" id="company" name='obj'>
+                        <label for="company">公司</label>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice-detail-container">
+                <div class="personal-invoice-detail">
+                    <div class="invoice-header">发票抬头 个人（不可修改）</div>
+                    
+                </div>
+                <div class="company-invoice-detail"></div>
             </div>
         </div>
         <button class="invoice-btn">确定</button>
