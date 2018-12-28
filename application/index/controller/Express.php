@@ -78,7 +78,7 @@ class  Express extends  Controller{
             if($delivery) {
                 return ajax_success("获取成功",array("delivery"=>$delivery,"delivery_data"=>$delivery_data));
             }else{
-                return ajax_error("你服务的区域没有匹配到相应的订单");
+                return ajax_error("你服务的区域没有匹配到相应的订单",$delivery_data);
             }
         }
         return view("express_wait_for_order");
