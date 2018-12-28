@@ -399,7 +399,7 @@ class OrderService extends Controller{
             //用户爱车信息（默认）
             $user_car_data =Db::table("tb_user_car")->where("user_id",$user_id)->where("status",1)->find();
             //默认爱车的车牌信息
-            $user_love_car_message =Db::name("user_cart_message")->where("id",$user_car_data["id"])->find();
+            $user_love_car_message =Db::name("user_car_message")->where("id",$user_car_data["id"])->find();
             if(!empty($member["real_name"])){
                 $member_name =$member["real_name"];
             }else{
