@@ -165,6 +165,9 @@
                                     },
                                     success: function(res){
                                         console.log(res);
+                                        if(res.status == 1){
+                                            location.reload();
+                                        }
                                     },
                                     error: function(){
                                         console.log('error');

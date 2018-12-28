@@ -108,7 +108,7 @@
                     $('.info .name').text(data.delivery_data[0].name);
                     $('.info .phone').text(data.delivery_data[0].number);
                     var str = '';
-                    $.each(data.delivery, function(idx, val){
+                    $.each(data.express, function(idx, val){
                         str += `<div class="order-item">
                                     <div class="address-container">
                                         <div class="get-goods" id="store-`+val.store_id+`">
@@ -121,7 +121,7 @@
                                         </div>
                                         <div class="send-goods" id="send-`+val.order_id+`">
                                             <span>送：</span>
-                                            <span class="send-address">`+val.order_address+`</span>
+                                            <span class="send-address">`+val.user_order_address+`</span>
                                             <a href="call:`+parseInt(val.order_user_number)+`" class="spr customer-phone"></a>
                                         </div>
                                     </div>
@@ -138,13 +138,13 @@
                     $('.order-item').on('click', '.my-btn', function(){
                         var deliveryId = data.delivery_data[0].id;
                         var $index = $('.my-btn').index($(this));
-                        var thisData = data.delivery[$index];
+                        var thisData = data.express[$index];
                         layer.open({
                             content: '配送完成？',
                             btn: ['确定', '取消'],
                             yes: function (index) {
                                 layer.close(index);
-                                console.log(data);
+                                console.log(data.express[$index]);
                                 $.ajax({
                                     url: 'express_distribution_edit',
                                     type: 'POST',
@@ -160,10 +160,14 @@
                                         'order_create_time': thisData.order_create_time,
                                         'store_name': thisData.store_name,
                                         'parts_order_number': thisData.parts_order_number,
-                                        'store_id': thisData.store_id
+                                        'store_id': thisData.store_id,
+                                        'id': thisData.id
                                     },
                                     success: function(res){
                                         console.log(res);
+                                        if(res.status == 1){
+                                            location.reload();
+                                        }
                                     },
                                     error: function(){
                                         console.log('error');
