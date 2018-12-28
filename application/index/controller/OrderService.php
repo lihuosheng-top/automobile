@@ -393,29 +393,96 @@ class OrderService extends Controller{
     {
         if ($request->isPost()) {
             $data = $_POST;
-            $member_data = session('member');
-            $member = Db::name('user')->field('id,harvester,harvester_phone_num,harvester_real_address')->where('phone_num', $member_data['phone_num'])->find();
+            $user_id = Session::get('user');
+            //用户信息
+            $member = Db::name('user')->where("id",$user_id)->find();
+            //用户爱车信息（默认）
+            $user_car_data =Db::table("tb_user_car")->where("user_id",$user_id)->where("status",1)->find();
+            //默认爱车的车牌信息
+            $user_love_car_message =Db::name("user_cart_message")->where("id",$user_car_data["id"])->find();
+            if(!empty($member["real_name"])){
+                $member_name =$member["real_name"];
+            }else{
+                $member_name =$member["user_name"];
+            }
             $commodity_id = $_POST['goods_id'];
             if (!empty($commodity_id)) {
-                $goods_data = Db::name('serve_goods')->where('id', $commodity_id)->find();
+                //积分
+                if(!empty($data["setting_id"])){
+                    $setting_data =Db::name("integral_discount_settings")->where("setting_id",$data["setting_id"])->find();
+                    $integral_deductible =$setting_data["deductible_money"];
+                    $integral_discount_setting_id =$data["setting_id"];
+                    $integral_deductible_num =$setting_data["integral_full"];
+                }else{
+                    $integral_deductible = 0;
+                    $integral_discount_setting_id =NULL;
+                    $integral_deductible_num =NULL;
+                }
+
+                $goods_data = Db::table('tb_serve_goods')
+                    ->join("tb_service_setting","tb_serve_goods.service_setting_id =tb_service_setting.service_setting_id","left")
+                    ->where('tb_serve_goods.id', $commodity_id)
+                    ->find();
+                $store_name =Db::name("store")
+                    ->where("store_id",$goods_data["id"])
+                    ->value("store_name");
                 $create_time = time();
+                $time=date("Y-m-d",time());
+                $v=explode('-',$time);
+                $time_second=date("H:i:s",time());
+                $vs=explode(':',$time_second);
+                $service_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
                 if (!empty($data)) {
                     $datas = [
-                        'service_goods_id' => $goods_data['id'],//服务项目ID
                         'service_goods_name' => $goods_data['vehicle_model'], //车型
-                        'service_order_quantitative' => $data['service_order_quantitative'],      //订单数量
-//                        'service_order_quantitative' => 1,      //订单数量
-                        'user_id' => $member['id'],         //用户id
-                        'create_time' => $create_time,
-                        'service_order_amount' => $data['service_money'],//服务金额
-//                        'service_order_amount' => 0.01,//服务金额
+                        "service_goods_image" =>$goods_data["service_setting_calss_img"],//服务项目图片
+                        'service_order_quantitative' => $data['service_order_quantitative'],//订单数量
+                        "service_goods_name" =>$goods_data["service_setting_name"],//服务项目名称
+                        'user_id' => $user_id,         //用户id
+                        'create_time' => $create_time,//创建时间
+                        'service_order_amount' => $goods_data['service_money'],//服务金额
+                        "car_owner_phone_number"=>$member["phone_num"],//联系方式
+                        "car_owner_name"=>$member_name,//车主名字
+                        "car_number"=> $user_love_car_message["plate_number"],//车牌号
+                        "reserve_time"=>null, //因为还没有服务所以没有服务时间
                         'status' => 1,      //订单状态
                         'service_goods_id' => $commodity_id,        //服务项目ID
-                        'service_order_number' => $create_time . $member['id'],//时间戳+用户id构成订单号
+                        'service_order_number' => $service_order_number,//订单号
+                        "got_to_time"=>$data["got_to_time"],//预约到店时间
+                        "store_id"=>$goods_data["store_id"],//商铺id
+                        "service_reservations"=>$store_name,//预约门店（店铺名称）
+                        "service_real_pay"=>$data["service_money"],//积分抵扣之后的金额
+                        "order_amount"=>$goods_data["service_money"],//订单金额
+                        "integral_deductible"=> $integral_deductible,//积分抵扣（元）
+                        "integral_discount_setting_id"=>$integral_discount_setting_id, //积分设置中的id
+                        "integral_deductible_num" =>$integral_deductible_num, //使用了多少积分
                     ];
                     $res = Db::name('order_service')->insertGetId($datas);
                     if ($res) {
-                        return ajax_success('下单成功', $datas['service_order_number']);
+                        $order_datas =Db::name("order_service")
+                            ->field("service_real_pay,service_goods_name,service_order_number")
+                            ->where('id',$res)
+                            ->where("user_id",$user_id)
+                            ->find();
+                        if(!empty($data["setting_id"])){
+                            //积分消费记录
+                            $user_integral_wallet =$member["user_integral_wallet"]; //之前的积分余额
+                            $user_integral_wallets =$user_integral_wallet - $setting_data["integral_full"];//减了之后的积分
+                            $operation_times =date("Y-m-d H:i:s");
+                            $integral_data =[
+                                "user_id"=>$user_id,//用户ID
+                                "integral_operation"=>"-".$setting_data['integral_full'],//积分操作
+                                "integral_balance"=>$user_integral_wallets,//积分余额
+                                "integral_type"=> -1,//积分类型
+                                "operation_time"=>$operation_times ,//操作时间
+                                "integral_remarks"=>"订单号:".$order_datas['service_order_number']."下单使用积分".$setting_data['integral_full']."抵扣".$setting_data["deductible_money"]."元钱",//积分备注
+                            ];
+                            Db::name("user")->where("id",$user_id)->update(["user_integral_wallet"=>$user_integral_wallets,"user_integral_wallet_consumed"=>$setting_data["integral_full"]+$member["user_wallet_consumed"]]);
+                            Db::name("integral")->insert($integral_data); //插入积分消费记录
+                        }
+                        return ajax_success('下单成功', $order_datas);
+                    }else{
+                        return ajax_error("下单失败",["status"=>0]);
                     }
                 }
             }
