@@ -421,7 +421,7 @@ $.ajax({
         console.log('error');
     }
 })
-$('.icon_back').click(function () {
+$('.discount_pop .icon_back').click(function () {
     $('.discount_pop').hide();
     $('.place-order-pop').show();
 })
@@ -452,6 +452,57 @@ $('.chose-payment-back').click(function(){
 })
 
 // 发票
+$('.invoice-li').click(function(){
+    $('.invoice-container').show();
+    $('.place-order-pop').hide();
+})
 $('.invoice-type-box').on('click', 'span', function(){
     $(this).addClass('choose').siblings().removeClass('choose');
+    if($(this).hasClass('need')){
+        $('.need-invoice').show();
+    }else{
+        $('.need-invoice').hide();
+    }
+})
+$('.invoice-object').on('change', 'input', function(){
+    if(this.id === 'personal'){
+        $('.personal-invoice-detail').show();
+        $('.company-invoice-detail').hide();
+    }else{
+        $('.personal-invoice-detail').hide();
+        $('.company-invoice-detail').show();
+    }
+})
+$('.invoice-container .icon_back').click(function(){
+    $('.invoice-container').hide();
+    $('.place-order-pop').show();
+})
+
+$('.invoice-btn').click(function(){
+    var text = $('.choose').text();
+    if(text == '不开发票'){
+        $('.invoice-container').hide();
+        $('.place-order-pop').show();
+        $('.invoice').text(text);
+    }else{
+        var invoiceObjId = $('.invoice-object input:checked').attr('id');
+        if(invoiceObjId == 'personal'){
+            var personalHead = $('.invoice-header span').text();
+            var personalPhone = $('.invoice-phone span').text();
+        }else{
+            if($('#company-header-input').val() !== '' && $('#company-phone-input').val() !== ''){
+                var companyHead = $('#company-header-input').val();
+                var companyPhone = $('#company-phone-input').val();
+                var companyIdentify = $('#company-identify').val();
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请填写发票信息',
+                    time: 1
+                })
+            }
+        }
+        // $('.invoice-container').hide();
+        // $('.place-order-pop').show();
+    }
 })
