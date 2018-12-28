@@ -152,7 +152,8 @@
                     $('.car_ver').text(data.car_series.brand+' '+data.car_series.series+' '+data.car_series.displacement+' '+data.car_series.year);
                     $('.shop span').text(data.store[0].store_name);
                     $('.arrive_time span').text(data.time);
-                    $('.service-type').text(data.serve_data[0].serve_name);
+                    $('.service-type').text(data.serve_data[0].serve_name.service_setting_name);
+                    $('.service_name').find('img').attr('src', 'uploads/' + data.serve_data[0].serve_name.service_setting_calss_img);
                     $('.price').text('￥'+ data.serve_data[0].serve_goods[0].service_money);
                     $('.pay-amount-span span').text(data.serve_data[0].serve_goods[0].service_money)
                     $('.totalprice span').text(data.serve_data[0].serve_goods[0].service_money);
