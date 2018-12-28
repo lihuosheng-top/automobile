@@ -19,7 +19,7 @@ class  Express extends  Controller{
 
 
     /**
-     **************李火生*******************
+     **************陈绪*******************
      * @param Request $request
      * Notes:快递员退出登录
      **************************************
@@ -34,7 +34,7 @@ class  Express extends  Controller{
 
 
     /**
-     **************李火生*******************
+     **************陈绪*******************
      * @param Request $request
      * Notes:设置
      **************************************
@@ -98,6 +98,7 @@ class  Express extends  Controller{
             $express_data["status"] = 1;
             $bool = db("delivery_order")->insert($express_data);
             if ($bool) {
+                db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>3]);
                 return ajax_success("入库成功");
             } else {
                 return ajax_error("入库失败");
@@ -108,7 +109,7 @@ class  Express extends  Controller{
 
 
     /**
-     **************李火生*******************
+     **************陈绪*******************
      * @param Request $request
      * Notes:待取货页面
      **************************************
@@ -141,8 +142,10 @@ class  Express extends  Controller{
 
         if($request->isPost()){
             $id = $request->only(["id"])["id"];
+            $order = db("delivery_order")->where("id",$id)->value("order_id");
             $bool = db("delivery_order")->where("id",$id)->update(["status"=>2]);
             if($bool){
+                db("order_parts")->where("id",$order)->update(["status"=>4]);
                 return ajax_success("已取货");
             }else{
                 return ajax_error("取货失败");
@@ -153,7 +156,7 @@ class  Express extends  Controller{
 
 
     /**
-     **************李火生*******************
+     **************陈绪*******************
      * @param Request $request
      * Notes:配送中页面
      **************************************
@@ -185,8 +188,10 @@ class  Express extends  Controller{
 
         if($request->isPost()){
             $id = $request->only(["id"])["id"];
+            $order = db("delivery_order")->where("id",$id)->value("order_id");
             $bool = db("delivery_order")->where("id",$id)->update(["status"=>3]);
             if($bool){
+                db("order_parts")->where("id",$order)->update(["status"=>5]);
                 return ajax_success("已取货");
             }else{
                 return ajax_error("取货失败");
@@ -197,7 +202,7 @@ class  Express extends  Controller{
 
 
     /**
-     **************李火生*******************
+     **************陈绪*******************
      * @param Request $request
      * Notes:已完成页面
      **************************************
