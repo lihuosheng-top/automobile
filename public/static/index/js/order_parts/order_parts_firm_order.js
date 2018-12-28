@@ -369,8 +369,8 @@ $.ajax({
                             <p class="deduction-money">￥`+ val.deductible_money + `</p>
                             <span class="need-integ">需`+ val.integral_full + `积分</span>
                         </div>
-                        <label class="twent" for="twent-`+ val.setting_id + `" id="` + val.consumption_full + `">
-                            <p class="dis-introduce">消费满`+ val.consumption_full + `元可用</p>
+                        <label class="twent" for="twent-`+ val.setting_id + `">
+                            <p class="dis-introduce">消费满<span>`+ val.consumption_full + `</span>元可用</p>
                         </label>
                         <input type="radio" id="twent-`+ val.setting_id + `" name="disc">
                     </div>`
@@ -379,16 +379,15 @@ $.ajax({
 
         $('.dis').click(function (e) {
             e.preventDefault();
-            var index = $(this).index() - 1;
-            var consumptionFul = $(this).find('label')[0].id;
+            // var index = $(this).index() - 1;
+            var consumptionFul = $(this).find('.dis-introduce span').text();
+            console.log(consumptionFul)
             if (finalMoney >= consumptionFul) {
                 var cut = $(this).find('.deduction-money').text().split('￥')[1];
-                $(this).find('input').attr('checked', 'checked');
+                $(this).find('input').prop('checked', 'checked');
                 $('.discount').text('-￥' + cut);
                 $('.discount_pop').hide();
                 $('.place-order-pop').show();
-                $(this).siblings().find('input').removeAttr('checked');
-                $(this).find('input').prop('checked', 'checked');
 
                 // 抵扣后的总价格
                 $('.total-money').text(toFixed(finalMoney - cut, 2));

@@ -62,16 +62,16 @@ $.ajax({
             var inputElem = $(this)[0];
             var switchSpan = $(this).parent();
             var id = $(this).parents('.evaluation-subject').attr('id');
-            console.log(id);
             changeEvent(inputElem, switchSpan, id);
-            console.log(filesArr);
+            // console.log(filesArr);
+            console.log(filesObj)
         })
     },
     error: function(){
         console.log('error');
     }
 })
-var filesArr = [];
+var filesObj = {};
 function changeEvent(inputElem, clickObj, id){
     var imgArrDom = [];
     var str = '';
@@ -79,11 +79,15 @@ function changeEvent(inputElem, clickObj, id){
     // // 限制上传图片
     var uploadItemLen = $(clickObj).siblings('.upload-item').length;
     if(uploadItemLen + len <= 4){
+        // 第一次实例化数组
+        if(filesObj[id] === undefined){
+            filesObj[id] = new Array();
+        }
         for(var i = 0; i < len; i++){
             // 存图片地址
             imgArrDom.push(getObjectURL(inputElem.files[i]));
-            inputElem.files[i].id = id;
-            filesArr.push(inputElem.files[i]);
+            // 把files用id区分开插入
+            filesObj[id].push(inputElem.files[i]);
         }
         $.each(imgArrDom, function(idx, val){
             str += `<div class="upload-item">
@@ -102,9 +106,8 @@ function changeEvent(inputElem, clickObj, id){
     // 删除图片
     $('.upload-item').on('click', '.del-img', function(){
         var $index = $('.del-img').index($(this));
-        console.log($index);
-        filesArr.splice($index, 1);
-        console.log(filesArr)
+        filesObj[id].splice($index, 1);
+        console.log(filesObj)
         $(this).parent().remove();
     })
 }
@@ -132,6 +135,7 @@ $('.on-time').on('change', 'input', function(){
 
 
 // 发布
+var formData = new FormData();
 $('.publish-btn').click(function(){
     var orderId = [];
     var evaluationSubjectArr = $('.evaluation-subject');
@@ -144,9 +148,15 @@ $('.publish-btn').click(function(){
     $.each($('textarea'), function(idx, val){
         evaluateContent.push(val.value);
     })
-    var formData = new FormData();
-    $.each(filesArr, function(idx, val){
-        formData.append('filesArr[]', val);
+    var idArr = [];
+    $.each($('.evaluation-subject'), function(idx, val){
+        idArr.push(val.id);
+    })
+    $.each(idArr, function(idx, val){
+        $.each(filesObj[val], function(index, value){
+            console.log(value);
+            formData.append('filesArr'+val+'[]', value);
+        })
     })
     $.each(orderId, function(idx, val){
         formData.append('orderId[]', val);

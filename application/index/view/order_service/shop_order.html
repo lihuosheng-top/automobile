@@ -11,71 +11,69 @@
     <title>提交订单</title>
 </head>
 <body>
-    <div id="app">
-        <div class="wrapper" v-show="switchPop">
-            <div class="head">
-                <a href="javascript:history.back(-1);" class="spr icon_back"></a>
-                <h3>提交订单</h3>
-            </div>
-            <div class="order_info_wrap">
-                <div class="order_num">订单号:20181108</div>
-                <div class="user_wrap">联系人：杨教授 <span>13691853045</span></div>
-                <div class="plate_num">到店车辆：粤B123456</div>
-                <div class="car_ver">宝骏 560  1.8L  2015年产</div>
-            </div>
-            <div class="shop_info_wrap">
-                <div>服务门店:XXXXXXXX汽车修理中心（XXX）</div>
-                <div class="arrive_time">到达时间：2018年11月8日 14:00-15:00</div>
-            </div>
-            <div class="service_price">
-                <div class="service_name clearfix">服务项目
-                    <div class="clearfix">
-                        <img src="__STATIC__/index/image/11.jpg">
-                        <span>标准洗车</span>
-                        <span class="price">￥35</span>
-                    </div>
-                </div>
-                <div class="discount" @click="popShow">
-                    积分抵扣
-                    <a href="javasscript:;" class="spr icon_more"></a>
-                    <span class="acount_num">-￥5</span>
-                </div>
-                <div class="pay-amount">
-                    <span>实付款</span>
-                    <span class="pay-amount-span">￥0</span>
+    <div class="wrapper">
+        <div class="head">
+            <a href="javascript:history.back(-1);" class="spr icon_back"></a>
+            <h3>提交订单</h3>
+        </div>
+        <div class="order_info_wrap">
+            <!-- <div class="order_num">订单号:20181108</div> -->
+            <div class="user_wrap">联系人：<span class="name">杨教授</span> <span class="phone">13691853045</span></div>
+            <div class="plate_num">到店车辆：<span></span></div>
+            <div class="car_ver"></div>
+        </div>
+        <div class="shop_info_wrap">
+            <div class="shop">服务门店: <span></span></div>
+            <div class="arrive_time">到达时间：<span></span></div>
+        </div>
+        <div class="service_price">
+            <div class="service_name clearfix">
+                <p>服务项目</p>
+                <div class="clearfix">
+                    <img src="__STATIC__/index/image/11.jpg">
+                    <span class="service-type"></span>
+                    <span class="price"></span>
                 </div>
             </div>
-            <div class="footbar">
-                <div class="totalprice">
-                    合计：<span class="txt">￥0.01</span>
-                </div>
-                <div class="btn_buy">
-                    <a href="javascript:;" class="txt" id="goAlipay">去支付</a>
-                </div>
+            <div class="discount">
+                积分抵扣
+                <a href="javasscript:;" class="spr icon_more"></a>
+                <span class="acount_num">不使用积分</span>
+            </div>
+            <div class="pay-amount">
+                <span>实付款</span>
+                <div class="pay-amount-span">￥<span></span></div>
             </div>
         </div>
-        <div class="discount_pop" v-show="!switchPop">
-            <div class="head">
-                <a href="javascript:;" @click="popHide" class="spr icon_back"></a>
-                <h3>使用积分</h3>
+        <div class="footbar">
+            <div class="totalprice">
+                <p class="txt">合计：￥<span></span></p>
             </div>
-            <div class="discount_wrap">
-                <div class="default" @click="popHide">
-                    <label class="dont" for="dont">不使用积分</label>
-                    <input type="radio" id="dont" name="disc" checked>
-                </div>
-                <div class="dis" @click="popHide">
-                    <div class="denomination">
-                        <p>￥2</p>
-                        <span>需20积分</span>
-                    </div>
-                    <label class="twent" for="twent">
-                        <p>消费满30元可用</p>
-                        <!-- <span>仅限预约服务可用</span> -->
-                    </label>
-                    <input type="radio" id="twent" name="disc">
-                </div>
+            <div class="btn_buy">
+                <a href="javascript:;" class="txt" id="goAlipay">去支付</a>
             </div>
+        </div>
+    </div>
+    <div class="discount_pop" style="display:none;">
+        <div class="head">
+            <a href="javascript:;" class="spr icon_back"></a>
+            <h3>使用积分</h3>
+        </div>
+        <div class="discount_wrap">
+            <div class="default">
+                <label class="dont" for="dont">不使用积分</label>
+                <input type="radio" id="dont" name="disc" checked>
+            </div>
+            <!-- <div class="dis">
+                <div class="denomination">
+                    <p>￥2</p>
+                    <span>需20积分</span>
+                </div>
+                <label class="twent" for="twent">
+                    <p>消费满30元可用</p>
+                </label>
+                <input type="radio" id="twent" name="disc">
+            </div> -->
         </div>
     </div>
     <!-- 支付弹窗 -->
@@ -107,24 +105,8 @@
     </form>
     <div class="mask" style="display:none;"></div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
-    <script src="__STATIC__/index/js/plugin/vue.js"></script>
-    <script src="__STATIC__/index/js/plugin/vue.resource.js"></script>
-    <script>
-        var app = new Vue({
-            el: '#app',
-            data: {
-                switchPop: true,
-            },
-            methods: {
-                popShow: function(){
-                    this.switchPop = false;
-                },
-                popHide: function(){
-                    this.switchPop = true;
-                }
-            }
-        })
-    </script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    
     <script>
         $('#goAlipay').click(function(){
             $('.mask').show();
@@ -134,15 +116,98 @@
             $('.mask').hide();
             $('.alipay-pop').animate({'bottom': '-100%'});
         })
-        
+        // 折扣
+        $('.discount').click(function(){
+            $('.wrapper').hide();
+            $('.discount_pop').show();
+        })
+        $('.discount_pop .icon_back').click(function(){
+            $('.wrapper').show();
+            $('.discount_pop').hide();
+        })
+        // 解决计算精度问题
+        function toFixed(num, s) {
+            var times = Math.pow(10, s)
+            var des = num * times + 0.5
+            des = parseInt(des, 10) / times
+            return des + ''
+        }
+        var finalMoney;
         // 订单号
         $.ajax({
-            url: 'ios_api_order_button',
+            url: 'ios_api_order_service_get_information',
             type: 'POST',
             dataType: 'JSON',
-            success: function(data){
-                console.log(data);
-                $('#WIDout_trade_no').val(data.data);
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    var data = res.data;
+                    if(data.user_info.real_name !== null){
+                        $('.name').text(data.user_info.real_name);
+                    }else{
+                        $('.name').text(data.user_info.user_name);
+                    }
+                    $('.phone').text(data.user_info.phone_num);
+                    $('.plate_num span').text(data.user_love_info.plate_number);
+                    $('.car_ver').text(data.car_series.brand+' '+data.car_series.series+' '+data.car_series.displacement+' '+data.car_series.year);
+                    $('.shop span').text(data.store[0].store_name);
+                    $('.arrive_time span').text(data.time);
+                    $('.service-type').text(data.serve_data[0].serve_name);
+                    $('.price').text('￥'+ data.serve_data[0].serve_goods[0].service_money);
+                    $('.pay-amount-span span').text(data.serve_data[0].serve_goods[0].service_money)
+                    $('.totalprice span').text(data.serve_data[0].serve_goods[0].service_money);
+                    finalMoney = data.serve_data[0].serve_goods[0].service_money;
+                    var str = '';
+                    $.each(data.integral_info, function(idx, val){
+                        str += `<div class="dis">
+                                    <div class="denomination">
+                                        <p>￥`+val.integral_full+`</p>
+                                        <span class="need-inte">需`+val.integral_can_be_used+`积分</span>
+                                    </div>
+                                    <label class="twent" for="twent-`+val.setting_id+`">
+                                        <p class="dis-introduce">消费满<span>`+val.consumption_full+`</span>元可用</p>
+                                    </label>
+                                    <input type="radio" id="twent-`+val.setting_id+`" name="disc">
+                                </div>`
+                    })
+                    $('.default').after(str);
+                    $('.dis').click(function (e) {
+                        e.preventDefault();
+                        var consumptionFul = $(this).find('.dis-introduce span').text();
+                        if (finalMoney >= consumptionFul) {
+                            var cut = $(this).find('.denomination p').text().split('￥')[1];
+                            $(this).find('input').prop('checked', 'checked');
+                            $('.acount_num').text('-￥' + cut);
+                            $('.discount_pop').hide();
+                            $('.wrapper').show();
+                            // 抵扣后的总价格
+                            $('.pay-amount-span span').text(toFixed(finalMoney - cut, 2));
+                            $('.totalprice span').text(toFixed(finalMoney - cut, 2));
+                            // 存储积分券id
+                            deductionId = $(this).find('input')[0].id.split('-')[1];
+                            console.log(deductionId)
+                        } else {
+                            layer.open({
+                                skin: 'msg',
+                                content: '未达到使用条件',
+                                time: 1
+                            })
+                        }
+                    })
+                    $('.default').click(function (e) {
+                        e.preventDefault();
+                        // 隐藏弹窗
+                        $('.discount_pop').hide();
+                        $('.wrapper').show();
+                        // 显示 不适用积分
+                        var dont = $(this).find('label').text();
+                        $(this).find('input').prop('checked', 'checked');
+                        $('.acount_num').text(dont);
+                        // 不适用积分 重新计算价格
+                        $('.pay-amount-span span').text(toFixed(finalMoney, 2));
+                        $('.totalprice span').text(toFixed(finalMoney, 2));
+                    })
+                }
             },
             error: function(){
                 console.log('error');

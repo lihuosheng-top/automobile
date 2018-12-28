@@ -89,7 +89,7 @@ $(function(){
                 type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                 skin: 'msg',
                 content: '最多上传20张图片',
-                time: 2
+                time: 1
             })
         }
         // 删除图片
@@ -143,7 +143,7 @@ $('.submit-button').click(function(){
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: 1.2
+                            time: .8
                         })
                         setTimeout(function(){
                             location.href = 'my_index';
@@ -154,7 +154,7 @@ $('.submit-button').click(function(){
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: 1.2
+                            time: .8
                         })
                     }
                 },
@@ -168,7 +168,7 @@ $('.submit-button').click(function(){
                 type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                 skin: 'msg',
                 content: '图片未上传完整',
-                time: 1
+                time: .8
             })
         }
     }else if($(this).text() === '提交修改'){
@@ -208,18 +208,18 @@ $('.submit-button').click(function(){
                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: res.info,
-                        time: 1.2
+                        time: .8
                     })
                     setTimeout(function(){
                         location.href = 'my_index';
-                    }, 1400);
+                    }, 1000);
                 }else{
                     layer.open({
                         style: 'bottom:100px;',
                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: res.info,
-                        time: 1.2
+                        time: .8
                     })
                 }
             },
@@ -230,6 +230,7 @@ $('.submit-button').click(function(){
     }
 })
 var updateImages = [];
+// var myLngLat = [];
 // 返回数据
 $.ajax({
     url: 'return_store_information',
@@ -238,6 +239,11 @@ $.ajax({
     success: function(res){
         console.log(res);
         var data = res.data;
+        // if(data.longitude !== null && data.latitude !== null){
+        //     myLngLat = [data.longitude, data.latitude];
+        // }else{
+        //     myLngLat = [114.085947,22.547];
+        // }
         if(data.store_identity_card !== null && data.store_reverse_images !== null &&
             data.store_do_bussiness_positive_img !== null && data.store_do_bussiness_side_img !== null &&
             data.verifying_physical_storefront_one !== null){
@@ -290,7 +296,9 @@ $.ajax({
 AMapUI.loadUI(['misc/PositionPicker'], function(PositionPicker) {
     var map = new AMap.Map('container', {
         zoom: 16,
-        scrollWheel: false
+        scrollWheel: false,
+        resizeEnable: true,
+        // center: [114.085947,22.547]
     })
     AMap.plugin([
         'AMap.ToolBar',

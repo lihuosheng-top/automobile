@@ -239,6 +239,7 @@ class Store extends Controller{
                     'store_owner_wechat'=>$store_owner_wechat,
                     'store_information'=>$store_information,
                     'role_id'=>$role_id,
+
                 ];
                 $bool = db("store")->where('user_id',$user_id)->update($data);
                 $store_id =db("store")->field('store_id')->where('user_id',$user_id)->find();
@@ -312,6 +313,16 @@ class Store extends Controller{
             $store_id =Db::name('store')->field('store_id')->where('user_id',$user_id)->find();
             //身份证正面
             $store_identity_card_file = $request->file('store_identity_card');
+            $lnglat =$request->only("lnglat")["lnglat"];
+            $real_address =$request->only("address")["address"];
+            if(!empty($lnglat)){
+                $longitude_data =explode(",",$lnglat);
+                $longitude =$longitude_data[0];
+                $latitude  = $longitude_data[1];
+                $data["longitude"] =$longitude;
+                $data["latitude"] =$latitude;
+                $data["real_address"] = $real_address;
+            }
             if(!empty($store_identity_card_file)){
                 $info = $store_identity_card_file->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $store_identity_card = str_replace("\\","/",$info->getSaveName());

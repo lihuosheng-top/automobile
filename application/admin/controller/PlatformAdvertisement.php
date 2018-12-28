@@ -23,7 +23,7 @@ class  PlatformAdvertisement extends  Controller{
      */
     public function platform_business_index(Request $request)
     {
-        $platform = db("platform") -> select();
+        $platform = db("platform") -> order("status",0)->order("start_time desc")->select();
         $all_idents = $platform;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
         $listRow = 20;//每页20行记录
@@ -60,7 +60,6 @@ class  PlatformAdvertisement extends  Controller{
     public function platform_business_edit($id){
 
         $plat = db("platform")->where("id",$id)->select();
-    
         return view('platform_business_edit',['plat'=>$plat]);
     }
 
@@ -89,12 +88,11 @@ class  PlatformAdvertisement extends  Controller{
             }
 
             $data["start_time"] = strtotime($data["start_time"]);
-            $data["end_time"] = strtotime($data["end_time"]);
-            $data["area"] = $area;
-            $data["shop_name"] = $store_name;           
+            $data["end_time"] = strtotime($data["end_time"]);           
             $data["location"] = $position;
-            unset($data["pid"]);
-
+            $data["postid"] = $data["pid"];
+            $data["pid"] = db("position") -> where("id",$data["pid"])->value("pid");
+            $data["department"] = "platform_business";
 
             $bool = db("platform")->insert($data);
             if ($bool) {
@@ -124,11 +122,11 @@ class  PlatformAdvertisement extends  Controller{
             }
             if(isset($find['pfd']))
             {
-               $boolse = db("facilitator")->where('id', $find['pfd'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
+                $boolse = db("facilitator")->where('id', $find['pfd'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
             }
 
-
-            if(empty($find['department']))
+            
+            if(empty($find['shop_name']))
             {
               $data["start_time"] = strtotime($data["start_time"]);
               $data["end_time"] = strtotime($data["end_time"]);  
