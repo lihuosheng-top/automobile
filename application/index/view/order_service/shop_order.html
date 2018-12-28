@@ -86,7 +86,7 @@
             <div class="middle_box">
                 <div class="price-box">
                     <span>￥</span>
-                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="0.01" readonly>
+                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="" readonly>
                 </div>
                 <ul class="content">
                     <li>
@@ -126,6 +126,10 @@
                 },
                 success: function(res){
                     console.log(res);
+                    $('#WIDout_trade_no').val(res.data.service_order_number);
+                    $('#WIDtotal_amount').val(res.data.service_real_pay);
+                    $('#WIDsubject').val(res.data.service_goods_name);
+                    $('#WIDbody').val(res.data.service_goods_name);
                 },
                 error: function(){
                     console.log('error');
