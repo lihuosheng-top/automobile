@@ -108,7 +108,7 @@
                     $('.info .name').text(data.delivery_data[0].name);
                     $('.info .phone').text(data.delivery_data[0].number);
                     var str = '';
-                    $.each(data.delivery, function(idx, val){
+                    $.each(data.express, function(idx, val){
                         str += `<div class="order-item">
                                     <div class="address-container">
                                         <div class="get-goods" id="store-`+val.store_id+`">
@@ -138,7 +138,7 @@
                     $('.order-item').on('click', '.my-btn', function(){
                         var deliveryId = data.delivery_data[0].id;
                         var $index = $('.my-btn').index($(this));
-                        var thisData = data.delivery[$index];
+                        var thisData = data.express[$index];
                         layer.open({
                             content: '已取到货物？',
                             btn: ['确定', '取消'],
