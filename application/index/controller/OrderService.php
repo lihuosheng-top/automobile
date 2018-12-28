@@ -31,6 +31,7 @@ class OrderService extends Controller{
      * @return \think\response\View
      */
     public function order_service_all(){
+
         return view('order_service_all');
     }
 
@@ -58,7 +59,11 @@ class OrderService extends Controller{
             if(!empty($datas)){
                 $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
                 if(!empty($datas)){
-                    $data =Db::name('order_service')->where('user_id',$member_id['id'])->order('create_time','desc')->select();
+                    $data =Db::name('order_service')
+                        ->where('user_id',$member_id['id'])
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
+                        ->order('create_time','desc')
+                        ->select();
                     if(!empty($data)){
                         return ajax_success('全部信息返回成功',$data);
                     }else{
@@ -96,6 +101,7 @@ class OrderService extends Controller{
                 $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
                 if(!empty($datas)){
                     $data =Db::name('order_service')
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
                         ->where('user_id',$member_id['id'])
                         ->where('status',1)
                         ->order('create_time','desc')
@@ -137,6 +143,7 @@ class OrderService extends Controller{
                 if(!empty($datas)){
                     $condition ="`status` = '2' or `status` = '3'";
                     $data =Db::name('order_service')
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
                         ->where('user_id',$member_id['id'])
                         ->where($condition)
                         ->order('create_time','desc')
@@ -178,6 +185,7 @@ class OrderService extends Controller{
                 if(!empty($datas)){
                     $condition ="`status` = '4' or `status` = '5'";
                     $data =Db::name('order_service')
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
                         ->where('user_id',$member_id['id'])
                         ->where($condition)
                         ->order('create_time','desc')
@@ -219,6 +227,7 @@ class OrderService extends Controller{
                 $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
                 if(!empty($datas)){
                     $data =Db::name('order_service')
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
                         ->where('user_id',$member_id['id'])
                         ->where('status',11)
                         ->order('create_time','desc')
