@@ -111,6 +111,24 @@
         $('#goAlipay').click(function(){
             $('.mask').show();
             $('.alipay-pop').animate({'bottom': '0'});
+
+            $.ajax({
+                url: 'ios_api_order_service_button',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'goods_id': goodsId,
+                    'service_order_quantitative': 1,
+                    'service_money': finalMoney,
+                    'setting_id': deductionId
+                },
+                success: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
         $('.close-alipay').click(function(){
             $('.mask').hide();
@@ -133,6 +151,8 @@
             return des + ''
         }
         var finalMoney;
+        var deductionId = '';
+        var goodsId;
         // 订单号
         $.ajax({
             url: 'ios_api_order_service_get_information',
@@ -142,6 +162,7 @@
                 console.log(res);
                 if(res.status == 1){
                     var data = res.data;
+                    goodsId = data.goods[0].id;
                     if(data.user_info.real_name !== null){
                         $('.name').text(data.user_info.real_name);
                     }else{
@@ -154,10 +175,10 @@
                     $('.arrive_time span').text(data.time);
                     $('.service-type').text(data.serve_data[0].serve_name.service_setting_name);
                     $('.service_name').find('img').attr('src', 'uploads/' + data.serve_data[0].serve_name.service_setting_calss_img);
-                    $('.price').text('￥'+ data.serve_data[0].serve_goods[0].service_money);
-                    $('.pay-amount-span span').text(data.serve_data[0].serve_goods[0].service_money)
-                    $('.totalprice span').text(data.serve_data[0].serve_goods[0].service_money);
-                    finalMoney = data.serve_data[0].serve_goods[0].service_money;
+                    $('.price').text('￥'+ data.goods[0].service_money);
+                    $('.pay-amount-span span').text(data.goods[0].service_money)
+                    $('.totalprice span').text(data.goods[0].service_money);
+                    finalMoney = data.goods[0].service_money;
                     var str = '';
                     $.each(data.integral_info, function(idx, val){
                         str += `<div class="dis">
