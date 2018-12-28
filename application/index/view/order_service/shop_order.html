@@ -111,7 +111,7 @@
         $('#goAlipay').click(function(){
             $('.mask').show();
             $('.alipay-pop').animate({'bottom': '0'});
-
+            var got_to_time = $('.arrive_time span').text();
             $.ajax({
                 url: 'ios_api_order_service_button',
                 type: 'POST',
@@ -120,7 +120,8 @@
                     'goods_id': goodsId,
                     'service_order_quantitative': 1,
                     'service_money': finalMoney,
-                    'setting_id': deductionId
+                    'setting_id': deductionId,
+                    'got_to_time': got_to_time
                 },
                 success: function(res){
                     console.log(res);

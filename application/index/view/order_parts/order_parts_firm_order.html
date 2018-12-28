@@ -63,10 +63,17 @@
         .discount_wrap .dis .dis-introduce{font-size: .42rem; color: #333;}
         .discount_wrap .dis .need-integ{font-size: .24rem; color: #333;}
         .discount_wrap .dis .deduction-money{font-size: .42rem;}
+
+        /* 发票 */
+        .invoice-container{height: 100vh; background-color: #f2f2f2;}
+        .invoice-type-container{background-color: #fff; padding: .35rem .3rem; border-bottom: 1px solid #eee;}
+        .invoice-type-container .invoice-type-title{font-size: .32rem; color: #333; margin-bottom: .2rem;}
+        .invoice-type-container .invoice-type-box span{padding: .15rem .4rem; margin: 0 .4rem .2rem 0; display: inline-block; border: 1px solid #999; font-size: .26rem; color: #456; line-height: normal; border-radius: 3px;}
+        .invoice-type-container .invoice-type-box span.choose{border-color: #504cfb; background: url(__STATIC__/index/image/choose.png) no-repeat right bottom;}
     </style>
 </head>
 <body>
-    <div class="place-order-pop">
+    <div class="place-order-pop" style="display:none;">
         <header class="place-order-header">
             <a href="javascript:;" class="spr place-order-back"></a>
             <h3 class="place-order-title">确认订单</h3>
@@ -208,6 +215,20 @@
             <div class="default">
                 <label class="dont" for="dont">不使用积分</label>
                 <input type="radio" id="dont" name="disc" checked>
+            </div> 
+        </div>
+    </div>
+    <!-- 发票 -->
+    <div class="invoice-container" style="display: block;">
+        <div class="head">
+            <a href="javascript:;" class="spr icon_back"></a>
+            <h3>开具发票</h3>
+        </div>
+        <div class="invoice-type-container">
+            <div class="invoice-type-title">发票类型</div>
+            <div class="invoice-type-box">
+                <span class="choose">不开发票</span>
+                <span>电子发票</span>
             </div>
         </div>
     </div>

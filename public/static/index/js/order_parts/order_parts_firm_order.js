@@ -450,3 +450,8 @@ $('.method-div').click(function(){
 $('.chose-payment-back').click(function(){
     backMethod();
 })
+
+// 发票
+$('.invoice-type-box').on('click', 'span', function(){
+    $(this).addClass('choose').siblings().removeClass('choose');
+})
