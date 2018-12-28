@@ -86,7 +86,7 @@
             <div class="middle_box">
                 <div class="price-box">
                     <span>￥</span>
-                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="0.01" readonly>
+                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="" readonly>
                 </div>
                 <ul class="content">
                     <li>
@@ -111,6 +111,30 @@
         $('#goAlipay').click(function(){
             $('.mask').show();
             $('.alipay-pop').animate({'bottom': '0'});
+            var got_to_time = $('.arrive_time span').text();
+            var service_money = $('.pay-amount-span span').text();
+            $.ajax({
+                url: 'ios_api_order_service_button',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'goods_id': goodsId,
+                    'service_order_quantitative': 1,
+                    'service_money': service_money,
+                    'setting_id': deductionId,
+                    'got_to_time': got_to_time
+                },
+                success: function(res){
+                    console.log(res);
+                    $('#WIDout_trade_no').val(res.data.service_order_number);
+                    $('#WIDtotal_amount').val(res.data.service_real_pay);
+                    $('#WIDsubject').val(res.data.service_goods_name);
+                    $('#WIDbody').val(res.data.service_goods_name);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
         $('.close-alipay').click(function(){
             $('.mask').hide();
@@ -133,6 +157,8 @@
             return des + ''
         }
         var finalMoney;
+        var deductionId = '';
+        var goodsId;
         // 订单号
         $.ajax({
             url: 'ios_api_order_service_get_information',
@@ -142,6 +168,7 @@
                 console.log(res);
                 if(res.status == 1){
                     var data = res.data;
+                    goodsId = data.goods[0].id;
                     if(data.user_info.real_name !== null){
                         $('.name').text(data.user_info.real_name);
                     }else{
@@ -152,11 +179,12 @@
                     $('.car_ver').text(data.car_series.brand+' '+data.car_series.series+' '+data.car_series.displacement+' '+data.car_series.year);
                     $('.shop span').text(data.store[0].store_name);
                     $('.arrive_time span').text(data.time);
-                    $('.service-type').text(data.serve_data[0].serve_name);
-                    $('.price').text('￥'+ data.serve_data[0].serve_goods[0].service_money);
-                    $('.pay-amount-span span').text(data.serve_data[0].serve_goods[0].service_money)
-                    $('.totalprice span').text(data.serve_data[0].serve_goods[0].service_money);
-                    finalMoney = data.serve_data[0].serve_goods[0].service_money;
+                    $('.service-type').text(data.serve_data[0].serve_name.service_setting_name);
+                    $('.service_name').find('img').attr('src', 'uploads/' + data.serve_data[0].serve_name.service_setting_calss_img);
+                    $('.price').text('￥'+ data.goods[0].service_money);
+                    $('.pay-amount-span span').text(data.goods[0].service_money)
+                    $('.totalprice span').text(data.goods[0].service_money);
+                    finalMoney = data.goods[0].service_money;
                     var str = '';
                     $.each(data.integral_info, function(idx, val){
                         str += `<div class="dis">

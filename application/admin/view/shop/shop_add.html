@@ -55,6 +55,24 @@
     .layui-btn {
         width: 100px;
     }
+    .open{
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,0.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: fixed;
+		z-index: 999999999;
+	}
+	.open>.img{
+		width: 600px;
+		height: 600px;
+		
+	}
+	.noshow{
+		display: none;
+	}
 </style>
 
 {/block}
@@ -62,7 +80,11 @@
 <body>
 
     {block name="content"}
-
+    <div class="open noshow">
+        <div class="img">
+               <img src=""/>		
+        </div>
+    </div>
     {if !empty($data)}
     {volist name="data" id="vo"}
     <form class="layui-form" action="{:url('admin/Shop/update',['id'=>$vo.store_id])}" method="post">
@@ -393,6 +415,16 @@
             $("#submits").attr("type", "submit");
 
         }
+        // 图片放大
+        $(".open").click(function(){
+		$(this).addClass("noshow");
+		
+        })
+        $("img").click(function(){
+            $(".open").removeClass("noshow");
+            var urls=$(this).attr('src');
+            $(".img img").attr('src',urls);
+        });
         // 图片删除
         $(".remove-img").click(function() {
             var remove = $(this).parent();

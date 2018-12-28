@@ -37,8 +37,8 @@
         .send-goods span:first-of-type{font-size: .32rem; color: #09b10d;}
         .send-goods .send-address{flex: 1; font-size: .32rem; color: #333;}
         .send-goods .customer-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -5.05rem}
-        .time-container{display: flex; justify-content: space-between; align-items: center; margin-bottom: .4rem;}
-        .time-container>span{border: 1px solid #39a3f5; font-size: .24rem; color: #678;padding: 0 .15rem; border-radius: .3rem; height: .4rem;}
+        .time-container{display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;}
+        .time-container>span{border: 1px solid #39a3f5; font-size: .24rem; color: #678;padding: 0 .15rem; border-radius: .3rem; height: .4rem; margin-bottom: .2rem;}
         .button-container button{width: 100%;height: .8rem; border-radius: .1rem; border: 0; background-color: #3169f6; font-size: .3rem; color: #fff;}
         
         .header-container{background-color: #3169f6; display: flex; align-items: center; justify-content: flex-end; padding: .1rem 0;}
@@ -54,11 +54,11 @@
         </header>
         <div class="courier-bg">
             <div class="avatar">
-                <img src="__STATIC__/index/image/icon6.png">
+                <img src="__STATIC__/index/image/avatar.png">
             </div>
             <div class="info">
-                <span>黄飞鸿</span>
-                <span>13691853045</span>
+                <span class="name"></span>
+                <span class="phone"></span>
             </div>
         </div>
         <div class="status-bar">
@@ -68,14 +68,7 @@
             <a href="express_completed" class="status-a">已完成</a>
         </div>
         <div class="order-container">
-            <div class="order-item">
-                <!-- <div class="distance-container">
-                    <i class="spr icon-me"></i>
-                    <div class="distance-box"><span>1.5</span>km</div>
-                    <i class="spr icon-get"></i>
-                    <div class="distance-box"><span>1.5</span>km</div>
-                    <i class="spr icon-send"></i>
-                </div> -->
+            <!-- <div class="order-item">
                 <div class="address-container">
                     <div class="get-goods">
                         <span>取：</span>
@@ -98,10 +91,11 @@
                 <div class="button-container">
                     <button>配送中</button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
         $.ajax({
             url: 'express_distribution',
@@ -109,12 +103,96 @@
             dataType: 'JSON',
             success: function(res){
                 console.log(res);
+                if(res.status == 1){
+                    var data = res.data;
+                    $('.info .name').text(data.delivery_data[0].name);
+                    $('.info .phone').text(data.delivery_data[0].number);
+                    var str = '';
+                    $.each(data.express, function(idx, val){
+                        str += `<div class="order-item">
+                                    <div class="address-container">
+                                        <div class="get-goods" id="store-`+val.store_id+`">
+                                            <span>取：</span>
+                                            <div>
+                                                <span class="shop-name">`+val.store_name+`</span>
+                                                <span class="shop-address">`+val.store_address+`</span>
+                                            </div>
+                                            <a href="call:`+parseInt(val.store_number)+`" class="spr shop-phone"></a>
+                                        </div>
+                                        <div class="send-goods" id="send-`+val.order_id+`">
+                                            <span>送：</span>
+                                            <span class="send-address">`+val.user_order_address+`</span>
+                                            <a href="call:`+parseInt(val.order_user_number)+`" class="spr customer-phone"></a>
+                                        </div>
+                                    </div>
+                                    <div class="time-container">
+                                        <span class="order-time">下单时间：<span>`+timetrans(val.order_create_time)+`</span></span>
+                                        <span class="accept-time">预计送达时间：<span>宝贝正在路上，请您耐心等候</span></span>
+                                    </div>
+                                    <div class="button-container">
+                                        <button class="my-btn">配送中</button>
+                                    </div>
+                                </div>`
+                    })
+                    $('.order-container').append(str);
+                    $('.order-item').on('click', '.my-btn', function(){
+                        var deliveryId = data.delivery_data[0].id;
+                        var $index = $('.my-btn').index($(this));
+                        var thisData = data.express[$index];
+                        layer.open({
+                            content: '配送完成？',
+                            btn: ['确定', '取消'],
+                            yes: function (index) {
+                                layer.close(index);
+                                console.log(data.express[$index]);
+                                $.ajax({
+                                    url: 'express_distribution_edit',
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    data: {
+                                        'user_order_phone': thisData.order_user_number,
+                                        'store_phone': thisData.store_number,
+                                        'order_id': thisData.order_id,
+                                        'delivery_id': deliveryId,
+                                        'status': 3,
+                                        'user_order_address': thisData.order_address,
+                                        'store_address': thisData.store_address,
+                                        'order_create_time': thisData.order_create_time,
+                                        'store_name': thisData.store_name,
+                                        'parts_order_number': thisData.parts_order_number,
+                                        'store_id': thisData.store_id,
+                                        'id': thisData.id
+                                    },
+                                    success: function(res){
+                                        console.log(res);
+                                        if(res.status == 1){
+                                            location.reload();
+                                        }
+                                    },
+                                    error: function(){
+                                        console.log('error');
+                                    }
+                                })
+                            }
+                        });
+                    })
+                }
             },
             error: function(){
                 console.log('error');
             }
         })
-        
+
+        function timetrans(date){
+            var date = new Date(date*1000);//如果date为13位不需要乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+            var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+            var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+            var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+            var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
+            return Y+M+D+h+m+s;
+        }
     </script>
 </body>
 </html>

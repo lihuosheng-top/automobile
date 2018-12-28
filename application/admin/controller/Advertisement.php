@@ -149,6 +149,7 @@ class  Advertisement extends  Controller{
             $data["end_time"] = strtotime($data["end_time"]);
             $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
 
+            $data["postid"] = $data["pid"];
             unset($data["id"]);
             unset($data["pid"]);
             $boole = db("platform")->where('pgd', $request->only(["id"])["id"])->update($data);

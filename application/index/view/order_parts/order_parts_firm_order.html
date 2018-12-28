@@ -63,6 +63,30 @@
         .discount_wrap .dis .dis-introduce{font-size: .42rem; color: #333;}
         .discount_wrap .dis .need-integ{font-size: .24rem; color: #333;}
         .discount_wrap .dis .deduction-money{font-size: .42rem;}
+
+        /* 发票 */
+        .invoice-container{height: 100vh; background-color: #f2f2f2;}
+        .invoice-type-container{background-color: #fff; padding: .35rem .3rem; border-bottom: 1px solid #eee;}
+        .invoice-type-container .invoice-type-title{font-size: .32rem; color: #333; margin-bottom: .2rem;}
+        .invoice-type-container .invoice-type-box span{padding: .15rem .4rem; margin: 0 .4rem .2rem 0; display: inline-block; border: 1px solid #999; font-size: .26rem; color: #456; line-height: normal; border-radius: 3px;}
+        .invoice-type-container .invoice-type-box span.choose{border-color: #504cfb; background: url(__STATIC__/index/image/choose.png) no-repeat right bottom;}
+        .invoice-btn{display: block; margin: .7rem auto 0; height: .88rem; font-size: .3rem; background-color: #504cfb; color: #fff; border: 0; outline: none; border-radius: .1rem; width: 80%;}
+        .invoice-info-container{background-color: #fff; padding: .35rem .3rem; border-bottom: 1px solid #eee;}
+        .invoice-info-container .invoice-info-title{font-size: .32rem; color: #333; margin-bottom: .2rem;}
+        .invoice-info-container .invoice-object{display: flex;}
+        .invoice-object .personal-container{margin-right: 1rem;}
+        .invoice-object input{vertical-align: middle;}
+        .invoice-object label{font-size: .3rem; color: #333;}
+        .invoice-detail-container{background-color: #fff; padding: .35rem 0;}
+        .personal-invoice-detail div, .company-invoice-detail div{padding: 0 .3rem; font-size: .3rem;}
+        .invoice-detail-container .invoice-header,
+        .company-invoice-detail .company-invoice-header,
+        .company-invoice-detail .company-invoice-phone{padding-bottom: .35rem; border-bottom: 1px solid #eee; margin-bottom: .35rem;}
+        .personal-invoice-detail .invoice-header{color: #666;}
+        .company-invoice-detail input{font-size: .3rem; flex: 1; outline: none;}
+        .company-invoice-detail span{display: inline-block; width: 1.5rem; line-height: normal;}
+        .company-invoice-identify{display: flex;}
+        .company-invoice-identify textarea{flex: 1; font-size: .3rem; resize: none; border: 0; outline: none;}
     </style>
 </head>
 <body>
@@ -119,7 +143,7 @@
                         <span class="discount">不使用积分</span>
                         <a href="javascript:;" class="spr icon-more"></a>
                     </li>
-                    <li class="sundry-li">
+                    <li class="sundry-li invoice-li">
                         <p class="sundry-title">发票信息</p>
                         <span class="invoice">不开发票</span>
                         <a href="javascript:;" class="spr icon-more"></a>
@@ -208,8 +232,58 @@
             <div class="default">
                 <label class="dont" for="dont">不使用积分</label>
                 <input type="radio" id="dont" name="disc" checked>
+            </div> 
+        </div>
+    </div>
+    <!-- 发票 -->
+    <div class="invoice-container" style="display: none;">
+        <div class="head">
+            <a href="javascript:;" class="spr icon_back"></a>
+            <h3>开具发票</h3>
+        </div>
+        <div class="invoice-type-container">
+            <div class="invoice-type-title">发票类型</div>
+            <div class="invoice-type-box">
+                <span class="choose neednt">不开发票</span>
+                <span class="need">电子发票</span>
             </div>
         </div>
+        <div class="need-invoice" style="display:none;">
+            <div class="invoice-info-container">
+                <div class="invoice-info-title">发票信息</div>
+                <div class="invoice-object">
+                    <div class="personal-container">
+                        <input type="radio" id="personal" name='obj' checked>
+                        <label for="personal">个人</label>
+                    </div>
+                    <div class="company-container">
+                        <input type="radio" id="company" name='obj'>
+                        <label for="company">公司</label>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice-detail-container">
+                <div class="personal-invoice-detail" style="display: block;">
+                    <div class="invoice-header">发票抬头 <span>个人</span>（不可修改）</div>
+                    <div class="invoice-phone">手机号 <span>18998906797</span></div>
+                </div>
+                <div class="company-invoice-detail" style="display: none;">
+                    <div class="company-invoice-header">
+                        <span>发票抬头</span>
+                        <input type="text" placeholder="请输入发票抬头" id="company-header-input">
+                    </div>
+                    <div class="company-invoice-phone">
+                        <span>手机号</span>
+                        <input type="text" placeholder="请输入手机号" id="company-phone-input">
+                    </div>
+                    <div class="company-invoice-identify">
+                        <span>识别号</span>
+                        <textarea placeholder="请输入纳税人识别号或统一社会信用代码（非必填）" id="company-identify"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="invoice-btn">确定</button>
     </div>
     
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>

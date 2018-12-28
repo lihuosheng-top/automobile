@@ -278,7 +278,7 @@ html{
     color: #ccc;
 }
 .time_pop .hours_wrap button.chosed{
-    background: url(../../image/chose.png) no-repeat right bottom;
+    background: url(../../image/choose.png) no-repeat right bottom;
 }
 .time_pop .nowM>div{
     display: flex;
