@@ -124,7 +124,7 @@ class  Express extends  Controller{
             if ($express) {
                 return ajax_success("获取成功",array("express"=>$express,"delivery_data"=>$delivery_data));
             } else {
-                return ajax_error("获取失败");
+                return ajax_error("获取失败",$delivery_data);
             }
         }
 
@@ -171,7 +171,7 @@ class  Express extends  Controller{
             if ($express) {
                 return ajax_success("获取成功", array("express"=>$express,"delivery_data"=>$delivery_data));
             } else {
-                return ajax_error("获取失败");
+                return ajax_error("获取失败",$delivery_data);
             }
         }
         return view("express_distribution");
@@ -217,7 +217,7 @@ class  Express extends  Controller{
             if ($express) {
                 return ajax_success("获取成功",array("express"=>$express,"delivery_data"=>$delivery_data));
             } else {
-                return ajax_error("获取失败");
+                return ajax_error("获取失败",$delivery_data);
             }
         }
         return view("express_completed");
