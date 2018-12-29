@@ -108,7 +108,7 @@
                         },
                         choose: (value) => {
                             starArr[idx] = value;
-                            console.log(starArr);
+                            // console.log(starArr);
                         }
                     })
                 })
@@ -151,7 +151,7 @@
                         var switchSpan = $(this).parent();
                         var id = $(this).parents('.evaluation-subject').attr('id');
                         changeEvent(inputElem, switchSpan, id);
-                        console.log(filesObj)
+                        // console.log(filesObj)
                     })
                 }
             },
@@ -195,7 +195,7 @@
             $('.upload-item').on('click', '.del-img', function(){
                 var $index = $('.del-img').index($(this));
                 filesObj[id].splice($index, 1);
-                console.log(filesObj)
+                // console.log(filesObj)
                 $(this).parent().remove();
             })
         }
@@ -219,15 +219,20 @@
                 orderId.push(val.id);
             })
             // 用户评价内容
-            var evaluateContent = $('textarea').val();
-            formData.append('evaluateContent', evaluateContent);
+            var evaluateContent = [];
+            $.each($('textarea'), function(idx, val){
+                evaluateContent.push(val.value);
+            })
+            $.each(evaluateContent, function(idx, val){
+                formData.append('evaluateContent[]', val);
+            })
             var idArr = [];
             $.each($('.evaluation-subject'), function(idx, val){
                 idArr.push(val.id);
             })
             $.each(idArr, function(idx, val){
                 $.each(filesObj[val], function(index, value){
-                    console.log(value);
+                    // console.log(value);
                     formData.append('filesArr'+val+'[]', value);
                 })
             })
