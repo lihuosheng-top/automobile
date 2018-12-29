@@ -79,6 +79,8 @@ $.ajax({
                 }
             })
             $('.reservation-tab-container').append(str);
+
+            // 取消订单
         }
     },
     error: function(){
