@@ -155,6 +155,7 @@ $('.publish-btn').click(function(){
         idArr.push(val.id);
     })
     $.each(idArr, function(idx, val){
+        console.log(filesObj == {});
         $.each(filesObj[val], function(index, value){
             console.log(value);
             formData.append('filesArr'+val+'[]', value);
@@ -171,18 +172,18 @@ $('.publish-btn').click(function(){
     })
     formData.append('isOnTime', isOnTime);
 
-    $.ajax({
-        url: 'evaluate_parts_add',
-        type: 'POST',
-        dataType: 'formData',
-        processData: false,
-        contentType: false,
-        data: formData,
-        success: function(res){
-            console.log(res);
-        },
-        error: function(){
-            console.log('error');
-        }
-    })
+    // $.ajax({
+    //     url: 'evaluate_parts_add',
+    //     type: 'POST',
+    //     dataType: 'formData',
+    //     processData: false,
+    //     contentType: false,
+    //     data: formData,
+    //     success: function(res){
+    //         console.log(res);
+    //     },
+    //     error: function(){
+    //         console.log('error');
+    //     }
+    // })
 })
