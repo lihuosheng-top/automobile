@@ -205,28 +205,28 @@ class Evaluate extends  Controller{
                     Db::name("order_service")
                         ->where("id",$v)
                         ->update(["status"=>6]);
-                    foreach ($images as $ks=>$vs){
-                        if( $v == intval($ks)){
-                            foreach ($vs as $j=>$i){
-                                //插入评价图片数据库
-                                $insert_data =[
-                                    "images"=>$i,
-                                    "evaluate_order_id"=>$bool,
-                                ];
-                                Db::name("order_service_evaluate_images")->insert($insert_data);
+                    if(!empty($images)){
+                        foreach ($images as $ks=>$vs){
+                            if( $v == intval($ks)){
+                                foreach ($vs as $j=>$i){
+                                    //插入评价图片数据库
+                                    $insert_data =[
+                                        "images"=>$i,
+                                        "evaluate_order_id"=>$bool,
+                                    ];
+                                    Db::name("order_service_evaluate_images")->insert($insert_data);
+                                }
                             }
                         }
                     }
-                }
-                if($bool){
                     return ajax_success("评价成功",$bool);
+                    exit();
                 }else{
                     return ajax_error("评价失败",["status"=>0]);
+                    exit();
                 }
             }
 
         }
     }
-
-
 }
