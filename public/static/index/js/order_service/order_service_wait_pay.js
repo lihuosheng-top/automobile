@@ -1,11 +1,3 @@
-
-var app = new Vue({
-    el: '#app',
-    
-})
-
-
-
 $('.tabs button').click(function(){
     var $index = $(this).index();
     switch($index){
@@ -21,3 +13,14 @@ $('.tabs button').click(function(){
     }
 })
 
+$.ajax({
+    url: 'ios_api_order_service_wait_pay',
+    dataType: 'JSON',
+    type: 'POST',
+    success: function(res){
+        console.log(res);
+    },
+    error: function(){
+        console.log();
+    }
+})
