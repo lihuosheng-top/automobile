@@ -71,13 +71,6 @@
             <div class="shop-eva-title">
                 <i class="spr icon-shop"></i>店铺评分
             </div>
-            <div class="on-time">
-                是否准时
-                <input type="radio" id="punctual" name='ontimes' checked>
-                <label for="punctual">准时</label>
-                <input type="radio" id="late" name='ontimes'>
-                <label for="late">不准时</label>
-            </div>
             <div class="service-eval">
                 服务态度
                 <div class="service star" id="service"></div>
@@ -216,19 +209,6 @@
             }
             return url;
         }
-        // 是否准时
-        var isOnTime = 1;
-        $('.on-time').on('change', 'input', function(){
-            var onTimeText = $(this).attr('id');
-            if(onTimeText === 'late'){
-                isOnTime = -1;
-            }else{
-                isOnTime = 1;
-            }
-            console.log(isOnTime);
-        })
-
-
         // 发布
         var formData = new FormData();
         $('.publish-btn').click(function(){
@@ -257,7 +237,6 @@
             $.each(starArr, function(idx, val){
                 formData.append('starArr[]', val);
             })
-            formData.append('isOnTime', isOnTime);
 
             $.ajax({
                 url: 'evaluate_service_add',
