@@ -50,13 +50,35 @@ $.ajax({
                                 <i class="spr icon-time"></i>`+val.got_to_time+`
                             </p>
                             <p class="order-shop-name">
-                                <i class="spr icon-shop"></i>深圳福田德鹏汽车保养店
+                                <i class="spr icon-shop"></i>`+val.store_name+`
                             </p>
                             <div class="order-item">
                                 <span></span>`+val.service_goods_name+`
+                            </div>`
+                if(statusTxt == '已关闭'){
+                    str += `</div>`
+                }else if(statusTxt == '待付款'){
+                    str += `<div class="button-box">
+                                <button class="cancel-order-btn">取消订单</button>
+                                <button class="to-payment-btn">去付款</button>
                             </div>
-                            <div class="button-box">`
+                        </div>`
+                }else if(statusTxt == '待服务'){
+                    str += `<div class="button-box">
+                                <button class="conf-receipt-btn" style="display:none;">已服务</button>
+                            </div>
+                        </div>`
+                }else if(statusTxt == '待评价'){
+                    str += `<div class="button-box">
+                                <button class="del-order-btn" style="display:none;">删除订单</button>
+                                <button class="evaluation-btn" style="display:none;">去评价</button>
+                            </div>
+                        </div>`
+                }else if(statusTxt == '已完成'){
+                    str += `</div>`
+                }
             })
+            $('.reservation-tab-container').append(str);
         }
     },
     error: function(){
