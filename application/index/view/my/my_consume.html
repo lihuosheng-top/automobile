@@ -23,7 +23,7 @@
         .cost-li .cost-info{flex: 1; line-height: normal;}
         .cost-li .cost-info p{font-size: .3rem; color: #333;}
         .cost-li .cost-info span{font-size: .24rem; color: #999;}
-        .cost-li .cost-money{font-size: .34rem;}
+        .cost-li .cost-money{font-size: .34rem; margin-left: .5rem;}
         .month-tit{padding: .15rem 0 .15rem .3rem;}
     </style>
 </head>
@@ -72,7 +72,7 @@
                 if(res.status == 1){
                     var str = '';
                     $.each(res.data, function(idx, val){
-                        str += `<li class="cost-li">
+                        str += `<li class="cost-li" id="`+val.wallet_id+`">
                                     <div class="cost-method">
                                         <img src="static/`+val.wallet_img+`">
                                     </div>
@@ -86,6 +86,9 @@
                                 </li>`
                     })
                     $('.cost-ul').append(str);
+                    $('.cost-li').click(function(){
+                        location.href = 'consume_message';
+                    })
                 }
             },
             error: function(){
