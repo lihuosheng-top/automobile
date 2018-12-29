@@ -106,7 +106,7 @@ $.ajax({
             // 去评价
             $('.evaluation-btn').click(function(){
                 var orderNum = $(this).parents('.reservation-tab').find('.order-num span').text();
-                detailAndEva('order_service_save_record', orderNum, 'evaluate_index');
+                detailAndEva('order_service_save_record', orderNum, 'service_evaluate_index');
             })
             // 查看详情
             $('.reservation-info-container').click(function(){
