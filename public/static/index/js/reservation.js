@@ -54,7 +54,7 @@ function showShops(){
             console.log(data);
             var str = '';
             $.each(data.data, function(idx, val){
-                if(val.store !== null){
+                if(val.serve_name !== null){
                     // 店铺经纬度
                     var dis = 0;
                     if(val.serve_name.longitude !== null && val.serve_name.latitude !== null){

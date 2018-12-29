@@ -102,10 +102,10 @@ var urlLen = url.substr(1).split('&').length;
 
 if(url.indexOf('?') != -1){
     storeId = url.substr(1).split('&')[0].split('=')[1];
-    serviceSettingId = url.substr(1).split('&')[1].split('=')[1];
 }
 if(urlLen > 1){
     // 选择服务类型进来
+    serviceSettingId = url.substr(1).split('&')[1].split('=')[1];
     $.ajax({
         url: 'reservation_detail',
         type: 'POST',
