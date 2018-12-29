@@ -33,30 +33,30 @@ AMap.plugin([
     function onComplete(e){
         console.log(e);
         userLngLat = [e.position.lng, e.position.lat];
-        showShops(e);
+        showShops(e.formattedAddress);
     };
     function onError(e){
         console.log(e);
     };
 })
-showShops();
 
-function showShops(e){
+function showShops(addr){
     var markerList = [];//店铺经纬度
-    console.log(e.formattedAddress)
+    console.log(addr); 
     $.ajax({
         url: 'reservation',
         type: 'POST',
         dataType: 'JSON',
         data: {
             'service_setting_id': service_setting_id,
-            'store_user_address':e.formattedAddress,
+            'store_user_address': addr
         },
         success: function(data){
             console.log(data);
             var str = '';
             $.each(data.data, function(idx, val){
-                if(val.serve_name !== null){
+                // console.log(val.serve_name)
+                if(val.serve_name !== undefined){
                     // 店铺经纬度
                     var dis = 0;
                     if(val.serve_name.longitude !== null && val.serve_name.latitude !== null){
