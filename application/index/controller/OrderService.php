@@ -433,7 +433,7 @@ class OrderService extends Controller{
                     ->where('tb_serve_goods.id', $commodity_id)
                     ->find();
                 $store_name =Db::name("store")
-                    ->where("store_id",$goods_data["id"])
+                    ->where("store_id",$goods_data["store_id"])
                     ->value("store_name");
                 $create_time = time();
                 $time=date("Y-m-d",time());
