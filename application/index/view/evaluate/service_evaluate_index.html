@@ -108,7 +108,7 @@
                         },
                         choose: (value) => {
                             starArr[idx] = value;
-                            console.log(starArr);
+                            // console.log(starArr);
                         }
                     })
                 })
@@ -151,7 +151,7 @@
                         var switchSpan = $(this).parent();
                         var id = $(this).parents('.evaluation-subject').attr('id');
                         changeEvent(inputElem, switchSpan, id);
-                        console.log(filesObj)
+                        // console.log(filesObj)
                     })
                 }
             },
@@ -195,7 +195,7 @@
             $('.upload-item').on('click', '.del-img', function(){
                 var $index = $('.del-img').index($(this));
                 filesObj[id].splice($index, 1);
-                console.log(filesObj)
+                // console.log(filesObj)
                 $(this).parent().remove();
             })
         }
@@ -227,7 +227,7 @@
             })
             $.each(idArr, function(idx, val){
                 $.each(filesObj[val], function(index, value){
-                    console.log(value);
+                    // console.log(value);
                     formData.append('filesArr'+val+'[]', value);
                 })
             })
