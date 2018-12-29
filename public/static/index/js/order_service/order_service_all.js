@@ -65,13 +65,13 @@ $.ajax({
                         </div>`
                 }else if(statusTxt == '待服务'){
                     str += `<div class="button-box">
-                                <button class="conf-receipt-btn" style="display:none;">已服务</button>
+                                <button class="conf-receipt-btn"">已服务</button>
                             </div>
                         </div>`
                 }else if(statusTxt == '待评价'){
                     str += `<div class="button-box">
-                                <button class="del-order-btn" style="display:none;">删除订单</button>
-                                <button class="evaluation-btn" style="display:none;">去评价</button>
+                                <button class="del-order-btn"">删除订单</button>
+                                <button class="evaluation-btn"">去评价</button>
                             </div>
                         </div>`
                 }else if(statusTxt == '已完成'){
