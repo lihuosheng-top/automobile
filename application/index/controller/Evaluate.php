@@ -124,5 +124,29 @@ class Evaluate extends  Controller{
 
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单（评价页面）
+     **************************************
+     */
+    public function service_evaluate_index(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            $service_order_number = Session::get("service_order_number"); //订单编号
+            $condition = "`user_id` = " . $user_id . " and `service_order_number` = " . $service_order_number;
+            $data = Db::name("order_service")
+                ->where($condition)
+                ->select();
+            if(!empty($data)){
+                Session::set("service_order_number",null);
+                return ajax_success("对应的订单信息返回成功",$data);
+            }else{
+                return ajax_error("没有对应的订单信息",["status"=>0]);
+            }
+        }
+    }
+
+
 
 }
