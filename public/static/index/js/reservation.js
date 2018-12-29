@@ -33,14 +33,15 @@ AMap.plugin([
     function onComplete(e){
         console.log(e);
         userLngLat = [e.position.lng, e.position.lat];
-        showShops();
+        showShops();    
     };
     function onError(e){
         console.log(e);
     };
 })
+showShops();
 
-function showShops(dis){
+function showShops(){
     var markerList = [];//店铺经纬度
     $.ajax({
         url: 'reservation',
@@ -69,7 +70,9 @@ function showShops(dis){
                         $.each(markerList, function(idx, val){
                             markerLngLat = [val.C.position.lng, val.C.position.lat];
                         })
-                        dis = parseInt(AMap.GeometryUtil.distance(markerLngLat, userLngLat));
+                        if(userLngLat.length !== 0){
+                            dis = parseInt(AMap.GeometryUtil.distance(markerLngLat, userLngLat));
+                        }
                     }
                     if(val.service_money !== null){
                         str += '<div>\

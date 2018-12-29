@@ -366,7 +366,8 @@ class Install extends Controller{
      */
     public function message_index(){
 
-        return view("message_index");
+        $message = db("message")->paginate(20);
+        return view("message_index",["message"=>$message]);
 
     }
 
@@ -388,9 +389,10 @@ class Install extends Controller{
      * 消息提醒修改
      * 陈绪
      */
-    public function message_edit(Request $request){
+    public function message_edit($id){
 
-        return view("message_edit");
+        $message = db("message")->where("id",$id)->select();
+        return view("message_edit",["message"=>$message]);
 
     }
 
@@ -402,7 +404,15 @@ class Install extends Controller{
      */
     public function message_updata(Request $request){
 
-
+        $id = $request->only(["id"])["id"];
+        $data = $request->param();
+        $data["create_time"] = time();
+        $bool = db("message")->where("id",$id)->update($data);
+        if($bool){
+            $this->success("修改成功",url("admin/Install/message_index"));
+        }else{
+            $this->error("修改失败",url("admin/Install/message_index"));
+        }
 
     }
 
@@ -410,10 +420,16 @@ class Install extends Controller{
      * 消息添加
      * 陈绪
      */
-    public function message_save(){
+    public function message_save(Request $request){
 
-
-
+        $messages_data = $request->param();
+        $messages_data["create_time"] = time();
+        $bool = db("message")->insert($messages_data);
+        if($bool){
+            $this->success("添加成功",url("admin/Install/message_index"));
+        }else{
+            $this->error("添加失败",url("admin/Install/message_index"));
+        }
     }
 
 
@@ -422,8 +438,14 @@ class Install extends Controller{
      * 消息删除
      * 陈绪
      */
-    public function message_del(){
+    public function message_del($id){
 
+        $bool = db("message")->where("id",$id)->delete();
+        if($bool){
+            $this->success("删除成功",url("admin/Install/message_index"));
+        }else{
+            $this->error("删除失败",url("admin/Install/message_index"));
+        }
 
     }
 

@@ -55,6 +55,8 @@ class  Information extends  Controller{
         return view('information_details');
     }
 
+
+
     /**
      **************李火生*******************
      * @param Request $request
