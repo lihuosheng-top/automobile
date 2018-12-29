@@ -219,8 +219,13 @@
                 orderId.push(val.id);
             })
             // 用户评价内容
-            var evaluateContent = $('textarea').val();
-            formData.append('evaluateContent', evaluateContent);
+            var evaluateContent = [];
+            $.each($('textarea'), function(idx, val){
+                evaluateContent.push(val.value);
+            })
+            $.each(evaluateContent, function(idx, val){
+                formData.append('evaluateContent[]', val);
+            })
             var idArr = [];
             $.each($('.evaluation-subject'), function(idx, val){
                 idArr.push(val.id);
