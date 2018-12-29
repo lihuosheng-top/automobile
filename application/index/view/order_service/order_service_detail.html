@@ -11,7 +11,7 @@
     <title>配件商-商品详情</title>
 </head>
 <body>
-    <div v-cloak id="app">
+    <div id="app">
         <div class="place-order-pop">
             <header class="place-order-header">
                 <a href="order_service_all" class="spr place-order-back"></a>
@@ -72,17 +72,17 @@
                     </div>
                 </div>
                 <div class="order-payment-box">
-                    <button class="order-cancel-btn" @click="cancelOrder">取消订单</button>
-                    <button class="order-payment-btn" @click="alipayPopFn">立即付款</button>
+                    <button class="order-cancel-btn">取消订单</button>
+                    <button class="order-payment-btn">立即付款</button>
                 </div>
             </div>
         </div>
-        <div class="mask" v-show="maskPopFlag"></div>
+        <div class="mask"></div>
         <!-- 取消订单弹窗 -->
-        <div class="cancel-order-pop" :class="{showCancelPop: cancelPopFlag}">
+        <div class="cancel-order-pop">
             <header class="cancel-order-header">
                 取消订单
-                <a href="#" class="spr close-cancel-order" @click.prevent="cancelOrder"></a>
+                <a href="#" class="spr close-cancel-order"></a>
             </header>
             <p class="reason-title">请选择取消订单原因：</p>
             <ul class="reason-list">
@@ -92,13 +92,13 @@
                 <li class="reason-li"><i class="spr icon-reason"></i> 预约时间有误</li>
                 <li class="reason-li"><i class="spr icon-reason"></i> 其他原因</li>
             </ul>
-            <button class="select-reason-btn" @click.prevent="cancelOrder">确定</button>
+            <button class="select-reason-btn">确定</button>
         </div>
         <!-- 支付弹窗 -->
         <form name=alipayment action="{:url('index/Apppay/index_aliPay')}" method="post">
-            <div class="alipay-pop" :class="{showAlipayPop: alipayPopFlag}">
+            <div class="alipay-pop">
                 <header>
-                    <a href="#" @click.prevent="alipayPopFn" class="close-alipay">×</a>
+                    <a href="#" class="close-alipay">×</a>
                     <h3 class="alipay-title">确认付款</h3>
                 </header>
                 <div class="middle_box">
