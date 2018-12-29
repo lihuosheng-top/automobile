@@ -201,7 +201,7 @@ class Evaluate extends  Controller{
                     "is_repay"=>0,
                 ];
                 $bool =Db::name("order_service_evaluate")->insertGetId($data);
-                if(!empty( $bool)){
+                if(!empty($bool)){
                     Db::name("order_service")
                         ->where("id",$v)
                         ->update(["status"=>6]);
@@ -218,12 +218,13 @@ class Evaluate extends  Controller{
                         }
                     }
                 }
+                if($bool){
+                    return ajax_success("评价成功",$bool);
+                }else{
+                    return ajax_error("评价失败",["status"=>0]);
+                }
             }
-            if($bool){
-                return ajax_success("评价成功",$bool);
-            }else{
-                return ajax_error("评价失败",["status"=>0]);
-            }
+
         }
     }
 
