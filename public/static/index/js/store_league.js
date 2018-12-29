@@ -36,7 +36,7 @@ $.ajax({
         var data = res.data;
         console.log(data);
         var leagueStr = '';
-        for(var i = 0, l = data.roles.length; i < l; i++){
+        for(var i = 0, l = 2; i < l; i++){
             if(i === 0){
                 leagueStr += '<input type="radio" name="league" checked id="'+data.roles[i].id+'" class="radio-input">\
                         <label for="'+data.roles[i].id+'" class="accessory-dealer-label">'+data.roles[i].name+'</label>';
