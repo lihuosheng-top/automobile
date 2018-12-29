@@ -228,6 +228,7 @@
     color: #999999;
 }
 .mask{
+    display: none;
     position: fixed;
     top: 0;
     left: 0;

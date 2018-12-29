@@ -35,6 +35,26 @@ class OrderService extends Controller{
         return view('order_service_all');
     }
 
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单保存订单编号给订单详情
+     **************************************
+     * @param Request $request
+     */
+    public function order_service_save_record(Request $request){
+        if($request->isPost()){
+            $service_order_number =$request->only("service_order_number")["service_order_number"];//配件商订单编号
+            if(!empty($service_order_number)){
+                Session::set("service_order_number", $service_order_number);
+                return ajax_success("暂存成功",['status'=>1]);
+            }else{
+                return ajax_error("没有这个订单编号",["status"=>0]);
+            }
+        }
+    }
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -42,7 +62,16 @@ class OrderService extends Controller{
      **************************************
      * @return \think\response\View
      */
-    public function order_service_detail(){
+    public function order_service_detail(Request $request){
+        if($request->isPost()){
+            $order_id=Session::get("service_order_number");
+            $data =Db::name("order_service")->where("service_order_number",$order_id)->find();
+            if(!empty($data)){
+                return ajax_success("订单信息返回成功",$data);
+            }else{
+                return ajax_error("没有对应的订单信息",["status"=>0]);
+            }
+        }
         return view('order_service_detail');
     }
 
@@ -385,11 +414,6 @@ class OrderService extends Controller{
             }
     }
 
-
-
-
-
-
     /**
      **************李火生*******************
      * ios提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
@@ -582,6 +606,30 @@ class OrderService extends Controller{
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单删除
+     **************************************
+     * @param Request $request
+     */
+    public function service_del(Request $request){
+        if($request->isPost()){
+            $id =$_POST['order_id'];
+            if(is_array($id)){
+                $where ='id in('.implode(',',$id).')';
+            }else{
+                $where ='id='.$id;
+            }
+            $list =  Db::name('order_service')->where($where)->delete();
+            if($list!==false)
+            {
+                return ajax_success('成功删除!',['status'=>1]);
+            }else{
+                return ajax_error('删除失败',['status'=>0]);
+            }
+        }
+    }
 
 
 

@@ -34,38 +34,40 @@ $.ajax({
     dataType: 'JSON',
     success: function(res){
         console.log(res);
-        var str = '';
-        $.each(res.data, function(idx, val){
-            str += `<div class="evaluation-subject" id="`+val.id+`">
-                        <div class="goods-evaluate">
-                            <div class="goods-img">
-                                <img src="uploads/`+val.goods_image+`">
+        if(res.status == 1){
+            var str = '';
+            $.each(res.data, function(idx, val){
+                str += `<div class="evaluation-subject" id="`+val.id+`">
+                            <div class="goods-evaluate">
+                                <div class="goods-img">
+                                    <img src="uploads/`+val.goods_image+`">
+                                </div>
+                                <p class="ms">描述相符</p>
+                                <div class="star"></div>
                             </div>
-                            <p class="ms">描述相符</p>
-                            <div class="star"></div>
-                        </div>
-                        <div class="evaluate-txt">
-                            <textarea placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧"></textarea>
-                        </div>
-                        <div class="vi-camera">
-                            <span class="switch-span">添加图片
-                                <input type="file" multiple id="upload-`+idx+`">
-                            </span>
-                        </div>
-                    </div>`
-        })
-        $('.header').after(str);
-        // 初始化star
-        initStar();
-        // 上传图片
-        $('.switch-span').on('change', 'input', function(){
-            var inputElem = $(this)[0];
-            var switchSpan = $(this).parent();
-            var id = $(this).parents('.evaluation-subject').attr('id');
-            changeEvent(inputElem, switchSpan, id);
-            // console.log(filesArr);
-            console.log(filesObj)
-        })
+                            <div class="evaluate-txt">
+                                <textarea placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧"></textarea>
+                            </div>
+                            <div class="vi-camera">
+                                <span class="switch-span">添加图片
+                                    <input type="file" multiple id="upload-`+idx+`">
+                                </span>
+                            </div>
+                        </div>`
+            })
+            $('.header').after(str);
+            // 初始化star
+            initStar();
+            // 上传图片
+            $('.switch-span').on('change', 'input', function(){
+                var inputElem = $(this)[0];
+                var switchSpan = $(this).parent();
+                var id = $(this).parents('.evaluation-subject').attr('id');
+                changeEvent(inputElem, switchSpan, id);
+                // console.log(filesArr);
+                console.log(filesObj)
+            })
+        }
     },
     error: function(){
         console.log('error');

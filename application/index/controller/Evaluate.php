@@ -124,5 +124,109 @@ class Evaluate extends  Controller{
 
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单（评价页面）
+     **************************************
+     */
+    public function service_evaluate_index(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            $service_order_number = Session::get("service_order_number"); //订单编号
+            $condition = "`user_id` = " . $user_id . " and `service_order_number` = " . $service_order_number;
+            $data = Db::name("order_service")
+                ->where($condition)
+                ->select();
+            if(!empty($data)){
+                Session::set("service_order_number",null);
+                return ajax_success("对应的订单信息返回成功",$data);
+            }else{
+                return ajax_error("没有对应的订单信息",["status"=>0]);
+            }
+        }
+        return view("service_evaluate_index");
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单评价添加
+     **************************************
+     * @param Request $request
+     */
+    public function evaluate_service_add(Request $request){
+        if($request->isPost()){
+            $order_id =$request->only("orderId")["orderId"];//订单排序号（数组）
+            foreach ($order_id as $k=>$v){
+                $filesArr[$k] = "filesArr".$v;
+            }
+            foreach ($filesArr as $ks=>$vs){
+                $str=str_replace('filesArr','',$vs);
+                $img = $request->file("$vs");
+                if(!empty($img)){
+                    foreach ($img as $k=>$v) {
+                        $info = $v->move(ROOT_PATH . 'public' . DS . 'uploads');
+                        $images["$str"][] = str_replace("\\", "/", $info->getSaveName());
+                    }
+                }
+            }
+            $user_id = Session::get("user");//用户id
+            $evaluate_content =$request->only("evaluateContent")["evaluateContent"];//评价内容（数组）
+            $logistics_stars =$request->only("starArr")["starArr"];//所有的星星（1为1颗星，...5为5颗星）
+            $start_length =count($logistics_stars);
+            $user_info =Db::name("user")->field("phone_num,user_name,id")->where("id",$user_id)->find();
+            $create_time =time();//创建时间
+            foreach ($order_id  as $k=>$v){
+                //所有的订单信息
+                $order_information =  Db::name("order_service")
+                    ->field("service_goods_name,service_goods_id,service_order_number,store_id")
+                    ->where("id",$v)
+                    ->find();
+                $data =[
+                    "evaluate_content"=>$evaluate_content[$k], //评价的内容
+                    "goods_id" =>$order_information["service_goods_id"],
+                    "store_id" =>$order_information["store_id"],
+                    "goods_name"=>$order_information["service_goods_name"],
+                    "user_phone_num"=>$user_info["phone_num"],
+                    "user_id"=>$user_info["id"],
+                    "status"=>0,
+                    "order_information_number"=>$order_information["service_order_number"],
+                    "order_id"=>$v,
+                    "create_time"=>$create_time,
+                    "user_name"=> $user_info["user_name"],
+                    "evaluate_stars"=>$logistics_stars[$k], //商品描述星星（1为1颗星，...5为5颗星）
+                    "service_attitude_stars"=>$logistics_stars[$start_length-2],  //服务态度的星星（1为1颗星，...5为5颗星） //服务星星(先计算长度-2)
+                    "logistics_stars"=>$logistics_stars[$start_length-1], //物流服务的星星（1为1颗星，...5为5颗星） //物流星星(先计算长度-1)
+                    "is_repay"=>0,
+                ];
+                $bool =Db::name("order_service_evaluate")->insertGetId($data);
+                if(!empty($bool)){
+                    Db::name("order_service")
+                        ->where("id",$v)
+                        ->update(["status"=>6]);
+                    foreach ($images as $ks=>$vs){
+                        if( $v == intval($ks)){
+                            foreach ($vs as $j=>$i){
+                                //插入评价图片数据库
+                                $insert_data =[
+                                    "images"=>$i,
+                                    "evaluate_order_id"=>$bool,
+                                ];
+                                Db::name("order_service_evaluate_images")->insert($insert_data);
+                            }
+                        }
+                    }
+                }
+                if($bool){
+                    return ajax_success("评价成功",$bool);
+                }else{
+                    return ajax_error("评价失败",["status"=>0]);
+                }
+            }
+
+        }
+    }
+
 
 }
