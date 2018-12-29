@@ -39,7 +39,7 @@ $.ajax({
                 }else if(val.status === 6){
                     statusTxt = '已完成';
                 }
-                str += `<div class="reservation-tab">
+                str += `<div class="reservation-tab" id="`+val.id+`">
                             <div class="order-num-status">
                                 <div class="order-num">
                                     <i class="spr icon-order-num"></i>订单编号：`+val.service_order_number+`
@@ -56,7 +56,10 @@ $.ajax({
                                 <span></span>`+val.service_goods_name+`
                             </div>`
                 if(statusTxt == '已关闭'){
-                    str += `</div>`
+                    str += `<div class="button-box">
+                                <button class="del-order-btn"">删除订单</button>
+                            </div>
+                        </div>`
                 }else if(statusTxt == '待付款'){
                     str += `<div class="button-box">
                                 <button class="cancel-order-btn">取消订单</button>
@@ -75,12 +78,70 @@ $.ajax({
                             </div>
                         </div>`
                 }else if(statusTxt == '已完成'){
-                    str += `</div>`
+                    str += `<div class="button-box">
+                                <button class="del-order-btn"">删除订单</button>
+                            </div>
+                        </div>`
                 }
             })
             $('.reservation-tab-container').append(str);
 
             // 取消订单
+            $('.cancel-order-btn').click(function(){
+                var id = $(this).parents('.reservation-tab').attr('id')
+                layer.open({
+                    content: '确认取消订单？',
+                    btn: ['确定', '取消'],
+                    yes: function(index){
+                        layer.close(index);
+                        $.ajax({
+                            url: 'ios_api_order_service_no_pay_cancel',
+                            dataType: 'JSON',
+                            type: 'POST',
+                            data: {
+                                'order_id': id
+                            },
+                            success: function(res){
+                                console.log(res);
+                                if(res.status == 1){
+                                    location.reload();
+                                }
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
+                        })
+                    }
+                })
+            })
+            // 已服务 
+            $('.conf-receipt-btn').click(function(){
+                var id = $(this).parents('.reservation-tab').attr('id')
+                layer.open({
+                    content: '服务已完成？',
+                    btn: ['确定', '取消'],
+                    yes: function(index){
+                        layer.close(index);
+                        $.ajax({
+                            url: 'ios_api_order_service_already_served',
+                            dataType: 'JSON',
+                            type: 'POST',
+                            data: {
+                                'order_id': id
+                            },
+                            success: function(res){
+                                console.log(res);
+                                if(res.status == 1){
+                                    location.reload();
+                                }
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
+                        })
+                    }
+                })
+            })
         }
     },
     error: function(){

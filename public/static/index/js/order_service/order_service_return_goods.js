@@ -39,6 +39,9 @@ $.ajax({
                             <div class="order-item">
                                 <span></span>`+val.service_goods_name+`
                             </div>
+                            <div class="button-box">
+                                <button class="del-order-btn"">删除订单</button>
+                            </div>
                         </div>`
             })
             $('.reservation-tab-container').append(str);
