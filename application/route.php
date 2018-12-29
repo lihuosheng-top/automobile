@@ -220,8 +220,9 @@ Route::group("",[
     /*TODO：我要推广结束*/
 
     /*TODO：配件商评价开始*/
-    "evaluate_index"=>"index/Evaluate/evaluate_index",//评价页面(ajax)
-    "evaluate_parts_add"=>"index/Evaluate/evaluate_parts_add",//评价页面(ajax)
+    "evaluate_index"=>"index/Evaluate/evaluate_index",//配件商评价页面(ajax)
+    "service_evaluate_index"=>"index/Evaluate/service_evaluate_index",//服务商评价页面(ajax)
+    "evaluate_parts_add"=>"index/Evaluate/evaluate_parts_add",//评价添加页面(ajax)
     /*TODO：配件商评价结束*/
 
 
