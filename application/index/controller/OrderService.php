@@ -229,7 +229,7 @@ class OrderService extends Controller{
                     $data =Db::name('order_service')
                         ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
                         ->where('user_id',$member_id['id'])
-                        ->where('status',11)
+                        ->where('status',6)
                         ->order('create_time','desc')
                         ->select();
                     if(!empty($data)){
