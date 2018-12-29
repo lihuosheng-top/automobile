@@ -206,7 +206,7 @@ class Evaluate extends  Controller{
                 if(!empty( $bool)){
                     Db::name("order_service")
                         ->where("id",$v)
-                        ->update(["status"=>8]);
+                        ->update(["status"=>6]);
                     foreach ($images as $ks=>$vs){
                         if( $v == intval($ks)){
                             foreach ($vs as $j=>$i){
