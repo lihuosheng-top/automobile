@@ -391,7 +391,8 @@ class Install extends Controller{
      */
     public function message_edit($id){
 
-        return view("message_edit");
+        $message = db("message")->where("id",$id)->select();
+        return view("message_edit",["message"=>$message]);
 
     }
 
@@ -403,7 +404,15 @@ class Install extends Controller{
      */
     public function message_updata(Request $request){
 
-
+        $id = $request->only(["id"])["id"];
+        $data = $request->param();
+        $data["create_time"] = time();
+        $bool = db("message")->where("id",$id)->update($data);
+        if($bool){
+            $this->success("修改成功",url("admin/Install/message_index"));
+        }else{
+            $this->error("修改失败",url("admin/Install/message_index"));
+        }
 
     }
 
