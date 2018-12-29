@@ -52,7 +52,7 @@ function countDown(id, endTime, storeId, orderNum, reason){
 }
 
 $.ajax({
-    url: 'order_parts_detail',
+    url: 'order_service_detail',
     type: 'POST',
     dataType: 'JSON',
     success: function(res){
