@@ -45,7 +45,6 @@ class Classify extends Controller
      */
     public function goods_list(Request $request)
     {
-
         if($request->isPost()){
             $goods_type_id = $request->only(["id"])["id"];
             $goods_data = [];
