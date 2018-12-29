@@ -56,7 +56,10 @@ $.ajax({
                                 <span></span>`+val.service_goods_name+`
                             </div>`
                 if(statusTxt == '已关闭'){
-                    str += `</div>`
+                    str += `<div class="button-box">
+                                <button class="del-order-btn"">删除订单</button>
+                            </div>
+                        </div>`
                 }else if(statusTxt == '待付款'){
                     str += `<div class="button-box">
                                 <button class="cancel-order-btn">取消订单</button>
@@ -75,7 +78,10 @@ $.ajax({
                             </div>
                         </div>`
                 }else if(statusTxt == '已完成'){
-                    str += `</div>`
+                    str += `<div class="button-box">
+                                <button class="del-order-btn"">删除订单</button>
+                            </div>
+                        </div>`
                 }
             })
             $('.reservation-tab-container').append(str);
