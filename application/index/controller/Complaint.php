@@ -12,18 +12,19 @@ use think\Controller;
 class Complaint extends Controller{
 
     /**
-     **************李火生*******************
+     **************陈绪*******************
      * @param Request $request
      * Notes:投诉中心
      **************************************
      * @return \think\response\View
      */
     public function home(){
+
         return view('index');
     }
 
     /**
-     **************李火生*******************
+     **************陈绪*******************
      * @param Request $request
      * Notes:投诉详情
      **************************************
