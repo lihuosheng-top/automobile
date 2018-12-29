@@ -27,12 +27,12 @@
     </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper MessageList">
         <header class="header">
             <a href="information_index" class="spr icon-back"></a>
             <h3>订单助手</h3>
         </header>
-        <div class="daily-box">
+        <!--<div class="daily-box">
             <div class="time-box">2018.09.15</div>
             <div class="news">
                 <div class="top">
@@ -52,10 +52,70 @@
                     <i class="spr icon-more"></i>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
 </body>
+<script>
+    $.ajax({
+        url: '{:url("index/Information/information_details")}',
+        type: 'POST',
+        dataType: 'JSON',
+        success: function(res){
+            console.log(res);
+            if(res.status == 1){
+                var data = res.data;
+                var str = '';
+                $.each(data, function(idx, val){
+                    str += `<div class="daily-box">
+                                <div class="time-box">`+DataTime(val.order_create_time)+`</div>
+                                <div class="news">
+                                    <div class="top">
+                                        <span class="order-number">订单编号：`+val.parts_order_number+`</span>
+                                        <span class="status">
+                                            `+(val.status==1 ? '待支付'  : "")+`
+                                            `+(val.status==2 ? '已支付'  : "")+`
+                                            `+(val.status==4 ? '已发货'  : "")+`
+                                            `+(val.status==10 ? '已付款取消订单'  : "")+`
+                                            `+(val.status==7 ? '待评价'  : "")+`
+                                            `+(val.status==11 ? '退货'  : "")+`
+                                        </span>
+                                    </div>
+                                    <div class="mid">
+                                        <div class="img-box">
+                                            <img src="__UPLOADS__/`+val.goods_image+`">
+                                        </div>
+                                        <div class="info-box">
+                                            <p class="goods-name txt-hid-two">`+val.parts_goods_name+`</p>
+                                        </div>
+                                    </div>
+                                    <div class="bot">
+                                        <span><a href="javascript:;" class="Order">查看详情</a></span>
+                                        <i class="spr icon-more"></i>
+                                    </div>
+                                </div>
+                            </div>`
+                })
+                $('.MessageList').append(str);
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+
+    function DataTime(date){
+        var date = new Date(date*1000);//如果date为13位不需要乘1000
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+        var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+        var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+        var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
+        return Y+M+D+h+m+s;
+    }
+
+</script>
 </html>
