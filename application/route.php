@@ -71,6 +71,7 @@ Route::group("",[
     'index_parts_pay_code'=>"index/Apppay/index_parts_pay_code",//配件商支付回调修改订单状态
     /*TODO:配件商订单结束*/
 
+
     /*TODO：登录开始*/
     'Dolog'=>"index/Login/Dolog", /*登录操作*/
     "logout"=>"index/Login/logout",/*退出登录*/
@@ -183,8 +184,6 @@ Route::group("",[
     "express_order_save"=>"index/Express/express_order_save",//快递员接单入库
     "express_order_get"=>"index/Express/express_order_get",//快递员已取货
     "express_distribution_edit"=>"index/Express/express_distribution_edit",//快递员配送中状态修改
-
-
     /*TODO:快递结束*/
 
 

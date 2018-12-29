@@ -78,6 +78,9 @@ class LoveCar extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");
             $love = db("user_car")->where("user_id",$user_id)->select();
+            foreach ($love as $key=>$value){
+                $love[$key]["images"] = db("car_images")->where("brand",$value["brand"])->find();
+            }
             return ajax_success("获取成功",$love);
         }
         return view("love_list");
