@@ -459,6 +459,7 @@ class OrderService extends Controller{
                         'service_order_number' => $service_order_number,//订单号
                         "got_to_time"=>$data["got_to_time"],//预约到店时间
                         "store_id"=>$goods_data["store_id"],//商铺id
+                        "store_name"=>$store_name,//商铺id
                         "service_reservations"=>$store_name,//预约门店（店铺名称）
                         "service_real_pay"=>$data["service_money"],//积分抵扣之后的金额
                         "order_amount"=>$goods_data["service_money"],//订单金额
