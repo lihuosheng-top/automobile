@@ -75,7 +75,6 @@ html, body{
 }
 .reservation-tab{
     width: 94%;
-    height: 4.35rem;
     background-color: #fff;
     border-radius: .2rem;
     margin: 0 auto .2rem;
@@ -86,7 +85,7 @@ html, body{
 .order-num-status{
     display: flex;
     justify-content: space-between;
-    font-size: .3rem;
+    font-size: .28rem;
     color: #333;
     margin-bottom: .2rem;
 }

@@ -1,11 +1,3 @@
-
-var app = new Vue({
-    el: '#app',
-    
-})
-
-
-
 $('.tabs button').click(function(){
     var $index = $(this).index();
     switch($index){
