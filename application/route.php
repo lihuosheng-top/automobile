@@ -297,7 +297,8 @@ Route::group("",[
     "shop_order"=>"index/OrderService/shop_order",//预约服务 详情(提交订单页面)
     "ios_api_order_service_get_information"=>"index/OrderService/ios_api_order_service_get_information",//服务商获取预约信息，准备下单
 
-    "order_service_detail"=>"index/OrderService/order_service_detail",//订单详情
+    "order_service_save_record"=>"index/OrderService/order_service_save_record",//服务商订单保存订单编号给订单详情
+    "order_service_detail"=>"index/OrderService/order_service_detail",//订单详情(ajax)
     "order_service_all"=>"index/OrderService/order_service_all",//全部订单页面
     "ios_api_order_service_all"=>"index/OrderService/ios_api_order_service_all",//全部订单接口（ajax）
     "order_service_wait_pay"=>"index/OrderService/order_service_wait_pay",//待付款页面
@@ -311,6 +312,7 @@ Route::group("",[
     /*修改状态值*/
     "ios_api_order_service_no_pay_cancel"=>"index/OrderService/ios_api_order_service_no_pay_cancel",//买家未付款取消订单接口(ajax)
     "ios_api_order_service_already_served"=>"index/OrderService/ios_api_order_service_already_served",//买家服务商订单买家确认服务（ajax）
+    "service_del"=>"index/OrderService/service_del",//买家服务商订单删除（ajax）
 
     /*TODO:服务商订单状态结束*/
 
