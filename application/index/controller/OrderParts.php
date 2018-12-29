@@ -1358,7 +1358,6 @@ class OrderParts extends Controller{
                         $special_data =Db::name("special")
                             ->where("id",$data["goods_standard_id"])
                             ->find();
-
                         $datas = [
                             'goods_image' =>  $special_data['images'],//图片
                             "goods_describe"=>$goods_data["goods_describe"],//卖点

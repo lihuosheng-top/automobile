@@ -105,7 +105,7 @@
                     $('.info .name').text(data.delivery_data[0].name);
                     $('.info .phone').text(data.delivery_data[0].number);
                     var str = '';
-                    $.each(data.delivery, function(idx, val){
+                    $.each(data.express, function(idx, val){
                         str += `<div class="order-item">
                                     <div class="address-container">
                                         <div class="get-goods" id="store-`+val.store_id+`">
@@ -118,54 +118,17 @@
                                         </div>
                                         <div class="send-goods" id="send-`+val.order_id+`">
                                             <span>送：</span>
-                                            <span class="send-address">`+val.order_address+`</span>
+                                            <span class="send-address">`+val.user_order_address+`</span>
                                             <a href="call:`+parseInt(val.order_user_number)+`" class="spr customer-phone"></a>
                                         </div>
                                     </div>
                                     <div class="time-container">
                                         <span class="order-time">下单时间：<span>`+timetrans(val.order_create_time)+`</span></span>
-                                        <span class="accept-time">预计送达时间：<span>宝贝正在路上，请您耐心等候</span></span>
+                                        <span class="accept-time">预计送达时间：<span>订单已完成</span></span>
                                     </div>
                                 </div>`
                     })
                     $('.order-container').append(str);
-                    $('.order-item').on('click', '.my-btn', function(){
-                        var deliveryId = data.delivery_data[0].id;
-                        var $index = $('.my-btn').index($(this));
-                        var thisData = data.delivery[$index];
-                        layer.open({
-                            content: '确认接单？',
-                            btn: ['确定', '取消'],
-                            yes: function (index) {
-                                layer.close(index);
-                                console.log(data);
-                                $.ajax({
-                                    url: 'express_order_save',
-                                    type: 'POST',
-                                    dataType: 'JSON',
-                                    data: {
-                                        'user_order_phone': thisData.order_user_number,
-                                        'store_phone': thisData.store_number,
-                                        'order_id': thisData.order_id,
-                                        'delivery_id': deliveryId,
-                                        'status': 1,
-                                        'user_order_address': thisData.order_address,
-                                        'store_address': thisData.store_address,
-                                        'order_create_time': thisData.order_create_time,
-                                        'store_name': thisData.store_name,
-                                        'parts_order_number': thisData.parts_order_number,
-                                        'store_id': thisData.store_id
-                                    },
-                                    success: function(res){
-                                        console.log(res);
-                                    },
-                                    error: function(){
-                                        console.log('error');
-                                    }
-                                })
-                            }
-                        });
-                    })
                 }
             },
             error: function(){
