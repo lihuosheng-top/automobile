@@ -173,7 +173,6 @@ class Evaluate extends  Controller{
             }
             $user_id = Session::get("user");//用户id
             $evaluate_content =$request->only("evaluateContent")["evaluateContent"];//评价内容（数组）
-            $is_on_time =$request->only("isOnTime")["isOnTime"];//是否准时（是否准时，1为准时,-1为不准时）
             $logistics_stars =$request->only("starArr")["starArr"];//所有的星星（1为1颗星，...5为5颗星）
             $start_length =count($logistics_stars);
             $user_info =Db::name("user")->field("phone_num,user_name,id")->where("id",$user_id)->find();
@@ -200,7 +199,6 @@ class Evaluate extends  Controller{
                     "service_attitude_stars"=>$logistics_stars[$start_length-2],  //服务态度的星星（1为1颗星，...5为5颗星） //服务星星(先计算长度-2)
                     "logistics_stars"=>$logistics_stars[$start_length-1], //物流服务的星星（1为1颗星，...5为5颗星） //物流星星(先计算长度-1)
                     "is_repay"=>0,
-                    "is_on_time"=>$is_on_time,
                 ];
                 $bool =Db::name("order_service_evaluate")->insertGetId($data);
                 if(!empty( $bool)){
