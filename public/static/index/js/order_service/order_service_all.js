@@ -88,59 +88,18 @@ $.ajax({
 
             // 取消订单
             $('.cancel-order-btn').click(function(){
-                var id = $(this).parents('.reservation-tab').attr('id')
-                layer.open({
-                    content: '确认取消订单？',
-                    btn: ['确定', '取消'],
-                    yes: function(index){
-                        layer.close(index);
-                        $.ajax({
-                            url: 'ios_api_order_service_no_pay_cancel',
-                            dataType: 'JSON',
-                            type: 'POST',
-                            data: {
-                                'order_id': id
-                            },
-                            success: function(res){
-                                console.log(res);
-                                if(res.status == 1){
-                                    location.reload();
-                                }
-                            },
-                            error: function(){
-                                console.log('error');
-                            }
-                        })
-                    }
-                })
+                var id = $(this).parents('.reservation-tab').attr('id');
+                btnEvent('确认取消订单？', 'ios_api_order_service_no_pay_cancel', id);
             })
             // 已服务 
             $('.conf-receipt-btn').click(function(){
                 var id = $(this).parents('.reservation-tab').attr('id')
-                layer.open({
-                    content: '服务已完成？',
-                    btn: ['确定', '取消'],
-                    yes: function(index){
-                        layer.close(index);
-                        $.ajax({
-                            url: 'ios_api_order_service_already_served',
-                            dataType: 'JSON',
-                            type: 'POST',
-                            data: {
-                                'order_id': id
-                            },
-                            success: function(res){
-                                console.log(res);
-                                if(res.status == 1){
-                                    location.reload();
-                                }
-                            },
-                            error: function(){
-                                console.log('error');
-                            }
-                        })
-                    }
-                })
+                btnEvent('服务已完成？', 'ios_api_order_service_already_served', id);
+            })
+            // 删除订单
+            $('.del-order-btn').click(function(){
+                var id = $(this).parents('.reservation-tab').attr('id')
+                btnEvent('确认删除？', 'service_del', id);
             })
         }
     },
@@ -149,7 +108,32 @@ $.ajax({
     }
 })
 
-
+function btnEvent(info, url, id){
+    layer.open({
+        content: info,
+        btn: ['确定', '取消'],
+        yes: function(index){
+            layer.close(index);
+            $.ajax({
+                url: url,
+                dataType: 'JSON',
+                type: 'POST',
+                data: {
+                    'order_id': id
+                },
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        location.reload();
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        }
+    })
+}
 
 
 
