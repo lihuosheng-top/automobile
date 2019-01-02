@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
                                     <div class="bot">
-                                        <span><a href="javascript:;" class="Order">查看详情</a></span>
+                                        <span><a href="order_information_details?order_id=`+val.id+`">查看详情</a></span>
                                         <i class="spr icon-more"></i>
                                     </div>
                                 </div>
@@ -102,6 +102,7 @@
                 $('.MessageList').append(str);
             }
         },
+
         error: function(){
             console.log('error');
         }

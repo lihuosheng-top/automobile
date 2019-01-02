@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/payment.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/order_parts/order_parts_detail.css">
+    <title>配件商-商品详情</title>
+</head>
+<body>
+<div class="place-order-pop">
+    {volist name="order" id="value"}
+    <header class="place-order-header">
+        <a href="javascript:;" onClick="javascript:history.back(-1);" class="spr place-order-back"></a>
+        <h3 class="place-order-title">订单详情</h3>
+    </header>
+    <div class="order-detail-box">
+        <div class="order-detail-bg">
+            <div class="status">
+                {$value.status == 1 ? "待支付" : ""}
+                {$value.status == 2 ? "已支付" : ""}
+                {$value.status == 4 ? "已发货" : ""}
+                {$value.status == 10 ? "已付款取消订单" : ""}
+                {$value.status == 7 ? "待评价" : ""}
+                {$value.status == 11 ? "退货" : ""}
+            </div>
+            <div class="time-count-down" id="time-count-down" style="display:none;"></div>
+        </div>
+        <div class="user-info-box">
+            <div class="order-num">订单编号：<span>{$value.parts_order_number}</span></div>
+            <div class="user-name-phone">
+                <span class="user-name">收货人：<span>{$value.harvester}</span></span>
+                <span class="user-phone">{$value.harvest_phone_num}</span>
+            </div>
+            <div class="user-address">
+                <span class="address-title">配送地址：</span>
+                <span class="address-txt txt-hid-two">{$value.harvester_address}</span>
+            </div>
+        </div>
+        <div class="order-goods-info">
+            <div class="order-shop-box">
+                <i class="spr icon-shop"></i>
+                <span class="order-shop-namp">{$value.store.store_name}</span>
+            </div>
+             <div class="order-goods-detail">
+                <div class="order-goods-img">
+                    <img src="__UPLOADS__/{$value.goods_image}">
+                </div>
+                <div class="order-info-box">
+                    <p class="order-goods-p txt-hid-two">{$value.parts_goods_name}</p>
+                    <p class="order-selling-point txt-hid-two">{$value.goods_describe}</p>
+                    <div class="unit-price-quantity">
+                        <p class="unit-price-p">{$value.goods_money}</p>
+                        <p class="quantity-p">×{$value.order_quantity}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cal-price-box">
+                <div class="cal-total">
+                    <span>商品总额</span>
+                    <div class="total-box">￥<span>{$value.goods_money}</span></div>
+                </div>
+                <div class="discount-money">
+                    <span>抵扣金额</span>
+                    <div class="discount-box">￥<span>{$value.integral_deductible}</span></div>
+                </div>
+                <div class="leave-msg-container">
+                    <span>买家留言</span>
+                    <span class="leave-message">{$value.buy_message}</span>
+                </div>
+            </div>
+            <div class="pay-amount">
+                <span>需付款</span>
+                <div class="pay-amount-span">￥<span>{$value.goods_money}</span></div>
+            </div>
+        </div>
+        <div class="sundry">
+            <p>订单信息</p>
+            <p class="create-time">创建时间：<span>{$value.order_create_time|date='Y-m-d H:i',###}</span></p>
+            <!-- <p class="pay-time">支付时间：<span>2018-12-05 17:55</span></p> -->
+            <!-- <div class="contact-seller">
+                <a href="javascript:;" class="spr icon-phone"></a>
+                联系卖家
+            </div> -->
+        </div>
+        <div class="order-payment-box">
+            <button class="cancel-order-btn" style="display:none;">取消订单</button>
+            <button class="to-payment-btn" style="display:none;">立即付款</button>
+            <button class="del-order-btn" style="display:none;">删除订单</button>
+            <button class="check-logistics-btn" style="display:none;">查看物流</button>
+            <button class="conf-receipt-btn" style="display:none;">确认收货</button>
+            <button class="evaluation-btn" style="display:none;">去评价</button>
+        </div>
+    </div>
+    {/volist}
+</div>
+
+<div class="mask" style="display:none;"></div>
+<!-- 取消订单弹窗 -->
+<div class="cancel-order-pop">
+    <header class="cancel-order-header">
+        取消订单
+        <a href="javascript:;" class="spr close-cancel-order"></a>
+    </header>
+    <p class="reason-title">请选择取消订单原因：</p>
+    <ul class="reason-list">
+        <li class="reason-li reason-selected"><i class="spr icon-reason"></i> 操作有误</li>
+        <li class="reason-li"><i class="spr icon-reason"></i> 暂时不需要</li>
+        <li class="reason-li"><i class="spr icon-reason"></i> 选错商品</li>
+        <li class="reason-li"><i class="spr icon-reason"></i> 预约时间有误</li>
+        <li class="reason-li"><i class="spr icon-reason"></i> 其他原因</li>
+    </ul>
+    <button class="select-reason-btn">确定</button>
+</div>
+
+<!-- 支付弹窗 -->
+<form name=alipayment action="{:url('index/Apppay/index_parts_aliPay')}" method="post">
+    <div class="alipay-pop">
+        <header>
+            <a href="javascript:;" class="close-alipay">×</a>
+            <h3 class="alipay-title">确认付款</h3>
+        </header>
+        <div class="middle_box">
+            <div class="price-box">
+                <span>￥</span>
+                <input id="WIDtotal_amount" name="WIDtotal_amount" value="" readonly>
+            </div>
+            <ul class="content">
+                <li>
+                    商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="" readonly>
+                </li>
+                <li>
+                    订单名称: <input id="WIDsubject" name="WIDsubject" value="" readonly>
+                </li>
+                <li>
+                    商品描述: <input id="WIDbody" name="WIDbody" value="" readonly>
+                </li>
+                <li>
+                    付款方式: <input id="WIDway" name="WIDway" class="widway" value="微信支付" readonly><i class="spr icon-more"></i>
+                </li>
+            </ul>
+        </div>
+        <button type="submit" class="alipay-submit">立即付款</button>
+    </div>
+</form>
+<!-- 选择支付方式 -->
+<div class="chose-payment">
+    <header>
+        <a href="javascript:;" class="spr chose-payment-back"></a>
+        <h3 class="chose-title">选择支付方式</h3>
+    </header>
+    <div class="method-div">
+        <div class="icon-div">
+            <img src="__STATIC__/index/image/money.png">
+        </div>
+        <p>余额支付</p>
+        <a href="javascript:;" class="spr check-a"></a>
+    </div>
+    <div class="method-div">
+        <div class="icon-div">
+            <img src="__STATIC__/index/image/wechat.png">
+        </div>
+        <p>微信支付</p>
+        <a href="javascript:;" class="spr check-a icon-check"></a>
+    </div>
+    <div class="method-div">
+        <div class="icon-div">
+            <img src="__STATIC__/index/image/alipay.png">
+        </div>
+        <p>支付宝支付</p>
+        <a href="javascript:;" class="spr check-a"></a>
+    </div>
+</div>
+
+<script src="__STATIC__/index/js/plugin/jquery.js"></script>
+<script src="__STATIC__/index/js/plugin/layer.js"></script>
+</body>
+</html>

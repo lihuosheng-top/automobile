@@ -184,6 +184,7 @@ Route::group("",[
     "express_order_save"=>"index/Express/express_order_save",//快递员接单入库
     "express_order_get"=>"index/Express/express_order_get",//快递员已取货
     "express_distribution_edit"=>"index/Express/express_distribution_edit",//快递员配送中状态修改
+    "express_distribution_del"=>"index/Express/express_distribution_del",//已完成快递人员删除
     /*TODO:快递结束*/
 
 
@@ -192,7 +193,9 @@ Route::group("",[
     /*TODO:消息开始*/
     "information_index"=>"index/Information/index",//消息页面
     "information_details"=>"index/Information/information_details",//订单助手消息页面详情
+    "order_information_details"=>"index/Information/order_information_details",//订单助手消息页面详情
     "information_system"=>"index/Information/information_system",//系统消息页面详情
+    "information_system_details"=>"index/Information/information_system_details",//系统消息页面详情
     "about_index"=>"index/About/index",//关于我们
     /*TODO:消息结束*/
     /*TODO:投诉开始*/
