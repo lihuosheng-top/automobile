@@ -39,6 +39,9 @@ class  SellMy extends Controller{
                 exit(json_encode(array("status" => 1, "info" => "店铺信息返回成功","data"=> $store_info)));
             }
             //今月账单
+            $timetoday = strtotime(date("Y",time()));//今月时间戳
+            $time2 = time() + 3600*24;//今天24点的时间点，两个值之间即为今天一天内的数据
+            $time_condition  = "order_create_time>{$timetoday} and order_create_time< {$time2}";
 
             //上月账单
 

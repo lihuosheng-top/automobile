@@ -218,10 +218,7 @@ class OrderParts extends Controller{
                                 foreach ($order_undate["info"] as  $kk=>$vv){
                                     $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
                                 }
-
                             }
-
-
                         }
                         else{
                             $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
