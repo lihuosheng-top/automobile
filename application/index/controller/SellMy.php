@@ -63,7 +63,7 @@ class  SellMy extends Controller{
             if(empty($role_name_store_id)){
                 exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
             }
-           $get_numbers =$request->only("number")["number"];
+           $get_numbers =$request->only("get_number")["get_number"];
            if(!empty($get_numbers)){
                //今日订单
                 Session::set("get_number",$get_numbers);
