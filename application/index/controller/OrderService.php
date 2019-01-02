@@ -65,7 +65,9 @@ class OrderService extends Controller{
     public function order_service_detail(Request $request){
         if($request->isPost()){
             $order_id=Session::get("service_order_number");
-            $data =Db::name("order_service")->where("service_order_number",$order_id)->find();
+            $data =Db::name("order_service")
+                ->where("service_order_number",$order_id)
+                ->find();
             if(!empty($data)){
                 return ajax_success("订单信息返回成功",$data);
             }else{
