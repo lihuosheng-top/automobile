@@ -187,7 +187,11 @@ class OrderParts extends Controller{
                         if (strpos($value['order_parts_id'], ',')) {
                             $order_id = explode(',', $value['order_parts_id']);
                             foreach ($order_id as $k => $v) {
-                                $return_data[] = Db::name('order_parts')->where('id', $v) ->where('user_id', $member_id['id'])->find();
+                                $return_data[] = Db::name('order_parts')
+                                    ->where('id', $v)
+                                    ->where('user_id', $member_id['id'])
+                                    ->order('order_create_time', 'desc')
+                                    ->find();
                             }
                             foreach ($return_data as $ke => $item) {
                                 $order_store_id[] = $item['store_id'];
@@ -198,6 +202,7 @@ class OrderParts extends Controller{
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
+                                    ->order('order_create_time', 'desc')
                                     ->select();
 
                                 $names = Db::name('order_parts')
@@ -296,6 +301,7 @@ class OrderParts extends Controller{
 
 
                     }
+
                     if(!empty($data_infomation)){
                         if(!empty($new_arr)){
                             $coutn =count($new_arr);
@@ -333,6 +339,11 @@ class OrderParts extends Controller{
                     }
 
                     if (!empty($end_info)) {
+//                        $ords =array();
+//                        foreach ($end_info as $vl){
+//                            $ords[] =$vl["parts_order_number"];
+//                        }
+//                        array_multisort($end_info,SORT_DESC,$ords);
                         return ajax_success('数据', $end_info);
                     } else {
                         return ajax_error('没数据');
