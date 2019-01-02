@@ -4,62 +4,53 @@ $.ajax({
     type: 'POST',
     success: function(res){
         console.log(res);
-        
+        var statusTxt = '';
+        if(res.status == 1){
+            var val = res.data;
+            if(val.status === 0 || val.status === 9 || val.status === 10){
+                statusTxt = '已关闭';
+            }else if(val.status === 1){
+                statusTxt = '待付款';
+            }else if(val.status === 2 || val.status === 3){
+                statusTxt = '待服务';
+            }else if(val.status === 4 || val.status === 5){
+                statusTxt = '待评价';
+            }else if(val.status === 6){
+                statusTxt = '已完成';
+            }
+            // 状态值
+            $('.status').text(statusTxt);
+            // 订单编号
+            $('.order-num span').text(val.service_order_number);
+            // 车主
+            $('.user-name span').text(val.car_owner_name);
+            // 电话号码
+            $('.user-phone').text(val.car_owner_phone_number);
+            // 车牌号
+            $('.address-title span').text(val.car_number);
+            // 车辆信息
+            $('.car-info').text();
+            // 店铺信息
+            $('.shop-address').text(val.store_name);
+            // 到店时间
+            $('.service-time span').text(val.got_to_time);
+            // 打电话
+            $('.call-phone a').prop('href', 'call:'+val.car_owner_phone_number);
+            // 服务项目名称
+            $('.service-item-name').text(val.service_goods_name);
+            // 服务项目价格 服务总价值服务总价值  积分抵扣 实付款
+            if(val.service_real_pay !== 0){
+                $('.service-item-price span').text(val.service_order_amount);
+                $('.service-total-sum p span').text(val.service_order_amount);
+                $('.pay-amount p span').text(val.service_real_pay);
+            }else{
+                $('.service-item-price').text('面议');
+                $('service-total-sum p').text('面议');
+                $('.pay-amount p').text('面议');
+            }
+        }
     },
     error: function(){
         console.log('error');
     }
 })
-
-// 转换时间戳
-function timetrans(date){
-    var date = new Date(date*1000);//如果date为13位不需要乘1000
-    var Y = date.getFullYear() + '-';
-    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
-    var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-    var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes());
-    // var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
-    return Y+M+D+h+m;
-}
-// 倒计时
-function countDown(id, endTime, storeId, orderNum, reason){
-    var nowDate = new Date();
-    var endDate = new Date(endTime * 1000);
-    // 相差总秒数
-    var totalSecond = parseInt((endDate - nowDate) / 1000);
-    if(totalSecond > 0){
-        // console.log(totalSecond)
-        // 小时
-        var hours = Math.floor(totalSecond / 3600);
-        // console.log(hours);
-        // 分钟
-        var minutes = Math.floor((totalSecond % 3600) / 60);
-        // console.log(minutes);
-        // 秒
-        // var seconds = Math.floor((totalSecond % 3600) % 60);
-        // console.log(seconds);
-        document.getElementById(id).innerText = '剩'+hours+'小时'+minutes+'分自动关闭';
-        setTimeout(function(){
-            countDown(id, endTime, storeId, orderNum, reason);
-        }, 1000)
-    }else{
-        $.ajax({
-            url: 'order_parts_detail_cancel',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                'store_id': storeId,
-                'parts_order_number': orderNum,
-                'cancel_order_description': reason
-            },
-            success: function(res){
-                console.log(res);
-                location.reload();
-            },
-            error: function(){
-                console.log('error');
-            }
-        })
-    }
-}

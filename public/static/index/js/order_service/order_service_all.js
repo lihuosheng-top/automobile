@@ -113,6 +113,38 @@ $.ajax({
                 var orderNum = $(this).parents('.reservation-tab').find('.order-num span').text();
                 detailAndEva('order_service_save_record', orderNum, 'order_service_detail');
             })
+            // 去付款
+            $('.to-payment-btn').click(function(){
+                var id = $(this).parents('.reservation-tab').attr('id')
+                var index = res.data.findIndex(function(item){
+                    return item.id == id;
+                });
+                var totalAmount = res.data[index].service_real_pay;
+                var outTradeNo = res.data[index].service_order_number;
+                var subjuect = res.data[index].service_goods_name;
+                var body = res.data[index].service_goods_name;
+                $('#WIDtotal_amount').val(totalAmount);
+                $('#WIDout_trade_no').val(outTradeNo);
+                $('#WIDsubject').val(subjuect);
+                $('#WIDbody').val(body);
+                if(totalAmount !== 0){
+                    $('.mask').show();
+                    $('.alipay-pop').animate({'bottom': '0'});
+                    $('html').css('overflow', 'hidden');
+                }else{
+                    layer.open({
+                        skin: 'msg',
+                        content: '等待商家确认，确认之后方可付款！',
+                        time: 1.2
+                    })
+                }
+
+                $('.close-alipay').click(function () {
+                    $('.mask').hide();
+                    $('.alipay-pop').animate({ 'bottom': '-100%' });
+                    $('html').css('overflow', 'auto');
+                })
+            })
         }
     },
     error: function(){
