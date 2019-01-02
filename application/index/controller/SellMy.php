@@ -94,7 +94,7 @@ class  SellMy extends Controller{
                 //今日订单
                 $timetoday = strtotime(date("Y-m-d",time()));//今天0点的时间点
                 $time2 = time() + 3600*24;//今天24点的时间点，两个值之间即为今天一天内的数据
-                $time_condition  = "order_create_time>{$timetoday} and order_create_time< {$time2}";
+                $time_condition  = "order_create_time>{$timetoday} and order_create_time<{$time2}";
                 $data =Db::name("order_service")
                     ->where($time_condition)
                     ->where("store_id",$role_name_store_id["store_id"])
