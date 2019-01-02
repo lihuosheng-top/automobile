@@ -132,7 +132,7 @@ class OrderService extends Controller{
                 $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
                 if(!empty($datas)){
                     $data =Db::name('order_service')
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->where('user_id',$member_id['id'])
                         ->where('status',1)
                         ->order('create_time','desc')
@@ -174,7 +174,7 @@ class OrderService extends Controller{
                 if(!empty($datas)){
                     $condition ="`status` = '2' or `status` = '3'";
                     $data =Db::name('order_service')
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->where('user_id',$member_id['id'])
                         ->where($condition)
                         ->order('create_time','desc')
@@ -216,7 +216,7 @@ class OrderService extends Controller{
                 if(!empty($datas)){
                     $condition ="`status` = '4' or `status` = '5'";
                     $data =Db::name('order_service')
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->where('user_id',$member_id['id'])
                         ->where($condition)
                         ->order('create_time','desc')
@@ -258,7 +258,7 @@ class OrderService extends Controller{
                 $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
                 if(!empty($datas)){
                     $data =Db::name('order_service')
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->where('user_id',$member_id['id'])
                         ->where('status',6)
                         ->order('create_time','desc')
