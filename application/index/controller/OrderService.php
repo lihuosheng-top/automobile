@@ -479,6 +479,7 @@ class OrderService extends Controller{
                         "car_owner_phone_number"=>$member["phone_num"],//联系方式
                         "car_owner_name"=>$member_name,//车主名字
                         "car_number"=> $user_love_car_message["plate_number"],//车牌号
+                        "car_information"=>$data["car_information"],//爱车信息
                         "reserve_time"=>null, //因为还没有服务所以没有服务时间
                         'status' => 1,      //订单状态
                         'service_goods_id' => $commodity_id,        //服务项目ID
