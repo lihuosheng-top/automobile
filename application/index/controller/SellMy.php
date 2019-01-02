@@ -35,9 +35,11 @@ class  SellMy extends Controller{
                 ->find();
             if(empty($store_info)){
                 exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
+            }else{
+                exit(json_encode(array("status" => 1, "info" => "店铺信息返回成功","data"=> $store_info)));
             }
             //今月账单
-            
+
             //上月账单
 
         }
@@ -48,10 +50,47 @@ class  SellMy extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
+     * Notes:暂存订单信息
+     **************************************
+     * @param Request $request
+     */
+    public function  store_order_save(Request $request){
+        if($request->isPost()){
+            $role_name_store_id = Session::get("role_name_store_id");
+            if(empty($role_name_store_id)){
+                exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
+            }
+           $get_numbers =$request->only("number")["number"];
+           if(!empty($get_numbers)){
+               //今日订单
+                Session::set("get_number",$get_numbers);
+               exit(json_encode(array("status" => 1, "info" => "存储成功","data"=>$get_numbers)));
+           }else{
+               exit(json_encode(array("status" => 0, "info" => "请重新请求","data"=>["status"=>0])));
+           }
+        }
+    }
+
+
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
      * Notes:卖家服务订单
      **************************************
      */
-    public function sell_service_order(){
+    public function sell_service_order(Request $request){
+        if($request->isPost()){
+            $role_name_store_id = Session::get("role_name_store_id");
+            if(empty($role_name_store_id)){
+                exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
+            }
+            $get_number =  Session::set("get_number");
+            $data =Db::name("order_service")
+                ->where("store_id",$role_name_store_id["store_id"])
+                ->find();
+        }
         return view("sell_service_order");
     }
 
