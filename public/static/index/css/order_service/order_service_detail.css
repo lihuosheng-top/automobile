@@ -177,7 +177,7 @@
     font-size: .28rem;
     padding-top: .2rem;
 }
-.pay-amount span:last-of-type{
+.pay-amount p{
     color: #f00;
     font-size: .32rem;
 }
