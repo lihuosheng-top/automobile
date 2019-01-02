@@ -155,11 +155,14 @@ $('.publish-btn').click(function(){
         idArr.push(val.id);
     })
     $.each(idArr, function(idx, val){
-        console.log(filesObj == {});
-        $.each(filesObj[val], function(index, value){
-            console.log(value);
-            formData.append('filesArr'+val+'[]', value);
-        })
+        if($.isEmptyObject(filesObj)){
+            formData.append('filesArr[]', null);
+        }else{
+            $.each(filesObj[val], function(index, value){
+                console.log(value);
+                formData.append('filesArr'+val+'[]', value);
+            })
+        }
     })
     $.each(orderId, function(idx, val){
         formData.append('orderId[]', val);
@@ -172,18 +175,21 @@ $('.publish-btn').click(function(){
     })
     formData.append('isOnTime', isOnTime);
 
-    // $.ajax({
-    //     url: 'evaluate_parts_add',
-    //     type: 'POST',
-    //     dataType: 'formData',
-    //     processData: false,
-    //     contentType: false,
-    //     data: formData,
-    //     success: function(res){
-    //         console.log(res);
-    //     },
-    //     error: function(){
-    //         console.log('error');
-    //     }
-    // })
+    $.ajax({
+        url: 'evaluate_parts_add',
+        type: 'POST',
+        dataType: 'JSON',
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function(res){
+            console.log(res);
+            if(res.status == 1){
+                location.href = 'order_wait_evaluate';
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
 })

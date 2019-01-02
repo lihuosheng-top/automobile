@@ -231,10 +231,14 @@
                 idArr.push(val.id);
             })
             $.each(idArr, function(idx, val){
-                $.each(filesObj[val], function(index, value){
-                    // console.log(value);
-                    formData.append('filesArr'+val+'[]', value);
-                })
+                if($.isEmptyObject(filesObj)){
+                    formData.append('filesArr[]', null);
+                }else{
+                    $.each(filesObj[val], function(index, value){
+                        console.log(value);
+                        formData.append('filesArr'+val+'[]', value);
+                    })
+                }
             })
             $.each(orderId, function(idx, val){
                 formData.append('orderId[]', val);
@@ -246,7 +250,7 @@
             $.ajax({
                 url: 'evaluate_service_add',
                 type: 'POST',
-                dataType: 'formData',
+                dataType: 'JSON',
                 processData: false,
                 contentType: false,
                 data: formData,
