@@ -4,7 +4,7 @@ $.ajax({
     type: 'POST',
     success: function(res){
         console.log(res);
-        
+        var statusTxt = '';
     },
     error: function(){
         console.log('error');

@@ -113,6 +113,18 @@ $.ajax({
                 var orderNum = $(this).parents('.reservation-tab').find('.order-num span').text();
                 detailAndEva('order_service_save_record', orderNum, 'order_service_detail');
             })
+            // 去付款
+            $('.to-payment-btn').click(function(){
+                $('.mask').show();
+                $('.alipay-pop').animate({'bottom': '0'});
+                $('html').css('overflow', 'hidden');
+
+                $('.close-alipay').click(function () {
+                    $('.mask').hide();
+                    $('.alipay-pop').animate({ 'bottom': '-100%' });
+                    $('html').css('overflow', 'auto');
+                })
+            })
         }
     },
     error: function(){
