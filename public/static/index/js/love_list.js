@@ -26,7 +26,7 @@ $.ajax({
             if(val.status !== 1){
                 str += `<div class="car-box">
                             <div class="car-info-top" id="`+val.id+`">
-                                <div class="logo"><img src="static/index/image/aodi.png"></div>
+                                <div class="logo">`+(val.images ==null ? '<img src="static/index/image/aodi.png">' : '<img src="uploads/'+val.images.brand_images+'">')+`</div>
                                 <div class="car-info">
                                     <p>`+val.brand+` `+val.series+`</p>
                                     <p>`+val.displacement+` `+val.production_time+`</p>
@@ -40,7 +40,7 @@ $.ajax({
             }else{
                 str += `<div class="car-box">
                             <div class="car-info-top" id="`+val.id+`">
-                                <div class="logo"><img src="static/index/image/aodi.png"></div>
+                                <div class="logo">`+(val.images ==null ? '<img src="static/index/image/aodi.png">' : '<img src="uploads/'+val.images.brand_images+'">')+`</div>
                                 <div class="car-info">
                                     <p>`+val.brand+` `+val.series+`</p>
                                     <p>`+val.displacement+` `+val.production_time+`</p>

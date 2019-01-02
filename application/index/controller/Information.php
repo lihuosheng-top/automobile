@@ -58,14 +58,44 @@ class  Information extends  Controller{
 
 
     /**
-     **************李火生*******************
+     **************陈绪*******************
      * @param Request $request
      * Notes:系统消息页面详情
      **************************************
      * @return \think\response\View
      */
     public function information_system(){
-        return view('information_system');
+
+        $system_data = db("message")->select();
+        return view('information_system',["system_data"=>$system_data]);
+    }
+
+
+
+    /**
+     * 系统消息详情
+     * 陈绪
+     */
+    public function information_system_details($id){
+
+        $system_data = db("message")->where("id",$id)->select();
+        return view("information_system_details",["system_data"=>$system_data]);
+
+    }
+
+
+
+    /**
+     * 订单助手详情页面
+     * 陈绪
+     */
+    public function order_information_details($order_id){
+        $order = db("order_parts")->where("id",$order_id)->select();
+        foreach ($order as $key=>$value){
+            $order[$key]["store"] = db("store")->where("store_id",$value["store_id"])->find();
+        }
+        return view("order_information_details",["order"=>$order]);
+
     }
 
 
