@@ -20,7 +20,7 @@
             <div class="order-detail-box">
                 <div class="order-detail-bg">
                     <div class="status"></div>
-                    <div class="time-count-down" style="display:none;">剩0小时56分自动关闭</div>
+                    <!-- <div class="time-count-down" style="display:none;">剩0小时56分自动关闭</div> -->
                 </div>
                 <div class="user-info-box">
                     <div class="order-num">订单编号：<span></span></div>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="discount-amount">
                             <span>积分抵扣</span>
-                            <span class="discount-amount-span">-￥0</span>
+                            <span class="discount-amount-span">-￥<span></span></span>
                             <!-- <i class="spr icon-select"></i> -->
                         </div>
                         <div class="pay-amount">
@@ -72,8 +72,8 @@
                     </div>
                 </div>
                 <div class="order-payment-box">
-                    <button class="cancel-order-btn">取消订单</button>
-                    <button class="to-payment-btn">去付款</button>
+                    <button class="cancel-order-btn" style="display: none;">取消订单</button>
+                    <button class="to-payment-btn" style="display: none;">去付款</button>
                     <button class="del-order-btn" style="display:none;">删除订单</button>
                     <button class="check-logistics-btn" style="display:none;">查看物流</button>
                     <button class="conf-receipt-btn" style="display:none;">确认收货</button>
