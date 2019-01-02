@@ -113,6 +113,7 @@
             $('.alipay-pop').animate({'bottom': '0'});
             var got_to_time = $('.arrive_time span').text();
             var service_money = $('.pay-amount-span span').text();
+            var car_ver = $('.car_ver').text();
             $.ajax({
                 url: 'ios_api_order_service_button',
                 type: 'POST',
@@ -122,7 +123,8 @@
                     'service_order_quantitative': 1,
                     'service_money': service_money,
                     'setting_id': deductionId,
-                    'got_to_time': got_to_time
+                    'got_to_time': got_to_time,
+                    'car_infomation': car_ver
                 },
                 success: function(res){
                     console.log(res);
