@@ -71,5 +71,16 @@
         $('.reservation-tab').click(function(){
             location.href = 'sell_service_order_detail';
         })
+        $.ajax({
+            url: 'sell_service_order',
+            dataType: 'JSON',
+            type: 'POST',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
     </script>
 </html>

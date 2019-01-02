@@ -143,6 +143,9 @@
                 },
                 success: function(res){
                     console.log(res);
+                    if(res.status === 1){
+                        location.href = 'sell_service_order';
+                    }
                 },
                 error: function(){
                     console.log('error');
