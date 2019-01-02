@@ -90,7 +90,7 @@ class OrderService extends Controller{
                 if(!empty($datas)){
                     $data =Db::name('order_service')
                         ->where('user_id',$member_id['id'])
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->order('create_time','desc')
                         ->select();
                     if(!empty($data)){
