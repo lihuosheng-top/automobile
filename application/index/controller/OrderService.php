@@ -65,7 +65,9 @@ class OrderService extends Controller{
     public function order_service_detail(Request $request){
         if($request->isPost()){
             $order_id=Session::get("service_order_number");
-            $data =Db::name("order_service")->where("service_order_number",$order_id)->find();
+            $data =Db::name("order_service")
+                ->where("service_order_number",$order_id)
+                ->find();
             if(!empty($data)){
                 return ajax_success("订单信息返回成功",$data);
             }else{
@@ -90,7 +92,7 @@ class OrderService extends Controller{
                 if(!empty($datas)){
                     $data =Db::name('order_service')
                         ->where('user_id',$member_id['id'])
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->order('create_time','desc')
                         ->select();
                     if(!empty($data)){
@@ -130,7 +132,7 @@ class OrderService extends Controller{
                 $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
                 if(!empty($datas)){
                     $data =Db::name('order_service')
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->where('user_id',$member_id['id'])
                         ->where('status',1)
                         ->order('create_time','desc')
@@ -172,7 +174,7 @@ class OrderService extends Controller{
                 if(!empty($datas)){
                     $condition ="`status` = '2' or `status` = '3'";
                     $data =Db::name('order_service')
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->where('user_id',$member_id['id'])
                         ->where($condition)
                         ->order('create_time','desc')
@@ -214,7 +216,7 @@ class OrderService extends Controller{
                 if(!empty($datas)){
                     $condition ="`status` = '4' or `status` = '5'";
                     $data =Db::name('order_service')
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->where('user_id',$member_id['id'])
                         ->where($condition)
                         ->order('create_time','desc')
@@ -256,7 +258,7 @@ class OrderService extends Controller{
                 $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
                 if(!empty($datas)){
                     $data =Db::name('order_service')
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->where('user_id',$member_id['id'])
                         ->where('status',6)
                         ->order('create_time','desc')
@@ -477,6 +479,7 @@ class OrderService extends Controller{
                         "car_owner_phone_number"=>$member["phone_num"],//联系方式
                         "car_owner_name"=>$member_name,//车主名字
                         "car_number"=> $user_love_car_message["plate_number"],//车牌号
+                        "car_information"=>$data["car_information"],//爱车信息
                         "reserve_time"=>null, //因为还没有服务所以没有服务时间
                         'status' => 1,      //订单状态
                         'service_goods_id' => $commodity_id,        //服务项目ID

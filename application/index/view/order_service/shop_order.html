@@ -90,7 +90,7 @@
                 </div>
                 <ul class="content">
                     <li>
-                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="15428821121021" readonly>
+                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="" readonly>
                     </li>
                     <li>
                         订单名称: <input id="WIDsubject" name="WIDsubject" value="预约洗车" readonly>
@@ -113,6 +113,7 @@
             $('.alipay-pop').animate({'bottom': '0'});
             var got_to_time = $('.arrive_time span').text();
             var service_money = $('.pay-amount-span span').text();
+            var car_ver = $('.car_ver').text();
             $.ajax({
                 url: 'ios_api_order_service_button',
                 type: 'POST',
@@ -122,7 +123,8 @@
                     'service_order_quantitative': 1,
                     'service_money': service_money,
                     'setting_id': deductionId,
-                    'got_to_time': got_to_time
+                    'got_to_time': got_to_time,
+                    'car_information': car_ver
                 },
                 success: function(res){
                     console.log(res);
@@ -190,8 +192,8 @@
                     $.each(data.integral_info, function(idx, val){
                         str += `<div class="dis">
                                     <div class="denomination">
-                                        <p>￥`+val.integral_full+`</p>
-                                        <span class="need-inte">需`+val.integral_can_be_used+`积分</span>
+                                        <p>￥`+val.deductible_money+`</p>
+                                        <span class="need-inte">需`+val.integral_full+`积分</span>
                                     </div>
                                     <label class="twent" for="twent-`+val.setting_id+`">
                                         <p class="dis-introduce">消费满<span>`+val.consumption_full+`</span>元可用</p>

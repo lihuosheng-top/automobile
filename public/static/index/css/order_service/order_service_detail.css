@@ -169,9 +169,6 @@
 .discount-amount{
     position: relative;
 }
-.service-item-amount .discount-amount-span{
-    margin-right: .35rem;
-}
 .pay-amount{
     display: flex;
     justify-content: space-between;
@@ -180,7 +177,7 @@
     font-size: .28rem;
     padding-top: .2rem;
 }
-.pay-amount span:last-of-type{
+.pay-amount p{
     color: #f00;
     font-size: .32rem;
 }
@@ -193,10 +190,6 @@
     height: .38rem;
     background-position: -7.25rem -1.75rem;
 }
-
-
-
-
 .order-payment-box{
     position: absolute;
     bottom: 0;
@@ -211,8 +204,12 @@
     box-sizing: border-box;
     text-align: right;
 }
-.order-payment-box .order-cancel-btn,
-.order-payment-box .order-payment-btn{
+.order-payment-box .cancel-order-btn,
+.order-payment-box .to-payment-btn,
+.del-order-btn,
+.check-logistics-btn,
+.conf-receipt-btn,
+.evaluation-btn{
     width: 1.8rem;
     height: .6rem;
     border: 0;
@@ -221,8 +218,11 @@
     font-size: .2rem;
     outline: none;
     border-radius: .3rem;
+    margin-right: .2rem;
 }
-.order-payment-box .order-cancel-btn{
+.order-payment-box .cancel-order-btn,
+.del-order-btn,
+.check-logistics-btn{
     background-color: #fff;
     border: 1px solid #999999;
     color: #999999;

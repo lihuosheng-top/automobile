@@ -209,7 +209,7 @@ function myService(data){
                     <div class="service-colla-title">
                         <p class="service-subtitle">`+val.serve_name+`</p>
                         <p class="service-money"></p>
-                        <i class="spr icon-uncheck"></i>
+                        <i class="spr icon-uncheck" id="setting-`+val.serve_goods[0].service_setting_id+`"></i>
                     </div>
                     <div class="service-colla-content" style="display:none;">
                         <ul>`
@@ -317,6 +317,7 @@ $('.filter-ul').on('click', 'li', function(){
 // 确定预约
 $('.bespeak-btn').click(function(){
     var id = $('.service-colla-content').find('.icon-check').attr('id');
+    var settingId = $('.service-colla-title').find('.icon-check').attr('id').split('-')[1];
     $.ajax({
         url: 'reservation_info',
         type: 'POST',
@@ -328,7 +329,11 @@ $('.bespeak-btn').click(function(){
             console.log(res);
             if(res.status == 1){
                 if(res.data.user_car_message.length !== 0){
-                    location.href = 'reservation_info?store_id='+storeId+'&service_setting_id='+serviceSettingId+'&serve_goods_id='+id;
+                    if(urlLen > 1){
+                        location.href = 'reservation_info?store_id='+storeId+'&serve_goods_id='+id+'&service_setting_id='+serviceSettingId;
+                    }else{
+                        location.href = 'reservation_info?store_id='+storeId+'&serve_goods_id='+id+'&service_setting_id='+settingId;
+                    }
                 }else{
                     layer.open({
                         skin: 'msg',
