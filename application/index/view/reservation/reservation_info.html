@@ -342,11 +342,13 @@
                 }else{
                     $('.totalprice span').text('面议');
                 }
+                goodsId = data.serve_goods[0].id;
             },
             error: function(){
                 console.log('error');
             }
         })
+        var goodsId = '';
         $('#confirm-info').click(function(){
             if($('.time_span').text() == '选择时间'){
                 layer.open({
@@ -356,7 +358,28 @@
                 })
             }else if($('.totalprice span').text() == '面议'){
                 var time = $('.time_span').text();
-                
+                var got_to_time = $('.time_span').text();
+                var car_ver = $('.car_info').text();
+                $.ajax({
+                url: 'ios_api_order_service_button',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'goods_id': goodsId,
+                    'service_order_quantitative': 1,
+                    'service_money': 0,
+                    'setting_id': '',
+                    'got_to_time': got_to_time,
+                    'car_information': car_ver
+                },
+                success: function(res){
+                    console.log(res);
+                    location.href = 'order_service_all';
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
             }else{
                 var time = $('.time_span').text();
                 $.ajax({

@@ -9,6 +9,9 @@ namespace app\index\controller;
 
 
 use think\Controller;
+use think\Request;
+use think\Session;
+use think\Db;
 
 class  SellMy extends Controller{
 
@@ -18,7 +21,26 @@ class  SellMy extends Controller{
      * Notes:卖家我的页面
      **************************************
      */
-    public function sell_my_index(){
+    public function sell_my_index(Request $request){
+        if($request->isPost()){
+            //店铺的id
+            $role_name_store_id = Session::get("role_name_store_id");
+            if(empty($role_name_store_id)){
+                exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
+            }
+            //店铺信息
+            $store_info = Db::name("store")
+                ->field("store_logo_images,store_id,store_name,user_id")
+                ->where("store_id",$role_name_store_id["store_id"])
+                ->find();
+            if(empty($store_info)){
+                exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
+            }
+            //今月账单
+            
+            //上月账单
+
+        }
         return view("sell_my_index");
     }
 
