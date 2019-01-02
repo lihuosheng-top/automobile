@@ -86,10 +86,83 @@ class  SellMy extends Controller{
             if(empty($role_name_store_id)){
                 exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
             }
-            $get_number =  Session::set("get_number");
-            $data =Db::name("order_service")
-                ->where("store_id",$role_name_store_id["store_id"])
-                ->find();
+            $get_number =  Session::get("get_number");
+            if($get_number ==1){
+                //今日订单
+                $timetoday = strtotime(date("Y-m-d",time()));//今天0点的时间点
+                $time2 = time() + 3600*24;//今天24点的时间点，两个值之间即为今天一天内的数据
+                $time_condition  = "order_create_time>{$timetoday} and order_create_time< {$time2}";
+                $data =Db::name("order_service")
+                    ->where($time_condition)
+                    ->where("store_id",$role_name_store_id["store_id"])
+                    ->select();
+                if(!empty($data)){
+                    exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$data)));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
+                }
+            }else if($get_number ==2){
+
+            }else if($get_number ==3){
+
+            }else if($get_number ==4){
+                //待服务
+                $condition ="`status` = '2' or `status` = '3'";
+                $data =Db::name("order_service")
+                    ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
+                    ->where($condition)
+                    ->where("store_id",$role_name_store_id["store_id"])
+                    ->select();
+                if(!empty($data)){
+                    exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$data)));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
+                }
+            }else if($get_number ==5){
+                //取消订单
+                $condition ="`status` = '0' or `status` = '9' or `status` = '10'";
+                $data =Db::name("order_service")
+                    ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
+                    ->where($condition)
+                    ->where("store_id",$role_name_store_id["store_id"])
+                    ->select();
+                if(!empty($data)){
+                    exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$data)));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
+                }
+            }else if($get_number ==6){
+                //已完成
+                $data =Db::name("order_service")
+                    ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
+                    ->where('status',6)
+                    ->where("store_id",$role_name_store_id["store_id"])
+                    ->select();
+                if(!empty($data)){
+                    exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$data)));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
+                }
+            }else if($get_number ==7){
+
+            }else if($get_number ==8){
+                //新订单
+                $time1 =time();
+                $time2 = time() + 3600;//1小时后的时间点，两个值之
+                $time_condition  = "order_create_time>{$time1} and order_create_time< {$time2}";
+                $data =Db::name("order_service")
+                    ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
+                    ->where("store_id",$role_name_store_id["store_id"])
+                    ->where($time_condition)
+                    ->where("status",2)
+                    ->select();
+                if(!empty($data)){
+                    exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$data)));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "没有新订单信息","data"=>["status"=>0])));
+                }
+            }
+
         }
         return view("sell_service_order");
     }
@@ -101,7 +174,45 @@ class  SellMy extends Controller{
      * Notes:卖家商品订单
      **************************************
      */
-    public function sell_parts_order(){
+    public function sell_parts_order(Request $request){
+        if($request->isPost()){
+            $role_name_store_id = Session::get("role_name_store_id");
+            if(empty($role_name_store_id)){
+                exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
+            }
+            $get_number = Session::get("get_number");
+            if($get_number ==1){
+                $timetoday = strtotime(date("Y-m-d",time()));//今天0点的时间点
+                $time2 = time() + 3600*24;//今天24点的时间点，两个值之间即为今天一天内的数据
+                $time_condition  = "order_create_time>{$timetoday} and order_create_time< {$time2}";
+                $data =Db::name("order_parts")
+                    ->where($time_condition)
+                    ->where("store_id",$role_name_store_id["store_id"])
+                    ->select();
+                if(!empty($data)){
+                    exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$data)));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
+                }
+            }else if($get_number ==2){
+
+            }else if($get_number ==3){
+
+            }else if($get_number ==4){
+
+            }else if($get_number ==5){
+
+            }else if($get_number ==6){
+
+            }else if($get_number ==7){
+
+            }else if($get_number ==8){
+
+            }
+            $data =Db::name("order_service")
+                ->where("store_id",$role_name_store_id["store_id"])
+                ->find();
+        }
         return view("sell_parts_order");
     }
 
