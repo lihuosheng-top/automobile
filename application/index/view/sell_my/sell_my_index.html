@@ -133,7 +133,21 @@
         })
         $('.function-item').click(function(e){
             e.preventDefault();
-            console.log($(this).index());
+            var index  = $(this).index() + 1;
+            $.ajax({
+                url: 'store_order_save',
+                dataType: 'JSON',
+                type: 'POST',
+                data: {
+                    'get_number': index
+                },
+                success: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
         $.ajax({
             url: 'sell_my_index',
