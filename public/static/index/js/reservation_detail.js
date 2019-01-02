@@ -328,7 +328,11 @@ $('.bespeak-btn').click(function(){
             console.log(res);
             if(res.status == 1){
                 if(res.data.user_car_message.length !== 0){
-                    location.href = 'reservation_info?store_id='+storeId+'&service_setting_id='+serviceSettingId+'&serve_goods_id='+id;
+                    if(urlLen > 1){
+                        location.href = 'reservation_info?store_id='+storeId+'&service_setting_id='+serviceSettingId+'&serve_goods_id='+id;
+                    }else{
+                        location.href = 'reservation_info?store_id='+storeId+'&serve_goods_id='+id;
+                    }
                 }else{
                     layer.open({
                         skin: 'msg',
