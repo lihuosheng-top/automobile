@@ -398,6 +398,12 @@ $('.add_mycar a').click(function(){
     $('.wrapper').hide();
 })
 
+// 添加爱车 返回
+$('.add-back').click(function(){
+    $('.select-car').hide();
+    $('.wrapper').show();
+})
+
 // 城市定位 首字母匹配 start
 $(function(){
     var Initials=$('.gec-initials');
@@ -541,11 +547,8 @@ function gecInitials() {//公众号排序
     };
 }
 // 城市定位 首字母匹配 end
-
-// 添加爱车 返回
-$('.add-back').click(function(){
-    $('.select-car').hide();
-    $('.wrapper').show();
+$('.curr_city').click(function(){
+    
 })
 
 var map = new AMap.Map('container', {
@@ -583,7 +586,7 @@ map.plugin([
     };
 })
  //页面初始化时，如果帐号密码cookie存在则填充
- if (getCookie('area')) {
+if (getCookie('area')) {
     getAdvertisment(getCookie('area'));
 }
 // 获取广告

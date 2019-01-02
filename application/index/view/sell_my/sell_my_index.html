@@ -41,37 +41,37 @@
         </div>
         <div class="main-cont">
             <div class="function-item">
-                <a href="sell_service_order">
+                <a href="javascript:;">
                     <i class="spr-sell icon-order"></i>
                     <span class="item-txt">今日订单</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="sell_service_order">
+                <a href="javascript:;">
                     <i class="spr-sell icon-out"></i>
                     <span class="item-txt">已发货</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="sell_service_order">
+                <a href="javascript:;">
                     <i class="spr-sell icon-return"></i>
                     <span class="item-txt">已退货</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="sell_service_order">
+                <a href="javascript:;">
                     <i class="spr-sell icon-service"></i>
                     <span class="item-txt">待服务</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="sell_service_order">
+                <a href="javascript:;">
                     <i class="spr-sell icon-cancel"></i>
                     <span class="item-txt">已取消</span>
                 </a>
             </div>
             <div class="function-item">
-                <a href="sell_service_order">
+                <a href="javascript:;">
                     <i class="spr-sell icon-complete"></i>
                     <span class="item-txt">已完成</span>
                 </a>
@@ -83,7 +83,7 @@
                 </a>
             </div>
             <div class="function-item">
-                <a href="sell_service_order">
+                <a href="javascript:;">
                     <i class="spr-sell icon-new"></i>
                     <span class="item-txt">新订单</span>
                 </a>
@@ -131,12 +131,23 @@
         $('.wallet-btn').click(function(){
             location.href = 'sell_wallet';
         })
+        $('.function-item').click(function(e){
+            e.preventDefault();
+            console.log($(this).index());
+        })
         $.ajax({
             url: 'sell_my_index',
             dataType: 'JSON',
             type: 'POST',
             success: function(res){
                 console.log(res);
+                if(res.status === 1){
+                    var val = res.data;
+                    // 店铺logo
+                    $('.img-box img').prop('src', 'uploads/'+val.store_logo_images);
+                    // 店铺名
+                    $('.shop-name').text(val.store_name);
+                }
             },
             error: function(){
                 console.log('error');
