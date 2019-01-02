@@ -31,13 +31,13 @@ class  SellMy extends Controller{
             //店铺信息
             $store_info = Db::name("store")
                 ->field("store_logo_images,store_id,store_name,user_id")
-                ->where("store_id",$role_name_store_id)
+                ->where("store_id",$role_name_store_id["store_id"])
                 ->find();
             if(empty($store_info)){
                 exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
             }
             //今月账单
-
+            
             //上月账单
 
         }
