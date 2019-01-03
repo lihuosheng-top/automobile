@@ -18,6 +18,10 @@ class Operation extends Controller{
      */
     public function rescue(Request $request){
 
+        if($request->isPost()){
+            $address = $request->only(["address"])["address"];
+            halt($address);
+        }
         return view("rescue_index");
 
     }
