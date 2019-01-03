@@ -152,9 +152,14 @@ class  SellMy extends Controller{
 
             }else if($get_number ==8){
                 //新订单
-                $time1 =time();
-                $time2 = time() + 3600;//1小时后的时间点，两个值之
-                $time_condition  = "create_time>$time1 and create_time< $time2";
+//                $time1 =time();
+//                $time2 = time() + 3600;//1小时后的时间点，两个值之
+//                $time_condition  = "create_time>$time1 and create_time< $time2";
+
+                $timetoday = strtotime(date("Y-m-d H:i:s",time()));//今天0点的时间点
+                $time2 = strtotime(date("Y-m-d H:i:s",strtotime('-5 hour')));
+                $time_condition  = "  create_time > $time2  and  create_time < $timetoday";
+//                exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$time_condition)));
                 $data =Db::name("order_service")
                     ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                     ->where("store_id",$role_name_store_id["store_id"])
