@@ -8,7 +8,7 @@
 	body {
 		background: #fff;
 	}
-	
+
 	#page {
 		width: 96%;
 		height: 50px;
@@ -18,7 +18,7 @@
 		background: #FDFDFE;
 	}
 	/*弹窗*/
-    
+
     .tanchuang {
         width: 100%;
         min-height: 800px;
@@ -26,7 +26,7 @@
         position: fixed;
         z-index: 9999;
     }
-    
+
     .tanchuang-content {
         width: 400px;
         height: 300px;
@@ -36,19 +36,19 @@
         top: 25%;
         left: 25%;
     }
-    
+
     .close {
         width: 30px;
     }
-    
+
     .clear {
         clear: both;
     }
-    
+
     .title-a {
         background: RGB(247, 247, 247);
     }
-    
+
     .content-title {
         padding-top: 10px;
         padding-left: 20px;
@@ -56,16 +56,16 @@
         width: 50%;
         height: 40px;
     }
-    
+
     .noshow {
         display: none;
     }
-    
+
     .dom form div {
           margin-top: 16px;
-         margin-bottom: 9px; 
+         margin-bottom: 9px;
     }
-    
+
     .buts button {
         width: 100px;
     }
@@ -89,10 +89,10 @@
 	.dom_static{
 		display: flex;
 		width: 100%;
-        align-items: center; 
+        align-items: center;
         justify-content: center;
 	}
-	
+
 </style>
 
 {/block}
@@ -109,24 +109,23 @@
 			<!-- 里面的内容 -->
 
 			<div class="dom">
-				<form name="alipayment" action="" method="post" style="text-align: center; margin-top: 20px;" class="layui-form">
-					<input type="hidden" name="WIDbody" id="good-id" value="" />
-					<input type="hidden" name="" id="year" value="" />
+				<form name="alipayment" action="{:url('admin/Operation/urgency_updata')}" method="post" style="text-align: center; margin-top: 20px;" class="layui-form">
 					<div class="dom_static">
 						  <span style="width: 100px; text-align: right;display: inline-block;">处理状态：</span>
-						  <input type="radio" name="goods_sign" value="已处理" title="已处理" checked="" class="hot">
-                          <input type="radio" name="goods_sign" value="拒绝处理" title="拒绝处理" class="">
+						  <input type="radio" name="status" value="1" title="已处理" checked="" class="hot">
+                          <input type="radio" name="status" value="2" title="拒绝处理" class="">
 					</div>
 					<div style="display: flex; align-items: center;justify-content: center;">
 						<span style="width: 100px; text-align: left; display: inline-block; margin-left: 11px;">处理备注：</span>
-						<textarea name="" rows="4" cols="20"></textarea>
+						<textarea name="user_dispose" class="UserDispose" rows="4" cols="20"></textarea>
 					</div>
 					<div class="buts">
-						<button class="layui-btn layui-btn-primary layui-btn-radius close-btus" type="button">取消</button>
+						 <input type="hidden" name="id" value="" class="admin_status" data-id="">
+						 <button class="layui-btn layui-btn-primary layui-btn-radius close-btus" type="button">取消</button>
 						 <button class="layui-btn layui-btn-normal layui-btn-radius" type="submit">确定</button>
 					</div>
 				</form>
-				
+
 			</div>
 		</div>
 	</div>
@@ -154,7 +153,7 @@
 
 		<div class="layui-form news_list">
 			<table class="layui-table">
-			
+
 				<thead>
 					<tr>
 						<th>序号</th>
@@ -167,25 +166,29 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
+				{volist name="rescue" id="value"}
 					<tr>
-						<td>1000001</td>
-						<td>1000001</td>
-						<td>1000001</td>
-						<td>1000001</td>
-						<td>1000001</td>
+						<td>{$value.id}</td>
+						<td>{$value.account}</td>
+						<td>{$value.user_name == null ? "无" : $value.user_name}</td>
+						<td>{$value.user_address}</td>
+						<td>{$value.user_phone}</td>
 						<td>
-							<div class="static static_pending">
-							    待处理
+							<div class="static static_pending" data-id="{$value.id}">
+							    {$value.status == 0 ? "待处理" : ""}
+								{$value.status == 1 ? "已处理" : ""}
+								{$value.status == 2 ? "拒绝处理" : ""}
 						    </div>
 						</td>
 						<td>
-							<a href="{:url('admin/Category/del')}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+							<a href="{:url('admin/Operation/urgency_del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 						</td>
 					</tr>
+				{/volist}
 				</tbody>
 			</table>
 			<div id="page">
-			
+				{$rescue->render()}
 			</div>
 
 		</div>
@@ -211,6 +214,20 @@
 		});
 		   $(".static").on('click', function() {
                 $(".tanchuang").removeClass("noshow");
+                var id = $(this).data("id");
+			    $(".admin_status").val(id);
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('admin/Operation/urgency_select')}",
+                    data: {"id":id},
+					success:function (data) {
+						console.log(data);
+						if(data.status == 1){
+							$(".UserDispose").html(data.data[0].user_dispose);
+						}
+                    }
+				})
+
             });
 		   $(".close-btus").on('click', function() {
                 $(".tanchuang").addClass("noshow");
