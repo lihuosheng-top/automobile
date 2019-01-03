@@ -419,7 +419,7 @@ class  SellMy extends Controller{
                 }
             }else if($get_number ==2){
                 //已发货
-                $condition =" `status` = '4'";
+                $condition =" `status` = '4' or `status` = '5'";
                 $data =Db::name("order_parts")
                     ->field('parts_order_number,order_create_time,group_concat(id) order_id')
                     ->where($condition)
