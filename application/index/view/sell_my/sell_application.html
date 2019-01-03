@@ -68,8 +68,58 @@
         </ul>
     </div>
 
-
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $.ajax({
+            url: 'sell_wallet',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status === 1){
+                    $('.balance-txt').text(res.data.user_wallet);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+        $('.button-container button').click(function(){
+            var apply_money = $('.apply-container input').val();
+            var apply_member = $('.name-container input').val();
+            var apply_bank = $('.bank-container input').val();
+            var apply_bank_code = $('.bank-num-container input').val();
+            if(apply_money > 100){
+                $.ajax({
+                    url: 'sell_application',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    success: function(res){
+                        console.log(res);
+                        if(res.status === 1){
+                            layer.open({
+                                skin: 'msg',
+                                content: '提交申请成功',
+                                time: .8
+                            })
+                            setTimeout(() => {
+                                location.href = 'sell_wallet';
+                            }, 1000);
+                        }
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '提现金额不能小于100元',
+                    time: 1.2
+                })
+            }
+        })
+    </script>
 </body>
 </html>

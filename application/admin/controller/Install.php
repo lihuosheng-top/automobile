@@ -659,15 +659,36 @@ class Install extends Controller{
     }
 
     /**
-     **************李火生*******************
+     **************GY*******************
      * @param Request $request
      * Notes:发票设置页面
      **************************************
      */
-    public function invoice_setting(){
-        return view("invoice_setting");
+    public function invoice_setting()
+    {
+        $receipt = db("receipt")->select();
+        return view("invoice_setting",["receipt"=>$receipt]);
     }
 
+
+    /**
+     **************GY*******************
+     * @param Request $request
+     * Notes:发票设置保存
+     **************************************
+     */
+    public function invoice_setting_save(Request $request)
+    {
+        if ($request->isPost()) {
+            $receipt = $request->param();
+            $bool = db("receipt")->where('id', $request->only(["id"])["id"])->update($receipt);
+            if ($bool) {
+                $this->success("保存成功", url("admin/Install/invoice_setting"));
+            } else {
+                $this->error("保存失败", url("admin/Install/invoice_setting"));
+            }
+        }
+    }
 
     
 }

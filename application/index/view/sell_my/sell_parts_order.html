@@ -10,10 +10,10 @@
     <title>服务商-服务订单</title>
     <style>
         body,html{background-color: #f2f2f2;}
-        .header-container{position: fixed; top: 0;left: 0; width: 100%;height: .88rem; background-color: #fff; border-bottom: 1px solid #eee; text-align: center; line-height: .88rem;box-sizing: border-box;}
+        .header-container{position: fixed; top: 0;left: 0; width: 100%;height: .88rem; background-color: #fff; border-bottom: 1px solid #eee; text-align: center; line-height: .88rem;box-sizing: border-box;z-index: 2;}
         .header-container .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
         .header-title{font-size: .36rem; color: #333;}
-        .subtitle-container{position: fixed; top: .88rem; left: 0; width: 100%; height: .8rem; background-color: #fff;border-bottom: 1px solid #eee;display: flex; align-items: center;justify-content: space-around;}
+        .subtitle-container{position: fixed; top: .88rem; left: 0; width: 100%; height: .8rem; background-color: #fff;border-bottom: 1px solid #eee;display: flex; align-items: center;justify-content: space-around;z-index: 2;}
         .subtitle-container a{position: relative; font-size: .34rem; color: #333;}
         .subtitle-container a.subtitle-on{color: #504cfb;}
         .subtitle-container a.subtitle-on::after{content: ''; position: absolute; left: 0;bottom: -.1rem; width: 100%; border: 1px solid #504cfb;}
@@ -86,11 +86,126 @@
             location.href = 'sell_parts_order_detail';
         })
         $.ajax({
+            url: 'store_order_get',
+            dataType: 'JSON',
+            type: 'POST',
+            success: function(res){
+                console.log(res);
+                var whichBtnIn = res.data;
+                switch(whichBtnIn){
+                    case '2':
+                        changeHeadTitle('已发货');
+                        $('.subtitle-container').hide();
+                        $('.shops-goods-wrap').css('margin-top', '1.15rem');
+                        break;
+                    case '3':
+                        changeHeadTitle('已退货');
+                        $('.subtitle-container').hide();
+                        $('.shops-goods-wrap').css('margin-top', '1.15rem');
+                        break;
+                    case '4':
+                        changeHeadTitle('待服务');
+                    case '5':
+                        changeHeadTitle('已取消');
+                        break;
+                    case '6':
+                        changeHeadTitle('已完成');
+                        break;
+                    case '7':
+                        changeHeadTitle('月销');
+                        break;
+                    case '8':
+                        changeHeadTitle('新订单');
+                        break;
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+        function changeHeadTitle(txt){
+            $('.header-title').text(txt);
+        }
+
+        $.ajax({
             url: 'sell_parts_order',
             type: 'POST',
             dataType: 'JSON',
             success: function(res){
                 console.log(res);
+                if(res.status == 1){
+                    var str = '';
+                    var statusTxt = '';
+                    $.each(res.data, function(idx, val){
+                        if(val.status === 1){
+                            statusTxt = `待付款`;
+                        }else if(val.status === 2 || val.status === 3 || val.status === 4 || val.status === 5){
+                            statusTxt = `待收货`;
+                        }else if(val.status === 6 || val.status === 7){
+                            statusTxt = `待评价`;
+                        }else if(val.status === 8){
+                            statusTxt = `已完成`;
+                        }else if(val.status === 9 || val.status === 10){
+                            statusTxt = `已取消`;
+                        }else if(val.status === 11){
+                            statusTxt = `退货`;
+                        }else if(val.status === 12){
+                            statusTxt = '已退货';
+                        }
+                        str += `<div class="single-shop-box" id="`+val.parts_order_number+`" name="`+val.store_id+`">
+                                    <div class="shop-name-box">
+                                        <div class="name-txt-div">
+                                            <i class="spr icon-shop"></i>
+                                            <span class="name-txt-span">北方轮胎旗舰店</span>
+                                        </div>
+                                        <p class="status-txt-p">`+statusTxt+`</p>
+                                    </div>
+                                    <div class="all-goods-box">`;
+                        $.each(val.info, function(idx, val){
+                            str += `<div class="single-goods-box single-goods-box-border">
+                                        <div class="shop-img-box">
+                                            <img src="uploads/`+val.goods_image+`">
+                                        </div>
+                                        <div class="order-info-box">
+                                            <p class="goods-name-p txt-hid-two">`+val.parts_goods_name+`</p>
+                                            <p class="goods-selling-point txt-hid-two">`+val.goods_describe+`</p>
+                                            <div class="unit-price-quantity">
+                                                <p class="unit-price-p">￥`+val.goods_money+`</p>
+                                                <p class="quantity-p">×`+val.order_quantity+`</p>
+                                            </div>
+                                        </div>
+                                    </div>`
+                        })
+                        str += `</div>
+                                <div class="total-button-box">
+                                    <p class="total-p">共计`+val.all_numbers+`件商品 合计：￥`+val.all_order_real_pay+`</p>
+                                </div>
+                            </div>`
+                    })
+                    $('.shops-goods-wrap').append(str);
+                    $('.single-shop-box').click(function(){
+                        var sell_store_id = $(this).attr('name');
+                        var sell_parts_order_number = $(this).attr('id');
+                        $.ajax({
+                            url: 'sell_parts_save_record',
+                            dataType: 'JSON',
+                            type: 'POST',
+                            data: {
+                                'sell_store_id': sell_store_id,
+                                'sell_parts_order_number': sell_parts_order_number
+                            },
+                            success: function(res){
+                                console.log(res);
+                                if(res.status == 1){
+                                    location.href = 'sell_parts_order_detail';
+                                }
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
+                        })
+                    })
+                }
             },
             error: function(){
                 console.log('error');
