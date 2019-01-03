@@ -174,7 +174,21 @@ class  SellMy extends Controller{
                     exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
                 }
             }else if($get_number ==7){
-
+                //月销
+                $month_start = strtotime(date("Y-m-01"));
+                $month_end = strtotime("+1 month -1 seconds", $month_start);
+                $time_condition  = "create_time>$month_start and create_time< $month_end";
+                $data =Db::name("order_service")
+                    ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
+                    ->where("store_id",$role_name_store_id["store_id"])
+                    ->where($time_condition)
+                    ->where("status",2)
+                    ->select();
+                if(!empty($data)){
+                    exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$data)));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "没有新订单信息","data"=>["status"=>0])));
+                }
             }else if($get_number ==8){
                 //新订单
                 $timetoday = strtotime(date("Y-m-d H:i:s",time()));//今天0点的时间点
@@ -1691,7 +1705,7 @@ class  SellMy extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:卖家商品记录
+     * Notes:卖家商品账单
      **************************************
      * @return \think\response\View
      */
