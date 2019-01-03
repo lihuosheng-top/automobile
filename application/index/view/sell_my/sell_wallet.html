@@ -42,6 +42,17 @@
         $('.recharge').click(function(){
             location.href = 'sell_application';
         })
+        $.ajax({
+            url: 'sell_wallet',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
     </script>
 </body>
 </html>
