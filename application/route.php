@@ -108,7 +108,9 @@ Route::group("",[
 
     "sell_service_order"=>"index/SellMy/sell_service_order",//卖家服务订单
     "sell_parts_order"=>"index/SellMy/sell_parts_order",//卖家商品订单
+    "sell_order_service_save_record"=>"index/SellMy/sell_order_service_save_record",//卖家进入服务订单详情需要保存的数据
     "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
+    "sell_parts_save_record"=>"index/SellMy/sell_parts_save_record",//卖家进入配件商订单详情需要保存的数据
     "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
 
     "sell_service_record"=>"index/SellMy/sell_service_record",//卖家服务记录
@@ -701,6 +703,9 @@ Route::group("admin",[
      */
     "complaint_index"=>"admin/Operation/complaint_index",
     "urgency_index"=>"admin/Operation/urgency_index",
+    "urgency_updata"=>"admin/Operation/urgency_updata",
+    "urgency_select"=>"admin/Operation/urgency_select",
+    "urgency_del"=>"admin/Operation/urgency_del",
 
 ]);
 
