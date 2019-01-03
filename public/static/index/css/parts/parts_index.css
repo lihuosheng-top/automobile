@@ -54,7 +54,11 @@ html, body{
     width: .76rem;
     height: .75rem;
 }
-.server-list .icon1{
+.server-list i img{
+    width: 100%;
+    height: 100%;
+}
+/* .server-list .icon1{
     background-position: .05rem .05rem;
 }
 .server-list .icon2{
@@ -92,7 +96,7 @@ html, body{
 }
 .server-list .icon13{
     background-position: .05rem -2.95rem;
-}
+} */
 .server-list .server-ul li{
     float: left;
     width: 1.65rem;
