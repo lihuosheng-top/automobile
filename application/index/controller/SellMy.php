@@ -90,14 +90,16 @@ class  SellMy extends Controller{
                 exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
             }
             $get_number =  Session::get("get_number");
+
+            $store_id =intval($role_name_store_id["store_id"]);
             if($get_number ==1){
                 //今日订单
                 $timetoday = strtotime(date("Y-m-d",time()));//今天0点的时间点
                 $time2 = time() + 3600*24;//今天24点的时间点，两个值之间即为今天一天内的数据
-                $time_condition  = "order_create_time>{$timetoday} and order_create_time<{$time2}";
+                $time_condition  = "create_time>$timetoday and create_time< $time2";
                 $data =Db::name("order_service")
                     ->where($time_condition)
-                    ->where("store_id",$role_name_store_id["store_id"])
+                    ->where("store_id",$store_id)
                     ->select();
                 if(!empty($data)){
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$data)));
@@ -152,7 +154,7 @@ class  SellMy extends Controller{
                 //新订单
                 $time1 =time();
                 $time2 = time() + 3600;//1小时后的时间点，两个值之
-                $time_condition  = "order_create_time>{$time1} and order_create_time< {$time2}";
+                $time_condition  = "create_time>$time1 and create_time< $time2";
                 $data =Db::name("order_service")
                     ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                     ->where("store_id",$role_name_store_id["store_id"])
