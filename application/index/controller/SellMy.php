@@ -212,6 +212,7 @@ class  SellMy extends Controller{
             }
             $get_number = Session::get("get_number");
             if($get_number ==1){
+                //今日订单
                 $timetoday = strtotime(date("Y-m-d",time()));//今天0点的时间点
                 $time2 = time() + 3600*24;//今天24点的时间点，两个值之间即为今天一天内的数据
                 $time_condition  = "order_create_time>$timetoday and order_create_time< $time2";
@@ -403,6 +404,7 @@ class  SellMy extends Controller{
                     exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
                 }
             }else if($get_number ==2){
+                //已发货
                 $condition =" `status` = '4'";
                 $data =Db::name("order_parts")
                     ->field('parts_order_number,order_create_time,group_concat(id) order_id')
@@ -470,6 +472,7 @@ class  SellMy extends Controller{
                 }
 
             }else if($get_number ==3){
+                //已退货
                 $condition =" `status` = '12'";
                 $data =Db::name("order_parts")
                     ->field('parts_order_number,order_create_time,group_concat(id) order_id')
@@ -536,8 +539,9 @@ class  SellMy extends Controller{
                     }
                 }
             }else if($get_number ==4){
-
+                //待服务
             }else if($get_number ==5){
+                //已取消
                 $condition =" `status` = '0' or `status` = '9'  or `status` = '10' ";
                 $data =Db::name("order_parts")
                     ->field('parts_order_number,order_create_time,group_concat(id) order_id')
@@ -604,6 +608,7 @@ class  SellMy extends Controller{
                     }
                 }
             }else if($get_number ==6){
+                //已完成
                 $condition =" `status` = '8' ";
                 $data =Db::name("order_parts")
                     ->field('parts_order_number,order_create_time,group_concat(id) order_id')
@@ -670,8 +675,9 @@ class  SellMy extends Controller{
                     }
                 }
             }else if($get_number ==7){
-
+                //月销
             }else if($get_number ==8){
+                //新订单
                 $timetoday = strtotime(date("Y-m-d H:i:s",time()));//今天0点的时间点
                 $time2 = strtotime(date("Y-m-d H:i:s",strtotime('-6 hour')));
                 $time_condition  = "order_create_time > $time2  and  order_create_time < $timetoday";
@@ -694,12 +700,10 @@ class  SellMy extends Controller{
                             $parts_order_number_all[$ke] = $item['parts_order_number'];
                         }
                         $unique_order_number = array_merge(array_unique($parts_order_number_all));
-
                         foreach ($unique_order_number as $da_k =>$da_v){
                             $order_data['info'][$da_k] = Db::name('order_parts')
                                 ->where('parts_order_number', $da_v)
                                 ->where("store_id",$role_name_store_id["store_id"])
-                                ->order('order_create_time', 'desc')
                                 ->select();
                             $names = Db::name("order_parts")
                                 ->where("store_id",$role_name_store_id["store_id"])
