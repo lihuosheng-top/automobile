@@ -42,9 +42,7 @@ class  SellMy extends Controller{
             $timetoday = strtotime(date("Y",time()));//今月时间戳
             $time2 = time() + 3600*24;//今天24点的时间点，两个值之间即为今天一天内的数据
             $time_condition  = "order_create_time>{$timetoday} and order_create_time< {$time2}";
-
             //上月账单
-
         }
         return view("sell_my_index");
     }
@@ -224,7 +222,6 @@ class  SellMy extends Controller{
                     ->where("store_id",$role_name_store_id["store_id"])
                     ->group('parts_order_number')
                     ->select();
-//                halt( $data);
                 foreach ($data as $key=>$value) {
                     if (strpos($value["order_id"], ",")) {
                         $order_id = explode(',', $value["order_id"]);
@@ -253,6 +250,8 @@ class  SellMy extends Controller{
                             $order_data["parts_order_number"][$da_k] = $names["parts_order_number"];
                             $order_data["all_order_real_pay"][$da_k] = $names["order_real_pay"];
                             $order_data["order_create_time"][$da_k] = $names["order_create_time"];
+                            $order_data["store_name"][$da_k] = $names["store_name"];
+                            $order_data["store_id"][$da_k] = $names["store_id"];
                             foreach ($order_data["info"] as $kk => $vv) {
                                 $order_data["all_numbers"][$kk] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $vv));
                             }
@@ -268,6 +267,8 @@ class  SellMy extends Controller{
                         $data_information['status'][] = $return_data['status'];
                         $data_information['parts_order_number'][] = $return_data['parts_order_number'];
                         $data_information['order_create_time'][] = $value['order_create_time'];
+                        $data_information['store_id'][] = $return_data['store_id'];
+                        $data_information['store_name'][] =$return_data['store_name'];
                         $data_information['all'][] = Db::name('order_parts')
                             ->where("store_id",$role_name_store_id["store_id"])
                             ->where('id', $value['order_id'])
@@ -321,7 +322,6 @@ class  SellMy extends Controller{
                     foreach ($new_arr_all_order_number as $i=>$j){
                         $end_info[$i]['parts_order_number'] = $j;
                     }
-
                     //订单创建时间
                     foreach ($order_data['order_create_time'] as $i => $j) {
                         if(!empty($j)){
@@ -330,6 +330,24 @@ class  SellMy extends Controller{
                     }
                     foreach ($new_arr_order_create_time as $i=>$j){
                         $end_info[$i]['order_create_times'] = $j;
+                    }
+                    //店铺id
+                    foreach ($order_data['store_id'] as $i => $j) {
+                        if(!empty($j)){
+                            $new_arr_all_store_id[] =$j;
+                        }
+                    }
+                    foreach ($new_arr_all_store_id as $i=>$j){
+                        $end_info[$i]['store_id'] = $j;
+                    }
+                    //店铺名字
+                    foreach ($order_data['store_name'] as $i => $j) {
+                        if(!empty($j)){
+                            $new_arr_all_store_name[] =$j;
+                        }
+                    }
+                    foreach ($new_arr_all_store_name as $i=>$j){
+                        $end_info[$i]['store_name'] = $j;
                     }
                 }
                 if(!empty($data_information)){
@@ -362,6 +380,16 @@ class  SellMy extends Controller{
                     //创建订单时间
                     foreach ($data_information['order_create_time'] as $a=>$b){
                         $end_info[$a+$count]['order_create_times'] = $b;
+                    }
+
+                    //店铺id
+                    foreach ($data_information['store_id'] as $a=>$b){
+                        $end_info[$a+$count]['store_id'] = $b;
+                    }
+
+                    //店铺名字
+                    foreach ($data_information['store_name'] as $a=>$b){
+                        $end_info[$a+$count]['store_name'] = $b;
                     }
                 }
                 if(!empty($end_info)){
