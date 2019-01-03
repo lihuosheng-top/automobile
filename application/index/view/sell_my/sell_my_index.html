@@ -144,7 +144,16 @@
                 success: function(res){
                     console.log(res);
                     if(res.status === 1){
-                        location.href = 'sell_service_order';
+                        switch(index){
+                            case 2:
+                                location.href = 'sell_parts_order';break;
+                            case 3: 
+                                location.href = 'sell_parts_order';break;
+                            case 4:
+                                location.href = 'sell_service_order';break;
+                            default:
+                                location.href = 'sell_service_order';
+                        }
                     }
                 },
                 error: function(){
@@ -164,6 +173,8 @@
                     $('.img-box img').prop('src', 'uploads/'+val.store_logo_images);
                     // 店铺名
                     $('.shop-name').text(val.store_name);
+                }else if(res.status === 2){
+                    location.href = 'login';
                 }
             },
             error: function(){

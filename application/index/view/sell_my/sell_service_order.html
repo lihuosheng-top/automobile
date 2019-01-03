@@ -68,8 +68,48 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-        
         $.ajax({
+            url: 'store_order_get',
+            dataType: 'JSON',
+            type: 'POST',
+            success: function(res){
+                console.log(res);
+                var whichBtnIn = res.data;
+                switch(whichBtnIn){
+                    case '2':
+                        changeHeadTitle('已发货');
+                        break;
+                    case '3':
+                        changeHeadTitle('已退货');
+                        break;
+                    case '4':
+                        changeHeadTitle('待服务');
+                        $('.subtitle-container').hide();
+                        $('.reservation-container').css('margin-top', '1.15rem');
+                        break;
+                    case '5':
+                        changeHeadTitle('已取消');
+                        break;
+                    case '6':
+                        changeHeadTitle('已完成');
+                        break;
+                    case '7':
+                        changeHeadTitle('月销');
+                        break;
+                    case '8':
+                        changeHeadTitle('新订单');
+                        break;
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+        function changeHeadTitle(txt){
+            $('.header-title').text(txt);
+        }
+        
+        $ .ajax({
             url: 'sell_service_order',
             dataType: 'JSON',
             type: 'POST',
