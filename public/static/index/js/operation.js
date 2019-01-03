@@ -36,11 +36,11 @@ AMap.plugin([
 })
 $(".send_add").click(function () {
 	$.ajax({
-		url: '',
+		url: 'rescue_index',
 		type: 'POST',
 		dataType: 'JSON',
 		data: {
-			'add': add
+			'address': add
 		},
 		success: function (data) {
 			layer.open({
