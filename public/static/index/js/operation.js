@@ -31,7 +31,7 @@ AMap.plugin([
 			$('.addr_info').text(address);
 		}
 		$(".send_add").click(function () {
-			sendAddressEvent('路由地址', address)
+			sendAddressEvent('rescue_index', address)
 		});
 	};
 	function onError(e) {
@@ -45,7 +45,7 @@ function sendAddressEvent(url, add){
 		type: 'POST',
 		dataType: 'JSON',
 		data: {
-			'add': add
+			'address': add
 		},
 		success: function (data) {
 			console.log(data);

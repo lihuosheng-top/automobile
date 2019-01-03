@@ -29,8 +29,8 @@
             <div class="swiper-pagination"></div>
         </div>
         <div class="server-list">
-            <ul class="server-ul clearfix">
-                <li>
+            <ul class="server-ul clearfix Html">
+                <!--<li>
                     <a href="javascript:;">
                         <i class="spr-parts icon1"></i>
                         <span class="server-txt">常用配件</span>
@@ -107,7 +107,7 @@
                         <i class="spr-parts icon13"></i>
                         <span class="server-txt">内外饰改装</span>
                     </a>
-                </li>
+                </li>-->
             </ul>
         </div>
         <div class="preferential">
@@ -225,6 +225,29 @@
                 }
             })
         }
+        $.ajax({
+            url: '{:url("index/Parts/parts_index")}',
+            type: 'POST',
+            dataType: 'JSON',
+            success:function (res) {
+                console.log(res);
+                if(res.status == 1){
+                    var _html = '';
+                    $.each(res.data, function(key,value){
+                        _html += `<li>
+                                    <a href="classify_index?parets_id=`+value.id+`">
+                                        <i class="spr-parts"><img src="uploads/`+value.type_images+`"></i>
+                                        <span class="server-txt">`+value.name+`</span>
+                                    </a>
+                                  </li>`
+                    })
+                    $('.Html').append(_html);
+                }
+            },
+            error:function (data) {
+                console.log("错误")
+            }
+        })
     </script>
 </body>
 </html>

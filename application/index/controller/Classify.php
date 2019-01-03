@@ -3,6 +3,7 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Request;
+use think\Session;
 
 class Classify extends Controller
 {
@@ -19,6 +20,10 @@ class Classify extends Controller
             $goods_type = _tree_sort(recursionArr($goods_type), 'sort_number');
             $goods_brand = _tree_sort(recursionArr($brand), 'sort_number');
             return ajax_success("获取成功",array("goods_brand"=>$goods_brand,"goods_type"=>$goods_type));
+        }
+        if($request->get()){
+            $parets_id = $request->only(["parets_id"])["parets_id"];
+            Session::set("parets_id",$parets_id);
         }
         return view("classify_index");
     }
@@ -116,4 +121,20 @@ class Classify extends Controller
         }
         return view("goods_detail");
     }
+
+
+
+    /**
+     * 获取配件城id
+     * 陈绪
+     */
+    public function parets_id(Request $request){
+
+        if($request->isPost()) {
+            $parets_id = Session::get("parets_id");
+            Session::delete("parets_id");
+            return ajax_success("获取成功", $parets_id);
+        }
+    }
+
 }
