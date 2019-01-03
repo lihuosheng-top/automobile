@@ -171,6 +171,8 @@
                     $('.img-box img').prop('src', 'uploads/'+val.store_logo_images);
                     // 店铺名
                     $('.shop-name').text(val.store_name);
+                }else if(res.status === 2){
+                    location.href = 'login';
                 }
             },
             error: function(){
