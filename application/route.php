@@ -648,6 +648,7 @@ Route::group("admin",[
     "service_del"=>"admin/Install/service_del", //服务设置之删除
 
     "invoice_setting"=>"admin/Install/invoice_setting",//设置之发票手续费设置
+    "invoice_setting_save"=>"admin/Install/invoice_setting_save",//设置之发票手续费设置保存
 
     //消息提醒设置
     "message_index"=>"admin/Install/message_index",
