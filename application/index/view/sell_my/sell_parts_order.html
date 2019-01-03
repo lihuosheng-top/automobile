@@ -96,9 +96,12 @@
                     case '2':
                         changeHeadTitle('已发货');
                         $('.subtitle-container').hide();
+                        $('.shops-goods-wrap').css('margin-top', '1.15rem');
                         break;
                     case '3':
                         changeHeadTitle('已退货');
+                        $('.subtitle-container').hide();
+                        $('.shops-goods-wrap').css('margin-top', '1.15rem');
                         break;
                     case '4':
                         changeHeadTitle('待服务');
@@ -146,6 +149,8 @@
                             statusTxt = `已取消`;
                         }else if(val.status === 11){
                             statusTxt = `退货`;
+                        }else if(val.status === 12){
+                            statusTxt = '已退货';
                         }
                         str += `<div class="single-shop-box">
                                     <div class="shop-name-box">
