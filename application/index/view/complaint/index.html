@@ -70,13 +70,13 @@
                     </div>
                 </div>
                 <span class="switch-span">添加图片
-                    <input type="file" multiple id="upload">
+                    <input type="file" multiple id="images">
                 </span>
             </div>
         </div>
         <div class="connection-container">
             <span>联系方式</span>
-            <textarea placeholder="留下QQ、微信、电话等，方便及时联系您？" id=""></textarea>
+            <textarea placeholder="留下QQ、微信、电话等，方便及时联系您？" id="issue_relation"></textarea>
         </div>
         <div class="button-container">
             <button class="submit-question">提交反馈</button>
@@ -89,6 +89,7 @@
         $('.question-list span').click(function(){
             $(this).siblings().removeClass('question-on');
             var data = $(this).addClass('question-on');
+            var formData = new FormData();
 
         })
     </script>
