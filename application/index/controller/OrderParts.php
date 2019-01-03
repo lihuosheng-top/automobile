@@ -215,6 +215,7 @@ class OrderParts extends Controller{
                                 $order_undate['status'][] = $names['status'];
                                 $order_undate["parts_order_number"][] =$names["parts_order_number"];
                                 $order_undate["all_order_real_pay"][] = $names["order_real_pay"];
+                                $order_undate["order_create_time"][] = $names["order_create_time"];
                                 foreach ($order_undate["info"] as  $kk=>$vv){
                                     $order_undate["all_numbers"][$kk] =array_sum(array_map(create_function('$vals','return $vals["order_quantity"];'),$vv));
                                 }
@@ -228,6 +229,7 @@ class OrderParts extends Controller{
                             $data_infomation['store_id'][]= $return_datas['store_id'];
                             $data_infomation['status'][] = $return_datas['status'];
                             $data_infomation['parts_order_number'][] = $return_datas['parts_order_number'];
+                            $data_infomation['order_create_time'][] = $return_datas['order_create_time'];
                             $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
                         }
                     };
@@ -295,6 +297,14 @@ class OrderParts extends Controller{
                         foreach ($new_arr_all_order_number as $i=>$j){
                             $end_info[$i]['parts_order_number'] = $j;
                         }
+                        foreach ($order_undate['order_create_time'] as $i => $j) {
+                            if(!empty($j)){
+                                $new_arr_order_create_time[] =$j;
+                            }
+                        }
+                        foreach ($new_arr_order_create_time as $i=>$j){
+                            $end_info[$i]['order_create_time'] = $j;
+                        }
 
 
                     }
@@ -333,14 +343,18 @@ class OrderParts extends Controller{
                         foreach ($data_infomation['all'] as $a=>$b){
                             $end_info[$a+$coutn]['info'][] = $b;
                         }
+                        //时间
+                        foreach ($data_infomation['order_create_time'] as $a=>$b){
+                            $end_info[$a+$coutn]['order_create_time'] = $b;
+                        }
                     }
 
                     if (!empty($end_info)) {
-//                        $ords =array();
-//                        foreach ($end_info as $vl){
-//                            $ords[] =$vl["parts_order_number"];
-//                        }
-//                        array_multisort($end_info,SORT_DESC,$ords);
+                        $ords =array();
+                        foreach ($end_info as $vl){
+                            $ords[] =$vl["parts_order_number"];
+                        }
+                        array_multisort($end_info,SORT_DESC,$ords);
                         return ajax_success('数据', $end_info);
                     } else {
                         return ajax_error('没数据');
