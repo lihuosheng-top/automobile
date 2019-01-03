@@ -73,24 +73,15 @@ $.ajax({
             })
             // 去评价
             $('.evaluation-btn').click(function(){
-                var orderNum = $(this).parents('.reservation-tab').find('.order-num span').text();
+                var orderNum = $(".order-num span").text();
                 detailAndEva('order_service_save_record', orderNum, 'service_evaluate_index');
-            })
-            // 查看详情
-            $('.reservation-info-container').click(function(){
-                var orderNum = $(this).parents('.reservation-tab').find('.order-num span').text();
-                detailAndEva('order_service_save_record', orderNum, 'order_service_detail');
             })
             // 去付款
             $('.to-payment-btn').click(function(){
-                var id = $('.order-num span').attr('id');
-                var index = res.data.findIndex(function(item){
-                    return item.id == id;
-                });
-                var totalAmount = res.data[index].service_real_pay;
-                var outTradeNo = res.data[index].service_order_number;
-                var subjuect = res.data[index].service_goods_name;
-                var body = res.data[index].service_goods_name;
+                var totalAmount = val.service_real_pay;
+                var outTradeNo = val.service_order_number;
+                var subjuect = val.service_goods_name;
+                var body = val.service_goods_name;
                 $('#WIDtotal_amount').val(totalAmount);
                 $('#WIDout_trade_no').val(outTradeNo);
                 $('#WIDsubject').val(subjuect);

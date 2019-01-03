@@ -95,12 +95,12 @@ $.ajax({
             })
             // 已服务 
             $('.conf-receipt-btn').click(function(){
-                var id = $(this).parents('.reservation-tab').attr('id')
+                var id = $(this).parents('.reservation-tab').attr('id');
                 btnEvent('服务已完成？', 'ios_api_order_service_already_served', id);
             })
             // 删除订单
             $('.del-order-btn').click(function(){
-                var id = $(this).parents('.reservation-tab').attr('id')
+                var id = $(this).parents('.reservation-tab').attr('id');
                 btnEvent('确认删除？', 'service_del', id);
             })
             // 去评价
@@ -115,7 +115,7 @@ $.ajax({
             })
             // 去付款
             $('.to-payment-btn').click(function(){
-                var id = $(this).parents('.reservation-tab').attr('id')
+                var id = $(this).parents('.reservation-tab').attr('id');
                 var index = res.data.findIndex(function(item){
                     return item.id == id;
                 });

@@ -19,13 +19,13 @@
         .subtitle-container a.subtitle-on::after{content: ''; position: absolute; left: 0;bottom: -.1rem; width: 100%; border: 1px solid #504cfb;}
         .reservation-container{margin-top: 1.85rem;}
         .reservation-tab{width: 94%;background-color: #fff;border-radius: .2rem;margin: 0 auto .2rem;box-shadow: 0 1px 10px rgba(230, 230, 230, 1);padding: .32rem .28rem;box-sizing: border-box;}
-        .order-num-status{display: flex;justify-content: space-between;font-size: .3rem;color: #333;margin-bottom: .2rem;}
+        .order-num-status{display: flex;justify-content: space-between;font-size: .28rem;color: #333;margin-bottom: .2rem;}
         .order-num-status .icon-order-num{display: inline-block;width: .34rem;height: .34rem;background-position: -4.45rem .05rem;margin-right: .15rem;vertical-align: text-bottom;}
         .order-num-status .status{color: #504cfb;}        
         .order-time,.order-shop-name{font-size: .3rem;color: #333;margin-bottom: .2rem;}
         .order-time .icon-time{display: inline-block;width: .34rem;height: .34rem;background-position: -4.95rem .05rem;margin-right: .15rem;vertical-align: text-bottom;}
         .order-shop-name .icon-shop{display: inline-block;width: .4rem;height: .38rem;background-position: -5.55rem -.95rem;margin-right: .15rem;vertical-align: text-bottom;}        
-        .order-item{font-size: .3rem;color: #333;margin-bottom: .3rem;padding-left: .5rem;}
+        .order-item{font-size: .3rem;color: #333;padding-left: .5rem;}
         .order-item span{display: inline-block;width: .2rem;height: .2rem;border-radius: 50%;background-color: #999999;vertical-align: baseline;margin-right: .15rem;}
         .button-box{text-align: right;}
         .receipt{background-color: #504cfb; color: #fff; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none; border: 0;}
@@ -42,7 +42,7 @@
             <a href="sell_parts_order" class="goods-order">商品订单</a>
         </div>
         <div class="reservation-container">
-            <div class="reservation-tab">
+            <!-- <div class="reservation-tab">
                 <div class="order-num-status">
                     <div class="order-num">
                         <i class="spr icon-order-num"></i>订单编号：20181129145
@@ -61,15 +61,62 @@
                 <div class="button-box">
                     <button class="receipt">接单</button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-        $('.reservation-tab').click(function(){
-            location.href = 'sell_service_order_detail';
+        
+        $.ajax({
+            url: 'sell_service_order',
+            dataType: 'JSON',
+            type: 'POST',
+            success: function(res){
+                console.log(res);
+                if(res.status === 1){
+                    var str = '';
+                    var statusTxt = '';
+                    $.each(res.data, function(idx, val){
+                        if(val.status === 0 || val.status === 9 || val.status === 10){
+                            statusTxt = '已关闭';
+                        }else if(val.status === 1){
+                            statusTxt = '待付款';
+                        }else if(val.status === 2 || val.status === 3){
+                            statusTxt = '待服务';
+                        }else if(val.status === 4 || val.status === 5){
+                            statusTxt = '待评价';
+                        }else if(val.status === 6){
+                            statusTxt = '已完成';
+                        }
+                        str += `<div class="reservation-tab">
+                                    <div class="order-num-status">
+                                        <div class="order-num">
+                                            <i class="spr icon-order-num"></i>订单编号：<span>`+val.service_order_number+`</span>
+                                        </div>
+                                        <span class="status">`+statusTxt+`</span>
+                                    </div>
+                                    <p class="order-time">
+                                        <i class="spr icon-time"></i><span>`+val.got_to_time+`</span>
+                                    </p>
+                                    <p class="order-shop-name">
+                                        <i class="spr icon-shop"></i><span>`+val.store_name+`</span>
+                                    </p>
+                                    <div class="order-item">
+                                        <span></span>`+val.service_goods_name+`
+                                    </div>
+                                </div>`;
+                    })
+                    $('.reservation-container').append(str);
+                    $('.reservation-tab').click(function(){
+                        location.href = 'sell_service_order_detail';
+                    })
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
         })
     </script>
 </html>
