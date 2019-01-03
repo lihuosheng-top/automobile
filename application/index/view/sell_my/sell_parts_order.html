@@ -95,11 +95,7 @@
                 switch(whichBtnIn){
                     case '2':
                         changeHeadTitle('已发货');
-                        $('.service-order').hide();
-                        $('.goods-order').addClass('subtitle-on');
-                        $('.goods-order').click(function(e){
-                            e.preventDefault();
-                        })
+                        $('.subtitle-container').hide();
                         break;
                     case '3':
                         changeHeadTitle('已退货');
