@@ -50,14 +50,22 @@ class Reservation extends Controller{
 
         if($request->isPost()) {
             $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
+            $store_user_address = $request->only(["store_user_address"])["store_user_address"];
+            $num = strpos($store_user_address,"区");
+            $store_address = substr($store_user_address,0,$num);
             $user_id = Session::get("user");
             $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
             $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->where("year",$user_car["production_time"])->where("displacement",$user_car["displacement"])->field("vehicle_model")->find();
             $serve_goods = db("serve_goods")->where("vehicle_model",$car_series["vehicle_model"])->where("service_setting_id",$service_setting_id)->select();
             foreach ($serve_goods as $key=>$value){
                 $where = "`operation_status` = '1' and `store_is_button` = '1' and `del_status` = '1'";
-                $serve_goods[$key]["serve_name"] = db("store")->where("store_id",$value["store_id"])->where($where)->find();
-                $serve_goods[$key]["service_setting_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
+                $address = db("store")->where("store_detailed_address","like","%".$store_address."%")->where($where)->select();;
+                foreach ($address as $val){
+                    if($val["store_id"] == $value["store_id"]){
+                        $serve_goods[$key]["serve_name"] = $val;
+                        $serve_goods[$key]["service_setting_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
+                    }
+                }
             }
 
             if ($serve_goods) {
