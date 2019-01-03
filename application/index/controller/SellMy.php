@@ -1632,8 +1632,8 @@ class  SellMy extends Controller{
      */
     public function sell_parts_save_record(Request $request){
         if($request->isPost()){
-            $store_id =$request->only("store_id")["store_id"];//店铺id
-            $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//配件商订单编号
+            $store_id =$request->only("sell_store_id")["sell_store_id"];//店铺id
+            $parts_order_number =$request->only("sell_parts_order_number")["sell_parts_order_number"];//配件商订单编号
             if(!empty($store_id)){
                 Session::set("sell_store_id",$store_id);
                 Session::set("sell_parts_order_number",$parts_order_number);
