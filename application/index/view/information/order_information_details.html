@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
     <link rel="stylesheet" href="__STATIC__/index/css/payment.css">
     <link rel="stylesheet" href="__STATIC__/index/css/order_parts/order_parts_detail.css">
-    <title>配件商-商品详情</title>
+    <title>订单消息-详情</title>
 </head>
 <body>
 <div class="place-order-pop">
@@ -87,21 +87,21 @@
                 联系卖家
             </div> -->
         </div>
-        <div class="order-payment-box">
+        <!-- <div class="order-payment-box">
             <button class="cancel-order-btn" style="display:none;">取消订单</button>
             <button class="to-payment-btn" style="display:none;">立即付款</button>
             <button class="del-order-btn" style="display:none;">删除订单</button>
             <button class="check-logistics-btn" style="display:none;">查看物流</button>
             <button class="conf-receipt-btn" style="display:none;">确认收货</button>
             <button class="evaluation-btn" style="display:none;">去评价</button>
-        </div>
+        </div> -->
     </div>
     {/volist}
 </div>
 
-<div class="mask" style="display:none;"></div>
+<!-- <div class="mask" style="display:none;"></div> -->
 <!-- 取消订单弹窗 -->
-<div class="cancel-order-pop">
+<!-- <div class="cancel-order-pop">
     <header class="cancel-order-header">
         取消订单
         <a href="javascript:;" class="spr close-cancel-order"></a>
@@ -115,10 +115,10 @@
         <li class="reason-li"><i class="spr icon-reason"></i> 其他原因</li>
     </ul>
     <button class="select-reason-btn">确定</button>
-</div>
+</div> -->
 
 <!-- 支付弹窗 -->
-<form name=alipayment action="{:url('index/Apppay/index_parts_aliPay')}" method="post">
+<!-- <form name=alipayment action="{:url('index/Apppay/index_parts_aliPay')}" method="post">
     <div class="alipay-pop">
         <header>
             <a href="javascript:;" class="close-alipay">×</a>
@@ -146,9 +146,9 @@
         </div>
         <button type="submit" class="alipay-submit">立即付款</button>
     </div>
-</form>
+</form> -->
 <!-- 选择支付方式 -->
-<div class="chose-payment">
+<!-- <div class="chose-payment">
     <header>
         <a href="javascript:;" class="spr chose-payment-back"></a>
         <h3 class="chose-title">选择支付方式</h3>
@@ -174,7 +174,7 @@
         <p>支付宝支付</p>
         <a href="javascript:;" class="spr check-a"></a>
     </div>
-</div>
+</div> -->
 
 <script src="__STATIC__/index/js/plugin/jquery.js"></script>
 <script src="__STATIC__/index/js/plugin/layer.js"></script>

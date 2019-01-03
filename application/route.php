@@ -702,6 +702,9 @@ Route::group("admin",[
      */
     "complaint_index"=>"admin/Operation/complaint_index",
     "urgency_index"=>"admin/Operation/urgency_index",
+    "urgency_updata"=>"admin/Operation/urgency_updata",
+    "urgency_select"=>"admin/Operation/urgency_select",
+    "urgency_del"=>"admin/Operation/urgency_del",
 
 ]);
 
