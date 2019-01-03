@@ -239,6 +239,7 @@ Route::group("",[
     // 商品分类   商品品牌分类
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
+    "classify_parets_id"=>"index/Classify/parets_id",        //配件商城id
 
 
 
