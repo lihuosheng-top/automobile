@@ -78,8 +78,6 @@
                 switch(whichBtnIn){
                     case '2':
                         changeHeadTitle('已发货');
-                        $('.service-order').hide();
-                        $('.goods-order').addClass('subtitle-on')
                         break;
                     case '3':
                         changeHeadTitle('已退货');
@@ -87,6 +85,10 @@
                     case '4':
                         changeHeadTitle('待服务');
                         $('.goods-order').hide();
+                        $('.service-order').click(function(e){
+                            e.preventDefault();
+                        })
+                        break;
                     case '5':
                         changeHeadTitle('已取消');
                         break;
@@ -109,7 +111,7 @@
             $('.header-title').text(txt);
         }
         
-        $.ajax({
+        $ .ajax({
             url: 'sell_service_order',
             dataType: 'JSON',
             type: 'POST',
