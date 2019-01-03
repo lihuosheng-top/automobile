@@ -152,7 +152,7 @@
                         }else if(val.status === 12){
                             statusTxt = '已退货';
                         }
-                        str += `<div class="single-shop-box">
+                        str += `<div class="single-shop-box" id="`+val.parts_order_number+`" name="`+val.store_id+`">
                                     <div class="shop-name-box">
                                         <div class="name-txt-div">
                                             <i class="spr icon-shop"></i>
@@ -183,6 +183,28 @@
                             </div>`
                     })
                     $('.shops-goods-wrap').append(str);
+                    $('.single-shop-box').click(function(){
+                        var sell_store_id = $(this).attr('name');
+                        var sell_parts_order_number = $(this).attr('id');
+                        $.ajax({
+                            url: 'sell_parts_save_record',
+                            dataType: 'JSON',
+                            type: 'POST',
+                            data: {
+                                'sell_store_id': sell_store_id,
+                                'sell_parts_order_number': sell_parts_order_number
+                            },
+                            success: function(res){
+                                console.log(res);
+                                // if(res.status == 1){
+                                //     location.href = 'sell_service_order_detail';
+                                // }
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
+                        })
+                    })
                 }
             },
             error: function(){
