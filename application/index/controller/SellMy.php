@@ -1183,10 +1183,9 @@ class  SellMy extends Controller{
                 }
             }else if($get_number ==7){
                 //月销
-                $timetoday = strtotime(date("Y-m",time()));//今天0点的时间点
-                $time2 = time() + 3600*24;//今天24点的时间点，两个值之间即为今天一天内的数据
-                $time_condition  = "order_create_time>$timetoday and order_create_time< $time2";
-
+                $month_start = strtotime(date("Y-m-01"));
+                $month_end = strtotime("+1 month -1 seconds", $month_start);
+                $time_condition  = "order_create_time>$month_start and order_create_time< $month_end";
                 $data =Db::name("order_parts")
                     ->field('parts_order_number,order_create_time,group_concat(id) order_id')
                     ->where($time_condition)
