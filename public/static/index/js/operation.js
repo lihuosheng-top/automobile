@@ -26,33 +26,39 @@ AMap.plugin([
 	AMap.event.addListener(geolocation, 'error', onError);
 	function onComplete(e) {
 		console.log(e);
+		var address = e.formattedAddress;
 		if(e.status === 1){
-			$('.addr_info').text(e.formattedAddress);
+			$('.addr_info').text(address);
 		}
+		$(".send_add").click(function () {
+			sendAddressEvent('路由地址', address)
+		});
 	};
 	function onError(e) {
 		// console.log(e);
 	};
 })
-$(".send_add").click(function () {
+
+function sendAddressEvent(url, add){
 	$.ajax({
-		url: '',
+		url: url,
 		type: 'POST',
 		dataType: 'JSON',
 		data: {
 			'add': add
 		},
 		success: function (data) {
-			layer.open({
-				content: '发送成功', 
-				skin: 'msg', 
-				time: 1.2
-			});
 			console.log(data);
+			if(data.status == 1){
+				layer.open({
+					content: '发送成功', 
+					skin: 'msg', 
+					time: 1.5
+				});
+			}
 		},
 		error: function () {
 			console.log('error');
 		}
 	})
-
-});
+}
