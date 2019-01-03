@@ -12,20 +12,20 @@ $.ajax({
             goodsLi = '';
         $.each(res.data.goods_brand, function(idx, val){//循环品牌
             if(idx === 0){
-                brandLi += '<li class="active"><a href="#'+hrefId+'">'+val.name+'</a></li>';
+                brandLi += '<li class="active"><a href="#'+val.id+'">'+val.name+'</a></li>';
             }else{
-                brandLi += '<li><a href="#'+hrefId+'">'+val.name+'</a></li>';
+                brandLi += '<li><a href="#'+val.id+'">'+val.name+'</a></li>';
             }
             if(val.brand_describe == '轮胎品牌区'){
                 goodsLi += '<li class="first_li tyre" id="1">\
                                 <div class="adop-box">\
-                                    <p class="subtitle" id="'+hrefId+'">轮胎品牌区</p>\
+                                    <p class="subtitle" id="'+val.id+'">轮胎品牌区</p>\
                                     <span class="click-adop">点击适配</span>\
                                 </div>\
                                 <ul class="bgw">';
             }else{
                 goodsLi += '<li class="first_li maintain">\
-                                <p class="subtitle" id="'+hrefId+'">'+val.brand_describe+'</p>\
+                                <p class="subtitle" id="'+val.id+'">'+val.brand_describe+'</p>\
                                 <ul class="bgw">';
             }
             // 循环次级商品
@@ -45,10 +45,10 @@ $.ajax({
         
         //循环商品
         $.each(res.data.goods_type, function(idx, val){
-            brandLi += '<li><a href="#'+hrefId+'">'+val.name+'</a></li>';
+            brandLi += '<li><a href="#'+val.id+'">'+val.name+'</a></li>';
 
             goodsLi += '<li class="first_li maintain"">\
-                            <p class="subtitle" id="'+hrefId+'">'+val.name+'</p>\
+                            <p class="subtitle" id="'+val.id+'">'+val.name+'</p>\
                             <ul class="bgw">';
             // 循环次级商品
             if(val.child.length != 0){
