@@ -24,7 +24,7 @@
 <body>
     <div class="wrapper">
         <header class="header">
-            <a href="my_message" class="spr icon-back"></a>
+            <a href="sell_my_index" class="spr icon-back"></a>
             <h3>我的钱包</h3>
         </header>
         <div class="icon-money">
@@ -41,6 +41,17 @@
     <script>
         $('.recharge').click(function(){
             location.href = 'sell_application';
+        })
+        $.ajax({
+            url: 'sell_wallet',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
         })
     </script>
 </body>

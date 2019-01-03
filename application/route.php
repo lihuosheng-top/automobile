@@ -103,6 +103,8 @@ Route::group("",[
 
     /*TODO:卖家我的页面开始*/
     "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
+    "store_order_save"=>"index/SellMy/store_order_save",//卖家暂存订单信息（方便点击到对应的订单信息）
+
     "sell_service_order"=>"index/SellMy/sell_service_order",//卖家服务订单
     "sell_parts_order"=>"index/SellMy/sell_parts_order",//卖家商品订单
     "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
@@ -184,6 +186,7 @@ Route::group("",[
     "express_order_save"=>"index/Express/express_order_save",//快递员接单入库
     "express_order_get"=>"index/Express/express_order_get",//快递员已取货
     "express_distribution_edit"=>"index/Express/express_distribution_edit",//快递员配送中状态修改
+    "express_distribution_del"=>"index/Express/express_distribution_del",//已完成快递人员删除
     /*TODO:快递结束*/
 
 
@@ -192,7 +195,9 @@ Route::group("",[
     /*TODO:消息开始*/
     "information_index"=>"index/Information/index",//消息页面
     "information_details"=>"index/Information/information_details",//订单助手消息页面详情
+    "order_information_details"=>"index/Information/order_information_details",//订单助手消息页面详情
     "information_system"=>"index/Information/information_system",//系统消息页面详情
+    "information_system_details"=>"index/Information/information_system_details",//系统消息页面详情
     "about_index"=>"index/About/index",//关于我们
     /*TODO:消息结束*/
     /*TODO:投诉开始*/
@@ -234,6 +239,7 @@ Route::group("",[
     // 商品分类   商品品牌分类
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
+    "classify_parets_id"=>"index/Classify/parets_id",        //配件商城id
 
 
 

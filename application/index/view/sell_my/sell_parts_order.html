@@ -49,7 +49,7 @@
             <a href="sell_parts_order" class="goods-order subtitle-on">商品订单</a>
         </div>
         <div class="shops-goods-wrap">
-            <div class="single-shop-box">
+            <!-- <div class="single-shop-box">
                 <div class="shop-name-box">
                     <div class="name-txt-div">
                         <i class="spr icon-shop"></i>
@@ -74,11 +74,8 @@
                 </div>
                 <div class="total-button-box">
                     <p class="total-p">共计1件商品 合计：￥0.1</p>
-                    <div class="button-box">
-                        <button class="receipt">接单</button>
-                    </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -87,6 +84,17 @@
     <script>
         $('.single-shop-box').click(function(){
             location.href = 'sell_parts_order_detail';
+        })
+        $.ajax({
+            url: 'sell_parts_order',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
         })
     </script>
 </html>

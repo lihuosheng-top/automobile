@@ -88,7 +88,8 @@
     <script>
         $('.question-list span').click(function(){
             $(this).siblings().removeClass('question-on');
-            $(this).addClass('question-on');
+            var data = $(this).addClass('question-on');
+            console.log(data[0].innerHTML)
         })
     </script>
 </body>

@@ -14,20 +14,35 @@ $('.exit').click(function(){
     })
 })
 // 清除缓存
-$('.clearing').click(function(){
-    $.ajax({
-        url:'www.haorooms.com',
-        dataType:'json',
-        async: false,
-        beforeSend :function(xmlHttp){ 
-            xmlHttp.setRequestHeader("If-Modified-Since","0"); 
-            xmlHttp.setRequestHeader("Cache-Control","no-cache");
-        },
-        success:function(response){
-            //操作
+$('.clearing-li').click(function(){
+    layer.open({
+        content: '将清除缓存并退出登录，是否继续？',
+        btn: ['确定', '取消'],
+        yes: function (index) {
+            layer.close(index);
+            var cookies = document.cookie.split(";");
+            if (cookies.length > 0) {
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i];
+                    var eqPos = cookie.indexOf("=");
+                    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    delCookie(name);
+                }
+                $('.exit').click();
+            }
         }
     });
 })
+//删除cookie
+function delCookie(name) {
+    setCookie(name, null, -1);
+};
+//设置cookie
+function setCookie(name, value, day) {
+    var date = new Date();
+    date.setDate(date.getDate() + day);
+    document.cookie = name + '=' + value + ';expires=' + date;
+};
 
 // 修改登录密码
 

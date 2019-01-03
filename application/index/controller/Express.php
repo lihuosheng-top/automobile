@@ -78,7 +78,7 @@ class  Express extends  Controller{
             if($delivery) {
                 return ajax_success("获取成功",array("delivery"=>$delivery,"delivery_data"=>$delivery_data));
             }else{
-                return ajax_error("你服务的区域没有匹配到相应的订单",$delivery_data);
+                return ajax_error("你服务的区域没有匹配到相应的订单",array("delivery"=>$delivery,"delivery_data"=>$delivery_data));
             }
         }
         return view("express_wait_for_order");
@@ -253,6 +253,23 @@ class  Express extends  Controller{
                 return ajax_error("没有这个快递信息",['status'=>0]);
             }
         }
+    }
+
+
+
+    /**
+     * 快递单删除
+     * 陈绪
+     */
+    public function express_distribution_del($id){
+
+        $bool = db("delivery_order")->where("id",$id)->delete();
+        if($bool){
+            $this->success("删除成功",url("index/Express/express_completed"));
+        }else{
+            $this->error("删除失败",url("index/Express/express_completed"));
+        }
+
     }
 
 }
