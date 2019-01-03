@@ -190,7 +190,6 @@ class OrderParts extends Controller{
                                 $return_data[] = Db::name('order_parts')
                                     ->where('id', $v)
                                     ->where('user_id', $member_id['id'])
-                                    ->order('order_create_time', 'desc')
                                     ->find();
                             }
                             foreach ($return_data as $ke => $item) {
@@ -202,7 +201,7 @@ class OrderParts extends Controller{
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
-                                    ->order('order_create_time', 'desc')
+//                                    ->order('order_create_time', 'desc')
                                     ->select();
 
                                 $names = Db::name('order_parts')
@@ -348,13 +347,13 @@ class OrderParts extends Controller{
                             $end_info[$a+$coutn]['order_create_time'] = $b;
                         }
                     }
-
+//                    halt($end_info);
                     if (!empty($end_info)) {
                         $ords =array();
                         foreach ($end_info as $vl){
-                            $ords[] =$vl["parts_order_number"];
+                            $ords[] =intval($vl["order_create_time"]);
                         }
-                        array_multisort($end_info,SORT_DESC,$ords);
+                        array_multisort($end_info,SORT_ASC,$ords);
                         return ajax_success('数据', $end_info);
                     } else {
                         return ajax_error('没数据');

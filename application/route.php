@@ -104,6 +104,7 @@ Route::group("",[
     /*TODO:卖家我的页面开始*/
     "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
     "store_order_save"=>"index/SellMy/store_order_save",//卖家暂存订单信息（方便点击到对应的订单信息）
+    "store_order_get"=>"index/SellMy/store_order_get",//卖家读取信息（方便判断点击的是哪个按钮进来）
 
     "sell_service_order"=>"index/SellMy/sell_service_order",//卖家服务订单
     "sell_parts_order"=>"index/SellMy/sell_parts_order",//卖家商品订单
