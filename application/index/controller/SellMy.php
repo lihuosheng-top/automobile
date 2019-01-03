@@ -822,7 +822,6 @@ class  SellMy extends Controller{
                                 ->where('parts_order_number', $da_v)
                                 ->where("store_id",$role_name_store_id["store_id"])
                                 ->where($condition)
-                                ->order('order_create_time', 'desc')
                                 ->select();
                             $names = Db::name("order_parts")
                                 ->where("store_id",$role_name_store_id["store_id"])
@@ -860,6 +859,7 @@ class  SellMy extends Controller{
                             ->find();
                     }
                 }
+
                 if(!empty($order_data)){
                     //所有信息
                     foreach ($order_data["info"] as $i=>$j){
@@ -872,9 +872,7 @@ class  SellMy extends Controller{
                     }
                     //状态值
                     foreach ($order_data['status'] as $i => $j) {
-                        if(!empty($j)){
                             $new_arr_status[] = $j;
-                        }
                     }
                     foreach ($new_arr_status as $i=>$j){
                         $end_info[$i]['status'] = $j;
@@ -885,6 +883,7 @@ class  SellMy extends Controller{
                             $new_arr_pay[] =$j;
                         }
                     }
+
                     foreach ($new_arr_pay as $i=>$j){
                         $end_info[$i]['all_order_real_pay'] = $j;
                     }
@@ -1567,15 +1566,70 @@ class  SellMy extends Controller{
         return view("sell_parts_order");
     }
 
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单保存订单编号给订单详情
+     **************************************
+     * @param Request $request
+     */
+    public function sell_order_service_save_record(Request $request){
+        if($request->isPost()){
+            $service_order_number =$request->only("service_order_number")["service_order_number"];//配件商订单编号
+            if(!empty($service_order_number)){
+                Session::set("sell_service_order_number", $service_order_number);
+                return ajax_success("暂存成功",['status'=>1]);
+            }else{
+                return ajax_error("没有这个订单编号",["status"=>0]);
+            }
+        }
+    }
+
+
     /**
      **************李火生*******************
      * @param Request $request
      * Notes:卖家服务订单详情
      **************************************
      */
-    public function sell_service_order_detail(){
+    public function sell_service_order_detail(Request $request){
+        if($request->isPost()){
+            $order_id=Session::get("sell_service_order_number");
+            $data =Db::name("order_service")
+                ->where("service_order_number",$order_id)
+                ->find();
+            if(!empty($data)){
+                return ajax_success("订单信息返回成功",$data);
+            }else{
+                return ajax_error("没有对应的订单信息",["status"=>0]);
+            }
+        }
         return view("sell_service_order_detail");
     }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:卖家进入订单详情首先保存的信息
+     **************************************
+     * @param Request $request
+     */
+    public function sell_parts_save_record(Request $request){
+        if($request->isPost()){
+            $store_id =$request->only("store_id")["store_id"];//店铺id
+            $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//配件商订单编号
+            if(!empty($store_id)){
+                Session::set("sell_store_id",$store_id);
+                Session::set("sell_parts_order_number",$parts_order_number);
+                return ajax_success("暂存成功",['status'=>1]);
+            }else{
+                return ajax_error("店铺id不能为空",["status"=>0]);
+            }
+        }
+    }
+
 
     /**
      **************李火生*******************
@@ -1583,7 +1637,43 @@ class  SellMy extends Controller{
      * Notes:卖家商品订单详情
      **************************************
      */
-    public function sell_parts_order_detail(){
+    public function sell_parts_order_detail(Request $request){
+        if($request->isPost()){
+            $store_id = Session::get("sell_store_id");
+            $parts_order_number = Session::get("sell_parts_order_number");//订单编号
+            $condition =  " `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number;
+            $data = Db::name("order_parts")
+                ->where($condition)
+                ->select();
+            if (!empty($data)) {
+                $datas["store_id"] = $data[0]["store_id"];//店铺id
+                $datas["buy_message"] = $data[0]["buy_message"];//买家留言
+                $datas["store_name"] = $data[0]["store_name"];//店铺名称
+                $datas["create_time"] = $data[0]["order_create_time"];//订单创建时间
+                $datas["parts_order_number"] = $data[0]["parts_order_number"];//订单编号
+                $datas["pay_time"] = $data[0]["pay_time"]; //支付时间
+                $datas["harvester"] = $data[0]["harvester"];//收货人
+                $datas["harvest_phone_num"] = $data[0]["harvest_phone_num"];//收件人电话
+                $datas["harvester_address"] = $data[0]["harvester_address"];//收件人地址
+                $datas["status"] = $data[0]["status"];//状态
+                foreach ($data as $ks=>$vs){
+                    $datas["all_goods_money"][] =$vs["goods_money"]*$vs["order_quantity"];
+                }
+                $datas["all_goods_pays"] =array_sum($datas["all_goods_money"]); //商品总额（商品*数量）
+                $datas["normal_future_time"] = $data[0]["normal_future_time"];//正常订单未付款自动关闭的时间
+                $datas["all_order_real_pay"] = $data[0]["order_real_pay"];//订单实际支付
+                $datas["all_numbers"] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $data));//订单总数量
+                $datas["integral_deductible"] = $data[0]["integral_deductible"];//抵扣积分钱
+                $datas["info"] = $data;
+                if (!empty($datas)) {
+                    return ajax_success("数据返回成功", $datas);
+                } else {
+                    return ajax_error("没有数据信息", ["status" => 0]);
+                }
+            } else {
+                return ajax_error("订单信息错误", ["status" => 0]);
+            }
+        }
         return view("sell_parts_order_detail");
     }
 
