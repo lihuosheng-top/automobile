@@ -295,6 +295,16 @@ class My extends Controller
                 $user_id =Session::get("user");//用户id
                 $data =Db::name("user")->where('id',$user_id)->find();
                 if(!empty($data)){
+//                    //判断是否完善资料
+//                    if(!empty($data["user_img"])&&(!empty($data["real_name"]))&&(!empty($data["phone_num"]))&&(!empty($data["user_name"]))&&(!empty($data["sex"]))){
+//                    $is_perfect = Db::name("user_is_perfect")
+//                        ->where("user_id",$user_id)
+//                        ->find();
+//                        if(empty($is_perfect)){
+//                        //完善进行积分奖励
+//
+//                        }
+//                    }
                         return ajax_success('信息返回成功',$data);
                 }else {
                     return ajax_success('用户不存在');
