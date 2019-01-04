@@ -67,6 +67,7 @@ Route::group("",[
     "ios_api_order_button_by_shop"=>"index/OrderParts/ios_api_order_button_by_shop",//购物车提交订单
 //    "ios_api_alipay"=>"index/OrderParts/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
    "ios_return_parts_num"=>"index/OrderParts/ios_return_parts_num",//生成订单(未用)
+    "invoice_index"=>"index/OrderParts/invoice_index",//发票显示页面
     'index_parts_aliPay'=>"index/Apppay/index_parts_aliPay", //配件商支付接口（弹窗支付）
     'index_parts_pay_code'=>"index/Apppay/index_parts_pay_code",//配件商支付回调修改订单状态
     /*TODO:配件商订单结束*/
@@ -76,6 +77,7 @@ Route::group("",[
     'Dolog'=>"index/Login/Dolog", /*登录操作*/
     "logout"=>"index/Login/logout",/*退出登录*/
     "my_index"=>"index/My/my_index",  // 我的
+    "my_information_details"=>"index/My/my_information_details",  // 订单消息提醒
     "my_message"=>"index/My/message", //我的个人信息
     "login"=>"index/My/login",//登录
     "isLogin"=>"index/My/isLogin", //是否登录判断
@@ -86,6 +88,7 @@ Route::group("",[
     "member_update_mobiles"=>"index/My/member_update_mobiles",//个人信息修改手机
     "my_integral"=>"index/My/integral",            //我的积分页面(积分记录ajax)
     "setting"=>"index/My/setting",              //设置(所有页面)
+    "setting_status"=>"index/My/setting_status",              //通知设置
     "is_business"=>"index/My/is_business",      //判断是否是商家还是只是车主（ajax）（隐藏切换角色的按钮）
     "select_role_owner"=>"index/My/select_role_owner",      //选择车主）通过判断是否是商家或者是车主（ajax）
     "select_role_business"=>"index/My/select_role_business",      //（选择商家）通过判断是否是商家或者是车主（ajax）
@@ -197,14 +200,14 @@ Route::group("",[
 
     /*TODO:消息开始*/
     "information_index"=>"index/Information/index",//消息页面
-    "information_details"=>"index/Information/information_details",//订单助手消息页面详情
+    "information_details"=>"index/Information/information_details",//订单助手消息页面
     "order_information_details"=>"index/Information/order_information_details",//订单助手消息页面详情
-    "information_system"=>"index/Information/information_system",//系统消息页面详情
+    "information_system"=>"index/Information/information_system",//系统消息页面
     "information_system_details"=>"index/Information/information_system_details",//系统消息页面详情
     "about_index"=>"index/About/index",//关于我们
     /*TODO:消息结束*/
     /*TODO:投诉开始*/
-    "complaint_home"=>"index/Complaint/home",//投诉中心
+    "complaint_home"=>"index/Complaint/index",//投诉中心
     "complaint_detail"=>"index/Complaint/detail",//投诉记录
     /*TODO:投诉结束*/
 
@@ -347,6 +350,16 @@ Route::group("",[
     /*TODO:测试IOS地址开始*/
     "test_ios"=>"index/Operation/ios",
     /*TODO:测试IOS地址结束*/
+
+
+
+    /**
+     * 售后服务
+     * 陈绪
+     */
+    "service_type_index"=>"index/Service/type_index",     //选择服务类型
+    "service_refund"=>"index/Service/refund",              //申请退款
+
 ]);
 
 /**

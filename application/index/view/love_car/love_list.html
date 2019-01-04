@@ -8,6 +8,7 @@
     <script src="__STATIC__/index/js/adaptation.js"></script>
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
     <link rel="stylesheet" href="__STATIC__/index/css/my/my_car.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/plugin/LCalendar.min.css">
     <title>我的爱车</title>
 </head>
 <body>
@@ -97,7 +98,7 @@
                     </li>
                     <li class="expiration-date-li">
                         <span>保险到期日期</span>
-                        <input type="text" class="expiration-date-input" placeholder="请输入保险到期日期">
+                        <input type="text" id="date" class="expiration-date-input" placeholder="请输入保险到期日期" readonly>
                     </li>
                 </ul>
             </div>
@@ -107,6 +108,9 @@
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <!-- 日期插件 start-->
+    <script src="__STATIC__/index/js/plugin/LCalendar.min.js"></script>
+    <!-- 日期插件 end-->
     <script src="__STATIC__/index/js/love_list.js"></script>
 </body>
 </html>

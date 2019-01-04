@@ -31,6 +31,57 @@ class My extends Controller
         return view("setting");
     }
 
+
+    /**
+     * 订单通知信息发送前端
+     * 陈绪
+     * @param Request $request
+     */
+    public function my_information_details(Request $request){
+        if($request->isPost()) {
+            $user_id = Session::get("user");
+            $order_data = db("order_parts")->where("user_id", $user_id)->select();
+            $order = [];
+            foreach ($order_data as $value) {
+                if ($value["status"] == 1 || $value["status"] == 2 || $value["status"] == 4 || $value["status"] == 10 || $value["status"] == 7 || $value["status"] == 11) {
+                    $order[] = $value;
+                }
+            }
+            if($order){
+                return ajax_success("获取成功",$order);
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
+    }
+
+
+
+
+    /**
+     * 通知设置
+     * 陈绪
+     */
+    public function setting_status(Request $request){
+
+        if($request->isPost()){
+            $order_id = $request->only(["goodsInfo"])["goodsInfo"];
+            $status = $request->only(["showStatus"])["showStatus"];
+            if(isset($status)) {
+                foreach ($order_id as $value) {
+                    $bool = db("order_parts")->where("id",$value)->update(["show_status"=>$status]);
+                }
+                if($bool){
+                    return ajax_success("修改成功");
+                }else {
+                    return ajax_error("修改失败");
+
+                }
+            }
+        }
+
+    }
+
     /**
      **************李火生*******************
      * @param Request $request
@@ -244,6 +295,16 @@ class My extends Controller
                 $user_id =Session::get("user");//用户id
                 $data =Db::name("user")->where('id',$user_id)->find();
                 if(!empty($data)){
+//                    //判断是否完善资料
+//                    if(!empty($data["user_img"])&&(!empty($data["real_name"]))&&(!empty($data["phone_num"]))&&(!empty($data["user_name"]))&&(!empty($data["sex"]))){
+//                    $is_perfect = Db::name("user_is_perfect")
+//                        ->where("user_id",$user_id)
+//                        ->find();
+//                        if(empty($is_perfect)){
+//                        //完善进行积分奖励
+//
+//                        }
+//                    }
                         return ajax_success('信息返回成功',$data);
                 }else {
                     return ajax_success('用户不存在');

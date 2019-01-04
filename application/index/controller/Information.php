@@ -39,7 +39,7 @@ class  Information extends  Controller{
     public function information_details(Request $request){
         if($request->isPost()) {
             $user_id = Session::get("user");
-            $order_data = db("order_parts")->where("user_id", $user_id)->select();
+            $order_data = db("order_parts")->where("user_id", $user_id)->where("show_status","<>",0)->select();
             $order = [];
             foreach ($order_data as $value) {
                 if ($value["status"] == 1 || $value["status"] == 2 || $value["status"] == 4 || $value["status"] == 10 || $value["status"] == 7 || $value["status"] == 11) {
@@ -64,10 +64,13 @@ class  Information extends  Controller{
      **************************************
      * @return \think\response\View
      */
-    public function information_system(){
+    public function information_system(Request $request){
 
-        $system_data = db("message")->select();
-        return view('information_system',["system_data"=>$system_data]);
+        if($request->isPost()) {
+            $system_data = db("message")->select();
+            return ajax_success("获取成功",$system_data);
+        }
+        return view('information_system');
     }
 
 

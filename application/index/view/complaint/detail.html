@@ -30,7 +30,7 @@
             <h3>投诉记录</h3>
         </header>
         <div class="complain-container">
-            <div class="complain-tab">
+            <!-- <div class="complain-tab">
                 <div class="user-container">
                     <img src="__STATIC__/index/image/avatar.png" class="avator">
                     <div class="tag-container">
@@ -46,12 +46,46 @@
                     <img src="__STATIC__/index/image/15.jpg">
                     <img src="__STATIC__/index/image/15.jpg">
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
-   
+    <script>
+        $.ajax({
+            url: 'complaint_detail',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (res) {
+                console.log(res);
+                if (res.status == 1) {
+                    var str = '';
+                    $.each(res.data, function (idx, val) {
+                        str += `<div class="complain-tab">
+                                    <div class="user-container">
+                                        <img src="uploads/`+val.user_images+`" class="avator">
+                                        <div class="tag-container">
+                                            <span class="phone">`+val.phone+`</span>
+                                            <span class="tag">`+val.issue+`</span>
+                                        </div>
+                                    </div>
+                                    <div class="complain-txt">`+val.issue_details+`</div>
+                                    <div class="complain-img">`
+                        var myImg = val.images.split(',');
+                        $.each(myImg, function(idx, val){
+                            str += `<img src="uploads/`+val+`">`
+                        })
+                        str += `</div>
+                            </div>`
+                    })
+                    $('.complain-container').append(str);
+                }
+            },
+            error: function () {
+                console.log('error');
+            }
+        })
+    </script>
 </body>
 </html>

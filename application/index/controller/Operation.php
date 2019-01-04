@@ -27,7 +27,7 @@ class Operation extends Controller{
             $data["user_name"] = $user["user_name"];
             $data["user_address"] = $address;
             $data["user_phone"] = $user["phone_num"];
-            $data["status"] = 1;
+            $data["status"] = 0;
             $data["user_id"] = $user_id;
             $bool = db("rescue")->insert($data);
             if($bool){
