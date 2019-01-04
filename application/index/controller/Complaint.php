@@ -18,7 +18,7 @@ class Complaint extends Controller{
      **************************************
      * @return \think\response\View
      */
-    public function home(){
+    public function index(){
 
         return view('index');
     }

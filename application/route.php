@@ -200,12 +200,12 @@ Route::group("",[
     "information_index"=>"index/Information/index",//消息页面
     "information_details"=>"index/Information/information_details",//订单助手消息页面
     "order_information_details"=>"index/Information/order_information_details",//订单助手消息页面详情
-    "information_system"=>"index/Information/information_system",//系统消息页面详情
+    "information_system"=>"index/Information/information_system",//系统消息页面
     "information_system_details"=>"index/Information/information_system_details",//系统消息页面详情
     "about_index"=>"index/About/index",//关于我们
     /*TODO:消息结束*/
     /*TODO:投诉开始*/
-    "complaint_home"=>"index/Complaint/home",//投诉中心
+    "complaint_home"=>"index/Complaint/index",//投诉中心
     "complaint_detail"=>"index/Complaint/detail",//投诉记录
     /*TODO:投诉结束*/
 
