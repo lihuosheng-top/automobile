@@ -115,7 +115,9 @@
             var formData = new FormData();
             formData.append("issue",data)
             formData.append("issue_details",issueDetails);
-            formData.append("images",imgFiles);
+            $.each(imgFiles, function(idx, val){
+                formData.append("images",val);
+            })
             formData.append("issue_relation",contact);
             $.ajax({
                 url: 'complaint_home',
@@ -144,7 +146,7 @@
         })
         var imgFiles = [];
         function changeEvent(inputElem, uploadItemLen, imgMaxminum){
-            var imgArrDom = [];
+            var imgArrDom = []; 
             var str = '';
             var len =  inputElem.files.length; 
             // 限制上传图片
