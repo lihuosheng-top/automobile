@@ -31,6 +31,22 @@ class My extends Controller
         return view("setting");
     }
 
+
+
+    /**
+     * 通知设置
+     * 陈绪
+     */
+    public function setting_status(Request $request){
+
+        if($request->isPost()){
+
+
+
+        }
+
+    }
+
     /**
      **************李火生*******************
      * @param Request $request
