@@ -7,15 +7,17 @@ function getIdAjax(url, arrBox, switchStatus){
         success: function(res){
             console.log(res);
             if(res.status == 1){
-                switchStatus = res.data[0].show_status;
-                if(switchStatus === 1){
-                    $('#switch_checkbox').prop('checked', 'checked');
-                }else if(switchStatus === 0){
-                    $('#switch_checkbox').attr('checked', false);
+                if(res.data.length !== 0){
+                    switchStatus = res.data[0].show_status;
+                    if(switchStatus === 1){
+                        $('#switch_checkbox').prop('checked', 'checked');
+                    }else if(switchStatus === 0){
+                        $('#switch_checkbox').attr('checked', false);
+                    }
+                    $.each(res.data, function(idx, val){
+                        arrBox.push(val.id);
+                    })
                 }
-                $.each(res.data, function(idx, val){
-                    arrBox.push(val.id);
-                })
             }
         },
         error: function(){
@@ -24,10 +26,7 @@ function getIdAjax(url, arrBox, switchStatus){
     })
 }
 var goodsInfo = [], systemInfo = [];
-getIdAjax('information_details', goodsInfo, switchStatus);
-getIdAjax('information_system', systemInfo);
-
-
+getIdAjax('my_information_details', goodsInfo, switchStatus);
 $('#switch_checkbox').change(function(){
     console.log(this.checked);
     if(this.checked){
@@ -41,7 +40,6 @@ $('#switch_checkbox').change(function(){
         dataType: 'JSON',
         data: {
             'goodsInfo': goodsInfo,
-            'systemInfo': systemInfo,
             'showStatus': switchStatus
         },
         success: function(res){

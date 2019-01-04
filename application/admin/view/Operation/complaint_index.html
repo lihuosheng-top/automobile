@@ -168,9 +168,10 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
+				{volist name="issue" id="value"}
 					<tr>
-						<td>1000001</td>
-						<td>1000001</td>
+						<td>{$value.id}</td>
+						<td>{}</td>
 						<td>1000001</td>
 						<td>1000001</td>
 						<td>1000001</td>
@@ -180,13 +181,16 @@
 						<td>1000001</td>
 						<td>
 							<div class="static static_pending">
-							    待处理
+							    {$value.status == 0 ? "待处理" : ""}
+								{$value.status == 1 ? "已处理" : ""}
+								{$value.status == 0 ? "拒绝处理" : ""}
 						    </div>
 						</td>
 						<td>
 							<a href="{:url('admin/Category/del')}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 						</td>
 					</tr>
+				{/volist}
 				</tbody>
 			</table>
 			<div id="page">

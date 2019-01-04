@@ -8,6 +8,7 @@
 namespace app\admin\controller;
 use think\Controller;
 use think\Request;
+use think\paginator\driver\Bootstrap;
 
 class Operation extends Controller{
 
@@ -17,7 +18,24 @@ class Operation extends Controller{
      * 陈绪
      */
     public function complaint_index(){
-        return view("complaint_index");
+
+        $issue = db("complaint")->select();
+        foreach ($issue as $key=>$value){
+            $issue[$key]["user"] = db("user")->where("id",$value["user_id"])->find();
+        }
+        $all_idents = $issue;//这里是需要分页的数据
+        $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
+        $listRow = 20;//每页20行记录
+        $showdata = array_slice($all_idents, ($curPage - 1) * $listRow, $listRow, true);// 数组中根据条件取出一段值，并返回
+        $platform = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
+            'var_page' => 'page',
+            'path' => url('admin/Operation/complaint_index'),//这里根据需要修改url
+            'query' => [],
+            'fragment' => '',
+        ]);
+        $platform->appends($_GET);
+        $this->assign('platforme', $platform->render());
+        return view("complaint_index",["issue"=>$issue]);
     }
 
 

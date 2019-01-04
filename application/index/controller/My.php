@@ -32,6 +32,31 @@ class My extends Controller
     }
 
 
+    /**
+     * 订单通知信息发送前端
+     * 陈绪
+     * @param Request $request
+     */
+    public function my_information_details(Request $request){
+        if($request->isPost()) {
+            $user_id = Session::get("user");
+            $order_data = db("order_parts")->where("user_id", $user_id)->select();
+            $order = [];
+            foreach ($order_data as $value) {
+                if ($value["status"] == 1 || $value["status"] == 2 || $value["status"] == 4 || $value["status"] == 10 || $value["status"] == 7 || $value["status"] == 11) {
+                    $order[] = $value;
+                }
+            }
+            if($order){
+                return ajax_success("获取成功",$order);
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
+    }
+
+
+
 
     /**
      * 通知设置
@@ -40,9 +65,19 @@ class My extends Controller
     public function setting_status(Request $request){
 
         if($request->isPost()){
+            $order_id = $request->only(["goodsInfo"])["goodsInfo"];
+            $status = $request->only(["showStatus"])["showStatus"];
+            if(isset($status)) {
+                foreach ($order_id as $value) {
+                    $bool = db("order_parts")->where("id",$value)->update(["show_status"=>$status]);
+                }
+                if($bool){
+                    return ajax_success("修改成功");
+                }else {
+                    return ajax_error("修改失败");
 
-
-
+                }
+            }
         }
 
     }

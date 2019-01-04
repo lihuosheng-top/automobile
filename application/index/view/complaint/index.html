@@ -50,7 +50,7 @@
         <div class="question-container">
             <span>您遇到的问题是？</span>
             <div class="question-list">
-                <span>无法下单</span>
+                <span class="question-on">无法下单</span>
                 <span>客服服务</span>
                 <span>物流问题</span>
                 <span>型号太少</span>
@@ -61,52 +61,131 @@
         </div>
         <div class="suggestion-container">
             <span class="suggestion-title">问题和意见</span>
-            <textarea id="IssueDetails" placeholder="抱歉给您造成不便，请将问题告诉我们，以便给您提供更好的服务~"></textarea>
+            <textarea id="issue-describe" placeholder="抱歉给您造成不便，请将问题告诉我们，以便给您提供更好的服务~"></textarea>
             <div class="suggestion-img-container">
                 <div class="vi-camera">
-                    <div class="upload-item">
+                    <!-- <div class="upload-item">
                         <img src="__STATIC__/index/image/15.jpg">
                         <button class="del-img">×</button>
-                    </div>
+                    </div> -->
                 </div>
                 <span class="switch-span">添加图片
                     <input type="file" name="images[]" multiple id="Images">
-                    <div class="visible_box" >
-                        <i class="aui-iconfont aui-icon-camera"></i>
-                        <p>添加照片</p>
-                    </div>
-                    <div class="img_div"></div>
                 </span>
             </div>
         </div>
         <div class="connection-container">
             <span>联系方式</span>
-            <textarea placeholder="留下QQ、微信、电话等，方便及时联系您？" id="IssueRelation"></textarea>
+            <textarea placeholder="留下QQ、微信、电话等，方便及时联系您？" id="contact"></textarea>
         </div>
         <div class="button-container">
-            <button type="button" class="submit-question Submit">提交反馈</button>
+            <button type="button" class="submit-question">提交反馈</button>
         </div>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-        // $('.question-list span').click(function(){
-        //     $(this).siblings().removeClass('question-on');
-        //     var data = $(this).addClass('question-on');
-        //     $(".Submit").click(function () {
-        //         var IssueDetails = $("#IssueDetails").html();
-        //         var IssueRelation = $("#IssueRelation").html();
-        //         var images = $("#Images");
-        //         console.log(images);
-        //         var formData = new FormData();
-        //         formData.append("issue",data)
-        //         formData.append("issue_details",IssueDetails);
-        //         formData.append("issue_relation",IssueRelation);
-        //         formData.append("images",);
-        //     })
-        // })
+        $('.question-list span').click(function(){
+            $(this).siblings().removeClass('question-on');
+            var data = $(this).addClass('question-on');
+        })
+        $(".submit-question").click(function () {
+            var data = $('.question-on').text();
+            var issueDetails = $('#issue-describe').val();
+            var contact = $('#contact').val();
+            if(issueDetails == ''){
+                layer.open({
+                    skin: 'msg',
+                    content: '请留下您宝贵的意见或建议',
+                    time: 1.2
+                })
+                $('#issue-describe').focus();
+                return;
+            }
+            if(contact === ''){
+                layer.open({
+                    skin: 'msg',
+                    content: '请填写您的联系方式方便我们联系您',
+                    time: 1.2
+                })
+                $('#contact').focus();
+                return;
+            }
+            var formData = new FormData();
+            formData.append("issue",data)
+            formData.append("issue_details",issueDetails);
+            $.each(imgFiles, function(idx, val){
+                formData.append("images[]",val);
+            })
+            formData.append("issue_relation",contact);
+            $.ajax({
+                url: 'complaint_home',
+                type: 'POST',
+                dataType: 'JSON',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        location.href = 'complaint_detail';
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
     </script>
-    
+    <script>
+        $('.switch-span').on('change', 'input', function(){
+            var inputElem = $(this)[0];
+            var uploadItemLen = $('.upload-item').length;
+            changeEvent(inputElem, uploadItemLen, 3);
+        })
+        var imgFiles = [];
+        function changeEvent(inputElem, uploadItemLen, imgMaxminum){
+            var imgArrDom = []; 
+            var str = '';
+            var len =  inputElem.files.length; 
+            // 限制上传图片
+            if(uploadItemLen + len <= imgMaxminum){
+                for(var i = 0; i < len; i++){
+                    // 存图片地址
+                    imgArrDom.push(getObjectURL(inputElem.files[i]));
+                    imgFiles.push(inputElem.files[i]);
+                }
+                imgArrDom.forEach(function(el){
+                    str += `<div class="upload-item">
+                                <img src="`+el+`">
+                                <button class="del-img">×</button>
+                            </div>`
+                })
+                $('.vi-camera').append(str);
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '最多上传'+imgMaxminum+'张图片',
+                    time: 1
+                })
+            }
+            // 删除图片
+            $('.upload-item').on('click', '.del-img', function(){
+                var $index = $('.del-img').index($(this));
+                $(this).parent().remove();
+            })
+        }
+        // 在浏览器上预览本地图片
+        function getObjectURL(file) {
+            var url = null;
+            if(window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if(window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+    </script>
 </body>
 </html>
