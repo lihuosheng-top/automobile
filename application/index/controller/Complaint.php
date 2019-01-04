@@ -55,9 +55,11 @@ class Complaint extends Controller{
      * @return \think\response\View
      */
     public function detail(Request $request){
-
         if($request->isPost()){
             $issue = db("complaint")->select();
+            foreach ($issue as $key=>$value){
+                $issue[$key]["phone"] = db("user")->where("id",$value["user_id"])->value("phone_num");
+            }
             if($issue){
                 return ajax_success("获取成功",$issue);
             }else{
