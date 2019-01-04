@@ -86,6 +86,7 @@ Route::group("",[
     "member_update_mobiles"=>"index/My/member_update_mobiles",//个人信息修改手机
     "my_integral"=>"index/My/integral",            //我的积分页面(积分记录ajax)
     "setting"=>"index/My/setting",              //设置(所有页面)
+    "setting_status"=>"index/My/setting_status",              //通知设置
     "is_business"=>"index/My/is_business",      //判断是否是商家还是只是车主（ajax）（隐藏切换角色的按钮）
     "select_role_owner"=>"index/My/select_role_owner",      //选择车主）通过判断是否是商家或者是车主（ajax）
     "select_role_business"=>"index/My/select_role_business",      //（选择商家）通过判断是否是商家或者是车主（ajax）
@@ -197,7 +198,7 @@ Route::group("",[
 
     /*TODO:消息开始*/
     "information_index"=>"index/Information/index",//消息页面
-    "information_details"=>"index/Information/information_details",//订单助手消息页面详情
+    "information_details"=>"index/Information/information_details",//订单助手消息页面
     "order_information_details"=>"index/Information/order_information_details",//订单助手消息页面详情
     "information_system"=>"index/Information/information_system",//系统消息页面详情
     "information_system_details"=>"index/Information/information_system_details",//系统消息页面详情
