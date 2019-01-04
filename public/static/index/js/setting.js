@@ -1,3 +1,40 @@
+$.ajax({
+    url: 'information_system_details',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+$.ajax({
+    url: 'information_details',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+$('#switch_checkbox').change(function(){
+    console.log(this.checked);
+})
+// $('#switch_checkbox').prop('checked', 'true');
+// $.ajax({
+//     url: 'setting_status',
+//     type: 'POST',
+//     dataType: 'JSON',
+//     success: function(res){
+//         console.log(res);
+//     },
+//     error: function(){
+//         console.log('error');
+//     }
+// })
 // 退出登录 
 $('.exit').click(function(){
     $.ajax({
