@@ -71,11 +71,6 @@
                 </div>
                 <span class="switch-span">添加图片
                     <input type="file" name="images[]" multiple id="Images">
-                    <div class="visible_box" >
-                        <i class="aui-iconfont aui-icon-camera"></i>
-                        <p>添加照片</p>
-                    </div>
-                    <div class="img_div"></div>
                 </span>
             </div>
         </div>
@@ -107,6 +102,43 @@
         //     })
         // })
     </script>
-    
+    <script>
+        function changeEvent(inputElem, clickObj, imgMaxminum){
+            var imgArrDom = [];
+            var str = '';
+            var len =  inputElem.files.length;
+            // // 限制上传图片
+            var uploadItemLen = $(clickObj).siblings('.upload-item').length;
+            if(uploadItemLen + len <= imgMaxminum){
+                for(var i = 0; i < len; i++){
+                    // 存图片地址
+                    imgArrDom.push(getObjectURL(inputElem.files[i]));
+                }
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '最多上传'+imgMaxminum+'张图片',
+                    time: 1
+                })
+            }
+            // 删除图片
+            $('.upload-item').on('click', '.del-img', function(){
+                var $index = $('.del-img').index($(this));
+                filesObj[id].splice($index, 1);
+                console.log(filesObj)
+                $(this).parent().remove();
+            })
+        }
+        // 在浏览器上预览本地图片
+        function getObjectURL(file) {
+            var url = null;
+            if(window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if(window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+    </script>
 </body>
 </html>
