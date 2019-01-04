@@ -150,7 +150,24 @@
                     })
                     $('.reservation-container').append(str);
                     $('.reservation-tab').click(function(){
-                        location.href = 'sell_service_order_detail';
+                        var orderNumber = $(this).find('.order-num span').text();
+                        $.ajax({
+                            url: 'sell_order_service_save_record',
+                            dataType: 'JSON',
+                            type: 'POST',
+                            data: {
+                                'service_order_number': orderNumber
+                            },
+                            success: function(res){
+                                console.log(res);
+                                if(res.status == 1){
+                                    location.href = 'sell_service_order_detail';
+                                }
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
+                        })
                     })
                 }
             },

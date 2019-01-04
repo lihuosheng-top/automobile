@@ -419,7 +419,7 @@ class  SellMy extends Controller{
                 }
             }else if($get_number ==2){
                 //已发货
-                $condition =" `status` = '4'";
+                $condition =" `status` = '4' or `status` = '5'";
                 $data =Db::name("order_parts")
                     ->field('parts_order_number,order_create_time,group_concat(id) order_id')
                     ->where($condition)
@@ -1632,8 +1632,8 @@ class  SellMy extends Controller{
      */
     public function sell_parts_save_record(Request $request){
         if($request->isPost()){
-            $store_id =$request->only("store_id")["store_id"];//店铺id
-            $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//配件商订单编号
+            $store_id =$request->only("sell_store_id")["sell_store_id"];//店铺id
+            $parts_order_number =$request->only("sell_parts_order_number")["sell_parts_order_number"];//配件商订单编号
             if(!empty($store_id)){
                 Session::set("sell_store_id",$store_id);
                 Session::set("sell_parts_order_number",$parts_order_number);
@@ -1731,7 +1731,20 @@ class  SellMy extends Controller{
      **************************************
      * @return \think\response\View
      */
-    public function sell_wallet(){
+    public function sell_wallet(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");//用户的id
+            if(!empty($user_id)){
+                $money =Db::name("user")->field("user_wallet")->where("id",$user_id)->find();
+                if(!empty($money)){
+                    exit(json_encode(array("status" => 1, "info" => "我的钱包余额返回成功","data"=>$money)));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "我的钱包余额返回失败")));
+                }
+            }else{
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+        }
         return view("sell_wallet");
     }
 
@@ -1742,7 +1755,28 @@ class  SellMy extends Controller{
      **************************************
      * @return \think\response\View
      */
-    public function sell_application(){
+    public function sell_application(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");//用户的id
+            if(!empty($user_id)){
+                $money =Db::name("user")->where("id",$user_id)->value("user_wallet");
+            }else{
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+            $apply_money =$request->only("apply_money")["apply_money"];   //申请提现的金额
+            $apply_member =$request->only("apply_member")["apply_member"];  //开户名
+            $apply_bank =$request->only("apply_bank")["apply_bank"];   //开户银行
+            $apply_bank_code =$request->only("apply_bank_code")["apply_bank_code"];  //开户银行卡号
+            if($apply_money > $money){
+                exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于余额")));
+            }
+
+
+
+
+
+
+        }
         return view("sell_application");
     }
 

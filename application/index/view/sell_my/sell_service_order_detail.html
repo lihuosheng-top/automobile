@@ -12,7 +12,7 @@
     <style>
         .discount-amount-span{margin-right: 0 !important;}
         .user-info-box>div{margin-bottom: .1rem;}
-        .service-item-amount .service-total-sum{margin-bottom: .4rem;}
+        /* .service-item-amount .service-total-sum{margin-bottom: .4rem;} */
         .service-total-sum span{color: #333;font-size: .28rem;}
         .service-total-sum input{width: 1.2rem;outline: none;color: #333;}
         .service-total-sum div{color: #333;}
@@ -28,47 +28,47 @@
             </header>
             <div class="order-detail-box">
                 <div class="order-detail-bg">
-                    <div class="status">待付款</div>
+                    <div class="status"></div>
                 </div>
                 <div class="user-info-box">
-                    <div class="order-num">订单编号：20181130412</div>
+                    <div class="order-num">订单编号：<span></span></div>
                     <div class="user-name-phone">
-                        <span class="user-name">收货人：叶问</span>
-                        <span class="user-phone">13691853045</span>
+                        <span class="user-name">车主：<span></span></span>
+                        <span class="user-phone"></span>
                     </div>
                     <div class="service-car">
-                        <span class="address-title">到店车辆：粤B66666</span>
+                        <span class="address-title">到店车辆：<span></span></span>
                     </div>
-                    <div class="car-info">宝骏 560 1.8L 2015年产</div>
+                    <div class="car-info"></div>
                 </div>
     
                 <div class="order-shop">
                     <p>服务门店</p>
-                    <p class="shop-address">深圳福田区得朋汽车服务中心</p>
-                    <p class="service-time">到店时间：<span>2018-11-30 星期五 20:00-21:00</span></p>
+                    <p class="shop-address"></p>
+                    <p class="service-time">到店时间：<span></span></p>
                 </div>
                 <div class="service-item-box">
                     <p class="service-item-title">服务项目</p>
                     <div class="service-item">
-                        <span>预约洗车</span>
-                        <span class="service-item-price">￥0.01</span>
+                        <span class="service-item-name">预约洗车</span>
+                        <span class="service-item-price">￥<span></span></span>
                     </div>
                     <div class="service-item-amount">
                         <div class="service-total-sum">
                             <span>服务总价值</span>
-                            <div>￥<input type="text" placeholder="输入价格"></div>
+                            <div class="entry-price">￥<input type="text" placeholder="输入价格" style="display:none;"><span></span></div>
                         </div>
-                        <!-- <div class="discount-amount">
+                        <div class="discount-amount">
                             <span>积分抵扣</span>
-                            <span class="discount-amount-span">-￥0</span>
-                        </div> -->
-                        <!-- <div class="pay-amount">
+                            <span class="discount-amount-span">-￥<span></span></span>
+                        </div>
+                        <div class="pay-amount">
                             <span>实付款</span>
-                            <span>￥0.01</span>
-                        </div> -->
+                            <div>￥<span></span></div>
+                        </div>
                     </div>
                 </div>
-                <div class="order-payment-box">
+                <div class="order-payment-box" style="display: none;">
                     <button class="order-payment-btn">确定</button>
                 </div>
             </div>
@@ -77,5 +77,61 @@
     
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $.ajax({
+            url: 'sell_service_order_detail',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    var val = res.data;
+                    var statusTxt = '';
+                    if(val.status === 0 || val.status === 9 || val.status === 10){
+                        statusTxt = '已关闭';
+                    }else if(val.status === 1){
+                        statusTxt = '待付款';
+                    }else if(val.status === 2 || val.status === 3){
+                        statusTxt = '待服务';
+                    }else if(val.status === 4 || val.status === 5){
+                        statusTxt = '待评价';
+                    }else if(val.status === 6){
+                        statusTxt = '已完成';
+                    }
+                    // 状态值
+                    $('.status').text(statusTxt);
+                    // 订单编号
+                    $('.order-num span').text(val.service_order_number);
+                    // 用户信息
+                    $('.user-name span').text(val.car_owner_name);
+                    $('.user-phone').text(val.car_owner_phone_number);
+                    $('.address-title span').text(val.car_number);
+                    $('.car-info').text(val.car_information);
+                    // 店铺名字
+                    $('.shop-address').text(val.service_reservations);
+                    // 到店时间
+                    $('.service-time span').text(val.got_to_time);
+                    // 服务项目
+                    $('.service-item-name').text(val.service_goods_name);
+                    if(val.service_real_pay !== 0){
+                        $('.service-item-price span').text(val.order_amount);
+                        $('.entry-price span').text(val.order_amount);
+                    }else{
+                        $('.service-item-price').text('面议');
+                        $('.entry-price input').show();
+                        $('.entry-price span').hide();
+                        $('.order-payment-box').show();
+                    }
+                    // 积分抵扣金额
+                    $('.discount-amount-span span').text(val.integral_deductible);
+                    // 实付金额
+                    $('.pay-amount div span').text(val.service_real_pay);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+    </script>
 </body>
 </html>

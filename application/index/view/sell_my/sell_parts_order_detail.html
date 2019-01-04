@@ -24,25 +24,25 @@
         </header>
         <div class="order-detail-box">
             <div class="order-detail-bg">
-                <div class="status">待付款</div>
+                <div class="status"></div>
             </div>
             <div class="user-info-box">
-                <div class="order-num">订单编号：<span>20181130412</span></div>
+                <div class="order-num">订单编号：<span></span></div>
                 <div class="user-name-phone">
                     <span class="user-name">收货人：<span></span></span>
-                    <span class="user-phone">13691853045</span>
+                    <span class="user-phone"></span>
                 </div>
                 <div class="user-address">
                     <span class="address-title">配送地址：</span>
-                    <span class="address-txt txt-hid-two">深圳市福田区深南大道新闻路1号中电信息大厦西座1楼</span>
+                    <span class="address-txt txt-hid-two"></span>
                 </div>
             </div>
             <div class="order-goods-info">
                 <div class="order-shop-box">
                     <i class="spr icon-shop"></i>
-                    <span class="order-shop-namp">米其林轮胎旗舰店</span>
+                    <span class="order-shop-name"></span>
                 </div>
-                <div class="order-goods-detail">
+                <!-- <div class="order-goods-detail">
                     <div class="order-goods-img">
                         <img src="__STATIC__/index/image/14.png">
                     </div>
@@ -54,7 +54,7 @@
                             <p class="quantity-p">×1</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="cal-price-box">
                     <div class="cal-total">
                         <span>商品总额</span>
@@ -76,8 +76,8 @@
             </div>
             <div class="sundry">
                 <p>订单信息</p>
-                <p class="create-time">创建时间：<span>2018-11-30 17:55</span></p>
-                <!-- <p class="pay-time">支付时间：<span>2018-12-05 17:55</span></p> -->
+                <p class="create-time">创建时间：<span></span></p>
+                <p class="pay-time" style="display:none;">支付时间：<span></span></p>
                 <!-- <div class="contact-seller">
                     <a href="javascript:;" class="spr icon-phone"></a>
                     联系卖家
@@ -86,25 +86,91 @@
         </div>
     </div>
     
-    <div class="mask" style="display:none;"></div>
-    <!-- 取消订单弹窗 -->
-    <div class="cancel-order-pop">
-        <header class="cancel-order-header">
-            取消订单
-            <a href="javascript:;" class="spr close-cancel-order"></a>
-        </header>
-        <p class="reason-title">请选择取消订单原因：</p>
-        <ul class="reason-list">
-            <li class="reason-li reason-selected"><i class="spr icon-reason"></i> 操作有误</li>
-            <li class="reason-li"><i class="spr icon-reason"></i> 暂时不需要</li>
-            <li class="reason-li"><i class="spr icon-reason"></i> 选错商品</li>
-            <li class="reason-li"><i class="spr icon-reason"></i> 预约时间有误</li>
-            <li class="reason-li"><i class="spr icon-reason"></i> 其他原因</li>
-        </ul>
-        <button class="select-reason-btn">确定</button>
-    </div>
-
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $.ajax({
+            url: 'sell_parts_order_detail',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    var val = res.data;
+                    var statusTxt = '';
+                    if(val.status === 1){
+                        statusTxt = `待付款`;
+                    }else if(val.status === 2 || val.status === 3 || val.status === 4 || val.status === 5){
+                        statusTxt = `待收货`;
+                    }else if(val.status === 6 || val.status === 7){
+                        statusTxt = `待评价`;
+                    }else if(val.status === 8){
+                        statusTxt = `已完成`;
+                    }else if(val.status === 9 || val.status === 10){
+                        statusTxt = `已取消`;
+                    }else if(val.status === 11){
+                        statusTxt = `退货`;
+                    }else if(val.status === 12){
+                        statusTxt = '已退货';
+                    }
+                    // 状态值
+                    $('.status').text(statusTxt);
+                    // 订单编号
+                    $('.order-num span').text(val.parts_order_number);
+                    // 用户信息
+                    $('.user-name span').text(val.harvester);
+                    $('.user-phone').text(val.harvest_phone_num);
+                    $('.address-txt').text(val.harvester_address);
+                    // 店铺名
+                    $('.order-shop-name').text(val.store_name);
+                    var str = '';
+                    $.each(val.info, function(idx, val){
+                        str += `<div class="order-goods-detail">
+                                    <div class="order-goods-img">
+                                        <img src="uploads/`+val.goods_image+`">
+                                    </div>
+                                    <div class="order-info-box">
+                                        <p class="order-goods-p txt-hid-two">`+val.parts_goods_name+`</p>
+                                        <p class="order-selling-point txt-hid-two">`+val.goods_describe+`</p>
+                                        <div class="unit-price-quantity">
+                                            <p class="unit-price-p">￥`+val.goods_money+`</p>
+                                            <p class="quantity-p">×`+val.order_quantity+`</p>
+                                        </div>
+                                    </div>
+                                </div>`
+                    })
+                    $('.order-shop-box').after(str);
+                    // 总额
+                    $('.total-box span').text(val.all_goods_pays);
+                    // 抵扣金额
+                    $('.discount-box span').text(val.integral_deductible);
+                    // 买家留言
+                    $('.leave-message').text(val.buy_message);
+                    // 实付款
+                    $('.pay-amount-span span').text(val.all_order_real_pay);
+                    // 创建时间
+                    $('.create-time span').text(timetrans(val.create_time));
+                    if(val.pay_time !== null){
+                        $('.pay-time').show();
+                        $('.pay-time span').text(timetrans(val.pay_time));
+                    }
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+
+        function timetrans(date){
+            var date = new Date(date*1000);//如果date为13位不需要乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+            var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+            var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+            var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+            var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
+            return Y+M+D+h+m+s;
+        }
+    </script>
 </body>
 </html>
