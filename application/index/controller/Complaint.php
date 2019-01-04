@@ -21,7 +21,16 @@ class Complaint extends Controller{
      */
     public function index(Request $request){
         if($request->isPost()){
-            
+            $issue = $request->param();
+            $images = $request->file("images");
+            if(!empty($images)){
+                foreach ($images as $value){
+                    $image = $value->move(ROOT_PATH . 'public' . DS . 'uploads');
+                    $issue["images"] = explode(",",str_replace("\\", "/", $image->getSaveName()));
+                    halt($issue["images"]);
+                }
+
+            }
         }
         return view('index');
     }
