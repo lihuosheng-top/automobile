@@ -8,6 +8,7 @@
 
 namespace app\index\controller;
 use think\Controller;
+use think\Request;
 
 class Complaint extends Controller{
 
@@ -18,8 +19,10 @@ class Complaint extends Controller{
      **************************************
      * @return \think\response\View
      */
-    public function index(){
-
+    public function index(Request $request){
+        if($request->isPost()){
+            
+        }
         return view('index');
     }
 

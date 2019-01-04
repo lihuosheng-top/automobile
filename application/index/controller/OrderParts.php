@@ -1619,7 +1619,8 @@ class OrderParts extends Controller{
      **************************************
      */
     public function ios_api_order_parts_firm_order(){
-            return view("order_parts_firm_order");
+
+        return view("order_parts_firm_order");
     }
 
 
