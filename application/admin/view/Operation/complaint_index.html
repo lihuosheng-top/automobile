@@ -171,19 +171,19 @@
 				{volist name="issue" id="value"}
 					<tr>
 						<td>{$value.id}</td>
-						<td>{}</td>
-						<td>1000001</td>
-						<td>1000001</td>
-						<td>1000001</td>
+						<td>{$value.user.phone_num}</td>
+						<td>{$value.user.user_name}</td>
+						<td>{$value.issue}</td>
+						<td>{$value.issue_details}</td>
 						<td class="">
-							<div class="tdimg"><img src="11" /></div>
+							<div class="tdimg"><img src="" /></div>
 						</td>
 						<td>1000001</td>
 						<td>
 							<div class="static static_pending">
 							    {$value.status == 0 ? "待处理" : ""}
 								{$value.status == 1 ? "已处理" : ""}
-								{$value.status == 0 ? "拒绝处理" : ""}
+								{$value.status == 2 ? "拒绝处理" : ""}
 						    </div>
 						</td>
 						<td>
@@ -194,7 +194,7 @@
 				</tbody>
 			</table>
 			<div id="page">
-
+				{$platforme}
 			</div>
 
 		</div>

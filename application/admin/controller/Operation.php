@@ -22,6 +22,7 @@ class Operation extends Controller{
         $issue = db("complaint")->select();
         foreach ($issue as $key=>$value){
             $issue[$key]["user"] = db("user")->where("id",$value["user_id"])->find();
+            $issue[$key]["images"] = explode(",",$value["images"]);
         }
         $all_idents = $issue;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值

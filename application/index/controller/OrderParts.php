@@ -1777,4 +1777,17 @@ class OrderParts extends Controller{
 
 
 
+    /**
+     * 发票显示页面
+     * 陈绪
+     */
+    public function invoice_index(){
+
+        return view("invoice_index");
+
+    }
+
+
+
+
 }

@@ -59,6 +59,7 @@ class Complaint extends Controller{
             $issue = db("complaint")->select();
             foreach ($issue as $key=>$value){
                 $issue[$key]["phone"] = db("user")->where("id",$value["user_id"])->value("phone_num");
+                $issue[$key]["user_images"] = db("user")->where("id",$value["user_id"])->value("user_img");
             }
             if($issue){
                 return ajax_success("获取成功",$issue);
