@@ -172,11 +172,13 @@
 					<tr>
 						<td>{$value.id}</td>
 						<td>{$value.user.phone_num}</td>
-						<td>{$value.user.user_name}</td>
+						<td>{$value.user.user_name == null ? "无" : $value.user.user_name}</td>
 						<td>{$value.issue}</td>
 						<td>{$value.issue_details}</td>
 						<td class="">
-							<div class="tdimg"><img src="" /></div>
+							{volist name="$value.images" id="val"}
+							<div class="tdimg"><img src="__UPLOADS__/{$val}" /></div>
+							{/volist}
 						</td>
 						<td>1000001</td>
 						<td>
