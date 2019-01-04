@@ -1,40 +1,58 @@
-$.ajax({
-    url: 'information_system_details',
-    type: 'POST',
-    dataType: 'JSON',
-    success: function(res){
-        console.log(res);
-    },
-    error: function(){
-        console.log('error');
-    }
-})
-$.ajax({
-    url: 'information_details',
-    type: 'POST',
-    dataType: 'JSON',
-    success: function(res){
-        console.log(res);
-    },
-    error: function(){
-        console.log('error');
-    }
-})
+var switchStatus = 0;
+function getIdAjax(url, arrBox, switchStatus){
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'JSON',
+        success: function(res){
+            console.log(res);
+            if(res.status == 1){
+                switchStatus = res.data[0].show_status;
+                if(switchStatus === 1){
+                    $('#switch_checkbox').prop('checked', 'checked');
+                }else if(switchStatus === 0){
+                    $('#switch_checkbox').attr('checked', false);
+                }
+                $.each(res.data, function(idx, val){
+                    arrBox.push(val.id);
+                })
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
+var goodsInfo = [], systemInfo = [];
+getIdAjax('information_details', goodsInfo, switchStatus);
+getIdAjax('information_system', systemInfo);
+
+
 $('#switch_checkbox').change(function(){
     console.log(this.checked);
+    if(this.checked){
+        switchStatus = 1;
+    }else{
+        switchStatus = 0;
+    }
+    $.ajax({
+        url: 'setting_status',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'goodsInfo': goodsInfo,
+            'systemInfo': systemInfo,
+            'showStatus': switchStatus
+        },
+        success: function(res){
+            console.log(res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
 })
-// $('#switch_checkbox').prop('checked', 'true');
-// $.ajax({
-//     url: 'setting_status',
-//     type: 'POST',
-//     dataType: 'JSON',
-//     success: function(res){
-//         console.log(res);
-//     },
-//     error: function(){
-//         console.log('error');
-//     }
-// })
+
 // 退出登录 
 $('.exit').click(function(){
     $.ajax({
