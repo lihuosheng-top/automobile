@@ -22,29 +22,70 @@
     </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper SystemData">
         <header class="header">
             <a href="information_index" class="spr icon-back"></a>
             <h3>系统消息</h3>
         </header>
-        {volist name="system_data" id="value"}
-        <div class="system">
-            <div class="time-box">{$value.create_time|date='Y-m-d H:i',###}</div>
+        <!--<div class="system">
+            <div class="time-box"></div>
             <div class="news">
                 <div class="top">
-                    <p class="article-title">{$value.headline}</p>
-                    <!--<p class="article-subtitle">猛戳领取大礼！</p>-->
+                    <p class="article-title"></p>
+                    &lt;!&ndash;<p class="article-subtitle">猛戳领取大礼！</p>&ndash;&gt;
                 </div>
                 <div class="bot">
-                    <span><a href="{:url('index/Information/information_system_details',['id'=>$value.id])}"> 查看详情</a></span>
-                    <!-- <i class="spr icon-more"></i> -->
+                    <span><a href="">查看详情</a></span>
+                    <i class="spr icon-more"></i>
                 </div>
             </div>
-        </div>
-        {/volist}
-    </div>
-    
+        </div>-->
+
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
 </body>
+<script>
+    $.ajax({
+        url: "{:url('index/Information/information_system')}",
+        type: "POST",
+        dataType: 'JSON',
+        data: {},
+        success:function (data) {
+            console.log(data);
+            if(data.status == 1){
+                var _html = "";
+                $.each(data.data,function (key,value) {
+                    _html += `<div class="system">
+                                <div class="time-box">`+DataTime(value.create_time)+`</div>
+                                <div class="news">
+                                    <div class="top">
+                                        <p class="article-title">`+value.headline+`</p>
+                                        <!--<p class="article-subtitle">猛戳领取大礼！</p>-->
+                                    </div>
+                                    <div class="bot">
+                                        <span><a href="information_system_details?id=`+value.id+`">查看详情</a></span>
+                                        <i class="spr icon-more"></i>
+                                    </div>
+                                </div>
+                            </div>`
+                })
+                $(".SystemData").append(_html);
+            }
+        },
+        error:function (data) {
+            console.log("错误")
+        }
+    })
+    function DataTime(date){
+        var date = new Date(date*1000);//如果date为13位不需要乘1000
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+        var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+        var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+        var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
+        return Y+M+D+h+m+s;
+    }
+
+</script>
 </html>
