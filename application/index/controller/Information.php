@@ -67,7 +67,7 @@ class  Information extends  Controller{
     public function information_system(Request $request){
 
         if($request->isPost()) {
-            $system_data = db("message")->where("status","<>",0)->select();
+            $system_data = db("message")->select();
             return ajax_success("获取成功",$system_data);
         }
         return view('information_system');
