@@ -116,7 +116,7 @@
             formData.append("issue",data)
             formData.append("issue_details",issueDetails);
             $.each(imgFiles, function(idx, val){
-                formData.append("images",val);
+                formData.append("images[]",val);
             })
             formData.append("issue_relation",contact);
             $.ajax({
