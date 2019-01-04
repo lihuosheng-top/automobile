@@ -46,6 +46,7 @@ class Complaint extends Controller{
         return view('index');
     }
 
+
     /**
      **************陈绪*******************
      * @param Request $request
@@ -54,11 +55,11 @@ class Complaint extends Controller{
      * @return \think\response\View
      */
     public function detail(Request $request){
-        
+
         if($request->isPost()){
             $issue = db("complaint")->select();
             if($issue){
-                return ajax_success("获取成功");
+                return ajax_success("获取成功",$issue);
             }else{
                 return ajax_error("获取失败");
             }
