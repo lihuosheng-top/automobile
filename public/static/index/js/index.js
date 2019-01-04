@@ -548,7 +548,12 @@ function gecInitials() {//公众号排序
 }
 // 城市定位 首字母匹配 end
 $('.curr_city').click(function(){
-    
+    $('.geclocation-pop').show();
+    $('.wrapper').hide();
+})
+$('.gec-back').click(function(){
+    $('.geclocation-pop').hide();
+    $('.wrapper').show();
 })
 
 var map = new AMap.Map('container', {
