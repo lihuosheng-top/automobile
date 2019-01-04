@@ -23,14 +23,14 @@ class Complaint extends Controller{
         if($request->isPost()){
             $issue = $request->param();
             $images = $request->file("images");
-            if(!empty($images)){
+            
                 foreach ($images as $value){
                     $image = $value->move(ROOT_PATH . 'public' . DS . 'uploads');
-                    $issue["images"] = explode(",",str_replace("\\", "/", $image->getSaveName()));
-                    halt($issue["images"]);
+                    $issue_images = str_replace("\\", "/", $image->getSaveName());
+                    halt($issue_images);
                 }
 
-            }
+
         }
         return view('index');
     }
