@@ -5,7 +5,7 @@
  * Date: 2019/1/4
  * Time: 18:41
  */
-namespace app\index\controllerl;
+namespace app\index\controller;
 use think\Controller;
 
 class Service extends Controller{

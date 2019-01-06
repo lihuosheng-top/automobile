@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>发票预览</title>
+    <style>
+        html, body{background-color: #f2f2f2;}
+        .header{background-color: #fff; height: .88rem; position: relative;border-bottom: 1px solid #eee;}
+        .header-title{text-align: center; line-height: .88rem;}
+        .back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .invoice-container{margin-top: .3rem; padding: 0 .3rem;}
+    </style>
 </head>
 <body>
-发票显示页面
+    <div class="wrapper">
+        <header class="header">
+            <a href="order_wait_evaluate" class="spr back"></a>
+            <h3 class="header-title">发票预览</h3>
+        </header>
+        <div class="invoice-container">
+
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    
 </body>
 </html>
