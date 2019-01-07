@@ -78,6 +78,9 @@ $.ajax({
         }else if(val.status === 11){
             statusTxt = `退货`;
             $('.del-order-btn').show();
+        }else if(val.status === 12){
+            statusTxt = `已退货`;
+            $('.del-order-btn').show();
         }
         // 状态值
         $('.status').text(statusTxt);
