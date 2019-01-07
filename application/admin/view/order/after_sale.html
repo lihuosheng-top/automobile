@@ -27,21 +27,24 @@
 	.noshow {
 		display: none;
 	}
-
-	/* 弹窗 */
+/* 弹窗 */
 	
-	.tanchuang {
-		width: 100%;
-		min-height: 800px;
-		background: RGBA(0, 0, 0, 0.3);
-		position: fixed;
-		z-index: 9999;
-	}
+    
+.tanchuang {
+        width: 100%;
+        min-height: 1100px;
+        background: RGBA(0, 0, 0, 0.3);
+        position: fixed;
+        z-index: 9999;
+    }
+    .select-operation select{
+        width: 100px;
+        height: 30px;
+    }
 	
 	.tanchuang-content {
 		width: 800px;
-		min-height: 500px;
-		height: auto;
+		height: 500px;
 		background: #fff;
 		z-index: 10000;
 		position: fixed;
@@ -67,6 +70,10 @@
 		float: left;
 		width: 50%;
 		height: 40px;
+	}
+	
+	.noshow {
+		display: none;
 	}
 	/* 弹窗内容样式 */
 	
@@ -124,7 +131,10 @@
 	}
 	
 	.btu-sumit {
-		float: right;
+		position: absolute;
+		bottom: 25px;
+		right: 0;
+		/* float: right; */
 		color: #fff;
 		background: #0099FF;
 		border-radius: 10px;
@@ -199,8 +209,8 @@
 		position: absolute;
 		width: 3px;
 		background-color: #aaaaaa;
-		/*top:10px;
-	left:210px;*/
+		top: 10px;
+		left: 210px;
 		z-index: -1;
 	}
 	
@@ -209,50 +219,13 @@
 		width: 20px;
 	}
 	
-	.news_content button {
+	tbody button {
 		width: 100px;
 		height: 30px;
 		color: #fff;
 		border-radius: 10px;
 	}
 	/*  flow  end */
-	/* 按钮颜色 */
-	
-	.for-the-payment {
-		background: #FF0000;
-	}
-	
-	.payment-has-been {
-		background: #FF9900;
-	}
-	
-	.no-seed-goods {
-		background: #FF0099;
-	}
-	
-	.send-the-goods {
-		background: #33CC00;
-	}
-	
-	.for-the-goods {
-		background: #CC00FF;
-	}
-	
-	.have-the-goods {
-		background: #0099FF;
-	}
-	
-	.complete {
-		background: #0000CC;
-	}
-	
-	.closed-btu {
-		background: #333333;
-	}
-	
-	.cancel-btu {
-		background: #990000;
-	}
 	
 	.pagination {
 		float: right;
@@ -271,7 +244,6 @@
 				<div class="close"><img src="__STATIC__/admin/common/img/a7.png"></div>
 			</div>
 			<!-- 里面的内容 -->
-
 			<div class="dom">
 				<ul class="clear card">
 					<li class="active" data-id="list-a">订单处理</li>
@@ -700,6 +672,58 @@
 			});
 		}
 	</script>
+	<script type="text/javascript">
+		$(".state").on('click', function() {
+		var id = $(this).parent("td").data(id).id;
+		$(".btu-sumit").data('id', id);
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Order/order_processing')}",
+			async: false,
+			data: {
+				"id": id,
+			},
+			success: function(data) {
+				$(".tanchuang").removeClass("noshow");
+				data = eval("(" + data + ")");
+				console.log(data);
+				var order_create_time=timestampToTime(data.data.order_create_time);
+				new Vue({
+					el: '.list-a',
+					data: {
+						status: data.data.status,
+						payment: data.data.pay_type_content,
+						amount: data.data.goods_money,
+						points_Deduction: data.data.integral_deductible,
+						real_Pay: data.data.order_real_pay,
+						cancel_order_description:data.data.cancel_order_description,
+						order_create_time:order_create_time,
+						buy_message:data.data.buy_message,
+					}
+				})
+
+			},
+			error: function(data) {
+				console.log(data);
+			}
+		});
+
+	});
+
+	$(".close").on('click', function() {
+		$(".tanchuang").addClass("noshow");
+	});
+	// 弹窗选项卡切换
+	$(".card").on('click', 'li', function() {
+		$(this).addClass("active");
+		$(this).siblings().removeClass("active");
+		var dait_id = $(this).data("id");
+		$("." + dait_id).removeClass("noshow");
+		$("." + dait_id).siblings("div").addClass("noshow");
+
+	});
+	
+</script>
 
 	{/block}
 
