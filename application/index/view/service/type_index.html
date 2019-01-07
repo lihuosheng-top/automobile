@@ -37,15 +37,15 @@
             <h3 class="header-title">选择服务类型</h3>
         </header>
         <div class="refund-goods-container">
-            <div class="refund-goods-item">
+            <!-- <div class="refund-goods-item">
                 <div class="image-container">
                     <img src="__STATIC__/index/image/15.jpg">
                 </div>
                 <div class="goods-info-container">
-                    <div class="goods-name">附近开了大食堂娇娃二拖荆防颗粒的撒娇了开关机</div>
-                    <div class="sub-name">交付给开发大赛结果看来是大家</div>
+                    <div class="goods-name"></div>
+                    <div class="sub-name"></div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="service-container">
             <div class="icon-refund">
@@ -67,6 +67,21 @@
             dataType: 'JSON',
             success: function(res){
                 console.log(res);
+                if(res.status == 1){
+                    var str = '';
+                    $.each(res.data, function(idx, val){
+                        str += `<div class="refund-goods-item">
+                                    <div class="image-container">
+                                        <img src="uploads/`+val.order_images+`">
+                                    </div>
+                                    <div class="goods-info-container">
+                                        <div class="goods-name">`+val.order_name+`</div>
+                                        <div class="sub-name">`+val.order_describe+`</div>
+                                    </div>
+                                </div>`
+                    })
+                    $('.refund-goods-container').append(str);
+                }
             },
             error: function(){
                 console.log('error');

@@ -156,6 +156,33 @@
             $('.reason-container').text($('.circle-on').siblings().text());
             hidePop();
         })
+
+        $.ajax({
+            url: 'service_refund',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    var str = '';
+                    $.each(res.data, function(idx, val){
+                        str += `<div class="refund-goods-item">
+                                    <div class="image-container">
+                                        <img src="uploads/`+val.order_images+`">
+                                    </div>
+                                    <div class="goods-info-container">
+                                        <div class="goods-name">`+val.order_name+`</div>
+                                        <div class="sub-name">`+val.order_describe+`</div>
+                                    </div>
+                                </div>`
+                    })
+                    $('.refund-goods-container').append(str);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
     </script>
     <script>
         $('.switch-span').on('change', 'input', function(){
