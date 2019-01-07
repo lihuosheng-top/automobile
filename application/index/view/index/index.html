@@ -350,6 +350,12 @@
         //     })
         //     $('.gec-sort-box').append(str);
         // })
+        function callAndroid(){
+            Android.getLocation();
+        }
+        $('.gec-curr-box').click(function(){
+            callAndroid();
+        })
     </script>
 </body>
 </html>
