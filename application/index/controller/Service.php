@@ -41,6 +41,12 @@ class Service extends Controller{
                 $service[$key]["order_describe"] = $value["goods_describe"];
                 $service[$key]["order_id"] = $order_id;
             }
+            if($service){
+                return ajax_success('获取成功',$service);
+            }else{
+                return ajax_error("获取失败");
+            }
+
         }
         return view("refund");
 
