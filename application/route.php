@@ -357,8 +357,9 @@ Route::group("",[
      * 售后服务
      * 陈绪
      */
-    "service_type_index"=>"index/Service/type_index",     //选择服务类型
+    "service_type_index"=>"index/Service/type_index",     //选择类型
     "service_refund"=>"index/Service/refund",              //申请退款
+    "service_save"=>"index/Service/save",              //申请退款存储
 
 ]);
 
