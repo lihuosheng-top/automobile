@@ -337,7 +337,7 @@ $.ajax({
         $('.return-goods').click(function(){
             var id = $(this).parents('.order-goods-detail').attr('id');
             $.ajax({
-                url: 'order_parts_save_record',
+                url: 'service_type_index',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
@@ -345,7 +345,9 @@ $.ajax({
                 },
                 success: function(res){
                     console.log(res);
-                    location.href = 'service_type_index'; 
+                    if(res.status == 1){
+                        location.href = 'service_type_index';
+                    }
                 },
                 error: function(){
                     console.log('error');

@@ -51,7 +51,7 @@
 <body>
     <div class="wrapper">
         <header class="header">
-            <a href="order_wait_evaluate" class="spr back"></a>
+            <a href="service_type_index" class="spr back"></a>
             <h3 class="header-title">申请退款</h3>
         </header>
         <div class="refund-goods-container">
@@ -155,6 +155,33 @@
         $('.confirm').click(function(){
             $('.reason-container').text($('.circle-on').siblings().text());
             hidePop();
+        })
+
+        $.ajax({
+            url: 'service_refund',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    var str = '';
+                    $.each(res.data, function(idx, val){
+                        str += `<div class="refund-goods-item">
+                                    <div class="image-container">
+                                        <img src="uploads/`+val.order_images+`">
+                                    </div>
+                                    <div class="goods-info-container">
+                                        <div class="goods-name">`+val.order_name+`</div>
+                                        <div class="sub-name">`+val.order_describe+`</div>
+                                    </div>
+                                </div>`
+                    })
+                    $('.refund-goods-container').append(str);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
         })
     </script>
     <script>
