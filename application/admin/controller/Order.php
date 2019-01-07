@@ -794,9 +794,28 @@ class Order extends Controller{
         foreach ($service as $key=>$value){
             $service[$key]["order"] = db("order_parts")->where("id",$value["order_id"])->find();
         }
-
         return view('platform_after_sale',["service"=>$service]);
+    }
 
+
+    /**
+     * 平台售后维修显示
+     * 陈绪
+     */
+    public function platform_after_sale_selest(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $service = db("service")->where("id",$id)->select();
+            foreach ($service as $key=>$value){
+                $service[$key]["order"] = db("order_parts")->where("id",$value["order_id"])->find();
+            }
+            if($service){
+                return ajax_success("获取成功",$service);
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
     }
 
     /**
