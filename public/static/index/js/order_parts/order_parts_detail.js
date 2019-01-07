@@ -337,7 +337,7 @@ $.ajax({
         $('.return-goods').click(function(){
             var id = $(this).parents('.order-goods-detail').attr('id');
             $.ajax({
-                url: 'order_parts_save_record',
+                url: 'service_refund',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
