@@ -23,38 +23,42 @@
 		display: none;
 	}
 	/* 弹窗 */
-
-	.tanchuang {
-		width: 100%;
-		min-height: 800px;
-		background: RGBA(0, 0, 0, 0.3);
-		position: fixed;
-		z-index: 9999;
-	}
-
+	
+    
+    .tanchuang {
+        width: 100%;
+        min-height: 1100px;
+        background: RGBA(0, 0, 0, 0.3);
+        position: fixed;
+        z-index: 9999;
+    }
+    .select-operation select{
+        width: 100px;
+        height: 30px;
+    }
+	
 	.tanchuang-content {
 		width: 800px;
-		min-height: 500px;
-		height: auto;
+		height: 500px;
 		background: #fff;
 		z-index: 10000;
 		position: fixed;
 		top: 20%;
 		left: 20%;
 	}
-
+	
 	.close {
 		width: 30px;
 	}
-
+	
 	.clear {
 		clear: both;
 	}
-
+	
 	.title-a {
 		background: RGB(247, 247, 247);
 	}
-
+	
 	.content-title {
 		padding-top: 10px;
 		padding-left: 20px;
@@ -62,20 +66,24 @@
 		width: 50%;
 		height: 40px;
 	}
+	
+	.noshow {
+		display: none;
+	}
 	/* 弹窗内容样式 */
-
+	
 	.list-a ul li {
 		float: left;
 		margin-left: 26px;
 		font-size: 12px;
 	}
-
+	
 	.dom>ul {
 		margin-top: 10px;
 		margin-bottom: 0px;
 		margin-left: 50px;
 	}
-
+	
 	.dom>ul>li {
 		float: left;
 		width: 100px;
@@ -85,13 +93,13 @@
 		height: 40px;
 		line-height: 40px;
 	}
-
+	
 	.list {
 		padding-top: 20px;
 		margin-left: 50px;
 		border-top: RGB(242, 242, 242) solid 1px;
 	}
-
+	
 	.cancel {
 		border-bottom: solid 1px RGB(242, 242, 242);
 		margin-left: 26px;
@@ -99,26 +107,29 @@
 		margin-top: 18px;
 		font-size: 12px;
 	}
-
+	
 	.reply {
 		margin: 15px;
 	}
-
+	
 	.reply-content {
 		margin-top: 11px;
 		min-height: 175px;
 		max-height: 175px;
 		overflow-y: scroll;
 	}
-
+	
 	.opation>div {
 		float: left;
 		margin-left: 26px;
 		margin-top: 10px;
 	}
-
+	
 	.btu-sumit {
-		float: right;
+		position: absolute;
+		bottom: 25px;
+		right: 0;
+		/* float: right; */
 		color: #fff;
 		background: #0099FF;
 		border-radius: 10px;
@@ -126,24 +137,24 @@
 		height: 40px;
 		margin-right: 24px;
 	}
-
+	
 	.active {
 		background: #F2F2F2;
 	}
 	/* 物流线 */
 	/* flow start */
-
+	
 	.flowSwrap {
 		position: relative;
 		margin: 0 auto;
 		width: 720px;
 		/*background-color: rgba(0,0,0,.3);*/
 	}
-
+	
 	.flowCell {
 		overflow: hidden;
 	}
-
+	
 	.cell-left {
 		width: 190px;
 		padding-right: 28px;
@@ -152,7 +163,7 @@
 		vertical-align: middle;
 		/*background-color: goldenrod;*/
 	}
-
+	
 	.cell-right {
 		padding-left: 28px;
 		text-align: left;
@@ -160,7 +171,7 @@
 		vertical-align: middle;
 		/*background-color:green;*/
 	}
-
+	
 	.cell-center {
 		height: 60px;
 		width: 20px;
@@ -168,41 +179,41 @@
 		vertical-align: middle;
 		/*background-color: azure;*/
 	}
-
+	
 	.cell-left .t1 {
 		font-size: 10px;
 	}
-
+	
 	.cell-left .t2 {
 		font-size: 10px;
 	}
-
+	
 	.cell-right .t1_start {
 		font-size: 10px;
 	}
-
+	
 	.cell-right .t1 {
 		font-size: 10px;
 	}
-
+	
 	.cell-right .t2 {
 		font-size: 10px;
 	}
-
+	
 	.flow-line {
 		position: absolute;
 		width: 3px;
 		background-color: #aaaaaa;
-		/*top:10px;
-	left:210px;*/
+		top: 10px;
+		left: 210px;
 		z-index: -1;
 	}
-
+	
 	.firstImg {
 		height: 20px;
 		width: 20px;
 	}
-
+	
 	tbody button {
 		width: 100px;
 		height: 30px;
@@ -210,190 +221,169 @@
 		border-radius: 10px;
 	}
 	/*  flow  end */
-	/* 按钮颜色 */
-
-	.for-the-payment {
-		background: #FF0000;
-	}
-
-	.payment-has-been {
-		background: #FF9900;
-	}
-
-	.no-seed-goods {
-		background: #FF0099;
-	}
-
-	.send-the-goods {
-		background: #33CC00;
-	}
-
-	.for-the-goods {
-		background: #CC00FF;
-	}
-
-	.have-the-goods {
-		background: #0099FF;
-	}
-
-	.complete {
-		background: #0000CC;
-	}
-
-	.closed-btu {
-		background: #333333;
-	}
-
-	.cancel-btu {
-		background: #990000;
+	
+	.pagination {
+		float: right;
 	}
 </style>
-
 {/block}
 
 <body>
 
 	{block name="content"}
+	<!-- 弹窗 -->
 	<div class="tanchuang noshow">
-		<div class="tanchuang-content ">
-			<div class="title-a clear">
-				<div class="content-title">消息</div>
-				<div class="close"><img src="__STATIC__/admin/common/img/a7.png"></div>
-			</div>
-			<!-- 里面的内容 -->
-
-			<div class="dom">
-				<ul class="clear card">
-					<li class="active" data-id="list-a">订单处理</li>
-					<li data-id="list-b">物流跟踪</li>
-				</ul>
-
-				<div class="list-a list">
-					<ul class="clear">
-						<li>
-							<span>订单状态：</span>
-							<span>取消订单</span>
-						</li>
-						<li>
-							<span>支付方式：</span>
-							<span>取消订单</span>
-						</li>
-						<li>
-							<span>商品金额：</span>
-							<span>取消订单</span>
-						</li>
-						<li>
-							<span>积分抵扣：</span>
-							<span>取消订单</span>
-						</li>
-						<li>
-							<span>实付金额：</span>
-							<span>取消订单</span>
-						</li>
-					</ul>
-					<div class="cancel">
-						<span>取消原因:</span>
-						<span>商品无货</span>
-						<div class="edit" style="margin-top: 10px;">
-							<span>问题描述:</span>
-							<span>商品无货</span>
-						</div>
-						<div class="img" style="margin-left: 26px;margin-top: 10px;">
-							<span style="display: inline-block; width: 68px;"><img src="__STATIC__/admin/common/img/a11.png" alt="" width="100%"></span>
-						</div>
-					</div>
-
-					<div class="reply">
-						<span>官方回复</span>
-						<span><input type="text" name="" id="" value="" placeholder="请输入处理备注" style="width: 400px; height: 30px;" disabled="disabled"/></span>
-						<div class="reply-content">
-							<span>0180811 15：27：23</span>
-							<span>官方备注已用户要求高可顺非邮寄</span>
-						</div>
-					</div>
-					<div class="opation clear" style="margin-bottom: 20px;">
-						<div class="select-operation">
-							<span>选择状态</span>
-							<select disabled="disabled">
-								<option value="">请选择</option>
-								<option value="">已关闭</option>
-							</select>
-						</div>
-						<div class="select-operation">
-							<span>退款方式</span>
-							<select disabled="disabled">
-								<option value="">请选择</option>
-								<option value="">已关闭</option>
-							</select>
-						</div>
-						<div class="select-operation">
-							<span>退款金额</span>
-							<input type="text" name="" id="" value="" disabled="disabled" />
-						</div>
-						<button type="button" class="btu-sumit">确定</button>
-					</div>
+			<div class="tanchuang-content ">
+				<div class="title-a clear">
+					<div class="content-title">消息</div>
+					<div class="close"><img src="__STATIC__/admin/common/img/a7.png"></div>
 				</div>
-				<div class="list-b list noshow">
-					<div class="flowSwrap">
-						<!--流程线-->
-						<div class="flow-line" style="left: 226.5px; height:340px;"></div>
-						<!--流程区域 start-->
-						<div class="flowCell">
-							<div class="cell-left fc-orange">
-								<p class="t1">20:00</p>
-								<p class="t2">2018-01-01</p>
-							</div>
-							<div class="cell-center  fc-orange">
-								<img id="startImg" src="__STATIC__/admin/common/img/f1.png">
-							</div>
-							<div class="cell-right  fc-orange">
-								<p class="t1_start">订单已竣工</p>
+				<!-- 里面的内容 -->
+				<button type="button" class="btu-sumit" data-id="">确定</button>
+				<div class="dom">
+					<ul class="clear card">
+						<li class="active" data-id="list-a">订单处理</li>
+						<li data-id="list-b">物流跟踪</li>
+					</ul>
+	
+					<div class="list-a list">
+						<ul class="clear">
+							<li>
+								<span>订单状态：</span>
+								<span v-if="status==0">已关闭</span>
+								<span v-else-if="status==1">待支付</span>
+								<span v-else-if="status==2">已付款</span>
+								<span v-else-if="status==3">待发货</span>
+								<span v-else-if="status==4">已发货</span>
+								<span v-else-if="status==5">待收货</span>
+								<span v-else-if="status==6">已收货</span>
+								<span v-else-if="status==7">待评价</span>
+								<span v-else-if="status==8">已完成</span>
+								<span v-else-if="status==9">未付款取消订单</span>
+								<span v-else-if="status==10">已付款取消订单</span>
+								<span v-else-if="status==11">退货</span>
+								<span v-else>无</span>
+							</li>
+							<li>
+								<span>支付方式：</span>
+								<span v-if="payment!=null">{{payment}}</span>
+								<span v-else>无</span>
+							</li>
+							<li>
+								<span>商品金额：</span>
+								<span v-if="amount!=null">{{amount}}</span>
+								<span v-else>无</span>
+							</li>
+							<li>
+								<span>积分抵扣：</span>
+								<span  v-if="points_Deduction!=null">{{points_Deduction}}</span>
+								<span v-else>无</span>
+							</li>
+							<li>
+								<span>实付金额：</span>
+								<span  v-if="real_Pay!=null"> {{real_Pay}}</span>
+								<span v-else>无</span>
+							</li>
+						</ul>
+						<div class="cancel" >
+							<span  v-if="cancel_order_description!=null">取消原因:</span>
+							<span  v-if="cancel_order_description!=null">{{cancel_order_description}}</span>
+						</div>
+						<div class="reply">
+							<span>官方回复</span>
+							<span><input type="text" name="" value="" placeholder="请输入处理备注" style="width: 400px; height: 30px;" id="note_tip" /></span>
+							<div class="reply-content">
+								<span v-if="buy_message!=null">{{order_create_time}}</span>
+								<span v-if="buy_message!=null"> {{buy_message}}</span>
 							</div>
 						</div>
-						<div class="flowCell">
-							<div class="cell-left  fc-grey">
-								<p class="t1">20:00</p>
-								<p class="t2">2018-01-01</p>
+						<div class="opation clear">
+							<div class="select-operation">
+								<span>选择状态</span>
+								<select id="static_select">
+									<option value="">请选择</option>
+									<option value="3">待付款</option>
+									<option value="1">待付款</option>
+									<option value="4">已发货</option>
+									<option value="5">待收货</option>
+									<option value="0">已关闭</option>
+								</select>
 							</div>
-							<div class="cell-center  fc-grey">
-								<img src="__STATIC__/admin/common/img/f2.png">
+							<div class="select-operation">
+								<span>退款方式</span>
+								<select>
+									<option value="">请选择</option>
+									<option value="">已关闭</option>
+								</select>
 							</div>
-							<div class="cell-right  fc-grey">
-								<p class="t1">施工小哥已接单，请等待</p>
-								<p class="t2">小哥电话：18612123233</p>
+							<div class="select-operation">
+								<span>退款金额</span>
+								<input type="text" name="" id="" value="" />
 							</div>
+	
 						</div>
-						<div class="flowCell">
-							<div class="cell-left  fc-grey">
-								<p class="t1">20:00</p>
-								<p class="t2">2018-01-01</p>
+					</div>
+					<div class="list-b list noshow">
+						<div class="flowSwrap">
+							<!--流程线-->
+							<div class="flow-line" style="left: 226.5px; height:340px;"></div>
+							<!--流程区域 start-->
+							<div class="flowCell">
+								<div class="cell-left fc-orange">
+									<p class="t1">20:00</p>
+									<p class="t2">2018-01-01</p>
+								</div>
+								<div class="cell-center  fc-orange">
+									<img id="startImg" src="__STATIC__/admin/common/img/f1.png">
+								</div>
+								<div class="cell-right  fc-orange">
+									<p class="t1_start">订单已竣工</p>
+								</div>
 							</div>
-							<div class="cell-center  fc-grey">
-								<img src="__STATIC__/admin/common/img/f2.png">
+							<div class="flowCell">
+								<div class="cell-left  fc-grey">
+									<p class="t1">20:00</p>
+									<p class="t2">2018-01-01</p>
+								</div>
+								<div class="cell-center  fc-grey">
+									<img src="__STATIC__/admin/common/img/f2.png">
+								</div>
+								<div class="cell-right  fc-grey">
+									<p class="t1">施工小哥已接单，请等待</p>
+									<p class="t2">小哥电话：18612123233</p>
+								</div>
 							</div>
-							<div class="cell-right  fc-grey">
-								<p class="t1">施工小哥已接单，请等待</p>
-								<p class="t2">小哥电话：18612123233</p>
+							<div class="flowCell">
+								<div class="cell-left  fc-grey">
+									<p class="t1">20:00</p>
+									<p class="t2">2018-01-01</p>
+								</div>
+								<div class="cell-center  fc-grey">
+									<img src="__STATIC__/admin/common/img/f2.png">
+								</div>
+								<div class="cell-right  fc-grey">
+									<p class="t1">施工小哥已接单，请等待</p>
+									<p class="t2">小哥电话：18612123233</p>
+								</div>
 							</div>
+							<div class="flowCell">
+								<div class="cell-left fc-grey">
+									<p class="t1">20:00</p>
+									<p class="t2">2018-01-01</p>
+								</div>
+								<div class="cell-center  fc-grey">
+									<img id="endImg" src="__STATIC__/admin/common/img/f2.png">
+								</div>
+								<div class="cell-right  fc-grey">
+									<p class="t1">订单已提交</p>
+								</div>
+							</div>
+							<!--流程区域 end-->
 						</div>
-						<div class="flowCell">
-							<div class="cell-left fc-grey">
-								<p class="t1">20:00</p>
-								<p class="t2">2018-01-01</p>
-							</div>
-							<div class="cell-center  fc-grey">
-								<img id="endImg" src="__STATIC__/admin/common/img/f2.png">
-							</div>
-							<div class="cell-right  fc-grey">
-								<p class="t1">订单已提交</p>
-							</div>
-						</div>
-						<!--流程区域 end-->
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
@@ -474,7 +464,7 @@
 							{/if}
 						</td>
 						<td>
-							<button type="button" class="state for-the-payment">
+							<button type="button" class="state for-the-payment" data-id="{$value.id}">
 								{if $value.status == 0}
 								待处理
 								{/if}
@@ -683,26 +673,57 @@
 			});
 		}
 	</script>
-	<script type="text/javascript">
-		$(".state").on('click', function() {
+<script type="text/javascript">
+	$(".state").on('click', function() {
+	var id = $(this).data("id");
+	$.ajax({
+		type: "POST",
+		url: "{:url('admin/Order/platform_after_sale_selest')}",
+		async: false,
+		data: {
+			"id": id,
+		},
+		success: function(data) {
 			$(".tanchuang").removeClass("noshow");
-		});
-		$(".close").on('click', function() {
-			$(".tanchuang").addClass("noshow");
-		});
-		// 弹窗选项卡切换
-		$(".card").on('click', 'li', function() {
-			$(this).addClass("active");
-			$(this).siblings().removeClass("active");
-			var dait_id = $(this).data("id");
-			$("." + dait_id).removeClass("noshow");
-			$("." + dait_id).siblings("div").addClass("noshow");
+			data = eval("(" + data + ")");
+			console.log(data);
+			var order_create_time=timestampToTime(data.data.order_create_time);
+			new Vue({
+				el: '.list-a',
+				data: {
+					status: data.data.status,
+					payment: data.data.pay_type_content,
+					amount: data.data.goods_money,
+					points_Deduction: data.data.integral_deductible,
+					real_Pay: data.data.order_real_pay,
+					cancel_order_description:data.data.cancel_order_description,
+					order_create_time:order_create_time,
+					buy_message:data.data.buy_message,
+				}
+			})
 
-		});
-		$(".btu-sumit").click(function() {
-			$(".tanchuang").addClass("noshow");
-		});
-	</script>
+		},
+		error: function(data) {
+			console.log(data);
+		}
+	});
+
+});
+
+$(".close").on('click', function() {
+	$(".tanchuang").addClass("noshow");
+});
+// 弹窗选项卡切换
+$(".card").on('click', 'li', function() {
+	$(this).addClass("active");
+	$(this).siblings().removeClass("active");
+	var dait_id = $(this).data("id");
+	$("." + dait_id).removeClass("noshow");
+	$("." + dait_id).siblings("div").addClass("noshow");
+
+});
+
+</script>
 	{/block}
 
 </body>
