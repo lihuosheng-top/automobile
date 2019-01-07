@@ -794,8 +794,15 @@ class Order extends Controller{
         foreach ($service as $key=>$value){
             $service[$key]["order"] = db("order_parts")->where("id",$value["order_id"])->find();
         }
-
         return view('platform_after_sale',["service"=>$service]);
+    }
+
+
+    /**
+     * 平台售后维修显示
+     * 陈绪
+     */
+    public function platform_after_sale_selest(){
 
     }
 
