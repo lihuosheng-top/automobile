@@ -95,6 +95,12 @@
                     url: 'sell_application',
                     type: 'POST',
                     dataType: 'JSON',
+                    data: {
+                        'apply_money': apply_money,
+                        'apply_member': apply_member,
+                        'apply_bank': apply_bank,
+                        'apply_bank_code': apply_bank_code,
+                    },
                     success: function(res){
                         console.log(res);
                         if(res.status === 1){
