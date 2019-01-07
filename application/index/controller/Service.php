@@ -36,7 +36,6 @@ class Service extends Controller{
             }else{
                 return ajax_error("获取失败");
             }
-
         }
         return view("type_index");
 
