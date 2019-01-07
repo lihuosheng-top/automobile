@@ -556,44 +556,50 @@ $('.gec-back').click(function(){
     $('.wrapper').show();
 })
 
-var map = new AMap.Map('container', {
-    zoom: 12, //级别
-    center: [114.07, 22.62]
-});
-var threeAdress;
-map.plugin([
-    'AMap.Geolocation',
-    'AMap.Geocoder',//逆地理编码
-], function () {
-    var geolocation = new AMap.Geolocation({
-        enableHighAccuracy: true,
-        // timeout: 5000,
-        zoomToAccuracy: true,
-    })
-    map.addControl(geolocation);
-    geolocation.getCurrentPosition();
-    AMap.event.addListener(geolocation, 'complete', onComplete);
-    AMap.event.addListener(geolocation, 'error', onError);
-    function onComplete(e){
-        console.log(e)
-        // alert(JSON.stringify(e))
-        // $('.gec-curr-txt').text(e.addressComponent.city);
-        $('.curr_city').text(e.addressComponent.district);
-        threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
-        if (!getCookie('area')) {
-            getAdvertisment(threeAdress);
-        }
-        setCookie('area', threeAdress, 7); //保存地址到cookie，有效期7天
-    };
-    function onError(e){
-        // console.log(e)
-        // alert(JSON.stringify(e))
-    };
-})
- //页面初始化时，如果帐号密码cookie存在则填充
-if (getCookie('area')) {
-    getAdvertisment(getCookie('area'));
+function callAndroid(){
+    Android.getLocation();
 }
+$('.gec-curr-box').click(function(){
+    callAndroid();
+})
+// var map = new AMap.Map('container', {
+//     zoom: 12, //级别
+//     center: [114.07, 22.62]
+// });
+// var threeAdress;
+// map.plugin([
+//     'AMap.Geolocation',
+//     'AMap.Geocoder',//逆地理编码
+// ], function () {
+//     var geolocation = new AMap.Geolocation({
+//         enableHighAccuracy: true,
+//         // timeout: 5000,
+//         zoomToAccuracy: true,
+//     })
+//     map.addControl(geolocation);
+//     geolocation.getCurrentPosition();
+//     AMap.event.addListener(geolocation, 'complete', onComplete);
+//     AMap.event.addListener(geolocation, 'error', onError);
+//     function onComplete(e){
+//         console.log(e)
+//         // alert(JSON.stringify(e))
+//         // $('.gec-curr-txt').text(e.addressComponent.city);
+//         $('.curr_city').text(e.addressComponent.district);
+//         threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
+//         if (!getCookie('area')) {
+//             getAdvertisment(threeAdress);
+//         }
+//         setCookie('area', threeAdress, 7); //保存地址到cookie，有效期7天
+//     };
+//     function onError(e){
+//         // console.log(e)
+//         // alert(JSON.stringify(e))
+//     };
+// })
+ //页面初始化时，如果帐号密码cookie存在则填充
+// if (getCookie('area')) {
+//     getAdvertisment(getCookie('area'));
+// }
 // 获取广告
 function getAdvertisment(area){
     $.ajax({
