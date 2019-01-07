@@ -711,7 +711,7 @@ Route::group("admin",[
 
 
     /**
-     * 运行管理
+     * 运营管理
      * 陈绪
      */
     "complaint_index"=>"admin/Operation/complaint_index",
@@ -719,6 +719,9 @@ Route::group("admin",[
     "urgency_updata"=>"admin/Operation/urgency_updata",
     "urgency_select"=>"admin/Operation/urgency_select",
     "urgency_del"=>"admin/Operation/urgency_del",
+    "complaint_updata"=>"admin/Operation/complaint_updata",
+    "complaint_select"=>"admin/Operation/complaint_select",
+    "complaint_del"=>"admin/Operation/complaint_del",
 
 ]);
 

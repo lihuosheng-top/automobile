@@ -106,4 +106,58 @@ class Operation extends Controller{
 
     }
 
+
+
+
+    /**
+     * 投诉中心修改
+     * 陈绪
+     */
+    public function complaint_updata(Request $request){
+
+        $id = $request->only(["id"])["id"];
+        $data = $request->param();
+        unset($data["id"]);
+        $bool = db("complaint")->where("id",$id)->update($data);
+        if($bool){
+            $this->success("修改成功",url("admin/Operation/complaint_index"));
+        }else{
+            $this->error("修改失败",url("admin/Operation/complaint_index"));
+        }
+    }
+
+
+
+    /**
+     * 投诉中心处理详情查看
+     * 陈绪
+     */
+    public function complaint_select(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $user_dispose = db("complaint")->where("id",$id)->field("issue_remark")->select();
+            return ajax_success("获取成功",$user_dispose);
+        }
+
+    }
+
+
+
+    /**
+     * 投诉中心删除
+     * 陈绪
+     */
+    public function complaint_del(Request $request){
+
+        $id = $request->only(["id"])["id"];
+        $bool = db("complaint")->where("id",$id)->delete();
+        if($bool){
+            $this->success("删除成功",url("admin/Operation/complaint_index"));
+        }else{
+            $this->error("删除失败",url("admin/Operation/complaint_index"));
+        }
+
+
+    }
 }
