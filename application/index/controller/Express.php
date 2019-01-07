@@ -58,7 +58,8 @@ class  Express extends  Controller{
         if($request->isPost()) {
             $delivery_id = Session::get("delivery_id");
             $delivery_data = db("delivery")->where("id", $delivery_id)->select();
-            $store = db("store")->where("store_city_address", $delivery_data[0]["area"])->select();
+            $where ="`is_hot_store` = '1' and `store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1' ";
+            $store = db("store")->where("store_city_address", $delivery_data[0]["area"])->where($where)->select();
             $delivery = [];
             foreach ($store as $key => $value) {
                 $order = db("order_parts")->where("store_id", $value["store_id"])->where("status",2)->select();

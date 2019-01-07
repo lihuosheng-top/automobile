@@ -793,6 +793,7 @@ class Order extends Controller{
         $service = db("service")->select();
         foreach ($service as $key=>$value){
             $service[$key]["order"] = db("order_parts")->where("id",$value["order_id"])->find();
+            $service[$key]["service_images"] = explode(",",$value["service_images"]);
         }
         return view('platform_after_sale',["service"=>$service]);
     }
@@ -809,6 +810,8 @@ class Order extends Controller{
             $service = db("service")->where("id",$id)->select();
             foreach ($service as $key=>$value){
                 $service[$key]["order"] = db("order_parts")->where("id",$value["order_id"])->find();
+                $service[$key]["delivery_status"] = db("delivery_order")->where("order_id",$value["order_id"])->find();
+                $service[$key]["service_images"] = explode(",",$value["service_images"]);
             }
             if($service){
                 return ajax_success("获取成功",$service);
