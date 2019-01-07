@@ -345,7 +345,9 @@ $.ajax({
                 },
                 success: function(res){
                     console.log(res);
-                    location.href = 'service_type_index'; 
+                    if(res.status == 1){
+                        location.href = 'service_type_index';
+                    }
                 },
                 error: function(){
                     console.log('error');
