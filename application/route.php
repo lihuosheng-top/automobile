@@ -589,6 +589,7 @@ Route::group("admin",[
 
 
     "platform_after_sale"=>"admin/Order/platform_after_sale", //平台商售后服务
+    "platform_after_sale_selest"=>"admin/Order/platform_after_sale_selest", //平台售后维修显示
     "platform_invoice_index"=>"admin/Order/platform_invoice_index", //平台商发票列表
     "platform_invoice_details"=>"admin/Order/platform_invoice_details", //平台商发票详情
 
