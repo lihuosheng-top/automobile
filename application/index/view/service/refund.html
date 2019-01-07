@@ -26,7 +26,7 @@
         .subspan .more{display: inline-block; width: .16rem; height: .28rem; background-position: -7.3rem -1.8rem;}
         .refund-amount,.refund-describe{margin-bottom: .2rem; padding: .2rem .3rem; background-color: #fff; border-bottom: 1px solid #eee;}
         .refund-amount span{color: #c00;}
-        .refund-describe input{outline: none; width: 75%;}
+        .refund-describe textarea{outline: none; width: 100%; vertical-align: text-top; border: 0; resize: none; padding: 0;}
         .refund-upload-img{background-color: #fff; padding: .2rem .3rem;border-bottom: 1px solid #eee;}
         .upload-img-title{margin-bottom: .15rem;}
         .refund-img-container{display: flex; flex-wrap: wrap;}
@@ -79,7 +79,7 @@
             退款金额：<span>￥122</span>
         </div>
         <div class="refund-describe">
-            退款说明: <input type="text" placeholder="选填">
+            退款说明(最多30字): <textarea rows="2" placeholder="选填" maxlength="30"></textarea>
         </div>
         <div class="refund-upload-img">
             <div class="upload-img-title">上传凭证（最多3张）</div>
