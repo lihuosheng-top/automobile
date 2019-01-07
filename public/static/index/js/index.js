@@ -556,12 +556,7 @@ $('.gec-back').click(function(){
     $('.wrapper').show();
 })
 
-function callAndroid(){
-    Android.getLocation();
-}
-$('.gec-curr-box').click(function(){
-    callAndroid();
-})
+
 // var map = new AMap.Map('container', {
 //     zoom: 12, //级别
 //     center: [114.07, 22.62]
