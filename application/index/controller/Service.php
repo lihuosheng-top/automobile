@@ -61,7 +61,6 @@ class Service extends Controller{
                 $service[$key]["order_id"] = $order_id;
             }
             if($service){
-                Session::delete("order_id");
                 return ajax_success('获取成功',$service);
             }else{
                 return ajax_error("获取失败");
@@ -94,6 +93,7 @@ class Service extends Controller{
             $service["status"] = 0;
             $bool = db("service")->insert($service);
             if($bool){
+                Session::delete("order_id");
                 return ajax_success("反馈成功");
             }else{
                 return ajax_error("反馈失败");
