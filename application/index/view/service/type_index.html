@@ -1,10 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>退货-选择服务类型</title>
+    <style>
+         html, body{background-color: #f2f2f2;}
+        .header{background-color: #fff; height: .88rem; position: relative;border-bottom: 1px solid #eee;}
+        .header-title{text-align: center; line-height: .88rem;}
+        .back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .refund-goods-item{display: flex; margin-top: .15rem; background-color: #fff; padding: .2rem .3rem;}
+        .image-container{width: 1.6rem; height: 1.6rem; margin-right: .25rem;}
+        .image-container img{width: 100%; height: 100%;}
+        .goods-info-container{flex: 1; line-height: normal;}
+        .goods-name{font-size: .28rem; color: #333; margin-bottom: .1rem;}
+        .sub-name{font-size: .26rem; color: #999;}
+        .service-container{position: relative; display: flex; background-color: #fff; margin-top: .2rem;padding: .2rem .3rem;}
+        .icon-refund{width: .48rem; height: .48rem; margin-right: .2rem;}
+        .icon-refund img{width: 100%; height: 100%;}
+        .refund-copywrite{line-height: normal;}
+        .refund-copywrite .refund-title{font-size: .28rem; color: #333; margin-bottom: .1rem;}
+        .refund-copywrite .refund-subtitle{font-size: .26rem; color: #999;}
+        .more{position: absolute; right: .35rem; top: 50%; transform: translateY(-50%); width: .16rem; height: .28rem; background-position: -7.3rem -1.8rem;}
+        
+
+    </style>
 </head>
 <body>
-选择服务类型
+    <div class="wrapper">
+        <header class="header">
+            <a href="order_wait_evaluate" class="spr back"></a>
+            <h3 class="header-title">选择服务类型</h3>
+        </header>
+        <div class="refund-goods-container">
+            <!-- <div class="refund-goods-item">
+                <div class="image-container">
+                    <img src="__STATIC__/index/image/15.jpg">
+                </div>
+                <div class="goods-info-container">
+                    <div class="goods-name"></div>
+                    <div class="sub-name"></div>
+                </div>
+            </div> -->
+        </div>
+        <div class="service-container">
+            <div class="icon-refund">
+                <img src="__STATIC__/index/image/tk.png">
+            </div>
+            <div class="refund-copywrite">
+                <div class="refund-title">退货退款</div>
+                <div class="refund-subtitle">收到货物后，方可申请退货退款</div>
+            </div>
+            <div class="spr more"></div>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script>
+        $.ajax({
+            url: 'service_refund',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    var str = '';
+                    $.each(res.data, function(idx, val){
+                        str += `<div class="refund-goods-item">
+                                    <div class="image-container">
+                                        <img src="uploads/`+val.order_images+`">
+                                    </div>
+                                    <div class="goods-info-container">
+                                        <div class="goods-name">`+val.order_name+`</div>
+                                        <div class="sub-name">`+val.order_describe+`</div>
+                                    </div>
+                                </div>`
+                    })
+                    $('.refund-goods-container').append(str);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+        $('.service-container').click(function(){
+            location.href= 'service_refund';
+        })
+    </script>
 </body>
 </html>

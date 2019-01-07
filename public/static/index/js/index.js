@@ -556,6 +556,7 @@ $('.gec-back').click(function(){
     $('.wrapper').show();
 })
 
+
 var map = new AMap.Map('container', {
     zoom: 12, //级别
     center: [114.07, 22.62]

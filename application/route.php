@@ -357,8 +357,9 @@ Route::group("",[
      * 售后服务
      * 陈绪
      */
-    "service_type_index"=>"index/Service/type_index",     //选择服务类型
+    "service_type_index"=>"index/Service/type_index",     //选择类型
     "service_refund"=>"index/Service/refund",              //申请退款
+    "service_save"=>"index/Service/save",              //申请退款存储
 
 ]);
 
@@ -588,6 +589,7 @@ Route::group("admin",[
 
 
     "platform_after_sale"=>"admin/Order/platform_after_sale", //平台商售后服务
+    "platform_after_sale_selest"=>"admin/Order/platform_after_sale_selest", //平台售后维修显示
     "platform_invoice_index"=>"admin/Order/platform_invoice_index", //平台商发票列表
     "platform_invoice_details"=>"admin/Order/platform_invoice_details", //平台商发票详情
 
@@ -711,7 +713,7 @@ Route::group("admin",[
 
 
     /**
-     * 运行管理
+     * 运营管理
      * 陈绪
      */
     "complaint_index"=>"admin/Operation/complaint_index",
@@ -719,6 +721,9 @@ Route::group("admin",[
     "urgency_updata"=>"admin/Operation/urgency_updata",
     "urgency_select"=>"admin/Operation/urgency_select",
     "urgency_del"=>"admin/Operation/urgency_del",
+    "complaint_updata"=>"admin/Operation/complaint_updata",
+    "complaint_select"=>"admin/Operation/complaint_select",
+    "complaint_del"=>"admin/Operation/complaint_del",
 
 ]);
 

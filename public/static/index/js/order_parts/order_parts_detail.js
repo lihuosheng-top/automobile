@@ -61,15 +61,22 @@ $.ajax({
         var statusTxt = '';
         if(val.status === 1){
             statusTxt = `待付款`;
-            $('.cancel-order-btn').add('.to-payment-btn').show();
+            $('.cancel-order-btn')
+                .add('.to-payment-btn')
+                .show();
             $('.time-count-down').show();
             countDown('time-count-down', val.normal_future_time, val.store_id, val.parts_order_number, '超过规定时间未付款，系统自动关闭订单');
         }else if(val.status === 2 || val.status === 3 || val.status === 4 || val.status === 5){
             statusTxt = `待收货`;
-            $('.check-logistics-btn').add('.conf-receipt-btn').show();
+            $('.check-logistics-btn')
+                .add('.conf-receipt-btn')
+                .show();
         }else if(val.status === 6 || val.status === 7){
             statusTxt = `待评价`;
-            $('.evaluation-btn').add('.del-order-btn').show();
+            $('.evaluation-btn')
+                .add('.del-order-btn')
+                .add('.return-goods')
+                .show();
         }else if(val.status === 8){
             statusTxt = `已完成`;
         }else if(val.status === 9 || val.status === 10){
@@ -77,6 +84,9 @@ $.ajax({
             $('.del-order-btn').show();
         }else if(val.status === 11){
             statusTxt = `退货`;
+            $('.del-order-btn').show();
+        }else if(val.status === 12){
+            statusTxt = `已退货`;
             $('.del-order-btn').show();
         }
         // 状态值
@@ -95,19 +105,37 @@ $.ajax({
         // 订单商品
         var str = '';
         $.each(val.info, function(idx, val){
-            str += `<div class="order-goods-detail">
-                        <div class="order-goods-img">
-                            <img src="uploads/`+val.goods_image+`">
-                        </div>
-                        <div class="order-info-box">
-                            <p class="order-goods-p txt-hid-two">`+val.parts_goods_name+`</p>
-                            <p class="order-selling-point txt-hid-two">`+val.goods_describe+`</p>
-                            <div class="unit-price-quantity">
-                                <p class="unit-price-p">￥`+val.goods_money+`</p>
-                                <p class="quantity-p">×`+val.order_quantity+`</p>
+            if(statusTxt == '待评价'){
+                str += `<div class="order-goods-detail" id="`+val.id+`">
+                            <div class="order-goods-img">
+                                <img src="uploads/`+val.goods_image+`">
                             </div>
-                        </div>
-                    </div>`
+                            <div class="order-info-box">
+                                <p class="order-goods-p txt-hid-two">`+val.parts_goods_name+`</p>
+                                <p class="order-selling-point txt-hid-two">`+val.goods_describe+`</p>
+                                <div class="unit-price-quantity">
+                                    <p class="unit-price-p">￥`+val.goods_money+`</p>
+                                    <p class="quantity-p">×`+val.order_quantity+`</p>
+                                    <button class="return-goods">退货</button>
+                                </div>
+                            </div>
+                        </div>`
+            }else{
+                str += `<div class="order-goods-detail" id="`+val.id+`">
+                            <div class="order-goods-img">
+                                <img src="uploads/`+val.goods_image+`">
+                            </div>
+                            <div class="order-info-box">
+                                <p class="order-goods-p txt-hid-two">`+val.parts_goods_name+`</p>
+                                <p class="order-selling-point txt-hid-two">`+val.goods_describe+`</p>
+                                <div class="unit-price-quantity">
+                                    <p class="unit-price-p">￥`+val.goods_money+`</p>
+                                    <p class="quantity-p">×`+val.order_quantity+`</p>
+                                </div>
+                            </div>
+                        </div>`
+            }
+            
         })
         $('.order-shop-box').after(str);
         // 商品总额
@@ -299,6 +327,27 @@ $.ajax({
                 success: function(res){
                     console.log(res);
                     location.href = 'logistics_index';
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+        // 退款退货
+        $('.return-goods').click(function(){
+            var id = $(this).parents('.order-goods-detail').attr('id');
+            $.ajax({
+                url: 'service_type_index',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'order_id': id
+                },
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        location.href = 'service_type_index';
+                    }
                 },
                 error: function(){
                     console.log('error');

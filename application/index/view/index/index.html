@@ -324,9 +324,6 @@
                     <div class="gec-sort-list">
                         <div class="gec-city-name">遵义市</div>
                     </div>
-                    <div class="gec-sort-list">
-                        <div class="gec-city-name">北京</div>
-                    </div>
                 </div>
                 <div class="gec-initials">
                     <ul>
@@ -341,6 +338,24 @@
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
     <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/plugin/allCity.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
+    <script>
+        // var str = '';
+        // allCity.forEach(function(el, idx){
+        //     el.citys.forEach(function(value, index){
+        //         str += `<div class="gec-sort-list">
+        //                     <div class="gec-city-name">`+value.citysName+`</div>
+        //                 </div>`
+        //     })
+        //     $('.gec-sort-box').append(str);
+        // })
+        function callAndroid(){
+            Android.getLocation();
+        }
+        $('.gec-curr-box').click(function(){
+            callAndroid();
+        })
+    </script>
 </body>
 </html>
