@@ -695,7 +695,7 @@
 		success: function(data) {
 			$(".tanchuang").removeClass("noshow");
 			data = eval("(" + data + ")");
-			console.log(data.data[0].service_images);
+			console.log(data);
 			var order_create_time=timestampToTime(data.data.order_create_time);
 			new Vue({
 				el: '.list-a',
