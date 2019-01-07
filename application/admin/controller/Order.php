@@ -792,7 +792,7 @@ class Order extends Controller{
 
         $service = db("service")->select();
         foreach ($service as $key=>$value){
-            
+
         }
         return view('platform_after_sale');
 

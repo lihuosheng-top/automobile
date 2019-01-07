@@ -20,7 +20,7 @@ class Service extends Controller{
     public function type_index(Request $request){
 
         if($request->isPost()) {
-            $order_id = Session::get("order_id");
+            $order_id = $request->only(["order_id"])["order_id"];
             $order = db("order_parts")->where("id",$order_id)->select();
             $service = [];
             foreach ($order as $key=>$value){
@@ -30,8 +30,8 @@ class Service extends Controller{
                 $service[$key]["order_describe"] = $value["goods_describe"];
                 $service[$key]["order_id"] = $order_id;
             }
+            Session::set("order_id",$order_id);
             if($service){
-                Session::delete("order_id");
                 return ajax_success('获取成功',$service);
             }else{
                 return ajax_error("获取失败");
@@ -50,7 +50,7 @@ class Service extends Controller{
     public function refund(Request $request){
 
         if($request->isPost()){
-            $order_id = $request->only(["order_id"])["order_id"];
+            $order_id = Session::get("order_id");
             $order = db("order_parts")->where("id",$order_id)->select();
             $service = [];
             foreach ($order as $key=>$value){
@@ -60,13 +60,12 @@ class Service extends Controller{
                 $service[$key]["order_describe"] = $value["goods_describe"];
                 $service[$key]["order_id"] = $order_id;
             }
-            Session::set("order_id",$order_id);
             if($service){
+                Session::delete("order_id");
                 return ajax_success('获取成功',$service);
             }else{
                 return ajax_error("获取失败");
             }
-
         }
         return view("refund");
 
