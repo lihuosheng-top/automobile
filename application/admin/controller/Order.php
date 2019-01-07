@@ -789,7 +789,13 @@ class Order extends Controller{
      *
      */
     public function platform_after_sale(){
+
+        $service = db("service")->select();
+        foreach ($service as $key=>$value){
+            $service[$key]["order_"];
+        }
         return view('platform_after_sale');
+
     }
 
     /**
