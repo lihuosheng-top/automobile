@@ -341,7 +341,7 @@ $.ajax({
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
-                    'id': id
+                    'order_id': id
                 },
                 success: function(res){
                     console.log(res);
