@@ -67,6 +67,7 @@ Route::group("",[
     "ios_api_order_button_by_shop"=>"index/OrderParts/ios_api_order_button_by_shop",//购物车提交订单
 //    "ios_api_alipay"=>"index/OrderParts/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
    "ios_return_parts_num"=>"index/OrderParts/ios_return_parts_num",//生成订单(未用)
+    "invoice_index"=>"index/OrderParts/invoice_index",//发票显示页面
     'index_parts_aliPay'=>"index/Apppay/index_parts_aliPay", //配件商支付接口（弹窗支付）
     'index_parts_pay_code'=>"index/Apppay/index_parts_pay_code",//配件商支付回调修改订单状态
     /*TODO:配件商订单结束*/
@@ -349,6 +350,16 @@ Route::group("",[
     /*TODO:测试IOS地址开始*/
     "test_ios"=>"index/Operation/ios",
     /*TODO:测试IOS地址结束*/
+
+
+
+    /**
+     * 售后服务
+     * 陈绪
+     */
+    "service_type_index"=>"index/Service/type_index",     //选择服务类型
+    "service_refund"=>"index/Service/refund",              //申请退款
+
 ]);
 
 /**
@@ -700,7 +711,7 @@ Route::group("admin",[
 
 
     /**
-     * 运行管理
+     * 运营管理
      * 陈绪
      */
     "complaint_index"=>"admin/Operation/complaint_index",
@@ -708,6 +719,9 @@ Route::group("admin",[
     "urgency_updata"=>"admin/Operation/urgency_updata",
     "urgency_select"=>"admin/Operation/urgency_select",
     "urgency_del"=>"admin/Operation/urgency_del",
+    "complaint_updata"=>"admin/Operation/complaint_updata",
+    "complaint_select"=>"admin/Operation/complaint_select",
+    "complaint_del"=>"admin/Operation/complaint_del",
 
 ]);
 

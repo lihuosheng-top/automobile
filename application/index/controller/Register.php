@@ -103,7 +103,7 @@ class Register extends Controller{
                 return ajax_error("验证码不正确");
             } else {
                 $passwords =password_hash($password,PASSWORD_DEFAULT);
-                $invitation = $request->only(['invitation'])['invitation'];
+                $invitation = $request->only(['invitation'])['invitation']; //邀请码
                 $datas =[
                     'phone_num'=>$mobile,
                     'password'=>$passwords,
@@ -114,34 +114,93 @@ class Register extends Controller{
                    $invitation = intval(qr_decode($invitation));
                     $is_user_id =Db::name('user')->where('id',$invitation)->select();
                     if(!empty($is_user_id)){
+                        //如果有邀请码存在
                         $datas['inviterId']=$invitation;
                         $res =Db::name('user')->insertGetId($datas);
                         if($res){
+                            //有邀请码注册成功（推荐人获取积分）
+                            $recommend_integral =Db::name("recommend_integral")
+                                ->where("id",1)
+                                ->value("recommend_integral");
+                            if($recommend_integral>0){
+                                //推荐人的原账户积分
+                                $old_integral_wallet = Db::name("user")
+                                    ->where("id",$invitation)
+                                    ->value("user_integral_wallet");
+                                //推荐人的积分添加
+                               $add_res = Db::name("user")
+                                    ->where("id",$invitation)
+                                    ->update(["user_integral_wallet"=>$old_integral_wallet+$recommend_integral]);
+                               if($add_res){
+                                   //余额添加成功(做积分消费记录)
+                                   //插入积分记录
+                                   $integral_data =[
+                                       "user_id"=>$invitation,
+                                       "integral_operation"=>$recommend_integral,//获得积分
+                                       "integral_balance"=>$recommend_integral+$old_integral_wallet,//积分余额
+                                       "integral_type"=>1, //积分类型（1获得，-1消费）
+                                       "operation_time"=>date("Y-m-d H:i:s"), //操作时间
+                                       "integral_remarks"=>"成功推荐一位用户注册送".$recommend_integral."积分",
+                                   ];
+                                   Db::name("integral")->insert($integral_data);
+                               }
+                            }
+                            //注册成功送的积分（自己获取积分）
+                            $send_integral =Db::name("recommend_integral")->where("id",1)->value("register_integral");
                             $inv_num = createCode($res);
                            $inv =[
-                              "invitation"=>$inv_num
+                              "invitation"=>$inv_num,//生成邀请码
+                               "user_name"=>"QC".$inv_num, //默认用户名
+                               "user_integral_wallet"=>$send_integral,//注册的积分
                             ];                         //生成邀请码
                             Db::name("user")->where("id",$res)->update($inv);
+                            if($send_integral>0){
+                                //插入积分记录
+                                $integral_data =[
+                                    "user_id"=>$res,
+                                    "integral_operation"=>$send_integral,//获得积分
+                                    "integral_balance"=>$send_integral,//积分余额
+                                    "integral_type"=>1, //积分类型（1获得，-1消费）
+                                    "operation_time"=>date("Y-m-d H:i:s"), //操作时间
+                                    "integral_remarks"=>"成功注册送".$send_integral."积分",
+                                ];
+                                Db::name("integral")->insert($integral_data);
+                            }
                             return ajax_success('注册成功',$datas);
                         }else{
-                            return ajax_error('注册失败',['status'=>0]);
+                            return ajax_error('请重新注册',['status'=>0]);
                         }
                     }else{
                         return ajax_error('邀请码不正确',['status'=>0]);
                     }
                 }else{
+                    //无邀请码
                     $res =Db::name('user')->insertGetId($datas);
                     if($res){
+                        //如果注册成功（自己获取积分）
+                        $send_integral =Db::name("recommend_integral")->where("id",1)->value("register_integral");
                         $inv_num = createCode($res);
                         $inv =[
                             "invitation"=>$inv_num,//生成邀请码
                             "user_name"=>"QC".$inv_num, //默认用户名
+                            "user_integral_wallet"=>$send_integral,//注册的积分
                         ];
-
                         Db::name("user")->where("id",$res)->update($inv);
+                        if($send_integral>0){
+                            //插入积分记录
+                            $integral_data =[
+                                "user_id"=>$res,
+                                "integral_operation"=>$send_integral,//获得积分
+                                "integral_balance"=>$send_integral,//积分余额
+                                "integral_type"=>1, //积分类型（1获得，-1消费）
+                                "operation_time"=>date("Y-m-d H:i:s"), //操作时间
+                                "integral_remarks"=>"成功注册送".$send_integral."积分",
+                            ];
+                            Db::name("integral")->insert($integral_data);
+                        }
                         return ajax_success('注册成功',$datas);
                     }else{
-                        return ajax_error('注册失败',['status'=>0]);
+                        return ajax_error('请重新注册',['status'=>0]);
                     }
                 }
 

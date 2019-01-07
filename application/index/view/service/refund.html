@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>退货-申请退款</title>
+    <style>
+         html, body{background-color: #f2f2f2;}
+        .header{background-color: #fff; height: .88rem; position: relative;border-bottom: 1px solid #eee;}
+        .header-title{text-align: center; line-height: .88rem;}
+        .back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .refund-goods-item{display: flex; margin-top: .15rem; background-color: #fff; padding: .2rem .3rem; border-bottom: 1px solid #eee;}
+        .image-container{width: 1.6rem; height: 1.6rem; margin-right: .25rem;}
+        .image-container img{width: 100%; height: 100%;}
+        .goods-info-container{flex: 1; line-height: normal;}
+        .goods-name{font-size: .28rem; color: #333; margin-bottom: .1rem;}
+        .sub-name{font-size: .26rem; color: #999;}
+        .refund-reason-container{margin: .2rem 0; background-color: #fff; padding: .2rem .3rem; border-bottom: 1px solid #eee;}
+        .reason-select{display: flex; justify-content: space-between; font-size: .28rem; color: #333; margin-bottom: .15rem;}
+        .subspan{display: flex; align-items: center;}
+        .subspan span:first-of-type{color: #999; margin-right: .2rem;}
+        .subspan .more{display: inline-block; width: .16rem; height: .28rem; background-position: -7.3rem -1.8rem;}
+        .refund-amount,.refund-describe{margin-bottom: .2rem; padding: .2rem .3rem; background-color: #fff; border-bottom: 1px solid #eee;}
+        .refund-amount span{color: #c00;}
+        .refund-describe input{outline: none; width: 75%;}
+        .refund-upload-img{background-color: #fff; padding: .2rem .3rem;border-bottom: 1px solid #eee;}
+        .upload-img-title{margin-bottom: .15rem;}
+        .refund-img-container{display: flex; flex-wrap: wrap;}
+        .vi-camera{display: flex; flex-wrap: wrap; margin-bottom: .3rem;}
+        .switch-span{position: relative; display: block; width: 1.25rem; height: 1.25rem; border: 1px dashed #ccc; text-align: center; line-height: 2.1rem; color: #ccc; font-size: .24rem;}
+        .switch-span::before{position: absolute; left: 50%; top: 50%; transform: translate(-50%, -60%); content: ''; background: url(__STATIC__/index/image/camera.png) no-repeat; width: .72rem; height: .72rem; background-size: 100%;}
+        .switch-span input{position: absolute; top: 0;left: 0; width: 100%;height: 100%; opacity: 0;}
+        .upload-item{position: relative; width: 1.25rem; height: 1.25rem; margin-right: .3rem;}
+        .upload-item img{width: 100%; height: 100%;}
+        .upload-item .del-img{position: absolute; top: -6px; right: -6px; font-size: .3rem; color: #fff; background-color: rgba(0, 0, 0, .6); border: 0; outline: none; width: .3rem; height: .3rem; border-radius: 50%; text-align: center; padding: 0; line-height: .3rem;}
+        .submit{position: absolute; left: 0; bottom: 0; width: 100%; height: 1rem; background-color: rgb(80, 76, 251); color: #fff; outline: none; border: 0; font-size: .34rem;}
+        .mask{position: fixed; top: 0; left: 0; right: 0; width: 100%; height: 100vh; background-color: rgba(0, 0, 0, .6);}
+        .reason-container-pop{position: fixed; bottom: 0; left: 0; width: 100%; height: 60vh; background-color: #fff;}
+        .title{font-size: .32rem; text-align: center; color: #333; margin: .3rem 0 .6rem;}
+        .reason-container-pop ul{padding: 0 .3rem; height: 5.4rem; overflow-y: auto}
+        .reason-container-pop ul li{border-bottom: 1px solid #eee; padding: .2rem 0; display: flex; justify-content: space-between;}
+        .reason-container-pop .circle{display: inline-block;width: .42rem;height: .42rem;background-position: -7.35rem -2.15rem;vertical-align: middle;}
+        .reason-container-pop .circle.circle-on{background-position: -7.55rem -1.65rem;}
+        .confirm{position: absolute; bottom: 0; left: 0; width: 100%; height: .9rem; background-color: rgb(80, 76, 251); color: #fff; font-size: .3rem; border: 0; outline: none;}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <a href="order_wait_evaluate" class="spr back"></a>
+            <h3 class="header-title">申请退款</h3>
+        </header>
+        <div class="refund-goods-container">
+            <div class="refund-goods-item">
+                <div class="image-container">
+                    <img src="__STATIC__/index/image/15.jpg">
+                </div>
+                <div class="goods-info-container">
+                    <div class="goods-name">附近开了大食堂娇娃二拖荆防颗粒的撒娇了开关机</div>
+                    <div class="sub-name">交付给开发大赛结果看来是大家</div>
+                </div>
+            </div>
+        </div>
+        <div class="refund-reason-container">
+            <div class="reason-select">
+                <span>退款原因</span>
+                <div class="subspan">
+                    <span>请选择</span>
+                    <span class="spr more"></span>
+                </div>
+            </div>
+            <div class="reason-container"></div>
+        </div>
+        <div class="refund-amount">
+            退款金额：<span>￥122</span>
+        </div>
+        <div class="refund-describe">
+            退款说明: <input type="text" placeholder="选填">
+        </div>
+        <div class="refund-upload-img">
+            <div class="upload-img-title">上传凭证（最多3张）</div>
+            <div class="refund-img-container">
+                <div class="vi-camera">
+                    <!-- <div class="upload-item">
+                        <img src="__STATIC__/index/image/15.jpg">
+                        <button class="del-img">×</button>
+                    </div> -->
+                </div>
+                <span class="switch-span">上传凭证
+                    <input type="file" name="images[]" multiple id="Images">
+                </span>
+            </div>
+        </div>
+        <button class="submit">提交</button>
+    </div>
+    <div class="mask" style="display: none;"></div>
+    <div class="reason-container-pop" style="display: none;">
+        <div class="title">退款原因</div>
+        <ul>
+            <li>
+                <div class="reason-txt">少记漏记</div>
+                <i class="spr circle"></i>
+            </li>
+            <li>
+                <div class="reason-txt">材质与商品描述不符</div>
+                <i class="spr circle"></i>
+            </li>
+            <li>
+                <div class="reason-txt">功能/功效与描述不符</div>
+                <i class="spr circle"></i>
+            </li>
+            <li>
+                <div class="reason-txt">产地/类型/规格与描述不符</div>
+                <i class="spr circle"></i>
+            </li>
+            <li>
+                <div class="reason-txt">做工问题</div>
+                <i class="spr circle"></i>
+            </li>
+            <li>
+                <div class="reason-txt">商品质量问题</div>
+                <i class="spr circle"></i>
+            </li>
+        </ul>
+        <button class="confirm">确定</button>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $('.reason-select').click(function(){
+            showPop();
+        })
+        $('.mask').click(function(){
+            hidePop();
+        })
+        function showPop(){
+            $('.mask').show();
+            $('.reason-container-pop').show();
+            $('html').css('overflow', 'hidden');
+        }
+        function hidePop(){
+            $('.mask').hide();
+            $('.reason-container-pop').hide();
+            $('html').css('overflow', 'auto');
+        }
+        $('.reason-container-pop li').click(function(){
+            $('.circle').removeClass('circle-on');
+            $(this).find('.circle').addClass('circle-on');
+        })
+        $('.confirm').click(function(){
+            $('.reason-container').text($('.circle-on').siblings().text());
+            hidePop();
+        })
+    </script>
+    <script>
+        $('.switch-span').on('change', 'input', function(){
+            var inputElem = $(this)[0];
+            var uploadItemLen = $('.upload-item').length;
+            changeEvent(inputElem, uploadItemLen, 3);
+        })
+        var imgFiles = [];
+        function changeEvent(inputElem, uploadItemLen, imgMaxminum){
+            var imgArrDom = []; 
+            var str = '';
+            var len =  inputElem.files.length; 
+            // 限制上传图片
+            if(uploadItemLen + len <= imgMaxminum){
+                for(var i = 0; i < len; i++){
+                    // 存图片地址
+                    imgArrDom.push(getObjectURL(inputElem.files[i]));
+                    imgFiles.push(inputElem.files[i]);
+                }
+                imgArrDom.forEach(function(el){
+                    str += `<div class="upload-item">
+                                <img src="`+el+`">
+                                <button class="del-img">×</button>
+                            </div>`
+                })
+                $('.vi-camera').append(str);
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '最多上传'+imgMaxminum+'张图片',
+                    time: 1
+                })
+            }
+            // 删除图片
+            $('.upload-item').on('click', '.del-img', function(){
+                var $index = $('.del-img').index($(this));
+                $(this).parent().remove();
+            })
+        }
+        // 在浏览器上预览本地图片
+        function getObjectURL(file) {
+            var url = null;
+            if(window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if(window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+    </script>
+</body>
+</html>
