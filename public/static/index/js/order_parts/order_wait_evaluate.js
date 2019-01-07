@@ -147,7 +147,7 @@ $.ajax({
                 },
                 success: function(res){
                     console.log(res);
-                    location.href = 'order_parts_detail'; 
+                    location.href = 'service_type_index'; 
                 },
                 error: function(){
                     console.log('error');
