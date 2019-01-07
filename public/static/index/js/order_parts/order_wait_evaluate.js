@@ -54,7 +54,6 @@ $.ajax({
                         <div class="button-box">
                             <button class="del-order-btn">删除订单</button>
                             <button class="evaluation-btn">去评价</button>
-                            <button class="return-goods">退货</button>
                         </div>
                     </div>
                 </div>`
@@ -127,27 +126,6 @@ $.ajax({
                 success: function(res){
                     console.log(res);
                     location.href = 'order_parts_detail'; 
-                },
-                error: function(){
-                    console.log('error');
-                }
-            })
-        })
-        // 退款退货
-        $('.return-goods').click(function(){
-            var store_id = $(this).parents('.single-shop-box').attr('data-id');
-            var parts_order_number = $(this).parents('.single-shop-box').attr('name');
-            $.ajax({
-                url: 'order_parts_save_record',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    'parts_order_number': parts_order_number,
-                    'store_id': store_id
-                },
-                success: function(res){
-                    console.log(res);
-                    location.href = 'service_type_index'; 
                 },
                 error: function(){
                     console.log('error');
