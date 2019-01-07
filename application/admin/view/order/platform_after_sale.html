@@ -17,13 +17,13 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
-	
-	
+
+
 	.noshow {
 		display: none;
 	}
 	/* 弹窗 */
-	
+
 	.tanchuang {
 		width: 100%;
 		min-height: 800px;
@@ -31,7 +31,7 @@
 		position: fixed;
 		z-index: 9999;
 	}
-	
+
 	.tanchuang-content {
 		width: 800px;
 		min-height: 500px;
@@ -42,19 +42,19 @@
 		top: 20%;
 		left: 20%;
 	}
-	
+
 	.close {
 		width: 30px;
 	}
-	
+
 	.clear {
 		clear: both;
 	}
-	
+
 	.title-a {
 		background: RGB(247, 247, 247);
 	}
-	
+
 	.content-title {
 		padding-top: 10px;
 		padding-left: 20px;
@@ -63,19 +63,19 @@
 		height: 40px;
 	}
 	/* 弹窗内容样式 */
-	
+
 	.list-a ul li {
 		float: left;
 		margin-left: 26px;
 		font-size: 12px;
 	}
-	
+
 	.dom>ul {
 		margin-top: 10px;
 		margin-bottom: 0px;
 		margin-left: 50px;
 	}
-	
+
 	.dom>ul>li {
 		float: left;
 		width: 100px;
@@ -85,13 +85,13 @@
 		height: 40px;
 		line-height: 40px;
 	}
-	
+
 	.list {
 		padding-top: 20px;
 		margin-left: 50px;
 		border-top: RGB(242, 242, 242) solid 1px;
 	}
-	
+
 	.cancel {
 		border-bottom: solid 1px RGB(242, 242, 242);
 		margin-left: 26px;
@@ -99,24 +99,24 @@
 		margin-top: 18px;
 		font-size: 12px;
 	}
-	
+
 	.reply {
 		margin: 15px;
 	}
-	
+
 	.reply-content {
 		margin-top: 11px;
 		min-height: 175px;
 		max-height: 175px;
 		overflow-y: scroll;
 	}
-	
+
 	.opation>div {
 		float: left;
 		margin-left: 26px;
 		margin-top: 10px;
 	}
-	
+
 	.btu-sumit {
 		float: right;
 		color: #fff;
@@ -126,24 +126,24 @@
 		height: 40px;
 		margin-right: 24px;
 	}
-	
+
 	.active {
 		background: #F2F2F2;
 	}
 	/* 物流线 */
 	/* flow start */
-	
+
 	.flowSwrap {
 		position: relative;
 		margin: 0 auto;
 		width: 720px;
 		/*background-color: rgba(0,0,0,.3);*/
 	}
-	
+
 	.flowCell {
 		overflow: hidden;
 	}
-	
+
 	.cell-left {
 		width: 190px;
 		padding-right: 28px;
@@ -152,7 +152,7 @@
 		vertical-align: middle;
 		/*background-color: goldenrod;*/
 	}
-	
+
 	.cell-right {
 		padding-left: 28px;
 		text-align: left;
@@ -160,7 +160,7 @@
 		vertical-align: middle;
 		/*background-color:green;*/
 	}
-	
+
 	.cell-center {
 		height: 60px;
 		width: 20px;
@@ -168,27 +168,27 @@
 		vertical-align: middle;
 		/*background-color: azure;*/
 	}
-	
+
 	.cell-left .t1 {
 		font-size: 10px;
 	}
-	
+
 	.cell-left .t2 {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t1_start {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t1 {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t2 {
 		font-size: 10px;
 	}
-	
+
 	.flow-line {
 		position: absolute;
 		width: 3px;
@@ -197,12 +197,12 @@
 	left:210px;*/
 		z-index: -1;
 	}
-	
+
 	.firstImg {
 		height: 20px;
 		width: 20px;
 	}
-	
+
 	tbody button {
 		width: 100px;
 		height: 30px;
@@ -211,39 +211,39 @@
 	}
 	/*  flow  end */
 	/* 按钮颜色 */
-	
+
 	.for-the-payment {
 		background: #FF0000;
 	}
-	
+
 	.payment-has-been {
 		background: #FF9900;
 	}
-	
+
 	.no-seed-goods {
 		background: #FF0099;
 	}
-	
+
 	.send-the-goods {
 		background: #33CC00;
 	}
-	
+
 	.for-the-goods {
 		background: #CC00FF;
 	}
-	
+
 	.have-the-goods {
 		background: #0099FF;
 	}
-	
+
 	.complete {
 		background: #0000CC;
 	}
-	
+
 	.closed-btu {
 		background: #333333;
 	}
-	
+
 	.cancel-btu {
 		background: #990000;
 	}
@@ -413,7 +413,7 @@
 
 						</div>
 					</div>
-			
+
 					<div class="seach_list">
 						<div class="seach_laber">开始时间</div>
 						<div class="seach_input">
@@ -432,7 +432,7 @@
 				</div>
 
 			</form>
-		
+
 		</blockquote>
 		<div class="layui-form news_list">
 			<table class="layui-table">
@@ -456,20 +456,32 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
+				{volist name="service" id="value"}
 					<tr>
-						<td><input type="checkbox" sname="" lay-skin="primary" lay-filter="choose"></td>
-						<td>2</td>
-						<td><img src="111" /></td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
+						<td><input type="checkbox" sname="" value="{$value.id}" lay-skin="primary" lay-filter="choose"></td>
+						<td>{$value.order.parts_order_number}</td>
+						<td>{$value.create_time|date='Y-m-d H:i',###}</td>
+						<td>{$value.order.user_account_name == null ? "无" : $value.order.user_account_name}</td>
+						<td>{$value.order_money}</td>
+						<td>{$value.order.harvester}</td>
+						<td>{$value.service_reason}</td>
+						<td>{$value.order.harvest_phone_num}</td>
 						<td>
-							<button type="button" class="state for-the-payment">111</button>
+							{if $value.dispose_time != null}
+							{$value.dispose_time|date='Y-m-d H:i',###}
+							{else}
+							无
+							{/if}
+						</td>
+						<td>
+							<button type="button" class="state for-the-payment">
+								{$value.status == 0 ? "待处理" : ""}
+								{$value.status == 1 ? "已处理" : ""}
+								{$value.status == 2 ? "拒绝处理" : ""}
+							</button>
 						</td>
 					</tr>
+				{/volist}
 				</tbody>
 			</table>
 			<div id="page">

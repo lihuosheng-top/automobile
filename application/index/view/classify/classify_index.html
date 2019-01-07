@@ -87,18 +87,4 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/classify_index.js"></script>
 </body>
-<script>
-    $.ajax({
-        url: '{:url("index/Classify/parets_id")}',
-        type: 'POST',
-        dataType: 'JSON',
-        success:function (data) {
-            console.log(data)
-            var id = data.data;
-            if(data.status == 1){
-                window.location.hash = "#"+id;
-            }
-        }
-    })
-</script>
 </html>
