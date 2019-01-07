@@ -242,7 +242,7 @@
 					<div class="close"><img src="__STATIC__/admin/common/img/a7.png"></div>
 				</div>
 				<!-- 里面的内容 -->
-				<button type="button" class="btu-sumit" data-id="">确定</button>
+				<!-- <button type="button" class="btu-sumit" data-id="">确定</button> -->
 				<div class="dom">
 					<ul class="clear card">
 						<li class="active" data-id="list-a">订单处理</li>
@@ -295,7 +295,7 @@
 						<div class="cancel" >
 							<span  v-if="cancel_order_description!=null">问题描述:</span>
 							<span  v-if="cancel_order_description!=null">{{cancel_order_description}}</span>
-							<span  v-if="cancel_order_description!=null"><img :src="service_images" alt=""></span>
+							<span  v-if="cancel_order_description!=null" v-for={{}}><img :src="service_images" alt=""></span>
 						</div>
 						
 						<div class="reply">
