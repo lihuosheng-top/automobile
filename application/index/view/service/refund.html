@@ -55,7 +55,7 @@
             <h3 class="header-title">申请退款</h3>
         </header>
         <div class="refund-goods-container">
-            <div class="refund-goods-item">
+            <!-- <div class="refund-goods-item">
                 <div class="image-container">
                     <img src="__STATIC__/index/image/15.jpg">
                 </div>
@@ -63,7 +63,7 @@
                     <div class="goods-name">附近开了大食堂娇娃二拖荆防颗粒的撒娇了开关机</div>
                     <div class="sub-name">交付给开发大赛结果看来是大家</div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="refund-reason-container">
             <div class="reason-select">
@@ -76,7 +76,7 @@
             <div class="reason-container"></div>
         </div>
         <div class="refund-amount">
-            退款金额：<span>￥122</span>
+            退款金额：<span></span>
         </div>
         <div class="refund-describe">
             退款说明(最多30字): <textarea rows="2" placeholder="选填" maxlength="30"></textarea>
@@ -175,6 +175,11 @@
                                         <div class="sub-name">`+val.order_describe+`</div>
                                     </div>
                                 </div>`
+                        $('.refund-amount span').text('￥'+val.order_money);
+                        formData.append('order_name', val.order_name);
+                        formData.append('order_describe', val.order_describe);
+                        formData.append('order_id', val.order_id);
+                        formData.append('order_money', val.order_money);
                     })
                     $('.refund-goods-container').append(str);
                 }
@@ -183,6 +188,53 @@
                 console.log('error');
             }
         })
+        var formData = new FormData();
+        $('.submit').click(function(){
+            var reason = $('.reason-container').text();
+            var describe = $('.refund-describe textarea').val();
+            if(reason == ''){
+                myLayer('请选择退款原因');
+                return;
+            }
+            if(describe == ''){
+                myLayer('请填写退款说明');
+                return;
+            }
+            if(imgFiles.length == 0){
+                myLayer('请上传凭证');
+                return;
+            }
+            formData.append('service_reason', reason);
+            formData.append('service_explain', describe);
+            console.log(imgFiles)
+            imgFiles.forEach(function(el, idx){
+                formData.append('service_images[]', el);
+            })
+            $.ajax({
+                url: 'service_save',
+                type: 'POST',
+                dataType: 'JSON',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        location.href = 'order_wait_evaluate';
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+        function myLayer(cont){
+            layer.open({
+                skin: 'msg',
+                content: cont,
+                time: 1
+            })
+        }
     </script>
     <script>
         $('.switch-span').on('change', 'input', function(){
