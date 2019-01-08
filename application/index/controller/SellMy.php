@@ -1770,6 +1770,11 @@ class  SellMy extends Controller{
             if($apply_money > $money){
                 exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于余额")));
             }
+            $time=date("Y-m-d",time());
+            $v=explode('-',$time);
+            $time_second=date("H:i:s",time());
+            $vs=explode(':',$time_second);
+            $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
             $data =[
                 "user_id"=>$user_id,
                 "operation_time"=>date("Y-m-d H:i:s"),
@@ -1786,6 +1791,25 @@ class  SellMy extends Controller{
             ];
            $res = Db::name("recharge_reflect")->insert($data);
            if($res){
+               //余额进行减少
+               $old_wallet =Db::name("user")->where("id",$user_id)->value("user_wallet");
+               $user_data=[
+                   "user_wallet"=>$old_wallet - $apply_money,
+               ];
+               Db::name("user")->where("id",$user_id)->update($user_data);
+               //进行消费记录
+               $wallet_data =[
+                   "user_id"=>$user_id,
+                   "wallet_operation"=> -$apply_money,//消费金额
+                   "wallet_type"=>-1, //消费类型（1获得，-1消费）
+                   "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                   "wallet_remarks"=>"提现申请".$apply_money."元",
+                   "wallet_img"=>"index/image/back.png",
+                   "title"=>"提现",
+                   "order_nums"=>$parts_order_number,//订单编号
+                   "pay_type"=>"余额抵扣", //支付宝微信支付
+               ];
+               Db::name("wallet")->insert($wallet_data);
                exit(json_encode(array("status" => 1, "info" =>"提现成功")));
            }else{
                exit(json_encode(array("status" => 0, "info" =>"提现失败")));

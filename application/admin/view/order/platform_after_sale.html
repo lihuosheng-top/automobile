@@ -276,6 +276,8 @@
 								<span v-else-if="status==9">未付款取消订单</span>
 								<span v-else-if="status==10">已付款取消订单</span>
 								<span v-else-if="status==11">退货</span>
+								<span v-else-if="status==12">已退货</span>
+								<span v-else-if="status==13">退货中</span>
 								<span v-else>无</span>
 							</li>
 							<li>
@@ -327,18 +329,27 @@
 								<span>选择状态</span>
 								<select id="static_select">
 									<option value="">请选择</option>
-									<option value="3">待付款</option>
-									<option value="1">待付款</option>
-									<option value="4">已发货</option>
-									<option value="5">待收货</option>
-									<option value="0">已关闭</option>
+									<option value="0">待处理</option>
+									<option value="1">已拒绝</option>
+									<option value="2">已通过</option>
+									<option value="3">已退款</option>
+									<option value="4">待发货</option>
+									<option value="5">已发货</option>
+									<option value="6">待收货</option>
+									<option value="7">已收货</option>
+									<option value="8">已完成</option>
+									<option value="9">已关闭</option>
+									<option value="10">取消订单</option>
 								</select>
 							</div>
 							<div class="select-operation">
 								<span>退款方式</span>
 								<select>
 									<option value="">请选择</option>
-									<option value="">已关闭</option>
+									<option value="0">支付宝</option>
+									<option value="1">微信</option>
+									<option value="2">退回原支付渠道</option>
+									<option value="3">银行卡</option>
 								</select>
 							</div>
 							<div class="select-operation">
@@ -409,7 +420,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+	</div>
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
@@ -702,6 +713,7 @@
 <script type="text/javascript">
 	$(".state").on('click', function() {
 	var id = $(this).data("id");
+	console.log(id);
 	$.ajax({
 		type: "POST",
 		url: "{:url('admin/Order/platform_after_sale_selest')}",
