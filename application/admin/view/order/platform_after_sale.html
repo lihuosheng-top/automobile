@@ -420,7 +420,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+	</div>
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
@@ -713,6 +713,7 @@
 <script type="text/javascript">
 	$(".state").on('click', function() {
 	var id = $(this).data("id");
+	console.log(id);
 	$.ajax({
 		type: "POST",
 		url: "{:url('admin/Order/platform_after_sale_selest')}",
