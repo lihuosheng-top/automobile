@@ -449,45 +449,46 @@
         // 接收安卓回调data
         var threeAdress;
         function getAndroid(e) {
-            var myTimer = setInterval(function(){
-                if(e.errorCode !== undefined){
-                    if(e.errorCode != 0){
-                        threeAdress = e.province+','+e.city+','+e.district;
-                        setCookie('district', e.district, 7);
-                        alert(threeAdress)
-                        setCookie('pcd', threeAdress, 7);
-                        if(!getCookie('pcd')){
-                            alert('请求区域广告')
-                            getAdvertisment(threeAdress);
-                        }
-                        if(!getCookie('district')){
-                            $('.curr_city').text(e.district);
-                        }
-                        $('.geclocation-pop').hide();
-                        $('.wrapper').show();
-                    }else{
-                        layer.open({
-                            skin: 'msg',
-                            content: '定位失败，请稍后尝试',
-                            time: 1.2
-                        })
+            // var myTimer = setInterval(function(){
+            if(e.errorCode !== undefined){
+                if(e.errorCode != 0){
+                    threeAdress = e.province+','+e.city+','+e.district;
+                    setCookie('district', e.district, 7);
+                    alert(threeAdress)
+                    setCookie('pcd', threeAdress, 7);
+                    if(!getCookie('pcd')){
+                        alert('请求区域广告')
+                        getAdvertisment(threeAdress);
                     }
-                    clearInterval(myTimer);
+                    if(!getCookie('district')){
+                        $('.curr_city').text(e.district);
+                    }
+                    $('.geclocation-pop').hide();
+                    $('.wrapper').show();
                 }else{
                     layer.open({
-                        type: 2,
-                        content: '定位中'
+                        skin: 'msg',
+                        content: '定位失败，请稍后尝试',
+                        time: 1.2
                     })
                 }
-            }, 1000)
+                // clearInterval(myTimer);
+            }else{
+                layer.open({
+                    type: 2,
+                    content: '定位中'
+                })
+            }
+            // }, 1000)
         }
+        alert(111)
         if (getCookie('district')) {
             $('.curr_city').text(getCookie('district'));
         }
-        alert('默认地区广告')
         if (getCookie('pcd')) {
             getAdvertisment(threeAdress);
         }else{
+            alert('默认地区广告')
             getAdvertisment('广东,深圳,福田');
         }
         $('.gec-curr-box').click(function () {
