@@ -223,6 +223,17 @@
 	.parment{
 		margin-left: 26px;
 	}
+	.img_content{
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.img_content div{
+		width: 50px;
+		height: 50px;
+	}
+	.select-operation input{
+            height: 30px;
+	}
 	/*  flow  end */
 	
 	.pagination {
@@ -295,7 +306,10 @@
 						<div class="cancel" >
 							<span  v-if="cancel_order_description!=null">问题描述:</span>
 							<span  v-if="cancel_order_description!=null">{{cancel_order_description}}</span>
-							<span  v-if="cancel_order_description!=null" v-for={{}}><img :src="service_images" alt=""></span>
+							<div class="img_content">
+								<div  v-if="cancel_order_description!=null" v-for="item in service_images"><img :src="'__STATIC__/uploads/'+item" alt=""></div>
+							</div>
+							
 						</div>
 						
 						<div class="reply">
@@ -327,6 +341,7 @@
 							</div>
 							<div class="select-operation">
 								<span>退款金额</span>
+								
 								<input type="text" name="" id="" value="" />
 							</div>
 	
@@ -695,7 +710,7 @@
 		success: function(data) {
 			$(".tanchuang").removeClass("noshow");
 			data = eval("(" + data + ")");
-			console.log(data.data[0].service_images);
+			console.log(data);
 			var order_create_time=timestampToTime(data.data.order_create_time);
 			new Vue({
 				el: '.list-a',
@@ -709,9 +724,10 @@
 					order_create_time:order_create_time,
 					buy_message:data.data[0].order.buy_message,
 					service_images:data.data[0].service_images
-				}
+				},
+				
+			
 			})
-
 		},
 		error: function(data) {
 			console.log(data);

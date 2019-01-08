@@ -591,7 +591,7 @@ $('.gec-back').click(function(){
 //         // alert(JSON.stringify(e))
 //     };
 // })
- //页面初始化时，如果帐号密码cookie存在则填充
+//  //页面初始化时，如果帐号密码cookie存在则填充
 // if (getCookie('area')) {
 //     getAdvertisment(getCookie('area'));
 // }

@@ -350,14 +350,14 @@
         //     })
         //     $('.gec-sort-box').append(str);
         // })
+
         function callAndroid(){
             Android.getLocation();
         }
         function getAndroid(e){
-            // console.log(e)
-            alert(111)
-            alert(e);
-            return 'ok';
+            $('.curr_city').text(e.district);
+            $('.geclocation-pop').hide();
+            $('.wrapper').show();
         }
         $('.gec-curr-box').click(function(){
             callAndroid();
