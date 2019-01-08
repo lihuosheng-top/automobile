@@ -372,11 +372,12 @@
         }
         function getAndroid(e) {
             setCookie('district', e.district, 7);
-            if (getCookie('district')) {
-                $('.curr_city').text(getCookie('district'));
-            }
+            $('.curr_city').text(e.district);
             $('.geclocation-pop').hide();
             $('.wrapper').show();
+        }
+        if (getCookie('district')) {
+            $('.curr_city').text(getCookie('district'));
         }
         $('.gec-curr-box').click(function () {
             callAndroid();
