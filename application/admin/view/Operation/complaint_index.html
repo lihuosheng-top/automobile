@@ -108,19 +108,18 @@
 			<!-- 里面的内容 -->
 
 			<div class="dom">
-				<form name="alipayment" action="" method="post" style="text-align: center; margin-top: 20px;" class="layui-form">
-					<input type="hidden" name="WIDbody" id="good-id" value="" />
-					<input type="hidden" name="" id="year" value="" />
+				<form name="alipayment" action="{:url('admin/Operation/complaint_updata')}" method="post" style="text-align: center; margin-top: 20px;" class="layui-form">
 					<div class="dom_static">
 						  <span style="width: 100px; text-align: right;display: inline-block;">处理状态：</span>
-						  <input type="radio" name="goods_sign" value="已处理" title="已处理" checked="" class="hot">
-                          <input type="radio" name="goods_sign" value="拒绝处理" title="拒绝处理" class="">
+						  <input type="radio" name="status" value="1" title="已处理" checked="" class="hot">
+                          <input type="radio" name="status" value="2" title="拒绝处理" class="">
 					</div>
 					<div style="display: flex; align-items: center;justify-content: center;">
 						<span style="width: 100px; text-align: left; display: inline-block; margin-left: 11px;">处理备注：</span>
-						<textarea name="" rows="4" cols="20"></textarea>
+						<textarea name="issue_remark" class="UserDispose" rows="4" cols="20"></textarea>
 					</div>
 					<div class="buts">
+						<input type="hidden" name="id" class="admin_status" value="">
 						<button class="layui-btn layui-btn-primary layui-btn-radius close-btus" type="button">取消</button>
 						 <button class="layui-btn layui-btn-normal layui-btn-radius" type="submit">确定</button>
 					</div>
@@ -168,29 +167,41 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
+				{volist name="issue" id="value"}
 					<tr>
-						<td>1000001</td>
-						<td>1000001</td>
-						<td>1000001</td>
-						<td>1000001</td>
-						<td>1000001</td>
-						<td class="">
-							<div class="tdimg"><img src="11" /></div>
+						<td>{$value.id}</td>
+						<td>{$value.user.phone_num}</td>
+						<td>{$value.user.user_name == null ? "无" : $value.user.user_name}</td>
+						<td>{$value.issue}</td>
+						<td>{$value.issue_details}</td>
+						<td class="" style="display: flex;">
+							{volist name="$value.images" id="val"}
+							<div class="tdimg"><img src="__UPLOADS__/{$val}" /></div>
+							{/volist}
 						</td>
-						<td>1000001</td>
+						<td>{$value.issue_relation}</td>
 						<td>
-							<div class="static static_pending">
-							    待处理
+							<div class="static static_pending" data-id="{$value.id}">
+								{if $value.status == 0}
+								待处理
+								{/if}
+								{if $value.status == 1}
+								已处理
+								{/if}
+								{if $value.status == 2}
+								已拒绝
+								{/if}
 						    </div>
 						</td>
 						<td>
-							<a href="{:url('admin/Category/del')}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+							<a href="{:url('admin/Operation/complaint_del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
 						</td>
 					</tr>
+				{/volist}
 				</tbody>
 			</table>
 			<div id="page">
-
+				{$platforme}
 			</div>
 
 		</div>
@@ -216,6 +227,20 @@
 		});
 		   $(".static").on('click', function() {
                 $(".tanchuang").removeClass("noshow");
+                var id = $(this).data("id");
+			    $(".admin_status").val(id);
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('admin/Operation/complaint_select')}",
+                    data: {"id":id},
+                    dataType:"JSON",
+                    success:function (data) {
+                        console.log(data);
+                        if(data.status == 1){
+                            $(".UserDispose").html(data.data[0].issue_remark);
+                        }
+                    }
+				})
             });
 		   $(".close-btus").on('click', function() {
                 $(".tanchuang").addClass("noshow");

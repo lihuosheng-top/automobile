@@ -230,7 +230,7 @@ $('.submit-button').click(function(){
     }
 })
 var updateImages = [];
-// var myLngLat = [];
+var myLngLat = [];
 // 返回数据
 $.ajax({
     url: 'return_store_information',
@@ -239,11 +239,12 @@ $.ajax({
     success: function(res){
         console.log(res);
         var data = res.data;
-        // if(data.longitude !== null && data.latitude !== null){
-        //     myLngLat = [data.longitude, data.latitude];
-        // }else{
-        //     myLngLat = [114.085947,22.547];
-        // }
+        if(data.longitude !== null && data.latitude !== null){
+            myLngLat = [parseFloat(data.longitude), parseFloat(data.latitude)];
+            createMap(myLngLat);
+        }else{
+            myLngLat([114.096547,22.546643])
+        }
         if(data.store_identity_card !== null && data.store_reverse_images !== null &&
             data.store_do_bussiness_positive_img !== null && data.store_do_bussiness_side_img !== null &&
             data.verifying_physical_storefront_one !== null){
@@ -292,47 +293,50 @@ $.ajax({
         console.error(err);
     }
 })
-
-AMapUI.loadUI(['misc/PositionPicker'], function(PositionPicker) {
-    var map = new AMap.Map('container', {
-        zoom: 16,
-        scrollWheel: false,
-        resizeEnable: true,
-        // center: [114.085947,22.547]
-    })
-    AMap.plugin([
-        'AMap.ToolBar',
-        'AMap.Geolocation'
-    ], function(){
-        // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
-        map.addControl(new AMap.ToolBar());
-        var geolocation = new AMap.Geolocation({
-            enableHighAccuracy: true,
-            timeout: 1000,
-            buttonPosition: 'RB',
-            buttonOffset: new AMap.Pixel(10, 20),
-            zoomToAccuracy: true
+function createMap(myLngLat){
+    AMapUI.loadUI(['misc/PositionPicker'], function(PositionPicker) {
+        var map = new AMap.Map('container', {
+            zoom: 16,
+            scrollWheel: false,
+            resizeEnable: true,
+            center: myLngLat
         })
-        map.addControl(geolocation);
+        console.log(myLngLat);
+        AMap.plugin([
+            'AMap.ToolBar',
+            'AMap.Geolocation'
+        ], function(){
+            // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
+            map.addControl(new AMap.ToolBar());
+            var geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,
+                timeout: 1000,
+                buttonPosition: 'RB',
+                buttonOffset: new AMap.Pixel(10, 20),
+                zoomToAccuracy: true
+            })
+            map.addControl(geolocation);
+        })
+        var positionPicker = new PositionPicker({
+            mode: 'dragMap',
+            map: map
+        });
+        positionPicker.on('success', function(positionResult) {
+            document.getElementById('lnglat').innerHTML = positionResult.position;
+            document.getElementById('address').innerHTML = positionResult.address;
+        });
+        positionPicker.on('fail', function(positionResult) {
+            document.getElementById('lnglat').innerHTML = ' ';
+            document.getElementById('address').innerHTML = ' ';
+        });
+        var onModeChange = function(e) {
+            positionPicker.setMode(e.target.value)
+        }
+        positionPicker.start();
+        map.panBy(0, 1);
+    });
+    $('.confirm-address').add('.icon-map-back').click(function(){
+        $('.address-pop').animate({'right': '-100%'});
     })
-    var positionPicker = new PositionPicker({
-        mode: 'dragMap',
-        map: map
-    });
-    positionPicker.on('success', function(positionResult) {
-        document.getElementById('lnglat').innerHTML = positionResult.position;
-        document.getElementById('address').innerHTML = positionResult.address;
-    });
-    positionPicker.on('fail', function(positionResult) {
-        document.getElementById('lnglat').innerHTML = ' ';
-        document.getElementById('address').innerHTML = ' ';
-    });
-    var onModeChange = function(e) {
-        positionPicker.setMode(e.target.value)
-    }
-    positionPicker.start();
-    map.panBy(0, 1);
-});
-$('.confirm-address').add('.icon-map-back').click(function(){
-    $('.address-pop').animate({'right': '-100%'});
-})
+}
+

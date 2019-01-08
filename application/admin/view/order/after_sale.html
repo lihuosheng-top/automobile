@@ -8,11 +8,11 @@
 	body {
 		background: #fff;
 	}
-	
+
 	label {
 		text-align: left !important;
 	}
-	
+
 
 	#page {
 		width: 96%;
@@ -22,45 +22,48 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
-	
+
 
 	.noshow {
 		display: none;
 	}
+/* 弹窗 */
 
-	/* 弹窗 */
-	
-	.tanchuang {
-		width: 100%;
-		min-height: 800px;
-		background: RGBA(0, 0, 0, 0.3);
-		position: fixed;
-		z-index: 9999;
-	}
-	
+
+.tanchuang {
+        width: 100%;
+        min-height: 1100px;
+        background: RGBA(0, 0, 0, 0.3);
+        position: fixed;
+        z-index: 9999;
+    }
+    .select-operation select{
+        width: 100px;
+        height: 30px;
+    }
+
 	.tanchuang-content {
 		width: 800px;
-		min-height: 500px;
-		height: auto;
+		height: 500px;
 		background: #fff;
 		z-index: 10000;
 		position: fixed;
 		top: 20%;
 		left: 20%;
 	}
-	
+
 	.close {
 		width: 30px;
 	}
-	
+
 	.clear {
 		clear: both;
 	}
-	
+
 	.title-a {
 		background: RGB(247, 247, 247);
 	}
-	
+
 	.content-title {
 		padding-top: 10px;
 		padding-left: 20px;
@@ -68,20 +71,24 @@
 		width: 50%;
 		height: 40px;
 	}
+
+	.noshow {
+		display: none;
+	}
 	/* 弹窗内容样式 */
-	
+
 	.list-a ul li {
 		float: left;
 		margin-left: 26px;
 		font-size: 12px;
 	}
-	
+
 	.dom>ul {
 		margin-top: 10px;
 		margin-bottom: 0px;
 		margin-left: 50px;
 	}
-	
+
 	.dom>ul>li {
 		float: left;
 		width: 100px;
@@ -91,13 +98,13 @@
 		height: 40px;
 		line-height: 40px;
 	}
-	
+
 	.list {
 		padding-top: 20px;
 		margin-left: 50px;
 		border-top: RGB(242, 242, 242) solid 1px;
 	}
-	
+
 	.cancel {
 		border-bottom: solid 1px RGB(242, 242, 242);
 		margin-left: 26px;
@@ -105,26 +112,29 @@
 		margin-top: 18px;
 		font-size: 12px;
 	}
-	
+
 	.reply {
 		margin: 15px;
 	}
-	
+
 	.reply-content {
 		margin-top: 11px;
 		min-height: 175px;
 		max-height: 175px;
 		overflow-y: scroll;
 	}
-	
+
 	.opation>div {
 		float: left;
 		margin-left: 26px;
 		margin-top: 10px;
 	}
-	
+
 	.btu-sumit {
-		float: right;
+		position: absolute;
+		bottom: 25px;
+		right: 0;
+		/* float: right; */
 		color: #fff;
 		background: #0099FF;
 		border-radius: 10px;
@@ -132,24 +142,24 @@
 		height: 40px;
 		margin-right: 24px;
 	}
-	
+
 	.active {
 		background: #F2F2F2;
 	}
 	/* 物流线 */
 	/* flow start */
-	
+
 	.flowSwrap {
 		position: relative;
 		margin: 0 auto;
 		width: 720px;
 		/*background-color: rgba(0,0,0,.3);*/
 	}
-	
+
 	.flowCell {
 		overflow: hidden;
 	}
-	
+
 	.cell-left {
 		width: 190px;
 		padding-right: 28px;
@@ -158,7 +168,7 @@
 		vertical-align: middle;
 		/*background-color: goldenrod;*/
 	}
-	
+
 	.cell-right {
 		padding-left: 28px;
 		text-align: left;
@@ -166,7 +176,7 @@
 		vertical-align: middle;
 		/*background-color:green;*/
 	}
-	
+
 	.cell-center {
 		height: 60px;
 		width: 20px;
@@ -174,86 +184,49 @@
 		vertical-align: middle;
 		/*background-color: azure;*/
 	}
-	
+
 	.cell-left .t1 {
 		font-size: 10px;
 	}
-	
+
 	.cell-left .t2 {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t1_start {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t1 {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t2 {
 		font-size: 10px;
 	}
-	
+
 	.flow-line {
 		position: absolute;
 		width: 3px;
 		background-color: #aaaaaa;
-		/*top:10px;
-	left:210px;*/
+		top: 10px;
+		left: 210px;
 		z-index: -1;
 	}
-	
+
 	.firstImg {
 		height: 20px;
 		width: 20px;
 	}
-	
-	.news_content button {
+
+	tbody button {
 		width: 100px;
 		height: 30px;
 		color: #fff;
 		border-radius: 10px;
 	}
 	/*  flow  end */
-	/* 按钮颜色 */
-	
-	.for-the-payment {
-		background: #FF0000;
-	}
-	
-	.payment-has-been {
-		background: #FF9900;
-	}
-	
-	.no-seed-goods {
-		background: #FF0099;
-	}
-	
-	.send-the-goods {
-		background: #33CC00;
-	}
-	
-	.for-the-goods {
-		background: #CC00FF;
-	}
-	
-	.have-the-goods {
-		background: #0099FF;
-	}
-	
-	.complete {
-		background: #0000CC;
-	}
-	
-	.closed-btu {
-		background: #333333;
-	}
-	
-	.cancel-btu {
-		background: #990000;
-	}
-	
+
 	.pagination {
 		float: right;
 	}
@@ -271,7 +244,6 @@
 				<div class="close"><img src="__STATIC__/admin/common/img/a7.png"></div>
 			</div>
 			<!-- 里面的内容 -->
-
 			<div class="dom">
 				<ul class="clear card">
 					<li class="active" data-id="list-a">订单处理</li>
@@ -422,7 +394,7 @@
 
 						</div>
 					</div>
-					
+
 					<div class="seach_list">
 						<div class="seach_laber">开始时间</div>
 						<div class="seach_input">
@@ -441,7 +413,7 @@
 				</div>
 
 			</form>
-		
+
 		</blockquote>
 		<div class="layui-form news_list ">
 			<table class="layui-table">
@@ -463,20 +435,40 @@
 					</tr>
 				</thead>
 				<tbody class="news_content ">
+				{volist name="order" id="value"}
+				{if !empty($value.order)}
 					<tr>
 						<td><input type="checkbox" sname=" " lay-skin="primary" lay-filter="choose"></td>
-						<td>2</td>
-						<td>111</td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
+						<td>{$value.order.parts_order_number}</td>
+						<td>{$value.create_time|date="Y-m-d H:i",###}</td>
+						<td>{$value.user.phone_num}</td>
+						<td>{$value.refund_money == null ? "无" : $value.refund_money}</td>
+						<td>{$value.user.real_name == null ? "无" : $value.user.real_name}</td>
+						<td>{$value.service_reason}</td>
+						<td>{$value.user.phone_num}</td>
 						<td>
-							<button type="button " class="state for-the-payment ">111</button>
+							{if !empty($value.dispose_time)}
+							{$value.dispose_time|date="Y-m-d H:i",###}
+							{else}
+							无
+							{/if}
+						</td>
+						<td>
+							<button type="button " class="state for-the-payment ">
+								{if $value.status == 0}
+								待处理
+								{/if}
+								{if $value.status == 1}
+								已处理
+								{/if}
+								{if $value.status == 2}
+								已拒绝
+								{/if}
+							</button>
 						</td>
 					</tr>
+				{/if}
+				{/volist}
 				</tbody>
 			</table>
 			<div id="page">
@@ -700,6 +692,58 @@
 			});
 		}
 	</script>
+	<script type="text/javascript">
+		$(".state").on('click', function() {
+		var id = $(this).parent("td").data(id).id;
+		$(".btu-sumit").data('id', id);
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Order/order_processing')}",
+			async: false,
+			data: {
+				"id": id,
+			},
+			success: function(data) {
+				$(".tanchuang").removeClass("noshow");
+				data = eval("(" + data + ")");
+				console.log(data);
+				var order_create_time=timestampToTime(data.data.order_create_time);
+				new Vue({
+					el: '.list-a',
+					data: {
+						status: data.data.status,
+						payment: data.data.pay_type_content,
+						amount: data.data.goods_money,
+						points_Deduction: data.data.integral_deductible,
+						real_Pay: data.data.order_real_pay,
+						cancel_order_description:data.data.cancel_order_description,
+						order_create_time:order_create_time,
+						buy_message:data.data.buy_message,
+					}
+				})
+
+			},
+			error: function(data) {
+				console.log(data);
+			}
+		});
+
+	});
+
+	$(".close").on('click', function() {
+		$(".tanchuang").addClass("noshow");
+	});
+	// 弹窗选项卡切换
+	$(".card").on('click', 'li', function() {
+		$(this).addClass("active");
+		$(this).siblings().removeClass("active");
+		var dait_id = $(this).data("id");
+		$("." + dait_id).removeClass("noshow");
+		$("." + dait_id).siblings("div").addClass("noshow");
+
+	});
+
+</script>
 
 	{/block}
 

@@ -67,6 +67,7 @@ Route::group("",[
     "ios_api_order_button_by_shop"=>"index/OrderParts/ios_api_order_button_by_shop",//购物车提交订单
 //    "ios_api_alipay"=>"index/OrderParts/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
    "ios_return_parts_num"=>"index/OrderParts/ios_return_parts_num",//生成订单(未用)
+    "invoice_index"=>"index/OrderParts/invoice_index",//发票显示页面
     'index_parts_aliPay'=>"index/Apppay/index_parts_aliPay", //配件商支付接口（弹窗支付）
     'index_parts_pay_code'=>"index/Apppay/index_parts_pay_code",//配件商支付回调修改订单状态
     /*TODO:配件商订单结束*/
@@ -76,6 +77,7 @@ Route::group("",[
     'Dolog'=>"index/Login/Dolog", /*登录操作*/
     "logout"=>"index/Login/logout",/*退出登录*/
     "my_index"=>"index/My/my_index",  // 我的
+    "my_information_details"=>"index/My/my_information_details",  // 订单消息提醒
     "my_message"=>"index/My/message", //我的个人信息
     "login"=>"index/My/login",//登录
     "isLogin"=>"index/My/isLogin", //是否登录判断
@@ -86,13 +88,15 @@ Route::group("",[
     "member_update_mobiles"=>"index/My/member_update_mobiles",//个人信息修改手机
     "my_integral"=>"index/My/integral",            //我的积分页面(积分记录ajax)
     "setting"=>"index/My/setting",              //设置(所有页面)
+    "setting_status"=>"index/My/setting_status",              //通知设置
     "is_business"=>"index/My/is_business",      //判断是否是商家还是只是车主（ajax）（隐藏切换角色的按钮）
     "select_role_owner"=>"index/My/select_role_owner",      //选择车主）通过判断是否是商家或者是车主（ajax）
     "select_role_business"=>"index/My/select_role_business",      //（选择商家）通过判断是否是商家或者是车主（ajax）
     "select_role_get"=>"index/My/select_role_get",//获取商家的信息，如果存在则是商家角色，不存在则为车主
     "my_nickname"=>"index/My/nickname",         //昵称
     "my_consume"=>"index/My/consume",         //我的消费(ajax)
-    "consume_message"=>"index/My/consume_message",       //消费详情
+    "consume_save"=>"index/My/consume_save",         //进入我的消费需要存id(ajax)
+    "consume_message"=>"index/My/consume_message",       //消费详情（ajax）
     /*TODO:登录结束*/
 
     /*TODO:经纬度开始*/
@@ -197,14 +201,14 @@ Route::group("",[
 
     /*TODO:消息开始*/
     "information_index"=>"index/Information/index",//消息页面
-    "information_details"=>"index/Information/information_details",//订单助手消息页面详情
+    "information_details"=>"index/Information/information_details",//订单助手消息页面
     "order_information_details"=>"index/Information/order_information_details",//订单助手消息页面详情
-    "information_system"=>"index/Information/information_system",//系统消息页面详情
+    "information_system"=>"index/Information/information_system",//系统消息页面
     "information_system_details"=>"index/Information/information_system_details",//系统消息页面详情
     "about_index"=>"index/About/index",//关于我们
     /*TODO:消息结束*/
     /*TODO:投诉开始*/
-    "complaint_home"=>"index/Complaint/home",//投诉中心
+    "complaint_home"=>"index/Complaint/index",//投诉中心
     "complaint_detail"=>"index/Complaint/detail",//投诉记录
     /*TODO:投诉结束*/
 
@@ -347,6 +351,17 @@ Route::group("",[
     /*TODO:测试IOS地址开始*/
     "test_ios"=>"index/Operation/ios",
     /*TODO:测试IOS地址结束*/
+
+
+
+    /**
+     * 售后服务
+     * 陈绪
+     */
+    "service_type_index"=>"index/Service/type_index",     //选择类型
+    "service_refund"=>"index/Service/refund",              //申请退款
+    "service_save"=>"index/Service/save",              //申请退款存储
+
 ]);
 
 /**
@@ -489,12 +504,14 @@ Route::group("admin",[
     /*充值和提现*/
     "recharge_list"=>"admin/Recharge/index", //充值和提现首页
     "recharge_edit"=>"admin/Recharge/edit",   //充值和提现编辑
+    "recharge_edit_save"=>"admin/Recharge/edit_save",//提现编辑保存
     "recharge_del"=>"admin/Recharge/del",   //充值和提现删除
     "recharge_dels"=>"admin/Recharge/dels",   //充值和提现批量删除
     "recharge_search"=>"admin/Recharge/search",   //充值和提现搜索功能
 
     /*资金管理*/
     "capital_index"=>"admin/Capital/index",  //资金管理界面
+    "capital_detail"=>"admin/Capital/detail",  //资金详情
     "capital_search"=>"admin/Capital/search",  //资金管理搜索功能
 
 
@@ -575,6 +592,7 @@ Route::group("admin",[
 
 
     "platform_after_sale"=>"admin/Order/platform_after_sale", //平台商售后服务
+    "platform_after_sale_selest"=>"admin/Order/platform_after_sale_selest", //平台售后维修显示
     "platform_invoice_index"=>"admin/Order/platform_invoice_index", //平台商发票列表
     "platform_invoice_details"=>"admin/Order/platform_invoice_details", //平台商发票详情
 
@@ -698,7 +716,7 @@ Route::group("admin",[
 
 
     /**
-     * 运行管理
+     * 运营管理
      * 陈绪
      */
     "complaint_index"=>"admin/Operation/complaint_index",
@@ -706,6 +724,9 @@ Route::group("admin",[
     "urgency_updata"=>"admin/Operation/urgency_updata",
     "urgency_select"=>"admin/Operation/urgency_select",
     "urgency_del"=>"admin/Operation/urgency_del",
+    "complaint_updata"=>"admin/Operation/complaint_updata",
+    "complaint_select"=>"admin/Operation/complaint_select",
+    "complaint_del"=>"admin/Operation/complaint_del",
 
 ]);
 

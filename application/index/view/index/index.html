@@ -338,6 +338,155 @@
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
     <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/plugin/allCity.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
+    <script>
+        // var str = '';
+        // allCity.forEach(function(el, idx){
+        //     el.citys.forEach(function(value, index){
+        //         str += `<div class="gec-sort-list">
+        //                     <div class="gec-city-name">`+value.citysName+`</div>
+        //                 </div>`
+        //     })
+        //     $('.gec-sort-box').append(str);
+        // })
+
+        // 获取广告
+        function getAdvertisment(area){
+            $.ajax({
+                url: 'advertisement_index',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'area': area
+                },
+                success: function(res){
+                    console.log('广告',res);
+                    if(res.status == 1){
+                        var topSwiperStr = '';
+                        // 首页轮播图
+                        $.each(res.data.home, function(idx, val){
+                            if(idx < 5){
+                                topSwiperStr += `<div class="swiper-slide">
+                                                    <a href="`+val.url+`">
+                                                        <img src="uploads/`+val.advert_picture+`">
+                                                    </a>
+                                                </div>`;
+                            }
+                        })
+                        $('.swiper-wrapper').append(topSwiperStr);
+                        mySwiper();
+                        // 首页固定广告
+                        var indexFixStr = '';
+                        indexFixStr += `<a href="`+res.data.fixed[0].url+`">
+                                            <img src="uploads/`+res.data.fixed[0].advert_picture+`">
+                                        </a>`
+                        $('.banner').append(indexFixStr);
+                        // 热门推荐
+                        var hot = res.data.hot;
+                        var hotStr = `<div class="recommend_top">
+                                        <a href="`+hot[0].url+`">
+                                            <img src="uploads/`+hot[0].advert_picture+`">
+                                        </a>
+                                        <a href="`+hot[1].url+`">
+                                            <img src="uploads/`+hot[1].advert_picture+`">
+                                        </a>
+                                    </div>
+                                    <div class="recommend_bottom">
+                                        <div class="recommend_bottom_left">
+                                            <a href="`+hot[2].url+`">
+                                                <img src="uploads/`+hot[2].advert_picture+`">
+                                            </a>
+                                        </div>
+                                        <div class="recommend_bottom_right">
+                                            <div class="recommend_bottom_right_one">
+                                                <a href="`+hot[3].url+`">
+                                                    <img src="uploads/`+hot[3].advert_picture+`">
+                                                </a>
+                                            </div>
+                                            <div class="recommend_bottom_right_two">
+                                                <div class="recommend_bottom_right_three">
+                                                    <a href="`+hot[4].url+`">
+                                                        <img src="uploads/`+hot[4].advert_picture+`">
+                                                    </a>
+                                                </div>
+                                                <div class="recommend_bottom_right_four">
+                                                    <a href="`+hot[5].url+`">
+                                                        <img src="uploads/`+hot[5].advert_picture+`">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        $('.recommend_goods').append(hotStr);
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        }
+        //设置cookie
+        function setCookie(name, value, day) {
+            var date = new Date();
+            date.setDate(date.getDate() + day);
+            document.cookie = name + '=' + value + ';expires=' + date;
+        };
+        //获取cookie
+        function getCookie(name) {
+            var reg = RegExp(name + '=([^;]+)');
+            var arr = document.cookie.match(reg);
+            if (arr) {
+                return arr[1];
+            } else {
+                return '';
+            }
+        };
+        // 调用安卓方法
+        function callAndroid() {
+            Android.getLocation();
+        }
+        $('.gec-curr-box').click(function () {
+            callAndroid();
+        })
+        // 接收安卓回调data
+        // var threeAdress;
+        // function getAndroid(e) {
+        //     if(e.errorCode !== undefined){
+        //         if(e.errorCode != 0){
+        //             threeAdress = e.province+','+e.city+','+e.district;
+        //             setCookie('district', e.district, 7);
+        //             setCookie('pcd', threeAdress, 7);
+        //             if(!getCookie('pcd')){
+        //                 getAdvertisment(threeAdress);
+        //             }
+        //             if(!getCookie('district')){
+        //                 $('.curr_city').text(e.district);
+        //             }
+        //             $('.geclocation-pop').hide();
+        //             $('.wrapper').show();
+        //         }else{
+        //             layer.open({
+        //                 skin: 'msg',
+        //                 content: '定位失败，请稍后尝试',
+        //                 time: 1.2
+        //             })
+        //         }
+        //     }else{
+        //         layer.open({
+        //             type: 2,
+        //             content: '定位中'
+        //         })
+        //     }
+        // }
+        // if (getCookie('district')) {
+        //     $('.curr_city').text(getCookie('district'));
+        // }
+        // if (getCookie('pcd')) {
+        //     getAdvertisment(threeAdress);
+        // }else{
+        //     getAdvertisment('广东,深圳,福田');
+        // }
+    </script>
 </body>
 </html>

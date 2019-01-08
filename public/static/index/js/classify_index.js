@@ -1,4 +1,18 @@
-
+$.ajax({
+    url: 'classify_parets_id',
+    type: 'POST',
+    dataType: 'JSON',
+    success:function (data) {
+        console.log(data)
+        var id = data.data;
+        if(data.status == 1){
+            window.location.hash = "#"+id;
+            myHash = window.location.hash.slice(1);
+            console.log(myHash);
+        }
+    }
+})
+var myHash = null;
 // 分类中的品牌分类和商品分类
 $.ajax({
     url: 'classify_index',
@@ -10,12 +24,15 @@ $.ajax({
         var hrefId = 1,//锚链接id
             brandLi = '',//左边品牌li
             goodsLi = '';
+        // 如果是从首页是配件商城进来 
+        console.log(myHash);
         $.each(res.data.goods_brand, function(idx, val){//循环品牌
             if(idx === 0){
                 brandLi += '<li class="active"><a href="#'+val.id+'">'+val.name+'</a></li>';
             }else{
                 brandLi += '<li><a href="#'+val.id+'">'+val.name+'</a></li>';
             }
+
             if(val.brand_describe == '轮胎品牌区'){
                 goodsLi += '<li class="first_li tyre" id="1">\
                                 <div class="adop-box">\
@@ -45,8 +62,15 @@ $.ajax({
         
         //循环商品
         $.each(res.data.goods_type, function(idx, val){
-            brandLi += '<li><a href="#'+val.id+'">'+val.name+'</a></li>';
-
+            // if(myHash != 'null'){
+                // if(myHash == val.id){
+                    // brandLi += '<li class="active"><a href="#'+val.id+'">'+val.name+'</a></li>';
+                // }else{
+                    // brandLi += '<li><a href="#'+val.id+'">'+val.name+'</a></li>';
+                // }
+            // }else{
+                brandLi += '<li><a href="#'+val.id+'">'+val.name+'</a></li>';
+            // }
             goodsLi += '<li class="first_li maintain"">\
                             <p class="subtitle" id="'+val.id+'">'+val.name+'</p>\
                             <ul class="bgw">';

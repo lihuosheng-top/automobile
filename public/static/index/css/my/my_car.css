@@ -54,7 +54,13 @@ html{
 }
 .car-box .car-info-top .logo{
     flex-basis: 40%;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.car-box .car-info-top .logo img{
+    width: 1.28rem;
+    height: 1.28rem;
 }
 .car-box .car-info-top .car-info{
     flex-basis: 60%;

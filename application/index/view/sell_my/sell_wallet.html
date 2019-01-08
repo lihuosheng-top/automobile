@@ -31,7 +31,7 @@
             <img src="__STATIC__/index/image/money2.png">
         </div>
         <p class="money-title">可用金额</p>
-        <p class="money-txt">￥<span>999.99</span></p>
+        <p class="money-txt">￥<span></span></p>
         <button class="recharge">申请提现</button>
     </div>
 
@@ -39,15 +39,27 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-        $('.recharge').click(function(){
-            location.href = 'sell_application';
-        })
         $.ajax({
             url: 'sell_wallet',
             type: 'POST',
             dataType: 'JSON',
             success: function(res){
                 console.log(res);
+                if(res.status === 1){
+                    $('.money-txt span').text(res.data.user_wallet);
+                }
+                $('.recharge').click(function(){
+                    var myMoney = parseFloat($('.money-txt span').text());
+                    if(myMoney >= 100){
+                        location.href = 'sell_application';
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: '余额小于100',
+                            time: 1.2
+                        })
+                    }
+                })
             },
             error: function(){
                 console.log('error');

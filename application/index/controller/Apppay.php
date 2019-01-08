@@ -70,11 +70,11 @@ class Apppay extends Controller
             //商户私钥，您的原始格式RSA私钥
 //             'merchant_private_key' =>"MIIEpAIBAAKCAQEAyC9iRV5kLDbVK619EtISgMN5Gz0bOdFAfSojUzefVhKUrEJ6j48d1Awrg98yudp22kUs0zboMkVTYDT1l9ux5xj/p39JhqjjIl44oZsGFjSmu9/2HxaZ4UjfTJXkaGwJqyY0fSY2f+cE5YjoRYq5XhqijzF0BoKoH64pQNWxqp6f3wss2FKp707KV/oLAArqkqFcWfyylMsncdxV59Lo0mtJ7cIEOezng4es3KDdHmLT5kq3j0hl0kfIjdGuDR0cWnlcolHUoIOKVGSlSHn+WnFlZ20/fkfF+hdadUcG42tywCBVT40ugX1LmmdCI4hAnxLxeQ7bFkhrnpDWcW7KWQIDAQABAoIBAQCBQK730TFmpuTOtc669y6BOzUX1EWe+C/mYO28Dn7vqUGbU7UkuihtQIpcNCHhhGAXIHEH0zzrMH3b8XXdXjmo2ChBstr7elJlX2a7WYf9kHNTfRDCE+q5Xj7niSSYE6HOgvWDFMg9nyE3P0WRmTeEvjfVsv2SMoxxIBd8yD1Vxr3Gbg+gT8zWDrqXQ1Ap1gg5jNS14CFE3uKKwQ4n5JZWnIQ+jw3LZcpk9Eb/mrQ9kbnU7g0ikx8sYJpTiP7lAlb3dq1tdUmRV8+HfWYC/a8MbZtO6UyDWvms5Lb5g4we7FCmBAkG+zv62PxG9sQAvrQoSwKTOj/7LSeTgJsT97QNAoGBAPuQUNZEhVODVhCCISg84TGi0BozU64PqegJXFxbR++hQC2EsN6L2Mk2ftpd+J/9XRD0ffcBMea+H4N7ui4Y+OHoED/8d76dTX06PWfAYYJMu/o65c3IBSBiwgREuRo38a20CZ8hKr8LVpLXbtCB8WJ1kp5QeqqSPpwnjFncyBorAoGBAMu3Hokjze+FPpeFQ3tYVt9G/VSAhRMVAb5ZQClQH9plpVM9aMukp8jiaeSBg7d5RzNRGRU5ouKQ1AVs3jkgvVzUWRMKM+VkW4lzAhEkM766egpzngs9z4YXHcBW1bPJQap2TVLRcFmueDsVABXF5XZSgAwenBhtvmZ9X/UDCD+LAoGBALmXaOwLNUm9lVsshgXHlGQoN9t8jnnV+IXFkixY86NolY5/XHVzOwaHe+LifTCbnXOKzPvUF9qh3WIFf//OUJ9ps8NhIX6xUp/WvcKzfbzBm9Uqaqv8qzuPYJABm4YqS9TZBFgwAfdcCAzhf1G47Dq1fuvpd/YrWqGd07/gUIhtAoGAHDSkg7RzZQB75BrNdxyKGqwHk1WgFz5HWYWd/ppbbq+4LkhIZDnOCWBf7QWJqTOfihlmcavjQ59t27pxIlPIJDw6gQpemRpGGkfUN29dwsCq+Rt8/G14eEZnFiRvvk7VSrbKifb5qVEg0H1d36Xg2Xsew47Ragh33lTpnlDnKXUCgYBIuk9VU3DkITWsy+xiQbN4eQqbiFB7BA55xIjwPqK8K+0PVzRyObUEF6m9KSz2mEB1CHwr1fHj8qzJ/0CgKUeCONm5crLEGCGMbGUzMloGmVLSJz6+4xT8mwKOv/BcpTqkDLx+8HBaJppJnjWn0OmHLNa1JhAaVuef8eheH546kw==",
             //异步通知地址
-            'notify_url' => "http://localhost/automobile/public/index_pay_code",
-//            'notify_url' => "https://zlh188.cn/index_pay_code",
+//            'notify_url' => "http://localhost/automobile/public/index_pay_code",
+            'notify_url' => "https://zlh188.cn/index_pay_code",
             //同步跳转
-            'return_url' => "http://localhost/automobile/public/index_pay_code",
-//            'return_url' => "https://zlh188.cn/index_pay_code",
+//            'return_url' => "http://localhost/automobile/public/index_pay_code",
+            'return_url' => "https://zlh188.cn/index_pay_code",
             //编码格式
             'charset' => "UTF-8",
             //签名方式
@@ -126,6 +126,20 @@ class Apppay extends Controller
             if(!empty($_GET['out_trade_no'])){
                 $bool = Db::name("order_service")->where("service_order_number",$_GET['out_trade_no'])->update($data);
                 if($bool){
+                    $parts =Db::name("order_service")->field("service_goods_name")->where("service_order_number",$_GET['out_trade_no'])->select();
+                    foreach($parts as $ks=>$vs){
+                        $titles[] = $vs["parts_goods_name"];
+                    }
+                    $title =implode("",$titles);
+                    $money =$parts[0]["service_real_pay"];//金额
+                    $datas["user_id"] =$parts[0]["user_id"]; //用户ID
+                    $datas["wallet_operation"] = -$money; //消费金额
+                    $datas["wallet_type"] = -1; //消费操作(1入，-1出)
+                    $datas["operation_time"] = date("Y-m-d H:i:s"); //操作时间
+                    $datas["wallet_remarks"] = "订单号：".$_GET['out_trade_no']."，支付宝消费".$money; //消费备注
+                    $datas["wallet_img"] = "index/image/alipay.png"; //图标
+                    $datas["title"] = $title; //标题（消费内容）
+                    Db::name("wallet")->insert($datas);
                    $this->redirect('index/OrderService/order_service_wait_deliver');
                 }
             }
@@ -227,8 +241,7 @@ class Apppay extends Controller
                    }
                    $title =implode("",$titles);
                     $money =Db::name("order_parts")->where("parts_order_number",$_GET['out_trade_no'])->sum("order_real_pay");
-                    $user_id = Session::get("user");
-                    $datas["user_id"] =$user_id; //用户ID
+                    $datas["user_id"] =$parts[0]["user_id"]; //用户ID
                     $datas["wallet_operation"] = -$money; //消费金额
                     $datas["wallet_type"] = -1; //消费操作(1入，-1出)
                     $datas["operation_time"] = date("Y-m-d H:i:s"); //操作时间
@@ -246,7 +259,7 @@ class Apppay extends Controller
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:
+     * Notes:配件商订单回调
      **************************************
      */
     public function parts_notifyurl()
@@ -270,6 +283,8 @@ class Apppay extends Controller
                 $result = Db::name('order_parts')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
             }
             if ($result) {
+                //进行钱包消费记录
+
                 return ajax_success('支付成功', ['status' => 1]);
             } else {
                 return ajax_error('验证失败了', ['status' => 0]);
@@ -299,7 +314,6 @@ class Apppay extends Controller
             //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
 //            'alipay_public_key' => "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA86bQJlbz6FgjGn6/aS0UCGm1YWWBQvD5JhSUrUW4W3hAInKkLgga8rdNjbHsuMDzoBUEppeEU7CVnjTYusn4BoP4JS1q96n569IlFRltiPrykbuzcGf0HpDY1/gujy6klgF+rIZa6SL0D3LN5Yrefb5Vh16YTsiEhg3EGdGYxYGz0lNAk4dM+whleSQyajtYiK14rdKNoXX4Djs5dzn/xaomV7HGZHLyRE/GKx1jWVH5WHYJmL7CeOWdc1pSDqn0QseDds+o14wu7kRlOkiSkck1U0XiG753FxEQJjmcou4g0FbJxkViRETuFsXxhQBwCvlQfXDgwx9eupP42SFX8wIDAQAB",
             'alipay_public_key' => "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyUgwfM85daNJ3tHlmsFET1Mcc6kaXjLD9AdjOy8pknzHVvDp66fMp2TZfnJjwGUlYDr9w/mY9CDbzwQgwllVUCSNxzVLH57FfRuzVStoHN22BJBMTvkMPpSbEvV3MxEzXzrl2kyV5sqEEyDiY28wpX1aFb5ug/G18R6216DMqGlTdYwHSOBd+S+2r2B5ljk786dtRf0inimEAGP5CdX2HxI8svpUVq2OeabSZ/kvf39yW9oLNLz0WIAwHQiWSg3DCb+MBP4I/W+5pX6N8p+ijqtPDJTF7/XBDQnftKDfVwoFL/yOxc+XP3pFbU3h5F7Srv3FPoO1Cnh38P5iiY/pFwIDAQAB",
-
 
 
             //应用ID,您的APPID。
@@ -360,7 +374,6 @@ class Apppay extends Controller
      */
     public function  recharge_pay_code(Request $request){
         if($request->isGet()){
-            $user_id = Session::get("user");
             $data['status'] = 1;
             $pay_time = time();
             $pay_times = date("Y-m-d H:i:s");
@@ -371,7 +384,7 @@ class Apppay extends Controller
                 if($bool){
                     $recharge_record_data = Db::name("recharge_record")->where("recharge_order_number",$_GET['out_trade_no'])->find();
                     $datas["operation_time"] =$pay_times; //操作时间
-                    $datas["user_id"] =$user_id; //用户id
+                    $datas["user_id"] =$recharge_record_data["user_id"]; //用户id
                     $datas["operation_type"] =1; //操作类型（-1,1）
                     $datas["pay_type_content"] =$recharge_record_data["pay_type_name"]; //支付方式
                     $datas["money_status"] =1; //到款状态
@@ -387,14 +400,14 @@ class Apppay extends Controller
                         $datas["operation_amount"]=$recharge_record_data["recharge_money"]+$lists; //操作金额
                         $datas["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元,送了".$lists; //描述
                         Db::name("recharge_reflect")->insert($datas);//插到记录
-                        $user_wallet =Db::name("user")->field("user_wallet")->where("id",$user_id)->find();
-                        Db::name("user")->where("id",$user_id)->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $lists]);
+                        $user_wallet =Db::name("user")->field("user_wallet")->where("id",$recharge_record_data["user_id"])->find();
+                        Db::name("user")->where("id",$recharge_record_data["user_id"])->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $lists]);
                     }else{
                         $datas["operation_amount"] =$recharge_record_data["recharge_money"]; //操作金额
                         $datas["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元"; //描述
                         Db::name("recharge_reflect")->insert($datas);//插到记录
-                        $user_wallet =Db::name("user")->field("user_wallet")->where("id",$user_id)->find();
-                        Db::name("user")->where("id",$user_id)->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]]);
+                        $user_wallet =Db::name("user")->field("user_wallet")->where("id",$recharge_record_data["user_id"])->find();
+                        Db::name("user")->where("id",$recharge_record_data["user_id"])->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]]);
                     }
                     $this->redirect('index/wallet/index');
                 }

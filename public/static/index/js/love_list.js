@@ -1,3 +1,11 @@
+var calendar = new LCalendar();
+calendar.init({
+    'trigger': '#date',//标签id
+    'type': 'date',//date 调出日期选择 datetime 调出日期时间选择 time 调出时间选择 ym 调出年月选择
+    'minDate':'2010-1-1',//最小日期 注意：该值会覆盖标签内定义的日期范围
+    'maxDate':'2050-12-31'//最大日期 注意：该值会覆盖标签内定义的日期范围
+});
+
 // 车辆信息 下拉框
 let show = document.getElementById('show-input');
 let words = document.getElementById('word-select');
@@ -198,39 +206,47 @@ $('.save-btn').click(function(){
     var engine_number = $('.engine-no-input').val();
     var car_insurance = $('.insurer-input').val();
     var insurance_time = $('.expiration-date-input').val();
-    $.ajax({
-        url: 'love_list_save',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'id': id,
-            'seat': seat,
-            'colour': colour,
-            'plate_number': plate_number,
-            'driving_number': driving_number,
-            'carriage_number': carriage_number,
-            'engine_number': engine_number,
-            'car_insurance': car_insurance,
-            'insurance_time': insurance_time
-        },
-        success: function(res){
-            console.log(res);
-            if(res.status == 1){
-                layer.open({
-                    skin: 'msg',
-                    content: res.info,
-                    time: .8
-                })
-                setTimeout(function(){
-                    location.reload();
-                }, 1000)
-                $('.wrapper').show();
-                $('.car-detail-pop').hide();
+    if($('.plant-input').val() !== ''){
+        $.ajax({
+            url: 'love_list_save',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'id': id,
+                'seat': seat,
+                'colour': colour,
+                'plate_number': plate_number,
+                'driving_number': driving_number,
+                'carriage_number': carriage_number,
+                'engine_number': engine_number,
+                'car_insurance': car_insurance,
+                'insurance_time': insurance_time
+            },
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    layer.open({
+                        skin: 'msg',
+                        content: res.info,
+                        time: .8
+                    })
+                    setTimeout(function(){
+                        location.reload();
+                    }, 1000)
+                    $('.wrapper').show();
+                    $('.car-detail-pop').hide();
+                }
+            },
+            error: function(){
+                console.log('error');
             }
-        },
-        error: function(){
-            console.log('error');
-        }
-    })
+        })
+    }else{
+        layer.open({
+            skin: 'msg',
+            content: '请填写车牌号',
+            time: 1
+        })
+    }
 })
 

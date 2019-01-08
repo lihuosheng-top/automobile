@@ -55,6 +55,12 @@ $.ajax({
                 $('.discount-amount-span').text('');
                 $('.pay-amount p').text('面议');
             }
+            // 下单时间
+            $('.create-time span').text(timetrans(val.create_time));
+            // 服务完成时间
+            if(val.reserve_time !== null){
+                $('.create-time').after('<p class="pay-time">服务时间：<span>'+timetrans(val.reserve_time)+'</span></p>')
+            }
 
             // 取消订单
             $('.cancel-order-btn').click(function(){
@@ -156,4 +162,15 @@ function detailAndEva(url, orderNum, link){
             console.log('error');
         }
     })
+}
+// 转换时间戳
+function timetrans(date){
+    var date = new Date(date*1000);//如果date为13位不需要乘1000
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+    var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+    var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes());
+    // var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
+    return Y+M+D+h+m;
 }

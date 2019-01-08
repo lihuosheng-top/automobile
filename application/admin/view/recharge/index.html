@@ -80,6 +80,7 @@
 						<th>金额</th>
 						<th>支付方式</th>
 						<th>到款状态</th>
+						<th>审核状态</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -94,6 +95,11 @@
 					<td>{$vo.operation_amount}</td>
 					<td>{$vo.pay_type_content} </td>
 					<td>{$vo.money_status|show_recharge_status} </td>
+					{if !empty($vo.status)}
+					<td>{$vo.status|operation_recharge_status} </td>
+					{else}
+					<td> </td>
+					{/if}
 					<td>
 						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/recharge/edit',['id'=>$vo.id])}"><i class="iconfont icon-edit"></i> 编辑</a>
 

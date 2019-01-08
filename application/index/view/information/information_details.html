@@ -24,6 +24,7 @@
         .mid .img-box img{width: 100%; height: 100%;}
         .mid .info-box{flex: 1;}
         .bot{display: flex; align-items: center; justify-content: space-between;}
+        .bot a{color: #333;}
         .icon-more{display: inline-block;width: .26rem; height: .38rem; background-position: -7.25rem -1.75rem;}
     </style>
 </head>
@@ -78,10 +79,13 @@
                                         <span class="status">
                                             `+(val.status==1 ? '待支付'  : "")+`
                                             `+(val.status==2 ? '已支付'  : "")+`
+                                            `+(val.status==3 ? '待发货'  : "")+`
                                             `+(val.status==4 ? '已发货'  : "")+`
                                             `+(val.status==10 ? '已付款取消订单'  : "")+`
                                             `+(val.status==7 ? '待评价'  : "")+`
                                             `+(val.status==11 ? '退货'  : "")+`
+                                            `+(val.status==12 ? '已退货'  : "")+`
+                                            `+(val.status==13 ? '退货中'  : "")+`
                                         </span>
                                     </div>
                                     <div class="mid">

@@ -11,6 +11,8 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Db;
 use think\Request;
+use think\Session;
+
 class Order extends Controller{
 
 
@@ -495,7 +497,17 @@ class Order extends Controller{
      **************************************
      */
     public function after_sale(){
-        return view('after_sale');
+
+        $user_id = Session::get("user_id");
+        $admin = db("admin")->where("id",$user_id)->field("account")->find();
+        $user = db("user")->where("phone_num",$admin["account"])->field("id")->find();
+        $store = db("store")->where("user_id",$user["id"])->field("store_id")->find();
+        $order = db("service")->select();
+        foreach ($order as $key=>$value){
+            $order[$key]["order"] = db("order_parts")->where("id",$value["order_id"])->where("store_id",$store["store_id"])->find();
+            $order[$key]["user"] = db("user")->where("id",$order[$key]["order"]["user_id"])->find();
+        }
+        return view('after_sale',["order"=>$order]);
     }
 
     /**
@@ -789,7 +801,37 @@ class Order extends Controller{
      *
      */
     public function platform_after_sale(){
-        return view('platform_after_sale');
+
+        $service = db("service")->select();
+        foreach ($service as $key=>$value){
+            $service[$key]["order"] = db("order_parts")->where("id",$value["order_id"])->find();
+            $service[$key]["service_images"] = explode(",",$value["service_images"]);
+        }
+        return view('platform_after_sale',["service"=>$service]);
+    }
+
+
+    /**
+     * 平台售后维修显示
+     * 陈绪
+     */
+    public function platform_after_sale_selest(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $service = db("service")->where("id",$id)->select();
+            foreach ($service as $key=>$value){
+                $service[$key]["order"] = db("order_parts")->where("id",$value["order_id"])->find();
+                $service[$key]["delivery_status"] = db("delivery_order")->where("order_id",$value["order_id"])->field("status,delivery_id")->find();
+                $service[$key]["delivery_name_phone"] = db("delivery")->where("id",$service[$key]["delivery_status"]["delivery_id"])->field("name,number")->find();
+                $service[$key]["service_images"] = explode(",",$value["service_images"]);
+            }
+            if($service){
+                return ajax_success("获取成功",$service);
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
     }
 
     /**

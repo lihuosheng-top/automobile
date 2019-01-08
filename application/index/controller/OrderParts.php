@@ -1405,6 +1405,7 @@ class OrderParts extends Controller{
                             "integral_deductible"=>$integral_deductible, //积分抵扣
                             "integral_discount_setting_id"=>$integral_discount_setting_id, //积分抵扣的设置id
                             "integral_deductible_num"=>$integral_deductible_num,//抵扣的积分
+                            "show_status"=>1,
                         ];
                         $res = Db::name('order_parts')->insertGetId($datas);
                         if ($res) {
@@ -1565,6 +1566,7 @@ class OrderParts extends Controller{
                                 "integral_deductible"=>$integral_deductible, //积分抵扣
                                 "integral_discount_setting_id"=>$integral_discount_setting_id, //积分抵扣的设置id
                                 "integral_deductible_num"=>$integral_deductible_num,//抵扣的积分
+                                "show_status"=>1,
                             ];
                             $res = Db::name('order_parts')->insertGetId($datas);
 
@@ -1617,7 +1619,8 @@ class OrderParts extends Controller{
      **************************************
      */
     public function ios_api_order_parts_firm_order(){
-            return view("order_parts_firm_order");
+
+        return view("order_parts_firm_order");
     }
 
 
@@ -1769,6 +1772,19 @@ class OrderParts extends Controller{
                 return ajax_error('失败');
             }
         }
+    }
+
+
+
+
+    /**
+     * 发票显示页面
+     * 陈绪
+     */
+    public function invoice_index(){
+
+        return view("invoice_index");
+
     }
 
 
