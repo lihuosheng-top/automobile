@@ -105,7 +105,6 @@ class  Express extends  Controller{
                 }else{
                     db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>3]);
                 }
-
                 return ajax_success("入库成功");
             } else {
                 return ajax_error("入库失败");
@@ -152,7 +151,13 @@ class  Express extends  Controller{
             $order = db("delivery_order")->where("id",$id)->value("order_id");
             $bool = db("delivery_order")->where("id",$id)->update(["status"=>2]);
             if($bool){
-                db("order_parts")->where("id",$order)->update(["status"=>4]);
+                $order_status = $request->only(["order_status"])["order_status"];
+                if($order_status){
+                    db("order_parts")->where("id",$order)->update(["status"=>11]);
+                }else{
+                    db("order_parts")->where("id",$order)->update(["status"=>4]);
+                }
+
                 return ajax_success("已取货");
             }else{
                 return ajax_error("取货失败");
@@ -198,7 +203,12 @@ class  Express extends  Controller{
             $order = db("delivery_order")->where("id",$id)->value("order_id");
             $bool = db("delivery_order")->where("id",$id)->update(["status"=>3]);
             if($bool){
-                db("order_parts")->where("id",$order)->update(["status"=>5]);
+                $order_status = $request->only(["order_status"])["order_status"];
+                if($order_status){
+                    db("order_parts")->where("id",$order)->update(["status"=>12]);
+                }else{
+                    db("order_parts")->where("id",$order)->update(["status"=>5]);
+                }
                 return ajax_success("已取货");
             }else{
                 return ajax_error("取货失败");
