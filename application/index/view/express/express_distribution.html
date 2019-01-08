@@ -130,7 +130,7 @@
                                         <span class="accept-time">预计送达时间：<span>宝贝正在路上，请您耐心等候</span></span>
                                     </div>
                                     <div class="button-container">
-                                        <button class="my-btn">配送中</button>
+                                        <button class="my-btn">已完成</button>
                                     </div>
                                 </div>`
                     })
@@ -176,6 +176,11 @@
                             }
                         });
                     })
+                }
+                if(res.status == 0){
+                    var data = res.data;
+                    $('.info .name').text(data[0].name);
+                    $('.info .phone').text(data[0].number);
                 }
             },
             error: function(){
