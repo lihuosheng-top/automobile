@@ -556,7 +556,6 @@ $('.gec-back').click(function(){
     $('.wrapper').show();
 })
 
-
 // var map = new AMap.Map('container', {
 //     zoom: 12, //级别
 //     center: [114.07, 22.62]
@@ -761,19 +760,3 @@ function mySwiper(){
         }
     })
 }
-//设置cookie
-function setCookie(name, value, day) {
-    var date = new Date();
-    date.setDate(date.getDate() + day);
-    document.cookie = name + '=' + value + ';expires=' + date;
-};
-//获取cookie
-function getCookie(name) {
-    var reg = RegExp(name + '=([^;]+)');
-    var arr = document.cookie.match(reg);
-    if (arr) {
-        return arr[1];
-    } else {
-        return '';
-    }
-};
