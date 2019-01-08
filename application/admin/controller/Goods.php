@@ -18,6 +18,7 @@ use app\admin\model\Good;
 use app\admin\model\GoodsImages;
 use think\Session;
 use think\Loader;
+use think\paginator\driver\Bootstrap;
 
 class Goods extends Controller
 {
@@ -33,7 +34,7 @@ class Goods extends Controller
         $admin_id = Session::get("user_id");
         $admin_role = db("admin")->where("id", $admin_id)->field("role_id")->find();
         if ($admin_role["role_id"] == 2) {
-            $goods = db("goods")->order("id desc")->paginate(20);
+            $goods = db("goods")->order("id desc")->select();
             $goods_year = db("goods")->field("goods_year_id,id")->select();
             $time = date("Y-m-d");
             foreach ($goods_year as $key => $value) {
@@ -43,14 +44,22 @@ class Goods extends Controller
                     $bool = db("goods")->where("id", $value["id"])->update(["goods_status" => 0, "putaway_status" => null]);
                 }
             }
-            $goods_money = db("goods")->field("goods_new_money,id")->select();
+            // $goods_money = db("goods")->field("goods_new_money,id")->select();
             
-            foreach ($goods_money as $k => $val) {
-                $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
-                $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
-                db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
-            }
+            // foreach ($goods_money as $k => $val) {
+            //     $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
+            //     $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
+            //     db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
+            // }
    
+            foreach ($goods as $key => $value) {
+                $max[$key] = db("special")->where("goods_id", $goods[$key]['id'])->max("price");//最高价格
+                $min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("price");//最低价格
+                $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $goods[$key]['id'])->sum("stock");//库存
+                $goods[$key]["max_price"] = $max[$key];
+                $goods[$key]["min_price"] = $min[$key];
+                        
+            }
             //调整规格后的价格显示
             $adjusted_price = db("special")->field("price,id")->select();          
             foreach ($adjusted_price as $kw => $vl) {
@@ -63,12 +72,25 @@ class Goods extends Controller
             $user_id = Session::get("user_id");
             $role_name = db("admin")->where("id", $user_id)->select();
             $store = db("store")->select();
+            //halt($goods);
+            $all_idents = $goods;//这里是需要分页的数据
+            $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
+            $listRow = 20;//每页20行记录
+            $showdata = array_slice($all_idents, ($curPage - 1) * $listRow, $listRow, true);// 数组中根据条件取出一段值，并返回
+            $goods = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
+                'var_page' => 'page',
+                'path' => url('admin/Category/index'),//这里根据需要修改url
+                'query' => [],
+                'fragment' => '',
+            ]);
+            $goods->appends($_GET);
+            $this->assign('listpage', $goods->render());
             return view("goods_index", ["store" => $store, "goods" => $goods, "year" => $year, "role_name" => $role_name]);
         } else {
             $admin_phone = db("admin")->where("id", $admin_id)->value("phone");
             $user_id = db("user")->where("phone_num", $admin_phone)->value("id");
             $store_id = db("store")->where("user_id", $user_id)->value("store_id");
-            $goods = db("goods")->order("id desc")->where("store_id", $store_id)->paginate(10);
+            $goods = db("goods")->order("id desc")->where("store_id", $store_id)->select();
             $goods_year = db("goods")->field("goods_year_id,id")->select();
             $time = date("Y-m-d");
             foreach ($goods_year as $key => $value) {
@@ -78,12 +100,22 @@ class Goods extends Controller
                     $bool = db("goods")->where("id", $value["id"])->update(["goods_status" => 0, "putaway_status" => null]);
                 }
             }
-            $goods_money = db("goods")->field("goods_new_money,id")->select();
-            foreach ($goods_money as $k => $val) {
-                $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
-                $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
-                db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
+
+
+            foreach ($goods as $key => $value) {
+                $max[$key] = db("special")->where("goods_id", $goods[$key]['id'])->max("price");//最高价格
+                $min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("price");//最低价格
+                $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $goods[$key]['id'])->sum("stock");//库存
+                $goods[$key]["max_price"] = $max[$key];
+                $goods[$key]["min_price"] = $min[$key];
+                        
             }
+            // $goods_money = db("goods")->field("goods_new_money,id")->select();
+            // foreach ($goods_money as $k => $val) {
+            //     $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
+            //     $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
+            //     db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
+            // }
             //调整规格后的价格显示
             $adjusted_price = db("special")->field("price,id")->select();          
             foreach ($adjusted_price as $kw => $vl) {
@@ -96,6 +128,19 @@ class Goods extends Controller
             $user_id = Session::get("user_id");
             $role_name = db("admin")->where("id", $user_id)->select();
             $store = db("store")->select();
+            //halt($goods);
+            $all_idents = $goods;//这里是需要分页的数据
+            $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
+            $listRow = 20;//每页20行记录
+            $showdata = array_slice($all_idents, ($curPage - 1) * $listRow, $listRow, true);// 数组中根据条件取出一段值，并返回
+            $goods = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
+                'var_page' => 'page',
+                'path' => url('admin/Category/index'),//这里根据需要修改url
+                'query' => [],
+                'fragment' => '',
+            ]);
+            $goods->appends($_GET);
+            $this->assign('listpage', $goods->render());
             return view("goods_index", ["store" => $store, "goods" => $goods, "year" => $year, "role_name" => $role_name]);
         }
 

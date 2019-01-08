@@ -210,13 +210,7 @@
 						<td><input type="checkbox" data-text="{$val.year}" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加" data-action="{$value.putaway_status}"></td>
 						{/if}
 						{/volist}
-						<td>
-							{if !empty($value.goods_number)}
-							{$value.goods_number}
-							{else}
-							无
-							{/if}
-						</td>
+						<td>{$value.id +1000000}</td>
 						{volist name="store" id="shop"}
 						{if $value.store_id == $shop.store_id}
 						<td  ><div  class="shop_name overflow">{$shop.store_name}</div></td>
@@ -226,7 +220,11 @@
 						<td ><div class="overflow" >
 							{$value.goods_name}
 						</div></td>
-						<td>￥{$value.goods_new_money}</td>
+                        {if $value.min_price != $value.max_price}
+                        <td>￥{$value.min_price}-￥{$value.max_price}</td>
+                        {else}
+                        <td>￥{$value.min_price}</td>
+                        {/if}
 						{volist name="role_name" id="v"}
 						{if $v.role_id == 2}
 						<td style="color: red;">
@@ -303,7 +301,7 @@
 						</button>
                 </div>
 
-                {$goods->render()}
+                {$listpage}
             </div>
         </div>
 
