@@ -83,6 +83,83 @@
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
+				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit" >保存</button>
+			   
+			</div>
+		</div>
+
+	</form>
+	<!-- 
+		提现
+	 -->
+	<form class="layui-form" action="">
+		<div class="layui-form-item">
+			<label class="layui-form-label"> 账户可用余额：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$user_name}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">会员姓名：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$user_name}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">申请提现金额：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$user_name}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">支付方式：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$user_name}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">开户名：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$user_name}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">开户银行：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$user_name}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">银行卡号：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$user_name}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">类型：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$user_name}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">审核状态：</label>
+			<div class="layui-input-block">
+			   <input type="radio" name="sex" value="{$recharge_data.operation_type}" title="审核通过" checked="" >
+      			<input type="radio" name="sex" value="2" title="审核不通过"></div>
+			
+		</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注：</label>
+			<div class="layui-input-block">
+	     <textarea rows="10" cols="50"  >{$recharge_data.recharge_describe}</textarea>
+		</div>
+		</div>
+	
+
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
 				
 				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit" >保存</button>
 			   

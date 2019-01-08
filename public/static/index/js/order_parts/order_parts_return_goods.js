@@ -23,14 +23,20 @@ $.ajax({
     success: function(res){
         console.log(res);
         var str = '';
+        var statusTxt = '';
         $.each(res.data, function(idx, val){
+            if(val.status == 11){
+                statusTxt = '退货';
+            }else if(val.status == 13){
+                statusTxt = '退货中';
+            }
             str += `<div class="single-shop-box" data-id="`+val.store_id+`" name="`+val.parts_order_number+`">
                         <div class="shop-name-box">
                             <div class="name-txt-div">
                                 <i class="spr icon-shop"></i>
                                 <span class="name-txt-span">`+val.store_name+`</span>
                             </div>
-                            <p class="status-txt-p">退货</p>
+                            <p class="status-txt-p">`+statusTxt+`</p>
                         </div>`
             $.each(val.info, function(idx, val){
                 str += `<div class="all-goods-box">
