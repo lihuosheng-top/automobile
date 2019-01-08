@@ -307,7 +307,9 @@
 							<span  v-if="cancel_order_description!=null">问题描述:</span>
 							<span  v-if="cancel_order_description!=null">{{cancel_order_description}}</span>
 							<div class="img_content">
-								<div  v-if="cancel_order_description!=null" v-for="item in service_images"><img :src="'__STATIC__/uploads/'+item" alt=""></div>
+								<div  v-if="cancel_order_description!=null" v-for="item in service_images">
+									<img :src="'__STATIC__/uploads/'+item" alt="">
+								</div>
 							</div>
 							
 						</div>
@@ -708,9 +710,10 @@
 			"id": id,
 		},
 		success: function(data) {
+			console.log(data);
 			$(".tanchuang").removeClass("noshow");
 			data = eval("(" + data + ")");
-			console.log(data);
+			
 			var order_create_time=timestampToTime(data.data.order_create_time);
 			new Vue({
 				el: '.list-a',

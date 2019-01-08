@@ -504,6 +504,7 @@ Route::group("admin",[
     /*充值和提现*/
     "recharge_list"=>"admin/Recharge/index", //充值和提现首页
     "recharge_edit"=>"admin/Recharge/edit",   //充值和提现编辑
+    "recharge_edit_save"=>"admin/Recharge/edit_save",//提现编辑保存
     "recharge_del"=>"admin/Recharge/del",   //充值和提现删除
     "recharge_dels"=>"admin/Recharge/dels",   //充值和提现批量删除
     "recharge_search"=>"admin/Recharge/search",   //充值和提现搜索功能
