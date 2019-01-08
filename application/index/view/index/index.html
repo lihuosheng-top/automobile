@@ -350,17 +350,36 @@
         //     })
         //     $('.gec-sort-box').append(str);
         // })
+        //设置cookie
+        function setCookie(name, value, day) {
+            var date = new Date();
+            date.setDate(date.getDate() + day);
+            document.cookie = name + '=' + value + ';expires=' + date;
+        };
+        //获取cookie
+        function getCookie(name) {
+            var reg = RegExp(name + '=([^;]+)');
+            var arr = document.cookie.match(reg);
+            if (arr) {
+                return arr[1];
+            } else {
+                return '';
+            }
+        };
 
-        function callAndroid(){
+        function callAndroid() {
             Android.getLocation();
         }
-        function getAndroid(e){
-            // alert(e);
-            // alert(JSON.parse(e));
-            // $('.curr_city').text(e.district);
-            alert(e.district)
+        function getAndroid(e) {
+            setCookie('district', e.district, 7);
+            $('.curr_city').text(e.district);
+            $('.geclocation-pop').hide();
+            $('.wrapper').show();
         }
-        $('.gec-curr-box').click(function(){
+        if (getCookie('district')) {
+            $('.curr_city').text(getCookie('district'));
+        }
+        $('.gec-curr-box').click(function () {
             callAndroid();
         })
     </script>

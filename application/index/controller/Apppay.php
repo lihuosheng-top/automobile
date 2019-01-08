@@ -246,7 +246,7 @@ class Apppay extends Controller
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:
+     * Notes:配件商订单回调
      **************************************
      */
     public function parts_notifyurl()
@@ -270,6 +270,8 @@ class Apppay extends Controller
                 $result = Db::name('order_parts')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
             }
             if ($result) {
+                //进行钱包消费记录
+
                 return ajax_success('支付成功', ['status' => 1]);
             } else {
                 return ajax_error('验证失败了', ['status' => 0]);
@@ -359,7 +361,6 @@ class Apppay extends Controller
      */
     public function  recharge_pay_code(Request $request){
         if($request->isGet()){
-//            $user_id = Session::get("user");
             $data['status'] = 1;
             $pay_time = time();
             $pay_times = date("Y-m-d H:i:s");

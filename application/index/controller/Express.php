@@ -62,7 +62,7 @@ class  Express extends  Controller{
             $store = db("store")->where("store_city_address", $delivery_data[0]["area"])->where($where)->select();
             $delivery = [];
             foreach ($store as $key => $value) {
-                $order = db("order_parts")->where("store_id", $value["store_id"])->where("status",2)->select();
+                $order = db("order_parts")->where("store_id", $value["store_id"])->where("status",2)->whereOr("status",11)->select();
                 foreach ($order as $val) {
                     $delivery[] = array("store_name" => $value["store_name"],
                         "store_address" => $value["store_detailed_address"],
@@ -72,7 +72,8 @@ class  Express extends  Controller{
                         "store_number" => db("user")->where("id",$value["user_id"])->value("phone_num"),
                         "order_create_time"=>$val["order_create_time"],
                         "parts_order_number"=>$val["parts_order_number"],
-                        "store_id"=>$value["store_id"]
+                        "store_id"=>$value["store_id"],
+                        "order_status"=>$val["status"]
                     );
                 }
             }
@@ -99,7 +100,12 @@ class  Express extends  Controller{
             $express_data["status"] = 1;
             $bool = db("delivery_order")->insert($express_data);
             if ($bool) {
-                db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>3]);
+                if($express_data["order_status"] == 11){
+                    Session::set("order_status",$express_data["order_status"]);
+                    db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>11]);
+                }else{
+                    db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>3]);
+                }
                 return ajax_success("入库成功");
             } else {
                 return ajax_error("入库失败");
@@ -146,7 +152,13 @@ class  Express extends  Controller{
             $order = db("delivery_order")->where("id",$id)->value("order_id");
             $bool = db("delivery_order")->where("id",$id)->update(["status"=>2]);
             if($bool){
-                db("order_parts")->where("id",$order)->update(["status"=>4]);
+                $order_status = Session::get("order_status");
+                if($order_status == 11){
+                    db("order_parts")->where("id",$order)->update(["status"=>11]);
+                }else{
+                    db("order_parts")->where("id",$order)->update(["status"=>4]);
+                }
+
                 return ajax_success("已取货");
             }else{
                 return ajax_error("取货失败");
@@ -192,7 +204,12 @@ class  Express extends  Controller{
             $order = db("delivery_order")->where("id",$id)->value("order_id");
             $bool = db("delivery_order")->where("id",$id)->update(["status"=>3]);
             if($bool){
-                db("order_parts")->where("id",$order)->update(["status"=>5]);
+                $order_status = Session::get("order_status");
+                if($order_status == 11){
+                    db("order_parts")->where("id",$order)->update(["status"=>12]);
+                }else{
+                    db("order_parts")->where("id",$order)->update(["status"=>5]);
+                }
                 return ajax_success("已取货");
             }else{
                 return ajax_error("取货失败");
