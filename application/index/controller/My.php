@@ -130,7 +130,6 @@ class My extends Controller
                 ->where($condition)
                 ->order("operation_time","desc")
                 ->select();
-            dump($data);
             $datas =array(
                 "january"=>[],
                 "february"=>[],
@@ -172,12 +171,7 @@ class My extends Controller
                     $datas["december"][] =$vs;
                 }
             }
-            $user_data =Db::name("user")
-                ->field("user_wallet")
-                ->where("id",$user_id)
-                ->find();
             $res =[
-                "wallet"=>$user_data["user_wallet"],
                 "wallet_record"=>$datas
             ];
             if(!empty($data)){
@@ -467,15 +461,42 @@ class My extends Controller
         return view("my_integral");
     }
 
-
-
     /**
-     * 消费详情
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:进入消费详情页面保存的id
+     **************************************
      */
-    public function consume_message(){
+    public function consume_save(Request $request){
+        if($request->isPost()){
+            $wallet_id =$request->only("wallet_id")["wallet_id"];
+            Session::set("wallet_id",$wallet_id);
+            return ajax_success("保存成功");
+        }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:消费详情
+     **************************************
+     * @return \think\response\View
+     */
+    public function consume_message(Request $request){
+        if($request->isPost()){
+            $wallet_id =Session::get("wallet_id");
+            if(!empty($wallet_id)){
+                $data =Db::name("wallet")->where("wallet_id",$wallet_id)->find();
+                if(!empty($data)){
+                    return ajax_success("消费详情返回成功",$data);
+                }
+            }else{
+                return ajax_error("请重新刷新",["status"=>0]);
+            }
+
+        }
         return view("consume_message");
     }
+
 
     /**
      **************李火生*******************
