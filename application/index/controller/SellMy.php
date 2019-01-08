@@ -1771,11 +1771,6 @@ class  SellMy extends Controller{
                 exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于余额")));
             }
 
-
-
-
-
-
         }
         return view("sell_application");
     }
