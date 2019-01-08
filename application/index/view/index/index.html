@@ -355,10 +355,9 @@
             Android.getLocation();
         }
         function getAndroid(e){
-            // alert(e);
-            // alert(JSON.parse(e));
-            // $('.curr_city').text(e.district);
-            alert(e.district)
+            $('.curr_city').text(e.district);
+            $('.geclocation-pop').hide();
+            $('.wrapper').show();
         }
         $('.gec-curr-box').click(function(){
             callAndroid();
