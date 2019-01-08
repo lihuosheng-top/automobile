@@ -52,7 +52,6 @@ class Evaluate extends  Controller{
             foreach ($order_id as $k=>$v){
                 $filesArr[$k] = "filesArr".$v;
             }
-
             foreach ($filesArr as $ks=>$vs){
              $str=str_replace('filesArr','',$vs);
                 $img = $request->file("$vs");
@@ -115,6 +114,33 @@ class Evaluate extends  Controller{
               }
             }
             if($bool){
+                //进行消费积分奖励
+                $order_id_one =$order_id[0];
+                $order_real_pays =Db::name("order_parts")->where("id",$order_id_one)->value("order_rel_pays");//消费的钱数
+                $recommend_integral =Db::name("recommend_integral")->where("id",1)->find();
+                if($order_real_pays >= $recommend_integral["coin"]) {
+                    //判断消费是否满足送积分条件
+                    $old_integral_wallet = Db::name("user")
+                        ->where("id", $user_id)
+                        ->value("user_integral_wallet");
+                    //推荐人的积分添加
+                    $add_res = Db::name("user")
+                        ->where("id", $user_id)
+                        ->update(["user_integral_wallet" => $old_integral_wallet + $recommend_integral["consume_integral"]]);
+                    if ($add_res) {
+                        //余额添加成功(做积分消费记录)
+                        //插入积分记录
+                        $integral_data = [
+                            "user_id" => $user_id,
+                            "integral_operation" => $recommend_integral["consume_integral"],//获得积分
+                            "integral_balance" => $recommend_integral["consume_integral"] + $old_integral_wallet,//积分余额
+                            "integral_type" => 1, //积分类型（1获得，-1消费）
+                            "operation_time" => date("Y-m-d H:i:s"), //操作时间
+                            "integral_remarks" => "消费满".$recommend_integral["coin"]."送" . $recommend_integral["consume_integral"] . "积分",
+                        ];
+                        Db::name("integral")->insert($integral_data);
+                    }
+                }
                 return ajax_success("评价成功",$bool);
             }else{
                 return ajax_error("评价失败",["status"=>0]);
@@ -217,6 +243,32 @@ class Evaluate extends  Controller{
                                     Db::name("order_service_evaluate_images")->insert($insert_data);
                                 }
                             }
+                        }
+                    }
+                    $order_id_one =$order_id[0];
+                    $order_real_pays =Db::name("order_service")->where("id",$order_id_one)->value("service_rel_pays");//消费的钱数
+                    $recommend_integral =Db::name("recommend_integral")->where("id",1)->find();
+                    if($order_real_pays >= $recommend_integral["coin"]) {
+                        //判断消费是否满足送积分条件
+                        $old_integral_wallet = Db::name("user")
+                            ->where("id", $user_id)
+                            ->value("user_integral_wallet");
+                        //推荐人的积分添加
+                        $add_res = Db::name("user")
+                            ->where("id", $user_id)
+                            ->update(["user_integral_wallet" => $old_integral_wallet + $recommend_integral["consume_integral"]]);
+                        if ($add_res) {
+                            //余额添加成功(做积分消费记录)
+                            //插入积分记录
+                            $integral_data = [
+                                "user_id" => $user_id,
+                                "integral_operation" => $recommend_integral["consume_integral"],//获得积分
+                                "integral_balance" => $recommend_integral["consume_integral"] + $old_integral_wallet,//积分余额
+                                "integral_type" => 1, //积分类型（1获得，-1消费）
+                                "operation_time" => date("Y-m-d H:i:s"), //操作时间
+                                "integral_remarks" => "消费满".$recommend_integral["coin"]."送" . $recommend_integral["consume_integral"] . "积分",
+                            ];
+                            Db::name("integral")->insert($integral_data);
                         }
                     }
                     return ajax_success("评价成功",$bool);
