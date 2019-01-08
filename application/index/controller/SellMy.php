@@ -1770,6 +1770,26 @@ class  SellMy extends Controller{
             if($apply_money > $money){
                 exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于余额")));
             }
+            $data =[
+                "user_id"=>$user_id,
+                "operation_time"=>date("Y-m-d H:i:s"),
+                "operation_type"=>-1,
+                "operation_amount"=>$apply_money,
+                "pay_type_content"=>"银行卡",
+                "money_status"=>2,
+                "recharge_describe"=>"申请提现".$apply_money."元",
+                "img_url"=>"index/image/back.png",
+                "back_member"=>$apply_member,//用户名
+                "bank_card"=>$apply_bank_code,//开户银行卡
+                "back_name"=>$apply_bank,//开户银行
+                "status"=>2
+            ];
+           $res = Db::name("recharge_reflect")->insert($data);
+           if($res){
+               exit(json_encode(array("status" => 1, "info" =>"提现成功")));
+           }else{
+               exit(json_encode(array("status" => 0, "info" =>"提现失败")));
+           }
 
         }
         return view("sell_application");

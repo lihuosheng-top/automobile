@@ -35,8 +35,11 @@ class Recharge extends Controller{
      */
     public function edit($id){
         $recharge_data = Db::name("recharge_reflect")->where("id",$id)->find();
-        $user_name =Db::name('user')->field('user_name')->where('id',$recharge_data['user_id'])->find();
-        return view('edit',['recharge_data'=>$recharge_data,'user_name'=>$user_name['user_name']]);
+        $user_name =Db::name('user')
+            ->field('user_name,real_name,user_wallet')
+            ->where('id',$recharge_data['user_id'])
+            ->find();
+        return view('edit',['recharge_data'=>$recharge_data,'user_name'=>$user_name]);
     }
 
     /**
@@ -182,6 +185,48 @@ class Recharge extends Controller{
             if(!empty($reg_data)){
                 return view('index',['reg_data'=>$reg_data]);
             }
+        }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:提现编辑保存
+     **************************************
+     */
+    public function edit_save(Request $request){
+                if($request->ispost()){
+                    $id =$request->only("id")["id"];
+                    $status =$request->only("status")["status"];
+                    $recharge_describe =$request->only("recharge_describe")["recharge_describe"];
+                    if($status==2){
+                        $this->error("请选择审核或者不通过");
+                    }else if($status==1){
+                        $data =[
+                            "recharge_describe"=>$recharge_describe,
+                            "status"=>$status,
+                            "money_status"=>1
+                        ];
+                        $res =Db::name("recharge_reflect")->where("id",$id)->update($data);
+                        if($res){
+                            $this->success("审核成功","admin/Recharge/index");
+                        }else{
+                            $this->error("审核失败");
+                        }
+                    }else if($status==-1){
+                        $data =[
+                            "recharge_describe"=>$recharge_describe,
+                            "status"=>$status,
+                            "money_status"=>2
+                        ];
+                        $res =Db::name("recharge_reflect")->where("id",$id)->update($data);
+                        if($res){
+                            $this->success("审核成功","admin/Recharge/index");
+                        }else{
+                            $this->error("审核失败");
+                        }
+                    }
+
+                }
         }
 
 }
