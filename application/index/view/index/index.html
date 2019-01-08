@@ -351,16 +351,16 @@
         //     $('.gec-sort-box').append(str);
         // })
 
-        // function callAndroid(){
-        //     Android.getLocation();
-        // }
-        // function getAndroid(e){
-        //     alert(json.parse(e));
-        // }
-        // getAndroid();
-        // $('.gec-curr-box').click(function(){
-        //     callAndroid();
-        // })
+        function callAndroid(){
+            Android.getLocation();
+        }
+        function getAndroid(e){
+            alert(json.parse(e));
+            $('.curr_city').text(e.district);
+        }
+        $('.gec-curr-box').click(function(){
+            callAndroid();
+        })
     </script>
 </body>
 </html>
