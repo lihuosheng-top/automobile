@@ -100,7 +100,8 @@ class  Express extends  Controller{
             $express_data["status"] = 1;
             $bool = db("delivery_order")->insert($express_data);
             if ($bool) {
-                if($express_data["order_status"]){
+                if($express_data["order_status"] == 11){
+                    Session::set("order_status",$express_data["order_status"]);
                     db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>11]);
                 }else{
                     db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>3]);
@@ -151,8 +152,8 @@ class  Express extends  Controller{
             $order = db("delivery_order")->where("id",$id)->value("order_id");
             $bool = db("delivery_order")->where("id",$id)->update(["status"=>2]);
             if($bool){
-                $order_status = $request->only(["order_status"])["order_status"];
-                if($order_status){
+                $order_status = Session::get("order_status");
+                if($order_status == 11){
                     db("order_parts")->where("id",$order)->update(["status"=>11]);
                 }else{
                     db("order_parts")->where("id",$order)->update(["status"=>4]);
@@ -203,8 +204,8 @@ class  Express extends  Controller{
             $order = db("delivery_order")->where("id",$id)->value("order_id");
             $bool = db("delivery_order")->where("id",$id)->update(["status"=>3]);
             if($bool){
-                $order_status = $request->only(["order_status"])["order_status"];
-                if($order_status){
+                $order_status = Session::get("order_status");
+                if($order_status == 11){
                     db("order_parts")->where("id",$order)->update(["status"=>12]);
                 }else{
                     db("order_parts")->where("id",$order)->update(["status"=>5]);
