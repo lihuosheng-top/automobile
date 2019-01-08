@@ -90,38 +90,46 @@
             var apply_member = $('.name-container input').val();
             var apply_bank = $('.bank-container input').val();
             var apply_bank_code = $('.bank-num-container input').val();
-            if(apply_money >= 100){
-                $.ajax({
-                    url: 'sell_application',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {
-                        'apply_money': apply_money,
-                        'apply_member': apply_member,
-                        'apply_bank': apply_bank,
-                        'apply_bank_code': apply_bank_code,
-                    },
-                    success: function(res){
-                        console.log(res);
-                        if(res.status === 1){
-                            layer.open({
-                                skin: 'msg',
-                                content: '提交申请成功',
-                                time: .8
-                            })
-                            setTimeout(() => {
-                                location.href = 'sell_wallet';
-                            }, 1000);
+            if(apply_money !== '' && apply_member !== '' && apply_bank !== '' && apply_bank_code !== ''){
+                if(apply_money >= 100){
+                    $.ajax({
+                        url: 'sell_application',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'apply_money': apply_money,
+                            'apply_member': apply_member,
+                            'apply_bank': apply_bank,
+                            'apply_bank_code': apply_bank_code,
+                        },
+                        success: function(res){
+                            console.log(res);
+                            if(res.status === 1){
+                                layer.open({
+                                    skin: 'msg',
+                                    content: '提交申请成功',
+                                    time: .8
+                                })
+                                setTimeout(() => {
+                                    location.href = 'sell_wallet';
+                                }, 1000);
+                            }
+                        },
+                        error: function(){
+                            console.log('error');
                         }
-                    },
-                    error: function(){
-                        console.log('error');
-                    }
-                })
+                    })
+                }else{
+                    layer.open({
+                        skin: 'msg',
+                        content: '提现金额不能小于100元',
+                        time: 1.2
+                    })
+                }
             }else{
                 layer.open({
                     skin: 'msg',
-                    content: '提现金额不能小于100元',
+                    content: '申请信息不完整',
                     time: 1.2
                 })
             }
