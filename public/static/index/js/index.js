@@ -579,7 +579,7 @@ $('.gec-back').click(function(){
 //         // alert(JSON.stringify(e))
 //         // $('.gec-curr-txt').text(e.addressComponent.city);
 //         $('.curr_city').text(e.addressComponent.district);
-//         threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
+        // threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
 //         if (!getCookie('area')) {
 //             getAdvertisment(threeAdress);
 //         }

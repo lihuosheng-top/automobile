@@ -811,6 +811,7 @@ class Order extends Controller{
             foreach ($service as $key=>$value){
                 $service[$key]["order"] = db("order_parts")->where("id",$value["order_id"])->find();
                 $service[$key]["delivery_status"] = db("delivery_order")->where("order_id",$value["order_id"])->field("status,delivery_id")->find();
+                halt($service[$key]["delivery_status"]);
                 $service[$key]["delivery_name_phone"] = db("delivery")->where("id",$service[$key]["delivery_status"]["delivery_id"])->field("name,number")->find();
                 $service[$key]["service_images"] = explode(",",$value["service_images"]);
             }

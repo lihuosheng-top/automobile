@@ -23,10 +23,13 @@
             <div class="status">
                 {$value.status == 1 ? "待支付" : ""}
                 {$value.status == 2 ? "已支付" : ""}
+                {$value.status == 3 ? "待发货" : ""}
                 {$value.status == 4 ? "已发货" : ""}
                 {$value.status == 10 ? "已付款取消订单" : ""}
                 {$value.status == 7 ? "待评价" : ""}
                 {$value.status == 11 ? "退货" : ""}
+                {$value.status == 13 ? "退货中" : ""}
+                {$value.status == 12 ? "已退货" : ""}
             </div>
             <div class="time-count-down" id="time-count-down" style="display:none;"></div>
         </div>

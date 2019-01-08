@@ -1,0 +1,150 @@
+{include file="template/_meta" /}
+<title></title>
+</head>
+
+{block name="css"}
+
+<style type="text/css">
+	body {
+		background: #fff;
+	}
+
+	label {
+		text-align: left !important;
+	}
+
+	.layui-form-item {
+		width: 100%;
+		margin-bottom: 0;
+		margin-top: 0;
+
+	}
+
+	.layui-form-label {
+		width: 30% !important;
+	}
+
+	.layui-inline {
+		width: 30% !important;
+		line-height: 36px;
+
+	}
+
+	.layui-form-item {
+		max-width: 100% !important;
+	}
+
+	#page {
+		width: 96%;
+		height: 50px;
+		line-height: 50px;
+		border: solid 1px #E2E2E2;
+		padding-left: 50px;
+		background: #FDFDFE;
+	}
+
+	.pagination {
+		float: right;
+	}
+</style>
+
+
+
+{/block}
+<body>
+
+	{block name="content"}
+
+	<div class="childrenBody">
+		<blockquote class="layui-elem-quote news_search">
+				
+                <div class="seach">
+                        <div class="seach_list">
+                            <div class="seach_laber">用户账号：</div>
+                            <div class="seach_input">111</div>
+                        </div>
+                        <div class="seach_list">
+                                <div class="seach_laber">充值总金额：</div>
+                                <div class="seach_input">111</div>
+                        </div>
+
+                        <div class="seach_list">
+                                <div class="seach_laber">提现总额：</div>
+                                <div class="seach_input">111</div>
+                        </div>
+                        <div class="seach_list">
+                                <div class="seach_laber">消费总额：</div>
+                                <div class="seach_input">111</div>
+                        </div>
+                       
+                    </div>
+
+		</blockquote>
+		<div class="layui-form news_list">
+			<table class="layui-table">
+				<colgroup>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>订单编号</th>
+						<th>用户账号</th>
+						<th>类型</th>
+						<th>商品名称</th>
+						<th>支付方式</th>
+						<th>交易时间</th>
+						<th>交易金额</th>
+						<th>备注</th>
+						<th>账户余额</th>
+					</tr>
+				</thead>
+				<tbody class="news_content">
+					<tr>
+						<td>111 </td>
+						<td>111 </td>
+						<td>111 </td>
+						<td>111 </td>
+						<td>111 </td>
+						<td>111 </td>
+						<td>111 </td>
+						<td>111 </td>
+						<td>111 </td>
+						
+					</tr>
+				</tbody>
+			</table>
+			<div id="page">
+		
+			</div>
+		</div>
+
+
+	</div>
+
+
+	{/block}
+
+	<!--_footer 作为公共模版分离出去-->
+	{include file="template/_footer" /}
+	<!--/_footer 作为公共模版分离出去-->
+
+
+
+	<!--请在下方写此页面业务相关的脚本-->
+	{block name="bottom"}
+	<script type="text/javascript">
+		layui.config({
+			base: "js/"
+		}).use(['form', 'layer', 'jquery', 'laypage'], function() {
+			var form = layui.form(),
+				layer = parent.layer === undefined ? layui.layer : parent.layer,
+				laypage = layui.laypage,
+				$ = layui.jquery;
+	
+
+		})
+	</script>
+
+	{/block}
+
+</body>
+</html>
