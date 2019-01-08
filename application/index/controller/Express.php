@@ -98,11 +98,13 @@ class  Express extends  Controller{
         if($request->isPost()) {
             $express_data = $request->param();
             $express_data["status"] = 1;
+            unset($express_data["order_status"]);
             $bool = db("delivery_order")->insert($express_data);
+            $order_status = $request->only(["order_status"])["order_status"];
             if ($bool) {
-                if($express_data["order_status"] == 11){
-                    Session::set("order_status",$express_data["order_status"]);
-                    db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>11]);
+                if($order_status == 11){
+                    Session::set("order_status",$order_status);
+                    db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>13]);
                 }else{
                     db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>3]);
                 }
@@ -154,7 +156,7 @@ class  Express extends  Controller{
             if($bool){
                 $order_status = Session::get("order_status");
                 if($order_status == 11){
-                    db("order_parts")->where("id",$order)->update(["status"=>11]);
+                    db("order_parts")->where("id",$order)->update(["status"=>13]);
                 }else{
                     db("order_parts")->where("id",$order)->update(["status"=>4]);
                 }
