@@ -556,7 +556,20 @@ $('.gec-back').click(function(){
     $('.wrapper').show();
 })
 
-
+function callAndroid(){
+    Android.getLocation();
+}
+function getAndroid(e){
+    setCookie('district', e.district, 7);
+    if(getCookie('district')){
+        $('.curr_city').text(getCookie('district'));
+    }
+    $('.geclocation-pop').hide();
+    $('.wrapper').show();
+}
+$('.gec-curr-box').click(function(){
+    callAndroid();
+})
 // var map = new AMap.Map('container', {
 //     zoom: 12, //级别
 //     center: [114.07, 22.62]
