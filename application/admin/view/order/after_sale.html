@@ -8,11 +8,11 @@
 	body {
 		background: #fff;
 	}
-	
+
 	label {
 		text-align: left !important;
 	}
-	
+
 
 	#page {
 		width: 96%;
@@ -22,14 +22,14 @@
 		padding-left: 50px;
 		background: #FDFDFE;
 	}
-	
+
 
 	.noshow {
 		display: none;
 	}
 /* 弹窗 */
-	
-    
+
+
 .tanchuang {
         width: 100%;
         min-height: 1100px;
@@ -41,7 +41,7 @@
         width: 100px;
         height: 30px;
     }
-	
+
 	.tanchuang-content {
 		width: 800px;
 		height: 500px;
@@ -51,19 +51,19 @@
 		top: 20%;
 		left: 20%;
 	}
-	
+
 	.close {
 		width: 30px;
 	}
-	
+
 	.clear {
 		clear: both;
 	}
-	
+
 	.title-a {
 		background: RGB(247, 247, 247);
 	}
-	
+
 	.content-title {
 		padding-top: 10px;
 		padding-left: 20px;
@@ -71,24 +71,24 @@
 		width: 50%;
 		height: 40px;
 	}
-	
+
 	.noshow {
 		display: none;
 	}
 	/* 弹窗内容样式 */
-	
+
 	.list-a ul li {
 		float: left;
 		margin-left: 26px;
 		font-size: 12px;
 	}
-	
+
 	.dom>ul {
 		margin-top: 10px;
 		margin-bottom: 0px;
 		margin-left: 50px;
 	}
-	
+
 	.dom>ul>li {
 		float: left;
 		width: 100px;
@@ -98,13 +98,13 @@
 		height: 40px;
 		line-height: 40px;
 	}
-	
+
 	.list {
 		padding-top: 20px;
 		margin-left: 50px;
 		border-top: RGB(242, 242, 242) solid 1px;
 	}
-	
+
 	.cancel {
 		border-bottom: solid 1px RGB(242, 242, 242);
 		margin-left: 26px;
@@ -112,24 +112,24 @@
 		margin-top: 18px;
 		font-size: 12px;
 	}
-	
+
 	.reply {
 		margin: 15px;
 	}
-	
+
 	.reply-content {
 		margin-top: 11px;
 		min-height: 175px;
 		max-height: 175px;
 		overflow-y: scroll;
 	}
-	
+
 	.opation>div {
 		float: left;
 		margin-left: 26px;
 		margin-top: 10px;
 	}
-	
+
 	.btu-sumit {
 		position: absolute;
 		bottom: 25px;
@@ -142,24 +142,24 @@
 		height: 40px;
 		margin-right: 24px;
 	}
-	
+
 	.active {
 		background: #F2F2F2;
 	}
 	/* 物流线 */
 	/* flow start */
-	
+
 	.flowSwrap {
 		position: relative;
 		margin: 0 auto;
 		width: 720px;
 		/*background-color: rgba(0,0,0,.3);*/
 	}
-	
+
 	.flowCell {
 		overflow: hidden;
 	}
-	
+
 	.cell-left {
 		width: 190px;
 		padding-right: 28px;
@@ -168,7 +168,7 @@
 		vertical-align: middle;
 		/*background-color: goldenrod;*/
 	}
-	
+
 	.cell-right {
 		padding-left: 28px;
 		text-align: left;
@@ -176,7 +176,7 @@
 		vertical-align: middle;
 		/*background-color:green;*/
 	}
-	
+
 	.cell-center {
 		height: 60px;
 		width: 20px;
@@ -184,27 +184,27 @@
 		vertical-align: middle;
 		/*background-color: azure;*/
 	}
-	
+
 	.cell-left .t1 {
 		font-size: 10px;
 	}
-	
+
 	.cell-left .t2 {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t1_start {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t1 {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t2 {
 		font-size: 10px;
 	}
-	
+
 	.flow-line {
 		position: absolute;
 		width: 3px;
@@ -213,12 +213,12 @@
 		left: 210px;
 		z-index: -1;
 	}
-	
+
 	.firstImg {
 		height: 20px;
 		width: 20px;
 	}
-	
+
 	tbody button {
 		width: 100px;
 		height: 30px;
@@ -226,7 +226,7 @@
 		border-radius: 10px;
 	}
 	/*  flow  end */
-	
+
 	.pagination {
 		float: right;
 	}
@@ -394,7 +394,7 @@
 
 						</div>
 					</div>
-					
+
 					<div class="seach_list">
 						<div class="seach_laber">开始时间</div>
 						<div class="seach_input">
@@ -413,7 +413,7 @@
 				</div>
 
 			</form>
-		
+
 		</blockquote>
 		<div class="layui-form news_list ">
 			<table class="layui-table">
@@ -435,20 +435,40 @@
 					</tr>
 				</thead>
 				<tbody class="news_content ">
+				{volist name="order" id="value"}
+				{if !empty($value.order)}
 					<tr>
 						<td><input type="checkbox" sname=" " lay-skin="primary" lay-filter="choose"></td>
-						<td>2</td>
-						<td>111</td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
-						<td>张三</td>
-						<td>管理员</td>
-						<td>管理员</td>
+						<td>{$value.order.parts_order_number}</td>
+						<td>{$value.create_time|date="Y-m-d H:i",###}</td>
+						<td>{$value.user.phone_num}</td>
+						<td>{$value.refund_money == null ? "无" : $value.refund_money}</td>
+						<td>{$value.user.real_name == null ? "无" : $value.user.real_name}</td>
+						<td>{$value.service_reason}</td>
+						<td>{$value.user.phone_num}</td>
 						<td>
-							<button type="button " class="state for-the-payment ">111</button>
+							{if !empty($value.dispose_time)}
+							{$value.dispose_time|date="Y-m-d H:i",###}
+							{else}
+							无
+							{/if}
+						</td>
+						<td>
+							<button type="button " class="state for-the-payment ">
+								{if $value.status == 0}
+								待处理
+								{/if}
+								{if $value.status == 1}
+								已处理
+								{/if}
+								{if $value.status == 2}
+								已拒绝
+								{/if}
+							</button>
 						</td>
 					</tr>
+				{/if}
+				{/volist}
 				</tbody>
 			</table>
 			<div id="page">
@@ -722,7 +742,7 @@
 		$("." + dait_id).siblings("div").addClass("noshow");
 
 	});
-	
+
 </script>
 
 	{/block}
