@@ -450,9 +450,11 @@
         var threeAdress;
         function getAndroid(e) {
             threeAdress = e.province+','+e.city+','+e.district;
-            setCookie('district', e.district, 3650);
-            setCookie('pcd', threeAdress, 3650);
+            setCookie('district', e.district, 7);
+            alert(threeAdress)
+            setCookie('pcd', threeAdress, 7);
             if(!getCookie('pcd')){
+                alert('请求区域广告')
                 getAdvertisment(threeAdress);
             }
             if(!getCookie('district')){
@@ -467,6 +469,7 @@
         if (getCookie('pcd')) {
             getAdvertisment(threeAdress);
         }else{
+            alert('默认地区广告')
             getAdvertisment('广东,深圳,福田');
         }
         $('.gec-curr-box').click(function () {
