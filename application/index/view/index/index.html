@@ -484,10 +484,10 @@
         if (getCookie('district')) {
             $('.curr_city').text(getCookie('district'));
         }
+        alert('默认地区广告')
         if (getCookie('pcd')) {
             getAdvertisment(threeAdress);
         }else{
-            alert('默认地区广告')
             getAdvertisment('广东,深圳,福田');
         }
         $('.gec-curr-box').click(function () {
