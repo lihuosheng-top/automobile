@@ -117,7 +117,7 @@ Route::group("",[
     "sell_parts_save_record"=>"index/SellMy/sell_parts_save_record",//卖家进入配件商订单详情需要保存的数据
     "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
 
-    "sell_service_record"=>"index/SellMy/sell_service_record",//卖家服务记录
+    "sell_service_record"=>"index/SellMy/sell_service_record",//卖家消费收入记录
     "sell_parts_record"=>"index/SellMy/sell_parts_record",//卖家商品记录
     "sell_order_bill"=>"index/SellMy/sell_order_bill",//卖家账单
     "sell_wallet"=>"index/SellMy/sell_wallet",//卖家钱包
@@ -216,7 +216,8 @@ Route::group("",[
 
 
     /*TODO：店铺开始*/
-    "store_index"=>"index/Store/index",             //店铺首页
+    "store_index"=>"index/Store/index",             //店铺首页(所有的店铺信息)
+    "store_goods_info"=>"index/Store/store_goods_info",             //店铺首页 店铺内的商品（综合）
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
 
@@ -255,6 +256,12 @@ Route::group("",[
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
+    /*TODO:商品详情页面信息开始*/
+    "go_to_store"=>"index/Classify/go_to_store",//商品详情页面进店信息返回
+    "may_like_goods"=>"index/Classify/may_like_goods",//商品详情页面你可能还喜欢
+    "goods_evaluate_return"=>"index/Classify/goods_evaluate_return",//商品详情页面商品详情页面的评价数据
+    "goods_evaluate_detail"=>"index/Classify/goods_evaluate_detail",//配件商商品详情页面的评价数据查看详情
+    /*TODO:商品详情页面信息结束*/
 
 
     /*配件商城*/

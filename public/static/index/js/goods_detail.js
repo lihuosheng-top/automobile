@@ -16,7 +16,7 @@ $.ajax({
         'id': id
     },
     success: function(res){
-        console.log(res);
+        console.log('商品信息', res);
         // 轮播图
         var swiperImgStr = '';
         $.each(res.data[0].images, function(idx, val){
@@ -33,7 +33,7 @@ $.ajax({
             // 卖点
             $('.selling-point').html(val.goods_selling);
             // 划线价
-            $('.through').html('￥' + val.goods_bottom_money);
+            $('.through').html('￥' + val.goods_standard[0].cost);
             // 售价
             $('.sale').html('￥' + val.goods_standard[0].goods_adjusted_price);
             // 库存
@@ -156,12 +156,91 @@ $('.switch-detail').click(function(){
     $('.detail-box').show();
     $('.comment_box').hide();
 })
-
+// 评价
 $('.switch-comment').click(function(){
     $(this).addClass('switch-on').siblings().removeClass('switch-on');
     $('.comment_box').show();
     $('.detail-box').hide();
+
+    $.ajax({
+        url: 'goods_evaluate_return',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'goods_id': id
+        },
+        success: function(res){
+            console.log('评价',res);
+            if(res.status == 1){
+                var str = '';
+                $('.comment_title span').text(res.data.length);
+                var data = res.data;
+                for(var i = 0; i < 3; i++){
+                    str += `<li class="comment_li">
+                                <div class="comment_user_info">
+                                    <div class="comment_user_headimg">
+                                        <img src="userimg/`+data[i].user_info.user_img+`">
+                                    </div>
+                                    <div class="comment_phone_time">
+                                        <div class="phone_time clearfix">
+                                            <span class="phone_box">`+data[i].user_info.phone_num+`</span>
+                                            <span class="time_box">`+timetrans(data[i].create_time)+`</span>
+                                        </div>
+                                        <span class="spr 
+                                        `+(data[i].evaluate_stars === 5?'star':
+                                        (data[i].evaluate_stars === 4?'four-star':
+                                        (data[i].evaluate_stars === 3?'three-star':
+                                        data[i].evaluate_stars === 2?'two-star': 'one-star')))+`"></span>
+                                    </div>
+                                </div>
+                                <div class="comment_text_box">
+                                    <a href="javascript:;" class="comment_text_a">
+                                        <p class="comment_text_p">`+data[i].evaluate_content+`</p>
+                                    </a>`
+                    // 有评论图片
+                    if(data[i].images.length !== 0){
+                        str += `<ul class="comment_img_ul">`;
+                        data[i].images.forEach(function(val, idx){
+                            str += `<li class="comment_img_li">
+                                        <img src="uploads/`+val.images+`">
+                                    </li>`
+                        })
+                        str += '</ul>';
+                    }
+                    // 有商家回复
+                    if(data[i].business_repay !== null){
+                        str += `<div class="reply_box">
+                                    <i class="triangle"></i>
+                                    <p class="reply_text">`+data[i].business_repay+`</p>
+                                </div>`
+                    }
+                    str += `<div class="bottom_time_box">
+                                <p class="buy_time">购买时间: <span>2018-11-05</span></p>
+                                <div>
+                                    <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>`
+                }
+                $('.more_comment_box').before(str);
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
 })
+function timetrans(date){
+    var date = new Date(date*1000);//如果date为13位不需要乘1000
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+    var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+    var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+    var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
+    return Y+M+D+h+m+s;
+}
 
 // 查看评价详情
 $('.comment_text_a').click(function(){
@@ -412,3 +491,86 @@ function myAjax(url, data, succCallBack){
         }
     })
 }
+
+// 进入店铺
+$(function(){
+    $.ajax({
+        url: 'go_to_store',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'goods_id': id
+        },
+        success: function(res){
+            console.log('进入店铺',res);
+            if(res.status == 1){
+                var storeData = res.data.store_data;
+                $('.card-title')
+                    .html(`<img src="uploads/`+storeData.store_logo_images+`">
+                            <span class="txt-hid-one">`+storeData.store_name+`</span>
+                            <a href="store_index?storeId=`+res.data.store_id+`">进店</a>`)
+                var str = '';
+                res.data.goods_info.forEach(function(val, idx){
+                    str += `<div>
+                                <img src="uploads/`+val.goods_show_images+`">
+                                <p>￥`+val.special_info[0].goods_adjusted_price+`</p>
+                            </div>`
+                })
+                $('.card-show').html(str);
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+})
+
+
+// 你可能喜欢
+$(function(){
+    $.ajax({
+        url: 'may_like_goods',
+        type: 'POST',
+        dataType: 'JSON',
+        success: function(res){
+            console.log('你可能喜欢',res);
+            if(res.status == 1){
+                var str = '';
+                res.data.forEach(function(val, idx){
+                    if(idx % 2 !== 0){
+                        str += `<li class="mgr0">
+                                    <div class="img_div">
+                                        <img src="uploads/`+val.goods_show_images+`">
+                                    </div>
+                                    <div class="goods_name">
+                                        <p class="txt-hid-two">`+val.goods_name+`</p>
+                                    </div>
+                                    <div class="goods_price">
+                                        <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
+                                        <span class="pay_num">`+val.statistical_quantity+`人购买</span>
+                                    </div>
+                                </li>`
+                        return;
+                    }
+                    str += `<li>
+                                <div class="img_div">
+                                    <img src="uploads/`+val.goods_show_images+`">
+                                </div>
+                                <div class="goods_name">
+                                    <p class="txt-hid-two">`+val.goods_name+`</p>
+                                </div>
+                                <div class="goods_price">
+                                    <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
+                                    <span class="pay_num">`+val.statistical_quantity+`人购买</span>
+                                </div>
+                            </li>`
+                })
+                $('.like_cont_ul').html(str);
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+})
+
