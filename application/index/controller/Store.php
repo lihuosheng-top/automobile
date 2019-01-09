@@ -23,8 +23,9 @@ class Store extends Controller{
      */
     public function index(Request $request){
         if($request->isPost()){
-            $store_id =$request->only("store_id")["store_id"];
+            $store_id =$request->only("storeId")["storeId"];
             $store_name =Db::name("store")->where("store_id",$store_id)->value("store_name");
+            halt($store_name);
             $parts_attitude_stars =Db::name("order_parts")
                 ->where("store_id",$store_id)
                 ->avg("service_attitude_stars");
@@ -41,8 +42,6 @@ class Store extends Controller{
             dump($service_attitude_stars);
             $sum =(round($parts_attitude_stars,2) + round($service_attitude_stars,2))/2;
             dump(round($sum,2));
-
-
         }
         return view("store_index");
     }
