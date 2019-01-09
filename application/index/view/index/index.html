@@ -9,6 +9,42 @@
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
     <link rel="stylesheet" href="__STATIC__/index/css/index/index.css">
     <link rel="stylesheet" href="__STATIC__/index/css/plugin/swiper-4.3.5.min.css">
+    <link rel="stylesheet" href="__STATIC__/index/js/plugin/citypicker/picker.css">
+    <script>
+        // 默认广告
+        if(!getCookie('pcd')){
+            getAdvertisment('广东,深圳,福田区');
+        }
+         // 判断机型
+        (function(){
+            var u = navigator.userAgent;
+            if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                callAndroid();
+                // 接收安卓回调内容
+                function getAndroid(e) {
+                    // 定位成功
+                    if(e.errorCode != 0){
+                        // 首次定位
+                        if(!getCookie('district')){
+                            threeAdress = e.province+','+e.city+','+e.district;
+                            setCookie('district', e.district, 3650);
+                            setCookie('pcd', threeAdress, 3650);
+                            document.getElementById('space-input').innerHTML = e.district;
+                            getAdvertisment(threeAdress);
+                        }
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: '定位失败，请稍后尝试',
+                            time: 1.2
+                        })
+                    }
+                }
+            }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
+                console.log('ios')
+            }
+        })()
+    </script>
     <style>
         body {
             padding-top: constant(safe-area-inset-top);
@@ -23,7 +59,7 @@
     <div class="wrapper">
         <div class="header">
             <div class="map">
-                <span class="curr_city">请登录</span>
+                <span class="curr_city" id="space-input">定位中</span>
                 <i class="spr icon_location"></i>
             </div> 
             <div class="search">
@@ -292,7 +328,7 @@
         </div>
     </div>
     <!-- 定位城市 -->
-    <div class="geclocation-pop" style="display:none;">
+    <!-- <div class="geclocation-pop" style="display:none;">
         <div class="container"></div>
         <header class="geclocation-title">
             <a href="javascript:;" class="spr gec-back"></a>
@@ -332,32 +368,33 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/jquery.charfirst.pinyin.js"></script>
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
     <!-- <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script>  -->
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
-    <!-- 三级城市脚本 start -->
-    <script src="__STATIC__/index/js/plugin/LAreaData1.js"></script>
-    <script src="__STATIC__/index/js/plugin/LAreaData2.js"></script>
-    <script src="__STATIC__/index/js/plugin/LArea.min.js"></script>
-    <!-- 三级城市脚本 end -->
+    <script src="__STATIC__/index/js/plugin/citypicker/citypicker.js"></script>
+    <script src="__STATIC__/index/js/plugin/citypicker/city.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
     <script>
-        // http://www.jq22.com/jquery-info8371 插件地址  三级城市
-        // var area = new LArea();
-        // area.init({
-        //     'trigger': '#area-li',//触发选择控件的文本框，同时选择完毕后name属性输出到该位置
-        //     'valueTo': '#value1',//选择完毕后id属性输出到该位置
-        //     'keys': { //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
-        //         id: 'id',
-        //         name: 'name'
-        //     },
-        //     'type': 1,//数据源类型
-        //     'data': LAreaData//数据源
-        // })
-        // area.value=[1,13,1];//控制初始位置，注意：该方法并不会影响到input的value
+        var citypicker = new CityPicker({
+            inputId: 'space-input',
+            data: city, // 符合格式的数组
+            cancel: function () {
+                console.log('取消城市选择');
+            },
+            initialOption: ['广东', '深圳', '福田区'],
+            success: function(arr) {
+                console.log(arr);
+                var province = arr[0].value;
+                var city = arr[1].value;
+                var district = arr[2].value;
+                setCookie('district', district, 3650);
+                document.getElementById('space-input').innerHTML = district;
+                getAdvertisment(province+','+city+','+district);
+            }
+        });
 
         // 获取广告
         function getAdvertisment(area){
@@ -382,14 +419,14 @@
                                                 </div>`;
                             }
                         })
-                        $('.swiper-wrapper').append(topSwiperStr);
+                        $('.swiper-wrapper').html('').html(topSwiperStr);
                         mySwiper();
                         // 首页固定广告
                         var indexFixStr = '';
                         indexFixStr += `<a href="`+res.data.fixed[0].url+`">
                                             <img src="uploads/`+res.data.fixed[0].advert_picture+`">
                                         </a>`
-                        $('.banner').append(indexFixStr);
+                        $('.banner').html('').html(indexFixStr);
                         // 热门推荐
                         var hot = res.data.hot;
                         var hotStr = `<div class="recommend_top">
@@ -426,7 +463,7 @@
                                             </div>
                                         </div>
                                     </div>`;
-                        $('.recommend_goods').append(hotStr);
+                        $('.recommend_goods').html('').html(hotStr);
                     }
                 },
                 error: function(){
@@ -454,9 +491,9 @@
         function callAndroid() {
             Android.getLocation();
         }
-        $('.gec-curr-box').click(function () {
-            callAndroid();
-        })
+        // callAndroid();
+       
+
         // 接收安卓回调data
         // var threeAdress;
         // function getAndroid(e) {
