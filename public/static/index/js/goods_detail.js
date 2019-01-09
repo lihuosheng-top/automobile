@@ -413,8 +413,8 @@ function myAjax(url, data, succCallBack){
     })
 }
 
-// 进入店铺
 (function(){
+    // 进入店铺
     $.ajax({
         url: 'go_to_store',
         type: 'POST',
@@ -423,15 +423,13 @@ function myAjax(url, data, succCallBack){
             'goods_id': id
         },
         success: function(res){
-            console.log('进入店铺'+res);
+            console.log('进入店铺',res);
         },
         error: function(){
             console.log('error');
         }
     })
-})()
-// 评价
-(function(){
+    // 评价
     $.ajax({
         url: 'goods_evaluate_return',
         type: 'POST',
@@ -440,10 +438,11 @@ function myAjax(url, data, succCallBack){
             'goods_id': id
         },
         success: function(res){
-            console.log('评价'+res);
+            console.log('进入店铺',res);
         },
         error: function(){
             console.log('error');
         }
     })
-})()
+}())
+
