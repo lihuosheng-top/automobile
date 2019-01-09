@@ -132,7 +132,6 @@ class Classify extends Controller
             $store_id = db("goods")->where("id",$goods_id)->value("store_id");
             $store_data =db("store")->field("store_name,store_logo_images")->where("store_id",$store_id)->find();
             $goods_info =db("goods")->where("store_id",$store_id)->limit(3)->select();
-            
 
 
         }
