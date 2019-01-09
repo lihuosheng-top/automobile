@@ -177,7 +177,16 @@
 	     <textarea rows="10" cols="50" name="recharge_describe">{$recharge_data.recharge_describe}</textarea>
 		</div>
 		</div>
-
+		{if $recharge_data.status==2}
+		<!--<div class="layui-form-item">-->
+			<!--<label class="layui-form-label">到款状态：</label>-->
+			<!--<div class="layui-input-block">-->
+				<!--<p>-->
+					<!--{$recharge_data.money_status|show_recharge_status}-->
+				<!--</p>-->
+			<!--</div>-->
+		<!--</div>-->
+		{elseif $recharge_data.status ==1}
 		<div class="layui-form-item">
 			<label class="layui-form-label">到款状态：</label>
 			<div class="layui-input-block">
@@ -186,6 +195,17 @@
 				</p>
 			</div>
 		</div>
+		{else}
+		<div class="layui-form-item">
+			<label class="layui-form-label">到款状态：</label>
+			<div class="layui-input-block">
+				<p>
+					{$recharge_data.money_status|show_recharge_status}
+				</p>
+			</div>
+		</div>
+		{/if}
+
 
 		<div class="layui-form-item">
 			<div class="layui-input-block">

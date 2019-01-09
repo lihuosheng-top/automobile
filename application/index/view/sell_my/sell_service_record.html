@@ -36,8 +36,8 @@
     <div class="wrapper">
         <header class="header">
             <a href="sell_my_index" class="spr icon-back"></a>
-            <a href="sell_service_record" class="head-txt head-txt-on">服务账单</a>
-            <a href="sell_parts_record" class="head-txt">商品账单</a>
+            <a href="sell_service_record" class="head-txt head-txt-on">账单</a>
+            <!-- <a href="sell_parts_record" class="head-txt">商品账单</a> -->
         </header>
         <div class="search-box">
             <i class="spr icon-search"></i>
@@ -84,6 +84,17 @@
     <script>
         $('.cost-li').click(function(){
             location.href = 'sell_order_bill';
+        })
+        $.ajax({
+            url: 'sell_service_record',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
         })
     </script>
 </body>
