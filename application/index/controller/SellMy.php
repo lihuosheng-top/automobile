@@ -23,6 +23,7 @@ class  SellMy extends Controller{
      */
     public function sell_my_index(Request $request){
         if($request->isPost()){
+            $user_id =Session::get("user");//用户id
             //店铺的id
             $role_name_store_id = Session::get("role_name_store_id");
             if(empty($role_name_store_id)){
@@ -33,16 +34,21 @@ class  SellMy extends Controller{
                 ->field("store_logo_images,store_id,store_name,user_id")
                 ->where("store_id",$role_name_store_id["store_id"])
                 ->find();
+            //本月账单
+            $timetoday = date("Y-m",time());//今月时间戳
+            $condition = " `operation_time` like '%{$timetoday}%' ";
+            $now_data = Db::name("wallet")
+                ->where("user_id",$user_id)
+                ->where($condition)
+                ->sum("wallet_operation");
+            //上月账单
             if(empty($store_info)){
                 exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
             }else{
                 exit(json_encode(array("status" => 1, "info" => "店铺信息返回成功","data"=> $store_info)));
             }
-            //今月账单
-            $timetoday = strtotime(date("Y",time()));//今月时间戳
-            $time2 = time() + 3600*24;//今天24点的时间点，两个值之间即为今天一天内的数据
-            $time_condition  = "order_create_time>{$timetoday} and order_create_time< {$time2}";
-            //上月账单
+
+
         }
         return view("sell_my_index");
     }
@@ -1709,45 +1715,240 @@ class  SellMy extends Controller{
                 ->order("operation_time","desc")
                 ->select();
             $datas =array(
-                "january"=>[],
-                "february"=>[],
-                "march"=>[],
-                "april"=>[],
-                "may"=>[],
-                "june"=>[],
-                "july"=>[],
-                "august"=>[],
-                "september"=>[],
-                "october"=>[],
-                "november"=>[],
-                "december"=>[],
+                "january"=>[
+                    "name"=>[]
+                ],
+                "february"=>[
+                    "name"=>[]
+                ],
+                "march"=>[
+                    "name"=>[]
+                ],
+                "april"=>[
+                    "name"=>[]
+                ],
+                "may"=>[
+                    "name"=>[]
+                ],
+                "june"=>[
+                    "name"=>[]
+                ],
+                "july"=>[
+                    "name"=>[]
+                ],
+                "august"=>[
+                    "name"=>[]
+                ],
+                "september"=>[
+                    "name"=>[]
+                ],
+                "october"=>[
+                    "name"=>[]
+                ],
+                "november"=>[
+                    "name"=>[]
+                ],
+                "december"=>[
+                    "name"=>[]
+                ],
             );
             foreach ($data as $ks=>$vs){
                 if(strpos($vs["operation_time"],$now_time_one."-01") !==false){
-                    $datas["january"][] =$vs;
+                    $datas["january"]["name"][] =$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[0]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[0]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 } else if(strpos($vs["operation_time"],$now_time_one."-02")  !==false){
-                    $datas["sebruary"][] =$vs;
+                    $datas["sebruary"]["name"][] =$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[1]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[1]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 }else if(strpos($vs["operation_time"],$now_time_one."-03")  !==false){
-                    $datas["march"][] =$vs;
+                    $datas["march"]["name"][]=$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[2]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[2]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 }else if(strpos($vs["operation_time"],$now_time_one."-04")  !==false){
-                    $datas["april"][] =$vs;
+                    $datas["april"]["name"][]=$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[3]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[3]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 }else if(strpos($vs["operation_time"],$now_time_one."-05")  !==false){
-                    $datas["may"][] =$vs;
+                    $datas["may"]["name"][]=$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[4]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[4]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 }else if(strpos($vs["operation_time"],$now_time_one."-06")  !==false){
-                    $datas["june"][] =$vs;
+                    $datas["june"]["name"][] =$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[5]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[5]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 }else if(strpos($vs["operation_time"],$now_time_one."-07")  !==false){
-                    $datas["july"][] =$vs;
+                    $datas["july"]["name"][] =$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[6]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[6]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 }else if(strpos($vs["operation_time"],$now_time_one."-08")  !==false){
-                    $datas["august"][] =$vs;
+                    $datas["august"]["name"][] =$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[7]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[7]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 }else if(strpos($vs["operation_time"],$now_time_one."-09") !==false){
-                    $datas["september"][] =$vs;
+                    $datas["september"]["name"][] =$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[8]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[8]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 }else if(strpos($vs["operation_time"],$now_time_one."-10") !==false){
-                    $datas["october"][] =$vs;
+                    $datas["october"]["name"][]=$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[9]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[9]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 }else if(strpos($vs["operation_time"],$now_time_one."-11") !==false){
-                    $datas["november"][] =$vs;
+                    $datas["november"]["name"][] =$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[10]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[10]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 }else if(strpos($vs["operation_time"],$now_time_one."-12") !==false){
-                    $datas["december"][] =$vs;
+                    $datas["december"]["name"][] =$vs;
+                    if($vs["wallet_type"]== -1){
+                        $data_res[11]["expenditure"][] =$vs["wallet_operation"]; //支出
+                    }else if($vs["wallet_type"]== 1){
+                        $data_res[11]["income"][] =$vs["wallet_operation"]; //收入
+                    }
                 }
+            }
+            if(!empty($data_res)){
+                foreach ($data_res as $ks=>$vs){
+                    if(!empty($vs["income"])){
+                        if($ks==0){
+                            $datas["january"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }elseif ($ks==1){
+                            $datas["sebruary"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }elseif ($ks==2){
+                            $datas["march"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }elseif ($ks==3){
+                            $datas["april"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }elseif ($ks==4){
+                            $datas["may"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }elseif ($ks==5){
+                            $datas["june"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }elseif ($ks==6){
+                            $datas["july"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }elseif ($ks==7){
+                            $datas["august"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }elseif ($ks==8){
+                            $datas["september"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }elseif ($ks==9){
+                            $datas["october"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }elseif ($ks==10){
+                            $datas["november"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }elseif ($ks==11){
+                            $datas["december"]["income"] =array_sum($data_res[$ks]["income"]);
+                        }
+                    }else{
+                        if($ks==0){
+                            $datas["january"]["income"] =0;
+                        }elseif ($ks==1){
+                            $datas["sebruary"]["income"] =0;
+                        }elseif ($ks==2){
+                            $datas["march"]["income"] =0;
+                        }elseif ($ks==3){
+                            $datas["april"]["income"] =0;
+                        }elseif ($ks==4){
+                            $datas["may"]["income"] =0;
+                        }elseif ($ks==5){
+                            $datas["june"]["income"] =0;
+                        }elseif ($ks==6){
+                            $datas["july"]["income"] =0;
+                        }elseif ($ks==7){
+                            $datas["august"]["income"] =0;
+                        }elseif ($ks==8){
+                            $datas["september"]["income"] =0;
+                        }elseif ($ks==9){
+                            $datas["october"]["income"] =0;
+                        }elseif ($ks==10){
+                            $datas["november"]["income"] =0;
+                        }elseif ($ks==11){
+                            $datas["december"]["income"] =0;
+                        }
+                    }
+                    if(!empty($vs["expenditure"])){
+                        if($ks==0){
+                            $datas["january"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }elseif ($ks==1){
+                            $datas["sebruary"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }elseif ($ks==2){
+                            $datas["march"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }elseif ($ks==3){
+                            $datas["april"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }elseif ($ks==4){
+                            $datas["may"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }elseif ($ks==5){
+                            $datas["june"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }elseif ($ks==6){
+                            $datas["july"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }elseif ($ks==7){
+                            $datas["august"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }elseif ($ks==8){
+                            $datas["september"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }elseif ($ks==9){
+                            $datas["october"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }elseif ($ks==10){
+                            $datas["november"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }elseif ($ks==11){
+                            $datas["december"]["expenditure"] =array_sum($data_res[$ks]["expenditure"]);
+                        }
+                    }else{
+                        if($ks==0){
+                            $datas["january"]["expenditure"] =0;
+                        }elseif ($ks==1){
+                            $datas["sebruary"]["expenditure"] =0;
+                        }elseif ($ks==2){
+                            $datas["march"]["expenditure"] =0;
+                        }elseif ($ks==3){
+                            $datas["april"]["expenditure"] =0;
+                        }elseif ($ks==4){
+                            $datas["may"]["expenditure"] =0;
+                        }elseif ($ks==5){
+                            $datas["june"]["expenditure"] =0;
+                        }elseif ($ks==6){
+                            $datas["july"]["expenditure"] =0;
+                        }elseif ($ks==7){
+                            $datas["august"]["expenditure"] =0;
+                        }elseif ($ks==8){
+                            $datas["september"]["expenditure"] =0;
+                        }elseif ($ks==9){
+                            $datas["october"]["expenditure"] =0;
+                        }elseif ($ks==10){
+                            $datas["november"]["expenditure"] =0;
+                        }elseif ($ks==11){
+                            $datas["december"]["expenditure"] =0;
+                        }
+                    }
+                }
+
             }
             $res =[
                 "wallet_record"=>$datas

@@ -1,5 +1,4 @@
 
-
 // 上传图片 https://blog.csdn.net/scrat_kong/article/details/79230329
 function uploadImg(input,img){
     var input = document.getElementById(input);
