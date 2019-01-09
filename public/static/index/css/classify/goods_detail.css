@@ -673,27 +673,29 @@ html{
 .shop-card .card-title span{
     font-size: .3rem;
     color: #666666;
-    margin-right: 1rem;
+    flex: 1;
+    margin-right: .1rem;
+    line-height: normal;
 }
 .shop-card .card-title a{
     display: inline-block;
-    width: 1.2rem;
-    height: .45rem;
     border: 1px solid #fd4a2d;
     color: #fd4a2d;
     font-size: .26rem;
     text-align: center;
     line-height: .45rem;
-    border-radius: .23rem;
+    border-radius: .1rem;
+    padding: 0 .15rem;
 }
 .card-show{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 .card-show div{
     position: relative;
     width: 32%;
     height: 2.74rem;
+    margin-right: 5px;
 }
 .card-show div img{
     width: 100%;

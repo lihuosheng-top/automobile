@@ -413,8 +413,8 @@ function myAjax(url, data, succCallBack){
     })
 }
 
-(function(){
-    // 进入店铺
+// 进入店铺
+$(function(){
     $.ajax({
         url: 'go_to_store',
         type: 'POST',
@@ -424,12 +424,29 @@ function myAjax(url, data, succCallBack){
         },
         success: function(res){
             console.log('进入店铺',res);
+            if(res.status == 1){
+                var storeData = res.data.store_data;
+                $('.card-title')
+                    .html(`<img src="uploads/`+storeData.store_logo_images+`">
+                            <span class="txt-hid-one">`+storeData.store_name+`</span>
+                            <a href="store_index?storeId=`+res.data.store_id+`">进店</a>`)
+                var str = '';
+                res.data.goods_info.forEach(function(val, idx){
+                    str += `<div>
+                                <img src="uploads/`+val.goods_show_images+`">
+                                <p>￥`+val.special_info[0].goods_adjusted_price+`</p>
+                            </div>`
+                })
+                $('.card-show').html(str);
+            }
         },
         error: function(){
             console.log('error');
         }
     })
-    // 评价
+})
+// 评价
+$(function(){
     $.ajax({
         url: 'goods_evaluate_return',
         type: 'POST',
@@ -438,13 +455,13 @@ function myAjax(url, data, succCallBack){
             'goods_id': id
         },
         success: function(res){
-            console.log('进入店铺',res);
+            console.log('评价',res);
         },
         error: function(){
             console.log('error');
         }
     })
-}())
+})
 
 // 你可能喜欢
 $(function(){
@@ -466,8 +483,8 @@ $(function(){
                                         <p class="txt-hid-two">`+val.goods_name+`</p>
                                     </div>
                                     <div class="goods_price">
-                                        <span class="price">￥`+val.goods_adjusted_money+`</span>
-                                        <span class="pay_num">1500人购买</span>
+                                        <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
+                                        <span class="pay_num">`+val.statistical_quantity+`人购买</span>
                                     </div>
                                 </li>`
                         return;
@@ -480,8 +497,8 @@ $(function(){
                                     <p class="txt-hid-two">`+val.goods_name+`</p>
                                 </div>
                                 <div class="goods_price">
-                                    <span class="price">￥`+val.goods_adjusted_money+`</span>
-                                    <span class="pay_num">1500人购买</span>
+                                    <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
+                                    <span class="pay_num">`+val.statistical_quantity+`人购买</span>
                                 </div>
                             </li>`
                 })
