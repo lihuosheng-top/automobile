@@ -170,6 +170,19 @@ class Classify extends Controller
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:商品详情页面的评价数据
+     **************************************
+     */
+    public function goods_evaluate_return(Request $request){
+        if($request->isPost()){
+            $goods_id = $request->only(["goods_id"])["goods_id"];
+        }
+    }
+
+
 
     /**
      * 获取配件城id
