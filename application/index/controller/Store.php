@@ -24,27 +24,74 @@ class Store extends Controller{
     public function index(Request $request){
         if($request->isPost()){
             $store_id =$request->only("store_id")["store_id"];
-            $store_name =Db::name("store")->where("store_id",$store_id)->value("store_name");
-            $parts_attitude_stars =Db::name("order_parts")
+            $store_info =Db::name("store")->where("store_id",$store_id)->field("store_name,store_logo_images")->find();
+            $parts_attitude_stars =Db::name("order_parts_evaluate")
+                ->where("store_id",$store_id)
+                ->avg('service_attitude_stars');
+            $service_attitude_stars =Db::name("order_service_evaluate")
                 ->where("store_id",$store_id)
                 ->avg("service_attitude_stars");
-//            $parts_attitude_num =Db::name("order_service")
-//                ->where("store_id",$store_id)
-//                ->count();
-            $service_attitude_stars =Db::name("order_service")
-                ->where("store_id",$store_id)
-                ->avg("service_attitude_stars");
-//            $service_attitude_num =Db::name("order_service")
-//                ->where("store_id",$store_id)
-//                ->count();
-            dump($parts_attitude_stars);
-            dump($service_attitude_stars);
             $sum =(round($parts_attitude_stars,2) + round($service_attitude_stars,2))/2;
-            dump(round($sum,2));
+            $store_star =round($sum,2);
+            $data =[
+                "store_info"=>$store_info,
+                "store_star"=>$store_star,
+            ];
+            if(!empty($data)){
+                return ajax_success("成功",$data);
+            }else{
+                return ajax_error("请重新进入",["status"=>0]);
+            }
         }
         return view("store_index");
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:店铺内的商品（综合）
+     **************************************
+     */
+    public function store_goods_info(Request $request){
+        if($request->isPost()){
+            $store_id = $request->only(["id"])["id"];
+            $goods_data = [];
+            $goods = db("goods")
+                ->where("store_id",$store_id)
+                ->select();
+            foreach ($goods as $kye=>$value){
+                $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
+                $store = db("store")->where("store_id",$value["store_id"])->where($where)->find();
+                if(!empty($store)){
+                    if($value["goods_status"] == 1 && !empty($store)){
+                        $special_data[] =db("special")
+                            ->where("goods_id",$value["id"])
+                            ->select();
+                        $statistical_quantity[] =db("order_parts")
+                            ->where("goods_id",$value["id"])
+                            ->count();
+                        unset($goods[$kye]);
+                        $goods_data[] = $value;
+                    }
+                }
+            }
+            if(!empty($special_data)){
+                foreach ($special_data as $k=>$v){
+                    $goods_data[$k]["special"] =$v;
+                }
+            }
+            if(!empty($statistical_quantity)){
+                foreach ($statistical_quantity as $k=>$v){
+                    $goods_data[$k]["statistical_quantity"] =$v;
+                }
+            }
+            if($goods_data){
+                return ajax_success("获取成功",$goods_data);
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
+    }
 
 
     /**

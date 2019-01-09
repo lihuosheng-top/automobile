@@ -235,6 +235,10 @@ class Classify extends Controller
                 ->field("images")
                 ->where("evaluate_order_id",$evaluate_id)
                 ->select();
+            $evaluate_info["user_info"] = db("user")
+                ->where("id", $evaluate_info["evaluate_info"]["user_id"])
+                ->field("user_img,phone_num")
+                ->find();
             if(!empty($evaluate_info)){
                 return ajax_success("成功返回",$evaluate_info);
             }else{
