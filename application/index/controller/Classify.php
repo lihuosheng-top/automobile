@@ -207,6 +207,10 @@ class Classify extends Controller
                   ->where("id",$vs["order_id"])
                   ->field("order_create_time")
                   ->find();
+                $evaluate_info[$ks]["user_info"] =db("user")
+                    ->where("id",$vs["user_id"])
+                    ->field("user_img,phone_num")
+                    ->find();
             }
            if(!empty($evaluate_info)){
                 return ajax_success("数据返回成功",$evaluate_info);
