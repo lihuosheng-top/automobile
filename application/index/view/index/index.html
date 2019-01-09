@@ -10,41 +10,6 @@
     <link rel="stylesheet" href="__STATIC__/index/css/index/index.css">
     <link rel="stylesheet" href="__STATIC__/index/css/plugin/swiper-4.3.5.min.css">
     <link rel="stylesheet" href="__STATIC__/index/js/plugin/citypicker/picker.css">
-    <script>
-        // 默认广告
-        if(!getCookie('pcd')){
-            getAdvertisment('广东,深圳,福田区');
-        }
-         // 判断机型
-        (function(){
-            var u = navigator.userAgent;
-            if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
-                callAndroid();
-                // 接收安卓回调内容
-                function getAndroid(e) {
-                    // 定位成功
-                    if(e.errorCode != 0){
-                        // 首次定位
-                        if(!getCookie('district')){
-                            threeAdress = e.province+','+e.city+','+e.district;
-                            setCookie('district', e.district, 3650);
-                            setCookie('pcd', threeAdress, 3650);
-                            document.getElementById('space-input').innerHTML = e.district;
-                            getAdvertisment(threeAdress);
-                        }
-                    }else{
-                        layer.open({
-                            skin: 'msg',
-                            content: '定位失败，请稍后尝试',
-                            time: 1.2
-                        })
-                    }
-                }
-            }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
-                console.log('ios')
-            }
-        })()
-    </script>
     <style>
         body {
             padding-top: constant(safe-area-inset-top);
@@ -378,6 +343,39 @@
     <script src="__STATIC__/index/js/plugin/citypicker/city.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
     <script>
+        // 默认广告
+        if(!getCookie('pcd')){
+            getAdvertisment('广东,深圳,福田区');
+        }
+        // 判断机型
+        (function(){
+            var u = navigator.userAgent;
+            if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                callAndroid();
+                // 接收安卓回调内容
+                function getAndroid(e) {
+                    // 定位成功
+                    if(e.errorCode != 0){
+                        // 首次定位
+                        if(!getCookie('district')){
+                            threeAdress = e.province+','+e.city+','+e.district;
+                            setCookie('district', e.district, 3650);
+                            setCookie('pcd', threeAdress, 3650);
+                            document.getElementById('space-input').innerHTML = e.district;
+                            getAdvertisment(threeAdress);
+                        }
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: '定位失败，请稍后尝试',
+                            time: 1.2
+                        })
+                    }
+                }
+            }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
+                console.log('ios')
+            }
+        })()
         var citypicker = new CityPicker({
             inputId: 'space-input',
             data: city, // 符合格式的数组
