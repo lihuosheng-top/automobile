@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use think\Controller;
+use think\Db;
 use think\Request;
 use think\Session;
 
@@ -162,6 +163,10 @@ class Classify extends Controller
                 ->order('rand()')
                 ->limit(2)
                 ->select();
+            foreach ($goods_info as $ks =>$vs){
+                $goods_info[$ks]["special_info"] =db("special")->where("goods_id",$vs["id"])->select();
+                $goods_info[$ks]["statistical_quantity"] =db("order_parts")->where("goods_id",$vs["id"])->sum("order_quantity");
+            }
             if(!empty($goods_info)){
                 return ajax_success("数据成功",$goods_info);
             }else{
@@ -173,12 +178,28 @@ class Classify extends Controller
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:商品详情页面的评价数据
+     * Notes:配件商商品详情页面的评价数据
      **************************************
      */
     public function goods_evaluate_return(Request $request){
         if($request->isPost()){
             $goods_id = $request->only(["goods_id"])["goods_id"];
+            $evaluate_info =db("order_parts_evaluate")->where("goods_id",$goods_id)->select();
+            foreach ($evaluate_info as $ks=>$vs){
+              $evaluate_info[$ks]["images"] = db("order_parts_evaluate_images")
+                  ->field("images")
+                  ->where("evaluate_order_id",$vs["id"])
+                  ->select();
+              $evaluate_info[$ks]["order_create_time"] =db("order_parts")
+                  ->where("id",$vs["order_id"])
+                  ->field("order_create_time")
+                  ->find();
+            }
+            dump($evaluate_info);
+
+
+
+
         }
     }
 

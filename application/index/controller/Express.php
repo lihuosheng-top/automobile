@@ -62,7 +62,7 @@ class  Express extends  Controller{
             $store = db("store")->where("store_city_address", $delivery_data[0]["area"])->where($where)->select();
             $delivery = [];
             foreach ($store as $key => $value) {
-                $order = db("order_parts")->where("store_id", $value["store_id"])->where("status",2)->whereOr("status",11)->select();
+                $order = db("order_parts")->where("store_id", $value["store_id"])->where("status",2)->select();
                 foreach ($order as $val) {
                     $delivery[] = array("store_name" => $value["store_name"],
                         "store_address" => $value["store_detailed_address"],
@@ -75,6 +75,30 @@ class  Express extends  Controller{
                         "store_id"=>$value["store_id"],
                         "order_status"=>$val["status"]
                     );
+                }
+            }
+            $service = db("service")->select();
+            if(!empty($service)) {
+                foreach ($service as $k => $v) {
+                    if ($v["status"] == 2) {
+                        foreach ($store as $v_1) {
+                            $order = db("order_parts")->where("id", $v["order_id"])->where("store_id", $v_1["store_id"])->where("status",13)->select();
+                            foreach ($order as $v_2) {
+                                $delivery[] = array("store_name" => $v_1["store_name"],
+                                    "store_address" => $v_1["store_detailed_address"],
+                                    "order_id" => $v_2["id"],
+                                    "order_address" => $v_2["harvester_address"],
+                                    "order_user_number" => $v_2["user_phone_number"],
+                                    "store_number" => db("user")->where("id", $v_1["user_id"])->value("phone_num"),
+                                    "order_create_time" => $v_2["order_create_time"],
+                                    "parts_order_number" => $v_2["parts_order_number"],
+                                    "store_id" => $v_1["store_id"],
+                                    "order_status" => $v_2["status"]
+                                );
+                            }
+                        }
+                    }
+
                 }
             }
             if($delivery) {
@@ -102,9 +126,9 @@ class  Express extends  Controller{
             $bool = db("delivery_order")->insert($express_data);
             $order_status = $request->only(["order_status"])["order_status"];
             if ($bool) {
-                if($order_status == 11){
+                if($order_status == 13){
                     Session::set("order_status",$order_status);
-                    db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>13]);
+                    db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>15]);
                 }else{
                     db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>3]);
                 }
@@ -155,8 +179,8 @@ class  Express extends  Controller{
             $bool = db("delivery_order")->where("id",$id)->update(["status"=>2]);
             if($bool){
                 $order_status = Session::get("order_status");
-                if($order_status == 11){
-                    db("order_parts")->where("id",$order)->update(["status"=>13]);
+                if($order_status == 13){
+                    db("order_parts")->where("id",$order)->update(["status"=>15]);
                 }else{
                     db("order_parts")->where("id",$order)->update(["status"=>4]);
                 }
@@ -207,7 +231,7 @@ class  Express extends  Controller{
             $bool = db("delivery_order")->where("id",$id)->update(["status"=>3]);
             if($bool){
                 $order_status = Session::get("order_status");
-                if($order_status == 11){
+                if($order_status == 13){
                     db("order_parts")->where("id",$order)->update(["status"=>12]);
                 }else{
                     db("order_parts")->where("id",$order)->update(["status"=>5]);
