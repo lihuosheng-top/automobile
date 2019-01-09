@@ -363,6 +363,8 @@
                             setCookie('pcd', threeAdress, 3650);
                             document.getElementById('space-input').innerHTML = e.district;
                             getAdvertisment(threeAdress);
+                        }else{
+                            document.getElementById('space-input').innerHTML = getCookie('district');
                         }
                     }else{
                         layer.open({
