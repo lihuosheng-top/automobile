@@ -217,7 +217,28 @@ class Classify extends Controller
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商商品详情页面的评价数据查看详情
+     **************************************
+     */
+    public function goods_evaluate_detail(Request $request){
+        if($request->isPost()){
+            $evaluate_id = $request->only(["id"])["id"];//评价的id
+            $evaluate_info["evaluate_info"] =db("order_parts_evaluate")->where("id",$evaluate_id)->find();
+            $evaluate_info["images"] =db("order_parts_evaluate_images")
+                ->field("images")
+                ->where("evaluate_order_id",$evaluate_id)
+                ->select();
+            if(!empty($evaluate_info)){
+                return ajax_success("成功返回",$evaluate_info);
+            }else{
+                return ajax_error("请重新查看",["status"=>0]);
+            }
 
+        }
+    }
 
     /**
      * 获取配件城id
