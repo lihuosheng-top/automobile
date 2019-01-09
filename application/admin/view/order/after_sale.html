@@ -23,8 +23,8 @@
 		display: none;
 	}
 	/* 弹窗 */
-	
-    
+
+
     .tanchuang {
         width: 100%;
         min-height: 1100px;
@@ -36,7 +36,7 @@
         width: 100px;
         height: 30px;
     }
-	
+
 	.tanchuang-content {
 		width: 800px;
 		height: 600px;
@@ -46,19 +46,19 @@
 		top: 20%;
 		left: 20%;
 	}
-	
+
 	.close {
 		width: 30px;
 	}
-	
+
 	.clear {
 		clear: both;
 	}
-	
+
 	.title-a {
 		background: RGB(247, 247, 247);
 	}
-	
+
 	.content-title {
 		padding-top: 10px;
 		padding-left: 20px;
@@ -66,24 +66,24 @@
 		width: 50%;
 		height: 40px;
 	}
-	
+
 	.noshow {
 		display: none;
 	}
 	/* 弹窗内容样式 */
-	
+
 	.list-a ul li {
 		float: left;
 		margin-left: 26px;
 		font-size: 12px;
 	}
-	
+
 	.dom>ul {
 		margin-top: 10px;
 		margin-bottom: 0px;
 		margin-left: 50px;
 	}
-	
+
 	.dom>ul>li {
 		float: left;
 		width: 100px;
@@ -93,13 +93,13 @@
 		height: 40px;
 		line-height: 40px;
 	}
-	
+
 	.list {
 		padding-top: 20px;
 		margin-left: 30px;
 		border-top: RGB(242, 242, 242) solid 1px;
 	}
-	
+
 	.cancel {
 		border-bottom: solid 1px RGB(242, 242, 242);
 		margin-left: 26px;
@@ -107,24 +107,24 @@
 		margin-top: 18px;
 		font-size: 12px;
 	}
-	
+
 	.reply {
 		margin: 15px;
 	}
-	
+
 	.reply-content {
 		margin-top: 11px;
 		min-height: 175px;
 		max-height: 175px;
 		overflow-y: scroll;
 	}
-	
+
 	.opation>div {
 		float: left;
 		margin-left: 26px;
 		margin-top: 10px;
 	}
-	
+
 	.btu-sumit {
 		position: absolute;
 		bottom: 25px;
@@ -137,24 +137,24 @@
 		height: 40px;
 		margin-right: 24px;
 	}
-	
+
 	.active {
 		background: #F2F2F2;
 	}
 	/* 物流线 */
 	/* flow start */
-	
+
 	.flowSwrap {
 		position: relative;
 		margin: 0 auto;
 		width: 720px;
 		/*background-color: rgba(0,0,0,.3);*/
 	}
-	
+
 	.flowCell {
 		overflow: hidden;
 	}
-	
+
 	.cell-left {
 		width: 190px;
 		padding-right: 28px;
@@ -163,7 +163,7 @@
 		vertical-align: middle;
 		/*background-color: goldenrod;*/
 	}
-	
+
 	.cell-right {
 		padding-left: 28px;
 		text-align: left;
@@ -171,7 +171,7 @@
 		vertical-align: middle;
 		/*background-color:green;*/
 	}
-	
+
 	.cell-center {
 		height: 60px;
 		width: 20px;
@@ -179,27 +179,27 @@
 		vertical-align: middle;
 		/*background-color: azure;*/
 	}
-	
+
 	.cell-left .t1 {
 		font-size: 10px;
 	}
-	
+
 	.cell-left .t2 {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t1_start {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t1 {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t2 {
 		font-size: 10px;
 	}
-	
+
 	.flow-line {
 		position: absolute;
 		width: 3px;
@@ -208,12 +208,12 @@
 		left: 210px;
 		z-index: -1;
 	}
-	
+
 	.firstImg {
 		height: 20px;
 		width: 20px;
 	}
-	
+
 	tbody button {
 		width: 100px;
 		height: 30px;
@@ -235,7 +235,7 @@
             height: 30px;
 	}
 	/*  flow  end */
-	
+
 	.pagination {
 		float: right;
 	}
@@ -260,7 +260,7 @@
 						<li class="active" data-id="list-a">订单处理</li>
 						<li data-id="list-b">物流跟踪</li>
 					</ul>
-	
+
 					<div class="list-a list">
 						<ul class="clear">
 							<li>
@@ -314,9 +314,9 @@
 									<img :src="'__STATIC__/uploads/'+item" alt="">
 								</div>
 							</div>
-							
+
 						</div>
-						
+
 						<div class="reply">
 							<span>官方回复</span>
 							<span><input type="text" name="" value="" placeholder="请输入处理备注" style="width: 400px; height: 30px;" id="note_tip" /></span>
@@ -355,10 +355,10 @@
 							</div>
 							<div class="select-operation">
 								<span>退款金额</span>
-								
+
 								<input type="text" name="" id="refund_amount" value="" />
 							</div>
-	
+
 						</div>
 					</div>
 					<div class="list-b list noshow">
@@ -505,10 +505,34 @@
 								待处理
 								{/if}
 								{if $value.status == 1}
-								已处理
+								已拒绝
 								{/if}
 								{if $value.status == 2}
-								已拒绝
+								已通过
+								{/if}
+								{if $value.status == 3}
+								已退款
+								{/if}
+								{if $value.status == 4}
+								待发货
+								{/if}
+								{if $value.status == 5}
+								已发货
+								{/if}
+								{if $value.status == 6}
+								待收货
+								{/if}
+								{if $value.status == 7}
+								已收货
+								{/if}
+								{if $value.status == 8}
+								已完成
+								{/if}
+								{if $value.status == 9}
+								已关闭
+								{/if}
+								{if $value.status == 10}
+								订单取消
 								{/if}
 							</button>
 						</td>
@@ -752,7 +776,7 @@
 		success: function(data) {
 			$(".tanchuang").removeClass("noshow");
 			data = eval("(" + data + ")");
-			
+
 			var order_create_time=timestampToTime(data.data.order_create_time);
 			new Vue({
 				el: '.list-a',
@@ -767,8 +791,8 @@
 					buy_message:data.data[0].order.buy_message,
 					service_images:data.data[0].service_images
 				},
-				
-			
+
+
 			})
 		},
 		error: function(data) {
@@ -801,15 +825,15 @@ $(".btu-sumit").on('click', function() {
 			var timestamp = Date.parse(new Date());
 			$.ajax({
 				type: "POST",
-				url: "{:url('aaa')}",
+				url: "{:url('admin/Order/after_save')}",
 				async: false,
 				data: {
 					"id": id,
-					"sell_message": note_tip,
+					"service_dispose": note_tip,
 					"status": static_select,
-					"pay_type_content": pay_type_content,
-					"refund_amount": refund_amount,
-					"timestamp":timestamp
+					"refund_method": pay_type_content,
+					"refund_money": refund_amount,
+					"dispose_time":timestamp
 				},
 				success: function(data) {
 					console.log(data)
