@@ -259,6 +259,7 @@ Route::group("",[
     "go_to_store"=>"index/Classify/go_to_store",//商品详情页面进店信息返回
     "may_like_goods"=>"index/Classify/may_like_goods",//商品详情页面你可能还喜欢
     "goods_evaluate_return"=>"index/Classify/goods_evaluate_return",//商品详情页面商品详情页面的评价数据
+    "goods_evaluate_detail"=>"index/Classify/goods_evaluate_detail",//配件商商品详情页面的评价数据查看详情
     /*TODO:商品详情页面信息结束*/
 
 

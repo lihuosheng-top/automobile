@@ -41,8 +41,6 @@ class Store extends Controller{
             dump($service_attitude_stars);
             $sum =(round($parts_attitude_stars,2) + round($service_attitude_stars,2))/2;
             dump(round($sum,2));
-
-
         }
         return view("store_index");
     }
