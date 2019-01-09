@@ -366,7 +366,7 @@
             if(e.errorCode === 0){
                 // 首次定位
                 if(!getCookie('district')){
-                    alert(e.district);
+                    // alert(e.district);
                     var province = e.province;
                     var city = e.city;
                     var district = e.district;
@@ -376,7 +376,7 @@
                     document.getElementById('space-input').innerHTML = district;
                     getAdvertisment(threeAdress);
                 }else{
-                    alert('cookie')
+                    // alert('cookie')
                     document.getElementById('space-input').innerHTML = getCookie('district');
                 }
             }else{

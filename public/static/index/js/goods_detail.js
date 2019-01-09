@@ -412,3 +412,21 @@ function myAjax(url, data, succCallBack){
         }
     })
 }
+
+// 进入店铺
+(function(){
+    $.ajax({
+        url: 'go_to_store',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'goods_id': id
+        },
+        success: function(res){
+            console.log('进入店铺'+res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+})()

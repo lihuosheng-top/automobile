@@ -479,7 +479,7 @@
 						<td>{$value.user.phone_num}</td>
 						<td>
 							{if !empty($value.dispose_time)}
-							{$value.dispose_time|date="Y-m-d H:i",###}
+							{$value.dispose_time|date="Y-m-d H:i:s",###}
 							{else}
 							无
 							{/if}
@@ -487,37 +487,16 @@
 						<td>
 							<button type="button " class="state for-the-payment " data-id="{$value.id}">
 								{if $value.status == 0}
-								待处理
+								处理中
 								{/if}
 								{if $value.status == 1}
-								已拒绝
+								拒绝
 								{/if}
 								{if $value.status == 2}
-								已通过
+								收货中
 								{/if}
 								{if $value.status == 3}
-								已退款
-								{/if}
-								{if $value.status == 4}
-								待发货
-								{/if}
-								{if $value.status == 5}
-								已发货
-								{/if}
-								{if $value.status == 6}
-								待收货
-								{/if}
-								{if $value.status == 7}
-								已收货
-								{/if}
-								{if $value.status == 8}
-								已完成
-								{/if}
-								{if $value.status == 9}
-								已关闭
-								{/if}
-								{if $value.status == 10}
-								订单取消
+								完成退款
 								{/if}
 							</button>
 						</td>
@@ -814,10 +793,10 @@ $(".btu-sumit").on('click', function() {
 			var static_select = $("#static_select  option:selected").val();
 			var  pay_type_content=$("#pay_type_content  option:selected").val();
 			var refund_amount = $("#refund_amount").val();
-			var timestamp = Date.getTime();
+			var timestamp = new Date().getTime();
 			$.ajax({
 				type: "POST",
-				url: "{:url('admin/Order/after_saves')}",
+				url: "{:url('admin/Order/after_save')}",
 				async: false,
 				data: {
 					"id": id,

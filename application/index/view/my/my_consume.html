@@ -69,43 +69,76 @@
                 if(res.status == 1){
                     var data = res.data.wallet_record;
                     if(data.january.length > 0){
-                        $('.cost-detail').before(mySplicing(data.january, 1));
+                        $('.cost-detail').prepend(mySplicing(data.january, 1));
                         $('.cost-li').click(function(){
                             checkDetail(this);
                         })
                     }
                     if(data.february.length > 0){
-                        $('.cost-detail').before(mySplicing(data.february, 2));
+                        $('.cost-detail').prepend(mySplicing(data.february, 2));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
                     }
                     if(data.march.length > 0){
-                        $('.cost-detail').before(mySplicing(data.march, 3));
+                        $('.cost-detail').prepend(mySplicing(data.march, 3));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
                     }
                     if(data.april.length > 0){
-                        $('.cost-detail').before(mySplicing(data.april, 4));
+                        $('.cost-detail').prepend(mySplicing(data.april, 4));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
                     }
                     if(data.may.length > 0){
-                        $('.cost-detail').before(mySplicing(data.may, 5));
+                        $('.cost-detail').prepend(mySplicing(data.may, 5));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
                     }
                     if(data.june.length > 0){
-                        $('.cost-detail').before(mySplicing(data.june, 6));
+                        $('.cost-detail').prepend(mySplicing(data.june, 6));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
                     }
                     if(data.july.length > 0){
-                        $('.cost-detail').before(mySplicing(data.july, 7));
+                        $('.cost-detail').prepend(mySplicing(data.july, 7));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
                     }
                     if(data.august.length > 0){
-                        $('.cost-detail').before(mySplicing(data.august, 8));
+                        $('.cost-detail').prepend(mySplicing(data.august, 8));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
                     }
                     if(data.september.length > 0){
-                        $('.cost-detail').before(mySplicing(data.september, 9));
+                        $('.cost-detail').prepend(mySplicing(data.september, 9));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
                     }
                     if(data.october.length > 0){
-                        $('.cost-detail').before(mySplicing(data.october, 10));
+                        $('.cost-detail').prepend(mySplicing(data.october, 10));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
                     }
                     if(data.november.length > 0){
-                        $('.cost-detail').before(mySplicing(data.november, 11));
+                        $('.cost-detail').prepend(mySplicing(data.november, 11));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
                     }
                     if(data.december.length > 0){
-                        $('.cost-detail').before(mySplicing(data.december, 12));
+                        $('.cost-detail').prepend(mySplicing(data.december, 12));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
                     }
                 }
             },
@@ -126,7 +159,7 @@
                                 <p class="txt-hid-one">`+val.title+`</p>
                                 <span>`+val.operation_time+`</span>
                             </div>
-                            <div class="cost-money">`+val.wallet_operation+`</div>
+                            <div class="cost-money">`+(val.wallet_operation > 0 ? '+'+val.wallet_operation : val.wallet_operation)+`</div>
                         </li>`
             })
             str += `</ul>`;
