@@ -159,7 +159,12 @@ class Classify extends Controller
      */
     public function may_like_goods(Request $request){
         if($request->isPost()){
-            $goods_info =db("goods")
+            $goods_info =Db::table("tb_goods")
+                ->field("tb_goods.*")
+                ->join("tb_store","tb_goods.store_id=tb_store.store_id","left")
+                ->where("tb_store.del_status",1)
+                ->where("tb_store.store_is_button",1)
+                ->where("tb_store.operation_status",1)
                 ->order('rand()')
                 ->limit(2)
                 ->select();
