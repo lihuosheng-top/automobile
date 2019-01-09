@@ -492,7 +492,6 @@ class My extends Controller
             }else{
                 return ajax_error("请重新刷新",["status"=>0]);
             }
-
         }
         return view("consume_message");
     }

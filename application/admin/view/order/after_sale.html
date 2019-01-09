@@ -33,7 +33,7 @@
         z-index: 9999;
     }
     .select-operation select{
-        width: 100px;
+        width: 144px;
         height: 30px;
     }
 
@@ -256,12 +256,14 @@
 				<!-- 里面的内容 -->
 				<button type="button" class="btu-sumit" data-id="">确定</button>
 				<div class="dom">
+					
 					<ul class="clear card">
 						<li class="active" data-id="list-a">订单处理</li>
 						<li data-id="list-b">物流跟踪</li>
 					</ul>
 
 					<div class="list-a list">
+						<input type="button"   @click ="reflash" id="reflash"  style=" display: none;"/>
 						<ul class="clear">
 							<li>
 								<span>订单状态：</span>
@@ -329,33 +331,16 @@
 							<div class="select-operation">
 								<span>选择状态</span>
 								<select id="static_select">
-									<option value="">请选择</option>
-									<option value="0">待处理</option>
-									<option value="1">已拒绝</option>
-									<option value="2">已通过</option>
-									<option value="3">已退款</option>
-									<option value="4">待发货</option>
-									<option value="5">已发货</option>
-									<option value="6">待收货</option>
-									<option value="7">已收货</option>
-									<option value="8">已完成</option>
-									<option value="9">已关闭</option>
-									<option value="10">取消订单</option>
+									<option >请选择</option>
+									<option value="0">处理中</option>
+									<option value="1">拒绝</option>
+									<option value="2">收货中</option>
+									<option value="3">完成退款</option>
 								</select>
 							</div>
-							<div class="select-operation">
-								<span>退款方式</span>
-								<select id="pay_type_content">
-									<option value="">请选择</option>
-									<option value="0">支付宝</option>
-									<option value="1">微信</option>
-									<option value="2">退回原支付渠道</option>
-									<option value="3">银行卡</option>
-								</select>
-							</div>
+						
 							<div class="select-operation">
 								<span>退款金额</span>
-
 								<input type="text" name="" id="refund_amount" value="" />
 							</div>
 
@@ -485,7 +470,7 @@
 				{if !empty($value.order)}
 					<tr>
 						<td><input type="checkbox" sname=" " lay-skin="primary" lay-filter="choose"></td>
-						<td>{$value.order.parts_order_number}</td>
+						<td>{$value.order.parts_order_number}</td> 
 						<td>{$value.create_time|date="Y-m-d H:i",###}</td>
 						<td>{$value.user.phone_num}</td>
 						<td>{$value.refund_money == null ? "无" : $value.refund_money}</td>
@@ -764,6 +749,7 @@
 	</script>
 <script type="text/javascript">
 	$(".state").on('click', function() {
+		$(".close").trigger('click');
 	var id = $(this).data("id");
 	$(".btu-sumit").data('id', id);
 	$.ajax({
@@ -776,12 +762,11 @@
 		success: function(data) {
 			$(".tanchuang").removeClass("noshow");
 			data = eval("(" + data + ")");
-
 			var order_create_time=timestampToTime(data.data.order_create_time);
 			new Vue({
 				el: '.list-a',
 				data: {
-					status: data.data[0].status,
+					status: data.data[0].order.status,
 					payment: data.data[0].order.pay_type_content,
 					amount: data.data.order_money,
 					points_Deduction: data.data[0].order.integral_deductible,
@@ -791,6 +776,11 @@
 					buy_message:data.data[0].order.buy_message,
 					service_images:data.data[0].service_images
 				},
+				methods:{
+					reflash(){
+						console.log(this);
+					}
+				}
 
 
 			})
@@ -822,16 +812,15 @@ $(".btu-sumit").on('click', function() {
 			var static_select = $("#static_select  option:selected").val();
 			var  pay_type_content=$("#pay_type_content  option:selected").val();
 			var refund_amount = $("#refund_amount").val();
-			var timestamp = Date.parse(new Date());
+			var timestamp = Date.getTime();
 			$.ajax({
 				type: "POST",
-				url: "{:url('admin/Order/after_save')}",
+				url: "{:url('admin/Order/after_saves')}",
 				async: false,
 				data: {
 					"id": id,
 					"service_dispose": note_tip,
 					"status": static_select,
-					"refund_method": pay_type_content,
 					"refund_money": refund_amount,
 					"dispose_time":timestamp
 				},
