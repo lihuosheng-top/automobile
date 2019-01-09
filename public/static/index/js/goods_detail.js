@@ -430,3 +430,20 @@ function myAjax(url, data, succCallBack){
         }
     })
 })()
+// 评价
+(function(){
+    $.ajax({
+        url: 'goods_evaluate_return',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'goods_id': id
+        },
+        success: function(res){
+            console.log('评价'+res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+})()
