@@ -160,7 +160,7 @@ class Classify extends Controller
         if($request->isPost()){
             $goods_info =db("goods")
                 ->order('rand()')
-                ->limit(3)
+                ->limit(2)
                 ->select();
             if(!empty($goods_info)){
                 return ajax_success("数据成功",$goods_info);
