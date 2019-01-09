@@ -755,9 +755,10 @@ function getMyDate(str){
 			$("#real_pay").html(data.data[0].service[0].order.order_real_pay);
 			$("#reason").html(data.data[0].service[0].service_reason);
 			$("#description").html(data.data[0].service[0].service_reason);
+			$(".reply-content").html('');
 		if(data.data[0].service_message!=null){
             for(var i=0;i<data.data[0].service_message.length;i++){
-				var create_time= getMyDate(data.data[0].service_message[i].create_time );
+				var create_time= getMyDate(data.data[0].service_message[i].create_time*1000);
 				var dhtml='';
 				dhtml+='<div class="content_repay">';
 				dhtml+='<div class="repay_time">'+create_time+'</div>';
