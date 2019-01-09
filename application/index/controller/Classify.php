@@ -137,6 +137,9 @@ class Classify extends Controller
                 ->order('rand()')
                 ->limit(3)
                 ->select();
+            foreach ($goods_info as $ks=>$vs){
+                $goods_info[$ks]["special_info"] =db("special")->where("goods_id",$vs["id"])->select();
+            }
             $data =[
                 "goods_info"=>$goods_info,
                 "store_id"=>$store_id,

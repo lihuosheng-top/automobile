@@ -15,13 +15,36 @@ class Store extends Controller{
 
 
     /**
-     * 店铺首页
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:店铺首页
+     **************************************
+     * @return \think\response\View
      */
-    public function index(){
+    public function index(Request $request){
+        if($request->isPost()){
+            $store_id =$request->only("store_id")["store_id"];
+            $store_name =Db::name("store")->where("store_id",$store_id)->value("store_name");
+            $parts_attitude_stars =Db::name("order_parts")
+                ->where("store_id",$store_id)
+                ->avg("service_attitude_stars");
+//            $parts_attitude_num =Db::name("order_service")
+//                ->where("store_id",$store_id)
+//                ->count();
+            $service_attitude_stars =Db::name("order_service")
+                ->where("store_id",$store_id)
+                ->avg("service_attitude_stars");
+//            $service_attitude_num =Db::name("order_service")
+//                ->where("store_id",$store_id)
+//                ->count();
+            dump($parts_attitude_stars);
+            dump($service_attitude_stars);
+            $sum =(round($parts_attitude_stars,2) + round($service_attitude_stars,2))/2;
+            dump(round($sum,2));
 
+
+        }
         return view("store_index");
-
     }
 
 
