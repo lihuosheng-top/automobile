@@ -289,9 +289,21 @@ html{
 }
 .wrapper .comment_box .comment_phone_time .star{
     display: inline-block;
-    width: 1.04rem;
-    height: .2rem;
-    background-position: 0 -2.8rem;
+    width: 1.14rem;
+    height: .3rem;
+    background-position: .05rem -2.75rem;
+}
+.comment_box .comment_phone_time .star.four-star{
+    background-position: .05rem -3rem;
+}
+.comment_box .comment_phone_time .star.three-star{
+    background-position: .05rem -3.25rem;
+}
+.comment_box .comment_phone_time .star.two-star{
+    background-position: .05rem -3.5rem;
+}
+.comment_box .comment_phone_time .star.one-star{
+    background-position: .05rem -3.75rem;
 }
 .wrapper .comment_box .comment_text_box{
     width: 100%;
