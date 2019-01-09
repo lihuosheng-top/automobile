@@ -510,25 +510,28 @@ class Order extends Controller{
         return view('after_sale',["order"=>$order]);
     }
 
-    /**
-     **************李火生*******************
-     * @return \think\response\View
-     *订单维修售后待处理
-     **************************************
-     */
-    public function after_sale_wait_handle(){
-        return view('after_sale_wait_handle');
-    }
+
 
     /**
-     **************李火生*******************
-     * @return \think\response\View
-     *订单维修售后待发货
-     **************************************
+     * 售后维修状态修改
+     * 陈绪
      */
-    public function after_sale_wait_deliver(){
-        return view('after_sale_wait_deliver');
+    public function after_save(Request $request){
+
+        if($request->isPost()){
+            $service = $request->param();
+            unset($service["id"]);
+            $service_id = $request->only(["id"])["id"];
+            $bool = db("service")->where("id",$service_id)->update($service);
+            if($bool){
+                return ajax_success("修改成功");
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
+
     }
+
 
     /**
      **************李火生*******************

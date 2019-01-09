@@ -576,6 +576,7 @@ Route::group("admin",[
     "order_evaluate_repay"=>"admin/Order/evaluate_repay", //******配件商订单评价回复操作
 
     "order_after_sale"=>"admin/Order/after_sale", //配件商订单维修售后
+    "order_after_save"=>"admin/Order/after_save", //配件订单维修状态处理
 
     "order_invoice"=>"admin/Order/invoice", //配件商发票列表
     "order_invoice_edit"=>"admin/Order/invoice_edit", //****配件商发票信息
