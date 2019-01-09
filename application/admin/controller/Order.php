@@ -507,6 +507,8 @@ class Order extends Controller{
             $order[$key]["order"] = db("order_parts")->where("id",$value["order_id"])->where("store_id",$store["store_id"])->find();
             $order[$key]["user"] = db("user")->where("id",$order[$key]["order"]["user_id"])->find();
         }
+
+
         return view('after_sale',["order"=>$order]);
     }
 
@@ -520,10 +522,14 @@ class Order extends Controller{
 
         if($request->isPost()){
             $service = $request->param();
+            $service_dispose = $request->only(["service_dispose"])["service_dispose"];
             unset($service["id"]);
+            unset($service["service_dispose"]);
             $service_id = $request->only(["id"])["id"];
+            $service["dispose_time"] = time();
             $bool = db("service")->where("id",$service_id)->update($service);
             if($bool){
+                db("service_message")->insert(["service_dispose"=>$service_dispose,"service_id"=>$service_id,"create_time"=>$service["dispose_time"]]);
                 return ajax_success("修改成功");
             }else{
                 return ajax_error("获取失败");
@@ -829,8 +835,9 @@ class Order extends Controller{
                 $service[$key]["delivery_name_phone"] = db("delivery")->where("id",$service[$key]["delivery_status"]["delivery_id"])->field("name,number")->find();
                 $service[$key]["service_images"] = explode(",",$value["service_images"]);
             }
+            $service_message = db("service_message")->where("service_id",$id)->order("create_time")->select();
             if($service){
-                return ajax_success("获取成功",$service);
+                return ajax_success("获取成功",array(["service"=>$service,"service_message"=>$service_message]));
             }else{
                 return ajax_error("获取失败");
             }
