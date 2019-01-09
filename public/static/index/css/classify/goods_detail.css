@@ -689,12 +689,13 @@ html{
 }
 .card-show{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 .card-show div{
     position: relative;
     width: 32%;
     height: 2.74rem;
+    margin-right: 5px;
 }
 .card-show div img{
     width: 100%;

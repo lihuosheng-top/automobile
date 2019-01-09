@@ -43,7 +43,7 @@
                     <div class="goods_price">
                         <span class="price">￥875</span>
                         <span class="pay_num">1500人购买</span>
-                        <i class="spr icon_cart"></i>
+                        <!-- <i class="spr icon_cart"></i> -->
                     </div>
                 </a>
             </li>
@@ -58,7 +58,7 @@
                     <div class="goods_price">
                         <span class="price">￥875</span>
                         <span class="pay_num">1500人购买</span>
-                        <i class="spr icon_cart"></i>
+                        <!-- <i class="spr icon_cart"></i> -->
                     </div>
                 </a>
             </li>
@@ -69,6 +69,27 @@
         $('.filter_box button').click(function(){
             $(this).addClass('current').siblings().removeClass('current');
             var idx = $(this).index();
+        })
+        var url = location.search;
+        var store_id;
+        if(url.indexOf('?') != -1){
+            store_id = url.substr(1).split('&')[0].split('=')[1];
+        }
+        $(function(){
+            $.ajax({
+                url: 'store_index',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'store_id': store_id
+                },
+                success: function(res){
+                    console.log('店铺商品',res);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
     </script>
 </body>
