@@ -170,7 +170,12 @@ class Classify extends Controller
                 ->select();
             foreach ($goods_info as $ks =>$vs){
                 $goods_info[$ks]["special_info"] =db("special")->where("goods_id",$vs["id"])->select();
-                $goods_info[$ks]["statistical_quantity"] =db("order_parts")->where("goods_id",$vs["id"])->sum("order_quantity");
+                $num =db("order_parts")->where("goods_id",$vs["id"])->sum("order_quantity");
+                if(!empty($num)){
+                    $goods_info[$ks]["statistical_quantity"] =$num;
+                }else{
+                    $goods_info[$ks]["statistical_quantity"] =0;
+                }
             }
             if(!empty($goods_info)){
                 return ajax_success("数据成功",$goods_info);
