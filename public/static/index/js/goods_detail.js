@@ -16,7 +16,7 @@ $.ajax({
         'id': id
     },
     success: function(res){
-        console.log(res);
+        console.log('商品信息', res);
         // 轮播图
         var swiperImgStr = '';
         $.each(res.data[0].images, function(idx, val){
@@ -33,7 +33,7 @@ $.ajax({
             // 卖点
             $('.selling-point').html(val.goods_selling);
             // 划线价
-            $('.through').html('￥' + val.goods_bottom_money);
+            $('.through').html('￥' + val.goods_standard[0].cost);
             // 售价
             $('.sale').html('￥' + val.goods_standard[0].goods_adjusted_price);
             // 库存
@@ -445,4 +445,52 @@ function myAjax(url, data, succCallBack){
         }
     })
 }())
+
+// 你可能喜欢
+$(function(){
+    $.ajax({
+        url: 'may_like_goods',
+        type: 'POST',
+        dataType: 'JSON',
+        success: function(res){
+            console.log('你可能喜欢',res);
+            if(res.status == 1){
+                var str = '';
+                res.data.forEach(function(val, idx){
+                    if(idx % 2 !== 0){
+                        str += `<li class="mgr0">
+                                    <div class="img_div">
+                                        <img src="uploads/`+val.goods_show_images+`">
+                                    </div>
+                                    <div class="goods_name">
+                                        <p class="txt-hid-two">`+val.goods_name+`</p>
+                                    </div>
+                                    <div class="goods_price">
+                                        <span class="price">￥`+val.goods_adjusted_money+`</span>
+                                        <span class="pay_num">1500人购买</span>
+                                    </div>
+                                </li>`
+                        return;
+                    }
+                    str += `<li>
+                                <div class="img_div">
+                                    <img src="uploads/`+val.goods_show_images+`">
+                                </div>
+                                <div class="goods_name">
+                                    <p class="txt-hid-two">`+val.goods_name+`</p>
+                                </div>
+                                <div class="goods_price">
+                                    <span class="price">￥`+val.goods_adjusted_money+`</span>
+                                    <span class="pay_num">1500人购买</span>
+                                </div>
+                            </li>`
+                })
+                $('.like_cont_ul').html(str);
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+})
 
