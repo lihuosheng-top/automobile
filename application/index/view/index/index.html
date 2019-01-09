@@ -350,7 +350,9 @@
         // 判断机型
         (function(){
             var u = navigator.userAgent;
+            alert(111)
             if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                alert(222);
                 callAndroid();
                 // 接收安卓回调内容
                 function getAndroid(e) {
