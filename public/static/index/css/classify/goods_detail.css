@@ -774,8 +774,9 @@ html{
     -webkit-line-clamp: 2;
     font-size: .24rem;
     color: #333;
-    padding: 0 .16rem;
+    /* padding: 0 .16rem; */
     box-sizing: border-box;
+    line-height: normal;
 }
 .like_cont_ul .goods_price{
     padding-right: .3rem;
@@ -1001,6 +1002,7 @@ html{
 }
 .select-goods-wrap .select-goods-info{
     padding-left: .3rem;
+    flex: 1;
 }
 .select-goods-wrap .select-goods-info .select-goods-price{
     font-size: .4rem;

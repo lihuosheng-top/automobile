@@ -527,8 +527,17 @@ class Order extends Controller{
             unset($service["service_dispose"]);
             $service_id = $request->only(["id"])["id"];
             $service["dispose_time"] = time();
+            $service_data = db("service")->where("id",$service_id)->field("order_id")->find();
+            $order_id = db("order_parts")->where("id",$service_data["order_id"])->field("id")->find();
             $bool = db("service")->where("id",$service_id)->update($service);
             if($bool){
+                if($service["status"] == 1){
+                    db("order_parts")->where("id",$order_id["id"])->update(["status"=>14]);
+                }else if($service["status"] == 2){
+                    $order_bool = db("order_parts")->where("id",$order_id["id"])->update(["status"=>13]);
+                }else if($service["status"] == 3){
+                    db("order_parts")->where("id",$order_id["id"])->update(["status"=>12]);
+                }
                 db("service_message")->insert(["service_dispose"=>$service_dispose,"service_id"=>$service_id,"create_time"=>$service["dispose_time"]]);
                 return ajax_success("修改成功");
             }else{
