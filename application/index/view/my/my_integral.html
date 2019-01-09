@@ -117,7 +117,7 @@
             data.forEach(function(val, idx){
                 str += `<li class="detail-li">
                             <p class="cost-name txt-hid-one">`+val.integral_remarks+`</p>
-                            <p class="budget-integral">`+val.integral_operation+`</p>
+                            <p class="budget-integral">`+(val.integral_operation > 0 ? '+'+val.integral_operation : val.integral_operation)+`</p>
                         </li>`
             })
             str += `</ul>

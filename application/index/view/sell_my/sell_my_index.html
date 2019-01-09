@@ -25,11 +25,11 @@
             <p class="shop-name">福田专业维修保养店</p>
             <div class="bill-box">
                 <div class="monthly-bill">
-                    <p class="bill-money">￥<span>9999</span></p>
+                    <p class="bill-money">￥<span></span></p>
                     <span class="bill-txt">本月账单</span>
                 </div>
                 <div class="last-bill">
-                    <p class="bill-money">￥<span>9999</span></p>
+                    <p class="bill-money">￥<span></span></p>
                     <span class="bill-txt">上月账单</span>
                 </div>
             </div>
@@ -173,6 +173,9 @@
                     $('.img-box img').prop('src', 'uploads/'+val.store_logo_images);
                     // 店铺名
                     $('.shop-name').text(val.store_name);
+                    // 本月账单 上月账单
+                    $('.monthly-bill .bill-money span').text(val.now_bill);
+                    $('.last-bill .bill-money span').text(val.last_bill);
                 }else if(res.status === 2){
                     location.href = 'login';
                 }

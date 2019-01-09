@@ -177,7 +177,7 @@
                                 <p class="txt-hid-one">`+val.title+`</p>
                                 <span>`+val.operation_time+`</span>
                             </div>
-                            <div class="cost-money">`+val.wallet_operation+`</div>
+                            <div class="cost-money">`+(val.wallet_operation > 0 ? '+'+val.wallet_operation : val.wallet_operation)+`</div>
                         </li>`
             })
             str += `</ul>
