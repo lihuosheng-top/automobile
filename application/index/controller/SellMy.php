@@ -1982,7 +1982,7 @@ class  SellMy extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:卖家商品账单
+     * Notes:卖家商品账单(已写到一块)
      **************************************
      * @return \think\response\View
      */
@@ -1997,7 +1997,18 @@ class  SellMy extends Controller{
      **************************************
      * @return \think\response\View
      */
-    public function sell_order_bill(){
+    public function sell_order_bill(Request $request){
+        if($request->isPost()){
+            $wallet_id =Session::get("wallet_id");
+            if(!empty($wallet_id)){
+                $data =Db::name("wallet")->where("wallet_id",$wallet_id)->find();
+                if(!empty($data)){
+                    return ajax_success("消费详情返回成功",$data);
+                }
+            }else{
+                return ajax_error("请重新刷新",["status"=>0]);
+            }
+        }
         return view("sell_order_bill");
     }
 
