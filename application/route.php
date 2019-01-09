@@ -216,7 +216,7 @@ Route::group("",[
 
 
     /*TODO：店铺开始*/
-    "store_index"=>"index/Store/index",             //店铺首页
+    "store_index"=>"index/Store/index",             //店铺首页(所有的店铺信息)
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
 
@@ -254,6 +254,7 @@ Route::group("",[
     /*配件商品*/
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
+    "go_to_store"=>"index/Classify/go_to_store",//商品详情页面进店信息返回
 
 
 
