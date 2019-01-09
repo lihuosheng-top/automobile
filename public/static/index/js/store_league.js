@@ -8,10 +8,9 @@ area.init({
         name: 'name'
     },
     'type': 1,//数据源类型
-    'data': LAreaData//数据源
+    'data': LAreaData,//数据源
 })
 area.value=[1,13,1];//控制初始位置，注意：该方法并不会影响到input的value
-
 // 上传图片 https://blog.csdn.net/scrat_kong/article/details/79230329
 function uploadImg(input,img){
     var input = document.getElementById(input);
