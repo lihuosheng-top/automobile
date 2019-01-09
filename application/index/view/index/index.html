@@ -356,36 +356,35 @@
             var u = navigator.userAgent;
             if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
                 callAndroid();
-                alert(111);
-                // 接收安卓回调内容
-                function getAndroid(e) {
-                    alert(e);
-                    // 定位成功
-                    if(e.errorCode != 0){
-                        alert('定位成功');
-                        // 首次定位
-                        if(!getCookie('district')){
-                            alert(e.district);
-                            threeAdress = e.province+','+e.city+','+e.district;
-                            setCookie('district', e.district, 3650);
-                            setCookie('pcd', threeAdress, 3650);
-                            document.getElementById('space-input').innerHTML = e.district;
-                            getAdvertisment(threeAdress);
-                        }else{
-                            document.getElementById('space-input').innerHTML = getCookie('district');
-                        }
-                    }else{
-                        layer.open({
-                            skin: 'msg',
-                            content: '定位失败，请稍后尝试',
-                            time: 1.2
-                        })
-                    }
-                }
             }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
                 console.log('ios')
             }
         })()
+        // 接收安卓回调内容
+        function getAndroid(e) {
+            alert(e);
+            // 定位成功
+            if(e.errorCode != 0){
+                alert('定位成功');
+                // 首次定位
+                if(!getCookie('district')){
+                    alert(e.district);
+                    threeAdress = e.province+','+e.city+','+e.district;
+                    setCookie('district', e.district, 3650);
+                    setCookie('pcd', threeAdress, 3650);
+                    document.getElementById('space-input').innerHTML = e.district;
+                    getAdvertisment(threeAdress);
+                }else{
+                    document.getElementById('space-input').innerHTML = getCookie('district');
+                }
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '定位失败，请稍后尝试',
+                    time: 1.2
+                })
+            }
+        }
         var citypicker = new CityPicker({
             inputId: 'space-input',
             data: city, // 符合格式的数组
