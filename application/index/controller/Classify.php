@@ -159,13 +159,23 @@ class Classify extends Controller
      */
     public function may_like_goods(Request $request){
         if($request->isPost()){
-            $goods_info =db("goods")
+            $goods_info =Db::table("tb_goods")
+                ->field("tb_goods.*")
+                ->join("tb_store","tb_goods.store_id=tb_store.store_id","left")
+                ->where("tb_store.del_status",1)
+                ->where("tb_store.store_is_button",1)
+                ->where("tb_store.operation_status",1)
                 ->order('rand()')
                 ->limit(2)
                 ->select();
             foreach ($goods_info as $ks =>$vs){
                 $goods_info[$ks]["special_info"] =db("special")->where("goods_id",$vs["id"])->select();
-                $goods_info[$ks]["statistical_quantity"] =db("order_parts")->where("goods_id",$vs["id"])->sum("order_quantity");
+                $num =db("order_parts")->where("goods_id",$vs["id"])->sum("order_quantity");
+                if(!empty($num)){
+                    $goods_info[$ks]["statistical_quantity"] =$num;
+                }else{
+                    $goods_info[$ks]["statistical_quantity"] =0;
+                }
             }
             if(!empty($goods_info)){
                 return ajax_success("数据成功",$goods_info);

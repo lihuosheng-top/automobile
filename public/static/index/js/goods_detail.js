@@ -466,8 +466,8 @@ $(function(){
                                         <p class="txt-hid-two">`+val.goods_name+`</p>
                                     </div>
                                     <div class="goods_price">
-                                        <span class="price">￥`+val.goods_adjusted_money+`</span>
-                                        <span class="pay_num">1500人购买</span>
+                                        <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
+                                        <span class="pay_num">`+val.statistical_quantity+`人购买</span>
                                     </div>
                                 </li>`
                         return;
@@ -480,8 +480,8 @@ $(function(){
                                     <p class="txt-hid-two">`+val.goods_name+`</p>
                                 </div>
                                 <div class="goods_price">
-                                    <span class="price">￥`+val.goods_adjusted_money+`</span>
-                                    <span class="pay_num">1500人购买</span>
+                                    <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
+                                    <span class="pay_num">`+val.statistical_quantity+`人购买</span>
                                 </div>
                             </li>`
                 })
