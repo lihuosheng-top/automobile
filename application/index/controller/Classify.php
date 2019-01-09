@@ -136,12 +136,39 @@ class Classify extends Controller
                 ->order('rand()')
                 ->limit(3)
                 ->select();
-            dump($goods_info);
-
-
+            $data =[
+                "goods_info"=>$goods_info,
+                "store_id"=>$store_id,
+                "store_data"=>$store_data,
+            ];
+            if(!empty($data)){
+                return ajax_success("数据返回成功",$data);
+            }else{
+                return ajax_error("没有数据",["status"=>0]);
+            }
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:你可能还喜欢
+     **************************************
+     * @param Request $request
+     */
+    public function may_like_goods(Request $request){
+        if($request->isPost()){
+            $goods_info =db("goods")
+                ->order('rand()')
+                ->limit(3)
+                ->select();
+            if(!empty($goods_info)){
+                return ajax_success("数据成功",$goods_info);
+            }else{
+                return ajax_error("没有数据",["status"=>0]);
+            }
+        }
+    }
 
 
     /**
