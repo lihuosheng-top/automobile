@@ -156,11 +156,31 @@ $('.switch-detail').click(function(){
     $('.detail-box').show();
     $('.comment_box').hide();
 })
-
+// 评价
 $('.switch-comment').click(function(){
     $(this).addClass('switch-on').siblings().removeClass('switch-on');
     $('.comment_box').show();
     $('.detail-box').hide();
+
+    $.ajax({
+        url: 'goods_evaluate_return',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'goods_id': id
+        },
+        success: function(res){
+            console.log('评价',res);
+            if(res.status == 1){
+                var str = '';
+                $('.comment_title span').text(res.data.length);
+                
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
 })
 
 // 查看评价详情
@@ -445,23 +465,7 @@ $(function(){
         }
     })
 })
-// 评价
-$(function(){
-    $.ajax({
-        url: 'goods_evaluate_return',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'goods_id': id
-        },
-        success: function(res){
-            console.log('评价',res);
-        },
-        error: function(){
-            console.log('error');
-        }
-    })
-})
+
 
 // 你可能喜欢
 $(function(){
