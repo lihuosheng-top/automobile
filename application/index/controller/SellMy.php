@@ -41,7 +41,23 @@ class  SellMy extends Controller{
                 ->where("user_id",$user_id)
                 ->where($condition)
                 ->sum("wallet_operation");
+            if(!empty($now_data)){
+                $store_info["now_bill"] =round($now_data,2);
+            }else{
+                $store_info["now_bill"] =0;
+            }
             //上月账单
+            $last_time = date("Y-m",strtotime("-1 month"));//今月时间戳
+            $last_condition = " `operation_time` like '%{$last_time}%' ";
+            $last_data = Db::name("wallet")
+                ->where("user_id",$user_id)
+                ->where($last_condition)
+                ->sum("wallet_operation");
+            if(!empty($now_data)){
+                $store_info["last_bill"] =round($last_data,2);
+            }else{
+                $store_info["last_bill"] =0;
+            }
             if(empty($store_info)){
                 exit(json_encode(array("status" => 2, "info" => "请重新登录","data"=>["status"=>0])));
             }else{
