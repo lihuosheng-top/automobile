@@ -110,9 +110,7 @@ class Classify extends Controller
                 $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
                 $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
                 $goods[$key]["goods_standard"] = $goods_standard;
-
-            }           
-
+            }
             if($goods){
                 return ajax_success("获取成功",$goods);
             }else{
