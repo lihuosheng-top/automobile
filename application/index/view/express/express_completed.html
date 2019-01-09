@@ -133,6 +133,11 @@
                     })
                     $('.order-container').append(str);
                 }
+                if(res.status == 0){
+                    var data = res.data;
+                    $('.info .name').text(data[0].name);
+                    $('.info .phone').text(data[0].number);
+                }
             },
             error: function(){
                 console.log('error');

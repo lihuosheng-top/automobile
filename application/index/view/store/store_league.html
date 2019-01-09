@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
     <link rel="stylesheet" href="__STATIC__/index/css/store/store_league.css">
     <!-- 三级城市 -->
-    <link rel="stylesheet" href="__STATIC__/index/css/plugin/LArea.min.css">
+    <link rel="stylesheet" href="__STATIC__/index/js/plugin/citypicker/picker.css">
     <title>我要加盟</title>
 </head>
 <body>
@@ -115,11 +115,29 @@
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <!-- 三级城市脚本 start -->
-    <script src="__STATIC__/index/js/plugin/LAreaData1.js"></script>
-    <script src="__STATIC__/index/js/plugin/LAreaData2.js"></script>
-    <script src="__STATIC__/index/js/plugin/LArea.min.js"></script>
+    <script src="__STATIC__/index/js/plugin/citypicker/citypicker.js"></script>
+    <script src="__STATIC__/index/js/plugin/citypicker/city.js"></script>
     <!-- 三级城市脚本 end -->
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/store_league.js"></script>
+    <script>
+        var citypicker = new CityPicker({
+            inputId: 'area-li',
+            data: city, // 符合格式的数组
+            cancel: function () {
+                console.log('取消城市选择');
+            },
+            initialOption: ['广东', '深圳', '福田区'],
+            success: function(arr) {
+                console.log(arr);
+                console.log(arr);
+                var arr2 = [];
+                arr.forEach(function(val) {
+                    arr2.push(val.value);
+                });
+                document.getElementById('space-input').innerHTML = arr2;
+            }
+        });
+    </script>
 </body>
 </html>

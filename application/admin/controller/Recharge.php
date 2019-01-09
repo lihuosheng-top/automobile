@@ -35,8 +35,11 @@ class Recharge extends Controller{
      */
     public function edit($id){
         $recharge_data = Db::name("recharge_reflect")->where("id",$id)->find();
-        $user_name =Db::name('user')->field('user_name')->where('id',$recharge_data['user_id'])->find();
-        return view('edit',['recharge_data'=>$recharge_data,'user_name'=>$user_name['user_name']]);
+        $user_name =Db::name('user')
+            ->field('user_name,real_name,user_wallet')
+            ->where('id',$recharge_data['user_id'])
+            ->find();
+        return view('edit',['recharge_data'=>$recharge_data,'user_name'=>$user_name]);
     }
 
     /**
@@ -182,6 +185,75 @@ class Recharge extends Controller{
             if(!empty($reg_data)){
                 return view('index',['reg_data'=>$reg_data]);
             }
+        }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:提现编辑保存
+     **************************************
+     */
+    public function edit_save(Request $request){
+                if($request->ispost()){
+                    $id =$request->only("id")["id"];
+                    $status =$request->only("status")["status"];
+                    $recharge_describe =$request->only("recharge_describe")["recharge_describe"];
+                    if($status==2){
+                        $this->error("请选择审核或者不通过");
+                    }else if($status==1){
+                        $data =[
+                            "recharge_describe"=>$recharge_describe,
+                            "status"=>$status,
+                            "money_status"=>1
+                        ];
+                        $res =Db::name("recharge_reflect")->where("id",$id)->update($data);
+                        if($res){
+                            $this->success("审核成功","admin/Recharge/index");
+                        }else{
+                            $this->error("审核失败");
+                        }
+                    }else if($status==-1){
+                        //拒绝则退回申请的金额到余额里面
+                        $data =[
+                            "recharge_describe"=>$recharge_describe,
+                            "status"=>$status,
+                            "money_status"=>2
+                        ];
+                        $res =Db::name("recharge_reflect")->where("id",$id)->update($data);
+                        if($res){
+
+                            $money =Db::name("recharge_reflect")->where("id",$id)->find();
+                            $time=date("Y-m-d",time());
+                            $v=explode('-',$time);
+                            $time_second=date("H:i:s",time());
+                            $vs=explode(':',$time_second);
+                            $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$money["user_id"]; //订单编号
+                            //用户钱包退回资金
+                            $old_wallet =Db::name("user")->where("id",$money["user_id"])->value("user_wallet");
+                            $user_data=[
+                                "user_wallet"=>$old_wallet + $money["operation_amount"],
+                            ];
+                            Db::name("user")->where("id",$money["user_id"])->update($user_data);
+                            //进行消费记录
+                            $wallet_data =[
+                                "user_id"=>$money["user_id"],
+                                "wallet_operation"=> $money["operation_amount"],//消费金额
+                                "wallet_type"=>1, //消费类型（1获得，-1消费）
+                                "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                                "wallet_remarks"=>"提现未通过退回".$money["operation_amount"]."元",
+                                "wallet_img"=>"index/image/back.png",
+                                "title"=>"提现退回金额",
+                                "order_nums"=>$parts_order_number,//订单编号
+                                "pay_type"=>"平台退回", //支付宝微信支付
+                            ];
+                            Db::name("wallet")->insert($wallet_data);
+                            $this->success("审核成功","admin/Recharge/index");
+                        }else{
+                            $this->error("审核失败");
+                        }
+                    }
+
+                }
         }
 
 }

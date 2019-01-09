@@ -831,5 +831,21 @@ function qr_decode($code) {
     return $num;
 }
 
+/**
+ **************李火生*******************
+ * @param Request $request
+ * Notes:提现审核状态
+ **************************************
+ * @param $status
+ */
+function operation_recharge_status($status){
+    if($status==1){
+        echo '通过';
+    }elseif ($status==-1){
+        echo '<span class="gray">不通过</span>';
+    }elseif($status==2){
+        echo '<span class="red">待审核</sapn>';
+    }
+}
 
 

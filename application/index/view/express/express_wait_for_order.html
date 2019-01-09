@@ -137,7 +137,7 @@
                                         <span class="accept-time">预计送达时间：<span>宝贝正在路上，请您耐心等候</span></span>
                                     </div>
                                     <div class="button-container">
-                                        <button class="my-btn">接单</button>
+                                        <button class="my-btn" name="`+val.order_status+`">接单</button>
                                     </div>
                                 </div>`
                     })
@@ -146,6 +146,7 @@
                         var deliveryId = data.delivery_data[0].id;
                         var $index = $('.my-btn').index($(this));
                         var thisData = data.delivery[$index];
+                        var orderStatus = this.name;
                         layer.open({
                             content: '确认接单？',
                             btn: ['确定', '取消'],
@@ -167,7 +168,8 @@
                                         'order_create_time': thisData.order_create_time,
                                         'store_name': thisData.store_name,
                                         'parts_order_number': thisData.parts_order_number,
-                                        'store_id': thisData.store_id
+                                        'store_id': thisData.store_id,
+                                        'order_status': orderStatus
                                     },
                                     success: function(res){
                                         console.log(res);

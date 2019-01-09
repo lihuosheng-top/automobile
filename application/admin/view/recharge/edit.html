@@ -22,12 +22,13 @@
 	<div class="open">
 
 	</div>
+	{if $recharge_data.operation_type==1}
 	<form class="layui-form" action="">
 	
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 会员名称：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_name}">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_name.user_name}">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -68,7 +69,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">会员描述：</label>
 			<div class="layui-input-block">
-	<textarea rows="10" cols="50"  >{$recharge_data.recharge_describe}</textarea>
+	<textarea rows="10" cols="50" name="recharge_describe" >{$recharge_data.recharge_describe}</textarea>
 		</div>
 		</div>
 			<div class="layui-form-item">
@@ -83,14 +84,143 @@
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-				
 				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit" >保存</button>
 			   
 			</div>
 		</div>
 
 	</form>
-	
+	{else}
+	<!-- 
+		提现
+	 -->
+
+	<form class="layui-form" action="{:url('admin/Recharge/edit_save')}" method="post">
+		<div class="layui-form-item" style="display: none">
+			<label class="layui-form-label">id</label>
+			<div class="layui-input-block">
+				<input type="text" name="id" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$recharge_data.id}" style="border:0;" readonly>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">账户余额：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$user_name.user_wallet}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">会员昵称：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$user_name.user_name}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">会员姓名：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$user_name.real_name}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">申请提现金额：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$recharge_data.operation_amount}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">支付方式：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$recharge_data.pay_type_content}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">开户名：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$recharge_data.back_member}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">开户银行：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$recharge_data.back_name}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">银行卡号：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$recharge_data.bank_card}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">类型：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$recharge_data.operation_type|show_recharge_type}" style="border:0;" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">审核状态：</label>
+			<div class="layui-input-block">
+				{if $recharge_data.status==2}
+			   	<input type="radio" name="status" value="1" title="审核通过">
+      			<input type="radio" name="status" value="-1" title="审核不通过">
+				{elseif $recharge_data.status ==1}
+				<input type="radio" name="status" value="1" title="审核通过" checked="">
+				{else}
+				<input type="radio" name="status" value="-1" title="审核不通过" checked="">
+				{/if}
+			</div>
+		</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注：</label>
+			<div class="layui-input-block">
+	     <textarea rows="10" cols="50" name="recharge_describe">{$recharge_data.recharge_describe}</textarea>
+		</div>
+		</div>
+		{if $recharge_data.status==2}
+		<!--<div class="layui-form-item">-->
+			<!--<label class="layui-form-label">到款状态：</label>-->
+			<!--<div class="layui-input-block">-->
+				<!--<p>-->
+					<!--{$recharge_data.money_status|show_recharge_status}-->
+				<!--</p>-->
+			<!--</div>-->
+		<!--</div>-->
+		{elseif $recharge_data.status ==1}
+		<div class="layui-form-item">
+			<label class="layui-form-label">到款状态：</label>
+			<div class="layui-input-block">
+				<p>
+					{$recharge_data.money_status|show_recharge_status}
+				</p>
+			</div>
+		</div>
+		{else}
+		<div class="layui-form-item">
+			<label class="layui-form-label">到款状态：</label>
+			<div class="layui-input-block">
+				<p>
+					{$recharge_data.money_status|show_recharge_status}
+				</p>
+			</div>
+		</div>
+		{/if}
+
+
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				{if $recharge_data.status ==2}
+				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
+				<button class="layui-btn" lay-submit="" lay-filter="demo1" type="submit" >保存</button>
+				{else}
+				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
+				{/if}
+			</div>
+		</div>
+
+	</form>
+
+	{/if}
 	{/block}
 
 	<!--_footer 作为公共模版分离出去-->

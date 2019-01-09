@@ -37,11 +37,11 @@
             <ul>
                 <li class="info-li">
                     <p>商品</p>
-                    <span>冬季男士内搭中半高领毛衣男青年修身套头加厚针织衫男长袖打底衫秋冬新品白色装饰几何条长款上衣</span>
+                    <span class="name">冬季男士内搭中半高领毛衣男青年修身套头加厚针织衫男长袖打底衫秋冬新品白色装饰几何条长款上衣</span>
                 </li>
                 <li class="info-li">
                     <p>支付方式</p>
-                    <span>支付宝支付</span>
+                    <span class="payment-type">支付宝支付</span>
                 </li>
                 <!-- <li class="info-li">
                     <p>收货地址</p>
@@ -49,11 +49,11 @@
                 </li> -->
                 <li class="info-li">
                     <p>交易时间</p>
-                    <span>2018-12-4 10:35:10</span>
+                    <span class="time">2018-12-4 10:35:10</span>
                 </li>
                 <li class="info-li">
                     <p>订单编号</p>
-                    <span>20181204421</span>
+                    <span class="order-num">20181204421</span>
                 </li>
                 <!-- <li class="info-li">
                     <p>商户单号</p>
@@ -65,5 +65,25 @@
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $.ajax({
+            url: 'consume_message',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    $('.cost-money p').text(res.data.wallet_operation);
+                    $('.name').text(res.data.title);
+                    $('.payment-type').text(res.data.pay_type);
+                    $('.time').text(res.data.operation_time);
+                    $('.order-num').text(res.data.order_nums);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+    </script>
 </body>
 </html>

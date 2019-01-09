@@ -1698,7 +1698,67 @@ class  SellMy extends Controller{
      **************************************
      * @return \think\response\View
      */
-    public function sell_service_record(){
+    public function sell_service_record(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");//用户id
+            $now_time_one =date("Y");
+            $condition = " `operation_time` like '%{$now_time_one}%' ";
+            $data = Db::name("wallet")
+                ->where("user_id",$user_id)
+                ->where($condition)
+                ->order("operation_time","desc")
+                ->select();
+            $datas =array(
+                "january"=>[],
+                "february"=>[],
+                "march"=>[],
+                "april"=>[],
+                "may"=>[],
+                "june"=>[],
+                "july"=>[],
+                "august"=>[],
+                "september"=>[],
+                "october"=>[],
+                "november"=>[],
+                "december"=>[],
+            );
+            foreach ($data as $ks=>$vs){
+                if(strpos($vs["operation_time"],$now_time_one."-01") !==false){
+                    $datas["january"][] =$vs;
+                } else if(strpos($vs["operation_time"],$now_time_one."-02")  !==false){
+                    $datas["sebruary"][] =$vs;
+                }else if(strpos($vs["operation_time"],$now_time_one."-03")  !==false){
+                    $datas["march"][] =$vs;
+                }else if(strpos($vs["operation_time"],$now_time_one."-04")  !==false){
+                    $datas["april"][] =$vs;
+                }else if(strpos($vs["operation_time"],$now_time_one."-05")  !==false){
+                    $datas["may"][] =$vs;
+                }else if(strpos($vs["operation_time"],$now_time_one."-06")  !==false){
+                    $datas["june"][] =$vs;
+                }else if(strpos($vs["operation_time"],$now_time_one."-07")  !==false){
+                    $datas["july"][] =$vs;
+                }else if(strpos($vs["operation_time"],$now_time_one."-08")  !==false){
+                    $datas["august"][] =$vs;
+                }else if(strpos($vs["operation_time"],$now_time_one."-09") !==false){
+                    $datas["september"][] =$vs;
+                }else if(strpos($vs["operation_time"],$now_time_one."-10") !==false){
+                    $datas["october"][] =$vs;
+                }else if(strpos($vs["operation_time"],$now_time_one."-11") !==false){
+                    $datas["november"][] =$vs;
+                }else if(strpos($vs["operation_time"],$now_time_one."-12") !==false){
+                    $datas["december"][] =$vs;
+                }
+            }
+            $res =[
+                "wallet_record"=>$datas
+            ];
+            if(!empty($data)){
+                return ajax_success("消费细节返回成功",$res);
+            }else{
+                return ajax_error("暂无消费记录",["status"=>0]);
+            }
+        }
+
         return view("sell_service_record");
     }
 
@@ -1770,11 +1830,50 @@ class  SellMy extends Controller{
             if($apply_money > $money){
                 exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于余额")));
             }
-
-
-
-
-
+            $time=date("Y-m-d",time());
+            $v=explode('-',$time);
+            $time_second=date("H:i:s",time());
+            $vs=explode(':',$time_second);
+            $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
+            $data =[
+                "user_id"=>$user_id,
+                "operation_time"=>date("Y-m-d H:i:s"),
+                "operation_type"=>-1,
+                "operation_amount"=>$apply_money,
+                "pay_type_content"=>"银行卡",
+                "money_status"=>2,
+                "recharge_describe"=>"申请提现".$apply_money."元",
+                "img_url"=>"index/image/back.png",
+                "back_member"=>$apply_member,//用户名
+                "bank_card"=>$apply_bank_code,//开户银行卡
+                "back_name"=>$apply_bank,//开户银行
+                "status"=>2
+            ];
+           $res = Db::name("recharge_reflect")->insert($data);
+           if($res){
+               //余额进行减少
+               $old_wallet =Db::name("user")->where("id",$user_id)->value("user_wallet");
+               $user_data=[
+                   "user_wallet"=>$old_wallet - $apply_money,
+               ];
+               Db::name("user")->where("id",$user_id)->update($user_data);
+               //进行消费记录
+               $wallet_data =[
+                   "user_id"=>$user_id,
+                   "wallet_operation"=> -$apply_money,//消费金额
+                   "wallet_type"=>-1, //消费类型（1获得，-1消费）
+                   "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                   "wallet_remarks"=>"提现申请".$apply_money."元",
+                   "wallet_img"=>"index/image/back.png",
+                   "title"=>"提现",
+                   "order_nums"=>$parts_order_number,//订单编号
+                   "pay_type"=>"余额抵扣", //支付宝微信支付
+               ];
+               Db::name("wallet")->insert($wallet_data);
+               exit(json_encode(array("status" => 1, "info" =>"提现成功")));
+           }else{
+               exit(json_encode(array("status" => 0, "info" =>"提现失败")));
+           }
 
         }
         return view("sell_application");

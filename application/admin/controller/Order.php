@@ -11,6 +11,8 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Db;
 use think\Request;
+use think\Session;
+
 class Order extends Controller{
 
 
@@ -495,28 +497,41 @@ class Order extends Controller{
      **************************************
      */
     public function after_sale(){
-        return view('after_sale');
+
+        $user_id = Session::get("user_id");
+        $admin = db("admin")->where("id",$user_id)->field("account")->find();
+        $user = db("user")->where("phone_num",$admin["account"])->field("id")->find();
+        $store = db("store")->where("user_id",$user["id"])->field("store_id")->find();
+        $order = db("service")->select();
+        foreach ($order as $key=>$value){
+            $order[$key]["order"] = db("order_parts")->where("id",$value["order_id"])->where("store_id",$store["store_id"])->find();
+            $order[$key]["user"] = db("user")->where("id",$order[$key]["order"]["user_id"])->find();
+        }
+        return view('after_sale',["order"=>$order]);
     }
 
-    /**
-     **************李火生*******************
-     * @return \think\response\View
-     *订单维修售后待处理
-     **************************************
-     */
-    public function after_sale_wait_handle(){
-        return view('after_sale_wait_handle');
-    }
+
 
     /**
-     **************李火生*******************
-     * @return \think\response\View
-     *订单维修售后待发货
-     **************************************
+     * 售后维修状态修改
+     * 陈绪
      */
-    public function after_sale_wait_deliver(){
-        return view('after_sale_wait_deliver');
+    public function after_save(Request $request){
+
+        if($request->isPost()){
+            $service = $request->param();
+            unset($service["id"]);
+            $service_id = $request->only(["id"])["id"];
+            $bool = db("service")->where("id",$service_id)->update($service);
+            if($bool){
+                return ajax_success("修改成功");
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
+
     }
+
 
     /**
      **************李火生*******************

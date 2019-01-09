@@ -93,6 +93,7 @@ class Service extends Controller{
             $service["status"] = 0;
             $bool = db("service")->insert($service);
             if($bool){
+                db("order_parts")->where("id",$service["order_id"])->update(["status"=>11]);
                 Session::delete("order_id");
                 return ajax_success("反馈成功");
             }else{

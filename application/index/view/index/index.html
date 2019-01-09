@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
     <link rel="stylesheet" href="__STATIC__/index/css/index/index.css">
     <link rel="stylesheet" href="__STATIC__/index/css/plugin/swiper-4.3.5.min.css">
+    <link rel="stylesheet" href="__STATIC__/index/js/plugin/citypicker/picker.css">
     <style>
         body {
             padding-top: constant(safe-area-inset-top);
@@ -23,7 +24,7 @@
     <div class="wrapper">
         <div class="header">
             <div class="map">
-                <span class="curr_city">请登录</span>
+                <span class="curr_city" id="space-input">定位中</span>
                 <i class="spr icon_location"></i>
             </div> 
             <div class="search">
@@ -292,7 +293,7 @@
         </div>
     </div>
     <!-- 定位城市 -->
-    <div class="geclocation-pop" style="display:none;">
+    <!-- <div class="geclocation-pop" style="display:none;">
         <div class="container"></div>
         <header class="geclocation-title">
             <a href="javascript:;" class="spr gec-back"></a>
@@ -332,35 +333,211 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/jquery.charfirst.pinyin.js"></script>
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
-    <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
+    <!-- <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script>  -->
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
-    <script src="__STATIC__/index/js/plugin/allCity.js"></script>
+    <script src="__STATIC__/index/js/plugin/citypicker/citypicker.js"></script>
+    <script src="__STATIC__/index/js/plugin/citypicker/city.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
     <script>
-        // var str = '';
-        // allCity.forEach(function(el, idx){
-        //     el.citys.forEach(function(value, index){
-        //         str += `<div class="gec-sort-list">
-        //                     <div class="gec-city-name">`+value.citysName+`</div>
-        //                 </div>`
-        //     })
-        //     $('.gec-sort-box').append(str);
-        // })
+        // 默认广告
+        if(!getCookie('pcd')){
+            getAdvertisment('广东,深圳,福田区');
+        }
+        // 判断机型
+        (function(){
+            var u = navigator.userAgent;
+            alert(111)
+            if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                alert(222);
+                callAndroid();
+                // 接收安卓回调内容
+                function getAndroid(e) {
+                    // 定位成功
+                    alert(e.errorCode);
+                    if(e.errorCode != 0){
+                        alert('定位成功');
+                        // 首次定位
+                        if(!getCookie('district')){
+                            alert(e.district);
+                            threeAdress = e.province+','+e.city+','+e.district;
+                            setCookie('district', e.district, 3650);
+                            setCookie('pcd', threeAdress, 3650);
+                            document.getElementById('space-input').innerHTML = e.district;
+                            getAdvertisment(threeAdress);
+                        }else{
+                            document.getElementById('space-input').innerHTML = getCookie('district');
+                        }
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: '定位失败，请稍后尝试',
+                            time: 1.2
+                        })
+                    }
+                }
+                getAndroid();
+            }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
+                console.log('ios')
+            }
+        })()
+        var citypicker = new CityPicker({
+            inputId: 'space-input',
+            data: city, // 符合格式的数组
+            cancel: function () {
+                console.log('取消城市选择');
+            },
+            initialOption: ['广东', '深圳', '福田区'],
+            success: function(arr) {
+                console.log(arr);
+                var province = arr[0].value;
+                var city = arr[1].value;
+                var district = arr[2].value;
+                setCookie('district', district, 3650);
+                document.getElementById('space-input').innerHTML = district;
+                getAdvertisment(province+','+city+','+district);
+            }
+        });
 
-        // function callAndroid(){
-        //     Android.getLocation();
+        // 获取广告
+        function getAdvertisment(area){
+            $.ajax({
+                url: 'advertisement_index',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'area': area
+                },
+                success: function(res){
+                    console.log('广告',res);
+                    if(res.status == 1){
+                        var topSwiperStr = '';
+                        // 首页轮播图
+                        $.each(res.data.home, function(idx, val){
+                            if(idx < 5){
+                                topSwiperStr += `<div class="swiper-slide">
+                                                    <a href="`+val.url+`">
+                                                        <img src="uploads/`+val.advert_picture+`">
+                                                    </a>
+                                                </div>`;
+                            }
+                        })
+                        $('.swiper-wrapper').html('').html(topSwiperStr);
+                        mySwiper();
+                        // 首页固定广告
+                        var indexFixStr = '';
+                        indexFixStr += `<a href="`+res.data.fixed[0].url+`">
+                                            <img src="uploads/`+res.data.fixed[0].advert_picture+`">
+                                        </a>`
+                        $('.banner').html('').html(indexFixStr);
+                        // 热门推荐
+                        var hot = res.data.hot;
+                        var hotStr = `<div class="recommend_top">
+                                        <a href="`+hot[0].url+`">
+                                            <img src="uploads/`+hot[0].advert_picture+`">
+                                        </a>
+                                        <a href="`+hot[1].url+`">
+                                            <img src="uploads/`+hot[1].advert_picture+`">
+                                        </a>
+                                    </div>
+                                    <div class="recommend_bottom">
+                                        <div class="recommend_bottom_left">
+                                            <a href="`+hot[2].url+`">
+                                                <img src="uploads/`+hot[2].advert_picture+`">
+                                            </a>
+                                        </div>
+                                        <div class="recommend_bottom_right">
+                                            <div class="recommend_bottom_right_one">
+                                                <a href="`+hot[3].url+`">
+                                                    <img src="uploads/`+hot[3].advert_picture+`">
+                                                </a>
+                                            </div>
+                                            <div class="recommend_bottom_right_two">
+                                                <div class="recommend_bottom_right_three">
+                                                    <a href="`+hot[4].url+`">
+                                                        <img src="uploads/`+hot[4].advert_picture+`">
+                                                    </a>
+                                                </div>
+                                                <div class="recommend_bottom_right_four">
+                                                    <a href="`+hot[5].url+`">
+                                                        <img src="uploads/`+hot[5].advert_picture+`">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        $('.recommend_goods').html('').html(hotStr);
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        }
+        //设置cookie
+        function setCookie(name, value, day) {
+            var date = new Date();
+            date.setDate(date.getDate() + day);
+            document.cookie = name + '=' + value + ';expires=' + date;
+        };
+        //获取cookie
+        function getCookie(name) {
+            var reg = RegExp(name + '=([^;]+)');
+            var arr = document.cookie.match(reg);
+            if (arr) {
+                return arr[1];
+            } else {
+                return '';
+            }
+        };
+        // 调用安卓方法
+        function callAndroid() {
+            Android.getLocation();
+        }
+        // callAndroid();
+       
+
+        // 接收安卓回调data
+        // var threeAdress;
+        // function getAndroid(e) {
+        //     if(e.errorCode !== undefined){
+        //         if(e.errorCode != 0){
+        //             threeAdress = e.province+','+e.city+','+e.district;
+        //             setCookie('district', e.district, 7);
+        //             setCookie('pcd', threeAdress, 7);
+        //             if(!getCookie('pcd')){
+        //                 getAdvertisment(threeAdress);
+        //             }
+        //             if(!getCookie('district')){
+        //                 $('.curr_city').text(e.district);
+        //             }
+        //             $('.geclocation-pop').hide();
+        //             $('.wrapper').show();
+        //         }else{
+        //             layer.open({
+        //                 skin: 'msg',
+        //                 content: '定位失败，请稍后尝试',
+        //                 time: 1.2
+        //             })
+        //         }
+        //     }else{
+        //         layer.open({
+        //             type: 2,
+        //             content: '定位中'
+        //         })
+        //     }
         // }
-        // function getAndroid(e){
-        //     alert(json.parse(e));
+        // if (getCookie('district')) {
+        //     $('.curr_city').text(getCookie('district'));
         // }
-        // getAndroid();
-        // $('.gec-curr-box').click(function(){
-        //     callAndroid();
-        // })
+        // if (getCookie('pcd')) {
+        //     getAdvertisment(threeAdress);
+        // }else{
+        //     getAdvertisment('广东,深圳,福田');
+        // }
     </script>
 </body>
 </html>

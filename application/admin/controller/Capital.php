@@ -206,7 +206,15 @@ class Capital extends Controller{
     }
 
 
-
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:详情
+     **************************************
+     */
+    public function detail(){
+        return view("detail");
+    }
 
 
 }

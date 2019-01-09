@@ -382,14 +382,14 @@ $(function(){
         $('.num_name:contains('+search_input.val().trim()+')').parents('.sort_list').prev('.sort_letter').show();
     });
     // 城市 搜索框
-    var gecSearchInput = $('input[name="gec-search-input"]');
-    $(gecSearchInput).keyup(function(){
-        // jquery contains方法， :contains(text) 先隐藏后显示
-        $('.gec-city-name:not(:contains('+gecSearchInput.val().trim()+'))').parents('.gec-sort-list').add('.gec-sort-letter').hide();
-        $('.gec-city-name:contains('+gecSearchInput.val().trim()+')').parents('.gec-sort-list').show();
-        // 首字母标签显示
-        $('.gec-city-name:contains('+gecSearchInput.val().trim()+')').parents('.gec-sort-list').prev('.gec-sort-letter').show();
-    });
+    // var gecSearchInput = $('input[name="gec-search-input"]');
+    // $(gecSearchInput).keyup(function(){
+    //     // jquery contains方法， :contains(text) 先隐藏后显示
+    //     $('.gec-city-name:not(:contains('+gecSearchInput.val().trim()+'))').parents('.gec-sort-list').add('.gec-sort-letter').hide();
+    //     $('.gec-city-name:contains('+gecSearchInput.val().trim()+')').parents('.gec-sort-list').show();
+    //     // 首字母标签显示
+    //     $('.gec-city-name:contains('+gecSearchInput.val().trim()+')').parents('.gec-sort-list').prev('.gec-sort-letter').show();
+    // });
 })
 
 // 显示添加爱车弹窗
@@ -405,271 +405,197 @@ $('.add-back').click(function(){
 })
 
 // 城市定位 首字母匹配 start
-$(function(){
-    var Initials=$('.gec-initials');
-    var LetterBox=$('#gec-letter');
-    Initials.find('ul').append('<li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li><li>G</li><li>H</li><li>I</li><li>J</li><li>K</li><li>L</li><li>M</li><li>N</li><li>O</li><li>P</li><li>Q</li><li>R</li><li>S</li><li>T</li><li>U</li><li>V</li><li>W</li><li>X</li><li>Y</li><li>Z</li>');
-    gecInitials();
+// $(function(){
+//     var Initials=$('.gec-initials');
+//     var LetterBox=$('#gec-letter');
+//     Initials.find('ul').append('<li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li><li>G</li><li>H</li><li>I</li><li>J</li><li>K</li><li>L</li><li>M</li><li>N</li><li>O</li><li>P</li><li>Q</li><li>R</li><li>S</li><li>T</li><li>U</li><li>V</li><li>W</li><li>X</li><li>Y</li><li>Z</li>');
+//     gecInitials();
 
-    $(".gec-initials ul li").click(function(){
-        var _this=$(this);
-        var LetterHtml=_this.html();
-        LetterBox.html(LetterHtml).fadeIn();
+//     $(".gec-initials ul li").click(function(){
+//         var _this=$(this);
+//         var LetterHtml=_this.html();
+//         LetterBox.html(LetterHtml).fadeIn();
 
-        setTimeout(function(){
-            LetterBox.fadeOut();
-        },1000);
+//         setTimeout(function(){
+//             LetterBox.fadeOut();
+//         },1000);
 
-        var _index = _this.index();
-        if(_index==0){
-            $('.gec-cont').animate({scrollTop: '0px'}, 300);//点击第一个滚到顶部
-        }else{
-            var letter = _this.text();
-            if($('#gec_'+letter).length>0){//点击的字母 有值
-                var LetterTop = $('#gec_'+letter).position().top;
-                $('.gec-cont').animate({scrollTop: LetterTop-45+'px'}, 300);
-            }
-            console.log(LetterTop);
-        }
-    })
+//         var _index = _this.index();
+//         if(_index==0){
+//             $('.gec-cont').animate({scrollTop: '0px'}, 300);//点击第一个滚到顶部
+//         }else{
+//             var letter = _this.text();
+//             if($('#gec_'+letter).length>0){//点击的字母 有值
+//                 var LetterTop = $('#gec_'+letter).position().top;
+//                 $('.gec-cont').animate({scrollTop: LetterTop-45+'px'}, 300);
+//             }
+//             console.log(LetterTop);
+//         }
+//     })
 
-    var windowHeight=$(window).height();
-    var InitHeight=windowHeight-180;
-    Initials.height(InitHeight);
-    var LiHeight=InitHeight/28;
-    Initials.find('li').height(LiHeight);
-})
-function gecInitials() {//公众号排序
-    var gecSortList=$(".gec-sort-list");
-    var gecSortBox=$(".gec-sort-box");
-    gecSortList.sort(asc_sort).appendTo('.gec-sort-box');//按首字母排序
-    function asc_sort(a, b) {
-        return makePy($(b).find('.gec-city-name').text().charAt(0))[0].toUpperCase() < makePy($(a).find('.gec-city-name').text().charAt(0))[0].toUpperCase() ? 1 : -1;
-    }
+//     var windowHeight=$(window).height();
+//     var InitHeight=windowHeight-180;
+//     Initials.height(InitHeight);
+//     var LiHeight=InitHeight/28;
+//     Initials.find('li').height(LiHeight);
+// })
+// function gecInitials() {//公众号排序
+//     var gecSortList=$(".gec-sort-list");
+//     var gecSortBox=$(".gec-sort-box");
+//     gecSortList.sort(asc_sort).appendTo('.gec-sort-box');//按首字母排序
+//     function asc_sort(a, b) {
+//         return makePy($(b).find('.gec-city-name').text().charAt(0))[0].toUpperCase() < makePy($(a).find('.gec-city-name').text().charAt(0))[0].toUpperCase() ? 1 : -1;
+//     }
 
-    var initials = [];
-    gecSortList.each(function(i) {
-        var initial = makePy($(this).find('.gec-city-name').text().charAt(0))[0].toUpperCase();
-        if(initial>='A'&&initial<='Z'){
-            if (initials.indexOf(initial) === -1)
-                initials.push(initial);
-        }
-    });
+//     var initials = [];
+//     gecSortList.each(function(i) {
+//         var initial = makePy($(this).find('.gec-city-name').text().charAt(0))[0].toUpperCase();
+//         if(initial>='A'&&initial<='Z'){
+//             if (initials.indexOf(initial) === -1)
+//                 initials.push(initial);
+//         }
+//     });
 
-    $.each(initials, function(index, value) {//添加首字母标签
-        gecSortBox.append('<div class="gec-sort-letter" id="gec_'+ value +'">' + value + '</div>');
-    });
-    for (var i =0;i<gecSortList.length;i++) {//插入到对应的首字母后面
-        var gecLetter=makePy(gecSortList.eq(i).find('.gec-city-name').text().charAt(0))[0].toUpperCase();
-        switch(gecLetter){
-            case "A":
-                $('#gec_A').after(gecSortList.eq(i));
-                break;
-            case "B":
-                $('#gec_B').after(gecSortList.eq(i));
-                break;
-            case "C":
-                $('#gec_C').after(gecSortList.eq(i));
-                break;
-            case "D":
-                $('#gec_D').after(gecSortList.eq(i));
-                break;
-            case "E":
-                $('#gec_E').after(gecSortList.eq(i));
-                break;
-            case "F":
-                $('#gec_F').after(gecSortList.eq(i));
-                break;
-            case "G":
-                $('#gec_G').after(gecSortList.eq(i));
-                break;
-            case "H":
-                $('#gec_H').after(gecSortList.eq(i));
-                break;
-            case "I":
-                $('#gec_I').after(gecSortList.eq(i));
-                break;
-            case "J":
-                $('#gec_J').after(gecSortList.eq(i));
-                break;
-            case "K":
-                $('#gec_K').after(gecSortList.eq(i));
-                break;
-            case "L":
-                $('#gec_L').after(gecSortList.eq(i));
-                break;
-            case "M":
-                $('#gec_M').after(gecSortList.eq(i));
-                break;
-            case "N":
-                $('#gec_N').after(gecSortList.eq(i));
-                break;
-            case "O":
-                $('#gec_O').after(gecSortList.eq(i));
-                break;
-            case "P":
-                $('#gec_P').after(gecSortList.eq(i));
-                break;
-            case "Q":
-                $('#gec_Q').after(gecSortList.eq(i));
-                break;
-            case "R":
-                $('#gec_R').after(gecSortList.eq(i));
-                break;
-            case "S":
-                $('#gec_S').after(gecSortList.eq(i));
-                break;
-            case "T":
-                $('#gec_T').after(gecSortList.eq(i));
-                break;
-            case "U":
-                $('#gec_U').after(gecSortList.eq(i));
-                break;
-            case "V":
-                $('#gec_V').after(gecSortList.eq(i));
-                break;
-            case "W":
-                $('#gec_W').after(gecSortList.eq(i));
-                break;
-            case "X":
-                $('#gec_X').after(gecSortList.eq(i));
-                break;
-            case "Y":
-                $('#gec_Y').after(gecSortList.eq(i));
-                break;
-            case "Z":
-                $('#gec_Z').after(gecSortList.eq(i));
-                break;
-            default:
-                $('#gec-default').after(gecSortList.eq(i));
-                break;
-        }
-    };
-}
+//     $.each(initials, function(index, value) {//添加首字母标签
+//         gecSortBox.append('<div class="gec-sort-letter" id="gec_'+ value +'">' + value + '</div>');
+//     });
+//     for (var i =0;i<gecSortList.length;i++) {//插入到对应的首字母后面
+//         var gecLetter=makePy(gecSortList.eq(i).find('.gec-city-name').text().charAt(0))[0].toUpperCase();
+//         switch(gecLetter){
+//             case "A":
+//                 $('#gec_A').after(gecSortList.eq(i));
+//                 break;
+//             case "B":
+//                 $('#gec_B').after(gecSortList.eq(i));
+//                 break;
+//             case "C":
+//                 $('#gec_C').after(gecSortList.eq(i));
+//                 break;
+//             case "D":
+//                 $('#gec_D').after(gecSortList.eq(i));
+//                 break;
+//             case "E":
+//                 $('#gec_E').after(gecSortList.eq(i));
+//                 break;
+//             case "F":
+//                 $('#gec_F').after(gecSortList.eq(i));
+//                 break;
+//             case "G":
+//                 $('#gec_G').after(gecSortList.eq(i));
+//                 break;
+//             case "H":
+//                 $('#gec_H').after(gecSortList.eq(i));
+//                 break;
+//             case "I":
+//                 $('#gec_I').after(gecSortList.eq(i));
+//                 break;
+//             case "J":
+//                 $('#gec_J').after(gecSortList.eq(i));
+//                 break;
+//             case "K":
+//                 $('#gec_K').after(gecSortList.eq(i));
+//                 break;
+//             case "L":
+//                 $('#gec_L').after(gecSortList.eq(i));
+//                 break;
+//             case "M":
+//                 $('#gec_M').after(gecSortList.eq(i));
+//                 break;
+//             case "N":
+//                 $('#gec_N').after(gecSortList.eq(i));
+//                 break;
+//             case "O":
+//                 $('#gec_O').after(gecSortList.eq(i));
+//                 break;
+//             case "P":
+//                 $('#gec_P').after(gecSortList.eq(i));
+//                 break;
+//             case "Q":
+//                 $('#gec_Q').after(gecSortList.eq(i));
+//                 break;
+//             case "R":
+//                 $('#gec_R').after(gecSortList.eq(i));
+//                 break;
+//             case "S":
+//                 $('#gec_S').after(gecSortList.eq(i));
+//                 break;
+//             case "T":
+//                 $('#gec_T').after(gecSortList.eq(i));
+//                 break;
+//             case "U":
+//                 $('#gec_U').after(gecSortList.eq(i));
+//                 break;
+//             case "V":
+//                 $('#gec_V').after(gecSortList.eq(i));
+//                 break;
+//             case "W":
+//                 $('#gec_W').after(gecSortList.eq(i));
+//                 break;
+//             case "X":
+//                 $('#gec_X').after(gecSortList.eq(i));
+//                 break;
+//             case "Y":
+//                 $('#gec_Y').after(gecSortList.eq(i));
+//                 break;
+//             case "Z":
+//                 $('#gec_Z').after(gecSortList.eq(i));
+//                 break;
+//             default:
+//                 $('#gec-default').after(gecSortList.eq(i));
+//                 break;
+//         }
+//     };
+// }
+// $('.curr_city').click(function(){
+//     $('.geclocation-pop').show();
+//     $('.wrapper').hide();
+// })
+// $('.gec-back').click(function(){
+//     $('.geclocation-pop').hide();
+//     $('.wrapper').show();
+// })
 // 城市定位 首字母匹配 end
-$('.curr_city').click(function(){
-    $('.geclocation-pop').show();
-    $('.wrapper').hide();
-})
-$('.gec-back').click(function(){
-    $('.geclocation-pop').hide();
-    $('.wrapper').show();
-})
 
 
-var map = new AMap.Map('container', {
-    zoom: 12, //级别
-    center: [114.07, 22.62]
-});
-var threeAdress;
-map.plugin([
-    'AMap.Geolocation',
-    'AMap.Geocoder',//逆地理编码
-], function () {
-    var geolocation = new AMap.Geolocation({
-        enableHighAccuracy: true,
-        // timeout: 5000,
-        zoomToAccuracy: true,
-    })
-    map.addControl(geolocation);
-    geolocation.getCurrentPosition();
-    AMap.event.addListener(geolocation, 'complete', onComplete);
-    AMap.event.addListener(geolocation, 'error', onError);
-    function onComplete(e){
-        console.log(e)
-        // alert(JSON.stringify(e))
-        // $('.gec-curr-txt').text(e.addressComponent.city);
-        $('.curr_city').text(e.addressComponent.district);
-        threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
-        if (!getCookie('area')) {
-            getAdvertisment(threeAdress);
-        }
-        setCookie('area', threeAdress, 7); //保存地址到cookie，有效期7天
-    };
-    function onError(e){
-        // console.log(e)
-        // alert(JSON.stringify(e))
-    };
-})
- //页面初始化时，如果帐号密码cookie存在则填充
-if (getCookie('area')) {
-    getAdvertisment(getCookie('area'));
-}
-// 获取广告
-function getAdvertisment(area){
-    $.ajax({
-        url: 'advertisement_index',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'area': area
-        },
-        success: function(res){
-            console.log('广告',res);
-            if(res.status == 1){
-                var topSwiperStr = '';
-                // 首页轮播图
-                $.each(res.data.home, function(idx, val){
-                    if(idx < 5){
-                        topSwiperStr += `<div class="swiper-slide">
-                                            <a href="`+val.url+`">
-                                                <img src="uploads/`+val.advert_picture+`">
-                                            </a>
-                                        </div>`;
-                    }
-                })
-                $('.swiper-wrapper').append(topSwiperStr);
-                mySwiper();
-                // 首页固定广告
-                var indexFixStr = '';
-                indexFixStr += `<a href="`+res.data.fixed[0].url+`">
-                                    <img src="uploads/`+res.data.fixed[0].advert_picture+`">
-                                </a>`
-                $('.banner').append(indexFixStr);
-                // 热门推荐
-                var hot = res.data.hot;
-                var hotStr = `<div class="recommend_top">
-                                <a href="`+hot[0].url+`">
-                                    <img src="uploads/`+hot[0].advert_picture+`">
-                                </a>
-                                <a href="`+hot[1].url+`">
-                                    <img src="uploads/`+hot[1].advert_picture+`">
-                                </a>
-                            </div>
-                            <div class="recommend_bottom">
-                                <div class="recommend_bottom_left">
-                                    <a href="`+hot[2].url+`">
-                                        <img src="uploads/`+hot[2].advert_picture+`">
-                                    </a>
-                                </div>
-                                <div class="recommend_bottom_right">
-                                    <div class="recommend_bottom_right_one">
-                                        <a href="`+hot[3].url+`">
-                                            <img src="uploads/`+hot[3].advert_picture+`">
-                                        </a>
-                                    </div>
-                                    <div class="recommend_bottom_right_two">
-                                        <div class="recommend_bottom_right_three">
-                                            <a href="`+hot[4].url+`">
-                                                <img src="uploads/`+hot[4].advert_picture+`">
-                                            </a>
-                                        </div>
-                                        <div class="recommend_bottom_right_four">
-                                            <a href="`+hot[5].url+`">
-                                                <img src="uploads/`+hot[5].advert_picture+`">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`;
-                $('.recommend_goods').append(hotStr);
-            }
-        },
-        error: function(){
-            console.log('error');
-        }
-    })
-}
+// var map = new AMap.Map('container', {
+//     zoom: 12, //级别
+//     center: [114.07, 22.62]
+// });
+// var threeAdress;
+// map.plugin([
+//     'AMap.Geolocation',
+//     'AMap.Geocoder',//逆地理编码
+// ], function () {
+//     var geolocation = new AMap.Geolocation({
+//         enableHighAccuracy: true,
+//         // timeout: 5000,
+//         zoomToAccuracy: true,
+//     })
+//     map.addControl(geolocation);
+//     geolocation.getCurrentPosition();
+//     AMap.event.addListener(geolocation, 'complete', onComplete);
+//     AMap.event.addListener(geolocation, 'error', onError);
+//     function onComplete(e){
+//         console.log(e)
+//         // alert(JSON.stringify(e))
+//         // $('.gec-curr-txt').text(e.addressComponent.city);
+//         $('.curr_city').text(e.addressComponent.district);
+        // threeAdress = e.addressComponent.province+','+e.addressComponent.city+','+e.addressComponent.district;
+//         if (!getCookie('area')) {
+//             getAdvertisment(threeAdress);
+//         }
+//         setCookie('area', threeAdress, 7); //保存地址到cookie，有效期7天
+//     };
+//     function onError(e){
+//         // console.log(e)
+//         // alert(JSON.stringify(e))
+//     };
+// })
+//  //页面初始化时，如果帐号密码cookie存在则填充
+// if (getCookie('area')) {
+//     getAdvertisment(getCookie('area'));
+// }
+
 // 获取商家的信息，如果存在则是商家角色，不存在则为车主
 $.ajax({
     url: 'select_role_get',
@@ -761,19 +687,3 @@ function mySwiper(){
         }
     })
 }
-//设置cookie
-function setCookie(name, value, day) {
-    var date = new Date();
-    date.setDate(date.getDate() + day);
-    document.cookie = name + '=' + value + ';expires=' + date;
-};
-//获取cookie
-function getCookie(name) {
-    var reg = RegExp(name + '=([^;]+)');
-    var arr = document.cookie.match(reg);
-    if (arr) {
-        return arr[1];
-    } else {
-        return '';
-    }
-};

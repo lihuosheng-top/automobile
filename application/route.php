@@ -95,7 +95,8 @@ Route::group("",[
     "select_role_get"=>"index/My/select_role_get",//获取商家的信息，如果存在则是商家角色，不存在则为车主
     "my_nickname"=>"index/My/nickname",         //昵称
     "my_consume"=>"index/My/consume",         //我的消费(ajax)
-    "consume_message"=>"index/My/consume_message",       //消费详情
+    "consume_save"=>"index/My/consume_save",         //进入我的消费需要存id(ajax)
+    "consume_message"=>"index/My/consume_message",       //消费详情（ajax）
     /*TODO:登录结束*/
 
     /*TODO:经纬度开始*/
@@ -503,12 +504,14 @@ Route::group("admin",[
     /*充值和提现*/
     "recharge_list"=>"admin/Recharge/index", //充值和提现首页
     "recharge_edit"=>"admin/Recharge/edit",   //充值和提现编辑
+    "recharge_edit_save"=>"admin/Recharge/edit_save",//提现编辑保存
     "recharge_del"=>"admin/Recharge/del",   //充值和提现删除
     "recharge_dels"=>"admin/Recharge/dels",   //充值和提现批量删除
     "recharge_search"=>"admin/Recharge/search",   //充值和提现搜索功能
 
     /*资金管理*/
     "capital_index"=>"admin/Capital/index",  //资金管理界面
+    "capital_detail"=>"admin/Capital/detail",  //资金详情
     "capital_search"=>"admin/Capital/search",  //资金管理搜索功能
 
 
@@ -573,6 +576,7 @@ Route::group("admin",[
     "order_evaluate_repay"=>"admin/Order/evaluate_repay", //******配件商订单评价回复操作
 
     "order_after_sale"=>"admin/Order/after_sale", //配件商订单维修售后
+    "order_after_save"=>"admin/Order/after_save", //配件订单维修状态处理
 
     "order_invoice"=>"admin/Order/invoice", //配件商发票列表
     "order_invoice_edit"=>"admin/Order/invoice_edit", //****配件商发票信息
