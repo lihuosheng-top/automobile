@@ -195,10 +195,11 @@ class Classify extends Controller
                   ->field("order_create_time")
                   ->find();
             }
-            dump($evaluate_info);
-
-
-
+           if(!empty($evaluate_info)){
+                return ajax_success("数据返回成功",$evaluate_info);
+           }else{
+               return ajax_error("没有数据",["status"=>0]);
+           }
 
         }
     }
