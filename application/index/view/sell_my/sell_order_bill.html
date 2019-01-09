@@ -65,5 +65,18 @@
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        $.ajax({
+            url: 'sell_order_bill',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+    </script>
 </body>
 </html>
