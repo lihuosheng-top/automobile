@@ -412,3 +412,37 @@ function myAjax(url, data, succCallBack){
         }
     })
 }
+
+(function(){
+    // 进入店铺
+    $.ajax({
+        url: 'go_to_store',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'goods_id': id
+        },
+        success: function(res){
+            console.log('进入店铺',res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+    // 评价
+    $.ajax({
+        url: 'goods_evaluate_return',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'goods_id': id
+        },
+        success: function(res){
+            console.log('进入店铺',res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}())
+

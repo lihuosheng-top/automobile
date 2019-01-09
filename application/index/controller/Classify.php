@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use think\Controller;
+use think\Db;
 use think\Request;
 use think\Session;
 
@@ -102,7 +103,6 @@ class Classify extends Controller
             $goods_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("id",$goods_id)->select();
             $goods_standard = db("special")->where("goods_id", $goods_id)->select();
-            
             foreach ($goods as $key=>$value){
                 $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
                 $goods_standard_value = explode(",",$value["goods_standard_value"]);
@@ -110,9 +110,7 @@ class Classify extends Controller
                 $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
                 $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
                 $goods[$key]["goods_standard"] = $goods_standard;
-
-            }           
-
+            }
             if($goods){
                 return ajax_success("获取成功",$goods);
             }else{
@@ -120,6 +118,89 @@ class Classify extends Controller
             }
         }
         return view("goods_detail");
+    }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:进入店铺信息
+     **************************************
+     */
+    public function go_to_store(Request $request){
+        if($request->isPost()){
+            $goods_id = $request->only(["goods_id"])["goods_id"];
+            $store_id = db("goods")->where("id",$goods_id)->value("store_id");
+            $store_data =db("store")->field("store_name,store_logo_images")->where("store_id",$store_id)->find();
+            $goods_info =db("goods")
+                ->where("store_id",$store_id)
+                ->order('rand()')
+                ->limit(3)
+                ->select();
+            $data =[
+                "goods_info"=>$goods_info,
+                "store_id"=>$store_id,
+                "store_data"=>$store_data,
+            ];
+            if(!empty($data)){
+                return ajax_success("数据返回成功",$data);
+            }else{
+                return ajax_error("没有数据",["status"=>0]);
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:你可能还喜欢
+     **************************************
+     * @param Request $request
+     */
+    public function may_like_goods(Request $request){
+        if($request->isPost()){
+            $goods_info =db("goods")
+                ->order('rand()')
+                ->limit(2)
+                ->select();
+            foreach ($goods_info as $ks =>$vs){
+                $goods_info[$ks]["special_info"] =db("special")->where("goods_id",$vs["id"])->select();
+                $goods_info[$ks]["statistical_quantity"] =db("order_parts")->where("goods_id",$vs["id"])->sum("order_quantity");
+            }
+            if(!empty($goods_info)){
+                return ajax_success("数据成功",$goods_info);
+            }else{
+                return ajax_error("没有数据",["status"=>0]);
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商商品详情页面的评价数据
+     **************************************
+     */
+    public function goods_evaluate_return(Request $request){
+        if($request->isPost()){
+            $goods_id = $request->only(["goods_id"])["goods_id"];
+            $evaluate_info =db("order_parts_evaluate")->where("goods_id",$goods_id)->select();
+            foreach ($evaluate_info as $ks=>$vs){
+              $evaluate_info[$ks]["images"] = db("order_parts_evaluate_images")
+                  ->field("images")
+                  ->where("evaluate_order_id",$vs["id"])
+                  ->select();
+              $evaluate_info[$ks]["order_create_time"] =db("order_parts")
+                  ->where("id",$vs["order_id"])
+                  ->field("order_create_time")
+                  ->find();
+            }
+            dump($evaluate_info);
+
+
+
+
+        }
     }
 
 
