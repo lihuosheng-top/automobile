@@ -50,7 +50,7 @@ $.ajax({
                 $.each(val.child, function(idx, val){
                     goodsLi += '<li>\
                                     <a href="goods_list?id='+val.id+'">\
-                                        <img src="uploads/'+val.brand_images+'">\
+                                        <div><img src="uploads/'+val.brand_images+'"></div>\
                                         <span class="brand_name">'+val.name+'</span>\
                                     </a>\
                                 </li>'
@@ -62,15 +62,8 @@ $.ajax({
         
         //循环商品
         $.each(res.data.goods_type, function(idx, val){
-            // if(myHash != 'null'){
-                // if(myHash == val.id){
-                    // brandLi += '<li class="active"><a href="#'+val.id+'">'+val.name+'</a></li>';
-                // }else{
-                    // brandLi += '<li><a href="#'+val.id+'">'+val.name+'</a></li>';
-                // }
-            // }else{
-                brandLi += '<li><a href="#'+val.id+'">'+val.name+'</a></li>';
-            // }
+            brandLi += '<li><a href="#'+val.id+'">'+val.name+'</a></li>';
+
             goodsLi += '<li class="first_li maintain"">\
                             <p class="subtitle" id="'+val.id+'">'+val.name+'</p>\
                             <ul class="bgw">';
@@ -79,7 +72,7 @@ $.ajax({
                 $.each(val.child, function(idx, val){
                     goodsLi += '<li>\
                                     <a href="goods_list?id='+val.id+'">\
-                                        <img src="uploads/'+val.type_images+'">\
+                                        <div><img src="uploads/'+val.type_images+'"></div>\
                                         <span class="brand_name">'+val.name+'</span>\
                                     </a>\
                                 </li>'
