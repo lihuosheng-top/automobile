@@ -437,7 +437,7 @@ html{
     background-position: -.5rem -.5rem;
 }
 .pop .pop_head{
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
