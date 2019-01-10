@@ -40,12 +40,15 @@ $.ajax({
             $('.stock').html('库存' + val.goods_standard[0].stock + '件');
             // 商品详情
             $('.detail-img-box').html(val.goods_text);
-            // 专用参数
-            $('.parameter-brand').text(val.dedicated_vehicle);
-            $('.parameter-series').text(val.goods_car_series.split(',').join('  '));
-            $('.parameter-year').text(val.goods_car_year.split(',').join('  '));
-            $('.parameter-displacement').text(val.goods_car_displacement.split(',').join('  '));
-            
+            if(val.dedicated_vehicle == null){
+                $('.product-parameter').hide();
+            }else{
+                // 专用参数
+                $('.parameter-brand').text(val.dedicated_vehicle);
+                $('.parameter-series').text(val.goods_car_series.split(',').join('/ '));
+                $('.parameter-year').text(val.goods_car_year.split(',').join('/ '));
+                $('.parameter-displacement').text(val.goods_car_displacement.split(',').join('/ '));
+            }
             // 规格值
             var specStr = '';
             $.each(val.goods_standard, function(idx, val){
@@ -172,18 +175,6 @@ function timetrans(date){
     var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
     return Y+M+D+h+m+s;
 }
-
-// 查看评价详情
-$('.comment_text_a').click(function(){
-    $('.wrapper').hide();
-    $('.comment-detail-pop').show();
-})
-$('.detail-back').click(function(){
-    $('.wrapper').show();
-    $('.comment-detail-pop').hide();
-})
-
-
 
 // 立即购买 弹窗
 $('.select-buy').click(function(){
@@ -471,7 +462,7 @@ $.ajax({
             var data = res.data;
             var length = data.length > 3 ? 3: data.length;
             for(var i = 0; i < length; i++){
-                str += `<li class="comment_li">
+                str += `<li class="comment_li" data-evalid="`+data[i].id+`">
                             <div class="comment_user_info">
                                 <div class="comment_user_headimg">
                                     <img src="userimg/`+data[i].user_info.user_img+`">
@@ -481,11 +472,7 @@ $.ajax({
                                         <span class="phone_box">`+data[i].user_info.phone_num+`</span>
                                         <span class="time_box">`+timetrans(data[i].create_time)+`</span>
                                     </div>
-                                    <span class="spr 
-                                    `+(data[i].evaluate_stars === 5?'star':
-                                    (data[i].evaluate_stars === 4?'four-star':
-                                    (data[i].evaluate_stars === 3?'three-star':
-                                    data[i].evaluate_stars === 2?'two-star': 'one-star')))+`"></span>
+                                    <span class="spr star `+(data[i].evaluate_stars === 5?'':(data[i].evaluate_stars === 4?'four-star':(data[i].evaluate_stars === 3?'three-star':(data[i].evaluate_stars === 2?'two-star':'one-star'))))+`"></span>
                                 </div>
                             </div>
                             <div class="comment_text_box">
@@ -519,6 +506,15 @@ $.ajax({
                 </li>`
             }
             $('.more_comment_box').before(str);
+            // 查看评价详情
+            $('.tab-box .comment_user_info').click(function(){
+                $('.wrapper').hide();
+                $('.comment-detail-pop').show();
+            })
+            $('.detail-back').click(function(){
+                $('.wrapper').show();
+                $('.comment-detail-pop').hide();
+            })
         }
     },
     error: function(){
@@ -550,11 +546,7 @@ $('.more_comment_box').on('click','a', function(){
                                             <span class="phone_box">`+ele.user_info.phone_num+`</span>
                                             <span class="time_box">`+timetrans(ele.create_time)+`</span>
                                         </div>
-                                        <span class="spr 
-                                        `+(ele.evaluate_stars === 5?'star':
-                                        (ele.evaluate_stars === 4?'four-star':
-                                        (ele.evaluate_stars === 3?'three-star':
-                                        ele.evaluate_stars === 2?'two-star': 'one-star')))+`"></span>
+                                        <span class="spr star `+(ele.evaluate_stars === 5?'':(ele.evaluate_stars === 4?'four-star':(ele.evaluate_stars === 3?'three-star':(ele.evaluate_stars === 2?'two-star': 'one-star'))))+`"></span>
                                     </div>
                                 </div>
                                 <div class="comment_text_box">
