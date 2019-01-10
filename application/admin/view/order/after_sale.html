@@ -157,6 +157,8 @@
 	}
 
 	.flowCell {
+		margin-left: 218px;
+		margin-top: 46px;
 		overflow: hidden;
 	}
 
@@ -207,8 +209,8 @@
 
 	.flow-line {
 		position: absolute;
-		width: 3px;
-		background-color: #aaaaaa;
+		width: 2px;
+		background-color: #F2F2F2;
 		top: 10px;
 		left: 210px;
 		z-index: -1;
@@ -238,6 +240,11 @@
 	}
 	.select-operation input{
             height: 30px;
+	}
+	#startImg{
+		background: #009DD9;
+		height: 20px;
+		border-radius: 50%;
 	}
 	/*  flow  end */
 
@@ -337,62 +344,17 @@
 							<!--流程线-->
 							<div class="flow-line" style="left: 226.5px; height:340px;"></div>
 							<!--流程区域 start-->
+							<div class="flowCell_content">
 							<div class="flowCell">
-								<div class="cell-left fc-orange">
-									<p class="t1">20:00</p>
-									<p class="t2">2018-01-01</p>
-								</div>
-								<div class="cell-center  fc-orange">
-									<img id="startImg" src="__STATIC__/admin/common/img/f1.png">
-								</div>
-								<div class="cell-right  fc-orange">
-									<p class="t1_start">订单已竣工</p>
-								</div>
-							</div>
-							<div class="flowCell">
-								<div class="cell-left  fc-grey">
-									<p class="t1">20:00</p>
-									<p class="t2">2018-01-01</p>
-								</div>
-								<div class="cell-center  fc-grey">
-									<img src="__STATIC__/admin/common/img/f2.png">
-								</div>
-								<div class="cell-right  fc-grey">
-									<p class="t1">施工小哥已接单，请等待</p>
-									<p class="t2">小哥电话：18612123233</p>
-								</div>
-							</div>
-							<div class="flowCell">
-								<div class="cell-left  fc-grey">
-									<p class="t1">20:00</p>
-									<p class="t2">2018-01-01</p>
-								</div>
-								<div class="cell-center  fc-grey">
-									<img src="__STATIC__/admin/common/img/f2.png">
-								</div>
-								<div class="cell-right  fc-grey">
-									<p class="t1">施工小哥已接单，请等待</p>
-									<p class="t2">小哥电话：18612123233</p>
-								</div>
-							</div>
-							<div class="flowCell">
-								<div class="cell-left fc-grey">
-									<p class="t1">20:00</p>
-									<p class="t2">2018-01-01</p>
-								</div>
-								<div class="cell-center  fc-grey">
-									<img id="endImg" src="__STATIC__/admin/common/img/f2.png">
-								</div>
-								<div class="cell-right  fc-grey">
-									<p class="t1">订单已提交</p>
-								</div>
-							</div>
+								
+						    </div>
 							<!--流程区域 end-->
 						</div>
 					</div>
 				</div>
 			</div>
 	</div>
+   </div>
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
 				<form class="layui-form" action="{:url('admin/Category/search')}">
@@ -733,7 +695,6 @@ function getMyDate(str){
           return num;  
       }
 	$(".state").on('click', function() {
-		$(".close").trigger('click');
 	var id = $(this).data("id");
 	$(".btu-sumit").data('id', id);
 	$.ajax({
@@ -748,7 +709,51 @@ function getMyDate(str){
 			data = eval("(" + data + ")");
 			console.log(data);
 			var order_create_time=timestampToTime(data.data[0].service[0].order_create_time);
-			$("#order_status").html(data.data[0].service[0].order.status);
+			if(data.data[0].service[0].order.status==0){
+				$("#order_status").html('已关闭');
+			}
+			else if(data.data[0].service[0].order.status==1){
+				$("#order_status").html('待支付');
+			}
+			else if(data.data[0].service[0].order.status==2){
+				$("#order_status").html('已付款');
+			}
+			if(data.data[0].service[0].order.status==3){
+				$("#order_status").html('待发货');
+			}
+			else if(data.data[0].service[0].order.status==4){
+				$("#order_status").html('已发货');
+			}
+			else if(data.data[0].service[0].order.status==5){
+				$("#order_status").html('待收货');
+			}
+			if(data.data[0].service[0].order.status==6){
+				$("#order_status").html('已收货');
+			}
+			else if(data.data[0].service[0].order.status==7){
+				$("#order_status").html('待评价');
+			}
+			else if(data.data[0].service[0].order.status==8){
+				$("#order_status").html('已完成');
+			}
+			
+			else if(data.data[0].service[0].order.status==9){
+				$("#order_status").html('未付款取消订单');
+			}
+			if(data.data[0].service[0].order.status==10){
+				$("#order_status").html('已付款取消订单');
+			}
+			else if(data.data[0].service[0].order.status==11){
+				$("#order_status").html('退货');
+			}
+			else if(data.data[0].service[0].order.status==12){
+				$("#order_status").html('已退货');
+			}
+			else if(data.data[0].service[0].order.status==13){
+				$("#order_status").html('退货中');
+			}
+			
+		
 			$("#payment").html(data.data[0].service[0].order.pay_type_content);
 			$("#goods").html(data.data[0].service[0].order_money);
 			$("#points_deduction").html(data.data[0].service[0].order.integral_deductible);
@@ -756,6 +761,7 @@ function getMyDate(str){
 			$("#reason").html(data.data[0].service[0].service_reason);
 			$("#description").html(data.data[0].service[0].service_reason);
 			$(".reply-content").html('');
+			$(".flowCell_content").html('');
 		if(data.data[0].service_message!=null){
             for(var i=0;i<data.data[0].service_message.length;i++){
 				var create_time= getMyDate(data.data[0].service_message[i].create_time*1000);
@@ -767,6 +773,45 @@ function getMyDate(str){
 				$(".reply-content").append(dhtml)
 			} 
 		}
+		if(data.data[0].service[0].delivery_status!=null){
+			for(var j=0; j<parseInt(data.data[0].service[0].delivery_status.status);j++){
+			
+			var dhtmls='';
+	               dhtmls+='<div class="flowCell">';
+					dhtmls+='<div class="cell-center  fc-grey">';
+					dhtmls+='<div id="startImg"></div>';
+					dhtmls+='</div>';
+					dhtmls+='<div class="cell-right  fc-grey">';
+					if(j==0){
+						dhtmls+='<p class="t1">快递小哥已接单</p>';
+					}
+					else if(j==1){
+						dhtmls+='<p class="t1">快递小哥已取货</p>';
+					}
+					else {
+						dhtmls+='<p class="t1">已完成</p>';
+                    }
+					
+					dhtmls+='<p class="t2">小哥电话：'+data.data[0].service[0].delivery_name_phone.number+'</p>';
+					dhtmls+='</div>';
+					dhtmls+='</div>';
+					$(".flowCell_content").append(dhtmls);
+		}
+          
+		}
+		 else{
+			var dhtmls='';
+	               dhtmls+='<div class="flowCell">';
+					dhtmls+='<div class="cell-center  fc-grey">';
+					dhtmls+='<div id="startImg"></div>';
+					dhtmls+='</div>';
+					dhtmls+='<div class="cell-right  fc-grey">';
+				    dhtmls+='<p class="t1">暂未接单</p>';
+					dhtmls+='</div>';
+					dhtmls+='</div>';
+					$(".flowCell_content").append(dhtmls);
+		}
+		    
 		},
 		error: function(data) {
 			console.log(data);

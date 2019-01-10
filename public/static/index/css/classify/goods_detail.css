@@ -289,9 +289,21 @@ html{
 }
 .wrapper .comment_box .comment_phone_time .star{
     display: inline-block;
-    width: 1.04rem;
-    height: .2rem;
-    background-position: 0 -2.8rem;
+    width: 1.14rem;
+    height: .3rem;
+    background-position: .05rem -2.75rem;
+}
+.comment_box .comment_phone_time .star.four-star{
+    background-position: .05rem -3rem;
+}
+.comment_box .comment_phone_time .star.three-star{
+    background-position: .05rem -3.25rem;
+}
+.comment_box .comment_phone_time .star.two-star{
+    background-position: .05rem -3.5rem;
+}
+.comment_box .comment_phone_time .star.one-star{
+    background-position: .05rem -3.75rem;
 }
 .wrapper .comment_box .comment_text_box{
     width: 100%;
@@ -548,12 +560,13 @@ html{
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 .pop .comment_box .comment_img_ul .comment_img_li{
     width: 1.36rem;
     height: 1.36rem;
     overflow: hidden;
+    margin-right: .1rem;
 }
 .pop .comment_box .comment_img_li img{
     width: 100%;
@@ -673,27 +686,29 @@ html{
 .shop-card .card-title span{
     font-size: .3rem;
     color: #666666;
-    margin-right: 1rem;
+    flex: 1;
+    margin-right: .1rem;
+    line-height: normal;
 }
 .shop-card .card-title a{
     display: inline-block;
-    width: 1.2rem;
-    height: .45rem;
     border: 1px solid #fd4a2d;
     color: #fd4a2d;
     font-size: .26rem;
     text-align: center;
     line-height: .45rem;
-    border-radius: .23rem;
+    border-radius: .1rem;
+    padding: 0 .15rem;
 }
 .card-show{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 .card-show div{
     position: relative;
     width: 32%;
     height: 2.74rem;
+    margin-right: 5px;
 }
 .card-show div img{
     width: 100%;

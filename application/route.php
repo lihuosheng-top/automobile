@@ -217,6 +217,7 @@ Route::group("",[
 
     /*TODO：店铺开始*/
     "store_index"=>"index/Store/index",             //店铺首页(所有的店铺信息)
+    "store_goods_info"=>"index/Store/store_goods_info",             //店铺首页 店铺内的商品（综合）
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
 
@@ -259,6 +260,7 @@ Route::group("",[
     "go_to_store"=>"index/Classify/go_to_store",//商品详情页面进店信息返回
     "may_like_goods"=>"index/Classify/may_like_goods",//商品详情页面你可能还喜欢
     "goods_evaluate_return"=>"index/Classify/goods_evaluate_return",//商品详情页面商品详情页面的评价数据
+    "goods_evaluate_detail"=>"index/Classify/goods_evaluate_detail",//配件商商品详情页面的评价数据查看详情
     /*TODO:商品详情页面信息结束*/
 
 

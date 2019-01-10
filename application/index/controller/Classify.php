@@ -137,6 +137,9 @@ class Classify extends Controller
                 ->order('rand()')
                 ->limit(3)
                 ->select();
+            foreach ($goods_info as $ks=>$vs){
+                $goods_info[$ks]["special_info"] =db("special")->where("goods_id",$vs["id"])->select();
+            }
             $data =[
                 "goods_info"=>$goods_info,
                 "store_id"=>$store_id,
@@ -204,6 +207,10 @@ class Classify extends Controller
                   ->where("id",$vs["order_id"])
                   ->field("order_create_time")
                   ->find();
+                $evaluate_info[$ks]["user_info"] =db("user")
+                    ->where("id",$vs["user_id"])
+                    ->field("user_img,phone_num")
+                    ->find();
             }
            if(!empty($evaluate_info)){
                 return ajax_success("数据返回成功",$evaluate_info);
@@ -214,7 +221,32 @@ class Classify extends Controller
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商商品详情页面的评价数据查看详情
+     **************************************
+     */
+    public function goods_evaluate_detail(Request $request){
+        if($request->isPost()){
+            $evaluate_id = $request->only(["id"])["id"];//评价的id
+            $evaluate_info["evaluate_info"] =db("order_parts_evaluate")->where("id",$evaluate_id)->find();
+            $evaluate_info["images"] =db("order_parts_evaluate_images")
+                ->field("images")
+                ->where("evaluate_order_id",$evaluate_id)
+                ->select();
+            $evaluate_info["user_info"] = db("user")
+                ->where("id", $evaluate_info["evaluate_info"]["user_id"])
+                ->field("user_img,phone_num")
+                ->find();
+            if(!empty($evaluate_info)){
+                return ajax_success("成功返回",$evaluate_info);
+            }else{
+                return ajax_error("请重新查看",["status"=>0]);
+            }
 
+        }
+    }
 
     /**
      * 获取配件城id

@@ -23,8 +23,11 @@
 		display: none;
 	}
 	/* 弹窗 */
+
+.content_repay{
+	display: flex;
 	
-    
+}
     .tanchuang {
         width: 100%;
         min-height: 1100px;
@@ -33,10 +36,10 @@
         z-index: 9999;
     }
     .select-operation select{
-        width: 100px;
+        width: 144px;
         height: 30px;
     }
-	
+
 	.tanchuang-content {
 		width: 800px;
 		height: 600px;
@@ -46,19 +49,19 @@
 		top: 20%;
 		left: 20%;
 	}
-	
+
 	.close {
 		width: 30px;
 	}
-	
+
 	.clear {
 		clear: both;
 	}
-	
+
 	.title-a {
 		background: RGB(247, 247, 247);
 	}
-	
+
 	.content-title {
 		padding-top: 10px;
 		padding-left: 20px;
@@ -66,24 +69,24 @@
 		width: 50%;
 		height: 40px;
 	}
-	
+
 	.noshow {
 		display: none;
 	}
 	/* 弹窗内容样式 */
-	
+
 	.list-a ul li {
 		float: left;
 		margin-left: 26px;
 		font-size: 12px;
 	}
-	
+
 	.dom>ul {
 		margin-top: 10px;
 		margin-bottom: 0px;
 		margin-left: 50px;
 	}
-	
+
 	.dom>ul>li {
 		float: left;
 		width: 100px;
@@ -93,13 +96,13 @@
 		height: 40px;
 		line-height: 40px;
 	}
-	
+
 	.list {
 		padding-top: 20px;
-		margin-left: 50px;
+		margin-left: 30px;
 		border-top: RGB(242, 242, 242) solid 1px;
 	}
-	
+
 	.cancel {
 		border-bottom: solid 1px RGB(242, 242, 242);
 		margin-left: 26px;
@@ -107,24 +110,26 @@
 		margin-top: 18px;
 		font-size: 12px;
 	}
-	
+
 	.reply {
 		margin: 15px;
 	}
-	
+.repay_time{
+	margin-right: 30px;
+}
 	.reply-content {
 		margin-top: 11px;
 		min-height: 175px;
 		max-height: 175px;
 		overflow-y: scroll;
 	}
-	
+
 	.opation>div {
 		float: left;
 		margin-left: 26px;
 		margin-top: 10px;
 	}
-	
+
 	.btu-sumit {
 		position: absolute;
 		bottom: 25px;
@@ -137,24 +142,26 @@
 		height: 40px;
 		margin-right: 24px;
 	}
-	
+
 	.active {
 		background: #F2F2F2;
 	}
 	/* 物流线 */
 	/* flow start */
-	
+
 	.flowSwrap {
 		position: relative;
 		margin: 0 auto;
 		width: 720px;
 		/*background-color: rgba(0,0,0,.3);*/
 	}
-	
+
 	.flowCell {
+		margin-left: 218px;
+		margin-top: 46px;
 		overflow: hidden;
 	}
-	
+
 	.cell-left {
 		width: 190px;
 		padding-right: 28px;
@@ -163,7 +170,7 @@
 		vertical-align: middle;
 		/*background-color: goldenrod;*/
 	}
-	
+
 	.cell-right {
 		padding-left: 28px;
 		text-align: left;
@@ -171,7 +178,7 @@
 		vertical-align: middle;
 		/*background-color:green;*/
 	}
-	
+
 	.cell-center {
 		height: 60px;
 		width: 20px;
@@ -179,41 +186,41 @@
 		vertical-align: middle;
 		/*background-color: azure;*/
 	}
-	
+
 	.cell-left .t1 {
 		font-size: 10px;
 	}
-	
+
 	.cell-left .t2 {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t1_start {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t1 {
 		font-size: 10px;
 	}
-	
+
 	.cell-right .t2 {
 		font-size: 10px;
 	}
-	
+
 	.flow-line {
 		position: absolute;
-		width: 3px;
-		background-color: #aaaaaa;
+		width: 2px;
+		background-color: #F2F2F2;
 		top: 10px;
 		left: 210px;
 		z-index: -1;
 	}
-	
+
 	.firstImg {
 		height: 20px;
 		width: 20px;
 	}
-	
+
 	tbody button {
 		width: 100px;
 		height: 30px;
@@ -234,8 +241,13 @@
 	.select-operation input{
             height: 30px;
 	}
+	#startImg{
+		background: #009DD9;
+		height: 20px;
+		border-radius: 50%;
+	}
 	/*  flow  end */
-	
+
 	.pagination {
 		float: right;
 	}
@@ -255,138 +267,93 @@
 				<!-- 里面的内容 -->
 				<!-- <button type="button" class="btu-sumit" data-id="">确定</button> -->
 				<div class="dom">
+					
 					<ul class="clear card">
 						<li class="active" data-id="list-a">订单处理</li>
 						<li data-id="list-b">物流跟踪</li>
 					</ul>
-	
+
 					<div class="list-a list">
+						<input type="button"   id="reflash"  style=" display: none;"/>
 						<ul class="clear">
 							<li>
 								<span>订单状态：</span>
-								<span v-if="status==0">已关闭</span>
-								<span v-else-if="status==1">待支付</span>
-								<span v-else-if="status==2">已付款</span>
-								<span v-else-if="status==3">待发货</span>
-								<span v-else-if="status==4">已发货</span>
-								<span v-else-if="status==5">待收货</span>
-								<span v-else-if="status==6">已收货</span>
-								<span v-else-if="status==7">待评价</span>
-								<span v-else-if="status==8">已完成</span>
-								<span v-else-if="status==9">未付款取消订单</span>
-								<span v-else-if="status==10">已付款取消订单</span>
-								<span v-else-if="status==11">退货</span>
-								<span v-else-if="status==12">已退货</span>
-								<span v-else-if="status==13">退货中</span>
-								<span v-else>无</span>
+								<span id="order_status">无</span>
 							</li>
 							<li>
 								<span>支付方式：</span>
-								<span v-if="payment!=null">{{payment}}</span>
-								<span v-else>无</span>
+								<span id="payment">无</span>
 							</li>
 							<li>
 								<span>商品金额：</span>
-								<span v-if="amount!=null">{{amount}}</span>
-								<span v-else>无</span>
+								<span id="goods">无</span>
 							</li>
 							<li>
 								<span>积分抵扣：</span>
-								<span  v-if="points_Deduction!=null">{{points_Deduction}}</span>
-								<span v-else>无</span>
+								<span id="points_deduction">无</span>
 							</li>
 							<li>
 								<span>实付金额：</span>
-								<span  v-if="real_Pay!=null"> {{real_Pay}}</span>
-								<span v-else>无</span>
+								<span id="real_pay">无</span>
 							</li>
 						</ul>
 						<div class="parment" >
-								<span  v-if="cancel_order_description!=null">申请原因:</span>
-								<span  v-if="cancel_order_description!=null">{{cancel_order_description}}</span>
+								<span  >申请原因:</span>
+								<span  id="reason">申请原因:</span>
 							</div>
 						<div class="cancel" >
-							<span  v-if="cancel_order_description!=null">问题描述:</span>
-							<span  v-if="cancel_order_description!=null">{{cancel_order_description}}</span>
+							<span >问题描述:</span>
+							<span  id="description">申请原因:</span>
 							<div class="img_content">
-								<div  v-if="cancel_order_description!=null" v-for="item in service_images">
-									<img :src="'__STATIC__/uploads/'+item" alt="">
+								<div >
+									<img src="11" alt="">
 								</div>
 							</div>
-							
+
 						</div>
-						
+
 						<div class="reply">
 							<span>官方回复</span>
 							<span><input type="text" name="" value="" placeholder="请输入处理备注" style="width: 400px; height: 30px;" id="note_tip" /></span>
 							<div class="reply-content">
-								<span v-if="buy_message!=null">{{order_create_time}}</span>
-								<span v-if="buy_message!=null"> {{buy_message}}</span>
+								
 							</div>
 						</div>
-					
+						<div class="opation clear">
+							<div class="select-operation">
+								<span>选择状态</span>
+								<select id="static_select">
+									<option >请选择</option>
+									<option value="0">处理中</option>
+									<option value="1">拒绝</option>
+									<option value="2">收货中</option>
+									<option value="3">完成退款</option>
+								</select>
+							</div>
+						
+							<div class="select-operation">
+								<span>退款金额</span>
+								<input type="text" name="" id="refund_amount" value="" />
+							</div>
+
+						</div>
 					</div>
 					<div class="list-b list noshow">
 						<div class="flowSwrap">
 							<!--流程线-->
 							<div class="flow-line" style="left: 226.5px; height:340px;"></div>
 							<!--流程区域 start-->
+							<div class="flowCell_content">
 							<div class="flowCell">
-								<div class="cell-left fc-orange">
-									<p class="t1">20:00</p>
-									<p class="t2">2018-01-01</p>
-								</div>
-								<div class="cell-center  fc-orange">
-									<img id="startImg" src="__STATIC__/admin/common/img/f1.png">
-								</div>
-								<div class="cell-right  fc-orange">
-									<p class="t1_start">订单已竣工</p>
-								</div>
-							</div>
-							<div class="flowCell">
-								<div class="cell-left  fc-grey">
-									<p class="t1">20:00</p>
-									<p class="t2">2018-01-01</p>
-								</div>
-								<div class="cell-center  fc-grey">
-									<img src="__STATIC__/admin/common/img/f2.png">
-								</div>
-								<div class="cell-right  fc-grey">
-									<p class="t1">施工小哥已接单，请等待</p>
-									<p class="t2">小哥电话：18612123233</p>
-								</div>
-							</div>
-							<div class="flowCell">
-								<div class="cell-left  fc-grey">
-									<p class="t1">20:00</p>
-									<p class="t2">2018-01-01</p>
-								</div>
-								<div class="cell-center  fc-grey">
-									<img src="__STATIC__/admin/common/img/f2.png">
-								</div>
-								<div class="cell-right  fc-grey">
-									<p class="t1">施工小哥已接单，请等待</p>
-									<p class="t2">小哥电话：18612123233</p>
-								</div>
-							</div>
-							<div class="flowCell">
-								<div class="cell-left fc-grey">
-									<p class="t1">20:00</p>
-									<p class="t2">2018-01-01</p>
-								</div>
-								<div class="cell-center  fc-grey">
-									<img id="endImg" src="__STATIC__/admin/common/img/f2.png">
-								</div>
-								<div class="cell-right  fc-grey">
-									<p class="t1">订单已提交</p>
-								</div>
-							</div>
+								
+						    </div>
 							<!--流程区域 end-->
 						</div>
 					</div>
 				</div>
 			</div>
 	</div>
+   </div>
 
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
@@ -677,60 +644,194 @@
 		}
 	</script>
 <script type="text/javascript">
-	$(".state").on('click', function() {
-	var id = $(this).data("id");
-	console.log(id);
-	$.ajax({
-		type: "POST",
-		url: "{:url('admin/Order/platform_after_sale_selest')}",
-		async: false,
-		data: {
-			"id": id,
-		},
-		success: function(data) {
-			console.log(data);
-			$(".tanchuang").removeClass("noshow");
-			data = eval("(" + data + ")");
-			
-			var order_create_time=timestampToTime(data.data.order_create_time);
-			new Vue({
-				el: '.list-a',
-				data: {
-					status: data.data[0].status,
-					payment: data.data[0].order.pay_type_content,
-					amount: data.data.order_money,
-					points_Deduction: data.data[0].order.integral_deductible,
-					real_Pay:data.data[0].order.order_real_pay,
-					cancel_order_description:data.data[0].service_reason,
-					order_create_time:order_create_time,
-					buy_message:data.data[0].order.buy_message,
-					service_images:data.data[0].service_images
-				},
+	function getMyDate(str){  
+				var oDate = new Date(str),  
+				oYear = oDate.getFullYear(),  
+				oMonth = oDate.getMonth()+1,  
+				oDay = oDate.getDate(),  
+				oHour = oDate.getHours(),  
+				oMin = oDate.getMinutes(),  
+				oSen = oDate.getSeconds(),  
+				oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间  
+				return oTime;  
+			}; 
+			function getzf(num){  
+			  if(parseInt(num) < 10){  
+				  num = '0'+num;  
+			  }  
+			  return num;  
+		  }
+		$(".state").on('click', function() {
+		var id = $(this).data("id");
+		$(".btu-sumit").data('id', id);
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Order/platform_after_sale_selest')}",
+			async: false,
+			data: {
+				"id": id,
+			},
+			success: function(data) {
+				$(".tanchuang").removeClass("noshow");
+				data = eval("(" + data + ")");
+				console.log(data);
+				var order_create_time=timestampToTime(data.data[0].service[0].order_create_time);
+				if(data.data[0].service[0].order.status==0){
+					$("#order_status").html('已关闭');
+				}
+				else if(data.data[0].service[0].order.status==1){
+					$("#order_status").html('待支付');
+				}
+				else if(data.data[0].service[0].order.status==2){
+					$("#order_status").html('已付款');
+				}
+				if(data.data[0].service[0].order.status==3){
+					$("#order_status").html('待发货');
+				}
+				else if(data.data[0].service[0].order.status==4){
+					$("#order_status").html('已发货');
+				}
+				else if(data.data[0].service[0].order.status==5){
+					$("#order_status").html('待收货');
+				}
+				if(data.data[0].service[0].order.status==6){
+					$("#order_status").html('已收货');
+				}
+				else if(data.data[0].service[0].order.status==7){
+					$("#order_status").html('待评价');
+				}
+				else if(data.data[0].service[0].order.status==8){
+					$("#order_status").html('已完成');
+				}
+				
+				else if(data.data[0].service[0].order.status==9){
+					$("#order_status").html('未付款取消订单');
+				}
+				if(data.data[0].service[0].order.status==10){
+					$("#order_status").html('已付款取消订单');
+				}
+				else if(data.data[0].service[0].order.status==11){
+					$("#order_status").html('退货');
+				}
+				else if(data.data[0].service[0].order.status==12){
+					$("#order_status").html('已退货');
+				}
+				else if(data.data[0].service[0].order.status==13){
+					$("#order_status").html('退货中');
+				}
 				
 			
-			})
-		},
-		error: function(data) {
-			console.log(data);
-		}
+				$("#payment").html(data.data[0].service[0].order.pay_type_content);
+				$("#goods").html(data.data[0].service[0].order_money);
+				$("#points_deduction").html(data.data[0].service[0].order.integral_deductible);
+				$("#real_pay").html(data.data[0].service[0].order.order_real_pay);
+				$("#reason").html(data.data[0].service[0].service_reason);
+				$("#description").html(data.data[0].service[0].service_reason);
+				$(".reply-content").html('');
+				$(".flowCell_content").html('');
+			if(data.data[0].service_message!=null){
+				for(var i=0;i<data.data[0].service_message.length;i++){
+					var create_time= getMyDate(data.data[0].service_message[i].create_time*1000);
+					var dhtml='';
+					dhtml+='<div class="content_repay">';
+					dhtml+='<div class="repay_time">'+create_time+'</div>';
+					dhtml+='<div >'+data.data[0].service_message[i].service_dispose+'</div>';
+					dhtml+='</div>';
+					$(".reply-content").append(dhtml)
+				} 
+			}
+			if(data.data[0].service[0].delivery_status!=null){
+				for(var j=0; j<parseInt(data.data[0].service[0].delivery_status.status);j++){
+				
+				var dhtmls='';
+					   dhtmls+='<div class="flowCell">';
+						dhtmls+='<div class="cell-center  fc-grey">';
+						dhtmls+='<div id="startImg"></div>';
+						dhtmls+='</div>';
+						dhtmls+='<div class="cell-right  fc-grey">';
+						if(j==0){
+							dhtmls+='<p class="t1">快递小哥已接单</p>';
+						}
+						else if(j==1){
+							dhtmls+='<p class="t1">快递小哥已取货</p>';
+						}
+						else {
+							dhtmls+='<p class="t1">已完成</p>';
+						}
+						
+						dhtmls+='<p class="t2">小哥电话：'+data.data[0].service[0].delivery_name_phone.number+'</p>';
+						dhtmls+='</div>';
+						dhtmls+='</div>';
+						$(".flowCell_content").append(dhtmls);
+			}
+			  
+			}
+			 else{
+				var dhtmls='';
+					   dhtmls+='<div class="flowCell">';
+						dhtmls+='<div class="cell-center  fc-grey">';
+						dhtmls+='<div id="startImg"></div>';
+						dhtmls+='</div>';
+						dhtmls+='<div class="cell-right  fc-grey">';
+						dhtmls+='<p class="t1">暂未接单</p>';
+						dhtmls+='</div>';
+						dhtmls+='</div>';
+						$(".flowCell_content").append(dhtmls);
+			}
+				
+			},
+			error: function(data) {
+				console.log(data);
+			}
+		});
+	
 	});
-
-});
-
-$(".close").on('click', function() {
-	$(".tanchuang").addClass("noshow");
-});
-// 弹窗选项卡切换
-$(".card").on('click', 'li', function() {
-	$(this).addClass("active");
-	$(this).siblings().removeClass("active");
-	var dait_id = $(this).data("id");
-	$("." + dait_id).removeClass("noshow");
-	$("." + dait_id).siblings("div").addClass("noshow");
-
-});
-
-</script>
+	
+	$(".close").on('click', function() {
+		$(".tanchuang").addClass("noshow");
+	});
+	
+	// 弹窗选项卡切换
+	$(".card").on('click', 'li', function() {
+		$(this).addClass("active");
+		$(this).siblings().removeClass("active");
+		var dait_id = $(this).data("id");
+		$("." + dait_id).removeClass("noshow");
+		$("." + dait_id).siblings("div").addClass("noshow");
+	
+	});
+	// 点击弹窗确认按钮
+	$(".btu-sumit").on('click', function() {
+				$(".tanchuang").addClass("noshow");
+				var id = $(this).data("id");
+				var note_tip = $("#note_tip").val();
+				var static_select = $("#static_select  option:selected").val();
+				var  pay_type_content=$("#pay_type_content  option:selected").val();
+				var refund_amount = $("#refund_amount").val();
+				var timestamp = new Date().getTime();
+				$.ajax({
+					type: "POST",
+					url: "{:url('admin/Order/after_save')}",
+					async: false,
+					data: {
+						"id": id,
+						"service_dispose": note_tip,
+						"status": static_select,
+						"refund_money": refund_amount,
+						"dispose_time":timestamp
+					},
+					success: function(data) {
+						console.log(data)
+					},
+					error: function(data) {
+						console.log("失败");
+					}
+				});
+	
+			});
+	
+	</script>
+	
 	{/block}
 
 </body>
