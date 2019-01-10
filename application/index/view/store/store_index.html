@@ -106,7 +106,7 @@
                         var str = '';
                         res.data.forEach(function(ele, idx){
                             str += `<li class="`+(idx%2!=0? 'mgr0':'')+`">
-                                        <a href="goods_detail">
+                                        <a href="goods_detail?id=`+ele.id+`&preId=`+ele.goods_brand_id+`">
                                             <div class="img_div">
                                                 <img src="uploads/`+ele.goods_show_images+`">
                                             </div>
