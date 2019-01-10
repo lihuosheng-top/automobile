@@ -510,6 +510,21 @@ $.ajax({
             $('.tab-box .comment_user_info').click(function(){
                 $('.wrapper').hide();
                 $('.comment-detail-pop').show();
+                var id = $(this).parent().prop('data-evalid');
+                $.ajax({
+                    url: 'goods_evaluate_detail',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'id': id
+                    },
+                    success: function(res){
+                        console.log(res);
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
             })
             $('.detail-back').click(function(){
                 $('.wrapper').show();
