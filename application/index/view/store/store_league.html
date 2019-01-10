@@ -63,7 +63,7 @@
                     <p class="list-title-p"><i class="must">*</i>店铺所在区域</p>
                     <a href="javascript:;" class="spr icon-more"></a>
                     <input type="text" id="area-li" readonly class="text-input">
-                    <input type="hidden" id="value1">
+                    <!-- <input type="hidden" id="value1"> -->
                 </li>
                 <li class="list-li">
                     <p class="list-title-p"><i class="must">*</i>店铺详细地址</p>
@@ -135,7 +135,7 @@
                 arr.forEach(function(val) {
                     arr2.push(val.value);
                 });
-                document.getElementById('space-input').innerHTML = arr2;
+                document.getElementById('area-li').value = arr2;
             }
         });
     </script>

@@ -104,11 +104,6 @@ html{
 }
 .list_cont .goods_name p{
     width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: wrap;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
     font-size: .24rem;
     color: #333;
     padding: 0 .16rem;
@@ -148,23 +143,20 @@ html{
 }
 .flagship-name .icon-star{
     display: inline-block;
-    width: 1.04rem;
-    height: .2rem;
-    background-position: 0 -2.8rem;
+    width: 1.14rem;
+    height: .3rem;
+    background-position: .05rem -2.75rem;
     margin-right: .1rem;
 }
-.shop_box .comment_box .fourstar{
-    background-position: 0 -3.05rem;
+.flagship-name .fourstar{
+    background-position: .05rem -3rem;
 }
-.shop_box .comment_box .threestar{
-    background-position: 0 -3.3rem;
+.flagship-name .threestar{
+    background-position: .05rem -3.25rem;
 }
-.shop_box .comment_box .twostar{
-    background-position: 0 -3.55rem;
+.flagship-name .twostar{
+    background-position: .05rem -3.5rem;
 }
-.shop_box .comment_box .onestar{
-    background-position: 0 -3.8rem;
-}
-.shop_box .comment_box .zerostar{
-    background-position: 0 -4.05rem;
+.flagship-name .onestar{
+    background-position: .05rem -3.75rem;
 }
