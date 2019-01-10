@@ -40,12 +40,15 @@ $.ajax({
             $('.stock').html('库存' + val.goods_standard[0].stock + '件');
             // 商品详情
             $('.detail-img-box').html(val.goods_text);
-            // 专用参数
-            $('.parameter-brand').text(val.dedicated_vehicle);
-            $('.parameter-series').text(val.goods_car_series.split(',').join('  '));
-            $('.parameter-year').text(val.goods_car_year.split(',').join('  '));
-            $('.parameter-displacement').text(val.goods_car_displacement.split(',').join('  '));
-            
+            if(val.dedicated_vehicle == null){
+                $('.product-parameter').hide();
+            }else{
+                // 专用参数
+                $('.parameter-brand').text(val.dedicated_vehicle);
+                $('.parameter-series').text(val.goods_car_series.split(',').join('/ '));
+                $('.parameter-year').text(val.goods_car_year.split(',').join('/ '));
+                $('.parameter-displacement').text(val.goods_car_displacement.split(',').join('/ '));
+            }
             // 规格值
             var specStr = '';
             $.each(val.goods_standard, function(idx, val){
@@ -137,17 +140,35 @@ $('.parameter-btn').click(function(){
 
 // 显示 隐藏 评价弹窗 
 function showPop(){
-    $('.pop').css('transform', 'translateX(0)');
+    $('.pop').css('right', '0');
     $('html').css('overflow', 'hidden');
 }
 function hidePop(){
-    $('.pop').css('transform', 'translateX(100%)');
+    $('.pop').css('right', '-100%');
     $('html').css('overflow', 'auto');
 }
 
 // 所有评论切换
 $('.comment_classify_box li').click(function(){
     $(this).addClass('active').siblings().removeClass('active');
+    var _index = $(this).index();
+    switch(_index){
+        case 0:
+            allEvaluateDataAjax('goods_evaluate_return');
+            break;
+        case 1:
+            allEvaluateDataAjax('goods_evaluate_good');
+            break;
+        case 2:
+            allEvaluateDataAjax('goods_evaluate_secondary');
+            break;
+        case 3:
+            allEvaluateDataAjax('goods_evaluate_bad');
+            break;
+        case 4:
+            allEvaluateDataAjax('goods_evaluate_has_img');
+            break;
+    }
 })
 
 // 商品详情， 评价切换
@@ -156,80 +177,11 @@ $('.switch-detail').click(function(){
     $('.detail-box').show();
     $('.comment_box').hide();
 })
-// 评价
+
 $('.switch-comment').click(function(){
     $(this).addClass('switch-on').siblings().removeClass('switch-on');
     $('.comment_box').show();
     $('.detail-box').hide();
-
-    $.ajax({
-        url: 'goods_evaluate_return',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'goods_id': id
-        },
-        success: function(res){
-            console.log('评价',res);
-            if(res.status == 1){
-                var str = '';
-                $('.comment_title span').text(res.data.length);
-                var data = res.data;
-                for(var i = 0; i < 3; i++){
-                    str += `<li class="comment_li">
-                                <div class="comment_user_info">
-                                    <div class="comment_user_headimg">
-                                        <img src="userimg/`+data[i].user_info.user_img+`">
-                                    </div>
-                                    <div class="comment_phone_time">
-                                        <div class="phone_time clearfix">
-                                            <span class="phone_box">`+data[i].user_info.phone_num+`</span>
-                                            <span class="time_box">`+timetrans(data[i].create_time)+`</span>
-                                        </div>
-                                        <span class="spr 
-                                        `+(data[i].evaluate_stars === 5?'star':
-                                        (data[i].evaluate_stars === 4?'four-star':
-                                        (data[i].evaluate_stars === 3?'three-star':
-                                        data[i].evaluate_stars === 2?'two-star': 'one-star')))+`"></span>
-                                    </div>
-                                </div>
-                                <div class="comment_text_box">
-                                    <a href="javascript:;" class="comment_text_a">
-                                        <p class="comment_text_p">`+data[i].evaluate_content+`</p>
-                                    </a>`
-                    // 有评论图片
-                    if(data[i].images.length !== 0){
-                        str += `<ul class="comment_img_ul">`;
-                        data[i].images.forEach(function(val, idx){
-                            str += `<li class="comment_img_li">
-                                        <img src="uploads/`+val.images+`">
-                                    </li>`
-                        })
-                        str += '</ul>';
-                    }
-                    // 有商家回复
-                    if(data[i].business_repay !== null){
-                        str += `<div class="reply_box">
-                                    <i class="triangle"></i>
-                                    <p class="reply_text">`+data[i].business_repay+`</p>
-                                </div>`
-                    }
-                    str += `<div class="bottom_time_box">
-                                <p class="buy_time">购买时间: <span>2018-11-05</span></p>
-                                <div>
-                                    <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>`
-                }
-                $('.more_comment_box').before(str);
-            }
-        },
-        error: function(){
-            console.log('error');
-        }
-    })
 })
 function timetrans(date){
     var date = new Date(date*1000);//如果date为13位不需要乘1000
@@ -241,18 +193,6 @@ function timetrans(date){
     var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
     return Y+M+D+h+m+s;
 }
-
-// 查看评价详情
-$('.comment_text_a').click(function(){
-    $('.wrapper').hide();
-    $('.comment-detail-pop').show();
-})
-$('.detail-back').click(function(){
-    $('.wrapper').show();
-    $('.comment-detail-pop').hide();
-})
-
-
 
 // 立即购买 弹窗
 $('.select-buy').click(function(){
@@ -524,6 +464,221 @@ $(function(){
         }
     })
 })
+// 评价
+$.ajax({
+    url: 'goods_evaluate_return',
+    type: 'POST',
+    dataType: 'JSON',
+    data: {
+        'goods_id': id
+    },
+    success: function(res){
+        console.log('评价',res);
+        if(res.status == 1){
+            var str = '';
+            $('.comment_title span').text(res.data.length);
+            var data = res.data;
+            var length = data.length > 3 ? 3: data.length;
+            for(var i = 0; i < length; i++){
+                str += `<li class="comment_li" data-evalid="`+data[i].id+`">
+                            <div class="content-container">
+                                <div class="comment_user_info">
+                                    <div class="comment_user_headimg">
+                                        <img src="userimg/`+data[i].user_info.user_img+`">
+                                    </div>
+                                    <div class="comment_phone_time">
+                                        <div class="phone_time clearfix">
+                                            <span class="phone_box">`+data[i].user_info.phone_num+`</span>
+                                            <span class="time_box">`+timetrans(data[i].create_time)+`</span>
+                                        </div>
+                                        <span class="spr star `+(data[i].evaluate_stars === 5?'':
+                                                                (data[i].evaluate_stars === 4?'four-star':
+                                                                (data[i].evaluate_stars === 3?'three-star':
+                                                                (data[i].evaluate_stars === 2?'two-star':'one-star'))))+`"></span>
+                                    </div>
+                                </div>
+                                <div class="comment_text_box">
+                                    <a href="javascript:;" class="comment_text_a">
+                                        <p class="comment_text_p">`+data[i].evaluate_content+`</p>
+                                    </a>`
+                // 有评论图片
+                if(data[i].images.length !== 0){
+                    str += `<ul class="comment_img_ul">`;
+                    data[i].images.forEach(function(ele, idx){
+                        str += `<li class="comment_img_li">
+                                    <img src="uploads/`+ele.images+`">
+                                </li>`
+                    })
+                    str += '</ul>';
+                }
+                // 有商家回复
+                if(data[i].business_repay !== null){
+                    str += `<div class="reply_box">
+                                <i class="triangle"></i>
+                                <p class="reply_text">`+data[i].business_repay+`</p>
+                            </div>`
+                }
+                str += `</div>
+                    </div>
+                    <div class="bottom_time_box">
+                    <p class="buy_time">购买时间: <span>`+timetrans(data[i].order_create_time)+`</span></p>
+                    <div>
+                        <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                    </div>
+                </div>
+            </li>`
+            }
+            $('.more_comment_box').before(str);
+            // 查看评价详情
+            $('.content-container').click(function(){
+                $('html').css('overflow', 'hidden');
+                $('.comment-detail-pop').show();
+                var id = $(this).parents('.comment_li').attr('data-evalid');
+                evaluateDetailAjax(id);
+            })
+            $('.detail-back').click(function(){
+                var ifshowPop = +$('.pop').css('right').split('px')[0];
+                $('.comment-detail-pop').hide();
+                if(ifshowPop == 0){
+                    return;
+                }
+                $('html').css('overflow', 'auto');
+            })
+        }
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+$('.more_comment_box').on('click','a', function(){
+    showPop();
+    allEvaluateDataAjax('goods_evaluate_return');
+})
+// 查看全部评论ajax
+function allEvaluateDataAjax(url){
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'goods_id': id
+        },
+        success: function(res){
+            console.log('评价',res);
+            if(res.status == 1){
+                var str = '';
+                res.data.forEach(function(ele, idx){
+                    str += `<li class="comment_li" data-evalid="`+ele.id+`">
+                                <div class="all-content-container">
+                                    <div class="comment_user_info">
+                                        <div class="comment_user_headimg">
+                                            <img src="`+(ele.user_info.user_img===null?`static/index/image/avatar.png`:`userimg/`+ele.user_info.user_img)+`">
+                                        </div>
+                                        <div class="comment_phone_time">
+                                            <div class="phone_time clearfix">
+                                                <span class="phone_box">`+ele.user_info.phone_num+`</span>
+                                                <span class="time_box">`+timetrans(ele.create_time)+`</span>
+                                            </div>
+                                            <span class="spr star `+(ele.evaluate_stars === 5?'':
+                                                                    (ele.evaluate_stars === 4?'four-star':
+                                                                    (ele.evaluate_stars === 3?'three-star':
+                                                                    (ele.evaluate_stars === 2?'two-star': 'one-star'))))+`"></span>
+                                        </div>
+                                    </div>
+                                    <div class="comment_text_box">
+                                        <a href="javascript:;" class="comment_text_a">
+                                            <p class="comment_text_p">`+ele.evaluate_content+`</p>
+                                        </a>`
+                    // 有评论图片
+                    if(ele.images.length !== 0){
+                        str += `<ul class="comment_img_ul">`;
+                        ele.images.forEach(function(val, idx){
+                            str += `<li class="comment_img_li">
+                                        <img src="uploads/`+val.images+`">
+                                    </li>`
+                        })
+                        str += '</ul>';
+                    }
+                    // 有商家回复
+                    if(ele.business_repay !== null){
+                        str += `<div class="reply_box">
+                                    <i class="triangle"></i>
+                                    <p class="reply_text">`+ele.business_repay+`</p>
+                                </div>`
+                    }
+                    str += `</div>
+                        </div>
+                        <div class="bottom_time_box">
+                            <p class="buy_time">购买时间: <span>2018-11-05</span></p>
+                            <div>
+                                <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                            </div>
+                        </div>
+                    </li>`
+                })
+                $('.pop .comment_ul').html('').html(str);
+                // 查看评价详情
+                $('.all-content-container').click(function(){
+                    $('html').css('overflow', 'hidden');
+                    $('.comment-detail-pop').show();
+                    var id = $(this).parents('.comment_li').attr('data-evalid');
+                    evaluateDetailAjax(id);
+                })
+            }else{
+                $('.pop .comment_ul').html('');
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
+// 查看评论详情ajax
+function evaluateDetailAjax(id){
+    $.ajax({
+        url: 'goods_evaluate_detail',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id
+        },
+        success: function(res){
+            console.log(res);
+            if(res.status == 1){
+                var data = res.data;
+                $('.detail_user_info').html(`<div class="detail_user_headimg">
+                                            <img src="userimg/`+data.user_info.user_img+`">
+                                        </div>
+                                        <div class="detail_phone_time">
+                                            <div class="phone_time clearfix">
+                                                <span class="phone_box">`+data.user_info.phone_num+`</span>
+                                                <span class="time_box">`+timetrans(data.evaluate_info.create_time)+`</span>
+                                            </div>
+                                            <span class="spr star `+(data.evaluate_info.evaluate_stars === 5?'':
+                                                                    (data.evaluate_info.evaluate_stars === 4?'four-star':
+                                                                    (data.evaluate_info.evaluate_stars === 3?'three-star':
+                                                                    (data.evaluate_info.evaluate_stars === 2?'two-star': 'one-star'))))+`"></span>
+                                        </div>`)
+                $('.detail_text_p').text(data.evaluate_info.evaluate_content);
+                if(data.images.length !== 0){
+                    var str = '';
+                    data.images.forEach(function(ele, idx){
+                        str += `<img src="uploads/`+ele.images+`">`
+                    })
+                    $('.detail-com-img').html(str);
+                }
+                // 商家回复
+                if(data.evaluate_info.business_repay !== null){
+                    $('.detail_text_box').find('.reply_box').show().find('.reply_text').text(data.evaluate_info.business_repay);
+                }
+            }
+            
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
 
 
 // 你可能喜欢
