@@ -265,6 +265,7 @@ Route::group("",[
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
     /*TODO:商品详情页面信息开始*/
+    "classify_index_search"=>"index/Classify/classify_index_search",//分类页面搜索
     "goods_list_search"=>"index/Classify/goods_list_search",//分类进入详情页面搜索
     "go_to_store"=>"index/Classify/go_to_store",//商品详情页面进店信息返回
     "may_like_goods"=>"index/Classify/may_like_goods",//商品详情页面你可能还喜欢
@@ -553,7 +554,7 @@ Route::group("admin",[
     "accessories_business_updata"=>"admin/Advertisement/accessories_business_updata",           //汽车配件商广告更新
     "accessories_business_del"=>"admin/Advertisement/accessories_business_del",                 //汽车配件商广告删除
     "accessories_business_search"=>"admin/Advertisement/accessories_business_search",           //汽车配件商广告模糊搜索
-
+    "accessories_picture_del"=>"admin/Advertisement/accessories_picture_del",                   //汽车配件商广告图片删除
 
 
     /*服务商广告*/
@@ -575,7 +576,7 @@ Route::group("admin",[
     "platform_business_updata"=>"admin/platform_advertisement/platform_business_updata",//汽车平台广告更新
     "platform_business_del"=>"admin/platform_advertisement/platform_business_del",      //汽车平台广告删除  
     "platform_business_search"=>"admin/platform_advertisement/platform_business_search",//汽车平台广告模糊搜索
-
+    "platform_picture_del"=>"admin/platform_advertisement/platform_picture_del",        //汽车平台广告图片删除
 
 
 
