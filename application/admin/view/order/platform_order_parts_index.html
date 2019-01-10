@@ -211,7 +211,7 @@
 		position: absolute;
 		width: 2px;
 		background-color: #F2F2F2;
-		top: 10px;
+		top: -27px;
 		left: 210px;
 		z-index: -1;
 	}
@@ -259,7 +259,7 @@
 
     {block name="content"}
   	<!-- 弹窗 -->
-	<div class="tanchuang noshow">
+	  <div class="tanchuang noshow news_search">
         <div class="tanchuang-content ">
             <div class="title-a clear">
                 <div class="content-title">消息</div>
@@ -267,7 +267,7 @@
             </div>
             <!-- 里面的内容 -->
             <!-- <button type="button" class="btu-sumit" data-id="">确定</button> -->
-            <div class="dom">
+            <div class="dom  layui-form">
                 
                 <ul class="clear card">
                     <li class="active" data-id="list-a">订单处理</li>
@@ -319,17 +319,20 @@
                         <div class="reply-content">
                             
                         </div>
-                    </div>
-                    <div class="opation clear">
-                        <div class="select-operation">
+					</div>
+			
+                    <div class="opation">
+                        <div class="select-operation seach_list">
                             <span>选择状态</span>
-                            <select id="static_select">
-                                <option >请选择</option>
-                                <option value="0">处理中</option>
-                                <option value="1">拒绝</option>
-                                <option value="2">收货中</option>
-                                <option value="3">完成退款</option>
-                            </select>
+							<select id="static_select">
+								<option value="" selecte="" >请选择</option>
+								<option value="1">待付款</option>
+								<option value="3">待收货</option>
+								<option value="4">已发货</option>
+								<option value="5">待收货</option>
+								<option value="0">已关闭</option>
+								<option value="7">取消订单</option>
+							</select>
                         </div>
                     
                         <div class="select-operation">
@@ -353,7 +356,7 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </div>
 
     <div class="childrenBody">
@@ -659,180 +662,189 @@
             });
         }
     </script>
-   <script type="text/javascript">
-	function getMyDate(str){  
-				var oDate = new Date(str),  
-				oYear = oDate.getFullYear(),  
-				oMonth = oDate.getMonth()+1,  
-				oDay = oDate.getDate(),  
-				oHour = oDate.getHours(),  
-				oMin = oDate.getMinutes(),  
-				oSen = oDate.getSeconds(),  
-				oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间  
-				return oTime;  
-			}; 
-			function getzf(num){  
-			  if(parseInt(num) < 10){  
-				  num = '0'+num;  
-			  }  
-			  return num;  
-		  }
-		$(".state").on('click', function() {
-			var id = $(this).parent("td").data(id).id;
-		$(".btu-sumit").data('id', id);
-		$.ajax({
-			type: "POST",
-			url: "{:url('admin/Order/order_processing')}",
-			async: false,
-			data: {
-				"id": id,
-			},
-			success: function(data) {
-				$(".tanchuang").removeClass("noshow");
-				data = eval("(" + data + ")");
-				// console.log(data);
-				// var order_create_time=timestampToTime(data.data[0].service[0].order_create_time);
-				if(data.data.status==0){
-					$("#order_status").html('已关闭');
+	<script type="text/javascript">
+		function getMyDate(str){  
+					var oDate = new Date(str),  
+					oYear = oDate.getFullYear(),  
+					oMonth = oDate.getMonth()+1,  
+					oDay = oDate.getDate(),  
+					oHour = oDate.getHours(),  
+					oMin = oDate.getMinutes(),  
+					oSen = oDate.getSeconds(),  
+					oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间  
+					return oTime;  
+				}; 
+				function getzf(num){  
+				  if(parseInt(num) < 10){  
+					  num = '0'+num;  
+				  }  
+				  return num;  
+			  }
+			$(".state").on('click', function() {
+				var id = $(this).parent("td").data(id).id;
+			$(".btu-sumit").data('id', id);
+			$.ajax({
+				type: "POST",
+				url: "{:url('admin/Order/order_processing')}",
+				async: false,
+				data: {
+					"id": id,
+				},
+				success: function(data) {
+					$(".tanchuang").removeClass("noshow");
+					data = eval("(" + data + ")");
+					// var order_create_time=timestampToTime(data.data[0].service[0].order_create_time);
+					if(data.data[0].status==0){
+						$("#order_status").html('已关闭');
+					}
+					else if(data.data[0].status==1){
+						$("#order_status").html('待支付');
+					}
+					else if(data.data[0].status==2){
+						$("#order_status").html('已付款');
+					}
+					if(data.data[0].status==3){
+						$("#order_status").html('待发货');
+					}
+					else if(data.data[0].status==4){
+						$("#order_status").html('已发货');
+					}
+					else if(data.data[0].status==5){
+						$("#order_status").html('待收货');
+					}
+					if(data.data[0].status==6){
+						$("#order_status").html('已收货');
+					}
+					else if(data.data[0].status==7){
+						$("#order_status").html('待评价');
+					}
+					else if(data.data[0].status==8){
+						$("#order_status").html('已完成');
+					}
+					
+					else if(data.data[0].status==9){
+						$("#order_status").html('未付款取消订单');
+					}
+					if(data.data[0].status==10){
+						$("#order_status").html('已付款取消订单');
+					}
+					else if(data.data[0].status==11){
+						$("#order_status").html('退货');
+					}
+					else if(data.data[0].status==12){
+						$("#order_status").html('已退货');
+					}
+					else if(data.data[0].status==13){
+						$("#order_status").html('退货中');
+					}
+					
+				if(data.data[0].pay_type_content!=null){
+					$("#payment").html(data.data[0].pay_type_content);
 				}
-				else if(data.data.status==1){
-					$("#order_status").html('待支付');
+				else{
+					$("#payment").html("面议");
 				}
-				else if(data.data.status==2){
-					$("#order_status").html('已付款');
+				if(data.data[0].integral_deductible!=null){
+					$("#points_deduction").html(data.data[0].pay_type_content);
 				}
-				if(data.data.status==3){
-					$("#order_status").html('待发货');
+				else{
+					$("#points_deduction").html("无");
 				}
-				else if(data.data.status==4){
-					$("#order_status").html('已发货');
+				if(data.data[0].order_real_pay!=null){
+					$("#real_pay").html(data.data[0].pay_type_content);
 				}
-				else if(data.data.status==5){
-					$("#order_status").html('待收货');
-				}
-				if(data.data.status==6){
-					$("#order_status").html('已收货');
-				}
-				else if(data.data.status==7){
-					$("#order_status").html('待评价');
-				}
-				else if(data.data.status==8){
-					$("#order_status").html('已完成');
+				else{
+					$("#real_pay").html("面议");
 				}
 				
-				else if(data.data.status==9){
-					$("#order_status").html('未付款取消订单');
+					$(".reply-content").html('');
+					$(".flowCell_content").html('');
+				// if(data.data.delivery_status!=null){
+				// 	for(var i=0;i<data.data[0].service_message.length;i++){
+				// 		var create_time= getMyDate(data.data[0].service_message[i].create_time*1000);
+				// 		var dhtml='';
+				// 		dhtml+='<div class="content_repay">';
+				// 		dhtml+='<div class="repay_time">'+create_time+'</div>';
+				// 		dhtml+='<div >'+data.data[0].service_message[i].service_dispose+'</div>';
+				// 		dhtml+='</div>';
+				// 		$(".reply-content").append(dhtml)
+				// 	} 
+				// }
+				if(data.data[0].delivery_status!=null){
+					for(var j=0; j<parseInt(data.data[0].delivery_status.status);j++){
+					
+					var dhtmls='';
+						   dhtmls+='<div class="flowCell">';
+							dhtmls+='<div class="cell-center  fc-grey">';
+							dhtmls+='<div id="startImg"></div>';
+							dhtmls+='</div>';
+							dhtmls+='<div class="cell-right  fc-grey">';
+							if(j==0){
+								dhtmls+='<p class="t1">快递小哥已接单</p>';
+							}
+							else if(j==1){
+								dhtmls+='<p class="t1">快递小哥已取货</p>';
+							}
+							else {
+								dhtmls+='<p class="t1">已完成</p>';
+							}
+							
+							dhtmls+='<p class="t2">小哥电话：'+data.data[0].delivery_name_phone.number+'</p>';
+							dhtmls+='</div>';
+							dhtmls+='</div>';
+							$(".flowCell_content").append(dhtmls);
 				}
-				if(data.data.status==10){
-					$("#order_status").html('已付款取消订单');
+				  
 				}
-				else if(data.data.status==11){
-					$("#order_status").html('退货');
+				 else{
+					var dhtmls='';
+						   dhtmls+='<div class="flowCell">';
+							dhtmls+='<div class="cell-center  fc-grey">';
+							dhtmls+='<div id="startImg"></div>';
+							dhtmls+='</div>';
+							dhtmls+='<div class="cell-right  fc-grey">';
+							dhtmls+='<p class="t1">暂未接单</p>';
+							dhtmls+='</div>';
+							dhtmls+='</div>';
+							$(".flowCell_content").append(dhtmls);
 				}
-				else if(data.data.status==12){
-					$("#order_status").html('已退货');
+					
+				},
+				error: function(data) {
+					console.log(data);
 				}
-				else if(data.data.status==13){
-					$("#order_status").html('退货中');
-				}
-				
-			
-				$("#payment").html(data.data.pay_type_content);
-				$("#goods").html(data.data.goods_money);
-				$("#points_deduction").html(data.data.integral_deductible);
-				$("#real_pay").html(data.data.order_real_pay);
-				$(".reply-content").html('');
-				$(".flowCell_content").html('');
-			if(data.data[0].service_message!=null){
-				for(var i=0;i<data.data[0].service_message.length;i++){
-					var create_time= getMyDate(data.data[0].service_message[i].create_time*1000);
-					var dhtml='';
-					dhtml+='<div class="content_repay">';
-					dhtml+='<div class="repay_time">'+create_time+'</div>';
-					dhtml+='<div >'+data.data[0].service_message[i].service_dispose+'</div>';
-					dhtml+='</div>';
-					$(".reply-content").append(dhtml)
-				} 
-			}
-			if(data.data[0].service[0].delivery_status!=null){
-				for(var j=0; j<parseInt(data.data[0].service[0].delivery_status.status);j++){
-				
-				var dhtmls='';
-					   dhtmls+='<div class="flowCell">';
-						dhtmls+='<div class="cell-center  fc-grey">';
-						dhtmls+='<div id="startImg"></div>';
-						dhtmls+='</div>';
-						dhtmls+='<div class="cell-right  fc-grey">';
-						if(j==0){
-							dhtmls+='<p class="t1">快递小哥已接单</p>';
-						}
-						else if(j==1){
-							dhtmls+='<p class="t1">快递小哥已取货</p>';
-						}
-						else {
-							dhtmls+='<p class="t1">已完成</p>';
-						}
-						
-						dhtmls+='<p class="t2">小哥电话：'+data.data[0].service[0].delivery_name_phone.number+'</p>';
-						dhtmls+='</div>';
-						dhtmls+='</div>';
-						$(".flowCell_content").append(dhtmls);
-			}
-			  
-			}
-			 else{
-				var dhtmls='';
-					   dhtmls+='<div class="flowCell">';
-						dhtmls+='<div class="cell-center  fc-grey">';
-						dhtmls+='<div id="startImg"></div>';
-						dhtmls+='</div>';
-						dhtmls+='<div class="cell-right  fc-grey">';
-						dhtmls+='<p class="t1">暂未接单</p>';
-						dhtmls+='</div>';
-						dhtmls+='</div>';
-						$(".flowCell_content").append(dhtmls);
-			}
-				
-			},
-			error: function(data) {
-				console.log(data);
-			}
+			});
+		
 		});
-	
-	});
-	
-	$(".close").on('click', function() {
-		$(".tanchuang").addClass("noshow");
-	});
-	
-	// 弹窗选项卡切换
-	$(".card").on('click', 'li', function() {
-		$(this).addClass("active");
-		$(this).siblings().removeClass("active");
-		var dait_id = $(this).data("id");
-		$("." + dait_id).removeClass("noshow");
-		$("." + dait_id).siblings("div").addClass("noshow");
-	
-	});
-	// 点击弹窗确认按钮
-	$(".btu-sumit").on('click', function() {
-				$(".tanchuang").addClass("noshow");
+		
+		$(".close").on('click', function() {
+			$(".tanchuang").addClass("noshow");
+		});
+		
+		// 弹窗选项卡切换
+		$(".card").on('click', 'li', function() {
+			$(this).addClass("active");
+			$(this).siblings().removeClass("active");
+			var dait_id = $(this).data("id");
+			$("." + dait_id).removeClass("noshow");
+			$("." + dait_id).siblings("div").addClass("noshow");
+		
+		});
+		// 点击弹窗确认按钮
+			$(".tanchuang").addClass("noshow");
 				var id = $(this).data("id");
 				var note_tip = $("#note_tip").val();
 				var static_select = $("#static_select  option:selected").val();
-				var  pay_type_content=$("#pay_type_content  option:selected").val();
-				var refund_amount = $("#refund_amount").val();
-				var timestamp = new Date().getTime();
 				$.ajax({
 					type: "POST",
-					url: "{:url('admin/Order/after_save')}",
+					url: "{:url('admin/Order/order_update_status')}",
 					async: false,
 					data: {
 						"id": id,
-						"service_dispose": note_tip,
+						"sell_message": note_tip,
 						"status": static_select,
-						"refund_money": refund_amount,
-						"dispose_time":timestamp
+						"pay_type_content": "",
+						"refund_amount": "",
 					},
 					success: function(data) {
 						console.log(data)
@@ -841,10 +853,34 @@
 						console.log("失败");
 					}
 				});
-	
-			});
-	
-	</script>
+		$(".btu-sumit").on('click', function() {
+			$(".tanchuang").addClass("noshow");
+				var id = $(this).data("id");
+				var note_tip = $("#note_tip").val();
+				var static_select = $("#static_select  option:selected").val();
+				$.ajax({
+					type: "POST",
+					url: "{:url('admin/Order/order_update_status')}",
+					async: false,
+					data: {
+						"id": id,
+						"sell_message": note_tip,
+						"status": static_select,
+						"pay_type_content": "",
+						"refund_amount": "",
+					},
+					success: function(data) {
+						console.log(data)
+					},
+					error: function(data) {
+						console.log("失败");
+					}
+				});
+				
+		
+				});
+		
+		</script>
     {/block}
 
 </body>
