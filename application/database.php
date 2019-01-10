@@ -16,7 +16,7 @@ return [
     'hostname'        => 'rm-wz9l3z92630ora5wjwo.mysql.rds.aliyuncs.com',
   //    'hostname'       =>'127.0.0.1',
     // 数据库名
-    'database'        => 'qiche',
+    'database'        => 'automobile',
     // 用户名
     'username'        => 'siring',
   //    'username'      =>'root',
