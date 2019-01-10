@@ -212,7 +212,8 @@ class Capital extends Controller{
      * Notes:详情
      **************************************
      */
-    public function detail(){
+    public function detail($id){
+
         return view("detail");
     }
 

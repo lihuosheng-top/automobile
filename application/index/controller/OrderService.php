@@ -312,6 +312,30 @@ class OrderService extends Controller{
             if(!empty($order_id)){
                 $res =Db::name('order_service')->where('id',$order_id)->update(['status'=>5]);
                 if($res){
+                    //需要加入到商家余额里面
+                   $order_info = Db::name("order_service")
+                       ->field("service_real_pay,store_id,service_order_number")
+                       ->where("id",$order_id)
+                       ->find();
+                    $business_id =Db::name("store")->where("store_id",$order_info["store_id"])->value("user_id");
+                   //原本的钱包余额
+                    $old_wallet =Db::name("user")
+                        ->where("id",$business_id)
+                        ->value("user_wallet");
+                    $new_wallet =$order_info["service_real_pay"] + $old_wallet;
+                   //余额更新
+                    $arr =Db::name('order_service')->where('id',$order_id)->update(['user_wallet'=>$new_wallet]);
+                    //添加消费记录
+                    if($arr){
+                        $data=[
+                            "user_id"=>$business_id,
+                            "wallet_operation"=>$order_info["service_real_pay"],
+                            "wallet_type"=>1,
+                            "operation_time"=>date("Y-m-d H:i:s"),
+                            "wallet_remarks"=>"订单号：".$order_info['service_order_number']."，完成交易，收入".$order_info['service_real_pay']."元",
+                        ];
+                        Db::name("wallet")->insert($data);
+                    }
                     return ajax_success('确认服务成功',['status'=>1]);
                 }else{
                     return ajax_error('确认服务失败',['status'=>0]);
