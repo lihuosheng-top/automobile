@@ -187,10 +187,10 @@ class Reservation extends Controller{
         if($request->isPost()){
             $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
             $store_id =$request->only(["store_id"])["store_id"];
+            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
             $evaluate_info =db("order_service_evaluate")
                 ->where("store_id",$store_id)
-                ->where("evaluate_stars",4)
-                ->whereOr("evaluate_stars",5)
+                ->where($condition)
                 ->where("goods_id",$goods_id)
                 ->select();
             foreach ($evaluate_info as $ks=>$vs){
@@ -224,10 +224,10 @@ class Reservation extends Controller{
         if($request->isPost()){
             $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
             $store_id =$request->only(["store_id"])["store_id"];
+            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
             $evaluate_info =db("order_service_evaluate")
                 ->where("store_id",$store_id)
-                ->where("evaluate_stars",3)
-                ->whereOr("evaluate_stars",2)
+                ->where($condition)
                 ->where("goods_id",$goods_id)
                 ->select();
             foreach ($evaluate_info as $ks=>$vs){
@@ -297,13 +297,21 @@ class Reservation extends Controller{
         if($request->isPost()){
             $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
             $store_id =$request->only(["store_id"])["store_id"];
-            $evaluate_info =Db::table("tb_order_service_evaluate")
+            $evaluate_info =db("order_service_evaluate")
                 ->where("store_id",$store_id)
-                ->field("tb_order_service_evaluate.*,tb_order_service_evaluate_images.images")
-                ->join("tb_order_service_evaluate_images","tb_order_service_evaluate.id = tb_order_service_evaluate_images.evaluate_order_id","left")
-                ->where("tb_order_service_evaluate.goods_id",$goods_id)
+                ->where("evaluate_stars",1)
+                ->where("goods_id",$goods_id)
                 ->select();
             foreach ($evaluate_info as $ks=>$vs){
+                $img = db("order_service_evaluate_images")
+                    ->field("images")
+                    ->where("evaluate_order_id",$vs["id"])
+                    ->select();
+                if(!empty($img)){
+                    $evaluate_info[$ks]["images"] =$img;
+                }else{
+                    $evaluate_info[$ks]["images"] =null;
+                }
                 $evaluate_info[$ks]["order_create_time"] =db("order_service")
                     ->where("id",$vs["order_id"])
                     ->value("create_time");
