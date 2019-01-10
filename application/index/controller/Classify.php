@@ -124,6 +124,61 @@ class Classify extends Controller
     /**
      **************李火生*******************
      * @param Request $request
+     * Notes:分类进入详情页面搜索
+     **************************************
+     * @param Request $request
+     * @return \think\response\View|void
+     */
+    public function goods_list_search(Request $request)
+    {
+        if($request->isPost()){
+            $goods_type_id = $request->only(["id"])["id"];
+            $goods_data = [];
+            $goods_name =$request->only(["goods_name"])["goods_name"];
+            $condition = " `goods_name` like '%{$goods_name}%'";
+            $goods = db("goods")
+                ->where($condition)
+                ->where("goods_type_id",$goods_type_id)
+                ->whereOr("goods_brand_id",$goods_type_id)
+                ->select();
+            foreach ($goods as $kye=>$value){
+                $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
+                $store = db("store")->where("store_id",$value["store_id"])->where($where)->find();
+                if(!empty($store)){
+                    if($value["goods_status"] == 1 && !empty($store)){
+                        $special_data[] =db("special")
+                            ->where("goods_id",$value["id"])
+                            ->select();
+                        $statistical_quantity[] =db("order_parts")
+                            ->where("goods_id",$value["id"])
+                            ->count();
+                        unset($goods[$kye]);
+                        $goods_data[] = $value;
+                    }
+                }
+            }
+            if(!empty($special_data)){
+                foreach ($special_data as $k=>$v){
+                    $goods_data[$k]["special"] =$v;
+                }
+            }
+            if(!empty($statistical_quantity)){
+                foreach ($statistical_quantity as $k=>$v){
+                    $goods_data[$k]["statistical_quantity"] =$v;
+                }
+            }
+            if($goods_data){
+                return ajax_success("获取成功",$goods_data);
+            }else{
+                return ajax_error("获取失败");
+            }
+        }
+        return view("goods_list");
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
      * Notes:进入店铺信息
      **************************************
      */
@@ -231,10 +286,10 @@ class Classify extends Controller
     public function goods_evaluate_good(Request $request){
         if($request->isPost()){
             $goods_id = $request->only(["goods_id"])["goods_id"];
+            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
             $evaluate_info =db("order_parts_evaluate")
                 ->where("goods_id",$goods_id)
-                ->where("evaluate_stars",4)
-                ->whereOr("evaluate_stars",5)
+                ->where($condition)
                 ->select();
             foreach ($evaluate_info as $ks=>$vs){
                 $evaluate_info[$ks]["images"] = db("order_parts_evaluate_images")
@@ -267,10 +322,10 @@ class Classify extends Controller
     public function goods_evaluate_secondary(Request $request){
         if($request->isPost()){
             $goods_id = $request->only(["goods_id"])["goods_id"];
+            $condition ="evaluate_stars = 2 or evaluate_stars = 3";
             $evaluate_info =db("order_parts_evaluate")
                 ->where("goods_id",$goods_id)
-                ->where("evaluate_stars",3)
-                ->whereOr("evaluate_stars",2)
+                ->where($condition)
                 ->select();
             foreach ($evaluate_info as $ks=>$vs){
                 $evaluate_info[$ks]["images"] = db("order_parts_evaluate_images")
@@ -339,12 +394,19 @@ class Classify extends Controller
     public function goods_evaluate_has_img(Request $request){
         if($request->isPost()){
             $goods_id = $request->only(["goods_id"])["goods_id"];
-            $evaluate_info =Db::table("tb_order_parts_evaluate")
-                ->field("tb_order_parts_evaluate.*,tb_order_parts_evaluate_images.images")
-                ->join("tb_order_parts_evaluate_images","tb_order_parts_evaluate.id = tb_order_parts_evaluate_images.evaluate_order_id","left")
-                ->where("tb_order_parts_evaluate.goods_id",$goods_id)
+            $evaluate_info =db("order_parts_evaluate")
+                ->where("goods_id",$goods_id)
                 ->select();
             foreach ($evaluate_info as $ks=>$vs){
+                $img = db("order_parts_evaluate_images")
+                    ->field("images")
+                    ->where("evaluate_order_id",$vs["id"])
+                    ->select();
+                if(!empty($img)){
+                    $evaluate_info[$ks]["images"] =$img;
+                }else{
+                    $evaluate_info[$ks]["images"] =null;
+                }
                 $evaluate_info[$ks]["order_create_time"] =db("order_parts")
                     ->where("id",$vs["order_id"])
                     ->value("order_create_time");
