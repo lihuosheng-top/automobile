@@ -205,8 +205,7 @@ class Classify extends Controller
                   ->select();
               $evaluate_info[$ks]["order_create_time"] =db("order_parts")
                   ->where("id",$vs["order_id"])
-                  ->field("order_create_time")
-                  ->find();
+                  ->value("order_create_time");
                 $evaluate_info[$ks]["user_info"] =db("user")
                     ->where("id",$vs["user_id"])
                     ->field("user_img,phone_num")
