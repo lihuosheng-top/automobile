@@ -45,6 +45,14 @@ Route::group("",[
     "reservation"=>"index/reservation/reservation",//预约服务 首页
     "reservation_detail"=>"index/reservation/reservation_detail",//预约服务 详情
     "reservation_info"=>"index/reservation/reservation_info",//预约服务 详情
+    /*TODO:预约服务评价信息开始*/
+    "reservation_evaluate_return"=>"index/reservation/reservation_evaluate_return",//预约服务全部评价数据
+    "reservation_evaluate_good"=>"index/reservation/reservation_evaluate_good",//预约服务详全部评价里面的（好评）
+    "reservation_evaluate_secondary"=>"index/reservation/reservation_evaluate_secondary",//预约服务详情全部评价里面的（中评）
+    "reservation_evaluate_bad"=>"index/reservation/reservation_evaluate_bad",//预约服务详情全部评价里面的（差评）
+    "reservation_evaluate_has_img"=>"index/reservation/reservation_evaluate_has_img",//预约服务详情全部评价里面的（有图）
+    "reservation_evaluate_detail"=>"index/reservation/reservation_evaluate_detail",//预约服务商品详情页面的评价数据查看详情
+    /*TODO:预约服务评价信息结束*/
 
 
 
@@ -53,12 +61,12 @@ Route::group("",[
     /*TODO:服务商订单开始*/
     "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_order_service_button"=>"index/OrderService/ios_api_order_service_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
-    "ios_api_alipay"=>"index/OrderService/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
     'index_aliPay'=>"index/Apppay/index_aliPay", //服务商提交支付（付款）（弹窗支付）
     'index_pay_code'=>"index/Apppay/index_pay_code", //状态修改(回调地址修改状态)
     "recharge_aliPay"=>"index/Apppay/recharge_aliPay",     //充值订单提交支付（付款）
     "recharge_pay_code"=>"index/Apppay/recharge_pay_code",     //充值订单支付（成功回调修改状态）
+    "ios_api_alipay"=>"index/Apppay/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/
@@ -117,7 +125,7 @@ Route::group("",[
     "sell_parts_save_record"=>"index/SellMy/sell_parts_save_record",//卖家进入配件商订单详情需要保存的数据
     "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
 
-    "sell_service_record"=>"index/SellMy/sell_service_record",//卖家服务记录
+    "sell_service_record"=>"index/SellMy/sell_service_record",//卖家消费收入记录
     "sell_parts_record"=>"index/SellMy/sell_parts_record",//卖家商品记录
     "sell_order_bill"=>"index/SellMy/sell_order_bill",//卖家账单
     "sell_wallet"=>"index/SellMy/sell_wallet",//卖家钱包
@@ -216,7 +224,8 @@ Route::group("",[
 
 
     /*TODO：店铺开始*/
-    "store_index"=>"index/Store/index",             //店铺首页
+    "store_index"=>"index/Store/index",             //店铺首页(所有的店铺信息)
+    "store_goods_info"=>"index/Store/store_goods_info",             //店铺首页 店铺内的商品（综合）
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
 
@@ -255,6 +264,17 @@ Route::group("",[
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
+    /*TODO:商品详情页面信息开始*/
+    "goods_list_search"=>"index/Classify/goods_list_search",//分类进入详情页面搜索
+    "go_to_store"=>"index/Classify/go_to_store",//商品详情页面进店信息返回
+    "may_like_goods"=>"index/Classify/may_like_goods",//商品详情页面你可能还喜欢
+    "goods_evaluate_return"=>"index/Classify/goods_evaluate_return",//商品详情页面商品详情页面的评价数据
+    "goods_evaluate_good"=>"index/Classify/goods_evaluate_good",//商品详情配件商全部评价里面的（好评）
+    "goods_evaluate_secondary"=>"index/Classify/goods_evaluate_secondary",//商品详情配件商全部评价里面的（中评）
+    "goods_evaluate_bad"=>"index/Classify/goods_evaluate_bad",//商品详情配件商全部评价里面的（差评）
+    "goods_evaluate_has_img"=>"index/Classify/goods_evaluate_has_img",//商品详情配件商全部评价里面的（有图）
+    "goods_evaluate_detail"=>"index/Classify/goods_evaluate_detail",//配件商商品详情页面的评价数据查看详情
+    /*TODO:商品详情页面信息结束*/
 
 
     /*配件商城*/

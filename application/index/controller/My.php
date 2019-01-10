@@ -343,6 +343,9 @@ class My extends Controller
     public function member_information_data(Request $request){
             if($request->isPost()){
                 $user_id =Session::get("user");//用户id
+                if(empty($user_id)){
+                    return ajax_success('请重新登录',["status"=>2]);
+                }
                 $data =Db::name("user")->where('id',$user_id)->find();
                 if(!empty($data)){
                     //判断是否完善资料
@@ -492,7 +495,6 @@ class My extends Controller
             }else{
                 return ajax_error("请重新刷新",["status"=>0]);
             }
-
         }
         return view("consume_message");
     }

@@ -32,13 +32,13 @@
             <button>筛选</button>
         </div>
         <ul class="list_cont clearfix">
-            <li>
+            <!-- <li>
                 <a href="goods_detail">
                     <div class="img_div">
                         <img src="__STATIC__/index/image/02.png">
                     </div>
                     <div class="goods_name">
-                        <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
+                        <p class="txt-hid-two">德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
                     </div>
                     <div class="goods_price">
                         <span class="price">￥875</span>
@@ -46,22 +46,7 @@
                         <i class="spr icon_cart"></i>
                     </div>
                 </a>
-            </li>
-            <li class="mgr0">
-                <a href="goods_detail">
-                    <div class="img_div">
-                        <img src="__STATIC__/index/image/02.png">
-                    </div>
-                    <div class="goods_name">
-                        <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
-                    </div>
-                    <div class="goods_price">
-                        <span class="price">￥875</span>
-                        <span class="pay_num">1500人购买</span>
-                        <i class="spr icon_cart"></i>
-                    </div>
-                </a>
-            </li>
+            </li> -->
         </ul>
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
@@ -69,6 +54,79 @@
         $('.filter_box button').click(function(){
             $(this).addClass('current').siblings().removeClass('current');
             var idx = $(this).index();
+        })
+        var url = location.search;
+        var store_id;
+        if(url.indexOf('?') != -1){
+            store_id = url.substr(1).split('&')[0].split('=')[1];
+        }
+        $(function(){
+            $.ajax({
+                url: 'store_index',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'store_id': store_id
+                },
+                success: function(res){
+                    console.log('店铺信息',res);
+                    if(res.status == 1){
+                        var store_info = res.data.store_info;
+                        $('.flagship-name').find('img').attr('src', 'uploads/'+store_info.store_logo_images)
+                        $('.flagship-name').find('p').text(store_info.store_name);
+                        var starNum = res.data.store_star;
+                        if(starNum > 3 && starNum <= 4){
+                            $('.icon-star').addClass('fourstar');
+                        }else if(starNum > 2 && starNum <= 3){
+                            $('.icon-star').addClass('threestar');
+                        }else if(starNum > 1 && starNum <= 2){
+                            $('.icon-star').addClass('twostar');
+                        }else if(starNum > 0 && starNum <= 1){
+                            $('.icon-star').addClass('onestar');
+                        }
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
+        // 店铺商品信息
+        $(function(){
+            $.ajax({
+                url: 'store_goods_info',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': store_id
+                },
+                success: function(res){
+                    console.log('店铺商品',res);
+                    if(res.status == 1){
+                        var str = '';
+                        res.data.forEach(function(ele, idx){
+                            str += `<li class="`+(idx%2!=0? 'mgr0':'')+`">
+                                        <a href="goods_detail">
+                                            <div class="img_div">
+                                                <img src="uploads/`+ele.goods_show_images+`">
+                                            </div>
+                                            <div class="goods_name">
+                                                <p class="txt-hid-two">`+ele.goods_name+`</p>
+                                            </div>
+                                            <div class="goods_price">
+                                                <span class="price">￥`+ele.special[0].goods_adjusted_price+`</span>
+                                                <span class="pay_num">`+ele.statistical_quantity+`人购买</span>
+                                            </div>
+                                        </a>
+                                    </li>`
+                        })
+                        $('.list_cont').html(str);
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
     </script>
 </body>

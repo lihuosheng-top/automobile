@@ -39,63 +39,171 @@
             <a href="sell_service_record" class="head-txt head-txt-on">账单</a>
             <!-- <a href="sell_parts_record" class="head-txt">商品账单</a> -->
         </header>
-        <div class="search-box">
+        <!-- <div class="search-box">
             <i class="spr icon-search"></i>
             <input type="text" placeholder="输入账单相关信息">
             <button class="search-btn">搜索</button>
-        </div>
+        </div> -->
         <div class="cost-detail">
-            <h3 class="month-tit">10月</h3>
-            <div class="bill-container">
-                <div class="income-container">收入：￥<span>10000</span></div>
-                <div class="expenditure">支出：￥<span>5000</span></div>
-            </div>
-            <ul class="cost-ul">
-                <li class="cost-li">
-                    <div class="cost-method">
-                        <img src="__STATIC__/index/image/wechat.png">
-                    </div>
-                    <div class="cost-info">
-                        <p class="txt-hid-one">米其林轮胎车模清洁套装</p>
-                        <span>12月04日 9:45</span>
-                    </div>
-                    <div class="cost-money">
-                        -199.00
-                    </div>
-                </li>
-                <li class="cost-li">
-                    <div class="cost-method">
-                        <img src="__STATIC__/index/image/alipay.png">
-                    </div>
-                    <div class="cost-info">
-                        <p class="txt-hid-one">米其林轮胎车模清洁套装</p>
-                        <span>12月04日 9:45</span>
-                    </div>
-                    <div class="cost-money">
-                        -199.00
-                    </div>
-                </li>
-            </ul>
+            <!-- <div class="cost-item">
+                <h3 class="month-tit">10月</h3>
+                <div class="bill-container">
+                    <div class="income-container">收入：￥<span>10000</span></div>
+                    <div class="expenditure">支出：￥<span>5000</span></div>
+                </div>
+                <ul class="cost-ul">
+                    <li class="cost-li">
+                        <div class="cost-method">
+                            <img src="__STATIC__/index/image/wechat.png">
+                        </div>
+                        <div class="cost-info">
+                            <p class="txt-hid-one">米其林轮胎车模清洁套装</p>
+                            <span>12月04日 9:45</span>
+                        </div>
+                        <div class="cost-money">
+                            -199.00
+                        </div>
+                    </li>
+                </ul>
+            </div> -->
         </div>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-        $('.cost-li').click(function(){
-            location.href = 'sell_order_bill';
-        })
         $.ajax({
             url: 'sell_service_record',
             type: 'POST',
             dataType: 'JSON',
             success: function(res){
                 console.log(res);
+                if(res.status == 1){
+                    var data = res.data.wallet_record;
+                    if(data.january.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.january, 1));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                    if(data.february.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.february, 2));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                    if(data.march.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.march, 3));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                    if(data.april.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.april, 4));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                    if(data.may.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.may, 5));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                    if(data.june.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.june, 6));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                    if(data.july.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.july, 7));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                    if(data.august.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.august, 8));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                    if(data.september.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.september, 9));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                    if(data.october.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.october, 10));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                    if(data.november.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.november, 11));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                    if(data.december.name.length > 0){
+                        $('.cost-detail').prepend(mySplicing(data.december, 12));
+                        $('.cost-li').click(function(){
+                            checkDetail(this);
+                        })
+                    }
+                }
             },
             error: function(){
                 console.log('error');
             }
         })
+        function mySplicing(data, month){
+            console.log(data)
+            var str = '';
+            str += `<div class="cost-item">
+                        <h3 class="month-tit">`+month+`月</h3>
+                        <div class="bill-container">
+                            <div class="income-container">收入：￥<span>`+data.income+`</span></div>
+                            <div class="expenditure">支出：￥<span>`+data.expenditure+`</span></div>
+                        </div>
+                        <ul class="cost-ul">`;
+            data.name.forEach(function(val, idx){
+                str += `<li class="cost-li" data-id="`+val.wallet_id+`">
+                            <div class="cost-method">
+                                <img src="__STATIC__/`+val.wallet_img+`">
+                            </div>
+                            <div class="cost-info">
+                                <p class="txt-hid-one">`+val.title+`</p>
+                                <span>`+val.operation_time+`</span>
+                            </div>
+                            <div class="cost-money">`+(val.wallet_operation > 0 ? '+'+val.wallet_operation : val.wallet_operation)+`</div>
+                        </li>`
+            })
+            str += `</ul>
+                </div>`;
+            return str;
+        }
+        function checkDetail(_this){
+            var wallet_id = $(_this).attr('data-id');
+            $.ajax({
+                url: 'consume_save',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'wallet_id': wallet_id
+                },
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        location.href = 'sell_order_bill';
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        }
     </script>
 </body>
 </html>

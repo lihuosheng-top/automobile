@@ -18,7 +18,7 @@ class Brand extends Controller{
      */
     public function index(){
 
-        $brand_data = db("brand")->where("status",1)->order("sort_number")->select();
+        $brand_data = db("brand")->order("sort_number")->select();
         return view("brand_index",["brand_data"=>$brand_data]);
 
     }

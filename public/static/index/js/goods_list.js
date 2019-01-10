@@ -9,33 +9,35 @@ var id;
 if(url.indexOf('?') != -1){
     id = url.substr(1).split('=')[1];
 }
-$.ajax({
-    url: 'goods_list',
-    type: 'POST',
-    dataType: 'JSON',
-    data: {
-        'id': id
-    },
-    success: function(res){
-        console.log(res);
-        var str = '';
-        $.each(res.data, function(idx, val){
-            if(idx % 2 == 0){
-                str += '<li>\
-                            <a href="goods_detail?id='+val.id+'&preid='+id+'">\
-                                <div class="img_div">\
-                                    <img src="uploads/'+val.goods_show_images+'">\
-                                </div>\
-                                <div class="goods_name">\
-                                    <p class="txt-hid-two">'+val.goods_name+'</p>\
-                                </div>\
-                                <div class="goods_price">\
-                                    <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
-                                    <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
-                                </div>\
-                            </a>\
-                        </li>'
-            }else{
+$(function(){
+    $.ajax({
+        url: 'goods_list',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id
+        },
+        success: function(res){
+            console.log(res);
+            var str = '';
+            $.each(res.data, function(idx, val){
+                if(idx % 2 == 0){
+                    str += '<li>\
+                                <a href="goods_detail?id='+val.id+'&preid='+id+'">\
+                                    <div class="img_div">\
+                                        <img src="uploads/'+val.goods_show_images+'">\
+                                    </div>\
+                                    <div class="goods_name">\
+                                        <p class="txt-hid-two">'+val.goods_name+'</p>\
+                                    </div>\
+                                    <div class="goods_price">\
+                                        <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
+                                        <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
+                                    </div>\
+                                </a>\
+                            </li>'
+                    return;
+                }
                 str += '<li class="mgr0">\
                             <a href="goods_detail?id='+val.id+'&preid='+id+'">\
                                 <div class="img_div">\
@@ -50,14 +52,88 @@ $.ajax({
                                 </div>\
                             </a>\
                         </li>'
-            }
-        })
-        $('.list_cont').append(str);
-    },
-    error: function(){
-        console.log('error');
-    }
+                
+            })
+            $('.list_cont').html(str);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
 })
+var timer = null;
+$('#search').on('input', function(){
+    var _self = this;
+    clearTimeout(timer);
+    timer = setTimeout(function(){
+        searchAjax('goods_list_search', _self.value);
+    }, 1000);
+})
+function searchAjax(url, searchTxt){
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id,
+            'goods_name': searchTxt
+        },
+        success: function(res){
+            console.log(res);
+            var str = '';
+            $.each(res.data, function(idx, val){
+                if(idx % 2 == 0){
+                    str += '<li>\
+                                <a href="goods_detail?id='+val.id+'&preid='+id+'">\
+                                    <div class="img_div">\
+                                        <img src="uploads/'+val.goods_show_images+'">\
+                                    </div>\
+                                    <div class="goods_name">\
+                                        <p class="txt-hid-two">'+val.goods_name+'</p>\
+                                    </div>\
+                                    <div class="goods_price">\
+                                        <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
+                                        <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
+                                    </div>\
+                                </a>\
+                            </li>'
+                    return;
+                }
+                str += '<li class="mgr0">\
+                            <a href="goods_detail?id='+val.id+'&preid='+id+'">\
+                                <div class="img_div">\
+                                    <img src="uploads/'+val.goods_show_images+'">\
+                                </div>\
+                                <div class="goods_name">\
+                                    <p class="txt-hid-two">'+val.goods_name+'</p>\
+                                </div>\
+                                <div class="goods_price">\
+                                    <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
+                                    <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
+                                </div>\
+                            </a>\
+                        </li>'
+                
+            })
+            $('.list_cont').html('').html(str);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
+
+// 搜索防抖
+// function debounce(handle, delay){
+//     var timer = null;
+//     return function(){
+//         var _self = this, _arg = arguments;
+//         clearTimeout(timer);
+//         timer = setTimeout(function(){
+//             handle.apply(_self, _arg);
+//         }, delay);
+//     }
+// }
 
 
 
