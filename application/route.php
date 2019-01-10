@@ -23,7 +23,7 @@ Route::group("",[
     "saoma_callback"=>"index/index/saoma_callback",
     "weixin_notify"=>"index/index/weixin_notify",
     "index_shop"=>"index/index/shop",                               //热门配件店铺
-    "index_shop_goods"=>"index/index/shop_goods",                   //热门配件店铺商品
+    "index_shop_goods"=>"index/index/shop_goods",                   //热门配件店铺商品显示
     "index_serve_shop"=>"index/index/serve_shop",                   //热门配件店铺商品
  
 
