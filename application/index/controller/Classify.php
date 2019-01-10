@@ -381,6 +381,9 @@ class Classify extends Controller
                 ->where("id", $evaluate_info["evaluate_info"]["user_id"])
                 ->field("user_img,phone_num")
                 ->find();
+            $evaluate_info["order_create_time"] =db("order_parts")
+                ->where("id",$evaluate_info["evaluate_info"]["order_id"])
+                ->value("order_create_time");
             if(!empty($evaluate_info)){
                 return ajax_success("成功返回",$evaluate_info);
             }else{

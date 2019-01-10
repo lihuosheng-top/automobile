@@ -45,6 +45,14 @@ Route::group("",[
     "reservation"=>"index/reservation/reservation",//预约服务 首页
     "reservation_detail"=>"index/reservation/reservation_detail",//预约服务 详情
     "reservation_info"=>"index/reservation/reservation_info",//预约服务 详情
+    /*TODO:预约服务评价信息开始*/
+    "reservation_evaluate_return"=>"index/reservation/reservation_evaluate_return",//预约服务全部评价数据
+    "reservation_evaluate_good"=>"index/reservation/reservation_evaluate_good",//预约服务详全部评价里面的（好评）
+    "reservation_evaluate_secondary"=>"index/reservation/reservation_evaluate_secondary",//预约服务详情全部评价里面的（中评）
+    "reservation_evaluate_bad"=>"index/reservation/reservation_evaluate_bad",//预约服务详情全部评价里面的（差评）
+    "reservation_evaluate_has_img"=>"index/reservation/reservation_evaluate_has_img",//预约服务详情全部评价里面的（有图）
+    "reservation_evaluate_detail"=>"index/reservation/reservation_evaluate_detail",//预约服务商品详情页面的评价数据查看详情
+    /*TODO:预约服务评价信息结束*/
 
 
 
