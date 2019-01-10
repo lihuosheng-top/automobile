@@ -141,7 +141,6 @@ if(urlLen > 1){
         },
         success: function(data){
             console.log('获取店铺商品',data);
-            // 
             if(data.status == 1 || data.status == 2){
                 // 商品
                 var str = myGoods(data);
@@ -150,15 +149,14 @@ if(urlLen > 1){
                 var str2 = myService(data);
                 $('.service-content').append(str2);
                 selectEvent();
-
-                // $('.comment-filter').show();
             }
         },
         error: function(){
             console.log('error');
         }
     })
-
+    
+    $('.comment-filter').show();
     // 评论
     $.ajax({
         url: 'reservation_evaluate_return',
