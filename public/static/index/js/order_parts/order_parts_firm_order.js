@@ -163,6 +163,7 @@ $.ajax({
                             },
                             success: function(res){
                                 console.log(res);
+                                alert(res.data);
                                 alipay(res.data);
                             },
                             error: function(){
