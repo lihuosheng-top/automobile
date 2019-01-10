@@ -314,7 +314,7 @@ class OrderService extends Controller{
                 if($res){
                     //需要加入到商家余额里面
                    $order_info = Db::name("order_service")
-                       ->field("service_real_pay,store_id,service_order_number")
+                       ->field("service_real_pay,store_id,service_order_number,service_goods_name,pay_type_content")
                        ->where("id",$order_id)
                        ->find();
                     $business_id =Db::name("store")->where("store_id",$order_info["store_id"])->value("user_id");
@@ -333,6 +333,11 @@ class OrderService extends Controller{
                             "wallet_type"=>1,
                             "operation_time"=>date("Y-m-d H:i:s"),
                             "wallet_remarks"=>"订单号：".$order_info['service_order_number']."，完成交易，收入".$order_info['service_real_pay']."元",
+                            "wallet_img"=>"index/image/money2.png",
+                            "title"=>$order_info["service_goods_name"],
+                            "order_nums"=>$order_info["service_order_number"],
+                            "pay_type"=>$order_info["pay_type_content"], //支付方式
+                            "wallet_balance"=>$new_wallet,
                         ];
                         Db::name("wallet")->insert($data);
                     }
