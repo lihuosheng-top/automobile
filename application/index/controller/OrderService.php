@@ -324,7 +324,7 @@ class OrderService extends Controller{
                         ->value("user_wallet");
                     $new_wallet =$order_info["service_real_pay"] + $old_wallet;
                    //余额更新
-                    $arr =Db::name('order_service')->where('id',$order_id)->update(['user_wallet'=>$new_wallet]);
+                    $arr =Db::name('user')->where('id',$business_id)->update(['user_wallet'=>$new_wallet]);
                     //添加消费记录
                     if($arr){
                         $data=[

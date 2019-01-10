@@ -1338,29 +1338,34 @@ class OrderParts extends Controller{
                     if($bool){
                         //需要加入到商家余额里面
                         $order_info = Db::name("order_parts")
-                            ->field("order_real_pay,store_id,parts_order_number,parts_goods_name,pay_type_content")
+                            ->field("order_real_pay,parts_order_number,parts_goods_name,pay_type_content,order_quantity,goods_business_price")
+                            ->where("store_id",$store_id)
                             ->where("parts_order_number",$parts_order_number)
-                            ->find();
-                        $business_id =Db::name("store")->where("store_id",$order_info["store_id"])->value("user_id");
+                            ->select();
+                        foreach ($order_info as $kk=>$vv){
+                            $all_price[] =$vv["goods_business_price"] *$vv["order_quantity"];
+                        }
+                        $business_all_price =array_sum($all_price);
+                        $business_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
                         //原本的钱包余额
                         $old_wallet =Db::name("user")
                             ->where("id",$business_id)
                             ->value("user_wallet");
-                        $new_wallet =$order_info["order_real_pay"] + $old_wallet;
+                        $new_wallet =$business_all_price + $old_wallet;
                         //余额更新
-                        $arr =Db::name('order_parts')->where('id',$order_id)->update(['user_wallet'=>$new_wallet]);
+                        $arr =Db::name('user')->where('id',$business_id)->update(['user_wallet'=>$new_wallet]);
                         //添加消费记录
                         if($arr){
                             $data=[
                                 "user_id"=>$business_id,
-                                "wallet_operation"=>$order_info["service_real_pay"],
+                                "wallet_operation"=>$business_all_price,
                                 "wallet_type"=>1,
                                 "operation_time"=>date("Y-m-d H:i:s"),
-                                "wallet_remarks"=>"订单号：".$order_info['service_order_number']."，完成交易，收入".$order_info['service_real_pay']."元",
+                                "wallet_remarks"=>"订单号：".$parts_order_number."，完成交易，收入".$business_all_price."元",
                                 "wallet_img"=>"index/image/money2.png",
-                                "title"=>$order_info["service_goods_name"],
-                                "order_nums"=>$order_info["service_order_number"],
-                                "pay_type"=>$order_info["pay_type_content"], //支付方式
+                                "title"=>$order_info[0]["parts_goods_name"],
+                                "order_nums"=>$parts_order_number,
+                                "pay_type"=>$order_info[0]["pay_type_content"], //支付方式
                                 "wallet_balance"=>$new_wallet,
                             ];
                             Db::name("wallet")->insert($data);
@@ -1433,7 +1438,7 @@ class OrderParts extends Controller{
                             ->where("id",$data["goods_standard_id"])
                             ->find();
                         $datas = [
-                            "goods_business" =>$special_data["price"],//商家自己发布商品时的价格
+                            "goods_business_price" =>$special_data["price"],//商家自己发布商品时的价格
                             'goods_image' =>  $special_data['images'],//图片
                             "goods_describe"=>$goods_data["goods_describe"],//卖点
                             'parts_goods_name' => $goods_data['goods_name'],//名字
