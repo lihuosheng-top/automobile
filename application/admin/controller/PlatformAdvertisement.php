@@ -125,7 +125,12 @@ class  PlatformAdvertisement extends  Controller{
                 $boolse = db("facilitator")->where('id', $find['pfd'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
             }
 
-            
+            $show_images = $request->file("advert_picture");
+            if ($show_images) {
+                $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
+            }  
+
             if(empty($find['shop_name']))
             {
               $data["start_time"] = strtotime($data["start_time"]);
@@ -154,6 +159,28 @@ class  PlatformAdvertisement extends  Controller{
             $this->success("删除成功", url("admin/platform_advertisement/platform_business_index"));
         } else {
             $this->error("删除失败", url("admin/platform_advertisement/platform_business_index"));
+        }
+
+    }
+
+    /**
+     * 平台广告图片删除
+     * 郭杨
+     */
+    public function platform_picture_del(Request $request){
+
+        if ($request->isPost()) {
+            $id = $request->only(['id'])['id'];
+            $image_url = db("platform")->where("id", $id)->field("advert_picture")->find();
+            if ($image_url['advert_picture'] != null) {
+                unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $image_url['advert_picture']);
+            }
+            $bool = db("platform")->where("id", $id)->field("advert_picture")->update(["advert_picture" => null]);
+            if ($bool) {
+                return ajax_success("删除成功");
+            } else {
+                return ajax_error("删除失败");
+            }
         }
 
     }

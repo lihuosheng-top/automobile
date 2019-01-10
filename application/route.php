@@ -553,7 +553,7 @@ Route::group("admin",[
     "accessories_business_updata"=>"admin/Advertisement/accessories_business_updata",           //汽车配件商广告更新
     "accessories_business_del"=>"admin/Advertisement/accessories_business_del",                 //汽车配件商广告删除
     "accessories_business_search"=>"admin/Advertisement/accessories_business_search",           //汽车配件商广告模糊搜索
-
+    "accessories_picture_del"=>"admin/Advertisement/accessories_picture_del",                   //汽车配件商广告图片删除
 
 
     /*服务商广告*/
@@ -575,7 +575,7 @@ Route::group("admin",[
     "platform_business_updata"=>"admin/platform_advertisement/platform_business_updata",//汽车平台广告更新
     "platform_business_del"=>"admin/platform_advertisement/platform_business_del",      //汽车平台广告删除  
     "platform_business_search"=>"admin/platform_advertisement/platform_business_search",//汽车平台广告模糊搜索
-
+    "platform_picture_del"=>"admin/platform_advertisement/platform_picture_del",        //汽车平台广告图片删除
 
 
 
