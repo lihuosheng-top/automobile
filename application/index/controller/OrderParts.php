@@ -1337,18 +1337,18 @@ class OrderParts extends Controller{
                     }
                     if($bool){
                         //需要加入到商家余额里面
-                        $order_info = Db::name("order_service")
-                            ->field("service_real_pay,store_id,service_order_number,service_goods_name,pay_type_content")
-                            ->where("id",$order_id)
+                        $order_info = Db::name("order_parts")
+                            ->field("order_real_pay,store_id,parts_order_number,parts_goods_name,pay_type_content")
+                            ->where("parts_order_number",$parts_order_number)
                             ->find();
                         $business_id =Db::name("store")->where("store_id",$order_info["store_id"])->value("user_id");
                         //原本的钱包余额
                         $old_wallet =Db::name("user")
                             ->where("id",$business_id)
                             ->value("user_wallet");
-                        $new_wallet =$order_info["service_real_pay"] + $old_wallet;
+                        $new_wallet =$order_info["order_real_pay"] + $old_wallet;
                         //余额更新
-                        $arr =Db::name('order_service')->where('id',$order_id)->update(['user_wallet'=>$new_wallet]);
+                        $arr =Db::name('order_parts')->where('id',$order_id)->update(['user_wallet'=>$new_wallet]);
                         //添加消费记录
                         if($arr){
                             $data=[
@@ -1433,6 +1433,7 @@ class OrderParts extends Controller{
                             ->where("id",$data["goods_standard_id"])
                             ->find();
                         $datas = [
+                            "goods_business" =>$special_data["price"],//商家自己发布商品时的价格
                             'goods_image' =>  $special_data['images'],//图片
                             "goods_describe"=>$goods_data["goods_describe"],//卖点
                             'parts_goods_name' => $goods_data['goods_name'],//名字
@@ -1536,6 +1537,7 @@ class OrderParts extends Controller{
                     $total_money[$i]["money"] =$j["money"] * $j["goods_unit"];//总额
                    $total_money[$i]["store_id"] =$j["store_id"];
                    $total_money[$i]["id"] =$j["store_id"];
+                   $total_money[$i]["goods_business_price"] =$j["goods_business_price"];//商家自己设置的商品价钱
                    $da_store_ids[] = $j["store_id"];
                 }
                 $da_store_id = array_unique($da_store_ids); //去重之后的商户
@@ -1594,6 +1596,7 @@ class OrderParts extends Controller{
                             $buy_message = NUll ;
                         }
                             $datas = [
+                                "goods_business_price" =>$val["goods_business_price"],//商家自己发布商品时的价格
                                 'goods_image' => $val['goods_images'],//图片
                                 "goods_describe"=>$goods_data["goods_describe"],//卖点
                                 'parts_goods_name' => $goods_data['goods_name'],//名字
