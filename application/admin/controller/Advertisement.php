@@ -148,7 +148,11 @@ class  Advertisement extends  Controller{
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
             $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
-
+            $show_images = $request->file("advert_picture");
+            if ($show_images) {
+                $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
+            }
             $data["postid"] = $data["pid"];
             unset($data["id"]);
             unset($data["pid"]);
@@ -176,6 +180,28 @@ class  Advertisement extends  Controller{
             $this->success("删除成功", url("admin/Advertisement/accessories_business_advertising"));
         } else {
             $this->error("删除失败", url("admin/Advertisement/accessories_business_advertising"));
+        }
+
+    }
+
+    /**
+     * 汽车配件商图片删除
+     * 郭杨
+     */
+    public function accessories_picture_del(Request $request){
+
+        if ($request->isPost()) {
+            $id = $request->only(['id'])['id'];
+            $image_url = db("accessories")->where("id", $id)->field("advert_picture")->find();
+            if ($image_url['advert_picture'] != null) {
+                unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $image_url['advert_picture']);
+            }
+            $bool = db("accessories")->where("id", $id)->field("advert_picture")->update(["advert_picture" => null]);
+            if ($bool) {
+                return ajax_success("删除成功");
+            } else {
+                return ajax_error("删除失败");
+            }
         }
 
     }

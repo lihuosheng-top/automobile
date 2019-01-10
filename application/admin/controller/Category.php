@@ -150,12 +150,16 @@ class Category extends Controller{
      * @return string|void
      */
     public function images(Request $request){
-        $id = $request->only(['id'])['id'];
-        $images = db("goods_type")->where("id",$id)->field("type_images")->find();
-        $bool = db("goods_type")->where("id",$id)->update(['type_images'=>null]);
-        unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$images['type_images']);
-        if($bool){
-            return ajax_success("更新成功");
+        if($request->isPost()) {
+            $id = $request->only(['id'])['id'];
+            $images = db("goods_type")->where("id", $id)->field("type_images")->find();
+            $bool = db("goods_type")->where("id", $id)->update(['type_images' => null]);
+            if ($bool) {
+                unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $images['type_images']);
+                $this->success("成功");
+            }else{
+                $this->error("失败");
+            }
         }
     }
 

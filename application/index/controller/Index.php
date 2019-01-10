@@ -210,6 +210,7 @@ class Index extends Controller
                         if ($value["service_setting_id"] == $val["service_setting_id"]) {
                             $serve_data[$key]["serve_name"] = $value["service_setting_name"];
                             $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id", $val["service_setting_id"])->where("store_id", $shop_id)->select();
+                            $serve_data[$key]["service_setting_id"] = $val["service_setting_id"];
                         }
                     }
                 }
@@ -242,9 +243,12 @@ class Index extends Controller
                     foreach ($serve_goods as $k_1 => $v_1) {
                         $serve_data[$v_1['service_setting_id']]["serve_goods"][] = $v_1;
                         $serve_data[$v_1['service_setting_id']]["serve_name"] = db("service_setting")->where("service_setting_id", $v_1["service_setting_id"])->value("service_setting_name");
+                        $serve_data[$v_1['service_setting_id']]["service_setting_id"] = $v_1['service_setting_id'];
+
                     }
                     if ($goods || $store || $serve_goods) {
-                        exit(json_encode(array("info" => "获取成功", "status" => "2", "data" => ["store" => $store, "goods" => $goods, "serve_data" => $serve_data]),JSON_FORCE_OBJECT));
+                        //exit(json_encode(array("info" => "获取成功", "status" => "2", "data" => []),JSON_UNESCAPED_UNICODE));
+                        return ajax_success("获取成功", array("store" => $store, "goods" => $goods, "serve_data" => array_values($serve_data)));
                     } else {
                         exit(json_encode(array("info" => "获取成功", "status" => "3")));
                     }
@@ -260,6 +264,7 @@ class Index extends Controller
                             if ($value["service_setting_id"] == $val["service_setting_id"]) {
                                 $serve_data[$key]["serve_name"] = $value["service_setting_name"];
                                 $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id", $val["service_setting_id"])->where("store_id", $shop_id)->select();
+                                $serve_data[$key]["service_setting_id"] = $val["service_setting_id"];
                             }
                         }
                     }
