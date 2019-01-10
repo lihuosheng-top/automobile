@@ -124,6 +124,8 @@ if(urlLen > 1){
                 var str2 = myService(data);
                 $('.service-content').append(str2);
                 selectEvent();
+
+                $('.comment_title').show();
             }
         },
         error: function(){
@@ -153,11 +155,25 @@ if(urlLen > 1){
                 $('.comment-filter').show();
                 var filterStr = '';
                 data.data.serve_data.forEach(function(ele, idx){
-                    console.log(ele)
                     if(idx === 0){
                         filterStr += `<li class="filter-this" data-serverid="`+ele.service_setting_id+`">
                                         <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
                                     </li>`
+                        $.ajax({
+                            url: 'reservation_evaluate_return',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'goods_id': ele.service_setting_id,
+                                'store_id': storeId
+                            },
+                            success: function(res){
+                                console.log(res);
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
+                        })
                     }else{
                         filterStr += `<li data-serverid="`+ele.service_setting_id+`">
                                         <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
