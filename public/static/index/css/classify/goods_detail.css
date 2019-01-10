@@ -293,17 +293,17 @@ html{
     height: .3rem;
     background-position: .05rem -2.75rem;
 }
-.comment_box .comment_phone_time .star.four-star{
-    background-position: .05rem -3rem;
+.four-star{
+    background-position: .05rem -3rem !important;
 }
-.comment_box .comment_phone_time .star.three-star{
-    background-position: .05rem -3.25rem;
+.three-star{
+    background-position: .05rem -3.25rem !important;
 }
-.comment_box .comment_phone_time .star.two-star{
-    background-position: .05rem -3.5rem;
+.two-star{
+    background-position: .05rem -3.5rem !important;
 }
-.comment_box .comment_phone_time .star.one-star{
-    background-position: .05rem -3.75rem;
+.one-star{
+    background-position: .05rem -3.75rem !important;
 }
 .wrapper .comment_box .comment_text_box{
     width: 100%;
@@ -534,9 +534,9 @@ html{
 .pop .comment_box .comment_phone_time .star,
 .comment-detail-pop .detail_phone_time .star{
     display: inline-block;
-    width: 1.04rem;
-    height: .2rem;
-    background-position: 0 -2.8rem;
+    width: 1.14rem;
+    height: .3rem;
+    background-position: .05rem -2.75rem;
 }
 .pop .comment_box .comment_text_box{
     width: 100%;
@@ -720,7 +720,7 @@ html{
     bottom: 0;
     right: 0;
     height: .6rem;
-    background-color: rgba(0, 0, 0, .4);
+    background-color: rgba(0, 0, 0, .7);
     text-align: right;
     line-height: .6rem;
     color: #f00;

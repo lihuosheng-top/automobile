@@ -177,12 +177,16 @@ html, body{
 .total-button-box .button-box button{
     width: 1.72rem;
     height: .58rem;
-    border: 1px solid #999999;
+    border: 1px solid #999;
     color: #999;
     text-align: center;
     border-radius: .29rem;
     background-color: #fff;
     outline: none;
+}
+.total-button-box .button-box button.evaluation-btn{
+    border: 1px solid #504cfb;
+    color: #504cfb;
 }
 .total-button-box .button-box .to-payment-btn,
 .total-button-box .button-box .conf-receipt-btn{
