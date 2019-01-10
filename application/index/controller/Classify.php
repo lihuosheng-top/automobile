@@ -329,6 +329,38 @@ class Classify extends Controller
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商全部评价里面的（有图）
+     **************************************
+     * @param Request $request
+     */
+    public function goods_evaluate_has_img(Request $request){
+        if($request->isPost()){
+            $goods_id = $request->only(["goods_id"])["goods_id"];
+            $evaluate_info =Db::table("tb_order_parts_evaluate")
+                ->field("tb_order_parts_evaluate.*,tb_order_parts_evaluate_images.images")
+                ->join("tb_order_parts_evaluate_images","tb_order_parts_evaluate.id = tb_order_parts_evaluate_images.evaluate_order_id","left")
+                ->where("tb_order_parts_evaluate.goods_id",$goods_id)
+                ->select();
+            foreach ($evaluate_info as $ks=>$vs){
+                $evaluate_info[$ks]["order_create_time"] =db("order_parts")
+                    ->where("id",$vs["order_id"])
+                    ->value("order_create_time");
+                $evaluate_info[$ks]["user_info"] =db("user")
+                    ->where("id",$vs["user_id"])
+                    ->field("user_img,phone_num")
+                    ->find();
+            }
+            if(!empty($evaluate_info)){
+                return ajax_success("数据返回成功",$evaluate_info);
+            }else{
+                return ajax_error("没有数据",["status"=>0]);
+            }
+
+        }
+    }
 
 
     /**
