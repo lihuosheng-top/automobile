@@ -22,6 +22,25 @@
         margin: 0 auto;
         padding-top: 40px;
     }
+    	/* 数据库展现图片样式 */
+	
+	.img {
+		position: relative;
+		display: inline-block;
+		width: 100px;
+	}
+	
+	.imgcontent {
+		margin: 10px;
+	}
+	
+	.img>i {
+		display: inline-block;
+		width: 20px;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
 </style>
 
 
@@ -73,6 +92,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">商品分类图标</label>
             <div class="layui-input-block">
+				<div class="imgcontent">
+					<span class="img">
+						<img src="111" width="100%">
+						<i class="remove-img" data-id="{$value.id}" data-value="1"><img src="__STATIC__/admin/common/img/a7.png"></i>
+					</span>
+				</div>
+			</div>
+            <div class="layui-input-block">
                 <div class="img-box full">
                     <section class=" img-section">
                         <div class="z_photo upimg-div clear">
@@ -116,6 +143,47 @@
             var form = layui.form(),
                 $ = layui.jquery;
             form.render();
+            // 图片删除
+		$(".remove-img").click(function() {
+			var remove = $(this).parent();
+			var id = $(this).data("id");
+			var value = $(this).data("value");
+			//			console.log(value)
+			//			console.log(id);
+			if(value == 1) {
+				$.ajax({
+					type: "POST",
+					url: "{:url('admin/aa')}",
+					data: {
+						"id": id
+					},
+					dataType: "json",
+					success: function(data) {
+						remove.remove();
+					},
+					error: function(data) {
+						console.log("错误");
+					}
+				});
+			} else {
+				$.ajax({
+					type: "POST",
+					url: "{:url('admin/Goods/images')}",
+					data: {
+						"images_id": id
+					},
+					dataType: "json",
+					success: function(data) {
+						remove.remove();
+					},
+					error: function(data) {
+						console.log("错误");
+					}
+				});
+			}
+			// 		
+		});
+
             //创建一个编辑器
             //var editIndex = layedit.build('LAY_demo_editor');
 
