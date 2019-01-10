@@ -149,32 +149,30 @@ if(urlLen > 1){
                 var str2 = myService(data);
                 $('.service-content').append(str2);
                 selectEvent();
+                
+                $('.comment-filter').show();
+                var filterStr = '';
+                data.data.serve_data.forEach(function(ele, idx){
+                    console.log(ele)
+                    if(idx === 0){
+                        filterStr += `<li class="filter-this" data-serverid="`+ele.service_setting_id+`">
+                                        <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
+                                    </li>`
+                    }else{
+                        filterStr += `<li data-serverid="`+ele.service_setting_id+`">
+                                        <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
+                                    </li>`
+                    }
+                })
+                $('.filter-ul').html(filterStr);
             }
         },
         error: function(){
             console.log('error');
         }
     })
-    
-    $('.comment-filter').show();
-    // 评论
-    $.ajax({
-        url: 'reservation_evaluate_return',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'goods_id': 2,
-            'store_id': storeId
-        },
-        success: function(res){
-            console.log(res);
-            
-        },
-        error: function(){
-            console.log('error');
-        }
-    })
 }
+
 // 商品
 function myGoods(data){
     var str = '';
@@ -216,7 +214,7 @@ function myService(data){
     $('.swiper-wrapper').append(myStr);
     mySwiper();
     $.each(data.data.serve_data, function(idx, val){
-        str2 += `<div class="service-colla-item" data-goodsid="`+idx+`">
+        str2 += `<div class="service-colla-item" data-goodsid="`+val.service_setting_id+`">
                     <div class="service-colla-title">
                         <p class="service-subtitle">`+val.serve_name+`</p>
                         <p class="service-money"></p>
@@ -323,6 +321,24 @@ $('.service-tab-title').on('click', 'li', function(){
 $('.filter-ul').on('click', 'li', function(){
     $(this).siblings().removeClass('filter-this');
     $(this).addClass('filter-this');
+    var serveSettingId = $(this).attr('data-serverid');
+    // 评论
+    $.ajax({
+        url: 'reservation_evaluate_return',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'goods_id': serveSettingId,
+            'store_id': storeId
+        },
+        success: function(res){
+            console.log(res);
+            
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
 })
 
 // 确定预约
