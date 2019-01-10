@@ -265,6 +265,7 @@ Route::group("",[
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
     /*TODO:商品详情页面信息开始*/
+    "classify_index_search"=>"index/Classify/classify_index_search",//分类页面搜索
     "goods_list_search"=>"index/Classify/goods_list_search",//分类进入详情页面搜索
     "go_to_store"=>"index/Classify/go_to_store",//商品详情页面进店信息返回
     "may_like_goods"=>"index/Classify/may_like_goods",//商品详情页面你可能还喜欢
