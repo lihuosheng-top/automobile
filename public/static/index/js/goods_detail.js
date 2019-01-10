@@ -140,17 +140,35 @@ $('.parameter-btn').click(function(){
 
 // 显示 隐藏 评价弹窗 
 function showPop(){
-    $('.pop').css('transform', 'translateX(0)');
+    $('.pop').css('right', '0');
     $('html').css('overflow', 'hidden');
 }
 function hidePop(){
-    $('.pop').css('transform', 'translateX(100%)');
+    $('.pop').css('right', '-100%');
     $('html').css('overflow', 'auto');
 }
 
 // 所有评论切换
 $('.comment_classify_box li').click(function(){
     $(this).addClass('active').siblings().removeClass('active');
+    var _index = $(this).index();
+    switch(_index){
+        case 0:
+            allEvaluateDataAjax('goods_evaluate_return');
+            break;
+        case 1:
+            allEvaluateDataAjax('goods_evaluate_good');
+            break;
+        case 2:
+            allEvaluateDataAjax('goods_evaluate_secondary');
+            break;
+        case 3:
+            allEvaluateDataAjax('goods_evaluate_bad');
+            break;
+        case 4:
+            allEvaluateDataAjax('goods_evaluate_has_img');
+            break;
+    }
 })
 
 // 商品详情， 评价切换
@@ -463,22 +481,26 @@ $.ajax({
             var length = data.length > 3 ? 3: data.length;
             for(var i = 0; i < length; i++){
                 str += `<li class="comment_li" data-evalid="`+data[i].id+`">
-                            <div class="comment_user_info">
-                                <div class="comment_user_headimg">
-                                    <img src="userimg/`+data[i].user_info.user_img+`">
-                                </div>
-                                <div class="comment_phone_time">
-                                    <div class="phone_time clearfix">
-                                        <span class="phone_box">`+data[i].user_info.phone_num+`</span>
-                                        <span class="time_box">`+timetrans(data[i].create_time)+`</span>
+                            <div class="content-container">
+                                <div class="comment_user_info">
+                                    <div class="comment_user_headimg">
+                                        <img src="userimg/`+data[i].user_info.user_img+`">
                                     </div>
-                                    <span class="spr star `+(data[i].evaluate_stars === 5?'':(data[i].evaluate_stars === 4?'four-star':(data[i].evaluate_stars === 3?'three-star':(data[i].evaluate_stars === 2?'two-star':'one-star'))))+`"></span>
+                                    <div class="comment_phone_time">
+                                        <div class="phone_time clearfix">
+                                            <span class="phone_box">`+data[i].user_info.phone_num+`</span>
+                                            <span class="time_box">`+timetrans(data[i].create_time)+`</span>
+                                        </div>
+                                        <span class="spr star `+(data[i].evaluate_stars === 5?'':
+                                                                (data[i].evaluate_stars === 4?'four-star':
+                                                                (data[i].evaluate_stars === 3?'three-star':
+                                                                (data[i].evaluate_stars === 2?'two-star':'one-star'))))+`"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="comment_text_box">
-                                <a href="javascript:;" class="comment_text_a">
-                                    <p class="comment_text_p">`+data[i].evaluate_content+`</p>
-                                </a>`
+                                <div class="comment_text_box">
+                                    <a href="javascript:;" class="comment_text_a">
+                                        <p class="comment_text_p">`+data[i].evaluate_content+`</p>
+                                    </a>`
                 // 有评论图片
                 if(data[i].images.length !== 0){
                     str += `<ul class="comment_img_ul">`;
@@ -496,39 +518,31 @@ $.ajax({
                                 <p class="reply_text">`+data[i].business_repay+`</p>
                             </div>`
                 }
-                str += `<div class="bottom_time_box">
-                            <p class="buy_time">购买时间: <span>2018-11-05</span></p>
-                            <div>
-                                <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
-                            </div>
-                        </div>
+                str += `</div>
                     </div>
-                </li>`
+                    <div class="bottom_time_box">
+                    <p class="buy_time">购买时间: <span>`+timetrans(data[i].order_create_time)+`</span></p>
+                    <div>
+                        <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                    </div>
+                </div>
+            </li>`
             }
             $('.more_comment_box').before(str);
             // 查看评价详情
-            $('.tab-box .comment_user_info').click(function(){
-                $('.wrapper').hide();
+            $('.content-container').click(function(){
+                $('html').css('overflow', 'hidden');
                 $('.comment-detail-pop').show();
-                var id = $(this).parent().prop('data-evalid');
-                $.ajax({
-                    url: 'goods_evaluate_detail',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {
-                        'id': id
-                    },
-                    success: function(res){
-                        console.log(res);
-                    },
-                    error: function(){
-                        console.log('error');
-                    }
-                })
+                var id = $(this).parents('.comment_li').attr('data-evalid');
+                evaluateDetailAjax(id);
             })
             $('.detail-back').click(function(){
-                $('.wrapper').show();
+                var ifshowPop = +$('.pop').css('right').split('px')[0];
                 $('.comment-detail-pop').hide();
+                if(ifshowPop == 0){
+                    return;
+                }
+                $('html').css('overflow', 'auto');
             })
         }
     },
@@ -538,8 +552,12 @@ $.ajax({
 })
 $('.more_comment_box').on('click','a', function(){
     showPop();
+    allEvaluateDataAjax('goods_evaluate_return');
+})
+// 查看全部评论ajax
+function allEvaluateDataAjax(url){
     $.ajax({
-        url: 'goods_evaluate_return',
+        url: url,
         type: 'POST',
         dataType: 'JSON',
         data: {
@@ -549,25 +567,28 @@ $('.more_comment_box').on('click','a', function(){
             console.log('评价',res);
             if(res.status == 1){
                 var str = '';
-                $('.comment_title span').text(res.data.length);
                 res.data.forEach(function(ele, idx){
-                    str += `<li class="comment_li">
-                                <div class="comment_user_info">
-                                    <div class="comment_user_headimg">
-                                        <img src="`+(ele.user_info.user_img===null?`static/index/image/avatar.png`:`userimg/`+ele.user_info.user_img)+`">
-                                    </div>
-                                    <div class="comment_phone_time">
-                                        <div class="phone_time clearfix">
-                                            <span class="phone_box">`+ele.user_info.phone_num+`</span>
-                                            <span class="time_box">`+timetrans(ele.create_time)+`</span>
+                    str += `<li class="comment_li" data-evalid="`+ele.id+`">
+                                <div class="all-content-container">
+                                    <div class="comment_user_info">
+                                        <div class="comment_user_headimg">
+                                            <img src="`+(ele.user_info.user_img===null?`static/index/image/avatar.png`:`userimg/`+ele.user_info.user_img)+`">
                                         </div>
-                                        <span class="spr star `+(ele.evaluate_stars === 5?'':(ele.evaluate_stars === 4?'four-star':(ele.evaluate_stars === 3?'three-star':(ele.evaluate_stars === 2?'two-star': 'one-star'))))+`"></span>
+                                        <div class="comment_phone_time">
+                                            <div class="phone_time clearfix">
+                                                <span class="phone_box">`+ele.user_info.phone_num+`</span>
+                                                <span class="time_box">`+timetrans(ele.create_time)+`</span>
+                                            </div>
+                                            <span class="spr star `+(ele.evaluate_stars === 5?'':
+                                                                    (ele.evaluate_stars === 4?'four-star':
+                                                                    (ele.evaluate_stars === 3?'three-star':
+                                                                    (ele.evaluate_stars === 2?'two-star': 'one-star'))))+`"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="comment_text_box">
-                                    <a href="javascript:;" class="comment_text_a">
-                                        <p class="comment_text_p">`+ele.evaluate_content+`</p>
-                                    </a>`
+                                    <div class="comment_text_box">
+                                        <a href="javascript:;" class="comment_text_a">
+                                            <p class="comment_text_p">`+ele.evaluate_content+`</p>
+                                        </a>`
                     // 有评论图片
                     if(ele.images.length !== 0){
                         str += `<ul class="comment_img_ul">`;
@@ -585,23 +606,79 @@ $('.more_comment_box').on('click','a', function(){
                                     <p class="reply_text">`+ele.business_repay+`</p>
                                 </div>`
                     }
-                    str += `<div class="bottom_time_box">
-                                <p class="buy_time">购买时间: <span>2018-11-05</span></p>
-                                <div>
-                                    <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
-                                </div>
+                    str += `</div>
+                        </div>
+                        <div class="bottom_time_box">
+                            <p class="buy_time">购买时间: <span>2018-11-05</span></p>
+                            <div>
+                                <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
                             </div>
                         </div>
                     </li>`
                 })
-                $('.pop .comment_ul').html(str);
+                $('.pop .comment_ul').html('').html(str);
+                // 查看评价详情
+                $('.all-content-container').click(function(){
+                    $('html').css('overflow', 'hidden');
+                    $('.comment-detail-pop').show();
+                    var id = $(this).parents('.comment_li').attr('data-evalid');
+                    evaluateDetailAjax(id);
+                })
+            }else{
+                $('.pop .comment_ul').html('');
             }
         },
         error: function(){
             console.log('error');
         }
     })
-})
+}
+// 查看评论详情ajax
+function evaluateDetailAjax(id){
+    $.ajax({
+        url: 'goods_evaluate_detail',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'id': id
+        },
+        success: function(res){
+            console.log(res);
+            if(res.status == 1){
+                var data = res.data;
+                $('.detail_user_info').html(`<div class="detail_user_headimg">
+                                            <img src="userimg/`+data.user_info.user_img+`">
+                                        </div>
+                                        <div class="detail_phone_time">
+                                            <div class="phone_time clearfix">
+                                                <span class="phone_box">`+data.user_info.phone_num+`</span>
+                                                <span class="time_box">`+timetrans(data.evaluate_info.create_time)+`</span>
+                                            </div>
+                                            <span class="spr star `+(data.evaluate_info.evaluate_stars === 5?'':
+                                                                    (data.evaluate_info.evaluate_stars === 4?'four-star':
+                                                                    (data.evaluate_info.evaluate_stars === 3?'three-star':
+                                                                    (data.evaluate_info.evaluate_stars === 2?'two-star': 'one-star'))))+`"></span>
+                                        </div>`)
+                $('.detail_text_p').text(data.evaluate_info.evaluate_content);
+                if(data.images.length !== 0){
+                    var str = '';
+                    data.images.forEach(function(ele, idx){
+                        str += `<img src="uploads/`+ele.images+`">`
+                    })
+                    $('.detail-com-img').html(str);
+                }
+                // 商家回复
+                if(data.evaluate_info.business_repay !== null){
+                    $('.detail_text_box').find('.reply_box').show().find('.reply_text').text(data.evaluate_info.business_repay);
+                }
+            }
+            
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
 
 
 // 你可能喜欢
