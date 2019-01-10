@@ -676,7 +676,51 @@
 				data = eval("(" + data + ")");
 				console.log(data);
 				var order_create_time=timestampToTime(data.data[0].service[0].order_create_time);
-				$("#order_status").html(data.data[0].service[0].order.status);
+				if(data.data[0].service[0].order.status==0){
+					$("#order_status").html('已关闭');
+				}
+				else if(data.data[0].service[0].order.status==1){
+					$("#order_status").html('待支付');
+				}
+				else if(data.data[0].service[0].order.status==2){
+					$("#order_status").html('已付款');
+				}
+				if(data.data[0].service[0].order.status==3){
+					$("#order_status").html('待发货');
+				}
+				else if(data.data[0].service[0].order.status==4){
+					$("#order_status").html('已发货');
+				}
+				else if(data.data[0].service[0].order.status==5){
+					$("#order_status").html('待收货');
+				}
+				if(data.data[0].service[0].order.status==6){
+					$("#order_status").html('已收货');
+				}
+				else if(data.data[0].service[0].order.status==7){
+					$("#order_status").html('待评价');
+				}
+				else if(data.data[0].service[0].order.status==8){
+					$("#order_status").html('已完成');
+				}
+				
+				else if(data.data[0].service[0].order.status==9){
+					$("#order_status").html('未付款取消订单');
+				}
+				if(data.data[0].service[0].order.status==10){
+					$("#order_status").html('已付款取消订单');
+				}
+				else if(data.data[0].service[0].order.status==11){
+					$("#order_status").html('退货');
+				}
+				else if(data.data[0].service[0].order.status==12){
+					$("#order_status").html('已退货');
+				}
+				else if(data.data[0].service[0].order.status==13){
+					$("#order_status").html('退货中');
+				}
+				
+			
 				$("#payment").html(data.data[0].service[0].order.pay_type_content);
 				$("#goods").html(data.data[0].service[0].order_money);
 				$("#points_deduction").html(data.data[0].service[0].order.integral_deductible);
