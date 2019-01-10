@@ -155,25 +155,25 @@ if(urlLen > 1){
             console.log('error');
         }
     })
-    
-    $('.comment-filter').show();
-    // 评论
-    $.ajax({
-        url: 'reservation_evaluate_return',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'goods_id': 2,
-            'store_id': storeId
-        },
-        success: function(res){
-            console.log(res);
+
+    // $('.comment-filter').show();
+    // // 评论
+    // $.ajax({
+    //     url: 'reservation_evaluate_return',
+    //     type: 'POST',
+    //     dataType: 'JSON',
+    //     data: {
+    //         'goods_id': 2,
+    //         'store_id': storeId
+    //     },
+    //     success: function(res){
+    //         console.log(res);
             
-        },
-        error: function(){
-            console.log('error');
-        }
-    })
+    //     },
+    //     error: function(){
+    //         console.log('error');
+    //     }
+    // })
 }
 // 商品
 function myGoods(data){
@@ -216,7 +216,7 @@ function myService(data){
     $('.swiper-wrapper').append(myStr);
     mySwiper();
     $.each(data.data.serve_data, function(idx, val){
-        str2 += `<div class="service-colla-item" data-goodsid="`+idx+`">
+        str2 += `<div class="service-colla-item" data-goodsid="`+val.service_setting_id+`">
                     <div class="service-colla-title">
                         <p class="service-subtitle">`+val.serve_name+`</p>
                         <p class="service-money"></p>
