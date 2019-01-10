@@ -141,7 +141,8 @@ if(urlLen > 1){
         },
         success: function(data){
             console.log('获取店铺商品',data);
-            if(data.status == 1){
+            // 
+            if(data.status == 1 || data.status == 2){
                 // 商品
                 var str = myGoods(data);
                 $('.goods-content').prepend(str);
@@ -149,14 +150,8 @@ if(urlLen > 1){
                 var str2 = myService(data);
                 $('.service-content').append(str2);
                 selectEvent();
-            }else if(data.status == 2){
-                // 商品
-                var str = myGoods(data);
-                $('.goods-content').prepend(str);
-                // 服务项目
-                var str2 = myService(data);
-                $('.service-content').append(str2);
-                selectEvent();
+
+                // $('.comment-filter').show();
             }
         },
         error: function(){
