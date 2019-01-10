@@ -286,10 +286,10 @@ class Classify extends Controller
     public function goods_evaluate_good(Request $request){
         if($request->isPost()){
             $goods_id = $request->only(["goods_id"])["goods_id"];
+            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
             $evaluate_info =db("order_parts_evaluate")
                 ->where("goods_id",$goods_id)
-                ->where("evaluate_stars",4)
-                ->whereOr("evaluate_stars",5)
+                ->where($condition)
                 ->select();
             foreach ($evaluate_info as $ks=>$vs){
                 $evaluate_info[$ks]["images"] = db("order_parts_evaluate_images")
@@ -322,10 +322,10 @@ class Classify extends Controller
     public function goods_evaluate_secondary(Request $request){
         if($request->isPost()){
             $goods_id = $request->only(["goods_id"])["goods_id"];
+            $condition ="evaluate_stars = 2 or evaluate_stars = 3";
             $evaluate_info =db("order_parts_evaluate")
                 ->where("goods_id",$goods_id)
-                ->where("evaluate_stars",3)
-                ->whereOr("evaluate_stars",2)
+                ->where($condition)
                 ->select();
             foreach ($evaluate_info as $ks=>$vs){
                 $evaluate_info[$ks]["images"] = db("order_parts_evaluate_images")
@@ -394,12 +394,19 @@ class Classify extends Controller
     public function goods_evaluate_has_img(Request $request){
         if($request->isPost()){
             $goods_id = $request->only(["goods_id"])["goods_id"];
-            $evaluate_info =Db::table("tb_order_parts_evaluate")
-                ->field("tb_order_parts_evaluate.*,tb_order_parts_evaluate_images.images")
-                ->join("tb_order_parts_evaluate_images","tb_order_parts_evaluate.id = tb_order_parts_evaluate_images.evaluate_order_id","left")
-                ->where("tb_order_parts_evaluate.goods_id",$goods_id)
+            $evaluate_info =db("order_parts_evaluate")
+                ->where("goods_id",$goods_id)
                 ->select();
             foreach ($evaluate_info as $ks=>$vs){
+                $img = db("order_parts_evaluate_images")
+                    ->field("images")
+                    ->where("evaluate_order_id",$vs["id"])
+                    ->select();
+                if(!empty($img)){
+                    $evaluate_info[$ks]["images"] =$img;
+                }else{
+                    $evaluate_info[$ks]["images"] =null;
+                }
                 $evaluate_info[$ks]["order_create_time"] =db("order_parts")
                     ->where("id",$vs["order_id"])
                     ->value("order_create_time");
