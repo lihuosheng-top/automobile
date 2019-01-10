@@ -164,7 +164,7 @@ $.ajax({
                             success: function(res){
                                 console.log(res);
                                 alert(res.data);
-                                alipay(res.data);
+                                Android.alipay(res.data);
                             },
                             error: function(){
                                 console.log('error');
