@@ -293,17 +293,17 @@ html{
     height: .3rem;
     background-position: .05rem -2.75rem;
 }
-.comment_box .comment_phone_time .star.four-star{
-    background-position: .05rem -3rem;
+.four-star{
+    background-position: .05rem -3rem !important;
 }
-.comment_box .comment_phone_time .star.three-star{
-    background-position: .05rem -3.25rem;
+.three-star{
+    background-position: .05rem -3.25rem !important;
 }
-.comment_box .comment_phone_time .star.two-star{
-    background-position: .05rem -3.5rem;
+.two-star{
+    background-position: .05rem -3.5rem !important;
 }
-.comment_box .comment_phone_time .star.one-star{
-    background-position: .05rem -3.75rem;
+.one-star{
+    background-position: .05rem -3.75rem !important;
 }
 .wrapper .comment_box .comment_text_box{
     width: 100%;
@@ -338,11 +338,12 @@ html{
     height: 100%;
 }
 .wrapper .comment_box .bottom_time_box{
-    width: 100%;
+    /* width: 100%;s */
     height: .7rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-left: .9rem;
 }
 .wrapper .comment_box .bottom_time_box .buy_time{
     font-size: .2rem;
@@ -416,16 +417,14 @@ html{
 
 /* 全部评论弹窗 start */
 .pop{
-    /* display: none; */
     position: fixed;
     top: 0;
-    left: 0;
-    transform: translateX(100%);
+    right: -100%;
     width: 100%;
     height: 100vh;
     background-color: #f4f5f6;
-    z-index: 998;
-    /* overflow-y: auto; */
+    z-index: 7;
+    transition: all .5s;
     transition: all .5s;
 }
 .pop .back{
@@ -438,14 +437,14 @@ html{
     background-position: -.5rem -.5rem;
 }
 .pop .pop_head{
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: .88rem;
     background-color: #fff;
     border-bottom: 1px solid #eee;
-    z-index: 999;
+    z-index: 8;
 }
 .pop .pop_head h3{
     width: 100%;
@@ -534,9 +533,9 @@ html{
 .pop .comment_box .comment_phone_time .star,
 .comment-detail-pop .detail_phone_time .star{
     display: inline-block;
-    width: 1.04rem;
-    height: .2rem;
-    background-position: 0 -2.8rem;
+    width: 1.14rem;
+    height: .3rem;
+    background-position: .05rem -2.75rem;
 }
 .pop .comment_box .comment_text_box{
     width: 100%;
@@ -573,11 +572,12 @@ html{
     height: 100%;
 }
 .pop .comment_box .bottom_time_box{
-    width: 100%;
+    /* width: 100%; */
     height: .7rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-left: .9rem;
 }
 .pop .comment_box .bottom_time_box .buy_time{
     font-size: .2rem;
@@ -639,7 +639,7 @@ html{
 /* 全部评论弹窗 end */
 
 /* 图片展示 */
-.show_img{
+/* .show_img{
     position: fixed;
     left:0;
     top:0;
@@ -666,7 +666,7 @@ html{
     left:50%;
     top:50%;
     transform: translate(-50%,-50%);
-}
+} */
 /* 图片展示 end*/
 .shop-card{
     padding: .2rem .3rem;
@@ -720,7 +720,7 @@ html{
     bottom: 0;
     right: 0;
     height: .6rem;
-    background-color: rgba(0, 0, 0, .4);
+    background-color: rgba(0, 0, 0, .7);
     text-align: right;
     line-height: .6rem;
     color: #f00;
@@ -890,6 +890,7 @@ html{
     padding: 0 .3rem;
     box-sizing: border-box;
     overflow-y: auto;
+    z-index: 9;
 }
 .comment-detail-pop .detail-pop-header{
     position: fixed;

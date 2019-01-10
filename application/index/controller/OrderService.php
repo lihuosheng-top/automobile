@@ -312,6 +312,30 @@ class OrderService extends Controller{
             if(!empty($order_id)){
                 $res =Db::name('order_service')->where('id',$order_id)->update(['status'=>5]);
                 if($res){
+                    //需要加入到商家余额里面
+                   $order_info = Db::name("order_service")
+                       ->field("service_real_pay,store_id,service_order_number")
+                       ->where("id",$order_id)
+                       ->find();
+                    $business_id =Db::name("store")->where("store_id",$order_info["store_id"])->value("user_id");
+                   //原本的钱包余额
+                    $old_wallet =Db::name("user")
+                        ->where("id",$business_id)
+                        ->value("user_wallet");
+                    $new_wallet =$order_info["service_real_pay"] + $old_wallet;
+                   //余额更新
+                    $arr =Db::name('order_service')->where('id',$order_id)->update(['user_wallet'=>$new_wallet]);
+                    //添加消费记录
+                    if($arr){
+                        $data=[
+                            "user_id"=>$business_id,
+                            "wallet_operation"=>$order_info["service_real_pay"],
+                            "wallet_type"=>1,
+                            "operation_time"=>date("Y-m-d H:i:s"),
+                            "wallet_remarks"=>"订单号：".$order_info['service_order_number']."，完成交易，收入".$order_info['service_real_pay']."元",
+                        ];
+                        Db::name("wallet")->insert($data);
+                    }
                     return ajax_success('确认服务成功',['status'=>1]);
                 }else{
                     return ajax_error('确认服务失败',['status'=>0]);
@@ -564,6 +588,26 @@ class OrderService extends Controller{
             $list =  Db::name('order_service')->where($where)->delete();
             if($list!==false)
             {
+                //如果评价过的则进行评价删除
+                $is_set_evaluate =Db::name("order_service_evaluate")
+                    ->where("order_id",$id)
+                    ->value("id");
+                if(!empty($is_set_evaluate)){
+                    $is_set_img =Db::name("order_service_evaluate_images")
+                        ->where("evaluate_order_id",$is_set_evaluate)
+                        ->select();
+                    if(!empty($is_set_img)){
+                        foreach ($is_set_img as $ks=>$vs){
+                            unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$vs['images']);
+                            Db::name("order_service_evaluate_images")
+                                ->where("evaluate_order_id",$vs["id"])
+                                ->delete();
+                        }
+                    }
+                    Db::name("order_service_evaluate")
+                        ->where("order_id",$id)
+                        ->delete();
+                }
                 return ajax_success('成功删除!',['status'=>1]);
             }else{
                 return ajax_error('删除失败',['status'=>0]);

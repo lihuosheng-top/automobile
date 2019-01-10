@@ -1275,6 +1275,30 @@ class OrderParts extends Controller{
                             ->delete();
                     }
                     if($bool){
+
+                        foreach ($res as $keys=>$values){
+                            //如果评价过的则进行评价删除
+                            $is_set_evaluate =Db::name("order_parts_evaluate")
+                                ->where("order_id",$values["id"])
+                                ->value("id");
+                            if(!empty($is_set_evaluate)){
+                                $is_set_img =Db::name("order_parts_evaluate_images")
+                                    ->where("evaluate_order_id",$is_set_evaluate)
+                                    ->select();
+                                if(!empty($is_set_img)){
+                                    foreach ($is_set_img as $ks=>$vs){
+                                        unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$vs['images']);
+                                        Db::name("order_parts_evaluate_images")
+                                            ->where("evaluate_order_id",$vs["id"])
+                                            ->delete();
+                                    }
+                                }
+                                Db::name("order_parts_evaluate")
+                                    ->where("order_id",$values["id"])
+                                    ->delete();
+                            }
+                        }
+
                         return ajax_success("删除成功",["status"=>1]);
                     }else{
                         return ajax_error("删除失败",["status"=>0]);

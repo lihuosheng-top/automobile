@@ -9,6 +9,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Request;
 use think\Session;
+use think\Db;
 
 class Reservation extends Controller{
 
@@ -139,5 +140,223 @@ class Reservation extends Controller{
         }
         return view("reservation_info");
     }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:预约服务全部评价数据
+     **************************************
+     */
+    public function reservation_evaluate_return(Request $request){
+        if($request->isPost()){
+            $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
+            $store_id =$request->only(["store_id"])["store_id"];
+            $evaluate_info =db("order_service_evaluate")
+                ->where("goods_id",$goods_id)
+                ->where("store_id",$store_id)
+                ->select();
+            foreach ($evaluate_info as $ks=>$vs){
+                $evaluate_info[$ks]["images"] = db("order_service_evaluate_images")
+                    ->field("images")
+                    ->where("evaluate_order_id",$vs["id"])
+                    ->select();
+                $evaluate_info[$ks]["order_create_time"] =db("order_service")
+                    ->where("id",$vs["order_id"])
+                    ->value("create_time");
+                $evaluate_info[$ks]["user_info"] =db("user")
+                    ->where("id",$vs["user_id"])
+                    ->field("user_img,phone_num")
+                    ->find();
+            }
+            if(!empty($evaluate_info)){
+                return ajax_success("数据返回成功",$evaluate_info);
+            }else{
+                return ajax_error("没有数据",["status"=>0]);
+            }
+
+        }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:预约服务详全部评价里面的（好评）
+     **************************************
+     */
+    public function reservation_evaluate_good(Request $request){
+        if($request->isPost()){
+            $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
+            $store_id =$request->only(["store_id"])["store_id"];
+            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
+            $evaluate_info =db("order_service_evaluate")
+                ->where("store_id",$store_id)
+                ->where($condition)
+                ->where("goods_id",$goods_id)
+                ->select();
+            foreach ($evaluate_info as $ks=>$vs){
+                $evaluate_info[$ks]["images"] = db("order_service_evaluate_images")
+                    ->field("images")
+                    ->where("evaluate_order_id",$vs["id"])
+                    ->select();
+                $evaluate_info[$ks]["order_create_time"] =db("order_service")
+                    ->where("id",$vs["order_id"])
+                    ->value("create_time");
+                $evaluate_info[$ks]["user_info"] =db("user")
+                    ->where("id",$vs["user_id"])
+                    ->field("user_img,phone_num")
+                    ->find();
+            }
+            if(!empty($evaluate_info)){
+                return ajax_success("数据返回成功",$evaluate_info);
+            }else{
+                return ajax_error("没有数据",["status"=>0]);
+            }
+
+        }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:预约服务详情全部评价里面的（中评）
+     **************************************
+     */
+    public function reservation_evaluate_secondary(Request $request){
+        if($request->isPost()){
+            $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
+            $store_id =$request->only(["store_id"])["store_id"];
+            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
+            $evaluate_info =db("order_service_evaluate")
+                ->where("store_id",$store_id)
+                ->where($condition)
+                ->where("goods_id",$goods_id)
+                ->select();
+            foreach ($evaluate_info as $ks=>$vs){
+                $evaluate_info[$ks]["images"] = db("order_service_evaluate_images")
+                    ->field("images")
+                    ->where("evaluate_order_id",$vs["id"])
+                    ->select();
+                $evaluate_info[$ks]["order_create_time"] =db("order_service")
+                    ->where("id",$vs["order_id"])
+                    ->value("create_time");
+                $evaluate_info[$ks]["user_info"] =db("user")
+                    ->where("id",$vs["user_id"])
+                    ->field("user_img,phone_num")
+                    ->find();
+            }
+            if(!empty($evaluate_info)){
+                return ajax_success("数据返回成功",$evaluate_info);
+            }else{
+                return ajax_error("没有数据",["status"=>0]);
+            }
+
+        }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:预约服务详情全部评价里面的（差评）
+     **************************************
+     */
+    public function reservation_evaluate_bad(Request $request){
+        if($request->isPost()){
+            $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
+            $store_id =$request->only(["store_id"])["store_id"];
+            $evaluate_info =db("order_service_evaluate")
+                ->where("store_id",$store_id)
+                ->where("evaluate_stars",1)
+                ->where("goods_id",$goods_id)
+                ->select();
+            foreach ($evaluate_info as $ks=>$vs){
+                $evaluate_info[$ks]["images"] = db("order_service_evaluate_images")
+                    ->field("images")
+                    ->where("evaluate_order_id",$vs["id"])
+                    ->select();
+                $evaluate_info[$ks]["order_create_time"] =db("order_service")
+                    ->where("id",$vs["order_id"])
+                    ->value("create_time");
+                $evaluate_info[$ks]["user_info"] =db("user")
+                    ->where("id",$vs["user_id"])
+                    ->field("user_img,phone_num")
+                    ->find();
+            }
+            if(!empty($evaluate_info)){
+                return ajax_success("数据返回成功",$evaluate_info);
+            }else{
+                return ajax_error("没有数据",["status"=>0]);
+            }
+
+        }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:预约服务详情全部评价里面的（有图）
+     **************************************
+     */
+    public function reservation_evaluate_has_img(Request $request){
+        if($request->isPost()){
+            $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
+            $store_id =$request->only(["store_id"])["store_id"];
+            $evaluate_info =db("order_service_evaluate")
+                ->where("store_id",$store_id)
+                ->where("evaluate_stars",1)
+                ->where("goods_id",$goods_id)
+                ->select();
+            foreach ($evaluate_info as $ks=>$vs){
+                $img = db("order_service_evaluate_images")
+                    ->field("images")
+                    ->where("evaluate_order_id",$vs["id"])
+                    ->select();
+                if(!empty($img)){
+                    $evaluate_info[$ks]["images"] =$img;
+                }else{
+                    $evaluate_info[$ks]["images"] =null;
+                }
+                $evaluate_info[$ks]["order_create_time"] =db("order_service")
+                    ->where("id",$vs["order_id"])
+                    ->value("create_time");
+                $evaluate_info[$ks]["user_info"] =db("user")
+                    ->where("id",$vs["user_id"])
+                    ->field("user_img,phone_num")
+                    ->find();
+            }
+            if(!empty($evaluate_info)){
+                return ajax_success("数据返回成功",$evaluate_info);
+            }else{
+                return ajax_error("没有数据",["status"=>0]);
+            }
+
+        }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:预约服务商品详情页面的评价数据查看详情
+     **************************************
+     */
+    public function reservation_evaluate_detail(Request $request){
+        if($request->isPost()){
+            $evaluate_id = $request->only(["id"])["id"];//评价的id
+            $evaluate_info["evaluate_info"] =db("order_service_evaluate")->where("id",$evaluate_id)->find();
+            $evaluate_info["images"] =db("order_service_evaluate_images")
+                ->field("images")
+                ->where("evaluate_order_id",$evaluate_id)
+                ->select();
+            $evaluate_info["user_info"] = db("user")
+                ->where("id", $evaluate_info["evaluate_info"]["user_id"])
+                ->field("user_img,phone_num")
+                ->find();
+            $evaluate_info["order_create_time"] =db("order_parts")
+                ->where("id",$evaluate_info["evaluate_info"]["order_id"])
+                ->value("order_create_time");
+            if(!empty($evaluate_info)){
+                return ajax_success("成功返回",$evaluate_info);
+            }else{
+                return ajax_error("请重新查看",["status"=>0]);
+            }
+
+        }
+    }
+
 
 }

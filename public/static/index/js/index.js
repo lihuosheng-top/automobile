@@ -355,13 +355,11 @@ $.ajax({
         }else{
             $('.service-container').on('click', 'li', function(e){
                 e.preventDefault();
-                if($(this).index() === 0){
-                    layer.open({
-                        skin: 'msg',
-                        content: '请先添加爱车',
-                        time: .8
-                    })
-                }
+                layer.open({
+                    skin: 'msg',
+                    content: '请登录',
+                    time: .8
+                })
             })
         }
     },
