@@ -151,7 +151,7 @@ if(urlLen > 1){
                 $('.service-content').append(str2);
                 selectEvent();
 
-                $('.comment-filter').show();
+                // $('.comment-filter').show();
             }
         },
         error: function(){
