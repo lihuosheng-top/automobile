@@ -50,7 +50,7 @@ $.ajax({
                 $.each(val.child, function(idx, val){
                     goodsLi += '<li>\
                                     <a href="goods_list?id='+val.id+'">\
-                                        <div><img src="uploads/'+val.brand_images+'"></div>\
+                                        <img src="uploads/'+val.brand_images+'">\
                                         <span class="brand_name">'+val.name+'</span>\
                                     </a>\
                                 </li>'
@@ -72,7 +72,7 @@ $.ajax({
                 $.each(val.child, function(idx, val){
                     goodsLi += '<li>\
                                     <a href="goods_list?id='+val.id+'">\
-                                        <div><img src="uploads/'+val.type_images+'"></div>\
+                                        <img src="uploads/'+val.type_images+'">\
                                         <span class="brand_name">'+val.name+'</span>\
                                     </a>\
                                 </li>'

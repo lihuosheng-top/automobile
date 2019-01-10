@@ -33,6 +33,8 @@ class Classify extends Controller
 
 
 
+
+
     /**
      * 分类推荐
      * 陈绪
@@ -124,6 +126,35 @@ class Classify extends Controller
     /**
      **************李火生*******************
      * @param Request $request
+     * Notes:分类页面搜索
+     **************************************
+     * @param Request $request
+     * @return \think\response\View|void
+     */
+    public function classify_index_search(Request $request){
+        if($request->isPost()) {
+            $names =$request->only("names")["names"];
+            $condition = " `name` like '%{$names}%'";
+            $brand = db("brand")
+                ->where($condition)
+                ->where("status", 1)
+                ->select();
+            $goods_type = db("goods_type")->where("status", 1)->select();
+            $goods_type = _tree_sort(recursionArr($goods_type), 'sort_number');
+            $goods_brand = _tree_sort(recursionArr($brand), 'sort_number');
+            return ajax_success("获取成功",array("goods_brand"=>$goods_brand,"goods_type"=>$goods_type));
+        }
+        if($request->get()){
+            $parets_id = $request->only(["parets_id"])["parets_id"];
+            Session::set("parets_id",$parets_id);
+        }
+        return view("classify_index");
+    }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
      * Notes:分类进入详情页面搜索
      **************************************
      * @param Request $request
@@ -138,8 +169,7 @@ class Classify extends Controller
             $condition = " `goods_name` like '%{$goods_name}%'";
             $goods = db("goods")
                 ->where($condition)
-                ->where("goods_type_id",$goods_type_id)
-                ->whereOr("goods_brand_id",$goods_type_id)
+                ->where("goods_brand_id",$goods_type_id)
                 ->select();
             foreach ($goods as $kye=>$value){
                 $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
