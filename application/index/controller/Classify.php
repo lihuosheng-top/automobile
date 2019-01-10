@@ -138,8 +138,7 @@ class Classify extends Controller
             $condition = " `goods_name` like '%{$goods_name}%'";
             $goods = db("goods")
                 ->where($condition)
-                ->where("goods_type_id",$goods_type_id)
-                ->whereOr("goods_brand_id",$goods_type_id)
+                ->where("goods_brand_id",$goods_type_id)
                 ->select();
             foreach ($goods as $kye=>$value){
                 $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";

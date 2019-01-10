@@ -1336,6 +1336,40 @@ class OrderParts extends Controller{
                         $bool =Db::name("order_parts")->where("id",$v["id"])->update($data);
                     }
                     if($bool){
+                        //需要加入到商家余额里面
+                        $order_info = Db::name("order_parts")
+                            ->field("order_real_pay,parts_order_number,parts_goods_name,pay_type_content,order_quantity,goods_business_price")
+                            ->where("store_id",$store_id)
+                            ->where("parts_order_number",$parts_order_number)
+                            ->select();
+                        foreach ($order_info as $kk=>$vv){
+                            $all_price[] =$vv["goods_business_price"] *$vv["order_quantity"];
+                        }
+                        $business_all_price =array_sum($all_price);
+                        $business_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
+                        //原本的钱包余额
+                        $old_wallet =Db::name("user")
+                            ->where("id",$business_id)
+                            ->value("user_wallet");
+                        $new_wallet =$business_all_price + $old_wallet;
+                        //余额更新
+                        $arr =Db::name('user')->where('id',$business_id)->update(['user_wallet'=>$new_wallet]);
+                        //添加消费记录
+                        if($arr){
+                            $data=[
+                                "user_id"=>$business_id,
+                                "wallet_operation"=>$business_all_price,
+                                "wallet_type"=>1,
+                                "operation_time"=>date("Y-m-d H:i:s"),
+                                "wallet_remarks"=>"订单号：".$parts_order_number."，完成交易，收入".$business_all_price."元",
+                                "wallet_img"=>"index/image/money2.png",
+                                "title"=>$order_info[0]["parts_goods_name"],
+                                "order_nums"=>$parts_order_number,
+                                "pay_type"=>$order_info[0]["pay_type_content"], //支付方式
+                                "wallet_balance"=>$new_wallet,
+                            ];
+                            Db::name("wallet")->insert($data);
+                        }
                         return ajax_success("确认收货成功",["status"=>1]);
                     }else{
                         return ajax_error("确认收货失败",["status"=>0]);
@@ -1404,6 +1438,7 @@ class OrderParts extends Controller{
                             ->where("id",$data["goods_standard_id"])
                             ->find();
                         $datas = [
+                            "goods_business_price" =>$special_data["price"],//商家自己发布商品时的价格
                             'goods_image' =>  $special_data['images'],//图片
                             "goods_describe"=>$goods_data["goods_describe"],//卖点
                             'parts_goods_name' => $goods_data['goods_name'],//名字
@@ -1507,6 +1542,7 @@ class OrderParts extends Controller{
                     $total_money[$i]["money"] =$j["money"] * $j["goods_unit"];//总额
                    $total_money[$i]["store_id"] =$j["store_id"];
                    $total_money[$i]["id"] =$j["store_id"];
+                   $total_money[$i]["goods_business_price"] =$j["goods_business_price"];//商家自己设置的商品价钱
                    $da_store_ids[] = $j["store_id"];
                 }
                 $da_store_id = array_unique($da_store_ids); //去重之后的商户
@@ -1565,6 +1601,7 @@ class OrderParts extends Controller{
                             $buy_message = NUll ;
                         }
                             $datas = [
+                                "goods_business_price" =>$val["goods_business_price"],//商家自己发布商品时的价格
                                 'goods_image' => $val['goods_images'],//图片
                                 "goods_describe"=>$goods_data["goods_describe"],//卖点
                                 'parts_goods_name' => $goods_data['goods_name'],//名字
