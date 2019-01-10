@@ -168,7 +168,7 @@
             success: function(res){
                 console.log(res);
                 if(res.status ==1){
-                    var topSwiper = '';
+                    var topSwiper = '',botSwiper = '';
                     $.each(res.data.machine, function(idx, val){
                         topSwiper += `<div class="swiper-slide">
                                         <a href="`+val.url+`">
@@ -179,13 +179,13 @@
                     $('.swiper-container .swiper-wrapper').append(topSwiper);
                     swiper1();
                     $.each(res.data.discounts, function(idx, val){
-                        topSwiper += `<div class="swiper-slide">
+                        botSwiper += `<div class="swiper-slide">
                                         <a href="`+val.url+`">
                                             <img src="uploads/`+val.advert_picture+`">
                                         </a>
                                     </div>`
                     })
-                    $('.swiper-container2 .swiper-wrapper').append(topSwiper);
+                    $('.swiper-container2 .swiper-wrapper').append(botSwiper);
                     swiper2();
                 }
             },
@@ -197,7 +197,7 @@
             var mySwiper = new Swiper ('.swiper-container', {
                 direction: 'horizontal', // 垂直切换选项
                 autoplay: true, //自动播放
-                delay: 3000,
+                delay: 1500,
                 // 禁止滑动添加类名swiper-no-swiping
                 // 如果需要分页器
                 pagination: {

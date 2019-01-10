@@ -2096,6 +2096,7 @@ class  SellMy extends Controller{
                    "title"=>"提现",
                    "order_nums"=>$parts_order_number,//订单编号
                    "pay_type"=>"余额抵扣", //支付宝微信支付
+                   "wallet_balance"=>$old_wallet - $apply_money, //余额
                ];
                Db::name("wallet")->insert($wallet_data);
                exit(json_encode(array("status" => 1, "info" =>"提现成功")));

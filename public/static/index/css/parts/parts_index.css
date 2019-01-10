@@ -40,7 +40,6 @@ html, body{
     height: 100%;
 }
 .server-list{
-    height: 6rem;
     padding: .24rem .4rem;
     border-bottom: 1px solid #eee;
 }
