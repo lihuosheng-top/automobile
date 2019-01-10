@@ -469,7 +469,8 @@ $.ajax({
             var str = '';
             $('.comment_title span').text(res.data.length);
             var data = res.data;
-            for(var i = 0; i < 3; i++){
+            var length = data.length > 3 ? 3: data.length;
+            for(var i = 0; i < length; i++){
                 str += `<li class="comment_li">
                             <div class="comment_user_info">
                                 <div class="comment_user_headimg">
@@ -494,9 +495,9 @@ $.ajax({
                 // 有评论图片
                 if(data[i].images.length !== 0){
                     str += `<ul class="comment_img_ul">`;
-                    data[i].images.forEach(function(val, idx){
+                    data[i].images.forEach(function(ele, idx){
                         str += `<li class="comment_img_li">
-                                    <img src="uploads/`+val.images+`">
+                                    <img src="uploads/`+ele.images+`">
                                 </li>`
                     })
                     str += '</ul>';
