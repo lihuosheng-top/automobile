@@ -156,6 +156,7 @@ class Reservation extends Controller{
                 ->where("goods_id",$goods_id)
                 ->where("store_id",$store_id)
                 ->select();
+            dump($evaluate_info);
             foreach ($evaluate_info as $ks=>$vs){
                 $evaluate_info[$ks]["images"] = db("order_service_evaluate_images")
                     ->field("images")
