@@ -40,13 +40,14 @@
         height: 30px;
     }
 
+
 	.tanchuang-content {
 		width: 800px;
 		height: 600px;
 		background: #fff;
 		z-index: 10000;
 		position: fixed;
-		top: 20%;
+		top: 14%;
 		left: 20%;
 	}
 
@@ -258,8 +259,8 @@
 <body>
 
 	{block name="content"}
-	<!-- 弹窗 -->
-	<div class="tanchuang noshow">
+		<!-- 弹窗 -->
+		<div class="tanchuang noshow news_search">
 			<div class="tanchuang-content ">
 				<div class="title-a clear">
 					<div class="content-title">消息</div>
@@ -267,7 +268,7 @@
 				</div>
 				<!-- 里面的内容 -->
 				<button type="button" class="btu-sumit" data-id="">确定</button>
-				<div class="dom">
+				<div class="dom layui-form">
 					
 					<ul class="clear card">
 						<li class="active" data-id="list-a">订单处理</li>
@@ -320,11 +321,11 @@
 								
 							</div>
 						</div>
-						<div class="opation clear">
-							<div class="select-operation">
+						<div class="opation ">
+							<div class="select-operation seach_list">
 								<span>选择状态</span>
 								<select id="static_select">
-									<option >请选择</option>
+									<option value="" selected="selected">请选择</option>
 									<option value="0">处理中</option>
 									<option value="1">拒绝</option>
 									<option value="2">收货中</option>
@@ -433,18 +434,29 @@
 							{/if}
 						</td>
 						<td>
-							<button type="button " class="state for-the-payment " data-id="{$value.id}">
-								{if $value.status == 0}
+						
+								{if $value.status == 0 }
+								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #6667E5;">
 								处理中
+						     	</button>
 								{/if}
 								{if $value.status == 1}
-								拒绝
+								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #BCBCBC;">
+									拒绝
+									 </button>
+								
 								{/if}
 								{if $value.status == 2}
-								收货中
+								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #6FC605;">
+									收货中
+									 </button>
+								
 								{/if}
 								{if $value.status == 3}
-								完成退款
+								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #CD8B01;">
+									完成退款
+								</button>
+								
 								{/if}
 							</button>
 						</td>

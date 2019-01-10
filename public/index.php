@@ -13,6 +13,7 @@
 
 // 定义应用目录
 define('EXTEND_PATH', '../extend/');
+define('VENDOR_PATH', '../vendor/');
 define('APP_PATH', __DIR__ . '/../application/');
 //程序目录
 define('S_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
