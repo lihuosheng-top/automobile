@@ -99,15 +99,17 @@ class Evaluate extends  Controller{
                   Db::name("order_parts")
                       ->where("id",$v)
                       ->update(["status"=>8]);
-                  foreach ($images as $ks=>$vs){
-                      if( $v == intval($ks)){
-                          foreach ($vs as $j=>$i){
-                              //插入评价图片数据库
-                              $insert_data =[
-                                  "images"=>$i,
-                                  "evaluate_order_id"=>$bool,
-                              ];
-                             Db::name("order_parts_evaluate_images")->insert($insert_data);
+                  if(!empty($images)){
+                      foreach ($images as $ks=>$vs){
+                          if( $v == intval($ks)){
+                              foreach ($vs as $j=>$i){
+                                  //插入评价图片数据库
+                                  $insert_data =[
+                                      "images"=>$i,
+                                      "evaluate_order_id"=>$bool,
+                                  ];
+                                  Db::name("order_parts_evaluate_images")->insert($insert_data);
+                              }
                           }
                       }
                   }
@@ -116,7 +118,7 @@ class Evaluate extends  Controller{
             if($bool){
                 //进行消费积分奖励
                 $order_id_one =$order_id[0];
-                $order_real_pays =Db::name("order_parts")->where("id",$order_id_one)->value("order_rel_pays");//消费的钱数
+                $order_real_pays =Db::name("order_parts")->where("id",$order_id_one)->value("order_real_pay");//消费的钱数
                 $recommend_integral =Db::name("recommend_integral")->where("id",1)->find();
                 if($order_real_pays >= $recommend_integral["coin"]) {
                     //判断消费是否满足送积分条件
@@ -124,9 +126,10 @@ class Evaluate extends  Controller{
                         ->where("id", $user_id)
                         ->value("user_integral_wallet");
                     //推荐人的积分添加
+                    $new_integral =$old_integral_wallet + $recommend_integral["consume_integral"];
                     $add_res = Db::name("user")
                         ->where("id", $user_id)
-                        ->update(["user_integral_wallet" => $old_integral_wallet + $recommend_integral["consume_integral"]]);
+                        ->update(["user_integral_wallet" =>$new_integral ]);
                     if ($add_res) {
                         //余额添加成功(做积分消费记录)
                         //插入积分记录
@@ -246,7 +249,7 @@ class Evaluate extends  Controller{
                         }
                     }
                     $order_id_one =$order_id[0];
-                    $order_real_pays =Db::name("order_service")->where("id",$order_id_one)->value("service_rel_pays");//消费的钱数
+                    $order_real_pays =Db::name("order_service")->where("id",$order_id_one)->value("service_real_pay");//消费的钱数
                     $recommend_integral =Db::name("recommend_integral")->where("id",1)->find();
                     if($order_real_pays >= $recommend_integral["coin"]) {
                         //判断消费是否满足送积分条件
