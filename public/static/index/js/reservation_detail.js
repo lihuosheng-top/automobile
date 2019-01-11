@@ -211,7 +211,7 @@ if(urlLen > 1){
                         myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
                         myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
                         $.ajax({
-                            url: 'index_shop_goods',
+                            url: 'reservation_evaluate_numbers',
                             type: 'POST',
                             dataType: 'JSON',
                             data: {
