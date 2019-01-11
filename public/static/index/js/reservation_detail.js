@@ -8,12 +8,11 @@ function hidePop(){
     $('.pop').css('transform', 'translateX(100%)');
     $('html').css('overflow', 'auto');
 }
-var settingId;
 $('.filter-service-ul').on('click', 'li', function(){
     $(this).siblings().removeClass('filter-service-li');
     $(this).toggleClass('filter-service-li');
-    settingId = $(this).attr('data-serverid');
-    myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+    var serveSettingId = $(this).attr('data-serverid');
+    myEvaluate(serveSettingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
     
 })
 // 全部 好评 中评 差评
@@ -21,21 +20,22 @@ $('.filter-com-ul').on('click', 'li', function(){
     $(this).siblings().removeClass('filter-li-this');
     $(this).toggleClass('filter-li-this');
     var $index = $(this).index();
+    var serveSettingId = $('.filter-service-li').attr('data-serverid');
     switch($index){
         case 0:
-            myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+            myEvaluate(serveSettingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
             break;
         case 1:
-            myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_good');
+            myEvaluate(serveSettingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_good');
             break;
         case 2:
-            myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_secondary');
+            myEvaluate(serveSettingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_secondary');
             break;
         case 3:
-            myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_bad');
+            myEvaluate(serveSettingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_bad');
             break;
         case 4:
-            myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_has_img');
+            myEvaluate(serveSettingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_has_img');
             break;
     }
 })
