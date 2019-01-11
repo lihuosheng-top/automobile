@@ -1,18 +1,4 @@
-$.ajax({
-    url: 'classify_parets_id',
-    type: 'POST',
-    dataType: 'JSON',
-    success:function (data) {
-        console.log(data)
-        var id = data.data;
-        if(data.status == 1){
-            window.location.hash = "#"+id;
-            myHash = window.location.hash.slice(1);
-            console.log(myHash);
-        }
-    }
-})
-var myHash = null;
+// var myHash = null;
 // 分类中的品牌分类和商品分类
 $.ajax({
     url: 'classify_index',
@@ -25,7 +11,7 @@ $.ajax({
             brandLi = '',//左边品牌li
             goodsLi = '';
         // 如果是从首页是配件商城进来 
-        console.log(myHash);
+        // console.log(myHash);
         $.each(res.data.goods_brand, function(idx, val){//循环品牌
             if(idx === 0){
                 brandLi += '<li class="active"><a href="#'+val.id+'">'+val.name+'</a></li>';
