@@ -99,6 +99,7 @@ class Reservation extends Controller{
             foreach ($store as $key=>$value){
                 $serve_data[$key]["serve_goods"] = db("serve_goods")->where("store_id",$value["store_id"])->where("vehicle_model",$car_series["vehicle_model"])->select();
                 $serve_data[$key]["serve_name"] = db("service_setting")->where("service_setting_id",$serve_data[$key]["serve_goods"][0]["service_setting_id"])->value("service_setting_name");
+                $serve_data[$key]["service_setting_id"] = $serve_data[$key]["serve_goods"][0]["service_setting_id"];
             }
             if($serve_data){
                 return ajax_success("获取成功",array("goods"=>$goods,"store"=>$store,"serve_data"=>$serve_data));

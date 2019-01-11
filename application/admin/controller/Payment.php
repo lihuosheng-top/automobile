@@ -17,9 +17,14 @@ class Payment extends Controller{
      */
     public function WxPayment(){
 
-        $order["out_trade_no"] = "2019011110174781101021";
-        include EXTEND_PATH."AliPay/aop/AopClient.php";
-        include EXTEND_PATH."AliPay/aop/request/AlipayTradeRefundRequest.php";
+       /* $order["trade_no"] = "2019011110174781101021";
+        $order["buyer_logon_id"] = "18646631338";
+        $order["refund_amount"] = "0.01";
+        $order["refund_currency"] = "USD";
+        $order["refund_reason"] = "	正常退款";
+        $null = null;
+        include EXTEND_PATH."AliPay_demo/aop/AopClient.php";
+        include EXTEND_PATH."AliPay_demo/aop/request/AlipayTradeRefundRequest.php";
         $aop = new \AopClient ();
         $aop->gatewayUrl = 'https://openapi.alipay.com/gateway.do';
         $aop->appId = '2018120762470526';
@@ -27,9 +32,41 @@ class Payment extends Controller{
         $aop->alipayrsaPublicKey='MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyUgwfM85daNJ3tHlmsFET1Mcc6kaXjLD9AdjOy8pknzHVvDp66fMp2TZfnJjwGUlYDr9w/mY9CDbzwQgwllVUCSNxzVLH57FfRuzVStoHN22BJBMTvkMPpSbEvV3MxEzXzrl2kyV5sqEEyDiY28wpX1aFb5ug/G18R6216DMqGlTdYwHSOBd+S+2r2B5ljk786dtRf0inimEAGP5CdX2HxI8svpUVq2OeabSZ/kvf39yW9oLNLz0WIAwHQiWSg3DCb+MBP4I/W+5pX6N8p+ijqtPDJTF7/XBDQnftKDfVwoFL/yOxc+XP3pFbU3h5F7Srv3FPoO1Cnh38P5iiY/pFwIDAQAB';
         $aop->apiVersion = '0.01';
         $aop->signType = 'RSA2';
-        $aop->postCharset='GBK';
+        $aop->postCharset='UTF-8';
         $aop->format='json';
+        $order = json_encode($order,JSON_UNESCAPED_UNICODE);
         $request = new \AlipayTradeRefundRequest ();
+        $request->setBizContent();
+        $result = $aop->execute ($request);
+
+        $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
+        $resultCode = $result->$responseNode->code;
+        halt($resultCode);
+        if(!empty($resultCode)&&$resultCode == 10000){
+            echo "成功";
+        } else {
+            echo "失败";
+        }*/
+        //公共请求参数
+        $pub_params = [
+            'app_id'    => self::APPID,
+            'method'    =>  'alipay.fund.trans.toaccount.transfer', //接口名称 应填写固定值alipay.fund.trans.toaccount.transfer
+            'format'    =>  'JSON', //目前仅支持JSON
+            'charset'    =>  'UTF-8',
+            'sign_type'    =>  'RSA2',//签名方式
+            'sign'    =>  '', //签名
+            'timestamp'    => date('Y-m-d H:i:s'), //发送时间 格式0000-00-00 00:00:00
+            'version'    =>  '1.0', //固定为1.0
+            'biz_content'    =>  '', //业务请求参数的集合
+        ];
+
+//请求参数
+        $api_params = [
+            'out_biz_no'  => date('YmdHis'),//商户转账订单号
+            'payee_type'  => 'ALIPAY_LOGONID', //收款方账户类型
+            'payee_account'  => $data['payee_account'], //收款方账户
+            'amount'  => $data['amount'], //金额
+        ];
 
     }
 
