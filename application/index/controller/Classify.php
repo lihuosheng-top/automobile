@@ -164,44 +164,84 @@ class Classify extends Controller
     {
         if($request->isPost()){
             $goods_type_id = $request->only(["id"])["id"];
-            $goods_data = [];
             $goods_name =$request->only(["goods_name"])["goods_name"];
-            $condition = " `goods_name` like '%{$goods_name}%'";
-            $goods = db("goods")
-                ->where($condition)
-                ->where("goods_brand_id",$goods_type_id)
-                ->select();
-            foreach ($goods as $kye=>$value){
-                $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
-                $store = db("store")->where("store_id",$value["store_id"])->where($where)->find();
-                if(!empty($store)){
-                    if($value["goods_status"] == 1 && !empty($store)){
-                        $special_data[] =db("special")
-                            ->where("goods_id",$value["id"])
-                            ->select();
-                        $statistical_quantity[] =db("order_parts")
-                            ->where("goods_id",$value["id"])
-                            ->count();
-                        unset($goods[$kye]);
-                        $goods_data[] = $value;
+            if(!empty($goods_type_id)){
+                $goods_data = [];
+                $condition = " `goods_name` like '%{$goods_name}%'";
+                $goods = db("goods")
+                    ->where($condition)
+                    ->where("goods_brand_id",$goods_type_id)
+                    ->select();
+                foreach ($goods as $kye=>$value){
+                    $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
+                    $store = db("store")->where("store_id",$value["store_id"])->where($where)->find();
+                    if(!empty($store)){
+                        if($value["goods_status"] == 1 && !empty($store)){
+                            $special_data[] =db("special")
+                                ->where("goods_id",$value["id"])
+                                ->select();
+                            $statistical_quantity[] =db("order_parts")
+                                ->where("goods_id",$value["id"])
+                                ->count();
+                            unset($goods[$kye]);
+                            $goods_data[] = $value;
+                        }
                     }
                 }
-            }
-            if(!empty($special_data)){
-                foreach ($special_data as $k=>$v){
-                    $goods_data[$k]["special"] =$v;
+                if(!empty($special_data)){
+                    foreach ($special_data as $k=>$v){
+                        $goods_data[$k]["special"] =$v;
+                    }
                 }
-            }
-            if(!empty($statistical_quantity)){
-                foreach ($statistical_quantity as $k=>$v){
-                    $goods_data[$k]["statistical_quantity"] =$v;
+                if(!empty($statistical_quantity)){
+                    foreach ($statistical_quantity as $k=>$v){
+                        $goods_data[$k]["statistical_quantity"] =$v;
+                    }
                 }
-            }
-            if($goods_data){
-                return ajax_success("获取成功",$goods_data);
+                if($goods_data){
+                    return ajax_success("获取成功",$goods_data);
+                }else{
+                    return ajax_error("获取失败");
+                }
             }else{
-                return ajax_error("获取失败");
+                $goods_data = [];
+                $condition = " `goods_name` like '%{$goods_name}%'";
+                $goods = db("goods")
+                    ->where($condition)
+                    ->select();
+                foreach ($goods as $kye=>$value){
+                    $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
+                    $store = db("store")->where("store_id",$value["store_id"])->where($where)->find();
+                    if(!empty($store)){
+                        if($value["goods_status"] == 1 && !empty($store)){
+                            $special_data[] =db("special")
+                                ->where("goods_id",$value["id"])
+                                ->select();
+                            $statistical_quantity[] =db("order_parts")
+                                ->where("goods_id",$value["id"])
+                                ->count();
+                            unset($goods[$kye]);
+                            $goods_data[] = $value;
+                        }
+                    }
+                }
+                if(!empty($special_data)){
+                    foreach ($special_data as $k=>$v){
+                        $goods_data[$k]["special"] =$v;
+                    }
+                }
+                if(!empty($statistical_quantity)){
+                    foreach ($statistical_quantity as $k=>$v){
+                        $goods_data[$k]["statistical_quantity"] =$v;
+                    }
+                }
+                if($goods_data){
+                    return ajax_success("获取成功",$goods_data);
+                }else{
+                    return ajax_error("获取失败");
+                }
             }
+
         }
         return view("goods_list");
     }
