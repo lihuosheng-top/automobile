@@ -332,7 +332,6 @@ $('.service-tab-title').on('click', 'li', function(){
             break;
     }
 })
-
 // 筛选评论
 $('.filter-ul').on('click', 'li', function(){
     $(this).siblings().removeClass('filter-this');
@@ -349,7 +348,6 @@ $('.filter-ul').on('click', 'li', function(){
         },
         success: function(res){
             console.log(res);
-            
         },
         error: function(){
             console.log('error');
