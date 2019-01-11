@@ -459,7 +459,7 @@ class Apppay extends Controller
                             $param['app_id'] = '2088231580479005';
                             $param['method'] = 'alipay.trade.app.pay';//接口名称，固定值
                             $param['charset'] = 'utf-8';//请求使用的编码格式
-                            $param['sign_type'] = 'RSA';//商户生成签名字符串所使用的签名算法类型
+                            $param['sign_type'] = 'RSA2';//商户生成签名字符串所使用的签名算法类型
                             $param['timestamp'] = date("Y-m-d H:i:s");//发送请求的时间
                             $param['version'] = '1.0';//调用的接口版本，固定为：1.0
                             $param['notify_url'] = 'https://automobile.siring.com.cn/notifyurl';
