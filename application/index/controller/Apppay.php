@@ -456,7 +456,7 @@ class Apppay extends Controller
                             $con = json_encode($content);//$content是biz_content的值,将之转化成json字符串
                             //公共参数
                             $Client = new \AopClient();//实例化支付宝sdk里面的AopClient类,下单时需要的操作,都在这个类里面
-                            $param['app_id'] = '2088231580479005';
+                            $param['app_id'] = '2018120762470526';
                             $param['method'] = 'alipay.trade.app.pay';//接口名称，固定值
                             $param['charset'] = 'utf-8';//请求使用的编码格式
                             $param['sign_type'] = 'RSA2';//商户生成签名字符串所使用的签名算法类型
