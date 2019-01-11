@@ -13,7 +13,7 @@
 <body>
     <div class="wrapper">
         <div class="head">
-            <a href="javascript:history.back(-1);" class="spr back"></a>
+            <a href="classify_index" class="spr back"></a>
             <input type="text" placeholder="输入你要搜索的品牌">
             <i class="spr icon_search"></i>
             <a href="javascript:;" class="spr icon_share"></a>
@@ -106,7 +106,7 @@
                         var str = '';
                         res.data.forEach(function(ele, idx){
                             str += `<li class="`+(idx%2!=0? 'mgr0':'')+`">
-                                        <a href="goods_detail">
+                                        <a href="goods_detail?id=`+ele.id+`&preId=`+ele.goods_brand_id+`&preStoreId=`+store_id+`">
                                             <div class="img_div">
                                                 <img src="uploads/`+ele.goods_show_images+`">
                                             </div>

@@ -32,9 +32,9 @@ class Apppay extends Controller
         if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
             $data['status'] = 2;
             $condition['parts_order_number'] = $out_trade_no;
-            $select_data = Db::name('order_parts')->where($condition)->select();
+            $select_data = Db::name('order_parts')->where("parts_order_number",$condition)->select();
             foreach ($select_data as $key => $val) {
-                $result = Db::name('order_parts')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
+                $result = Db::name('order_parts')->where("parts_order_number",$val["parts_order_number"])->update($data);//修改订单状态,支付宝单号到数据库
             }
             if ($result) {
                 return ajax_success('支付成功', ['status' => 1]);
@@ -262,7 +262,7 @@ class Apppay extends Controller
      * Notes:配件商订单回调
      **************************************
      */
-    public function parts_notifyurl()
+    public function service_notifyurl()
     {
         //这里可以做一下你自己的订单逻辑处理
         $pay_time = time();
@@ -277,10 +277,10 @@ class Apppay extends Controller
             $data['status'] = 2;//状态值
             $data['trade_no'] = $trade_no;//支付宝交易号
 
-            $condition['parts_order_number'] = $out_trade_no;
-            $select_data = Db::name('order_parts')->where($condition)->select();
+            $condition['service_order_number'] = $out_trade_no;
+            $select_data = Db::name('order_service')->where("service_order_number",$condition)->select();
             foreach ($select_data as $key => $val) {
-                $result = Db::name('order_parts')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
+                $result = Db::name('order_service')->where("service_order_number",$val["service_order_number"])->update($data);//修改订单状态,支付宝单号到数据库
             }
             if ($result) {
                 //进行钱包消费记录
@@ -420,7 +420,7 @@ class Apppay extends Controller
 
     /**
      **************陈绪*******************
-     * 生成支付宝签名 TODO:支付宝签名
+     * 生成支付宝签名 TODO:配件商支付宝支付生成签名
      **************************************
      */
     public function ios_api_alipay(Request $request){
@@ -444,8 +444,8 @@ class Apppay extends Controller
                             $app_ids =urlencode($app_id);
                             $time_encode =urlencode($time);
                             // 订单信息，在iOS端加密
-                            include EXTEND_PATH."lib/payment/alipay_sdk/AopClient.php";
-                            $private_path="MIIEpAIBAAKCAQEAyC9iRV5kLDbVK619EtISgMN5Gz0bOdFAfSojUzefVhKUrEJ6j48d1Awrg98yudp22kUs0zboMkVTYDT1l9ux5xj/p39JhqjjIl44oZsGFjSmu9/2HxaZ4UjfTJXkaGwJqyY0fSY2f+cE5YjoRYq5XhqijzF0BoKoH64pQNWxqp6f3wss2FKp707KV/oLAArqkqFcWfyylMsncdxV59Lo0mtJ7cIEOezng4es3KDdHmLT5kq3j0hl0kfIjdGuDR0cWnlcolHUoIOKVGSlSHn+WnFlZ20/fkfF+hdadUcG42tywCBVT40ugX1LmmdCI4hAnxLxeQ7bFkhrnpDWcW7KWQIDAQABAoIBAQCBQK730TFmpuTOtc669y6BOzUX1EWe+C/mYO28Dn7vqUGbU7UkuihtQIpcNCHhhGAXIHEH0zzrMH3b8XXdXjmo2ChBstr7elJlX2a7WYf9kHNTfRDCE+q5Xj7niSSYE6HOgvWDFMg9nyE3P0WRmTeEvjfVsv2SMoxxIBd8yD1Vxr3Gbg+gT8zWDrqXQ1Ap1gg5jNS14CFE3uKKwQ4n5JZWnIQ+jw3LZcpk9Eb/mrQ9kbnU7g0ikx8sYJpTiP7lAlb3dq1tdUmRV8+HfWYC/a8MbZtO6UyDWvms5Lb5g4we7FCmBAkG+zv62PxG9sQAvrQoSwKTOj/7LSeTgJsT97QNAoGBAPuQUNZEhVODVhCCISg84TGi0BozU64PqegJXFxbR++hQC2EsN6L2Mk2ftpd+J/9XRD0ffcBMea+H4N7ui4Y+OHoED/8d76dTX06PWfAYYJMu/o65c3IBSBiwgREuRo38a20CZ8hKr8LVpLXbtCB8WJ1kp5QeqqSPpwnjFncyBorAoGBAMu3Hokjze+FPpeFQ3tYVt9G/VSAhRMVAb5ZQClQH9plpVM9aMukp8jiaeSBg7d5RzNRGRU5ouKQ1AVs3jkgvVzUWRMKM+VkW4lzAhEkM766egpzngs9z4YXHcBW1bPJQap2TVLRcFmueDsVABXF5XZSgAwenBhtvmZ9X/UDCD+LAoGBALmXaOwLNUm9lVsshgXHlGQoN9t8jnnV+IXFkixY86NolY5/XHVzOwaHe+LifTCbnXOKzPvUF9qh3WIFf//OUJ9ps8NhIX6xUp/WvcKzfbzBm9Uqaqv8qzuPYJABm4YqS9TZBFgwAfdcCAzhf1G47Dq1fuvpd/YrWqGd07/gUIhtAoGAHDSkg7RzZQB75BrNdxyKGqwHk1WgFz5HWYWd/ppbbq+4LkhIZDnOCWBf7QWJqTOfihlmcavjQ59t27pxIlPIJDw6gQpemRpGGkfUN29dwsCq+Rt8/G14eEZnFiRvvk7VSrbKifb5qVEg0H1d36Xg2Xsew47Ragh33lTpnlDnKXUCgYBIuk9VU3DkITWsy+xiQbN4eQqbiFB7BA55xIjwPqK8K+0PVzRyObUEF6m9KSz2mEB1CHwr1fHj8qzJ/0CgKUeCONm5crLEGCGMbGUzMloGmVLSJz6+4xT8mwKOv/BcpTqkDLx+8HBaJppJnjWn0OmHLNa1JhAaVuef8eheH546kw==";
+                            include VENDOR_PATH."AliPay/aop/AopClient.php";
+                            $private_path="MIIEpQIBAAKCAQEAvPQu30qb4OsdxvU7e+5QlbK6xlku6q/Gm940nrGciz46+ICyAuifLs0OF+qH4HH9hIf5rxslsHTOHREMk/6SyUmkpE/ChYm4vp1tHcIknqWQsDaYHKFs9ML0OW4BI3xZxSs3YKOkdNTgmKFUZLAK1z59guo14MbpYskDmk8WaNHkKJgipTnwYMaXac8hHCDUOH0asMCbb2ZNwlCM9M4rGNaL62USeKhq26HiX7uct3Xd5I4a+l9Bk0COx05DGRLdX7Qo5TCatTK+g89BFCk2REQHYlSoIfR1rzJkSz2wyw/wz4GcfRxRO8t6khVJ5TclRL1BqH0P5aCwmqru4ZwqbQIDAQABAoIBACNadKKmrP+qPgoJvDV143H+3N9btGGIvdpP+vxuMuICpLn2KlhM+euhxi9HXGDsMwjnABp5M9YOJLpfhED0crZipwFvQvAFUqGnhtD4kC12wNmXfWJt+ZraFyPfpyrii1FOwq+8LnsFkXg9RzMHlR+su4MRGz+RN/2Zqqjmf0ThHYWl9bMzkl77s7TNK98zdsyLYf12qa/PZEPl7Zf2Sg5ksVZl+ilkHeR02OKt+zj04SIhw/IgZO/0jfaq9xHUTWXfJH45WWIjOKwsS5aV74iL9iHIdoFfGsPRsA0am9Hrj0lEH/WWHyQoNSzZpNCcvkGUh2q4dBQoOT1fw5D4GykCgYEA++njkSiclymIQu6JdSEGPHISH6R0IcBe2mvTWBZ6j+PXiStk/I33QWo4fxT4Qx0lRcuD2bc44rWYgCbZXm90GdymeSkZ94lpl0/4XEfdrT6deWrS7wEnV+U+Nu/3M3RmoxNAmq1w/IYc5MPkPhrkxoAZf7eqQFtVuAeNfI+s4eMCgYEAwATX/XuWAi/PP00dUoiq0I/MbPrU3W0zYA/V55+8/tyrLBs/1XXQXirp7GzmjTFBz5xh8FflIISv6KVdQ+5R/gx/66qYq7MklGeNvnLS8bvL6T+loF7w2xY7FHQ7J5q8Jtgd6ENe525WFBefHohxCsASbedOWNwVqZUj23GiM28CgYEA55tMLINoJNp8ev0Qx+2K7Dv8SbdLRlS1YJ/N+akBGhXibizFdiWX9D6SntRKxHmhcSABo0N/O4C2KuyM4PQbjEN/ktmlFB70Q7e0ojM4rjVpVt5N/IvU/ky3/I53eolEbB4hQZTA0osDOZiY2jijqZTQ3Mmh7/WJQ989yA3YZv0CgYEAvzCTdvrk5AyCiH7Z4WHe4ocrfp9J76dZbh6WV2g/oGxLq0D+kCYccIa+IABWluMiqfsFsW9y3qv/EuAEOy1CSnhbrmVQWjWnCHULN0PRMYxRfk83NLUTkLFT5gvNEqQJD4xESw05o6nC34KdlqM4GwIf13pmEighEZdD+q3sWNUCgYEAhTz2NfzdDfT0gZGxfpUhhK0nkqdNI8HX2CfUVMPQjmnbgZ9Hfav+RMMf+02ftUzmZX0f/VyytSu5i0bkIUClUqxvjaKXRwwoiv3Tb2JHTururXBViUOCQeCJuXarX89EoReIvUXBBw2G6HcULGfuuNZM81fd/cav4EZfMO2+zPM=";
                             //构造业务请求参数的集合(订单信息)
                             $content = array();
                             $content['subject'] = $goods_name;
@@ -463,6 +463,75 @@ class Apppay extends Controller
                             $param['timestamp'] = date("Y-m-d H:i:s");//发送请求的时间
                             $param['version'] = '1.0';//调用的接口版本，固定为：1.0
                             $param['notify_url'] = 'https://automobile.siring.com.cn/notifyurl';
+                            $param['biz_content'] = $con;//业务请求参数的集合,长度不限,json格式，即前面一步得到的
+                            $paramStr = $Client->getSignContent($param);//组装请求签名参数
+                            $sign = $Client->alonersaSign($paramStr, $private_path, 'RSA2', false);//生成签名()
+                            $param['sign'] = $sign;
+                            $str = $Client->getSignContentUrlencode($param);//最终请求参数
+
+                        }
+                        return ajax_success('数据成功返回',$str);
+                    }else{
+                        return ajax_error('数据返回不成功',['status'=>0]);
+                    }
+                }else{
+                    return ajax_error('没有这个订单号',['status'=>0]);
+                }
+            }else{
+                return ajax_error('失败',['status'=>0]);
+            }
+        }
+    }
+
+
+
+
+
+    /**
+     **************陈绪*******************
+     * 生成支付宝签名 TODO:服务商支付宝支付生成签名
+     **************************************
+     */
+    public function ios_api_service_alipay(Request $request){
+        if($request->isPost()){
+            $order_num =$request->only(['order_num'])['order_num'];
+//            $order_num =15428821121022;
+            $product_code ="QUICK_MSECURITY_PAY";
+            $out_trade_no="ZQLM3O56MJD4SK3";
+            $time =date('Y-m-d H:i:s');
+            if(!empty( $order_num)){
+                $counts =Db::name('order_service')->where('service_order_number',$order_num)->count();
+                if(!empty($counts)){
+                    $data = Db::name('order_service')->where('service_order_number',$order_num)->select();
+                    if(!empty($data)){
+                        foreach ($data as $k=>$v){
+                            $goods_name = $v['service_goods_name'];
+                            $order_num = $v['service_order_number'];
+                            $goods_pay_money =$v['service_real_pay'];
+                            $subject =$v['service_order_quantitative'];
+                            $app_id ="{'timeout_express':'30m','seller_id':"."'".$order_num."'".",'product_code':"."'".$product_code."'".",'total_amount':"."'".$goods_pay_money."'".",'subject':"."'".$subject."'".",'body':"."'".$goods_name."'".",'out_trade_no':"."'".$out_trade_no."'"."}";
+                            $app_ids =urlencode($app_id);
+                            $time_encode =urlencode($time);
+                            // 订单信息，在iOS端加密
+                            include VENDOR_PATH."AliPay/aop/AopClient.php";
+                            $private_path="MIIEpQIBAAKCAQEAvPQu30qb4OsdxvU7e+5QlbK6xlku6q/Gm940nrGciz46+ICyAuifLs0OF+qH4HH9hIf5rxslsHTOHREMk/6SyUmkpE/ChYm4vp1tHcIknqWQsDaYHKFs9ML0OW4BI3xZxSs3YKOkdNTgmKFUZLAK1z59guo14MbpYskDmk8WaNHkKJgipTnwYMaXac8hHCDUOH0asMCbb2ZNwlCM9M4rGNaL62USeKhq26HiX7uct3Xd5I4a+l9Bk0COx05DGRLdX7Qo5TCatTK+g89BFCk2REQHYlSoIfR1rzJkSz2wyw/wz4GcfRxRO8t6khVJ5TclRL1BqH0P5aCwmqru4ZwqbQIDAQABAoIBACNadKKmrP+qPgoJvDV143H+3N9btGGIvdpP+vxuMuICpLn2KlhM+euhxi9HXGDsMwjnABp5M9YOJLpfhED0crZipwFvQvAFUqGnhtD4kC12wNmXfWJt+ZraFyPfpyrii1FOwq+8LnsFkXg9RzMHlR+su4MRGz+RN/2Zqqjmf0ThHYWl9bMzkl77s7TNK98zdsyLYf12qa/PZEPl7Zf2Sg5ksVZl+ilkHeR02OKt+zj04SIhw/IgZO/0jfaq9xHUTWXfJH45WWIjOKwsS5aV74iL9iHIdoFfGsPRsA0am9Hrj0lEH/WWHyQoNSzZpNCcvkGUh2q4dBQoOT1fw5D4GykCgYEA++njkSiclymIQu6JdSEGPHISH6R0IcBe2mvTWBZ6j+PXiStk/I33QWo4fxT4Qx0lRcuD2bc44rWYgCbZXm90GdymeSkZ94lpl0/4XEfdrT6deWrS7wEnV+U+Nu/3M3RmoxNAmq1w/IYc5MPkPhrkxoAZf7eqQFtVuAeNfI+s4eMCgYEAwATX/XuWAi/PP00dUoiq0I/MbPrU3W0zYA/V55+8/tyrLBs/1XXQXirp7GzmjTFBz5xh8FflIISv6KVdQ+5R/gx/66qYq7MklGeNvnLS8bvL6T+loF7w2xY7FHQ7J5q8Jtgd6ENe525WFBefHohxCsASbedOWNwVqZUj23GiM28CgYEA55tMLINoJNp8ev0Qx+2K7Dv8SbdLRlS1YJ/N+akBGhXibizFdiWX9D6SntRKxHmhcSABo0N/O4C2KuyM4PQbjEN/ktmlFB70Q7e0ojM4rjVpVt5N/IvU/ky3/I53eolEbB4hQZTA0osDOZiY2jijqZTQ3Mmh7/WJQ989yA3YZv0CgYEAvzCTdvrk5AyCiH7Z4WHe4ocrfp9J76dZbh6WV2g/oGxLq0D+kCYccIa+IABWluMiqfsFsW9y3qv/EuAEOy1CSnhbrmVQWjWnCHULN0PRMYxRfk83NLUTkLFT5gvNEqQJD4xESw05o6nC34KdlqM4GwIf13pmEighEZdD+q3sWNUCgYEAhTz2NfzdDfT0gZGxfpUhhK0nkqdNI8HX2CfUVMPQjmnbgZ9Hfav+RMMf+02ftUzmZX0f/VyytSu5i0bkIUClUqxvjaKXRwwoiv3Tb2JHTururXBViUOCQeCJuXarX89EoReIvUXBBw2G6HcULGfuuNZM81fd/cav4EZfMO2+zPM=";
+                            //构造业务请求参数的集合(订单信息)
+                            $content = array();
+                            $content['subject'] = $goods_name;
+                            $content['out_trade_no'] = $order_num;
+                            $content['timeout_express'] = "90m";
+                            $content['total_amount'] = $goods_pay_money;
+                            $content['product_code'] = "QUICK_MSECURITY_PAY";
+                            $con = json_encode($content);//$content是biz_content的值,将之转化成json字符串
+                            //公共参数
+                            $Client = new \AopClient();//实例化支付宝sdk里面的AopClient类,下单时需要的操作,都在这个类里面
+                            $param['app_id'] = '2018120762470526';
+                            $param['method'] = 'alipay.trade.app.pay';//接口名称，固定值
+                            $param['charset'] = 'utf-8';//请求使用的编码格式
+                            $param['sign_type'] = 'RSA2';//商户生成签名字符串所使用的签名算法类型
+                            $param['timestamp'] = date("Y-m-d H:i:s");//发送请求的时间
+                            $param['version'] = '1.0';//调用的接口版本，固定为：1.0
+                            $param['notify_url'] = 'https://automobile.siring.com.cn/service_notifyurl';
                             $param['biz_content'] = $con;//业务请求参数的集合,长度不限,json格式，即前面一步得到的
                             $paramStr = $Client->getSignContent($param);//组装请求签名参数
                             $sign = $Client->alonersaSign($paramStr, $private_path, 'RSA2', false);//生成签名()

@@ -66,11 +66,12 @@ Route::group("",[
     'index_pay_code'=>"index/Apppay/index_pay_code", //状态修改(回调地址修改状态)
     "recharge_aliPay"=>"index/Apppay/recharge_aliPay",     //充值订单提交支付（付款）
     "recharge_pay_code"=>"index/Apppay/recharge_pay_code",     //充值订单支付（成功回调修改状态）
-    "ios_api_alipay"=>"index/Apppay/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
+    "ios_api_alipay"=>"index/Apppay/ios_api_alipay",//生成支付宝签名 TODO:配件商支付宝签名
+    "ios_api_service_alipay"=>"index/Apppay/ios_api_service_alipay",//生成支付宝签名 TODO:服务商支付宝签名
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/
-    "parts_notifyurl"=>"index/Apppay/parts_notifyurl",//异步处理(支付宝IOS对接)
+    "service_notifyurl"=>"index/Apppay/service_notifyurl",//服务商异步处理(支付宝IOS对接)
     "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_order_button_by_shop"=>"index/OrderParts/ios_api_order_button_by_shop",//购物车提交订单
 //    "ios_api_alipay"=>"index/OrderParts/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
@@ -312,7 +313,6 @@ Route::group("",[
     "order_wait_evaluate"=>"index/OrderParts/order_wait_evaluate", //待评价页面
     "ios_api_order_wait_evaluate"=>"index/OrderParts/ios_api_order_wait_evaluate", //待评价接口（ajax）
     "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货页面
-    "ios_api_order_parts_return_goods"=>"index/OrderParts/ios_api_order_parts_return_goods",//退货接口ajax
     "ios_api_order_parts_no_pay_cancel"=>"index/OrderParts/ios_api_order_parts_no_pay_cancel",//买家未付款取消订单接口(ajax)
     "ios_api_order_parts_yes_pay_cancel"=>"index/OrderParts/ios_api_order_parts_yes_pay_cancel",//买家已付款取消订单接口(ajax)（未接）
     "order_parts_detail_cancel"=>"index/OrderParts/order_parts_detail_cancel",//买家未付款超过后台设置的时间未付款，系统取消订单接口(ajax)
@@ -749,6 +749,14 @@ Route::group("admin",[
     "complaint_updata"=>"admin/Operation/complaint_updata",
     "complaint_select"=>"admin/Operation/complaint_select",
     "complaint_del"=>"admin/Operation/complaint_del",
+
+
+
+    /**
+     * 支付宝退款
+     * 陈绪
+     */
+    "WxPayment"=>"admin/Payment/WxPayment",     //支付宝退款
 
 ]);
 
