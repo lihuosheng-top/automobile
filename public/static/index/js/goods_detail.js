@@ -1,12 +1,21 @@
 // 获取url地址id
 var url = location.search;
-var id, preId, specId, store_id;
+// preStoreId 从店铺商品进来的详情
+var id, preId, specId, store_id, preStoreId;
 if(url.indexOf('?') != -1){
     id = url.substr(1).split('&')[0].split('=')[1];
     preId = url.substr(1).split('&')[1].split('=')[1];
+    if(url.substr(1).split('&').length == 3){
+        preStoreId = url.substr(1).split('&')[2].split('=')[1];
+    }
+    console.log(preStoreId);
 }
 $('.wrapper').find('a.back').click(function(){
-    location.href = 'goods_list?id=' + preId;
+    if(preStoreId == undefined){
+        location.href = 'goods_list?id=' + preId;
+    }else{
+        location.href = 'store_index?storeId=' + preStoreId;
+    }
 })
 $.ajax({
     url: 'goods_detail',

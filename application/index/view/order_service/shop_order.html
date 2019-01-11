@@ -77,7 +77,7 @@
         </div>
     </div>
     <!-- 支付弹窗 -->
-    <form name=alipayment action="{:url('index/Apppay/index_aliPay')}" method=post >
+    <!-- <form name=alipayment action="{:url('index/Apppay/index_aliPay')}" method=post >
         <div class="alipay-pop">
             <header>
                 <a href="javascript:;" class="close-alipay">×</a>
@@ -102,15 +102,15 @@
             </div>
             <button type="submit" class="alipay-submit">立即付款</button>
         </div>
-    </form>
+    </form> -->
     <div class="mask" style="display:none;"></div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     
     <script>
         $('#goAlipay').click(function(){
-            $('.mask').show();
-            $('.alipay-pop').animate({'bottom': '0'});
+            // $('.mask').show();
+            // $('.alipay-pop').animate({'bottom': '0'});
             var got_to_time = $('.arrive_time span').text();
             var service_money = $('.pay-amount-span span').text();
             var car_ver = $('.car_ver').text();
@@ -128,21 +128,36 @@
                 },
                 success: function(res){
                     console.log(res);
-                    $('#WIDout_trade_no').val(res.data.service_order_number);
-                    $('#WIDtotal_amount').val(res.data.service_real_pay);
-                    $('#WIDsubject').val(res.data.service_goods_name);
-                    $('#WIDbody').val(res.data.service_goods_name);
+                    $.ajax({
+                        url: 'ios_api_service_alipay',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'order_num': res.data.service_order_number
+                        },
+                        success: function(res){
+                            console.log(res);
+                            Android.alipay(res.data);
+                        },
+                        error: function(){
+                            console.log('error');
+                        }
+                    })
+                    // $('#WIDout_trade_no').val(res.data.service_order_number);
+                    // $('#WIDtotal_amount').val(res.data.service_real_pay);
+                    // $('#WIDsubject').val(res.data.service_goods_name);
+                    // $('#WIDbody').val(res.data.service_goods_name);
                 },
                 error: function(){
                     console.log('error');
                 }
             })
         })
-        $('.close-alipay').click(function(){
-            $('.mask').hide();
-            $('.alipay-pop').animate({'bottom': '-100%'});
-            location.href = 'order_service_all';
-        })
+        // $('.close-alipay').click(function(){
+        //     $('.mask').hide();
+        //     $('.alipay-pop').animate({'bottom': '-100%'});
+        //     location.href = 'order_service_all';
+        // })
         // 折扣
         $('.discount').click(function(){
             $('.wrapper').hide();
@@ -188,55 +203,69 @@
                     $('.pay-amount-span span').text(data.goods[0].service_money)
                     $('.totalprice span').text(data.goods[0].service_money);
                     finalMoney = data.goods[0].service_money;
-                    var str = '';
-                    $.each(data.integral_info, function(idx, val){
-                        str += `<div class="dis">
-                                    <div class="denomination">
-                                        <p>￥`+val.deductible_money+`</p>
-                                        <span class="need-inte">需`+val.integral_full+`积分</span>
-                                    </div>
-                                    <label class="twent" for="twent-`+val.setting_id+`">
-                                        <p class="dis-introduce">消费满<span>`+val.consumption_full+`</span>元可用</p>
-                                    </label>
-                                    <input type="radio" id="twent-`+val.setting_id+`" name="disc">
-                                </div>`
-                    })
-                    $('.default').after(str);
-                    $('.dis').click(function (e) {
-                        e.preventDefault();
-                        var consumptionFul = $(this).find('.dis-introduce span').text();
-                        if (finalMoney >= consumptionFul) {
-                            var cut = $(this).find('.denomination p').text().split('￥')[1];
-                            $(this).find('input').prop('checked', 'checked');
-                            $('.acount_num').text('-￥' + cut);
-                            $('.discount_pop').hide();
-                            $('.wrapper').show();
-                            // 抵扣后的总价格
-                            $('.pay-amount-span span').text(toFixed(finalMoney - cut, 2));
-                            $('.totalprice span').text(toFixed(finalMoney - cut, 2));
-                            // 存储积分券id
-                            deductionId = $(this).find('input')[0].id.split('-')[1];
-                            console.log(deductionId)
-                        } else {
-                            layer.open({
-                                skin: 'msg',
-                                content: '未达到使用条件',
-                                time: 1
-                            })
+                    // 积分抵扣
+                    $.ajax({
+                        url: 'return_integral_information',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        success: function(res){
+                            console.log(res);
+                            if(res.status == 1){
+                                var str = '';
+                                $.each(res.data, function(idx, val){
+                                    str += `<div class="dis">
+                                                <div class="denomination">
+                                                    <p>￥`+val.deductible_money+`</p>
+                                                    <span class="need-inte">需`+val.integral_full+`积分</span>
+                                                </div>
+                                                <label class="twent" for="twent-`+val.setting_id+`">
+                                                    <p class="dis-introduce">消费满<span>`+val.consumption_full+`</span>元可用</p>
+                                                </label>
+                                                <input type="radio" id="twent-`+val.setting_id+`" name="disc">
+                                            </div>`
+                                })
+                                $('.default').after(str);
+                                $('.dis').click(function (e) {
+                                    e.preventDefault();
+                                    var consumptionFul = $(this).find('.dis-introduce span').text();
+                                    if (finalMoney >= consumptionFul) {
+                                        var cut = $(this).find('.denomination p').text().split('￥')[1];
+                                        $(this).find('input').prop('checked', 'checked');
+                                        $('.acount_num').text('-￥' + cut);
+                                        $('.discount_pop').hide();
+                                        $('.wrapper').show();
+                                        // 抵扣后的总价格
+                                        $('.pay-amount-span span').text(toFixed(finalMoney - cut, 2));
+                                        $('.totalprice span').text(toFixed(finalMoney - cut, 2));
+                                        // 存储积分券id
+                                        deductionId = $(this).find('input')[0].id.split('-')[1];
+                                        console.log(deductionId)
+                                    } else {
+                                        layer.open({
+                                            skin: 'msg',
+                                            content: '未达到使用条件',
+                                            time: 1
+                                        })
+                                    }
+                                })
+                                $('.default').click(function (e) {
+                                    e.preventDefault();
+                                    // 隐藏弹窗
+                                    $('.discount_pop').hide();
+                                    $('.wrapper').show();
+                                    // 显示 不适用积分
+                                    var dont = $(this).find('label').text();
+                                    $(this).find('input').prop('checked', 'checked');
+                                    $('.acount_num').text(dont);
+                                    // 不适用积分 重新计算价格
+                                    $('.pay-amount-span span').text(toFixed(finalMoney, 2));
+                                    $('.totalprice span').text(toFixed(finalMoney, 2));
+                                })
+                            }
+                        },
+                        error: function(){
+                            console.log('error');
                         }
-                    })
-                    $('.default').click(function (e) {
-                        e.preventDefault();
-                        // 隐藏弹窗
-                        $('.discount_pop').hide();
-                        $('.wrapper').show();
-                        // 显示 不适用积分
-                        var dont = $(this).find('label').text();
-                        $(this).find('input').prop('checked', 'checked');
-                        $('.acount_num').text(dont);
-                        // 不适用积分 重新计算价格
-                        $('.pay-amount-span span').text(toFixed(finalMoney, 2));
-                        $('.totalprice span').text(toFixed(finalMoney, 2));
                     })
                 }
             },
