@@ -8,9 +8,18 @@ var url = location.search;
 var brandid;
 if(url.indexOf('?') != -1){
     brandid = url.substr(1).split('=')[1];
-    layDataAjax('goods_list', brandid)
+    layDataAjax('goods_list', brandid);
 }else{
     $('#search').focus();
+
+    var timer = null;
+    $('#search').on('input', function(){
+        var _self = this;
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+            searchAjax('goods_list_search', '', _self.value);
+        }, 500);
+    })
 }
 function layDataAjax(url, brandid){
     $.ajax({
@@ -69,16 +78,16 @@ $('#search').on('input', function(){
     var _self = this;
     clearTimeout(timer);
     timer = setTimeout(function(){
-        searchAjax('goods_list_search', _self.value);
-    }, 1000);
+        searchAjax('goods_list_search', brandid, _self.value);
+    }, 500);
 })
-function searchAjax(url, searchTxt){
+function searchAjax(url, brandid, searchTxt){
     $.ajax({
         url: url,
         type: 'POST',
         dataType: 'JSON',
         data: {
-            'id': id,
+            'id': brandid,
             'goods_name': searchTxt
         },
         success: function(res){
@@ -87,7 +96,7 @@ function searchAjax(url, searchTxt){
             $.each(res.data, function(idx, val){
                 if(idx % 2 == 0){
                     str += '<li>\
-                                <a href="goods_detail?id='+val.id+'&preid='+id+'">\
+                                <a href="goods_detail?id='+val.id+'&preid='+brandid+'">\
                                     <div class="img_div">\
                                         <img src="uploads/'+val.goods_show_images+'">\
                                     </div>\
@@ -103,7 +112,7 @@ function searchAjax(url, searchTxt){
                     return;
                 }
                 str += '<li class="mgr0">\
-                            <a href="goods_detail?id='+val.id+'&preid='+id+'">\
+                            <a href="goods_detail?id='+val.id+'&preid='+brandid+'">\
                                 <div class="img_div">\
                                     <img src="uploads/'+val.goods_show_images+'">\
                                 </div>\
@@ -125,19 +134,6 @@ function searchAjax(url, searchTxt){
         }
     })
 }
-
-// 搜索防抖
-// function debounce(handle, delay){
-//     var timer = null;
-//     return function(){
-//         var _self = this, _arg = arguments;
-//         clearTimeout(timer);
-//         timer = setTimeout(function(){
-//             handle.apply(_self, _arg);
-//         }, delay);
-//     }
-// }
-
 
 
 
