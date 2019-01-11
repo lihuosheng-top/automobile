@@ -313,7 +313,6 @@ Route::group("",[
     "order_wait_evaluate"=>"index/OrderParts/order_wait_evaluate", //待评价页面
     "ios_api_order_wait_evaluate"=>"index/OrderParts/ios_api_order_wait_evaluate", //待评价接口（ajax）
     "order_parts_return_goods"=>"index/OrderParts/order_parts_return_goods",//退货页面
-    "ios_api_order_parts_return_goods"=>"index/OrderParts/ios_api_order_parts_return_goods",//退货接口ajax
     "ios_api_order_parts_no_pay_cancel"=>"index/OrderParts/ios_api_order_parts_no_pay_cancel",//买家未付款取消订单接口(ajax)
     "ios_api_order_parts_yes_pay_cancel"=>"index/OrderParts/ios_api_order_parts_yes_pay_cancel",//买家已付款取消订单接口(ajax)（未接）
     "order_parts_detail_cancel"=>"index/OrderParts/order_parts_detail_cancel",//买家未付款超过后台设置的时间未付款，系统取消订单接口(ajax)
@@ -750,6 +749,14 @@ Route::group("admin",[
     "complaint_updata"=>"admin/Operation/complaint_updata",
     "complaint_select"=>"admin/Operation/complaint_select",
     "complaint_del"=>"admin/Operation/complaint_del",
+
+
+
+    /**
+     * 支付宝退款
+     * 陈绪
+     */
+    "WxPayment"=>"admin/Payment/WxPayment",     //支付宝退款
 
 ]);
 
