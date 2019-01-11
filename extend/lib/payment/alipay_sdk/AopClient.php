@@ -869,7 +869,6 @@ class AopClient {
 	}
 
 	function parserJSONSignData($request, $responseContent, $responseJSON) {
-
 		$signData = new SignData();
 
 		$signData->sign = $this->parserJSONSign($responseJSON);

@@ -82,12 +82,14 @@ $.ajax({
         }else if(val.status === 9 || val.status === 10){
             statusTxt = `已取消`;
             $('.del-order-btn').show();
-        }else if(val.status === 11){
-            statusTxt = `退货`;
-            $('.del-order-btn').show();
+        }else if(val.status === 11 || val.status === 13 || val.status === 15){
+            statusTxt = `退货中`;
+            // $('.del-order-btn').show();
         }else if(val.status === 12){
             statusTxt = `已退货`;
             $('.del-order-btn').show();
+        }else if(val.status === 14){
+            statusTxt = `拒绝退货`;
         }
         // 状态值
         $('.status').text(statusTxt);

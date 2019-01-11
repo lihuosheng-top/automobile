@@ -417,6 +417,7 @@
 				</thead>
 				<tbody class="news_content">
 				{volist name="service" id="value"}
+				{if !empty($value.order.parts_order_number)}
 					<tr>
 						<td><input type="checkbox" sname="" value="{$value.id}" lay-skin="primary" lay-filter="choose"></td>
 						<td>{$value.order.parts_order_number}</td>
@@ -461,6 +462,7 @@
 						</button>
 					</td>
 					</tr>
+				{/if}
 				{/volist}
 				</tbody>
 			</table>

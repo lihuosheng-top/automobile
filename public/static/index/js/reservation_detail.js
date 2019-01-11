@@ -168,7 +168,9 @@ if(urlLen > 1){
                                 'store_id': storeId
                             },
                             success: function(res){
-                                console.log(res);
+                                console.log('评论', res);
+                                var length = res.data.length > 3 ? 3 : res.data.length;
+                                
                             },
                             error: function(){
                                 console.log('error');
