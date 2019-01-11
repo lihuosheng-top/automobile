@@ -8,13 +8,36 @@ function hidePop(){
     $('.pop').css('transform', 'translateX(100%)');
     $('html').css('overflow', 'auto');
 }
-$('.filter-com-ul').on('click', 'li', function(){
-    $(this).siblings().removeClass('filter-li-this');
-    $(this).toggleClass('filter-li-this');
-})
+var settingId;
 $('.filter-service-ul').on('click', 'li', function(){
     $(this).siblings().removeClass('filter-service-li');
     $(this).toggleClass('filter-service-li');
+    settingId = $(this).attr('data-serverid');
+    myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+    
+})
+// 全部 好评 中评 差评
+$('.filter-com-ul').on('click', 'li', function(){
+    $(this).siblings().removeClass('filter-li-this');
+    $(this).toggleClass('filter-li-this');
+    var $index = $(this).index();
+    switch($index){
+        case 0:
+            myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+            break;
+        case 1:
+            myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_good');
+            break;
+        case 2:
+            myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_secondary');
+            break;
+        case 3:
+            myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_bad');
+            break;
+        case 4:
+            myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_has_img');
+            break;
+    }
 })
 
 // 往下滑 头部添加背景
@@ -126,6 +149,28 @@ if(urlLen > 1){
                 selectEvent();
 
                 $('.comment_title').show();
+                var filterStr = '', allcomStr = '';
+                data.data.serve_data.forEach(function(ele, idx){
+                    if(idx === 0){
+                        filterStr += `<li class="filter-this" data-serverid="`+ele.service_setting_id+`">
+                                        <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
+                                    </li>`
+                        allcomStr += `<li class="filter-service-li" data-serverid="`+ele.service_setting_id+`">
+                                            <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
+                                        </li>`
+                        // myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false);
+                        // myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true);
+                    }else{
+                        filterStr += `<li data-serverid="`+ele.service_setting_id+`">
+                                        <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
+                                    </li>`
+                        allcomStr += `<li data-serverid="`+ele.service_setting_id+`">
+                                    <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
+                                </li>`
+                    }
+                })
+                $('.filter-ul').html(filterStr);
+                $('.filter-service-ul').html(allcomStr);
             }
         },
         error: function(){
@@ -153,36 +198,29 @@ if(urlLen > 1){
                 selectEvent();
                 
                 $('.comment-filter').show();
-                var filterStr = '';
+                $('.filter-service').show();
+                var filterStr = '', allcomStr = '';
                 data.data.serve_data.forEach(function(ele, idx){
                     if(idx === 0){
                         filterStr += `<li class="filter-this" data-serverid="`+ele.service_setting_id+`">
                                         <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
                                     </li>`
-                        $.ajax({
-                            url: 'reservation_evaluate_return',
-                            type: 'POST',
-                            dataType: 'JSON',
-                            data: {
-                                'goods_id': ele.service_setting_id,
-                                'store_id': storeId
-                            },
-                            success: function(res){
-                                console.log('评论', res);
-                                var length = res.data.length > 3 ? 3 : res.data.length;
-                                
-                            },
-                            error: function(){
-                                console.log('error');
-                            }
-                        })
+                        allcomStr += `<li class="filter-service-li" data-serverid="`+ele.service_setting_id+`">
+                                            <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
+                                        </li>`
+                        myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
+                        myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
                     }else{
                         filterStr += `<li data-serverid="`+ele.service_setting_id+`">
                                         <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
                                     </li>`
+                        allcomStr += `<li data-serverid="`+ele.service_setting_id+`">
+                                    <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
+                                </li>`
                     }
                 })
                 $('.filter-ul').html(filterStr);
+                $('.filter-service-ul').html(allcomStr);
             }
         },
         error: function(){
@@ -190,7 +228,77 @@ if(urlLen > 1){
         }
     })
 }
-
+// 评论
+function myEvaluate(settingid, storeid, content, flag, url){
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'goods_id': settingid,
+            'store_id': storeid
+        },
+        success: function(res){
+            console.log('评论', res);
+            var data = res.data;
+            var str = '';
+            var length = data.length > 3 ? 3 : data.length;
+            for(var i = 0; i < (flag ? data.length : length); i++){
+                str += `<li class="comment_li" data-evalid="`+data[i].id+`">
+                            <div class="content-container">
+                                <div class="comment_user_info">
+                                    <div class="comment_user_headimg">
+                                        <img src="userimg/`+data[i].user_info.user_img+`">
+                                    </div>
+                                    <div class="comment_phone_time">
+                                        <div class="phone_time clearfix">
+                                            <span class="phone_box">`+data[i].user_info.phone_num+`</span>
+                                            <span class="time_box">`+timetrans(data[i].create_time)+`</span>
+                                        </div>
+                                        <span class="spr star `+(data[i].evaluate_stars === 5?'':
+                                                                (data[i].evaluate_stars === 4?'four-star':
+                                                                (data[i].evaluate_stars === 3?'three-star':
+                                                                (data[i].evaluate_stars === 2?'two-star':'one-star'))))+`"></span>
+                                    </div>
+                                </div>
+                                <div class="comment_text_box">
+                                    <a href="javascript:;" class="comment_text_a">
+                                        <p class="comment_text_p">`+data[i].evaluate_content+`</p>
+                                    </a>`
+                // 有评论图片
+                if(data[i].images.length !== 0){
+                    str += `<ul class="comment_img_ul">`;
+                    data[i].images.forEach(function(ele, idx){
+                        str += `<li class="comment_img_li">
+                                    <img src="uploads/`+ele.images+`">
+                                </li>`
+                    })
+                    str += '</ul>';
+                }
+                // 有商家回复
+                if(data[i].business_repay !== null){
+                    str += `<div class="reply_box">
+                                <i class="triangle"></i>
+                                <p class="reply_text">`+data[i].business_repay+`</p>
+                            </div>`
+                }
+                str += `</div>
+                    </div>
+                    <div class="bottom_time_box">
+                    <p class="buy_time">购买时间: <span>`+timetrans(data[i].order_create_time)+`</span></p>
+                    <div>
+                        <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                    </div>
+                </div>
+            </li>`
+            }
+            $(content).html('').html(str);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
 // 商品
 function myGoods(data){
     var str = '';
@@ -340,21 +448,7 @@ $('.filter-ul').on('click', 'li', function(){
     $(this).addClass('filter-this');
     var serveSettingId = $(this).attr('data-serverid');
     // 评论
-    $.ajax({
-        url: 'reservation_evaluate_return',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'goods_id': serveSettingId,
-            'store_id': storeId
-        },
-        success: function(res){
-            console.log(res);
-        },
-        error: function(){
-            console.log('error');
-        }
-    })
+    myEvaluate(serveSettingId,storeId, '.filter-comment', false, 'reservation_evaluate_return');
 })
 
 // 确定预约
@@ -396,3 +490,13 @@ $('.bespeak-btn').click(function(){
         }
     })
 })
+function timetrans(date){
+    var date = new Date(date*1000);//如果date为13位不需要乘1000
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+    var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+    var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+    var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
+    return Y+M+D+h+m+s;
+}

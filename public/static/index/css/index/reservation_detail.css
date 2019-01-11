@@ -84,20 +84,20 @@ html{
     display: block;
     width: 1.14rem;
     height: .3rem;
-    background-position: .05rem -3.75rem;
+    background-position: .05rem -2.75rem;
     margin-right: .2rem;
 }
-.star2{
-    background-position: .05rem -3.5rem !important;
-}
-.star3{
-    background-position: .05rem -3.25rem !important;
-}
-.star4{
+.four-star{
     background-position: .05rem -3rem !important;
 }
-.star5{
-    background-position: .05rem -2.75rem !important;
+.three-star{
+    background-position: .05rem -3.25rem !important;
+}
+.two-star{
+    background-position: .05rem -3.5rem !important;
+}
+.one-star{
+    background-position: .05rem -3.75rem !important;
 }
 .shop_info_box .addr_p{
     font-size: .24rem;
@@ -233,8 +233,6 @@ html{
     color: #f00;
     margin-top: .1rem;
 }
-
-
 /* 服务项目 end */
 
 /* 用户评论 start */
@@ -244,6 +242,7 @@ html{
     margin: 0 auto 1.2rem;
     border-radius: .1rem;
     box-shadow: 1px 1px 10px 0 rgba(220, 220, 220, .3);
+    padding-bottom: .2rem;
 }
 .wrapper .comment_box .comment_title{
     font-size: .3rem;
@@ -277,10 +276,8 @@ html{
 .filter-ul .filter-this p{
     color: #504cfb;
 }
-
 .wrapper .comment_box .comment_ul{
     width: 100%;
-    padding-bottom: .2rem;
 }
 .wrapper .comment_box .comment_li{
     width: 100%;
@@ -320,13 +317,13 @@ html{
     font-size: .2rem;
     color: #ccc;
 }
-.wrapper .comment_box .comment_phone_time .star{
+/* .wrapper .comment_box .comment_phone_time .star{
     display: block;
     width: 1.14rem;
     height: .3rem;
     background-position: .05rem -3.75rem;
     margin-right: .2rem;
-}
+} */
 .wrapper .comment_box .comment_text_box{
     width: 100%;
     padding-left: .9rem;
@@ -360,7 +357,8 @@ html{
     height: 100%;
 }
 .wrapper .comment_box .bottom_time_box{
-    width: 100%;
+    /* width: 100%; */
+    padding-left: .9rem;
     height: .7rem;
     display: flex;
     align-items: center;
@@ -420,12 +418,9 @@ html{
     font-size: .18rem;
     color: #666666;
 }
-.wrapper .comment_box .more_comment_box{
-    width: 100%;
-    text-align: center;
-}
-.wrapper .comment_box .more_comment_box a{
-    display: inline-block;
+
+.wrapper .comment_box .more_comment_a{
+    display: block;
     width: 2.2rem;
     height: .6rem;
     line-height: .6rem;
@@ -433,6 +428,8 @@ html{
     color: #3558fa;
     border: 1px solid #3558fa;
     border-radius: .3rem;
+    text-align: center;
+    margin: 0 auto;
 }
 /* 用户评论 end */
 .balance-box{
@@ -483,6 +480,7 @@ html{
     z-index: 998;
     /* overflow-y: auto; */
     transition: all .5s;
+    padding-top: .88rem;
 }
 .pop .back{
     position: absolute;
@@ -510,7 +508,6 @@ html{
     text-align: center;
 }
 .filter-service{
-    margin-top: .88rem;
     border-bottom: 1px solid #eee;
     background-color: #fff;
     margin-bottom: .12rem;
@@ -521,10 +518,11 @@ html{
     justify-content: space-around;
     line-height: normal;
     text-align: center;
-    padding: .2rem 0;
+    padding: .3rem 0;
 }
 .filter-service-ul li{
     position: relative;
+    flex: 1;
 }
 .com-number,
 .com-name{
@@ -538,10 +536,10 @@ html{
     content: '';
     border: 1px solid #504cfb;
     position: absolute;
-    bottom: -.1rem;
-    left: 0;
-    right: 0;
-    width: 100%;
+    bottom: -.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
 }
 .filter-com{
     border-bottom: 1px solid #eee;
@@ -571,7 +569,7 @@ html{
 }
 .pop .comment_box .comment_ul{
     width: 100%;
-    height: 87vh;
+    height: 69vh;
     overflow-y: auto;
 }
 .pop .comment_box .comment_ul::-webkit-scrollbar{
@@ -614,12 +612,12 @@ html{
     font-size: .2rem;
     color: #ccc;
 }
-.pop .comment_box .comment_phone_time .star{
+/* .pop .comment_box .comment_phone_time .star{
     display: inline-block;
     width: 1.04rem;
     height: .2rem;
     background-position: 0 -2.8rem;
-}
+} */
 .pop .comment_box .comment_text_box{
     width: 100%;
     padding-left: .9rem;
@@ -641,19 +639,21 @@ html{
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 .pop .comment_box .comment_img_ul .comment_img_li{
     width: 1.36rem;
     height: 1.36rem;
     overflow: hidden;
+    margin-right: .1rem;
 }
 .pop .comment_box .comment_img_li img{
     width: 100%;
     height: 100%;
 }
 .pop .comment_box .bottom_time_box{
-    width: 100%;
+    /* width: 100%; */
+    padding-left: .9rem;
     height: .7rem;
     display: flex;
     align-items: center;
