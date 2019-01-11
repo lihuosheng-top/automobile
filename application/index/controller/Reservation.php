@@ -240,7 +240,7 @@ class Reservation extends Controller{
         if($request->isPost()){
             $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
             $store_id =$request->only(["store_id"])["store_id"];
-            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
+            $condition ="evaluate_stars = 2 or evaluate_stars = 3";
             $evaluate_info =db("order_service_evaluate")
                 ->where("store_id",$store_id)
                 ->where($condition)
@@ -315,7 +315,6 @@ class Reservation extends Controller{
             $store_id =$request->only(["store_id"])["store_id"];
             $evaluate_info =db("order_service_evaluate")
                 ->where("store_id",$store_id)
-                ->where("evaluate_stars",1)
                 ->where("goods_id",$goods_id)
                 ->select();
             foreach ($evaluate_info as $ks=>$vs){
