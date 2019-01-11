@@ -862,7 +862,7 @@ $(".btu-sumit").on('click', function() {
 			if(static_select==3){
 				$.ajax({
 				type: "POST",
-				url: "{:url('admin/Order/after_savedsdedf')}",
+				url: "{:url('admin/Payment/WxPayment')}",
 				async: false,
 				data: {
 					"order_number": order_number,
