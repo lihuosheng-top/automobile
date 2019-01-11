@@ -13,11 +13,12 @@ if(url.indexOf('?') != -1){
     $('#search').focus();
 
     var timer = null;
+    var brandid = '';
     $('#search').on('input', function(){
         var _self = this;
         clearTimeout(timer);
         timer = setTimeout(function(){
-            searchAjax('goods_list_search', '', _self.value);
+            searchAjax('goods_list_search', brandid, _self.value);
         }, 500);
     })
 }
@@ -82,6 +83,7 @@ $('#search').on('input', function(){
     }, 500);
 })
 function searchAjax(url, brandid, searchTxt){
+    console.log(arguments)
     $.ajax({
         url: url,
         type: 'POST',
