@@ -188,27 +188,26 @@ class Advertisement extends Controller
                     $reste["hot_two"] = NULL;
                 }
                 if(isset($hot_three)){
-                    $reste["hot_three"] = $hot_two;
+                    $reste["hot_three"] = $hot_three;
                     }else{
                         $reste["hot_three"] = NULL;
                     }
                     if(isset($hot_four)){
-                        $reste["hot_four"] = $hot_two;
+                        $reste["hot_four"] = $hot_four;
                         }else{
                             $reste["hot_four"] = NULL;
                         }
                         if(isset($hot_five)){
-                            $reste["hot_five"] = $hot_two;
+                            $reste["hot_five"] = $hot_five;
                             }else{
                                 $reste["hot_five"] = NULL;
                             }
                             if(isset($hot_six)){
-                                $reste["hot_six"] = $hot_two;
+                                $reste["hot_six"] = $hot_six;
                                 }else{
                                     $reste["hot_six"] = NULL;
                                 }
-
-            unset($reste["hot"]);        
+     
             if ((!empty($reste)) && (!empty($area))) {
                 return ajax_success('传输成功', $reste);
             } else {

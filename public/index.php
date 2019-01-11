@@ -17,7 +17,7 @@ define('VENDOR_PATH', '../vendor/');
 define('APP_PATH', __DIR__ . '/../application/');
 //程序目录
 define('S_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
-define('WWW_URL','http://automobile.com');
+define('WWW_URL','https://openapi.alipay.com/gateway.do');
 
 define('D_BUG', 1);
 define('OPEN_SHOP_MONEY',0.01);
