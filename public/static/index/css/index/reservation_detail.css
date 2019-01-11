@@ -258,7 +258,7 @@ html{
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: .5rem 0;
+    padding: .3rem 0;
     border-bottom: 1px solid #eee;
 }
 .wrapper .filter-ul li{

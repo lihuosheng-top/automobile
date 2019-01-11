@@ -1468,7 +1468,11 @@ class OrderParts extends Controller{
                         ];
                         $res = Db::name('order_parts')->insertGetId($datas);
                         if ($res) {
-                            $order_datas =Db::name("order_parts")->field("order_real_pay,parts_goods_name,parts_order_number")->where('id',$res)->where("user_id",$user_id)->find();
+                            $order_datas =Db::name("order_parts")
+                                ->field("order_real_pay,parts_goods_name,parts_order_number")
+                                ->where('id',$res)
+                                ->where("user_id",$user_id)
+                                ->find();
                             if(!empty($data["setting_id"])){
                                 //积分消费记录
                                 $user_integral_wallet =$user_information["user_integral_wallet"]; //之前的积分余额

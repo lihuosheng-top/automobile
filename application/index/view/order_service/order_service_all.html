@@ -197,7 +197,7 @@
                         // $('#WIDbody').val(body);
                         if(totalAmount !== 0){
                             $.ajax({
-                                url: 'ios_api_order_service_button',
+                                url: 'ios_api_service_alipay',
                                 type: 'POST',
                                 dataType: 'JSON',
                                 data: {
@@ -221,12 +221,11 @@
                                 time: 1.2
                             })
                         }
-
-                        $('.close-alipay').click(function () {
-                            $('.mask').hide();
-                            $('.alipay-pop').animate({ 'bottom': '-100%' });
-                            $('html').css('overflow', 'auto');
-                        })
+                        // $('.close-alipay').click(function () {
+                        //     $('.mask').hide();
+                        //     $('.alipay-pop').animate({ 'bottom': '-100%' });
+                        //     $('html').css('overflow', 'auto');
+                        // })
                     })
                 }
             },
