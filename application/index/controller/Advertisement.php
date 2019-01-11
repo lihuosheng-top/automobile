@@ -151,7 +151,64 @@ class Advertisement extends Controller
                     $reste["machine"] = $machines;
                 }
             }
+           
+          $test = $reste["hot"];
+          if(!empty($test)){
+           foreach($test as $m => $p)
+           {
+            if($test[$m]["postid"]==5){
+                $hot_one[] = $p;
+            }
+            if($test[$m]["postid"]==6){
+                $hot_two[] = $p;
+            }
+            if($test[$m]["postid"]==7){
+                $hot_three[] = $p;
+            }
+            if($test[$m]["postid"]==8){
+                $hot_four[] = $p;
+            }
+            if($test[$m]["postid"]==9){
+                $hot_five[] = $p;
+            }
+            if($test[$m]["postid"]==10){
+                $hot_six[] = $p;
+            }
+               
+           }
+        }   
+            if(isset($hot_one)){
+            $reste["hot_one"] = $hot_one;
+            }else{
+                $reste["hot_one"] = NULL;
+            }
+            if(isset($hot_two)){
+                $reste["hot_two"] = $hot_two;
+                }else{
+                    $reste["hot_two"] = NULL;
+                }
+                if(isset($hot_three)){
+                    $reste["hot_three"] = $hot_two;
+                    }else{
+                        $reste["hot_three"] = NULL;
+                    }
+                    if(isset($hot_four)){
+                        $reste["hot_four"] = $hot_two;
+                        }else{
+                            $reste["hot_four"] = NULL;
+                        }
+                        if(isset($hot_five)){
+                            $reste["hot_five"] = $hot_two;
+                            }else{
+                                $reste["hot_five"] = NULL;
+                            }
+                            if(isset($hot_six)){
+                                $reste["hot_six"] = $hot_two;
+                                }else{
+                                    $reste["hot_six"] = NULL;
+                                }
 
+            unset($reste["hot"]);        
             if ((!empty($reste)) && (!empty($area))) {
                 return ajax_success('传输成功', $reste);
             } else {

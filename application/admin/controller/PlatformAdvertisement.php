@@ -39,7 +39,10 @@ class  PlatformAdvertisement extends  Controller{
         return view('platform_business_index',['platform'=>$platform]);
     }
 
-
+    /**
+     * [汽车平台广告添加]
+     * 郭杨
+     */
 
     public function platform_business_add($pid = 0)
     {      
