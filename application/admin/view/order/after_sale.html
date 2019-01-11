@@ -267,7 +267,7 @@
 					<div class="close"><img src="__STATIC__/admin/common/img/a7.png"></div>
 				</div>
 				<!-- 里面的内容 -->
-				<button type="button" class="btu-sumit" data-id="">确定</button>
+				<button type="button" class="btu-sumit" data-id="" data-name="" data-value="">确定</button>
 				<div class="dom layui-form">
 					
 					<ul class="clear card">
@@ -324,7 +324,7 @@
 						<div class="opation ">
 							<div class="select-operation seach_list">
 								<span>选择状态</span>
-								<select id="static_select">
+								<select id="static_select" lay-filter="select_static">
 									<option value="" selected="selected">请选择</option>
 									<option value="0">处理中</option>
 									<option value="1">拒绝</option>
@@ -436,24 +436,24 @@
 						<td>
 						
 								{if $value.status == 0 }
-								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #6667E5;">
+								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #6667E5;" data-value="{$value.user.phone_num}" data-name="{$value.order.parts_order_number}">
 								处理中
 						     	</button>
 								{/if}
 								{if $value.status == 1}
-								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #BCBCBC;">
+								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #BCBCBC; " data-value="{$value.user.phone_num}"  data-name="{$value.order.parts_order_number}">
 									拒绝
 									 </button>
 								
 								{/if}
 								{if $value.status == 2}
-								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #6FC605;">
+								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #6FC605;" data-value="{$value.user.phone_num}"  data-name="{$value.order.parts_order_number}">
 									收货中
 									 </button>
 								
 								{/if}
 								{if $value.status == 3}
-								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #CD8B01;">
+								<button type="button " class="state for-the-payment " data-id="{$value.id}" style= "background: #CD8B01;" data-value="{$value.user.phone_num}"  data-name="{$value.order.parts_order_number}">
 									完成退款
 								</button>
 								
@@ -497,8 +497,7 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 			var vals = $("input").data("id");
-			//是否展示
-
+			
 			//全选
 			form.on('checkbox(allChoose)', function(data) {
 				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
@@ -708,7 +707,11 @@ function getMyDate(str){
       }
 	$(".state").on('click', function() {
 	var id = $(this).data("id");
+	var phone = $(this).data("value");
+	var order_id = $(this).data("name");
 	$(".btu-sumit").data('id', id);
+	$(".btu-sumit").data('value', phone);
+	$(".btu-sumit").data('name', order_id);
 	$.ajax({
 		type: "POST",
 		url: "{:url('admin/Order/platform_after_sale_selest')}",
@@ -848,12 +851,33 @@ $(".card").on('click', 'li', function() {
 // 点击弹窗确认按钮
 $(".btu-sumit").on('click', function() {
 			$(".tanchuang").addClass("noshow");
-			var id = $(this).data("id");
 			var note_tip = $("#note_tip").val();
 			var static_select = $("#static_select  option:selected").val();
 			var  pay_type_content=$("#pay_type_content  option:selected").val();
 			var refund_amount = $("#refund_amount").val();
 			var timestamp = new Date().getTime();
+			var order_number=$(this).data("name");
+			var phone=$(this).data("value");
+			console.log(phone);
+			if(static_select==3){
+				$.ajax({
+				type: "POST",
+				url: "{:url('admin/Order/after_savedsdedf')}",
+				async: false,
+				data: {
+					"order_number": order_number,
+					"order_phone": phone,
+					"order_money": refund_amount,
+				},
+				success: function(data) {
+					console.log(data)
+				},
+				error: function(data) {
+					console.log("失败");
+				}
+			});
+			}
+			else{
 			$.ajax({
 				type: "POST",
 				url: "{:url('admin/Order/after_save')}",
@@ -872,6 +896,9 @@ $(".btu-sumit").on('click', function() {
 					console.log("失败");
 				}
 			});
+
+			}
+		
 
 		});
 
