@@ -210,21 +210,21 @@ if(urlLen > 1){
                                         </li>`
                         myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
                         myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
-                        $.ajax({
-                            url: 'reservation_evaluate_numbers',
-                            type: 'POST',
-                            dataType: 'JSON',
-                            data: {
-                                'setting_id': ele.service_setting_id,
-                                'store_id': storeId
-                            },
-                            success: function(res){
-                                console.log('评论数量', res);
-                            },
-                            error: function(){
-                                console.log('error');
-                            }
-                        })
+                        // $.ajax({
+                        //     url: 'reservation_evaluate_numbers',
+                        //     type: 'POST',
+                        //     dataType: 'JSON',
+                        //     data: {
+                        //         'setting_id': ele.service_setting_id,
+                        //         'store_id': storeId
+                        //     },
+                        //     success: function(res){
+                        //         console.log('评论数量', res);
+                        //     },
+                        //     error: function(){
+                        //         console.log('error');
+                        //     }
+                        // })
                     }else{
                         filterStr += `<li data-serverid="`+ele.service_setting_id+`">
                                         <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
