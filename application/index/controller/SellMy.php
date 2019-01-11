@@ -434,7 +434,7 @@ class  SellMy extends Controller{
                     foreach ($end_info as $vl){
                         $ords[] =$vl["order_create_times"];
                     }
-                    array_multisort($end_info,SORT_DESC,$ords);
+                    array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
                 }else{
                     exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
@@ -628,7 +628,7 @@ class  SellMy extends Controller{
                     foreach ($end_info as $vl){
                         $ords[] =$vl["order_create_times"];
                     }
-                    array_multisort($end_info,SORT_DESC,$ords);
+                    array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
                 }else{
                     exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
@@ -822,7 +822,7 @@ class  SellMy extends Controller{
                     foreach ($end_info as $vl){
                         $ords[] =$vl["order_create_times"];
                     }
-                    array_multisort($end_info,SORT_DESC,$ords);
+                    array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
                 }else{
                     exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
@@ -1017,7 +1017,7 @@ class  SellMy extends Controller{
                     foreach ($end_info as $vl){
                         $ords[] =$vl["order_create_times"];
                     }
-                    array_multisort($end_info,SORT_DESC,$ords);
+                    array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
                 }else{
                     exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
@@ -1211,7 +1211,7 @@ class  SellMy extends Controller{
                     foreach ($end_info as $vl){
                         $ords[] =$vl["order_create_times"];
                     }
-                    array_multisort($end_info,SORT_DESC,$ords);
+                    array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
                 }else{
                     exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
@@ -1402,7 +1402,7 @@ class  SellMy extends Controller{
                     foreach ($end_info as $vl){
                         $ords[] =$vl["order_create_times"];
                     }
-                    array_multisort($end_info,SORT_DESC,$ords);
+                    array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
                 }else{
                     exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
@@ -1591,7 +1591,7 @@ class  SellMy extends Controller{
                     foreach ($end_info as $vl){
                         $ords[] =$vl["order_create_times"];
                     }
-                    array_multisort($end_info,SORT_DESC,$ords);
+                    array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
                 }else{
                     exit(json_encode(array("status" => 0, "info" => "没有订单信息","data"=>["status"=>0])));
