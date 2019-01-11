@@ -200,32 +200,48 @@ class Reservation extends Controller{
      **************************************
      */
     public function reservation_evaluate_good(Request $request){
-        if($request->isPost()){
-            $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
-            $store_id =$request->only(["store_id"])["store_id"];
+        if($request->isPost()) {
+            $service_setting_id = $request->only(["goods_id"])["goods_id"];//服务setting_id
+            $store_id = $request->only(["store_id"])["store_id"];
+            $goods_id_arr = Db::name("serve_goods")->where("service_setting_id", $service_setting_id)->select();
             $condition ="evaluate_stars = 4 or evaluate_stars = 5";
-            $evaluate_info =db("order_service_evaluate")
-                ->where("store_id",$store_id)
-                ->where($condition)
-                ->where("goods_id",$goods_id)
-                ->select();
-            foreach ($evaluate_info as $ks=>$vs){
-                $evaluate_info[$ks]["images"] = db("order_service_evaluate_images")
-                    ->field("images")
-                    ->where("evaluate_order_id",$vs["id"])
+            foreach ($goods_id_arr as $key => $value) {
+                $evaluate_info = db("order_service_evaluate")
+                    ->where("goods_id", $value["id"])
+                    ->where($condition)
+                    ->where("store_id", $store_id)
                     ->select();
-                $evaluate_info[$ks]["order_create_time"] =db("order_service")
-                    ->where("id",$vs["order_id"])
-                    ->value("create_time");
-                $evaluate_info[$ks]["user_info"] =db("user")
-                    ->where("id",$vs["user_id"])
-                    ->field("user_img,phone_num")
-                    ->find();
+                if (!empty($evaluate_info)) {
+                    $evaluate_info_arr[] = $evaluate_info;
+                }
             }
-            if(!empty($evaluate_info)){
-                return ajax_success("数据返回成功",$evaluate_info);
-            }else{
-                return ajax_error("没有数据",["status"=>0]);
+
+            if (!empty($evaluate_info_arr)) {
+                foreach ($evaluate_info_arr as $kk => $vv) {
+                    foreach ($vv as $i => $j) {
+                        $evaluate_info_arr[$kk][$i]["images"] = db("order_service_evaluate_images")
+                            ->field("images")
+                            ->where("evaluate_order_id", $j["id"])
+                            ->select();
+                        $evaluate_info_arr[$kk][$i]["order_create_time"] = db("order_service")
+                            ->where("id", $j["order_id"])
+                            ->value("create_time");
+                        $evaluate_info_arr[$kk][$i]["user_info"] = db("user")
+                            ->where("id", $j["user_id"])
+                            ->field("user_img,phone_num")
+                            ->find();
+                    }
+                }
+                $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
+                $ords =array();
+                foreach ($evaluate_info_arr as $vl){
+                    $ords[] =intval($vl["create_time"]);
+                }
+                array_multisort($evaluate_info_arr,SORT_ASC,$ords);
+
+                return ajax_success("数据返回成功", $evaluate_info_arr);
+            } else {
+                return ajax_error("没有数据", ["status" => 0]);
             }
 
         }
@@ -237,32 +253,47 @@ class Reservation extends Controller{
      **************************************
      */
     public function reservation_evaluate_secondary(Request $request){
-        if($request->isPost()){
-            $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
-            $store_id =$request->only(["store_id"])["store_id"];
-            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
-            $evaluate_info =db("order_service_evaluate")
-                ->where("store_id",$store_id)
-                ->where($condition)
-                ->where("goods_id",$goods_id)
-                ->select();
-            foreach ($evaluate_info as $ks=>$vs){
-                $evaluate_info[$ks]["images"] = db("order_service_evaluate_images")
-                    ->field("images")
-                    ->where("evaluate_order_id",$vs["id"])
+        if($request->isPost()) {
+            $service_setting_id = $request->only(["goods_id"])["goods_id"];//服务setting_id
+            $store_id = $request->only(["store_id"])["store_id"];
+            $goods_id_arr = Db::name("serve_goods")->where("service_setting_id", $service_setting_id)->select();
+            $condition ="evaluate_stars = 2 or evaluate_stars = 3";
+            foreach ($goods_id_arr as $key => $value) {
+                $evaluate_info = db("order_service_evaluate")
+                    ->where("goods_id", $value["id"])
+                    ->where($condition)
+                    ->where("store_id", $store_id)
                     ->select();
-                $evaluate_info[$ks]["order_create_time"] =db("order_service")
-                    ->where("id",$vs["order_id"])
-                    ->value("create_time");
-                $evaluate_info[$ks]["user_info"] =db("user")
-                    ->where("id",$vs["user_id"])
-                    ->field("user_img,phone_num")
-                    ->find();
+                if (!empty($evaluate_info)) {
+                    $evaluate_info_arr[] = $evaluate_info;
+                }
             }
-            if(!empty($evaluate_info)){
-                return ajax_success("数据返回成功",$evaluate_info);
-            }else{
-                return ajax_error("没有数据",["status"=>0]);
+            if (!empty($evaluate_info_arr)) {
+                foreach ($evaluate_info_arr as $kk => $vv) {
+                    foreach ($vv as $i => $j) {
+                        $evaluate_info_arr[$kk][$i]["images"] = db("order_service_evaluate_images")
+                            ->field("images")
+                            ->where("evaluate_order_id", $j["id"])
+                            ->select();
+                        $evaluate_info_arr[$kk][$i]["order_create_time"] = db("order_service")
+                            ->where("id", $j["order_id"])
+                            ->value("create_time");
+                        $evaluate_info_arr[$kk][$i]["user_info"] = db("user")
+                            ->where("id", $j["user_id"])
+                            ->field("user_img,phone_num")
+                            ->find();
+                    }
+                }
+                $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
+                $ords =array();
+                foreach ($evaluate_info_arr as $vl){
+                    $ords[] =intval($vl["create_time"]);
+                }
+                array_multisort($evaluate_info_arr,SORT_ASC,$ords);
+
+                return ajax_success("数据返回成功", $evaluate_info_arr);
+            } else {
+                return ajax_error("没有数据", ["status" => 0]);
             }
 
         }
@@ -274,31 +305,47 @@ class Reservation extends Controller{
      **************************************
      */
     public function reservation_evaluate_bad(Request $request){
-        if($request->isPost()){
-            $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
-            $store_id =$request->only(["store_id"])["store_id"];
-            $evaluate_info =db("order_service_evaluate")
-                ->where("store_id",$store_id)
-                ->where("evaluate_stars",1)
-                ->where("goods_id",$goods_id)
-                ->select();
-            foreach ($evaluate_info as $ks=>$vs){
-                $evaluate_info[$ks]["images"] = db("order_service_evaluate_images")
-                    ->field("images")
-                    ->where("evaluate_order_id",$vs["id"])
+        if($request->isPost()) {
+            $service_setting_id = $request->only(["goods_id"])["goods_id"];//服务setting_id
+            $store_id = $request->only(["store_id"])["store_id"];
+            $goods_id_arr = Db::name("serve_goods")->where("service_setting_id", $service_setting_id)->select();
+            $condition ="evaluate_stars = 1";
+            foreach ($goods_id_arr as $key => $value) {
+                $evaluate_info = db("order_service_evaluate")
+                    ->where("goods_id", $value["id"])
+                    ->where($condition)
+                    ->where("store_id", $store_id)
                     ->select();
-                $evaluate_info[$ks]["order_create_time"] =db("order_service")
-                    ->where("id",$vs["order_id"])
-                    ->value("create_time");
-                $evaluate_info[$ks]["user_info"] =db("user")
-                    ->where("id",$vs["user_id"])
-                    ->field("user_img,phone_num")
-                    ->find();
+                if (!empty($evaluate_info)) {
+                    $evaluate_info_arr[] = $evaluate_info;
+                }
             }
-            if(!empty($evaluate_info)){
-                return ajax_success("数据返回成功",$evaluate_info);
-            }else{
-                return ajax_error("没有数据",["status"=>0]);
+            if (!empty($evaluate_info_arr)) {
+                foreach ($evaluate_info_arr as $kk => $vv) {
+                    foreach ($vv as $i => $j) {
+                        $evaluate_info_arr[$kk][$i]["images"] = db("order_service_evaluate_images")
+                            ->field("images")
+                            ->where("evaluate_order_id", $j["id"])
+                            ->select();
+                        $evaluate_info_arr[$kk][$i]["order_create_time"] = db("order_service")
+                            ->where("id", $j["order_id"])
+                            ->value("create_time");
+                        $evaluate_info_arr[$kk][$i]["user_info"] = db("user")
+                            ->where("id", $j["user_id"])
+                            ->field("user_img,phone_num")
+                            ->find();
+                    }
+                }
+                $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
+                $ords =array();
+                foreach ($evaluate_info_arr as $vl){
+                    $ords[] =intval($vl["create_time"]);
+                }
+                array_multisort($evaluate_info_arr,SORT_ASC,$ords);
+
+                return ajax_success("数据返回成功", $evaluate_info_arr);
+            } else {
+                return ajax_error("没有数据", ["status" => 0]);
             }
 
         }
@@ -310,36 +357,50 @@ class Reservation extends Controller{
      **************************************
      */
     public function reservation_evaluate_has_img(Request $request){
-        if($request->isPost()){
-            $goods_id = $request->only(["goods_id"])["goods_id"];//服务id
-            $store_id =$request->only(["store_id"])["store_id"];
-            $evaluate_info =db("order_service_evaluate")
-                ->where("store_id",$store_id)
-                ->where("evaluate_stars",1)
-                ->where("goods_id",$goods_id)
-                ->select();
-            foreach ($evaluate_info as $ks=>$vs){
-                $img = db("order_service_evaluate_images")
-                    ->field("images")
-                    ->where("evaluate_order_id",$vs["id"])
+        if($request->isPost()) {
+            $service_setting_id = $request->only(["goods_id"])["goods_id"];//服务setting_id
+            $store_id = $request->only(["store_id"])["store_id"];
+            $goods_id_arr = Db::name("serve_goods")->where("service_setting_id", $service_setting_id)->select();
+            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
+            foreach ($goods_id_arr as $key => $value) {
+                $evaluate_info = db("order_service_evaluate")
+                    ->where("goods_id", $value["id"])
+                    ->where($condition)
+                    ->where("store_id", $store_id)
                     ->select();
-                if(!empty($img)){
-                    $evaluate_info[$ks]["images"] =$img;
-                }else{
-                    $evaluate_info[$ks]["images"] =null;
+                if (!empty($evaluate_info)) {
+                    $evaluate_info_arr[] = $evaluate_info;
                 }
-                $evaluate_info[$ks]["order_create_time"] =db("order_service")
-                    ->where("id",$vs["order_id"])
-                    ->value("create_time");
-                $evaluate_info[$ks]["user_info"] =db("user")
-                    ->where("id",$vs["user_id"])
-                    ->field("user_img,phone_num")
-                    ->find();
             }
-            if(!empty($evaluate_info)){
-                return ajax_success("数据返回成功",$evaluate_info);
-            }else{
-                return ajax_error("没有数据",["status"=>0]);
+            if (!empty($evaluate_info_arr)) {
+                foreach ($evaluate_info_arr as $kk => $vv) {
+                    foreach ($vv as $i => $j) {
+                        $img = db("order_service_evaluate_images")
+                            ->field("images")
+                            ->where("evaluate_order_id", $j["id"])
+                            ->select();
+                        if(!empty($img)){
+                            $evaluate_info_arr[$kk][$i]["images"] =$img;
+                            $evaluate_info_arr[$kk][$i]["order_create_time"] = db("order_service")
+                                ->where("id", $j["order_id"])
+                                ->value("create_time");
+                            $evaluate_info_arr[$kk][$i]["user_info"] = db("user")
+                                ->where("id", $j["user_id"])
+                                ->field("user_img,phone_num")
+                                ->find();
+                        }
+
+                    }
+                }
+                $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
+                $ords =array();
+                foreach ($evaluate_info_arr as $vl){
+                    $ords[] =intval($vl["create_time"]);
+                }
+                array_multisort($evaluate_info_arr,SORT_ASC,$ords);
+                return ajax_success("数据返回成功", $evaluate_info_arr);
+            } else {
+                return ajax_error("没有数据", ["status" => 0]);
             }
 
         }
