@@ -154,19 +154,38 @@ class Reservation extends Controller{
             //前端传setting_id过来识别是那种服务项目类型
             $service_setting_id = $request->only(["setting_id"])["setting_id"];//服务setting_id
             $store_id = $request->only(["store_id"])["store_id"];
-            $goods_id_arr = Db::name("serve_goods")->where("service_setting_id", $service_setting_id)->select();
+            //所有的
+            $all_numbers[0] = db("order_service_evaluate")
+                ->where("setting_id",$service_setting_id)
+                ->where("store_id", $store_id)
+                ->count();
+            //好评的数量
             $condition ="evaluate_stars = 4 or evaluate_stars = 5";
-            foreach ($goods_id_arr as $key => $value) {
-                $evaluate_info = db("order_service_evaluate")
-                    ->where("goods_id", $value["id"])
-                    ->where($condition)
-                    ->where("store_id", $store_id)
-                    ->select();
-                if (!empty($evaluate_info)) {
-                    $evaluate_info_arr[] = $evaluate_info;
-                }
+            $all_numbers[1] = db("order_service_evaluate")
+                ->where($condition)
+                ->where("setting_id",$service_setting_id)
+                ->where("store_id", $store_id)
+                ->count();
+            //中评
+            $min_condition ="evaluate_stars = 4 or evaluate_stars = 5";
+            $all_numbers[2] = db("order_service_evaluate")
+                ->where($min_condition)
+                ->where("setting_id",$service_setting_id)
+                ->where("store_id", $store_id)
+                ->count();
+            //差评
+            $bad_condition ="evaluate_stars = 4 or evaluate_stars = 5";
+            $all_numbers[3] = db("order_service_evaluate")
+                ->where($bad_condition)
+                ->where("setting_id",$service_setting_id)
+                ->where("store_id", $store_id)
+                ->count();
+            $all_numbers[4] = 0;
+            if(!empty($all_numbers)){
+                return ajax_success("有数据",$all_numbers);
+            }else{
+                return ajax_error("没有记录");
             }
-
         }
     }
 
