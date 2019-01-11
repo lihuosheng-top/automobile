@@ -5,17 +5,20 @@ $('.filter_box button').click(function(){
 
 // 获取url地址id
 var url = location.search;
-var id;
+var brandid;
 if(url.indexOf('?') != -1){
-    id = url.substr(1).split('=')[1];
+    brandid = url.substr(1).split('=')[1];
+    layDataAjax('goods_list', brandid)
+}else{
+    $('#search').focus();
 }
-$(function(){
+function layDataAjax(url, brandid){
     $.ajax({
-        url: 'goods_list',
+        url: url,
         type: 'POST',
         dataType: 'JSON',
         data: {
-            'id': id
+            'id': brandid
         },
         success: function(res){
             console.log(res);
@@ -23,7 +26,7 @@ $(function(){
             $.each(res.data, function(idx, val){
                 if(idx % 2 == 0){
                     str += '<li>\
-                                <a href="goods_detail?id='+val.id+'&preid='+id+'">\
+                                <a href="goods_detail?id='+val.id+'&preid='+brandid+'">\
                                     <div class="img_div">\
                                         <img src="uploads/'+val.goods_show_images+'">\
                                     </div>\
@@ -39,7 +42,7 @@ $(function(){
                     return;
                 }
                 str += '<li class="mgr0">\
-                            <a href="goods_detail?id='+val.id+'&preid='+id+'">\
+                            <a href="goods_detail?id='+val.id+'&preid='+brandid+'">\
                                 <div class="img_div">\
                                     <img src="uploads/'+val.goods_show_images+'">\
                                 </div>\
@@ -60,7 +63,7 @@ $(function(){
             console.log('error');
         }
     })
-})
+}
 var timer = null;
 $('#search').on('input', function(){
     var _self = this;

@@ -76,7 +76,7 @@ $.ajax({
             $('.evaluation-btn')
                 .add('.del-order-btn')
                 .add('.return-goods')
-                .show();
+                    .show();
         }else if(val.status === 8){
             statusTxt = `已完成`;
         }else if(val.status === 9 || val.status === 10){
@@ -107,37 +107,24 @@ $.ajax({
         // 订单商品
         var str = '';
         $.each(val.info, function(idx, val){
-            if(statusTxt == '待评价'){
-                str += `<div class="order-goods-detail" id="`+val.id+`">
-                            <div class="order-goods-img">
-                                <img src="uploads/`+val.goods_image+`">
+            str += `<div class="order-goods-detail" id="`+val.id+`">
+                        <div class="order-goods-img">
+                            <img src="uploads/`+val.goods_image+`">
+                        </div>
+                        <div class="order-info-box">
+                            <p class="order-goods-p txt-hid-two">`+val.parts_goods_name+`</p>
+                            <p class="order-selling-point txt-hid-two">`+val.goods_describe+`</p>
+                            <div class="unit-price-quantity">
+                                <p class="unit-price-p">￥`+val.goods_money+`</p>
+                                <p class="quantity-p">×`+val.order_quantity+`</p>
+                                <p style="display:`+(val.status==11?'block': 
+                                                    (val.status==13?'block':
+                                                    (val.status==15?'block':'none')))+`;">退货中</p>
+                                <p style="display:`+(val.status==12?'block':'none')+`;">已退货</p>
+                                <button class="return-goods" style="display:`+(val.status==7?'block':'none')+`;">退货</button>
                             </div>
-                            <div class="order-info-box">
-                                <p class="order-goods-p txt-hid-two">`+val.parts_goods_name+`</p>
-                                <p class="order-selling-point txt-hid-two">`+val.goods_describe+`</p>
-                                <div class="unit-price-quantity">
-                                    <p class="unit-price-p">￥`+val.goods_money+`</p>
-                                    <p class="quantity-p">×`+val.order_quantity+`</p>
-                                    <button class="return-goods">退货</button>
-                                </div>
-                            </div>
-                        </div>`
-            }else{
-                str += `<div class="order-goods-detail" id="`+val.id+`">
-                            <div class="order-goods-img">
-                                <img src="uploads/`+val.goods_image+`">
-                            </div>
-                            <div class="order-info-box">
-                                <p class="order-goods-p txt-hid-two">`+val.parts_goods_name+`</p>
-                                <p class="order-selling-point txt-hid-two">`+val.goods_describe+`</p>
-                                <div class="unit-price-quantity">
-                                    <p class="unit-price-p">￥`+val.goods_money+`</p>
-                                    <p class="quantity-p">×`+val.order_quantity+`</p>
-                                </div>
-                            </div>
-                        </div>`
-            }
-            
+                        </div>
+                    </div>`
         })
         $('.order-shop-box').after(str);
         // 商品总额
