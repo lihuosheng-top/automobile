@@ -128,7 +128,7 @@
                 <p><i class="spr icon_like"></i>你可能还喜欢</p>
             </div>
             <ul class="like_cont_ul clearfix">
-                <li>
+                <!-- <li>
                     <div class="img_div">
                         <img src="__STATIC__/index/image/02.png">
                     </div>
@@ -140,20 +140,7 @@
                         <span class="pay_num">1500人购买</span>
                         <i class="spr icon_cart"></i>
                     </div>
-                </li>
-                <li class="mgr0">
-                    <div class="img_div">
-                        <img src="__STATIC__/index/image/02.png">
-                    </div>
-                    <div class="goods_name">
-                        <p>德国马牌continentalUItraCon tactUC6SUV235/65R171231234546</p>
-                    </div>
-                    <div class="goods_price">
-                        <span class="price">￥875</span>
-                        <span class="pay_num">1500人购买</span>
-                        <i class="spr icon_cart"></i>
-                    </div>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -176,16 +163,16 @@
                                         </a>
                                     </div>`
                     })
-                    $('.swiper-container .swiper-wrapper').append(topSwiper);
+                    $('.swiper-container .swiper-wrapper').html(topSwiper);
                     swiper1();
-                    $.each(res.data.discounts, function(idx, val){
+                    $.each(res.data.discount, function(idx, val){
                         botSwiper += `<div class="swiper-slide">
                                         <a href="`+val.url+`">
                                             <img src="uploads/`+val.advert_picture+`">
                                         </a>
                                     </div>`
                     })
-                    $('.swiper-container2 .swiper-wrapper').append(botSwiper);
+                    $('.swiper-container2 .swiper-wrapper').html(botSwiper);
                     swiper2();
                 }
             },
@@ -247,6 +234,53 @@
             error:function (data) {
                 console.log("错误")
             }
+        })
+        // 你可能喜欢
+        $(function(){
+            $.ajax({
+                url: 'may_like_goods',
+                type: 'POST',
+                dataType: 'JSON',
+                success: function(res){
+                    console.log('你可能喜欢',res);
+                    if(res.status == 1){
+                        var str = '';
+                        res.data.forEach(function(val, idx){
+                            if(idx % 2 !== 0){
+                                str += `<li class="mgr0">
+                                            <div class="img_div">
+                                                <img src="uploads/`+val.goods_show_images+`">
+                                            </div>
+                                            <div class="goods_name">
+                                                <p class="txt-hid-two">`+val.goods_name+`</p>
+                                            </div>
+                                            <div class="goods_price">
+                                                <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
+                                                <span class="pay_num">`+val.statistical_quantity+`人购买</span>
+                                            </div>
+                                        </li>`
+                                return;
+                            }
+                            str += `<li>
+                                        <div class="img_div">
+                                            <img src="uploads/`+val.goods_show_images+`">
+                                        </div>
+                                        <div class="goods_name">
+                                            <p class="txt-hid-two">`+val.goods_name+`</p>
+                                        </div>
+                                        <div class="goods_price">
+                                            <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
+                                            <span class="pay_num">`+val.statistical_quantity+`人购买</span>
+                                        </div>
+                                    </li>`
+                        })
+                        $('.like_cont_ul').html(str);
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         })
     </script>
 </body>
