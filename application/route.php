@@ -46,6 +46,7 @@ Route::group("",[
     "reservation_detail"=>"index/reservation/reservation_detail",//预约服务 详情
     "reservation_info"=>"index/reservation/reservation_info",//预约服务 详情
     /*TODO:预约服务评价信息开始*/
+    "reservation_evaluate_numbers"=>"index/reservation/reservation_evaluate_numbers",//全部评价数量，好评数量，中评数量，差评数量，有图数量
     "reservation_evaluate_return"=>"index/reservation/reservation_evaluate_return",//预约服务全部评价数据
     "reservation_evaluate_good"=>"index/reservation/reservation_evaluate_good",//预约服务详全部评价里面的（好评）
     "reservation_evaluate_secondary"=>"index/reservation/reservation_evaluate_secondary",//预约服务详情全部评价里面的（中评）
