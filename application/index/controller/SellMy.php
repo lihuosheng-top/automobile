@@ -233,6 +233,25 @@ class  SellMy extends Controller{
         return view("sell_service_order");
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商面议修改价格
+     **************************************
+     */
+    public function sell_service_price_change(Request $request){
+        if($request->isPost()){
+            $id =$request->only("id")["id"];
+            $price =$request->only("price")["price"];//价钱
+            $bool =Db::name("order_service")->where("id",$id)->update(["order_amount"=>$price]);
+            if($bool){
+                return ajax_success("保存价格成功",$price);
+            }else{
+                return ajax_error("请重新进入填写价格",["status"=>0]);
+            }
+        }
+    }
+
 
     /**
      **************李火生*******************
