@@ -185,6 +185,7 @@ class Reservation extends Controller{
                 ->where("setting_id",$service_setting_id)
                 ->where("store_id", $store_id)
                 ->select();
+            $set =[];
             foreach ($all_img as $k=>$v){
                 $is_set =Db::name("order_service_evaluate_images")
                     ->where("evaluate_order_id",$v["id"])
@@ -193,7 +194,11 @@ class Reservation extends Controller{
                     $set[$k] =$is_set["evaluate_order_id"];
                 }
             }
-            $all_numbers[4] =count(array_unique($set));
+            if(!empty($set)){
+                $all_numbers[4] =count(array_unique($set));
+            }else{
+                $all_numbers[4] =0;
+            }
             if(!empty($all_numbers)){
                 return ajax_success("有数据",$all_numbers);
             }else{
