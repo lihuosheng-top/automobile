@@ -167,20 +167,35 @@ class Reservation extends Controller{
                 ->where("store_id", $store_id)
                 ->count();
             //中评
-            $min_condition ="evaluate_stars = 4 or evaluate_stars = 5";
+            $min_condition ="evaluate_stars = 2 or evaluate_stars = 3";
             $all_numbers[2] = db("order_service_evaluate")
                 ->where($min_condition)
                 ->where("setting_id",$service_setting_id)
                 ->where("store_id", $store_id)
                 ->count();
             //差评
-            $bad_condition ="evaluate_stars = 4 or evaluate_stars = 5";
+            $bad_condition ="evaluate_stars = 1";
             $all_numbers[3] = db("order_service_evaluate")
                 ->where($bad_condition)
                 ->where("setting_id",$service_setting_id)
                 ->where("store_id", $store_id)
                 ->count();
-            $all_numbers[4] = 0;
+
+            $all_img= db("order_service_evaluate")
+                ->where("setting_id",$service_setting_id)
+                ->where("store_id", $store_id)
+                ->select();
+            foreach ($all_img as $k=>$v){
+                $is_set =Db::name("order_service_evaluate_images")
+                    ->where("evaluate_order_id",$v["id"])
+                    ->value("evaluate_order_id");
+                if(!empty($is_set)){
+                    $set[] =$is_set;
+                }else{
+                    $set = [];
+                }
+            }
+            $all_numbers[4] =count(array_unique($set));
             if(!empty($all_numbers)){
                 return ajax_success("有数据",$all_numbers);
             }else{
@@ -406,11 +421,9 @@ class Reservation extends Controller{
             $service_setting_id = $request->only(["goods_id"])["goods_id"];//服务setting_id
             $store_id = $request->only(["store_id"])["store_id"];
             $goods_id_arr = Db::name("serve_goods")->where("service_setting_id", $service_setting_id)->select();
-            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
             foreach ($goods_id_arr as $key => $value) {
                 $evaluate_info = db("order_service_evaluate")
                     ->where("goods_id", $value["id"])
-                    ->where($condition)
                     ->where("store_id", $store_id)
                     ->select();
                 if (!empty($evaluate_info)) {
