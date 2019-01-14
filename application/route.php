@@ -121,6 +121,7 @@ Route::group("",[
     "store_order_get"=>"index/SellMy/store_order_get",//卖家读取信息（方便判断点击的是哪个按钮进来）
 
     "sell_service_order"=>"index/SellMy/sell_service_order",//卖家服务订单
+    "sell_service_price_change"=>"index/SellMy/sell_service_price_change",//服务商面议修改价格
     "sell_parts_order"=>"index/SellMy/sell_parts_order",//卖家商品订单
     "sell_order_service_save_record"=>"index/SellMy/sell_order_service_save_record",//卖家进入服务订单详情需要保存的数据
     "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
