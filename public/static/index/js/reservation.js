@@ -42,7 +42,7 @@ AMap.plugin([
 
 function showShops(addr){
     var markerList = [];//店铺经纬度
-    console.log(addr); 
+    // console.log(addr); 
     $.ajax({
         url: 'reservation',
         type: 'POST',
@@ -54,11 +54,12 @@ function showShops(addr){
         success: function(data){
             console.log(data);
             var str = '';
+            // 店铺距离 数组
+            var dis = 0;
+            var disArr = [];
             $.each(data.data, function(idx, val){
-                // console.log(val.serve_name)
+                // 店铺匹配
                 if(val.serve_name !== undefined){
-                    // 店铺经纬度
-                    var dis = 0;
                     if(val.serve_name.longitude !== null && val.serve_name.latitude !== null){
                         // 存储标记点
                         markerList.push(new AMap.Marker({
@@ -66,58 +67,52 @@ function showShops(addr){
                             title: val.serve_name.real_address,
                             offset: new AMap.Pixel(-20, -62),
                         }));
-                        console.log(markerList);
-                        // 计算每一个标记点与车主距离
-                        var markerLngLat = [];
-                        $.each(markerList, function(idx, val){
-                            markerLngLat = [val.C.position.lng, val.C.position.lat];
-                        })
+                        var markerLngLat = [parseFloat(val.serve_name.longitude),parseFloat(val.serve_name.latitude)];
+                        // 定位成功 计算用户与店铺距离
                         if(userLngLat.length !== 0){
                             dis = parseInt(AMap.GeometryUtil.distance(markerLngLat, userLngLat));
                         }
-                    }
-                    if(val.service_money !== null){
-                        str += '<div>\
-                                    <a href="reservation_detail?store_id='+val.store_id+'&service_setting_id='+service_setting_id+'" class="shop_box">\
-                                        <div class="addr_info_box">\
-                                            <p class="shop_name_p">'+val.serve_name.store_name+'</p>\
-                                            <div class="comment_box">\
-                                                <i class="spr icon_star"></i>\
-                                                <p class="statistic_member">汽车维修<span class="member_num">2000</span>人去过</p>\
-                                            </div>\
-                                            <p class="distance_addr_box">\
-                                                <span class="distance_span">约'+dis+'米</span>\
-                                                <span class="addr_span">'+val.serve_name.store_detailed_address+'</span>\
-                                            </p>\
-                                        </div>\
-                                        <div class="service_type">\
-                                            <p class="service_price">￥'+val.service_money+'</p>\
-                                            <p class="service_text">'+val.service_setting_name+'</p>\
-                                        </div>\
-                                    </a>\
-                                </div>'
-                    }else{
-                        str += '<div>\
-                                <a href="reservation_detail?store_id='+val.store_id+'&service_setting_id='+service_setting_id+'" class="shop_box">\
-                                    <div class="addr_info_box">\
-                                        <p class="shop_name_p">'+val.serve_name.store_name+'</p>\
-                                        <div class="comment_box">\
-                                            <i class="spr icon_star"></i>\
-                                            <p class="statistic_member">汽车维修<span class="member_num">2000</span>人去过</p>\
-                                        </div>\
-                                        <p class="distance_addr_box">\
-                                            <span class="distance_span">约'+dis+'米</span>\
-                                            <span class="addr_span">'+val.serve_name.store_detailed_address+'</span>\
-                                        </p>\
-                                    </div>\
-                                    <div class="service_type">\
-                                        <p class="service_price">面议</p>\
-                                        <p class="service_text">'+val.service_setting_name+'</p>\
-                                    </div>\
-                                </a>\
-                            </div>'
+                        // 存储距离
+                        disArr.push({
+                            id: val.id,
+                            dis: dis
+                        })
                     }
                 }
+            })
+            // 从小到大排序
+            var sortDisArr = disArr.sort(sortNum);
+            console.log(sortDisArr)
+            // 循环距离数组
+            $.each(sortDisArr, function(idx, val){
+                // 循环店铺
+                $.each(data.data, function(idx, ele){
+                    if(ele.serve_name !== undefined){
+                        if(ele.serve_name.longitude !== null && ele.serve_name.latitude !== null){
+                            if(ele.id == val.id){
+                                str += '<div>\
+                                            <a href="reservation_detail?store_id='+ele.store_id+'&service_setting_id='+service_setting_id+'" class="shop_box">\
+                                                <div class="addr_info_box">\
+                                                    <p class="shop_name_p">'+ele.serve_name.store_name+'</p>\
+                                                    <div class="comment_box">\
+                                                        <i class="spr icon_star"></i>\
+                                                        <p class="statistic_member">'+ele.service_setting_name+'<span class="member_num">2000</span>人去过</p>\
+                                                    </div>\
+                                                    <p class="distance_addr_box">\
+                                                        <span class="distance_span">约'+val.dis+'米</span>\
+                                                        <span class="addr_span">'+ele.serve_name.store_detailed_address+'</span>\
+                                                    </p>\
+                                                </div>\
+                                                <div class="service_type">\
+                                                    <p class="service_price">￥'+(ele.service_money !== null ? ele.service_money:'面议')+'</p>\
+                                                    <p class="service_text">'+ele.service_setting_name+'</p>\
+                                                </div>\
+                                            </a>\
+                                        </div>'
+                            }
+                        }
+                    }
+                })
             })
             map.add(markerList);
             $('.shop_list').html('').append(str);
@@ -128,5 +123,8 @@ function showShops(addr){
 
     });
 }
-
-
+// 排位距离
+function sortNum(a, b){
+    return a.dis - b.dis;
+}
+// console.log(arr.sort(sortNum));
