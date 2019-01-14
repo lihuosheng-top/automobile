@@ -178,6 +178,10 @@ class LoveCar extends Controller{
         if($request->isPost()){
             $id = $request->only(["id"])["id"];
             $user_car_message = db("user_car_message")->where("user_car_id",$id)->select();
+            $user_car = db("user_car")->where("id",$id)->field("brand")->find();
+            foreach ($user_car_message as $key=>$value){
+                $user_car_message[$key]["images"] = db("car_images")->where("brand",$user_car["brand"])->value("brand_images");
+            };
             if($user_car_message){
                 return ajax_success("获取成功",$user_car_message);
             }else{
