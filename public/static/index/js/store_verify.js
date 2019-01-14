@@ -89,7 +89,7 @@ $(function(){
                 type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                 skin: 'msg',
                 content: '最多上传20张图片',
-                time: 1
+                time: .6
             })
         }
         // 删除图片
@@ -143,23 +143,22 @@ $('.submit-button').click(function(){
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: .8
+                            time: .3
                         })
                         setTimeout(function(){
                             location.href = 'my_index';
-                        }, 1400);
+                        }, 800);
                     }else{
                         layer.open({
                             style: 'bottom:100px;',
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: .8
+                            time: .3
                         })
                     }
                 },
                 error: function(){
-                    alert(e.status, e.statusText);
                     console.log('error');
                 }
             }) 
@@ -169,7 +168,7 @@ $('.submit-button').click(function(){
                 type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                 skin: 'msg',
                 content: '图片未上传完整',
-                time: .8
+                time: .6
             })
         }
     }else if($(this).text() === '提交修改'){
@@ -209,23 +208,22 @@ $('.submit-button').click(function(){
                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: res.info,
-                        time: .8
+                        time: .6
                     })
                     setTimeout(function(){
                         location.href = 'my_index';
-                    }, 1000);
+                    }, 800);
                 }else{
                     layer.open({
                         style: 'bottom:100px;',
                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: res.info,
-                        time: .8
+                        time: .6
                     })
                 }
             },
             error: function(){
-                alert(e.status, e.statusText);
                 console.log('error');
             }
         }) 
@@ -313,7 +311,7 @@ function createMap(myLngLat){
             map.addControl(new AMap.ToolBar());
             var geolocation = new AMap.Geolocation({
                 enableHighAccuracy: true,
-                timeout: 1000,
+                // timeout: 1000,
                 buttonPosition: 'RB',
                 buttonOffset: new AMap.Pixel(10, 20),
                 zoomToAccuracy: true
