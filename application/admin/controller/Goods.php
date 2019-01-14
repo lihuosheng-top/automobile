@@ -416,9 +416,9 @@ class Goods extends Controller
                 $bool_data = db("goods_images")->where("id", $value['id'])->delete();
             }
             if ($bool_data) {
-                $this->success("添加成功", url("admin/Goods/index"));
+                $this->success("删除成功", url("admin/Goods/index"));
             } else {
-                $this->success("添加失败", url('admin/Goods/add'));
+                $this->success("删除失败", url('admin/Goods/index'));
             }
 
         }
