@@ -153,6 +153,9 @@ html{
     font-size: .3rem;
     color: #666;
 }
+.car-detail-pop .info-bg img{
+    width: 1rem;
+}
 .car-detail-pop .info-bg span{
     display: block;
     width: 1.5rem;

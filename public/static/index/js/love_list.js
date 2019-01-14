@@ -141,7 +141,9 @@ $.ajax({
             $.each($(this).find('.car-info p'), function(idx, val){
                 myCarInfo += val.innerText+' ';
             })
-            console.log(myCarInfo)
+            // console.log($(this).find('img').attr('src'))
+            var imgSrc = $(this).find('img').attr('src');
+            $('.info-bg').find('img').attr('src', imgSrc);
             $('.wrapper').hide();
             $('.car-detail-pop').show();
             $.ajax({
@@ -174,6 +176,7 @@ $.ajax({
                         $('.engine-no-input').val(data.engine_number);
                         $('.insurer-input').val(data.car_insurance);
                         $('.expiration-date-input').val(data.insurance_time);
+                        $('.info-bg').find('img').attr('src', 'uploads/'+data.images);
                     }
                 },
                 error: function(){
