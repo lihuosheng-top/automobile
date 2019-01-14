@@ -69,7 +69,8 @@ class Role extends Controller
         $role_name = db("role")->where("id",$roles[0]["pid"])->field("name,id")->select();
         $menu_list = db("menu")->where("status","<>",0)->select();
         $menu_lists = _tree_hTree(_tree_sort($menu_list,"sort_number"));
-        return view("edit",["roles"=>$roles,"menu_lists"=>$menu_lists,"role_name"=>$role_name]);
+        $role_id = explode(",",$roles[0]["menu_role_id"]);
+        return view("edit",["role_id"=>$role_id,"roles"=>$roles,"menu_lists"=>$menu_lists,"role_name"=>$role_name]);
     }
 
 
