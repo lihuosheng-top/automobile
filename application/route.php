@@ -121,6 +121,7 @@ Route::group("",[
     "store_order_get"=>"index/SellMy/store_order_get",//卖家读取信息（方便判断点击的是哪个按钮进来）
 
     "sell_service_order"=>"index/SellMy/sell_service_order",//卖家服务订单
+    "sell_service_price_change"=>"index/SellMy/sell_service_price_change",//服务商面议修改价格
     "sell_parts_order"=>"index/SellMy/sell_parts_order",//卖家商品订单
     "sell_order_service_save_record"=>"index/SellMy/sell_order_service_save_record",//卖家进入服务订单详情需要保存的数据
     "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
@@ -369,10 +370,10 @@ Route::group("",[
      * 运营管理
      * 陈绪
      */
-    "rescue_index"=>"index/Operation/rescue",             //紧急救援
+    "rescue_index"=>"index/operation/rescue",             //紧急救援
 
     /*TODO:测试IOS地址开始*/
-    "test_ios"=>"index/Operation/ios",
+    "test_ios"=>"index/operation/ios",
     /*TODO:测试IOS地址结束*/
 
 
@@ -743,14 +744,14 @@ Route::group("admin",[
      * 运营管理
      * 陈绪
      */
-    "complaint_index"=>"admin/Operation/complaint_index",
-    "urgency_index"=>"admin/Operation/urgency_index",
-    "urgency_updata"=>"admin/Operation/urgency_updata",
-    "urgency_select"=>"admin/Operation/urgency_select",
-    "urgency_del"=>"admin/Operation/urgency_del",
-    "complaint_updata"=>"admin/Operation/complaint_updata",
-    "complaint_select"=>"admin/Operation/complaint_select",
-    "complaint_del"=>"admin/Operation/complaint_del",
+    "complaint_index"=>"admin/operation/complaint_index",
+    "urgency_index"=>"admin/operation/urgency_index",
+    "urgency_updata"=>"admin/operation/urgency_updata",
+    "urgency_select"=>"admin/operation/urgency_select",
+    "urgency_del"=>"admin/operation/urgency_del",
+    "complaint_updata"=>"admin/operation/complaint_updata",
+    "complaint_select"=>"admin/operation/complaint_select",
+    "complaint_del"=>"admin/operation/complaint_del",
 
 
 

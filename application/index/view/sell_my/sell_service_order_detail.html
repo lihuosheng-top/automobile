@@ -97,6 +97,8 @@
                         statusTxt = '待评价';
                     }else if(val.status === 6){
                         statusTxt = '已完成';
+                    }else if(val.status === 7){
+                        statusTxt = '待确认';
                     }
                     // 状态值
                     $('.status').text(statusTxt);
@@ -113,7 +115,7 @@
                     $('.service-time span').text(val.got_to_time);
                     // 服务项目
                     $('.service-item-name').text(val.service_goods_name);
-                    if(val.service_real_pay !== 0){
+                    if(val.order_amount !== null){
                         $('.service-item-price span').text(val.order_amount);
                         $('.entry-price span').text(val.order_amount);
                     }else{
@@ -126,10 +128,37 @@
                     $('.discount-amount-span span').text(val.integral_deductible);
                     // 实付金额
                     $('.pay-amount div span').text(val.service_real_pay);
+                    // order id
+                    $('.order-payment-btn').data({id: val.id});
                 }
             },
             error: function(){
                 console.log('error');
+            }
+        })
+        $('.order-payment-btn').click(function(){
+            var price = $('.entry-price input').val()
+            if(price !== ''){
+                $.ajax({
+                    url: 'sell_service_price_change',
+                    type: 'post',
+                    data: {
+                        id: $(this).data('id'),
+                        price: price
+                    },
+                    success: function(res){
+                        console.log(res);
+                    },
+                    error: function(e){
+                        console.log(e.status, e.statusText);
+                    }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请填写价格',
+                    time: .7
+                })
             }
         })
     </script>

@@ -243,7 +243,7 @@ $.ajax({
             myLngLat = [parseFloat(data.longitude), parseFloat(data.latitude)];
             createMap(myLngLat);
         }else{
-            myLngLat([114.096547,22.546643])
+            myLngLat = [114.096547,22.546643];
         }
         if(data.store_identity_card !== null && data.store_reverse_images !== null &&
             data.store_do_bussiness_positive_img !== null && data.store_do_bussiness_side_img !== null &&
