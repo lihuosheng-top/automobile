@@ -59,15 +59,16 @@ html{
     float: left;
     color: #fff;
     flex: 1;
+    /* line-height: normal; */
 }
 .user_info_text .user_name{
-    font-size: .30rem;
+    font-size: .28rem;
 }
 .user_info_text .invitation_code{
-    font-size: .24rem;
+    font-size: .28rem;
 }
 .user_info_text .jf_hy_qb{
-    font-size: .24rem;
+    font-size: .28rem;
 }
 .user_info_text .jf_hy_qb i{
     font-style: normal;

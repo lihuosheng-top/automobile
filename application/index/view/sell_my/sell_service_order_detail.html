@@ -132,6 +132,18 @@
                 console.log('error');
             }
         })
+        $('.order-payment-btn').click(function(){
+            $.ajax({
+                url: 'sell_service_price_change',
+                type: 'post',
+                success: function(res){
+                    console.log(res);
+                },
+                error: function(e){
+                    console.log(e.status, e.statusText);
+                }
+            })
+        })
     </script>
 </body>
 </html>

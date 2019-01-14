@@ -1,10 +1,10 @@
-var calendar = new LCalendar();
-calendar.init({
-    'trigger': '#date',//标签id
-    'type': 'date',//date 调出日期选择 datetime 调出日期时间选择 time 调出时间选择 ym 调出年月选择
-    'minDate':'2010-1-1',//最小日期 注意：该值会覆盖标签内定义的日期范围
-    'maxDate':'2050-12-31'//最大日期 注意：该值会覆盖标签内定义的日期范围
-});
+// var calendar = new LCalendar();
+// calendar.init({
+//     'trigger': '#date',//标签id
+//     'type': 'date',//date 调出日期选择 datetime 调出日期时间选择 time 调出时间选择 ym 调出年月选择
+//     'minDate':'2010-1-1',//最小日期 注意：该值会覆盖标签内定义的日期范围
+//     'maxDate':'2050-12-31'//最大日期 注意：该值会覆盖标签内定义的日期范围
+// });
 
 // 车辆信息 下拉框
 let show = document.getElementById('show-input');
@@ -235,6 +235,12 @@ $('.save-btn').click(function(){
                     }, 1000)
                     $('.wrapper').show();
                     $('.car-detail-pop').hide();
+                }else if(res.status == 0){
+                    layer.open({
+                        skin: 'msg',
+                        content: res.info,
+                        time: .8
+                    })
                 }
             },
             error: function(){
