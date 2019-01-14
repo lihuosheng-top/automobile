@@ -56,7 +56,7 @@ class Reservation extends Controller{
             $store_address = substr($store_user_address,0,$num);
             $user_id = Session::get("user");
             $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
-            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->where("year",$user_car["production_time"])->where("displacement",$user_car["displacement"])->field("vehicle_model")->find();
+            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->field("vehicle_model")->find();
             $serve_goods = db("serve_goods")->where("vehicle_model",$car_series["vehicle_model"])->where("service_setting_id",$service_setting_id)->select();
             foreach ($serve_goods as $key=>$value){
                 $where = "`operation_status` = '1' and `store_is_button` = '1' and `del_status` = '1'";
@@ -68,7 +68,6 @@ class Reservation extends Controller{
                     }
                 }
             }
-
             if ($serve_goods) {
                 return ajax_success("获取成功", $serve_goods);
             } else {
@@ -91,7 +90,7 @@ class Reservation extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");
             $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
-            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->where("year",$user_car["production_time"])->where("displacement",$user_car["displacement"])->field("vehicle_model")->find();
+            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->field("vehicle_model")->find();
             $serve_goods_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("store_id",$serve_goods_id)->where("goods_status",1)->select();
             $store = db("store")->where("store_id",$serve_goods_id)->select();
@@ -167,20 +166,38 @@ class Reservation extends Controller{
                 ->where("store_id", $store_id)
                 ->count();
             //中评
-            $min_condition ="evaluate_stars = 4 or evaluate_stars = 5";
+            $min_condition ="evaluate_stars = 2 or evaluate_stars = 3";
             $all_numbers[2] = db("order_service_evaluate")
                 ->where($min_condition)
                 ->where("setting_id",$service_setting_id)
                 ->where("store_id", $store_id)
                 ->count();
             //差评
-            $bad_condition ="evaluate_stars = 4 or evaluate_stars = 5";
+            $bad_condition ="evaluate_stars = 1";
             $all_numbers[3] = db("order_service_evaluate")
                 ->where($bad_condition)
                 ->where("setting_id",$service_setting_id)
                 ->where("store_id", $store_id)
                 ->count();
-            $all_numbers[4] = 0;
+
+            $all_img= db("order_service_evaluate")
+                ->where("setting_id",$service_setting_id)
+                ->where("store_id", $store_id)
+                ->select();
+            $set =[];
+            foreach ($all_img as $k=>$v){
+                $is_set =Db::name("order_service_evaluate_images")
+                    ->where("evaluate_order_id",$v["id"])
+                    ->find();
+                if(!empty($is_set)){
+                    $set[$k] =$is_set["evaluate_order_id"];
+                }
+            }
+            if(!empty($set)){
+                $all_numbers[4] =count(array_unique($set));
+            }else{
+                $all_numbers[4] =0;
+            }
             if(!empty($all_numbers)){
                 return ajax_success("有数据",$all_numbers);
             }else{
@@ -209,22 +226,24 @@ class Reservation extends Controller{
                     $evaluate_info_arr[] = $evaluate_info;
                 }
             }
-            foreach ($evaluate_info_arr as $kk => $vv) {
-                foreach ($vv as $i => $j) {
-                    $evaluate_info_arr[$kk][$i]["images"] = db("order_service_evaluate_images")
-                        ->field("images")
-                        ->where("evaluate_order_id", $j["id"])
-                        ->select();
-                    $evaluate_info_arr[$kk][$i]["order_create_time"] = db("order_service")
-                        ->where("id", $j["order_id"])
-                        ->value("create_time");
-                    $evaluate_info_arr[$kk][$i]["user_info"] = db("user")
-                        ->where("id", $j["user_id"])
-                        ->field("user_img,phone_num")
-                        ->find();
+            if(!empty($evaluate_info_arr)){
+                foreach ($evaluate_info_arr as $kk => $vv) {
+                    foreach ($vv as $i => $j) {
+                        $evaluate_info_arr[$kk][$i]["images"] = db("order_service_evaluate_images")
+                            ->field("images")
+                            ->where("evaluate_order_id", $j["id"])
+                            ->select();
+                        $evaluate_info_arr[$kk][$i]["order_create_time"] = db("order_service")
+                            ->where("id", $j["order_id"])
+                            ->value("create_time");
+                        $evaluate_info_arr[$kk][$i]["user_info"] = db("user")
+                            ->where("id", $j["user_id"])
+                            ->field("user_img,phone_num")
+                            ->find();
+                    }
                 }
+                $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
             }
-            $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
             if (!empty($evaluate_info_arr)) {
                 $ords =array();
                 foreach ($evaluate_info_arr as $vl){
@@ -404,11 +423,9 @@ class Reservation extends Controller{
             $service_setting_id = $request->only(["goods_id"])["goods_id"];//服务setting_id
             $store_id = $request->only(["store_id"])["store_id"];
             $goods_id_arr = Db::name("serve_goods")->where("service_setting_id", $service_setting_id)->select();
-            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
             foreach ($goods_id_arr as $key => $value) {
                 $evaluate_info = db("order_service_evaluate")
                     ->where("goods_id", $value["id"])
-                    ->where($condition)
                     ->where("store_id", $store_id)
                     ->select();
                 if (!empty($evaluate_info)) {

@@ -24,7 +24,7 @@ class Integral extends Controller{
             ->field("tb_integral.*,tb_user.phone_num phone_num")
             ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
             ->order('tb_integral.operation_time','desc')
-            ->paginate(3 ,false, [
+            ->paginate(20 ,false, [
                 'query' => request()->param(),
             ]);
         return view('center',['integral_data'=>$integral_data]);
@@ -43,7 +43,7 @@ class Integral extends Controller{
             ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
             ->where('tb_integral.user_id',$id)
             ->order('tb_integral.operation_time','desc')
-            ->paginate(3);
+            ->paginate(20);
         return view('detail',['integral_data'=>$integral_data,'user_data'=>$user_data]);
     }
 
@@ -157,7 +157,7 @@ class Integral extends Controller{
                     ->where($condition)
                     ->where('tb_integral.integral_type',$integral_type)
                     ->order('tb_integral.operation_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }else{
@@ -167,7 +167,7 @@ class Integral extends Controller{
                     ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
                     ->where($condition)
                     ->order('tb_integral.operation_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }
@@ -180,7 +180,7 @@ class Integral extends Controller{
                     ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
                     ->where('tb_integral.integral_type',$integral_type)
                     ->order('tb_integral.operation_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }else{
@@ -188,7 +188,7 @@ class Integral extends Controller{
                     ->field("tb_integral.*,tb_user.phone_num phone_num")
                     ->join("tb_user","tb_integral.user_id=tb_user.id",'left')
                     ->order('tb_integral.operation_time','desc')
-                    ->paginate(3 ,false, [
+                    ->paginate(20 ,false, [
                         'query' => request()->param(),
                     ]);
             }

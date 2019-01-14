@@ -106,6 +106,8 @@
                             statusTxt = '待评价';
                         }else if(val.status === 6){
                             statusTxt = '已完成';
+                        }else if(val.status === 7){
+                            statusTxt = '待确认';
                         }
                         str += `<div class="reservation-tab" id="`+val.id+`">
                                     <div class="reservation-info-container">
@@ -150,6 +152,12 @@
                         }else if(statusTxt == '已完成'){
                             str += `<div class="button-box">
                                         <button class="del-order-btn">删除订单</button>
+                                    </div>
+                                </div>`
+                        }else if(statusTxt == '待确认'){
+                            str += `<div class="button-box">
+                                        <button class="cancel-order-btn">取消订单</button>
+                                        <button class="to-payment-btn">去付款</button>
                                     </div>
                                 </div>`
                         }

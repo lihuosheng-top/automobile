@@ -56,30 +56,31 @@
 	{block name="content"}
 
 	<div class="childrenBody">
+		{if !empty($user_list)}
 		<blockquote class="layui-elem-quote news_search">
-				
                 <div class="seach">
                         <div class="seach_list">
                             <div class="seach_laber">用户账号：</div>
-                            <div class="seach_input">111</div>
+                            <div class="seach_input">{$user_list.phone_num}</div>
                         </div>
+
                         <div class="seach_list">
                                 <div class="seach_laber">充值总金额：</div>
-                                <div class="seach_input">111</div>
+                                <div class="seach_input">{$user_list.all_recharge}</div>
                         </div>
 
                         <div class="seach_list">
                                 <div class="seach_laber">提现总额：</div>
-                                <div class="seach_input">111</div>
+                                <div class="seach_input">{$user_list.all_reflect}</div>
                         </div>
                         <div class="seach_list">
                                 <div class="seach_laber">消费总额：</div>
-                                <div class="seach_input">111</div>
+                                <div class="seach_input">{$user_list.user_wallet_consumed}</div>
                         </div>
                        
                     </div>
-
 		</blockquote>
+		{/if}
 		<div class="layui-form news_list">
 			<table class="layui-table">
 				<colgroup>
@@ -98,22 +99,27 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
+				{if !empty($wallet_data)}
+				{volist name ="wallet_data" id ="vo" }
 					<tr>
-						<td>111 </td>
-						<td>111 </td>
-						<td>111 </td>
-						<td>111 </td>
-						<td>111 </td>
-						<td>111 </td>
-						<td>111 </td>
-						<td>111 </td>
-						<td>111 </td>
-						
+						<td>{$vo.order_nums}</td>
+						<td>{$vo.phone_num}</td>
+						<td>{$vo.wallet_type|show_integral_type}</td>
+						<td>{$vo.title}</td>
+						<td>{$vo.pay_type}</td>
+						<td>{$vo.operation_time}</td>
+						<td>{$vo.wallet_operation|show_integral_operation}</td>
+						<td>{$vo.wallet_remarks}</td>
+						<td>{$vo.user_wallet}</td>
 					</tr>
+				{/volist}
+				{/if}
 				</tbody>
 			</table>
 			<div id="page">
-		
+				{if !empty($wallet_data)}
+				{$wallet_data->render()}
+				{/if}
 			</div>
 		</div>
 

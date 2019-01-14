@@ -546,6 +546,8 @@ function show_integral_type($data){
     }
 }
 
+
+
 /**
  **************李火生*******************
  * @param Request $request
