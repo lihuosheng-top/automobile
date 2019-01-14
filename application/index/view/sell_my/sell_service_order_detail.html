@@ -118,6 +118,8 @@
                     if(val.order_amount !== null){
                         $('.service-item-price span').text(val.order_amount);
                         $('.entry-price span').text(val.order_amount);
+                        // 实付金额
+                        $('.pay-amount div span').text(val.service_real_pay);
                     }else{
                         $('.service-item-price').text('面议');
                         $('.entry-price input').show();
@@ -142,12 +144,16 @@
                 $.ajax({
                     url: 'sell_service_price_change',
                     type: 'post',
+                    dataType: 'JSON',
                     data: {
                         id: $(this).data('id'),
                         price: price
                     },
                     success: function(res){
                         console.log(res);
+                        if(res.status == 1){
+                            location.href = 'sell_service_order';
+                        }
                     },
                     error: function(e){
                         console.log(e.status, e.statusText);

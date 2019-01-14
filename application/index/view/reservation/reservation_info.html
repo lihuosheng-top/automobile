@@ -336,7 +336,7 @@
                 $('.client_phone span').text(data.user[0].phone_num);
                 // 店铺信息
                 $('.shop_name_box p').text(data.store[0].store_name);
-                $('.call').attr('href', 'call:'+data.store[0].phone_num);
+                $('.call').attr('href', 'tel:'+data.store_phone[0].phone_num);
                 if(data.serve_goods[0].service_money !== null){
                     $('.totalprice span').text('￥'+data.serve_goods[0].service_money);
                 }else{

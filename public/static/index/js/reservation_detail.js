@@ -43,7 +43,11 @@ $('.filter-com-ul').on('click', 'li', function(){
 })
 
 // 往下滑 头部添加背景
+// console.log($(window).height());
+// console.log($(document).height());
 $(window).on('scroll', function(){
+    var $window = $(window);
+    console.log($window.scrollTop());
     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
     if(scrollTop > 0){
         $('.wrapper .head').css('background', 'rgba(255, 255, 255, .5)');
