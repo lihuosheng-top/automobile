@@ -4,7 +4,6 @@ $.ajax({
     url: 'classify_index',
     type: 'POST',
     dataType: 'JSON',
-    async: false,
     success: function(res){
         console.log(res);
         var hrefId = 1,//锚链接id
