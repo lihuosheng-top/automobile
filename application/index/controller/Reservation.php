@@ -90,7 +90,7 @@ class Reservation extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");
             $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
-            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->where("year",$user_car["production_time"])->where("displacement",$user_car["displacement"])->field("vehicle_model")->find();
+            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->field("vehicle_model")->find();
             $serve_goods_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("store_id",$serve_goods_id)->where("goods_status",1)->select();
             $store = db("store")->where("store_id",$serve_goods_id)->select();
