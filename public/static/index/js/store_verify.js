@@ -159,6 +159,7 @@ $('.submit-button').click(function(){
                     }
                 },
                 error: function(){
+                    alert(e.status, e.statusText);
                     console.log('error');
                 }
             }) 
@@ -224,6 +225,7 @@ $('.submit-button').click(function(){
                 }
             },
             error: function(){
+                alert(e.status, e.statusText);
                 console.log('error');
             }
         }) 
