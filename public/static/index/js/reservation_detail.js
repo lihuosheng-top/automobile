@@ -151,7 +151,6 @@ if(urlLen > 1){
                 selectEvent();
 
                 $('.comment_title').show();
-
                 var filterStr = '', allcomStr = '';
                 data.data.serve_data.forEach(function(ele, idx){
                     if(idx === 0){
@@ -161,8 +160,8 @@ if(urlLen > 1){
                         allcomStr += `<li class="filter-service-li" data-serverid="`+ele.service_setting_id+`">
                                             <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
                                         </li>`
-                        // myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false);
-                        // myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true);
+                                        myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
+                                        myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
                         evaluateNum(ele.service_setting_id, storeId);
                     }else{
                         filterStr += `<li data-serverid="`+ele.service_setting_id+`">
@@ -253,6 +252,9 @@ function evaluateNum(settingId, storeId){
                                         <li>中评（<span>`+data[2]+`</span>）</li>
                                         <li class="negative">差评（<span>`+data[3]+`</span>）</li>
                                         <li>有图（<span>`+data[4]+`</span>）</li>`)
+                if(!$('.comment_title').is(':hidden')){
+                    $('.comment_title').find('span').text(data[0]);
+                }
             }
         },
         error: function(){
