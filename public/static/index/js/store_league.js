@@ -190,7 +190,7 @@ $.ajax({
                     type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                     skin: 'msg',
                     content: '请选择店铺所在区域',
-                    time: 1
+                    time: .8
                 })
             }
             // 店铺详细地址
@@ -243,7 +243,7 @@ $.ajax({
                                         layer.open({
                                             skin: 'msg',
                                             content: res.info,
-                                            time: 1
+                                            time: .8
                                         })
                                         setTimeout(function(){
                                             location.href = 'store_verify';
@@ -252,7 +252,7 @@ $.ajax({
                                         layer.open({
                                             skin: 'msg',
                                             content: res.info,
-                                            time: 1
+                                            time: .8
                                         })
                                     }
                                 },
@@ -274,7 +274,7 @@ $.ajax({
                                         layer.open({
                                             skin: 'msg',
                                             content: res.info,
-                                            time: 1
+                                            time: .8
                                         })
                                         setTimeout(function(){
                                             location.href = 'store_verify';
@@ -283,7 +283,7 @@ $.ajax({
                                         layer.open({
                                             skin: 'msg',
                                             content: res.info,
-                                            time: 1
+                                            time: .8
                                         })
                                         setTimeout(function(){
                                             location.href = 'store_verify';
@@ -299,7 +299,7 @@ $.ajax({
                         layer.open({
                             skin: 'msg',
                             content: '服务商需选择服务范围',
-                            time: 1
+                            time: .8
                         })
                     }
                 }else{//配件商
@@ -317,7 +317,7 @@ $.ajax({
                                     layer.open({
                                         skin: 'msg',
                                         content: res.info,
-                                        time: 1
+                                        time: .8
                                     })
                                     setTimeout(function(){
                                         location.href = 'store_verify';
@@ -326,7 +326,7 @@ $.ajax({
                                     layer.open({
                                         skin: 'msg',
                                         content: res.info,
-                                        time: 1
+                                        time: .8
                                     })
                                 }
                             },
@@ -348,7 +348,7 @@ $.ajax({
                                     layer.open({
                                         skin: 'msg',
                                         content: res.info,
-                                        time: 1
+                                        time: .8
                                     })
                                     setTimeout(function(){
                                         location.href = 'store_verify';
@@ -357,7 +357,7 @@ $.ajax({
                                     layer.open({
                                         skin: 'msg',
                                         content: res.info,
-                                        time: 1
+                                        time: .8
                                     })
                                     setTimeout(function(){
                                         location.href = 'store_verify';
@@ -396,7 +396,7 @@ function mustFill(){
         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
         skin: 'msg',
         content: '带星号信息需填写完整',
-        time: 1
+        time: .8
     })
 }
 
