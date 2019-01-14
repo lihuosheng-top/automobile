@@ -32,7 +32,7 @@ class Capital extends Controller{
         }
         $all_idents =$user_list ;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
-        $listRow = 3;//每页3行记录
+        $listRow = 20;//每页3行记录
         $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
         $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
             'var_page' => 'page',
@@ -72,7 +72,7 @@ class Capital extends Controller{
                     }
                     $all_idents =$user_list ;//这里是需要分页的数据
                     $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
-                    $listRow = 3;//每页3行记录
+                    $listRow = 20;//每页3行记录
                     $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                         'var_page' => 'page',
@@ -94,7 +94,7 @@ class Capital extends Controller{
                     }
                     $all_idents =$user_list ;//这里是需要分页的数据
                     $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
-                    $listRow = 3;//每页3行记录
+                    $listRow = 20;//每页3行记录
                     $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                         'var_page' => 'page',
@@ -117,7 +117,7 @@ class Capital extends Controller{
                     }
                     $all_idents =$user_list ;//这里是需要分页的数据
                     $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
-                    $listRow = 3;//每页3行记录
+                    $listRow = 20;//每页3行记录
                     $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                         'var_page' => 'page',
@@ -139,7 +139,7 @@ class Capital extends Controller{
                     }
                     $all_idents =$user_list ;//这里是需要分页的数据
                     $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
-                    $listRow = 3;//每页3行记录
+                    $listRow = 20;//每页3行记录
                     $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                     $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                         'var_page' => 'page',
@@ -167,7 +167,7 @@ class Capital extends Controller{
                 }
                 $all_idents =$user_list ;//这里是需要分页的数据
                 $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
-                $listRow = 3;//每页3行记录
+                $listRow = 20;//每页3行记录
                 $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                 $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                     'var_page' => 'page',
@@ -188,7 +188,7 @@ class Capital extends Controller{
                 }
                 $all_idents =$user_list ;//这里是需要分页的数据
                 $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
-                $listRow = 3;//每页3行记录
+                $listRow = 20;//每页3行记录
                 $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
                 $user_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                     'var_page' => 'page',
@@ -214,24 +214,37 @@ class Capital extends Controller{
      **************************************
      */
     public function detail($id){
-        //用户的id
-        $user_list = Db::name("user")->where("id",$id) ->find();
-        /*提现*/
-        $all_del =Db::name('recharge_reflect')->where('operation_type',"-1")->where('user_id',$id)->sum("operation_amount");
-        $user_list['all_reflect']=round($all_del,2);
-        /*充值*/
-        $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$id)->sum("operation_amount");
-        $user_list['all_recharge'] =round($all_add,2);
-        dump($user_list);
-        $wallet_data =Db::table('tb_wallet')
-            ->field("tb_wallet.*,tb_user.phone_num phone_num,tb_user.user_name user_name,tb_user.user_wallet user_wallet")
-            ->join("tb_user","tb_wallet.user_id=tb_user.id",'left')
-            ->where('tb_wallet.user_id',$id)
-            ->order('tb_wallet.operation_time','desc')
-            ->paginate(3);
-        dump($wallet_data);
-        return view("detail",['user_list'=>$user_list]);
+            //用户的id
+            $user_list = Db::name("user")->where("id",$id) ->find();
+            /*提现*/
+            $all_del =Db::name('recharge_reflect')->where('operation_type',"-1")->where('user_id',$id)->sum("operation_amount");
+            $user_list['all_reflect']=round($all_del,2);
+            /*充值*/
+            $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$id)->sum("operation_amount");
+            $user_list['all_recharge'] =round($all_add,2);
+            $wallet_data =Db::table('tb_wallet')
+                ->field("tb_wallet.*,tb_user.phone_num phone_num,tb_user.user_name user_name,tb_user.user_wallet user_wallet")
+                ->join("tb_user","tb_wallet.user_id=tb_user.id",'left')
+                ->where('tb_wallet.user_id',$id)
+                ->order('tb_wallet.operation_time','desc')
+                ->paginate(20);
+            return view("detail",['user_list'=>$user_list,"wallet_data"=>$wallet_data]);
+
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:资金详情
+     **************************************
+     */
+    public function edit(){
+        $wallet_data =Db::table('tb_wallet')
+            ->field("tb_wallet.*,tb_user.phone_num phone_num,tb_user.user_name user_name,tb_user.user_wallet user_wallet ,tb_user.id user_id")
+            ->join("tb_user","tb_wallet.user_id=tb_user.id",'left')
+            ->order('tb_wallet.operation_time','desc')
+            ->paginate(20);
+        return view("edit",["user_list"=>null,"wallet_data"=>$wallet_data]);
+    }
 
 }

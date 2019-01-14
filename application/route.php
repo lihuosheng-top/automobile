@@ -536,6 +536,7 @@ Route::group("admin",[
     /*资金管理*/
     "capital_index"=>"admin/Capital/index",  //资金管理界面
     "capital_detail"=>"admin/Capital/detail",  //资金详情
+    "capital_edit"=>"admin/Capital/edit",  //所有的资金详情
     "capital_search"=>"admin/Capital/search",  //资金管理搜索功能
 
 
