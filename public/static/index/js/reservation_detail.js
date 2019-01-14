@@ -211,21 +211,7 @@ if(urlLen > 1){
                                         </li>`
                         myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
                         myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
-                        $.ajax({
-                            url: 'reservation_evaluate_numbers',
-                            type: 'POST',
-                            dataType: 'JSON',
-                            data: {
-                                'setting_id': ele.service_setting_id,
-                                'store_id': storeId
-                            },
-                            success: function(res){
-                                console.log('评论数量', res);
-                            },
-                            error: function(){
-                                console.log('error');
-                            }
-                        })
+                        evaluateNum(ele.service_setting_id, storeId);
                     }else{
                         filterStr += `<li data-serverid="`+ele.service_setting_id+`">
                                         <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
@@ -237,6 +223,29 @@ if(urlLen > 1){
                 })
                 $('.filter-ul').html(filterStr);
                 $('.filter-service-ul').html(allcomStr);
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
+// 评论数量
+function evaluateNum(settingId, storeId){
+    $.ajax({
+        url: 'reservation_evaluate_numbers',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'setting_id': settingId,
+            'store_id': storeId
+        },
+        success: function(res){
+            console.log('评论数量', res);
+            if(res.status == 1){
+                $.each(res.data, function(idx, ele){
+                    
+                })
             }
         },
         error: function(){
@@ -411,6 +420,8 @@ function selectEvent(){
             $(this).parent().siblings().find('.service-colla-content').hide();
             $(this).parent().siblings().find('.icon-uncheck').removeClass('icon-check');
         }else{
+            $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
+            $('.bespeak-btn').prop('disabled', 'disabled');
             $(this).siblings('.service-colla-content').hide();
         }
     })
