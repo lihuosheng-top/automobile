@@ -140,21 +140,21 @@ $('.submit-button').click(function(){
                     if(res.status == 1){
                         layer.open({
                             style: 'bottom:100px;',
-                            type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                            type: 2,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: .8
+                            time: 1
                         })
                         setTimeout(function(){
                             location.href = 'my_index';
-                        }, 1400);
+                        }, 1100);
                     }else{
                         layer.open({
                             style: 'bottom:100px;',
                             type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                             skin: 'msg',
                             content: res.info,
-                            time: .8
+                            time: 1
                         })
                     }
                 },
@@ -168,7 +168,7 @@ $('.submit-button').click(function(){
                 type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                 skin: 'msg',
                 content: '图片未上传完整',
-                time: .8
+                time: 1
             })
         }
     }else if($(this).text() === '提交修改'){
@@ -205,21 +205,21 @@ $('.submit-button').click(function(){
                 if(res.status == 1){
                     layer.open({
                         style: 'bottom:100px;',
-                        type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
+                        type: 2,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: res.info,
-                        time: .8
+                        time: 1
                     })
                     setTimeout(function(){
                         location.href = 'my_index';
-                    }, 1000);
+                    }, 1100);
                 }else{
                     layer.open({
                         style: 'bottom:100px;',
                         type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
                         skin: 'msg',
                         content: res.info,
-                        time: .8
+                        time: 1
                     })
                 }
             },
@@ -311,7 +311,7 @@ function createMap(myLngLat){
             map.addControl(new AMap.ToolBar());
             var geolocation = new AMap.Geolocation({
                 enableHighAccuracy: true,
-                timeout: 1000,
+                // timeout: 1000,
                 buttonPosition: 'RB',
                 buttonOffset: new AMap.Pixel(10, 20),
                 zoomToAccuracy: true
