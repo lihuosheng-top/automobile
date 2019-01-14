@@ -209,22 +209,24 @@ class Reservation extends Controller{
                     $evaluate_info_arr[] = $evaluate_info;
                 }
             }
-            foreach ($evaluate_info_arr as $kk => $vv) {
-                foreach ($vv as $i => $j) {
-                    $evaluate_info_arr[$kk][$i]["images"] = db("order_service_evaluate_images")
-                        ->field("images")
-                        ->where("evaluate_order_id", $j["id"])
-                        ->select();
-                    $evaluate_info_arr[$kk][$i]["order_create_time"] = db("order_service")
-                        ->where("id", $j["order_id"])
-                        ->value("create_time");
-                    $evaluate_info_arr[$kk][$i]["user_info"] = db("user")
-                        ->where("id", $j["user_id"])
-                        ->field("user_img,phone_num")
-                        ->find();
+            if(!empty($evaluate_info_arr)){
+                foreach ($evaluate_info_arr as $kk => $vv) {
+                    foreach ($vv as $i => $j) {
+                        $evaluate_info_arr[$kk][$i]["images"] = db("order_service_evaluate_images")
+                            ->field("images")
+                            ->where("evaluate_order_id", $j["id"])
+                            ->select();
+                        $evaluate_info_arr[$kk][$i]["order_create_time"] = db("order_service")
+                            ->where("id", $j["order_id"])
+                            ->value("create_time");
+                        $evaluate_info_arr[$kk][$i]["user_info"] = db("user")
+                            ->where("id", $j["user_id"])
+                            ->field("user_img,phone_num")
+                            ->find();
+                    }
                 }
+                $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
             }
-            $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
             if (!empty($evaluate_info_arr)) {
                 $ords =array();
                 foreach ($evaluate_info_arr as $vl){
