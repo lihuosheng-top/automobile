@@ -210,11 +210,27 @@ class Capital extends Controller{
      **************李火生*******************
      * @param Request $request
      * Notes:详情
+     * 参数：id用户的id
      **************************************
      */
     public function detail($id){
-
-        return view("detail");
+        //用户的id
+        $user_list = Db::name("user")->where("id",$id) ->find();
+        /*提现*/
+        $all_del =Db::name('recharge_reflect')->where('operation_type',"-1")->where('user_id',$id)->sum("operation_amount");
+        $user_list['all_reflect']=round($all_del,2);
+        /*充值*/
+        $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$id)->sum("operation_amount");
+        $user_list['all_recharge'] =round($all_add,2);
+        dump($user_list);
+        $wallet_data =Db::table('tb_wallet')
+            ->field("tb_wallet.*,tb_user.phone_num phone_num,tb_user.user_name user_name,tb_user.user_wallet user_wallet")
+            ->join("tb_user","tb_wallet.user_id=tb_user.id",'left')
+            ->where('tb_wallet.user_id',$id)
+            ->order('tb_wallet.operation_time','desc')
+            ->paginate(3);
+        dump($wallet_data);
+        return view("detail",['user_list'=>$user_list]);
     }
 
 
