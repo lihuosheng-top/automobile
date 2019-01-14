@@ -73,7 +73,7 @@ var CodeMirror = (function() {
         // whether the user is holding shift.
         var shiftSelecting, lastClick, lastDoubleClick, draggingText, overwrite = false;
         // Variables used by startOperation/endOperation to track what
-        // happened during the operation.
+        // happened during the Operation.
         var updateInput, userSelChange, changes, textChanged, selectionChanged, leaveInputAlone,
             gutterDirty, callbacks;
         // Current visible range (may be bigger than the view window).
@@ -127,7 +127,7 @@ var CodeMirror = (function() {
         function isLine(l) {return l >= 0 && l < doc.size;}
         // The instance object that we'll return. Mostly calls out to
         // local functions in the CodeMirror function. Some do some extra
-        // range checking and/or clipping. operation is used to wrap the
+        // range checking and/or clipping. Operation is used to wrap the
         // call so that changes it makes are tracked, and the display is
         // updated afterwards.
         var instance = wrapper.CodeMirror = {

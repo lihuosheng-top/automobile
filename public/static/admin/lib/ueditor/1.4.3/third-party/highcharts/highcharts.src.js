@@ -1877,7 +1877,7 @@ function getOptions() {
 
 
 /**
- * Handle color operation. The object methods are chainable.
+ * Handle color Operation. The object methods are chainable.
  * @param {String} input The input color in either rbga or hex format
  */
 var Color = function (input) {
@@ -9267,7 +9267,7 @@ Pointer.prototype = {
 	},
 
 	/**
-	 * Run translation operation for each direction (horizontal and vertical) independently
+	 * Run translation Operation for each direction (horizontal and vertical) independently
 	 */
 	pinchTranslateDirection: function (horiz, pinchDown, touches, transform, selectionMarker, clip, lastValidTouch) {
 		var chart = this.chart,
@@ -9433,7 +9433,7 @@ Pointer.prototype = {
 	},
 
 	/**
-	 * Start a drag operation
+	 * Start a drag Operation
 	 */
 	dragStart: function (e) {
 		var chart = this.chart;
@@ -9446,7 +9446,7 @@ Pointer.prototype = {
 	},
 
 	/**
-	 * Perform a drag operation in response to a mousemove event while the mouse is down
+	 * Perform a drag Operation in response to a mousemove event while the mouse is down
 	 */
 	drag: function (e) {
 
@@ -11143,7 +11143,7 @@ Chart.prototype = {
 	/**
 	 * Pan the chart by dragging the mouse across the pane. This function is called
 	 * on mouse move, and the distance to pan is computed from chartX compared to
-	 * the first chartX position in the dragging operation.
+	 * the first chartX position in the dragging Operation.
 	 */
 	pan: function (e, panning) {
 
@@ -13298,7 +13298,7 @@ Series.prototype = {
 	 */
 	processData: function (force) {
 		var series = this,
-			processedXData = series.xData, // copied during slice operation below
+			processedXData = series.xData, // copied during slice Operation below
 			processedYData = series.yData,
 			dataLength = processedXData.length,
 			croppedData,

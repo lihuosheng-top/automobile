@@ -856,7 +856,7 @@ jQuery.extend({
 			}
 
 			if ( bulk ) {
-				// Bulk operation run against the entire set
+				// Bulk Operation run against the entire set
 				if ( raw ) {
 					fn.call( elems, value );
 					fn = null;
@@ -2847,7 +2847,7 @@ function select( selector, context, results, seed ) {
 		match = tokenize( selector );
 
 	if ( !seed ) {
-		// Try to minimize operation if there is only one group
+		// Try to minimize Operation if there is only one group
 		if ( match.length === 1 ) {
 
 			// Take a shortcut and set the context if the root selector is an ID

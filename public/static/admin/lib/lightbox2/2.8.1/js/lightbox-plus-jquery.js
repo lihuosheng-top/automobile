@@ -768,7 +768,7 @@ function Sizzle( selector, context, results, seed ) {
 
 	if ( !seed && documentIsHTML ) {
 
-		// Try to shortcut find operation when possible (e.g., not under DocumentFragment)
+		// Try to shortcut find Operation when possible (e.g., not under DocumentFragment)
 		if ( nodeType !== 11 && (match = rquickExpr.exec( selector )) ) {
 			// Speed-up: Sizzle("#ID")
 			if ( (m = match[1]) ) {
@@ -2480,7 +2480,7 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 
 	results = results || [];
 
-	// Try to minimize operation if there is no seed and only one group
+	// Try to minimize Operation if there is no seed and only one group
 	if ( match.length === 1 ) {
 
 		// Take a shortcut and set the context if the root selector is an ID
@@ -3486,7 +3486,7 @@ var access = jQuery.access = function( elems, fn, key, value, chainable, emptyGe
 		}
 
 		if ( bulk ) {
-			// Bulk operation run against the entire set
+			// Bulk Operation run against the entire set
 			if ( raw ) {
 				fn.call( elems, value );
 				fn = null;
