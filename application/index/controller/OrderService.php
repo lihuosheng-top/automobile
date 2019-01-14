@@ -399,8 +399,6 @@ class OrderService extends Controller{
                             $car_series = db("car_series")
                                 ->where("brand",$user_car["brand"])
                                 ->where("series",$user_car["series"])
-                                ->where("year",$user_car["production_time"])
-                                ->where("displacement",$user_car["displacement"])
                                 ->find();
                             $serve_goods_id = $data["service_goods_id"]; //商品id
                             //商品信息
