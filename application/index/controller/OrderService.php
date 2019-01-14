@@ -399,8 +399,6 @@ class OrderService extends Controller{
                             $car_series = db("car_series")
                                 ->where("brand",$user_car["brand"])
                                 ->where("series",$user_car["series"])
-                                ->where("year",$user_car["production_time"])
-                                ->where("displacement",$user_car["displacement"])
                                 ->find();
                             $serve_goods_id = $data["service_goods_id"]; //商品id
                             //商品信息
@@ -498,6 +496,7 @@ class OrderService extends Controller{
                 $service_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
                 if (!empty($data)) {
                     $datas = [
+                        'service_setting_id'=>$goods_data["service_setting_id"],//服务设置id
                         'service_goods_name' => $goods_data['vehicle_model'], //车型
                         "service_goods_image" =>$goods_data["service_setting_calss_img"],//服务项目图片
                         'service_order_quantitative' => $data['service_order_quantitative'],//订单数量
@@ -510,12 +509,11 @@ class OrderService extends Controller{
                         "car_number"=> $user_love_car_message["plate_number"],//车牌号
                         "car_information"=>$data["car_information"],//爱车信息
                         "reserve_time"=>null, //因为还没有服务所以没有服务时间
-                        'status' => 1,      //订单状态
                         'service_goods_id' => $commodity_id,        //服务项目ID
                         'service_order_number' => $service_order_number,//订单号
                         "got_to_time"=>$data["got_to_time"],//预约到店时间
                         "store_id"=>$goods_data["store_id"],//商铺id
-                        "store_name"=>$store_name,//商铺id
+                        "store_name"=>$store_name,//商铺名字
                         "service_reservations"=>$store_name,//预约门店（店铺名称）
                         "service_real_pay"=>$data["service_money"],//积分抵扣之后的金额
                         "order_amount"=>$goods_data["service_money"],//订单金额
@@ -523,6 +521,12 @@ class OrderService extends Controller{
                         "integral_discount_setting_id"=>$integral_discount_setting_id, //积分设置中的id
                         "integral_deductible_num" =>$integral_deductible_num, //使用了多少积分
                     ];
+                    //判断是面议还是直接有价钱购买
+                    if($goods_data["service_money"] != 0){
+                        $datas['status'] =1;      //订单状态（待付款）
+                    }else{
+                        $datas['status'] = 7;     //订单状态(待确认)
+                    }
                     $res = Db::name('order_service')->insertGetId($datas);
                     if ($res) {
                         $order_datas =Db::name("order_service")
@@ -619,6 +623,7 @@ class OrderService extends Controller{
             }
         }
     }
+
 
 
 

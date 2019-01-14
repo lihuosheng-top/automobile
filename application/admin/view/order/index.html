@@ -689,6 +689,7 @@
 				success: function(data) {
 					$(".tanchuang").removeClass("noshow");
 					data = eval("(" + data + ")");
+					console.log(data)
 					// var order_create_time=timestampToTime(data.data[0].service[0].order_create_time);
 					if(data.data[0].status==0){
 						$("#order_status").html('已关闭');
@@ -738,16 +739,23 @@
 					$("#payment").html(data.data[0].pay_type_content);
 				}
 				else{
-					$("#payment").html("面议");
+					$("#payment").html("无");
 				}
-				if(data.data[0].integral_deductible!=null){
-					$("#points_deduction").html(data.data[0].pay_type_content);
+				if(data.data[0].order_amount!=null){
+					$("#goods").html(data.data[0].order_amount);
 				}
 				else{
-					$("#points_deduction").html("无");
+					$("#goods").html("面议");
+				}
+				
+				if(data.data[0].integral_deductible!=null){
+					$("#points_deduction").html(data.data[0].integral_deductible);
+				}
+				else{
+					$("#points_deduction").html("面议");
 				}
 				if(data.data[0].order_real_pay!=null){
-					$("#real_pay").html(data.data[0].pay_type_content);
+					$("#real_pay").html(data.data[0].order_real_pay);
 				}
 				else{
 					$("#real_pay").html("面议");

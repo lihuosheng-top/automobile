@@ -12,8 +12,10 @@ $('.filter-service-ul').on('click', 'li', function(){
     $(this).siblings().removeClass('filter-service-li');
     $(this).toggleClass('filter-service-li');
     var serveSettingId = $(this).attr('data-serverid');
+    // 评论
     myEvaluate(serveSettingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
-    
+    // 评论数量
+    evaluateNum(serveSettingId, storeId);
 })
 // 全部 好评 中评 差评
 $('.filter-com-ul').on('click', 'li', function(){
@@ -41,7 +43,11 @@ $('.filter-com-ul').on('click', 'li', function(){
 })
 
 // 往下滑 头部添加背景
+// console.log($(window).height());
+// console.log($(document).height());
 $(window).on('scroll', function(){
+    var $window = $(window);
+    console.log($window.scrollTop());
     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
     if(scrollTop > 0){
         $('.wrapper .head').css('background', 'rgba(255, 255, 255, .5)');
@@ -158,8 +164,9 @@ if(urlLen > 1){
                         allcomStr += `<li class="filter-service-li" data-serverid="`+ele.service_setting_id+`">
                                             <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
                                         </li>`
-                        // myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false);
-                        // myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true);
+                                        myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
+                                        myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+                        evaluateNum(ele.service_setting_id, storeId);
                     }else{
                         filterStr += `<li data-serverid="`+ele.service_setting_id+`">
                                         <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
@@ -179,6 +186,7 @@ if(urlLen > 1){
     })
 }else{
     // 首页热门店铺进来
+    $('.bespeak-btn').prop('disabled', true);
     $.ajax({
         url: 'index_shop_goods',
         type: 'POST',
@@ -210,6 +218,7 @@ if(urlLen > 1){
                                         </li>`
                         myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
                         myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+                        evaluateNum(ele.service_setting_id, storeId);
                     }else{
                         filterStr += `<li data-serverid="`+ele.service_setting_id+`">
                                         <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
@@ -228,6 +237,36 @@ if(urlLen > 1){
         }
     })
 }
+// 评论数量
+function evaluateNum(settingId, storeId){
+    $.ajax({
+        url: 'reservation_evaluate_numbers',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'setting_id': settingId,
+            'store_id': storeId
+        },
+        success: function(res){
+            console.log('评论数量', res);
+            if(res.status == 1){
+                var data = res.data;
+                $('.filter-com-ul').html(`<li class="filter-li-this">全部（<span>`+data[0]+`</span>）</li>
+                                        <li>好评（<span>`+data[1]+`</span>）</li>
+                                        <li>中评（<span>`+data[2]+`</span>）</li>
+                                        <li class="negative">差评（<span>`+data[3]+`</span>）</li>
+                                        <li>有图（<span>`+data[4]+`</span>）</li>`)
+                if(!$('.comment_title').is(':hidden')){
+                    $('.comment_title').find('span').text(data[0]);
+                }
+            }
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+}
+
 // 评论
 function myEvaluate(settingid, storeid, content, flag, url){
     $.ajax({
@@ -339,14 +378,15 @@ function myService(data){
     })
     $('.swiper-wrapper').append(myStr);
     mySwiper();
+
     $.each(data.data.serve_data, function(idx, val){
         str2 += `<div class="service-colla-item" data-goodsid="`+val.service_setting_id+`">
                     <div class="service-colla-title">
                         <p class="service-subtitle">`+val.serve_name+`</p>
                         <p class="service-money"></p>
-                        <i class="spr icon-uncheck" id="setting-`+val.serve_goods[0].service_setting_id+`"></i>
+                        <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="setting-`+val.serve_goods[0].service_setting_id+`"></i>
                     </div>
-                    <div class="service-colla-content" style="display:none;">
+                    <div class="service-colla-content" style="display:`+(urlLen>1?'block':'none')+`;">
                         <ul>`
         $.each(val.serve_goods, function(idx, val){
             if(val.service_money === null && val.ruling_money === null){
@@ -355,7 +395,7 @@ function myService(data){
                             <div class="content-money-div">
                                 <p class="sale"><span>面议</span></p>
                             </div>
-                            <i class="spr icon-uncheck" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }else if(val.service_money !== null && val.ruling_money === null){
                 str2 += `<li>
@@ -363,7 +403,7 @@ function myService(data){
                             <div class="content-money-div">
                                 <p class="sale">￥<span>`+val.service_money+`</span></p>
                             </div>
-                            <i class="spr icon-uncheck" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }else if(val.service_money !== null && val.ruling_money !== null){
                 str2 += `<li>
@@ -372,7 +412,7 @@ function myService(data){
                                 <p class="sale">￥<span>`+val.service_money+`</span></p>
                                 <p class="thro">￥<span>`+val.ruling_money+`</span></p>
                             </div>
-                            <i class="spr icon-uncheck" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }
         })
@@ -393,6 +433,8 @@ function selectEvent(){
             $(this).parent().siblings().find('.service-colla-content').hide();
             $(this).parent().siblings().find('.icon-uncheck').removeClass('icon-check');
         }else{
+            $(this).siblings().find('.icon-uncheck').removeClass('icon-check');
+            $('.bespeak-btn').prop('disabled', 'disabled');
             $(this).siblings('.service-colla-content').hide();
         }
     })

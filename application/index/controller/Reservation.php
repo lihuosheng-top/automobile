@@ -56,7 +56,7 @@ class Reservation extends Controller{
             $store_address = substr($store_user_address,0,$num);
             $user_id = Session::get("user");
             $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
-            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->where("year",$user_car["production_time"])->where("displacement",$user_car["displacement"])->field("vehicle_model")->find();
+            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->field("vehicle_model")->find();
             $serve_goods = db("serve_goods")->where("vehicle_model",$car_series["vehicle_model"])->where("service_setting_id",$service_setting_id)->select();
             foreach ($serve_goods as $key=>$value){
                 $where = "`operation_status` = '1' and `store_is_button` = '1' and `del_status` = '1'";
@@ -68,7 +68,6 @@ class Reservation extends Controller{
                     }
                 }
             }
-
             if ($serve_goods) {
                 return ajax_success("获取成功", $serve_goods);
             } else {
@@ -91,7 +90,7 @@ class Reservation extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");
             $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
-            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->where("year",$user_car["production_time"])->where("displacement",$user_car["displacement"])->field("vehicle_model")->find();
+            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->field("vehicle_model")->find();
             $serve_goods_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("store_id",$serve_goods_id)->where("goods_status",1)->select();
             $store = db("store")->where("store_id",$serve_goods_id)->select();
@@ -142,6 +141,70 @@ class Reservation extends Controller{
         return view("reservation_info");
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:全部评价数量，好评数量，中评数量，差评数量，有图数量
+     **************************************
+     * @param Request $request
+     */
+    public function  reservation_evaluate_numbers(Request $request){
+        if($request->isPost()){
+            //前端传setting_id过来识别是那种服务项目类型
+            $service_setting_id = $request->only(["setting_id"])["setting_id"];//服务setting_id
+            $store_id = $request->only(["store_id"])["store_id"];
+            //所有的
+            $all_numbers[0] = db("order_service_evaluate")
+                ->where("setting_id",$service_setting_id)
+                ->where("store_id", $store_id)
+                ->count();
+            //好评的数量
+            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
+            $all_numbers[1] = db("order_service_evaluate")
+                ->where($condition)
+                ->where("setting_id",$service_setting_id)
+                ->where("store_id", $store_id)
+                ->count();
+            //中评
+            $min_condition ="evaluate_stars = 2 or evaluate_stars = 3";
+            $all_numbers[2] = db("order_service_evaluate")
+                ->where($min_condition)
+                ->where("setting_id",$service_setting_id)
+                ->where("store_id", $store_id)
+                ->count();
+            //差评
+            $bad_condition ="evaluate_stars = 1";
+            $all_numbers[3] = db("order_service_evaluate")
+                ->where($bad_condition)
+                ->where("setting_id",$service_setting_id)
+                ->where("store_id", $store_id)
+                ->count();
+
+            $all_img= db("order_service_evaluate")
+                ->where("setting_id",$service_setting_id)
+                ->where("store_id", $store_id)
+                ->select();
+            $set =[];
+            foreach ($all_img as $k=>$v){
+                $is_set =Db::name("order_service_evaluate_images")
+                    ->where("evaluate_order_id",$v["id"])
+                    ->find();
+                if(!empty($is_set)){
+                    $set[$k] =$is_set["evaluate_order_id"];
+                }
+            }
+            if(!empty($set)){
+                $all_numbers[4] =count(array_unique($set));
+            }else{
+                $all_numbers[4] =0;
+            }
+            if(!empty($all_numbers)){
+                return ajax_success("有数据",$all_numbers);
+            }else{
+                return ajax_error("没有记录");
+            }
+        }
+    }
 
     /**
      **************李火生*******************
@@ -163,29 +226,30 @@ class Reservation extends Controller{
                     $evaluate_info_arr[] = $evaluate_info;
                 }
             }
-            foreach ($evaluate_info_arr as $kk => $vv) {
-                foreach ($vv as $i => $j) {
-                    $evaluate_info_arr[$kk][$i]["images"] = db("order_service_evaluate_images")
-                        ->field("images")
-                        ->where("evaluate_order_id", $j["id"])
-                        ->select();
-                    $evaluate_info_arr[$kk][$i]["order_create_time"] = db("order_service")
-                        ->where("id", $j["order_id"])
-                        ->value("create_time");
-                    $evaluate_info_arr[$kk][$i]["user_info"] = db("user")
-                        ->where("id", $j["user_id"])
-                        ->field("user_img,phone_num")
-                        ->find();
+            if(!empty($evaluate_info_arr)){
+                foreach ($evaluate_info_arr as $kk => $vv) {
+                    foreach ($vv as $i => $j) {
+                        $evaluate_info_arr[$kk][$i]["images"] = db("order_service_evaluate_images")
+                            ->field("images")
+                            ->where("evaluate_order_id", $j["id"])
+                            ->select();
+                        $evaluate_info_arr[$kk][$i]["order_create_time"] = db("order_service")
+                            ->where("id", $j["order_id"])
+                            ->value("create_time");
+                        $evaluate_info_arr[$kk][$i]["user_info"] = db("user")
+                            ->where("id", $j["user_id"])
+                            ->field("user_img,phone_num")
+                            ->find();
+                    }
                 }
+                $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
             }
-            $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
             if (!empty($evaluate_info_arr)) {
                 $ords =array();
                 foreach ($evaluate_info_arr as $vl){
                     $ords[] =intval($vl["create_time"]);
                 }
-                array_multisort($evaluate_info_arr,SORT_ASC,$ords);
-
+                array_multisort($ords,SORT_DESC,$evaluate_info_arr);
                 return ajax_success("数据返回成功", $evaluate_info_arr);
             } else {
                 return ajax_error("没有数据", ["status" => 0]);
@@ -237,7 +301,7 @@ class Reservation extends Controller{
                 foreach ($evaluate_info_arr as $vl){
                     $ords[] =intval($vl["create_time"]);
                 }
-                array_multisort($evaluate_info_arr,SORT_ASC,$ords);
+                array_multisort($ords,SORT_DESC,$evaluate_info_arr);
 
                 return ajax_success("数据返回成功", $evaluate_info_arr);
             } else {
@@ -289,8 +353,7 @@ class Reservation extends Controller{
                 foreach ($evaluate_info_arr as $vl){
                     $ords[] =intval($vl["create_time"]);
                 }
-                array_multisort($evaluate_info_arr,SORT_ASC,$ords);
-
+                array_multisort($ords,SORT_DESC,$evaluate_info_arr);
                 return ajax_success("数据返回成功", $evaluate_info_arr);
             } else {
                 return ajax_error("没有数据", ["status" => 0]);
@@ -341,8 +404,7 @@ class Reservation extends Controller{
                 foreach ($evaluate_info_arr as $vl){
                     $ords[] =intval($vl["create_time"]);
                 }
-                array_multisort($evaluate_info_arr,SORT_ASC,$ords);
-
+                array_multisort($ords,SORT_DESC,$evaluate_info_arr);
                 return ajax_success("数据返回成功", $evaluate_info_arr);
             } else {
                 return ajax_error("没有数据", ["status" => 0]);
@@ -361,11 +423,9 @@ class Reservation extends Controller{
             $service_setting_id = $request->only(["goods_id"])["goods_id"];//服务setting_id
             $store_id = $request->only(["store_id"])["store_id"];
             $goods_id_arr = Db::name("serve_goods")->where("service_setting_id", $service_setting_id)->select();
-            $condition ="evaluate_stars = 4 or evaluate_stars = 5";
             foreach ($goods_id_arr as $key => $value) {
                 $evaluate_info = db("order_service_evaluate")
                     ->where("goods_id", $value["id"])
-                    ->where($condition)
                     ->where("store_id", $store_id)
                     ->select();
                 if (!empty($evaluate_info)) {
@@ -380,11 +440,12 @@ class Reservation extends Controller{
                             ->where("evaluate_order_id", $j["id"])
                             ->select();
                         if(!empty($img)){
-                            $evaluate_info_arr[$kk][$i]["images"] =$img;
-                            $evaluate_info_arr[$kk][$i]["order_create_time"] = db("order_service")
+                            $evaluate_info_array[$kk][$i] =$j;
+                            $evaluate_info_array[$kk][$i]["images"] =$img;
+                            $evaluate_info_array[$kk][$i]["order_create_time"] = db("order_service")
                                 ->where("id", $j["order_id"])
                                 ->value("create_time");
-                            $evaluate_info_arr[$kk][$i]["user_info"] = db("user")
+                            $evaluate_info_array[$kk][$i]["user_info"] = db("user")
                                 ->where("id", $j["user_id"])
                                 ->field("user_img,phone_num")
                                 ->find();
@@ -392,13 +453,13 @@ class Reservation extends Controller{
 
                     }
                 }
-                $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
+                $evaluate_info_array = array_reduce($evaluate_info_array, 'array_merge', array());
                 $ords =array();
-                foreach ($evaluate_info_arr as $vl){
+                foreach ($evaluate_info_array as $vl){
                     $ords[] =intval($vl["create_time"]);
                 }
-                array_multisort($evaluate_info_arr,SORT_ASC,$ords);
-                return ajax_success("数据返回成功", $evaluate_info_arr);
+                array_multisort($ords,SORT_ASC,$evaluate_info_array);
+                return ajax_success("数据返回成功",$evaluate_info_array);
             } else {
                 return ajax_error("没有数据", ["status" => 0]);
             }

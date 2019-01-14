@@ -30,7 +30,7 @@ class Operation extends Controller{
         $showdata = array_slice($all_idents, ($curPage - 1) * $listRow, $listRow, true);// 数组中根据条件取出一段值，并返回
         $platform = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
             'var_page' => 'page',
-            'path' => url('admin/Operation/complaint_index'),//这里根据需要修改url
+            'path' => url('admin/operation/complaint_index'),//这里根据需要修改url
             'query' => [],
             'fragment' => '',
         ]);
@@ -65,9 +65,9 @@ class Operation extends Controller{
         unset($data["id"]);
         $bool = db("rescue")->where("id",$id)->update($data);
         if($bool){
-            $this->success("修改成功",url("admin/Operation/urgency_index"));
+            $this->success("修改成功",url("admin/operation/urgency_index"));
         }else{
-            $this->error("修改失败",url("admin/Operation/urgency_index"));
+            $this->error("修改失败",url("admin/operation/urgency_index"));
         }
     }
 
@@ -98,9 +98,9 @@ class Operation extends Controller{
         $id = $request->only(["id"])["id"];
         $bool = db("rescue")->where("id",$id)->delete();
         if($bool){
-            $this->success("删除成功",url("admin/Operation/urgency_index"));
+            $this->success("删除成功",url("admin/operation/urgency_index"));
         }else{
-            $this->error("删除失败",url("admin/Operation/urgency_index"));
+            $this->error("删除失败",url("admin/operation/urgency_index"));
         }
 
 
@@ -120,9 +120,9 @@ class Operation extends Controller{
         unset($data["id"]);
         $bool = db("complaint")->where("id",$id)->update($data);
         if($bool){
-            $this->success("修改成功",url("admin/Operation/complaint_index"));
+            $this->success("修改成功",url("admin/operation/complaint_index"));
         }else{
-            $this->error("修改失败",url("admin/Operation/complaint_index"));
+            $this->error("修改失败",url("admin/operation/complaint_index"));
         }
     }
 
@@ -153,9 +153,9 @@ class Operation extends Controller{
         $id = $request->only(["id"])["id"];
         $bool = db("complaint")->where("id",$id)->delete();
         if($bool){
-            $this->success("删除成功",url("admin/Operation/complaint_index"));
+            $this->success("删除成功",url("admin/operation/complaint_index"));
         }else{
-            $this->error("删除失败",url("admin/Operation/complaint_index"));
+            $this->error("删除失败",url("admin/operation/complaint_index"));
         }
 
 

@@ -181,6 +181,24 @@ class Index extends Controller
                 $shop_data[$key]["id"] = $value["store_id"];
                 $shop_data[$key]["shop_time"] = $value["store_do_bussiness_time"];
                 $shop_data[$key]["shop_name"] = $value["store_name"];
+                $parts_attitude_stars =Db::name("order_parts_evaluate")
+                    ->where("store_id",$value["store_id"])
+                    ->avg('service_attitude_stars');
+                $service_attitude_stars =Db::name("order_service_evaluate")
+                    ->where("store_id",$value["store_id"])
+                    ->avg("service_attitude_stars");
+                if(!empty($parts_attitude_stars) && (!empty($service_attitude_stars))){
+                    $sum =(round($parts_attitude_stars,2) + round($service_attitude_stars,2))/2;
+                    $shop_data[$key]["store_star"] =round($sum,2);
+                }else if(!empty($parts_attitude_stars) && empty($service_attitude_stars)){
+                    $sum =round($parts_attitude_stars,2);
+                    $shop_data[$key]["store_star"] =round($sum,2);
+                }else if(empty($parts_attitude_stars) && (!empty($service_attitude_stars))){
+                    $sum = round($service_attitude_stars,2);
+                    $shop_data[$key]["store_star"] =round($sum,2);
+                }else{
+                    $shop_data[$key]["store_star"] =0;
+                }
             }
             return ajax_success("获取成功",$shop_data);
         }
@@ -222,7 +240,7 @@ class Index extends Controller
             } else {
                 $user_id = Session::get("user");
                 $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
-                $car_series = db("car_series")->where("brand", $user_car["brand"])->where("series", $user_car["series"])->where("year", $user_car["production_time"])->where("displacement", $user_car["displacement"])->field("vehicle_model")->find();
+                $car_series = db("car_series")->where("brand", $user_car["brand"])->where("series", $user_car["series"])->field("vehicle_model")->find();
                 if (!empty($car_series)) {
                     $shop_id = $request->only(["id"])["id"];
                     $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
