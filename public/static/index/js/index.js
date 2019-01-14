@@ -352,16 +352,17 @@ $.ajax({
             var res = res.data[0];
             $('.txt-div p').html(res.brand);
             $('.txt-div span').html(res.series + ' ' + res.displacement + ' ' + res.production_time);
-        }else{
-            $('.service-container').on('click', 'li', function(e){
-                e.preventDefault();
-                layer.open({
-                    skin: 'msg',
-                    content: '请登录',
-                    time: .8
-                })
-            })
         }
+        // else{
+        //     $('.service-container').on('click', 'li:eq(0)', function(e){
+        //         e.preventDefault();
+        //         layer.open({
+        //             skin: 'msg',
+        //             content: '请添加爱车',
+        //             time: .8
+        //         })
+        //     })
+        // }
     },
     error: function(){
         console.log('爱车显示：error')

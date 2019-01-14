@@ -179,6 +179,7 @@ if(urlLen > 1){
     })
 }else{
     // 首页热门店铺进来
+    $('.bespeak-btn').prop('disabled', true);
     $.ajax({
         url: 'index_shop_goods',
         type: 'POST',
@@ -355,14 +356,15 @@ function myService(data){
     })
     $('.swiper-wrapper').append(myStr);
     mySwiper();
+
     $.each(data.data.serve_data, function(idx, val){
         str2 += `<div class="service-colla-item" data-goodsid="`+val.service_setting_id+`">
                     <div class="service-colla-title">
                         <p class="service-subtitle">`+val.serve_name+`</p>
                         <p class="service-money"></p>
-                        <i class="spr icon-uncheck" id="setting-`+val.serve_goods[0].service_setting_id+`"></i>
+                        <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="setting-`+val.serve_goods[0].service_setting_id+`"></i>
                     </div>
-                    <div class="service-colla-content" style="display:none;">
+                    <div class="service-colla-content" style="display:`+(urlLen>1?'block':'none')+`;">
                         <ul>`
         $.each(val.serve_goods, function(idx, val){
             if(val.service_money === null && val.ruling_money === null){
@@ -371,7 +373,7 @@ function myService(data){
                             <div class="content-money-div">
                                 <p class="sale"><span>面议</span></p>
                             </div>
-                            <i class="spr icon-uncheck" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }else if(val.service_money !== null && val.ruling_money === null){
                 str2 += `<li>
@@ -379,7 +381,7 @@ function myService(data){
                             <div class="content-money-div">
                                 <p class="sale">￥<span>`+val.service_money+`</span></p>
                             </div>
-                            <i class="spr icon-uncheck" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }else if(val.service_money !== null && val.ruling_money !== null){
                 str2 += `<li>
@@ -388,7 +390,7 @@ function myService(data){
                                 <p class="sale">￥<span>`+val.service_money+`</span></p>
                                 <p class="thro">￥<span>`+val.ruling_money+`</span></p>
                             </div>
-                            <i class="spr icon-uncheck" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }
         })
