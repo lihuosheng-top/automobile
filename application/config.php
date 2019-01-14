@@ -141,7 +141,7 @@ return [
     // 视图输出字符串内容替换
     'view_replace_str'       => [
         /*"__AdminCss__"=>"/static/admin/static"*/
-        "__UPLOADS__"=>"/uploads",
+        "__UPLOADS__"=>"/automobile/public/uploads",
         "__UEDITOR__"=>"/ueditor",
         "__USERIMG__"=>"/userimg",
     ],
