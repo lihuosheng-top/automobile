@@ -370,10 +370,10 @@ Route::group("",[
      * 运营管理
      * 陈绪
      */
-    "rescue_index"=>"index/Operation/rescue",             //紧急救援
+    "rescue_index"=>"index/operation/rescue",             //紧急救援
 
     /*TODO:测试IOS地址开始*/
-    "test_ios"=>"index/Operation/ios",
+    "test_ios"=>"index/operation/ios",
     /*TODO:测试IOS地址结束*/
 
 
@@ -744,14 +744,14 @@ Route::group("admin",[
      * 运营管理
      * 陈绪
      */
-    "complaint_index"=>"admin/Operation/complaint_index",
-    "urgency_index"=>"admin/Operation/urgency_index",
-    "urgency_updata"=>"admin/Operation/urgency_updata",
-    "urgency_select"=>"admin/Operation/urgency_select",
-    "urgency_del"=>"admin/Operation/urgency_del",
-    "complaint_updata"=>"admin/Operation/complaint_updata",
-    "complaint_select"=>"admin/Operation/complaint_select",
-    "complaint_del"=>"admin/Operation/complaint_del",
+    "complaint_index"=>"admin/operation/complaint_index",
+    "urgency_index"=>"admin/operation/urgency_index",
+    "urgency_updata"=>"admin/operation/urgency_updata",
+    "urgency_select"=>"admin/operation/urgency_select",
+    "urgency_del"=>"admin/operation/urgency_del",
+    "complaint_updata"=>"admin/operation/complaint_updata",
+    "complaint_select"=>"admin/operation/complaint_select",
+    "complaint_del"=>"admin/operation/complaint_del",
 
 
 
