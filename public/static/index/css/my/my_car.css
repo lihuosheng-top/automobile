@@ -148,6 +148,8 @@ html{
 .car-detail-pop .info-bg .info-p{
     font-size: .3rem;
     color: #333;
+    padding: 0 .5rem;
+    text-align: center;
 }
 .car-detail-pop .info-bg .plate-num{
     font-size: .3rem;
