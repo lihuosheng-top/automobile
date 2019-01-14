@@ -498,6 +498,7 @@ class OrderService extends Controller{
                 $service_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
                 if (!empty($data)) {
                     $datas = [
+                        'service_setting_id'=>$goods_data["service_setting_id"],//服务设置id
                         'service_goods_name' => $goods_data['vehicle_model'], //车型
                         "service_goods_image" =>$goods_data["service_setting_calss_img"],//服务项目图片
                         'service_order_quantitative' => $data['service_order_quantitative'],//订单数量

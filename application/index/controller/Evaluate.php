@@ -209,10 +209,11 @@ class Evaluate extends  Controller{
             foreach ($order_id  as $k=>$v){
                 //所有的订单信息
                 $order_information =  Db::name("order_service")
-                    ->field("service_goods_name,service_goods_id,service_order_number,store_id")
+                    ->field("service_goods_name,service_goods_id,service_order_number,store_id,service_setting_id")
                     ->where("id",$v)
                     ->find();
                 $data =[
+                    "setting_id"=>$order_information["service_setting_id"],//
                     "evaluate_content"=>$evaluate_content[$k], //评价的内容
                     "goods_id" =>$order_information["service_goods_id"],
                     "store_id" =>$order_information["store_id"],

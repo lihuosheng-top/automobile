@@ -74,7 +74,6 @@ class Payment extends \Base {
         $pub_data = $alipay->setRsa2Sign($pub_params);
         $json_data = $this->curlRequest(self::NEW_PAYGATEWAY,$pub_data);
         halt($json_data);
-
     }
 
 

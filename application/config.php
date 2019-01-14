@@ -141,9 +141,9 @@ return [
     // 视图输出字符串内容替换
     'view_replace_str'       => [
         /*"__AdminCss__"=>"/static/admin/static"*/
-        "__UPLOADS__"=>"/automobile/public/uploads",
-        "__UEDITOR__"=>"/automobile/public/ueditor",
-        "__USERIMG__"=>"/automobile/public/userimg",
+        "__UPLOADS__"=>"/uploads",
+        "__UEDITOR__"=>"/ueditor",
+        "__USERIMG__"=>"/userimg",
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
