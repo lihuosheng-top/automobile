@@ -188,11 +188,9 @@ class Reservation extends Controller{
             foreach ($all_img as $k=>$v){
                 $is_set =Db::name("order_service_evaluate_images")
                     ->where("evaluate_order_id",$v["id"])
-                    ->value("evaluate_order_id");
+                    ->find();
                 if(!empty($is_set)){
-                    $set[] =$is_set;
-                }else{
-                    $set = [];
+                    $set[$k] =$is_set["evaluate_order_id"];
                 }
             }
             $all_numbers[4] =count(array_unique($set));
