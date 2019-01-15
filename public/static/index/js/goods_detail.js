@@ -1,20 +1,25 @@
 // 获取url地址id
 var url = location.search;
 // preStoreId 从店铺商品进来的详情
-var id, preId, specId, store_id, preStoreId;
+var id, preId, specId, store_id, preStoreId, hotStatus;
 if(url.indexOf('?') != -1){
     id = url.substr(1).split('&')[0].split('=')[1];
     preId = url.substr(1).split('&')[1].split('=')[1];
-    if(url.substr(1).split('&').length == 3){
+    var urlLen = url.substr(1).split('&').length;
+    if(urlLen == 3){
         preStoreId = url.substr(1).split('&')[2].split('=')[1];
+    }else if(urlLen == 4){
+        hotStatus = 1;
     }
-    console.log(preStoreId);
+    console.log(hotStatus);
 }
 $('.wrapper').find('a.back').click(function(){
-    if(preStoreId == undefined){
-        location.href = 'goods_list?id=' + preId;
-    }else{
+    if(preStoreId != undefined){
         location.href = 'store_index?storeId=' + preStoreId;
+    }else if(hotStatus != undefined){
+        location.href = 'reservation_detail?store_id=' + store_id;
+    }else{
+        location.href = 'goods_list?id=' + preId;
     }
 })
 $.ajax({
