@@ -578,7 +578,6 @@ class Goods extends Controller
                 }
             }
             //店铺不需要付款修改状态
-
             if ($status == 0 && $admin_role != 2 && $store_is_pay == 0) {
                 $id = $request->only(["id"])["id"];
                 $bool = [];
@@ -586,6 +585,8 @@ class Goods extends Controller
                     $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                 }
 
+                echo 1;
+                exit();
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -600,6 +601,8 @@ class Goods extends Controller
                     $bool = db("goods")->where("id", $val)->update(["goods_status" => 1]);
                 }
 
+                echo 2;
+                exit();
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
