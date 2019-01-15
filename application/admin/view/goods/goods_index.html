@@ -376,6 +376,7 @@
                                 var store_status=data.data.store_status;
 								// 当角色为平台时
 								if(role_id==2){
+                                  
 								   var ids=[];
 									  ids.push(id);
 									$.ajax({ 
@@ -395,65 +396,68 @@
 											});
 								}
 								// 当角色为服务商时
-								else if(role_id==5){
-                                    if(store_status==0){
-                                        var ids=[];
-                                            ids.push(id);
-                                            $.ajax({ 
-                                                    type: "POST",
-                                                    url: "{:url('admin/Goods/status')}",
-                                                    data: {
-                                                      "id":ids,
-                                                      "status":status,
-                                                      "store_status":store_status
-                                                      },
-                                                    success: function(data){
-                                                        console.log(data)
-                                                    },
-                                                    error:function (data) {
-                                                        console.log(data)
-                                                    }
-                                                });
-                                    }
+								// else if(role_id==5){
                                     else{
-                                        if(putaway_status==1){
-                                            var ids=[];
-                                            ids.push(id);
-                                                $.ajax({ 
-                                                        type: "POST",
-                                                        url: "{:url('admin/Goods/status')}",
-                                                        data: {
+                                            console.log(store_status == 0);
+                                            if(store_status.length!=0){
+                                                alert(11);
+                                                var ids=[];
+                                                    ids.push(id);
+                                                    $.ajax({ 
+                                                            type: "POST",
+                                                            url: "{:url('admin/Goods/status')}",
+                                                            data: {
                                                             "id":ids,
                                                             "status":status,
                                                             "store_status":store_status
                                                             },
-                                                        success: function(data){
-                                                            console.log(data)
-                                                        },
-                                                        error:function (data) {
-                                                            console.log(data)
+                                                            success: function(data){
+                                                                console.log(data)
+                                                            },
+                                                            error:function (data) {
+                                                                console.log(data)
+                                                            }
+                                                        });
+                                            }
+                                            else{
+                                                        if(putaway_status==1){
+                                                            var ids=[];
+                                                            ids.push(id);
+                                                                $.ajax({ 
+                                                                        type: "POST",
+                                                                        url: "{:url('admin/Goods/status')}",
+                                                                        data: {
+                                                                            "id":ids,
+                                                                            "status":status,
+                                                                            "store_status":null
+                                                                            },
+                                                                        success: function(data){
+                                                                            console.log(data)
+                                                                        },
+                                                                        error:function (data) {
+                                                                            console.log(data)
+                                                                        }
+                                                                    });
                                                         }
-                                                    });
-                                        }
-                                                else{
-                                            layer.confirm('付费商品需付费后才能上架！', {
-                                                    btn: ['确定付费','取消付费！'] //按钮
-                                                    }, function(){
-                                                    layer.close(layer.index);
-                                                    $(".tanchuang").removeClass("noshow");
-                                                    $("#shop").val(shop);
-                                                    $("#price").val(price);
-                                                    $("#num").val("1");
-                                                    $("#good-id").val(id);
-                                                    $("#year").val(present);
+                                                    else{
+                                                    layer.confirm('付费商品需付费后才能上架！', {
+                                                            btn: ['确定付费','取消付费！'] //按钮
+                                                            }, function(){
+                                                            layer.close(layer.index);
+                                                            $(".tanchuang").removeClass("noshow");
+                                                            $("#shop").val(shop);
+                                                            $("#price").val(price);
+                                                            $("#num").val("1");
+                                                            $("#good-id").val(id);
+                                                            $("#year").val(present);
+                                                            
+                                                            });
+
                                                     
-                                                    });
-
-                                            
-                                        }
+                                                }
 
 
-                                    }
+                                            }
                                       
                             }
 
@@ -474,7 +478,8 @@
                         url: "{:url('admin/Goods/status')}",
                         data: {
                             "id": ids,
-                            "status": status
+                            "status": status,
+                            "store_status":null
                         },
                         success: function(data) {
                             console.log(data)
