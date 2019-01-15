@@ -24,29 +24,39 @@ function countDown(id, endTime, storeId, orderNum, reason){
         var minutes = Math.floor((totalSecond % 3600) / 60);
         // console.log(minutes);
         // 秒
-        // var seconds = Math.floor((totalSecond % 3600) % 60);
+        var seconds = Math.floor((totalSecond % 3600) % 60);
         // console.log(seconds);
-        document.getElementById(id).innerText = '剩'+hours+'小时'+minutes+'分自动关闭';
+        document.getElementById(id).innerText = '剩'+hours+'小时'+minutes+'分'+seconds+'秒自动关闭';
         setTimeout(function(){
             countDown(id, endTime, storeId, orderNum, reason);
         }, 1000)
     }else{
-        $.ajax({
-            url: 'order_parts_detail_cancel',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                'store_id': storeId,
-                'parts_order_number': orderNum,
-                'cancel_order_description': reason
-            },
-            success: function(res){
-                console.log(res);
-                location.reload();
-            },
-            error: function(){
-                console.log('error');
-            }
+        (function(){
+            return $.ajax({
+                url: 'order_parts_detail_cancel',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'store_id': storeId,
+                    'parts_order_number': orderNum,
+                    'cancel_order_description': reason
+                }
+            })
+        })().then(function(){
+            $.ajax({
+                url: 'order_parts_save_record',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'parts_order_number': orderNum,
+                    'store_id': storeId,
+                    'status': 9
+                },
+                success: function(res){
+                    console.log(res);
+                    location.reload();
+                }
+            })
         })
     }
 }

@@ -184,6 +184,10 @@ if(urlLen > 1){
             console.log('error');
         }
     })
+    // 从预约服务进来 返回上一页
+    $('.back').click(function(){
+        location.href = 'reservation?service_setting_id='+serviceSettingId;
+    })
 }else{
     // 首页热门店铺进来
     $('.bespeak-btn').prop('disabled', true);
@@ -200,6 +204,14 @@ if(urlLen > 1){
                 // 商品
                 var str = myGoods(data);
                 $('.goods-content').prepend(str);
+
+                $('.goods-colla-item').click(function(){
+                    var id = $(this).attr('data-id');
+                    var standid = $(this).attr('data-standid');
+                    var storeid = $(this).attr('data-storeid');
+                    location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=`+1 ;
+                })
+
                 // 服务项目
                 var str2 = myService(data);
                 $('.service-content').append(str2);
@@ -235,6 +247,10 @@ if(urlLen > 1){
         error: function(){
             console.log('error');
         }
+    })
+    // 从热门店铺进来 返回上一页
+    $('.back').click(function(){
+        location.href = 'index';
     })
 }
 // 评论数量
@@ -342,7 +358,7 @@ function myEvaluate(settingid, storeid, content, flag, url){
 function myGoods(data){
     var str = '';
     $.each(data.data.goods, function(idx, val){
-        str += `<div class="goods-colla-item">
+        str += `<div class="goods-colla-item" data-id="`+val.id+`" data-standid="`+val.goods_brand_id+`" data-storeid="`+val.store_id+`">
                     <div class="goods-img-box">
                         <img src="uploads/`+val.goods_show_images+`">
                     </div>
