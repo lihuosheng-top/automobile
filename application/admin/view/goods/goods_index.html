@@ -186,13 +186,9 @@
 						<th>商品图片</th>
 						<th>商品名称</th>
 						<th>商品价格</th>
-						{volist name="role_name" id="v"}
-						{if $v.role_id == 2}
 						<th>
 							调整后价格
 						</th>
-						{/if}
-						{/volist}
 						<th>是否上架</th>
 						<th>是否付费</th>
 						<th>付费金额</th>
@@ -225,17 +221,12 @@
                         {else}
                         <td>￥{$value.min_price}</td>
                         {/if}
-						{volist name="role_name" id="v"}
-						{if $v.role_id == 2}
-						<td style="color: red;">
-							{if $value.goods_adjusted_money == $value.goods_new_money}
-							￥0
-							{else}
-							￥{$value.goods_adjusted_money}
-							{/if}
-						</td>
+
+						{if $value.max_goods_adjusted_price != $value.min_goods_adjusted_price}
+						<td>￥{$value.min_goods_adjusted_price}-￥{$value.max_goods_adjusted_price}</td>
+						{else}
+						<td>￥{$value.min_goods_adjusted_price}</td>
 						{/if}
-						{/volist}
 						<td>
 							{if $value.goods_status == 0}
 							{volist name="year" id="val"}

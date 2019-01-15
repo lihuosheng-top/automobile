@@ -45,23 +45,27 @@ class Goods extends Controller
                 }
             }
             // $goods_money = db("goods")->field("goods_new_money,id")->select();
-            
+
             // foreach ($goods_money as $k => $val) {
             //     $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
             //     $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
             //     db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
             // }
-   
+
             foreach ($goods as $key => $value) {
                 $max[$key] = db("special")->where("goods_id", $goods[$key]['id'])->max("price");//最高价格
                 $min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("price");//最低价格
                 $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $goods[$key]['id'])->sum("stock");//库存
                 $goods[$key]["max_price"] = $max[$key];
                 $goods[$key]["min_price"] = $min[$key];
-                        
+                $goods_adjusted_price_max[$key] = db("special")->where("goods_id", $goods[$key]['id'])->max("goods_adjusted_price");//最高价格
+                $goods_adjusted_price_min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("goods_adjusted_price");//最低价格
+                $goods[$key]["max_goods_adjusted_price"] = $goods_adjusted_price_max[$key];
+                $goods[$key]["min_goods_adjusted_price"] = $goods_adjusted_price_min[$key];
+                db("goods")->where("id",$value["id"])->update(["goods_adjusted_money"=>$goods_adjusted_price_min[$key]]);
             }
             //调整规格后的价格显示
-            $adjusted_price = db("special")->field("price,id")->select();          
+            $adjusted_price = db("special")->field("price,id")->select();
             foreach ($adjusted_price as $kw => $vl) {
                 $ratio[] = db("goods_ratio")->where("min_money", "<=", $vl["price"])->where("max_money", ">=", $vl["price"])->field("ratio")->find();
                 $goods_adjusted_moneys[] = $vl["price"] + ($vl["price"] * $ratio[$kw]["ratio"]);
@@ -108,7 +112,12 @@ class Goods extends Controller
                 $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $goods[$key]['id'])->sum("stock");//库存
                 $goods[$key]["max_price"] = $max[$key];
                 $goods[$key]["min_price"] = $min[$key];
-                        
+                $goods_adjusted_price_max[$key] = db("special")->where("goods_id", $goods[$key]['id'])->max("goods_adjusted_price");//最高价格
+                $goods_adjusted_price_min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("goods_adjusted_price");//最低价格
+                $goods[$key]["max_goods_adjusted_price"] = $goods_adjusted_price_max[$key];
+                $goods[$key]["min_goods_adjusted_price"] = $goods_adjusted_price_min[$key];
+                db("goods")->where("id",$value["id"])->update(["goods_adjusted_money"=>$goods_adjusted_price_min[$key]]);
+
             }
             // $goods_money = db("goods")->field("goods_new_money,id")->select();
             // foreach ($goods_money as $k => $val) {
@@ -117,7 +126,7 @@ class Goods extends Controller
             //     db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
             // }
             //调整规格后的价格显示
-            $adjusted_price = db("special")->field("price,id")->select();          
+            $adjusted_price = db("special")->field("price,id")->select();
             foreach ($adjusted_price as $kw => $vl) {
                 $ratio[] = db("goods_ratio")->where("min_money", "<=", $vl["price"])->where("max_money", ">=", $vl["price"])->field("ratio")->find();
                 $goods_adjusted_moneys[] = $vl["price"] + ($vl["price"] * $ratio[$kw]["ratio"]);
@@ -776,11 +785,17 @@ class Goods extends Controller
      */
     public function role_name(Request $request)
     {
-
         if ($request->isPost()) {
+            $goods_id = $request->only(["goods_id"])["goods_id"];
+            $goods = db("goods")->where("id",$goods_id)->field("store_id")->find();
+            $store = db("store")->where("store_id",$goods["store_id"])->find();
+            $store_status = [];
+            if($store["store_is_pay"] == 0){
+                $store_status = $store["store_is_pay"];
+            }
             $user_id = Session::get("user_id");
             $admin = db("admin")->where("id", $user_id)->select();
-            return ajax_success("获取成功", array("admin" => $admin));
+            return ajax_success("获取成功", array("admin" => $admin,"store_status"=>$store_status));
         }
 
     }
@@ -794,7 +809,6 @@ class Goods extends Controller
      */
     public function alipay(Request $request)
     {
-
         if ($request->isPost()) {
             include('../extend/AliPay_demo/f2fpay/model/builder/AlipayTradePrecreateContentBuilder.php');
             include('../extend/AliPay_demo/f2fpay/service/AlipayTradeService.php');
