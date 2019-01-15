@@ -214,7 +214,6 @@ class OrderParts extends Controller{
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
-//                                    ->order('order_create_time', 'desc')
                                     ->select();
 
                                 $names = Db::name('order_parts')
