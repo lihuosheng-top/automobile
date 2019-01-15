@@ -522,8 +522,7 @@ class Goods extends Controller
                 foreach ($id as $value) {
                     $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                 }
-                echo 3;
-                exit();
+
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -540,8 +539,7 @@ class Goods extends Controller
                         $bool = db("goods")->where("id", $val)->update(["goods_status" => 1, "putaway_status" => 1]);
                     }
                 }
-                echo 4;
-                exit();
+
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -556,8 +554,6 @@ class Goods extends Controller
                     $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                 }
 
-                echo 5;
-                exit();
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -565,7 +561,8 @@ class Goods extends Controller
                 }
 
             }
-            if ($status == 1 && $admin_role != 2 && $store_is_pay == 1) {
+
+            if ($status == 1 && $admin_role != 2 && $store["store_is_pay"] == 1) {
                 $id = $request->only(["id"])["id"];
                 $bool = [];
                 foreach ($id as $val) {
@@ -575,24 +572,21 @@ class Goods extends Controller
                     }
                 }
 
-                echo 6;
-                exit();
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
                     return ajax_error("失败");
                 }
             }
+
             //店铺不需要付款修改状态
-            if ($status == 0 && $admin_role != 2 && $store["store_is_pay"] == 1) {
+            if ($status == 0 && $admin_role != 2 && $store["store_is_pay"] == -1) {
                 $id = $request->only(["id"])["id"];
                 $bool = [];
                 foreach ($id as $value) {
                     $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                 }
 
-                echo 1;
-                exit();
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -600,15 +594,13 @@ class Goods extends Controller
                 }
 
             }
-            if ($status == 1 && $admin_role != 2 && $store_is_pay == 0) {
+            if ($status == 1 && $admin_role != 2 && $store["store_is_pay"] == -1) {
                 $id = $request->only(["id"])["id"];
                 $bool = [];
                 foreach ($id as $val) {
                     $bool = db("goods")->where("id", $val)->update(["goods_status" => 1]);
                 }
 
-                echo 2;
-                exit();
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
