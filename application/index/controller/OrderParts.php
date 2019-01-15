@@ -60,10 +60,6 @@ class OrderParts extends Controller{
             $store_id = intval(Session::get("store_id"));
             $parts_order_number = Session::get("parts_order_number");//订单编号
             $parts_status = intval(Session::get("parts_status"));//订单状态
-//            dump($user_id);
-//            dump($parts_order_number);
-//            dump($parts_status);
-//            halt($store_id);
             $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number . " and `status` = " .$parts_status;
             $data = Db::name("order_parts")
                 ->where($condition)
@@ -96,9 +92,9 @@ class OrderParts extends Controller{
                 }
 
                 if (!empty($datas)) {
-//                    Session::set("store_id",null);
-//                    Session::set("parts_order_number",null);
-//                    Session::set("parts_status",null);
+                    Session::set("store_id",null);
+                    Session::set("parts_order_number",null);
+                    Session::set("parts_status",null);
                     return ajax_success("数据返回成功", $datas);
                 } else {
                     return ajax_error("没有数据信息", ["status" => 0]);
