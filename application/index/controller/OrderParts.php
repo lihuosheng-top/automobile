@@ -60,6 +60,10 @@ class OrderParts extends Controller{
             $store_id = intval(Session::get("store_id"));
             $parts_order_number = Session::get("parts_order_number");//订单编号
             $parts_status = intval(Session::get("parts_status"));//订单状态
+//            dump($user_id);
+//            dump($parts_order_number);
+//            dump($parts_status);
+//            halt($store_id);
             $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number . " and `status` = " .$parts_status;
             $data = Db::name("order_parts")
                 ->where($condition)
@@ -80,16 +84,26 @@ class OrderParts extends Controller{
                 }
                 $datas["all_goods_pays"] =array_sum($datas["all_goods_money"]); //商品总额（商品*数量）
                 $datas["normal_future_time"] = $data[0]["normal_future_time"];//正常订单未付款自动关闭的时间
-                $datas["all_order_real_pay"] = $data[0]["order_real_pay"];//订单实际支付
+
                 $datas["all_numbers"] = array_sum(array_map(create_function('$vals', 'return $vals["order_quantity"];'), $data));//订单总数量
                 $datas["integral_deductible"] = $data[0]["integral_deductible"];//抵扣积分钱
                 $datas["info"] = $data;
+//                $datas["all_order_real_pay"] = $data[0]["order_real_pay"];//订单实际支付
+                if(!empty($data[0]["integral_deductible"])){
+                    $datas["all_order_real_pay"] =(array_sum($datas["all_goods_money"]) - $data[0]["integral_deductible"]);//订单实际支付
+                }else{
+                    $datas["all_order_real_pay"] =array_sum($datas["all_goods_money"]); //订单实际支付
+                }
+
                 if (!empty($datas)) {
+//                    Session::set("store_id",null);
+//                    Session::set("parts_order_number",null);
+//                    Session::set("parts_status",null);
                     return ajax_success("数据返回成功", $datas);
                 } else {
                     return ajax_error("没有数据信息", ["status" => 0]);
                 }
-            } else {
+            }else {
                 return ajax_error("订单信息错误", ["status" => 0]);
             }
         }
@@ -403,6 +417,7 @@ class OrderParts extends Controller{
                             foreach ($order_id as $k => $v) {
                                 $return_data[] = Db::name('order_parts')
                                     ->where('id', $v)
+                                    ->where("status",1)
                                     ->where('user_id', $member_id['id'])
                                     ->find();
                             }
@@ -413,6 +428,7 @@ class OrderParts extends Controller{
                             foreach ($da_store_id as $da_k => $da_v) {
                                 $order_undate['info'][] = Db::name('order_parts')
                                     ->where('store_id', $da_v)
+                                    ->where("status",1)
                                     ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
 //                                    ->order('order_create_time', 'desc')
@@ -421,6 +437,7 @@ class OrderParts extends Controller{
                                 $names = Db::name('order_parts')
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
+                                    ->where("status",1)
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
@@ -435,7 +452,10 @@ class OrderParts extends Controller{
                             }
                         }
                         else{
-                            $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $return_datas = Db::name('order_parts')
+                                ->where('id', $value['order_parts_id'])
+                                ->where("status",1)
+                                ->find();
                             $data_infomation["all_order_real_pay"][] =$return_datas["order_real_pay"];
                             $data_infomation["all_numbers"][] =$return_datas["order_quantity"];
                             $data_infomation['name'][]= $return_datas['store_name'];
@@ -443,7 +463,10 @@ class OrderParts extends Controller{
                             $data_infomation['status'][] = $return_datas['status'];
                             $data_infomation['parts_order_number'][] = $return_datas['parts_order_number'];
                             $data_infomation['order_create_time'][] = $return_datas['order_create_time'];
-                            $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $data_infomation['all'][] = Db::name('order_parts')
+                                ->where('id', $value['order_parts_id'])
+                                ->where("status",1)
+                                ->find();
                         }
                     };
 
@@ -616,6 +639,7 @@ class OrderParts extends Controller{
                             foreach ($order_id as $k => $v) {
                                 $return_data[] = Db::name('order_parts')
                                     ->where('id', $v)
+                                    ->where($condition)
                                     ->where('user_id', $member_id['id'])
                                     ->find();
                             }
@@ -628,6 +652,7 @@ class OrderParts extends Controller{
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
+                                    ->where($condition)
 //                                    ->order('order_create_time', 'desc')
                                     ->select();
 
@@ -635,6 +660,7 @@ class OrderParts extends Controller{
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
+                                    ->where($condition)
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
                                 $order_undate['store_id'][] = $names['store_id'];
@@ -648,7 +674,10 @@ class OrderParts extends Controller{
                             }
                         }
                         else{
-                            $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $return_datas = Db::name('order_parts')
+                                ->where('id', $value['order_parts_id'])
+                                ->where($condition)
+                                ->find();
                             $data_infomation["all_order_real_pay"][] =$return_datas["order_real_pay"];
                             $data_infomation["all_numbers"][] =$return_datas["order_quantity"];
                             $data_infomation['name'][]= $return_datas['store_name'];
@@ -656,7 +685,10 @@ class OrderParts extends Controller{
                             $data_infomation['status'][] = $return_datas['status'];
                             $data_infomation['parts_order_number'][] = $return_datas['parts_order_number'];
                             $data_infomation['order_create_time'][] = $return_datas['order_create_time'];
-                            $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $data_infomation['all'][] = Db::name('order_parts')
+                                ->where('id', $value['order_parts_id'])
+                                ->where($condition)
+                                ->find();
                         }
                     };
 
@@ -1034,22 +1066,25 @@ class OrderParts extends Controller{
      */
     public function ios_api_order_parts_return_goods(Request $request){
         if ($request->isPost()) {
+            $datas = session('member');
             if (!empty($datas)) {
                 $member_id = Db::name('user')->field('id')->where('phone_num', $datas['phone_num'])->find();
                 if (!empty($datas)) {
                     $condition ="`status` = '11' or `status` = '12' or `status` = '13'";
                     $data = Db::name('order_parts')
+                        ->field('parts_order_number,group_concat(id) order_parts_id')
                         ->where('user_id', $member_id['id'])
                         ->where($condition)
                         ->order('order_create_time', 'desc')
+                        ->group('parts_order_number')
                         ->select();
-                    halt($data);
                     foreach ($data as $key => $value) {
                         if (strpos($value['order_parts_id'], ',')) {
                             $order_id = explode(',', $value['order_parts_id']);
                             foreach ($order_id as $k => $v) {
                                 $return_data[] = Db::name('order_parts')
                                     ->where('id', $v)
+                                    ->where($condition)
                                     ->where('user_id', $member_id['id'])
                                     ->find();
                             }
@@ -1062,11 +1097,15 @@ class OrderParts extends Controller{
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
+                                    ->where($condition)
+//                                    ->order('order_create_time', 'desc')
                                     ->select();
+
                                 $names = Db::name('order_parts')
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
+                                    ->where($condition)
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
                                 $order_undate['store_id'][] = $names['store_id'];
@@ -1080,7 +1119,10 @@ class OrderParts extends Controller{
                             }
                         }
                         else{
-                            $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $return_datas = Db::name('order_parts')
+                                ->where('id', $value['order_parts_id'])
+                                ->where($condition)
+                                ->find();
                             $data_infomation["all_order_real_pay"][] =$return_datas["order_real_pay"];
                             $data_infomation["all_numbers"][] =$return_datas["order_quantity"];
                             $data_infomation['name'][]= $return_datas['store_name'];
@@ -1088,7 +1130,10 @@ class OrderParts extends Controller{
                             $data_infomation['status'][] = $return_datas['status'];
                             $data_infomation['parts_order_number'][] = $return_datas['parts_order_number'];
                             $data_infomation['order_create_time'][] = $return_datas['order_create_time'];
-                            $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $data_infomation['all'][] = Db::name('order_parts')
+                                ->where('id', $value['order_parts_id'])
+                                ->where($condition)
+                                ->find();
                         }
                     };
 
