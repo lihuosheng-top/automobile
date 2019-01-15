@@ -632,8 +632,10 @@ $.ajax({
                             <div class="hotshop-info">
                                 <p class="hot-name">`+val.shop_name+`</p>
                                 <div class="star-time">
-                                    <!-- star2=二星 以此类推 -->
-                                    <i class="spr star1"></i>
+                                    <i class="spr star1 `+(val.shop_star > 0 && val.shop_star < 1 ? '' : 
+                                                        (val.shop_star >= 1 && val.shop_star < 2 ? 'star2' :
+                                                        (val.shop_star >= 2 && val.shop_star < 3 ? 'star3' : 
+                                                        (val.shop_star > 3 && val.shop_star < 4 ? 'star4' : 'star5'))))+`"></i>
                                     <span>营业时间：`+val.shop_time+`</span>
                                 </div>
                                 <p class="txt-hid-two hotshop-detail">`+val.shop_address.split(',').join('')+`</p>
