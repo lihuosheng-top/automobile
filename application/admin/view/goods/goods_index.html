@@ -381,7 +381,11 @@
 									$.ajax({ 
 												type: "POST",
 												url: "{:url('admin/Goods/status')}",
-												  data: {"id":ids,"status":status},
+												  data: {
+                                                      "id":ids,
+                                                      "status":status,
+                                                      "store_status":store_status
+                                                      },
 												success: function(data){
 													console.log(data)
 												},
@@ -398,7 +402,11 @@
                                             $.ajax({ 
                                                     type: "POST",
                                                     url: "{:url('admin/Goods/status')}",
-                                                    data: {"id":ids,"status":status},
+                                                    data: {
+                                                      "id":ids,
+                                                      "status":status,
+                                                      "store_status":store_status
+                                                      },
                                                     success: function(data){
                                                         console.log(data)
                                                     },
@@ -414,7 +422,11 @@
                                                 $.ajax({ 
                                                         type: "POST",
                                                         url: "{:url('admin/Goods/status')}",
-                                                        data: {"id":ids,"status":status},
+                                                        data: {
+                                                            "id":ids,
+                                                            "status":status,
+                                                            "store_status":store_status
+                                                            },
                                                         success: function(data){
                                                             console.log(data)
                                                         },
@@ -590,9 +602,10 @@
                                     type: "POST",
                                     url: "{:url('admin/Goods/status')}",
                                     data: {
-                                        "id": data_id,
-                                        "status": 1
-                                    },
+                                        "id":ids,
+                                        "status":status,
+                                        "store_status":store_status
+                                        },
                                     success: function(data) {
                                         console.log(data);
                                     },
