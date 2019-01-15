@@ -733,6 +733,8 @@ Route::group("admin",[
     /*TODO:店铺管理开始*/
     "shop_index"=>"admin/Shop/index",//店铺列表
     "shop_add"=>"admin/Shop/add",//店铺详情
+    "shop_img_del"=>"admin/Shop/img_del",//店铺验证是体面店的删除
+    "shop_img_store_img_del"=>"admin/Shop/img_store_img_del",//店铺店内体面店的删除
     "shop_update"=>"admin/Shop/update",//店铺详情更新
     "store_hot_status"=>"admin/Shop/store_hot_status",//店铺热门店铺修改（-1为正常，1为热门店铺）
     "shop_del"=>"admin/Shop/del",//店铺列表删除
