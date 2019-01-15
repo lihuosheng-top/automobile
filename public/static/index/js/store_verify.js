@@ -107,9 +107,9 @@ $(function(){
 $('.submit-button').click(function(){
     var emblemInput = $('#emblem-input')[0].files,
         portraitInput = $('#portrait-input')[0].files,
-        businessLicense = $('#portrait-input')[0].files,
-        license = $('#portrait-input')[0].files,
-        faceInput = $('#portrait-input')[0].files,
+        businessLicense = $('#business-license-input')[0].files,
+        license = $('#license-input')[0].files,
+        faceInput = $('#face-input')[0].files,
         innerInput = imagesFileArr.length;
     // 经纬度  地址
     var address = $('#address').text();

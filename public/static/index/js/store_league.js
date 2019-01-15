@@ -107,7 +107,7 @@ $.ajax({
                         })
                     }
                     // 店铺所在区域
-                    $('#area-li').val(data.store_city_address);
+                    $('#myAddrs').val(data.store_city_address);
                     // 店铺详细地址
                     $('.detail-addr').val(data.store_street_address);
                     // 店铺信息
@@ -182,8 +182,8 @@ $.ajax({
             }
 
             // 店铺所在区域
-            if($('#area-li').val() !== ''){
-                store_city_address = $('#area-li').val();
+            if($('#myAddrs').val() !== ''){
+                store_city_address = $('#myAddrs').val();
             }else{
                 layer.open({
                     style: 'bottom:100px;',
