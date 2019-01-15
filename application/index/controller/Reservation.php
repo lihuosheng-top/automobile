@@ -49,7 +49,6 @@ class Reservation extends Controller{
     public function reservation(Request $request)
     {
 
-        
         if($request->isPost()) {
             $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
             $store_user_address = $request->only(["store_user_address"])["store_user_address"];

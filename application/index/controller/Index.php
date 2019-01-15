@@ -215,10 +215,16 @@ class Index extends Controller
     public function shop_goods(Request $request){
 
         if($request->isPost()) {
+            $data = Session::get("role_name_store_id");
             $user_id = Session::get("user");
             if (empty($user_id)) {
                 $shop_id = $request->only(["id"])["id"];
                 $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+                foreach ($goods as $k_1=>$v_1){
+                    if($v_1["goods_standard"] != "通用"){
+                        unset($goods[$k_1]);
+                    }
+                }
                 $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
                 $store = db("store")->where("store_id", $shop_id)->select();
                 $service_setting = db("service_setting")->select();
@@ -244,6 +250,13 @@ class Index extends Controller
                 if (!empty($car_series)) {
                     $shop_id = $request->only(["id"])["id"];
                     $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+                    if(empty($data)){
+                        foreach ($goods as $k_1=>$v_1){
+                            if($v_1["goods_standard"] != "通用"){
+                                unset($goods[$k_1]);
+                            }
+                        }
+                    }
                     $serve_vehicle_model = db("serve_goods")->where("store_id", $shop_id)->where("vehicle_model", $car_series["vehicle_model"])->find();
                     $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
                     $store = db("store")->where("store_id", $shop_id)->select();
@@ -273,6 +286,13 @@ class Index extends Controller
                 } else {
                     $shop_id = $request->only(["id"])["id"];
                     $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+                    if(empty($data)){
+                        foreach ($goods as $k_1=>$v_1){
+                            if($v_1["goods_standard"] != "通用"){
+                                unset($goods[$k_1]);
+                            }
+                        }
+                    }
                     $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
                     $store = db("store")->where("store_id", $shop_id)->select();
                     $service_setting = db("service_setting")->select();
