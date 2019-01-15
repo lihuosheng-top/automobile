@@ -146,7 +146,7 @@ $('.submit-button').click(function(){
                             time: 1
                         })
                         setTimeout(function(){
-                            // location.href = 'my_index';
+                            location.href = 'my_index';
                         }, 1100);
                     }else{
                         layer.open({
@@ -211,7 +211,7 @@ $('.submit-button').click(function(){
                         time: 1
                     })
                     setTimeout(function(){
-                        // location.href = 'my_index';
+                        location.href = 'my_index';
                     }, 1100);
                 }else{
                     layer.open({
