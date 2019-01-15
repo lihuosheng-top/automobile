@@ -11,7 +11,6 @@ if(url.indexOf('?') != -1){
     layDataAjax('goods_list', brandid);
 }else{
     $('#search').focus();
-
     var timer = null;
     var brandid = '';
     $('#search').on('input', function(){
