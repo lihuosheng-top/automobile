@@ -547,13 +547,12 @@ class Goods extends Controller
                 }
             }
             //店铺状态修改
-            if ($status == 0 && $admin_role != 2 && $store_is_pay == null) {
+            if ($status == 0 && $admin_role != 2 && $store_is_pay != null) {
                 $id = $request->only(["id"])["id"];
                 $bool = [];
                 foreach ($id as $value) {
                     $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                 }
-
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -561,7 +560,7 @@ class Goods extends Controller
                 }
 
             }
-            if ($status == 1 && $admin_role != 2 && $store_is_pay == null) {
+            if ($status == 1 && $admin_role != 2 && $store_is_pay != null) {
                 $id = $request->only(["id"])["id"];
                 $bool = [];
                 foreach ($id as $val) {
