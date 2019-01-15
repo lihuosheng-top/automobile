@@ -162,20 +162,20 @@ class Shop extends Controller{
      * @param $id
      */
     public function update($id){
-        $data =$this->request->post();
+        $img_data =$this->request->post();
         $form_data =[
-            $data["store_is_pay"] =>$data["store_is_pay"],
-            $data["store_order_num"] =>$data["store_order_num"],
-            $data["operation_status"] =>$data["operation_status"],
-            $data["is_hot_store"] =>$data["is_hot_store"],
-            $data["operation_remarks"] =>$data["operation_remarks"],
+            "store_is_pay" =>intval($img_data["store_is_pay"]),
+            "store_order_num" =>intval($img_data["store_order_num"]),
+            "operation_status" =>intval($img_data["operation_status"]),
+           "is_hot_store" =>intval($img_data["is_hot_store"]),
+            "operation_remarks" =>$img_data["operation_remarks"],
         ];
         //验证实体店面
         $verifying_physical_storefront_one_file = $this->request->file('imgs');
         if(!empty($verifying_physical_storefront_one_file)){
             $info = $verifying_physical_storefront_one_file->move(ROOT_PATH . 'public' . DS . 'uploads');
             $verifying_physical_storefront_one = str_replace("\\","/",$info->getSaveName());
-            $data['verifying_physical_storefront_one'] =$verifying_physical_storefront_one;
+            $form_data['verifying_physical_storefront_one'] =$verifying_physical_storefront_one;
         }
         //验证实体店内图片
         $verifying_physical_storefront_two = [];
@@ -185,16 +185,16 @@ class Shop extends Controller{
                 $info = $v->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $verifying_physical_storefront_two[] = str_replace("\\", "/", $info->getSaveName());
             }
-            $data['verifying_physical_storefront_two'] =implode(',',$verifying_physical_storefront_two);
-            $del_img_url_6= Db::name("store")
-                ->where('store_id',$id)
-                ->field('verifying_physical_storefront_two')
-                ->find();
+            $new =implode(',',$verifying_physical_storefront_two);
+            $old =Db::name('store')->where('store_id',$id)->value("verifying_physical_storefront_two");
+            if($new){
+                $form_data['verifying_physical_storefront_two'] =$old.",".$new;
+            }
         }
         $bool =Db::name('store')->where('store_id',$id)->update($form_data);
         if($bool){
             //通过则可以登录后台
-            if($data['operation_status']==1){
+            if($form_data['operation_status']==1){
                 $user_id =Db::name("store")->field("user_id")->where("store_id",$id)->find();
                 $phone =Db::name("user")->field("phone_num")->where('id',$user_id['user_id'])->find();
                 Db::name('admin')->where('phone',$phone["phone_num"])->update(['status'=>1]);
@@ -202,7 +202,7 @@ class Shop extends Controller{
                 phone("qiche", "123qwe", $phone["phone_num"], $content);
             }
             //拒绝不可以登录后台
-            if($data['operation_status']==-1){
+            if($form_data['operation_status']==-1){
                 $user_id =Db::name("store")->field("user_id")->where("store_id",$id)->find();
                 $phone =Db::name("user")->field("phone_num")->where('id',$user_id['user_id'])->find();
                 Db::name('admin')->where('phone',$phone["phone_num"])->update(['status'=>0]);
