@@ -787,12 +787,16 @@ class Goods extends Controller
     {
         if ($request->isPost()) {
             $goods_id = $request->only(["goods_id"])["goods_id"];
-            $goods = db("goods")->where("id",$goods_id)->field("store_id")->find();
-            $store = db("store")->where("store_id",$goods["store_id"])->find();
             $store_status = [];
-            if($store["store_is_pay"] == 0){
-                $store_status = $store["store_is_pay"];
+            foreach ($goods_id as $key=>$value){
+                $goods = db("goods")->where("id",$goods_id)->field("store_id")->find();
+                $store = db("store")->where("store_id",$goods["store_id"])->find();
+                if($store["store_is_pay"] == 0){
+                    $store_status = $store["store_is_pay"];
+                    $store_status["goods_id"] = $value;
+                }
             }
+
             $user_id = Session::get("user_id");
             $admin = db("admin")->where("id", $user_id)->select();
             return ajax_success("获取成功", array("admin" => $admin,"store_status"=>$store_status));
