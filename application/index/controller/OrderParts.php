@@ -812,9 +812,12 @@ class OrderParts extends Controller{
         if ($request->isPost()) {
             $datas = session('member');
             if (!empty($datas)) {
-                $member_id = Db::name('user')->field('id')->where('phone_num', $datas['phone_num'])->find();
+                $member_id = Db::name('user')
+                    ->field('id')
+                    ->where('phone_num', $datas['phone_num'])
+                    ->find();
+                $condition ="`status` = '6' or `status` = '7'";
                 if (!empty($datas)) {
-                    $condition ="`status` = '6' or `status` = '7'";
                     $data = Db::name('order_parts')
                         ->field('parts_order_number,group_concat(id) order_parts_id')
                         ->where('user_id', $member_id['id'])
@@ -829,6 +832,7 @@ class OrderParts extends Controller{
                                 $return_data[] = Db::name('order_parts')
                                     ->where('id', $v)
                                     ->where('user_id', $member_id['id'])
+                                    ->where($condition)
                                     ->find();
                             }
                             foreach ($return_data as $ke => $item) {
@@ -839,12 +843,13 @@ class OrderParts extends Controller{
                                 $order_undate['info'][] = Db::name('order_parts')
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
+                                    ->where($condition)
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->select();
-
                                 $names = Db::name('order_parts')
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
+                                    ->where($condition)
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->find();
                                 $order_undate['store_name'][] = $names['store_name'];
@@ -859,7 +864,10 @@ class OrderParts extends Controller{
                             }
                         }
                         else{
-                            $return_datas = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $return_datas = Db::name('order_parts')
+                                ->where('id', $value['order_parts_id'])
+                                ->where($condition)
+                                ->find();
                             $data_infomation["all_order_real_pay"][] =$return_datas["order_real_pay"];
                             $data_infomation["all_numbers"][] =$return_datas["order_quantity"];
                             $data_infomation['name'][]= $return_datas['store_name'];
@@ -867,10 +875,12 @@ class OrderParts extends Controller{
                             $data_infomation['status'][] = $return_datas['status'];
                             $data_infomation['parts_order_number'][] = $return_datas['parts_order_number'];
                             $data_infomation['order_create_time'][] = $return_datas['order_create_time'];
-                            $data_infomation['all'][] = Db::name('order_parts')->where('id', $value['order_parts_id'])->find();
+                            $data_infomation['all'][] = Db::name('order_parts')
+                                ->where('id', $value['order_parts_id'])
+                                ->where($condition)
+                                ->find();
                         }
                     };
-
                     if (!empty($order_undate)) {
                         foreach ($order_undate['info'] as $i => $j) {
                             if(!empty($j)){
