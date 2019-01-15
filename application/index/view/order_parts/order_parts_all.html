@@ -402,13 +402,15 @@
                 $('.evaluation-btn').click(function(){
                     var store_id = $(this).parents('.single-shop-box').attr('data-id');
                     var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+                    var dataStatus = $(this).parents('.single-shop-box').attr('data-status');
                     $.ajax({
                         url: 'order_parts_save_record',
                         type: 'POST',
                         dataType: 'JSON',
                         data: {
                             'parts_order_number': parts_order_number,
-                            'store_id': store_id
+                            'store_id': store_id,
+                            'status': dataStatus
                         },
                         success: function(res){
                             console.log(res);
