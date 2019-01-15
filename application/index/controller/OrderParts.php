@@ -86,9 +86,9 @@ class OrderParts extends Controller{
                 $datas["info"] = $data;
 //                $datas["all_order_real_pay"] = $data[0]["order_real_pay"];//订单实际支付
                 if(!empty($data[0]["integral_deductible"])){
-                    $datas["all_order_real_pay"] =(array_sum($datas["all_goods_money"]) - $data[0]["integral_deductible"]);//订单实际支付
+                    $datas["all_order_real_pay"] =round((array_sum($datas["all_goods_money"]) - $data[0]["integral_deductible"]),2);//订单实际支付
                 }else{
-                    $datas["all_order_real_pay"] =array_sum($datas["all_goods_money"]); //订单实际支付
+                    $datas["all_order_real_pay"] =round(array_sum($datas["all_goods_money"]),2); //订单实际支付
                 }
 
                 if (!empty($datas)) {
