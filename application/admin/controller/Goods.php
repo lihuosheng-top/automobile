@@ -514,7 +514,6 @@ class Goods extends Controller
             $admin = db("admin")->where("id", $admin_id)->select();
             $user = db("user")->where("phone_num",$admin[0]["account"])->find();
             $store = db("store")->where("user_id",$user["id"])->find();
-            $store_is_pay = $request->only(["store_status"])["store_status"];
             //管理员状态修改
             if ($status == 0 && $admin_role == 2) {
                 $id = $request->only(["id"])["id"];
