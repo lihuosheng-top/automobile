@@ -30,7 +30,7 @@ $.ajax({
             }else if(val.status == 13){
                 statusTxt = '退货中';
             }
-            str += `<div class="single-shop-box" data-id="`+val.store_id+`" name="`+val.parts_order_number+`">
+            str += `<div class="single-shop-box" data-id="`+val.store_id+`" data-status="`+val.status+`" name="`+val.parts_order_number+`">
                         <div class="shop-name-box">
                             <div class="name-txt-div">
                                 <i class="spr icon-shop"></i>
@@ -65,13 +65,15 @@ $.ajax({
         $('.all-goods-box').click(function(){
             var store_id = $(this).parents('.single-shop-box').attr('data-id');
             var parts_order_number = $(this).parents('.single-shop-box').attr('name');
+            var dataStatus = $(this).parents('.single-shop-box').attr('data-status');
             $.ajax({
                 url: 'order_parts_save_record',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
                     'parts_order_number': parts_order_number,
-                    'store_id': store_id
+                    'store_id': store_id,
+                    'status': dataStatus
                 },
                 success: function(res){
                     console.log(res);
