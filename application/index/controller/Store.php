@@ -448,7 +448,10 @@ class Store extends Controller{
                     $verifying_physical_storefront_two[] = str_replace("\\", "/", $info->getSaveName());
                 }
                 $data['verifying_physical_storefront_two'] =implode(',',$verifying_physical_storefront_two);
-                $del_img_url_6= Db::name("store")->where('user_id',$user_id)->field('verifying_physical_storefront_two')->find();
+                $del_img_url_6= Db::name("store")
+                    ->where('user_id',$user_id)
+                    ->field('verifying_physical_storefront_two')
+                    ->find();
             }
             $user_id = Session::get("user");
             $time=date("Y-m-d",time());
@@ -541,7 +544,10 @@ class Store extends Controller{
             $img_url =$request->only('image_del')['image_del'];
             if(!empty($img_url)){
                 $user_id = Session::get("user");
-                $data =Db::name('store')->field('verifying_physical_storefront_two')->where('user_id',$user_id)->find();
+                $data =Db::name('store')
+                    ->field('verifying_physical_storefront_two')
+                    ->where('user_id',$user_id)
+                    ->find();
                 $datas =explode(',',$data['verifying_physical_storefront_two']);
                 foreach ($datas as $k=>$v){
                     if($v==$img_url){

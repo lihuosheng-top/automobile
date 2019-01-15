@@ -360,12 +360,16 @@
 				var month = myDate.getMonth() + 1;
 				var date = myDate.getDate();
 				var present = year + '-' + month + '-' + date;
+                var ids=[];
+                ids.push(id);
 				// 当上架时
 				if(status==1){
 					$.ajax({
 							type: "POST",
 							url: "{:url('admin/Goods/role_name')}",
-							data: {"goods_id":id},
+							data: {
+                                "goods_id[]":ids
+                                },
 							success: function(data){	
 								var data=$.parseJSON( data ); 
 								var role_id=data.data.admin[0].role_id;
@@ -474,10 +478,11 @@
             })
 
             //点击操作确认按钮
-            var data_id = [];
+           
           
             var years = [];
             $("#opration_btu").click(function() {
+                var data_id = [];
                 var opration_val = $(".opation select option:selected").val();
                 if (opration_val == 0) {
                     layer.alert('请选择操作', {
@@ -501,8 +506,7 @@
                                 "ids": data_id,
                             },
                             success: function(data) {
-                                console.log("成功");
-                                console.log(data);
+                              
                                 var data = $.parseJSON(data);
                                 layer.alert(data.info, {
                                     skin: 'layui-layer-molv' //样式类名
