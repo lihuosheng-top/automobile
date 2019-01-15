@@ -59,7 +59,8 @@ class OrderParts extends Controller{
             $user_id = Session::get("user");
             $store_id = Session::get("store_id");
             $parts_order_number = Session::get("parts_order_number");//订单编号
-            $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number;
+            $parts_status =Session::get("parts_status");//订单状态
+            $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number ."and `parts_order_number` = " .$parts_status;
             $data = Db::name("order_parts")
                 ->where($condition)
                 ->select();
