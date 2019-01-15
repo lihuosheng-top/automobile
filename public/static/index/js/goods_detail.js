@@ -1,7 +1,7 @@
 // 获取url地址id
 var url = location.search;
 // preStoreId 从店铺商品进来的详情
-var id, preId, specId, store_id, preStoreId, hotStatus;
+var id, preId, specId, store_id, preStoreId, hotStatus, settingid;
 if(url.indexOf('?') != -1){
     id = url.substr(1).split('&')[0].split('=')[1];
     preId = url.substr(1).split('&')[1].split('=')[1];
@@ -10,6 +10,8 @@ if(url.indexOf('?') != -1){
         preStoreId = url.substr(1).split('&')[2].split('=')[1];
     }else if(urlLen == 4){
         hotStatus = 1;
+    }else if(urlLen == 5){
+        settingid = url.substr(1).split('&')[4].split('=')[1];
     }
     console.log(hotStatus);
 }
@@ -18,6 +20,8 @@ $('.wrapper').find('a.back').click(function(){
         location.href = 'store_index?storeId=' + preStoreId;
     }else if(hotStatus != undefined){
         location.href = 'reservation_detail?store_id=' + store_id;
+    }else if(settingid != undefined){
+        location.href = 'reservation_detail?store_id=' + store_id+'&service_setting_id='+settingid;
     }else{
         location.href = 'goods_list?id=' + preId;
     }
@@ -470,7 +474,10 @@ $(function(){
                                 <p>￥`+val.special_info[0].goods_adjusted_price+`</p>
                             </div>`
                 })
-                $('.card-show').html(str);
+                $('.card-show').html(str).click(function(){
+                    location.href = `store_index?storeId=`+res.data.store_id;
+                });
+
             }
         },
         error: function(){
@@ -558,6 +565,8 @@ $.ajax({
                 }
                 $('html').css('overflow', 'auto');
             })
+        }else{
+            $('.comment_title span').text('0');
         }
     },
     error: function(){
@@ -693,8 +702,6 @@ function evaluateDetailAjax(id){
         }
     })
 }
-
-
 // 你可能喜欢
 $(function(){
     $.ajax({
@@ -707,7 +714,7 @@ $(function(){
                 var str = '';
                 res.data.forEach(function(val, idx){
                     if(idx % 2 !== 0){
-                        str += `<li class="mgr0">
+                        str += `<li class="mgr0" data-storeId="`+val.store_id+`">
                                     <div class="img_div">
                                         <img src="uploads/`+val.goods_show_images+`">
                                     </div>
@@ -721,7 +728,7 @@ $(function(){
                                 </li>`
                         return;
                     }
-                    str += `<li>
+                    str += `<li data-storeId="`+val.store_id+`">
                                 <div class="img_div">
                                     <img src="uploads/`+val.goods_show_images+`">
                                 </div>
@@ -734,7 +741,10 @@ $(function(){
                                 </div>
                             </li>`
                 })
-                $('.like_cont_ul').html(str);
+                $('.like_cont_ul').html(str).on('click', 'li', function(){
+                    // console.log($(this).attr('data-storeId'))
+                    location.href = 'store_index?storeId='+$(this).attr('data-storeId');
+                });
             }
         },
         error: function(){

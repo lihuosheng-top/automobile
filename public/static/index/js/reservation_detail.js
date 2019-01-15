@@ -149,6 +149,15 @@ if(urlLen > 1){
                 // 商品
                 var str = myGoods(data);
                 $('.goods-content').prepend(str);
+
+                $('.goods-colla-item').click(function(){
+                    var id = $(this).attr('data-id');
+                    var standid = $(this).attr('data-standid');
+                    var storeid = $(this).attr('data-storeid');
+
+                    location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=1`+`&service_setting_id=`+serviceSettingId;
+                })
+
                 // 服务项目
                 var str2 = myService(data);
                 $('.service-content').append(str2);
@@ -209,7 +218,7 @@ if(urlLen > 1){
                     var id = $(this).attr('data-id');
                     var standid = $(this).attr('data-standid');
                     var storeid = $(this).attr('data-storeid');
-                    location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=`+1 ;
+                    location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=1`;
                 })
 
                 // 服务项目
