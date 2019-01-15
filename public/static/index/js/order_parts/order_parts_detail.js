@@ -104,6 +104,7 @@ $.ajax({
         // 店铺名
         $('.order-shop-namp').text(val.store_name);
         $('.order-shop-namp').attr('id', val.store_id);
+        $('.order-shop-namp').data({'data-status': val.status});
         // 订单商品
         var str = '';
         $.each(val.info, function(idx, val){
@@ -258,37 +259,39 @@ $.ajax({
             })
         })
         // 查看订单详情 √
-        $('.all-goods-box').click(function(){
-            var store_id = $('.order-shop-namp').attr('id');
-            var parts_order_number = $('.order-num span').text();
-            $.ajax({
-                url: 'order_parts_save_record',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    'parts_order_number': parts_order_number,
-                    'store_id': store_id
-                },
-                success: function(res){
-                    console.log(res);
-                    location.href = 'order_parts_detail'; 
-                },
-                error: function(){
-                    console.log('error');
-                }
-            })
-        })
+        // $('.all-goods-box').click(function(){
+        //     var store_id = $('.order-shop-namp').attr('id');
+        //     var parts_order_number = $('.order-num span').text();
+        //     $.ajax({
+        //         url: 'order_parts_save_record',
+        //         type: 'POST',
+        //         dataType: 'JSON',
+        //         data: {
+        //             'parts_order_number': parts_order_number,
+        //             'store_id': store_id
+        //         },
+        //         success: function(res){
+        //             console.log(res);
+        //             location.href = 'order_parts_detail'; 
+        //         },
+        //         error: function(){
+        //             console.log('error');
+        //         }
+        //     })
+        // })
         // 去评价
         $('.evaluation-btn').click(function(){
             var store_id = $('.order-shop-namp').attr('id');
             var parts_order_number = $('.order-num span').text();
+            var dataStatus = $('.order-shop-namp').data('data-status');
             $.ajax({
                 url: 'order_parts_save_record',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
                     'parts_order_number': parts_order_number,
-                    'store_id': store_id
+                    'store_id': store_id,
+                    'status': dataStatus
                 },
                 success: function(res){
                     console.log(res);
