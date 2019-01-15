@@ -514,7 +514,7 @@ class Goods extends Controller
             $admin = db("admin")->where("id", $admin_id)->select();
             $user = db("user")->where("phone_num",$admin[0]["account"])->find();
             $store = db("store")->where("user_id",$user["id"])->find();
-            $store_is_pay = $request->only(["store_is_pay"])["store_is_pay"];
+            $store_is_pay = $request->only(["store_status"])["store_status"];
             //管理员状态修改
             if ($status == 0 && $admin_role == 2 && $store_is_pay == null) {
                 $id = $request->only(["id"])["id"];
@@ -522,8 +522,7 @@ class Goods extends Controller
                 foreach ($id as $value) {
                     $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                 }
-                echo 1 ;
-                exit();
+
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -540,8 +539,7 @@ class Goods extends Controller
                         $bool = db("goods")->where("id", $val)->update(["goods_status" => 1, "putaway_status" => 1]);
                     }
                 }
-                echo 2;
-                exit();
+
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -549,14 +547,13 @@ class Goods extends Controller
                 }
             }
             //店铺状态修改
-            if ($status == 0 && $admin_role != 2 && $store_is_pay == null) {
+            if ($status == 0 && $admin_role != 2 && $store_is_pay != null) {
                 $id = $request->only(["id"])["id"];
                 $bool = [];
                 foreach ($id as $value) {
                     $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                 }
-                echo 3;
-                exit();
+
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -564,7 +561,7 @@ class Goods extends Controller
                 }
 
             }
-            if ($status == 1 && $admin_role != 2 && $store_is_pay == null) {
+            if ($status == 1 && $admin_role != 2 && $store_is_pay != null) {
                 $id = $request->only(["id"])["id"];
                 $bool = [];
                 foreach ($id as $val) {
@@ -573,8 +570,7 @@ class Goods extends Controller
                         $bool = db("goods")->where("id", $val)->update(["goods_status" => 1, "putaway_status" => 1]);
                     }
                 }
-                echo 4;
-                exit();
+
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -583,14 +579,13 @@ class Goods extends Controller
             }
             //店铺不需要付款修改状态
 
-            if ($status == 0 && $admin_role != 2 && $store["store_is_pay"] == 0) {
+            if ($status == 0 && $admin_role != 2 && $store_is_pay == 0) {
                 $id = $request->only(["id"])["id"];
                 $bool = [];
                 foreach ($id as $value) {
                     $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                 }
-                echo 5;
-                exit();
+
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -598,17 +593,13 @@ class Goods extends Controller
                 }
 
             }
-            if ($status == 1 && $admin_role != 2 && $store["store_is_pay"] == 0) {
+            if ($status == 1 && $admin_role != 2 && $store_is_pay == 0) {
                 $id = $request->only(["id"])["id"];
                 $bool = [];
                 foreach ($id as $val) {
-                    $goods = db("goods")->where("id", $val)->field("putaway_status")->find();
-                    if ($goods["putaway_status"] == null) {
-                        $bool = db("goods")->where("id", $val)->update(["goods_status" => 1, "putaway_status" => 1]);
-                    }
+                    $bool = db("goods")->where("id", $val)->update(["goods_status" => 1]);
                 }
-                echo 6;
-                exit();
+
                 if ($bool) {
                     return ajax_success("成功");
                 } else {

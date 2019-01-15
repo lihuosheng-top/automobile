@@ -376,6 +376,7 @@
                                 var store_status=data.data.store_status;
 								// 当角色为平台时
 								if(role_id==2){
+                                  
 								   var ids=[];
 									  ids.push(id);
 									$.ajax({ 
@@ -395,65 +396,68 @@
 											});
 								}
 								// 当角色为服务商时
-								else if(role_id==5){
-                                    if(store_status==0){
-                                        var ids=[];
-                                            ids.push(id);
-                                            $.ajax({ 
-                                                    type: "POST",
-                                                    url: "{:url('admin/Goods/status')}",
-                                                    data: {
-                                                      "id":ids,
-                                                      "status":status,
-                                                      "store_status":store_status
-                                                      },
-                                                    success: function(data){
-                                                        console.log(data)
-                                                    },
-                                                    error:function (data) {
-                                                        console.log(data)
-                                                    }
-                                                });
-                                    }
+								// else if(role_id==5){
                                     else{
-                                        if(putaway_status==1){
-                                            var ids=[];
-                                            ids.push(id);
-                                                $.ajax({ 
-                                                        type: "POST",
-                                                        url: "{:url('admin/Goods/status')}",
-                                                        data: {
+                                          
+                                            if(store_status.length!=0){
+                                               
+                                                var ids=[];
+                                                    ids.push(id);
+                                                    $.ajax({ 
+                                                            type: "POST",
+                                                            url: "{:url('admin/Goods/status')}",
+                                                            data: {
                                                             "id":ids,
                                                             "status":status,
                                                             "store_status":store_status
                                                             },
-                                                        success: function(data){
-                                                            console.log(data)
-                                                        },
-                                                        error:function (data) {
-                                                            console.log(data)
+                                                            success: function(data){
+                                                                console.log(data)
+                                                            },
+                                                            error:function (data) {
+                                                                console.log(data)
+                                                            }
+                                                        });
+                                            }
+                                            else{
+                                                        if(putaway_status==1){
+                                                            var ids=[];
+                                                            ids.push(id);
+                                                                $.ajax({ 
+                                                                        type: "POST",
+                                                                        url: "{:url('admin/Goods/status')}",
+                                                                        data: {
+                                                                            "id":ids,
+                                                                            "status":status,
+                                                                            "store_status":null
+                                                                            },
+                                                                        success: function(data){
+                                                                            console.log(data)
+                                                                        },
+                                                                        error:function (data) {
+                                                                            console.log(data)
+                                                                        }
+                                                                    });
                                                         }
-                                                    });
-                                        }
-                                                else{
-                                            layer.confirm('付费商品需付费后才能上架！', {
-                                                    btn: ['确定付费','取消付费！'] //按钮
-                                                    }, function(){
-                                                    layer.close(layer.index);
-                                                    $(".tanchuang").removeClass("noshow");
-                                                    $("#shop").val(shop);
-                                                    $("#price").val(price);
-                                                    $("#num").val("1");
-                                                    $("#good-id").val(id);
-                                                    $("#year").val(present);
+                                                    else{
+                                                    layer.confirm('付费商品需付费后才能上架！', {
+                                                            btn: ['确定付费','取消付费！'] //按钮
+                                                            }, function(){
+                                                            layer.close(layer.index);
+                                                            $(".tanchuang").removeClass("noshow");
+                                                            $("#shop").val(shop);
+                                                            $("#price").val(price);
+                                                            $("#num").val("1");
+                                                            $("#good-id").val(id);
+                                                            $("#year").val(present);
+                                                            
+                                                            });
+
                                                     
-                                                    });
-
-                                            
-                                        }
+                                                }
 
 
-                                    }
+                                            }
                                       
                             }
 
@@ -474,7 +478,8 @@
                         url: "{:url('admin/Goods/status')}",
                         data: {
                             "id": ids,
-                            "status": status
+                            "status": status,
+                            "store_status":null
                         },
                         success: function(data) {
                             console.log(data)
@@ -587,6 +592,7 @@
 
                          var shop=$(".shop_name")[0].innerHTML;
                     }
+
                     $.ajax({
                         type: "POST",
                         url: "{:url('admin/Goods/role_name')}",
@@ -596,14 +602,16 @@
                         success: function(data) {
                             var data = $.parseJSON(data);
                             var role_id = data.data.admin[0].role_id;
+                            var store_status=data.data.store_status;
                             // 当角色为平台时
+                          
                             if (role_id == 2) {
                                 $.ajax({
                                     type: "POST",
                                     url: "{:url('admin/Goods/status')}",
                                     data: {
-                                        "id":ids,
-                                        "status":status,
+                                        "id":data_id,
+                                        "status":1,
                                         "store_status":store_status
                                         },
                                     success: function(data) {
@@ -614,9 +622,29 @@
                                     }
                                 });
                             }
+
                             // 当角色为服务商时
-                            else if (role_id == 5) {
-                                if (mdata_id.length > 0) {
+                            else {
+                                    if(store_status.length!=0){
+                                      
+                                        $.ajax({
+                                        type: "POST",
+                                        url: "{:url('admin/Goods/status')}",
+                                        data: {
+                                            "id":data_id,
+                                            "status":1,
+                                            "store_status":store_status
+                                            },
+                                        success: function(data) {
+                                            console.log(data);
+                                        },
+                                        error: function(data) {
+                                            console.log(data);
+                                        }
+                                    });
+                                }
+                                else{
+                                    if (mdata_id.length > 0) {
                                 	if(j<=5){
 	                                    layer.confirm('付费商品需付费后才能上架！', {
 	                                        btn: ['确定付费', '取消付费！'] //按钮
@@ -627,6 +655,7 @@
 	                                        $("#price").val(all_price);
 	                                        $("#num").val(j);
 	                                        $("#good-id").val(mdata_id);
+
 	
 	                                    });
                                 	}
@@ -645,7 +674,9 @@
                                         url: "{:url('admin/Goods/status')}",
                                         data: {
                                             "id": nmdata_id,
-                                            "status": 1
+                                            "status": 1,
+                                            "store_status":null
+                                            
                                         },
                                         success: function(data) {
                                             console.log(data);
@@ -656,6 +687,9 @@
                                     });
                                 }
 
+
+                                }
+                               
 
 
                             }
