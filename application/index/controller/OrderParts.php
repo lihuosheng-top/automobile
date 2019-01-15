@@ -35,9 +35,11 @@ class OrderParts extends Controller{
             if($request->isPost()){
                 $store_id =$request->only("store_id")["store_id"];//店铺id
                 $parts_order_number =$request->only("parts_order_number")["parts_order_number"];//配件商订单编号
+                $parts_status = $request->only("status")["status"];//订单状态
                 if(!empty($store_id)){
-                    Session::set("store_id",$store_id);
-                    Session::set("parts_order_number",$parts_order_number);
+                    Session::set("store_id",$store_id);//店铺id
+                    Session::set("parts_order_number",$parts_order_number);//订单编号
+                    Session::set("parts_status",$parts_status); //状态
                     return ajax_success("暂存成功",['status'=>1]);
                 }else{
                     return ajax_error("店铺id不能为空",["status"=>0]);
