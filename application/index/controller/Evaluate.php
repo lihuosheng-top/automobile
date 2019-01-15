@@ -24,13 +24,15 @@ class Evaluate extends  Controller{
             $user_id =Session::get("user");
             $store_id = Session::get("store_id"); //店铺id
             $parts_order_number = Session::get("parts_order_number"); //订单编号
-            $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number;
+            $parts_status =Session::get("parts_status"); //订单状态
+            $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number. " and `status` = " . $parts_status;
             $data = Db::name("order_parts")
                 ->where($condition)
                 ->select();
             if(!empty($data)){
                 Session::set("parts_order_number",null);
                 Session::set("store_id",null); //店铺id
+                Session::set("parts_status",null); //店铺id
                 return ajax_success("对应的订单信息返回成功",$data);
             }else{
                 return ajax_error("没有对应的订单信息",["status"=>0]);

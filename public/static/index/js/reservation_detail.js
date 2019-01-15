@@ -46,8 +46,8 @@ $('.filter-com-ul').on('click', 'li', function(){
 // console.log($(window).height());
 // console.log($(document).height());
 $(window).on('scroll', function(){
-    var $window = $(window);
-    console.log($window.scrollTop());
+    // var $window = $(window);
+    // console.log($window.scrollTop());
     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
     if(scrollTop > 0){
         $('.wrapper .head').css('background', 'rgba(255, 255, 255, .5)');
