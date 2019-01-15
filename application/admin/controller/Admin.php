@@ -25,7 +25,7 @@ class Admin extends Controller
         $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
         $account_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
             'var_page' => 'page',
-            'path'     => url('admin/Shop/index'),//这里根据需要修改url
+            'path'     => url('admin/admin/index'),//这里根据需要修改url
             'query'    =>  [],
             'fragment' => '',
         ]);
