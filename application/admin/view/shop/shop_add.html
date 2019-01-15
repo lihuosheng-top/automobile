@@ -237,7 +237,7 @@
                                 <span class="img">
                                     <img src="__UPLOADS__/{$vo.verifying_physical_storefront_one}" width="100%" style="margin-bottom: 10px; "  class="open_img">
   
-                                    <i class="remove-img" name="icon_image" value="" data-id="{$vo.store_id}" data-value=""><img src="__STATIC__/admin/common/img/a7.png"></i>
+                                    <i class="remove-img" name="icon_image" value="" data-id="{$vo.store_id}" data-value=""  data-title="0"><img src="__STATIC__/admin/common/img/a7.png"></i>
                                 </span>
             
                     </div>
@@ -289,7 +289,7 @@
                         {volist name="$imgs"  id="lists"}
                             <span class="img">
                                 <img src="__UPLOADS__/{$lists}" width="100%" height="100%" style="margin-bottom: 10px;" class="open_img">
-                                <i class="remove-img" name="icon_image" value="" data-id="" data-value=""><img src="__STATIC__/admin/common/img/a7.png"></i>
+                                <i class="remove-img" name="icon_image" value="" data-id="" data-value="" data-title="1" data-toggle="排序的值"><img src="__STATIC__/admin/common/img/a7.png"></i>
                             </span>
                         {/volist}
                 </div>
@@ -498,12 +498,17 @@
             var remove = $(this).parent();
             var id = $(this).data("id");
             var value = $(this).data("value");
+            var title=$(this).data("title");
+            var toggle=$(this).data("toggle");
+            // 验证实体店面
+            if(title==0){
                 $.ajax({
                     type: "POST",
                     url: "{:url('admin/Car/images')}",
                     data: {
                         "id": id,
-						"images":value
+						"images":value,
+                        "num":toggle
                     },
                     dataType: "json",
                     success: function(data) {
@@ -514,6 +519,26 @@
                     }
                 });
          
+            }
+            else{
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('admin/Car/images')}",
+                    data: {
+                        "id": id,
+						"images":value,
+                        "num":toggle
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        remove.remove();
+                    },
+                    error: function(data) {
+                        console.log("错误");
+                    }
+                });
+            }
+                
 
         });
     </script>
