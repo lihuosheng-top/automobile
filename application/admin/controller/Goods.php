@@ -553,7 +553,7 @@ class Goods extends Controller
                 foreach ($id as $value) {
                     $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                 }
-                
+
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
