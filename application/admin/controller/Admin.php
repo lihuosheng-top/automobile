@@ -25,7 +25,7 @@ class Admin extends Controller
         $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
         $account_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
             'var_page' => 'page',
-            'path'     => url('admin/Shop/index'),//这里根据需要修改url
+            'path'     => url('admin/admin/index'),//这里根据需要修改url
             'query'    =>  [],
             'fragment' => '',
         ]);
@@ -55,9 +55,9 @@ class Admin extends Controller
         $boolData = model("Admin")->sSave($data);
 
         if($boolData){
-            $this->redirect(url("admin/admin/index"));
+            $this->success("编辑成功",url("admin/admin/index"));
         }else{
-            $this->redirect(url("admin/admin/add"));
+            $this->error("编辑失败",url("admin/admin/index"));
         }
     }
 
@@ -68,9 +68,9 @@ class Admin extends Controller
     public function del($id){
         $bool = model("Admin")->where("id",$id)->delete();
         if($bool){
-            $this->redirect(url("admin/admin/index"));
+            $this->success("编辑成功",url("admin/admin/index"));
         }else{
-            $this->error(url("admin/admin/index"));
+            $this->error("编辑失败",url("admin/admin/index"));
         }
     }
 
@@ -98,7 +98,7 @@ class Admin extends Controller
         if ($bool){
             $this->success("编辑成功",url("admin/admin/index"));
         }else{
-            $this->error("编辑失败",url("admin/admin/edit"));
+            $this->error("编辑失败",url("admin/admin/index"));
         }
     }
 
