@@ -93,10 +93,16 @@ class Reservation extends Controller{
     {
         if($request->isPost()){
             $user_id = Session::get("user");
+            $data = Session::get("role_name_store_id");
             $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
             $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->field("vehicle_model")->find();
             $serve_goods_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("store_id",$serve_goods_id)->where("goods_status",1)->select();
+            foreach ($goods as $k_1=>$v_1){
+                if($v_1["goods_standard"] != "通用"){
+                    unset($goods[$k_1]);
+                }
+            }
             $store = db("store")->where("store_id",$serve_goods_id)->select();
             $serve_data = [];
             foreach ($store as $key=>$value){
