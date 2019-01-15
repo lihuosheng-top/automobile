@@ -88,7 +88,7 @@
     </div>
     {if !empty($data)}
     {volist name="data" id="vo"}
-    <form class="layui-form" action="{:url('admin/Shop/update',['id'=>$vo.store_id])}" method="post">
+    <form class="layui-form" action="{:url('admin/Shop/update',['id'=>$vo.store_id])}" method="post" enctype="multipart/form-data">
 		<p class="title">店铺基本信息</p>
 		<div class="layui-form-item ">
 			<label class="layui-form-label">店铺名称:</label>
@@ -216,7 +216,9 @@
         <div class="layui-form-item" style="width: 570px !important;">
             <label class="layui-form-label">验证营业执照与许可证：</label>
             <div class="layui-input-inline">
+
                 <img src="__UPLOADS__/{$vo.store_do_bussiness_positive_img}" width="100%" class="open_img">
+
             </div>
             <div class="layui-input-inline">
                 <img src="__UPLOADS__/{$vo.store_do_bussiness_side_img}" width="100%" class="open_img">
@@ -235,9 +237,10 @@
                      <div class="imgcontent" >
                             
                                 <span class="img">
+                                    {if !empty($vo.verifying_physical_storefront_one)}
                                     <img src="__UPLOADS__/{$vo.verifying_physical_storefront_one}" width="100%" style="margin-bottom: 10px; "  class="open_img">
-  
-                                    <i class="remove-img" name="icon_image" value="" data-id="{$vo.store_id}" data-value=""  data-title="0"><img src="__STATIC__/admin/common/img/a7.png"></i>
+                                    {/if}
+                                    <i class="remove-img" name="icon_image" value="" data-id="{$vo.store_id}" data-value="{$vo.verifying_physical_storefront_one}"  data-title="0"><img src="__STATIC__/admin/common/img/a7.png"></i>
                                 </span>
             
                     </div>
@@ -248,7 +251,7 @@
                             <div class="z_photo upimg-div clear">
                                 <section class="z_file fl">
                                     <img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-                                    <input type="file" name="" id="file3" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="20" data-value=""/>
+                                    <input type="file" name="imgs" id="file3" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="1" data-value=""/>
                                 </section>
                             </div>
                         </section>
@@ -286,12 +289,14 @@
 			<label class="form-label">店内照片：</label>
 			<div class="img-edit">
 				 <div class="imgcontent" >
-                        {volist name="$imgs"  id="lists"}
+
+                     {foreach name="imgs" item="lists" key="abc"}
                             <span class="img">
                                 <img src="__UPLOADS__/{$lists}" width="100%" height="100%" style="margin-bottom: 10px;" class="open_img">
-                                <i class="remove-img" name="icon_image" value="" data-id="" data-value="" data-title="1" data-toggle="排序的值"><img src="__STATIC__/admin/common/img/a7.png"></i>
+                                <i class="remove-img" name="" value="" data-id="{$vo.store_id}" data-value="{$lists}" data-title="1" data-toggle="{$abc}"><img src="__STATIC__/admin/common/img/a7.png"></i>
                             </span>
-                        {/volist}
+
+                     {/foreach}
                 </div>
 			<div class="form-input">
 				<div class="img-box full">
@@ -299,7 +304,7 @@
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="brand_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="20" />
+								<input type="file" name="all_imgs[]" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="20" />
 							</section>
 						</div>
 					</section>
@@ -504,11 +509,10 @@
             if(title==0){
                 $.ajax({
                     type: "POST",
-                    url: "{:url('admin/Car/images')}",
+                    url: "{:url('admin/Shop/img_del')}",
                     data: {
                         "id": id,
-						"images":value,
-                        "num":toggle
+						"title":value,
                     },
                     dataType: "json",
                     success: function(data) {
@@ -523,10 +527,10 @@
             else{
                 $.ajax({
                     type: "POST",
-                    url: "{:url('admin/Car/images')}",
+                    url: "{:url('admin/Shop/img_store_img_del')}",
                     data: {
                         "id": id,
-						"images":value,
+						"title":value,
                         "num":toggle
                     },
                     dataType: "json",
