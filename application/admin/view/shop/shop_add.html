@@ -237,17 +237,18 @@
                                 <span class="img">
                                     <img src="__UPLOADS__/{$vo.verifying_physical_storefront_one}" width="100%" style="margin-bottom: 10px; "  class="open_img">
   
-                                    <i class="remove-img" name="icon_image" value="" data-id="" data-value=""><img src="__STATIC__/admin/common/img/a7.png"></i>
+                                    <i class="remove-img" name="icon_image" value="" data-id="{$vo.store_id}" data-value=""><img src="__STATIC__/admin/common/img/a7.png"></i>
                                 </span>
             
                     </div>
+                    <!--验证实体店面-->
                 <div class="form-input">
                     <div class="img-box full">
                         <section class=" img-section">
                             <div class="z_photo upimg-div clear">
                                 <section class="z_file fl">
                                     <img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-                                    <input type="file" name="" id="file3" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="20" />
+                                    <input type="file" name="" id="file3" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="20" data-value=""/>
                                 </section>
                             </div>
                         </section>
@@ -260,6 +261,7 @@
                     </aside>
     
                 </div>
+
                 </div>
             </div>
         <!-- <div class="layui-form-item" style="width: 1024px !important; max-width: 1024px;">
