@@ -101,7 +101,7 @@ class Classify extends Controller
                     ->whereOr("goods_brand_id", $goods_type_id)
                     ->select();
                 foreach ($goods as $kye => $value) {
-                    if($value["goods_standard"] != "通用") {
+                    if($value["goods_standard"] == "通用") {
                         unset($goods[$kye]);
                         $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
                         $store = db("store")->where("store_id", $value["store_id"])->where($where)->find();
