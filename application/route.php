@@ -60,7 +60,6 @@ Route::group("",[
 
 
     /*TODO:服务商订单开始*/
-    "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_order_service_button"=>"index/OrderService/ios_api_order_service_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
     'index_aliPay'=>"index/Apppay/index_aliPay", //服务商提交支付（付款）（弹窗支付）
@@ -68,11 +67,12 @@ Route::group("",[
     "recharge_aliPay"=>"index/Apppay/recharge_aliPay",     //充值订单提交支付（付款）
     "recharge_pay_code"=>"index/Apppay/recharge_pay_code",     //充值订单支付（成功回调修改状态）
     "ios_api_alipay"=>"index/Apppay/ios_api_alipay",//生成支付宝签名 TODO:配件商支付宝签名
+    "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_service_alipay"=>"index/Apppay/ios_api_service_alipay",//生成支付宝签名 TODO:服务商支付宝签名
+    "service_notifyurl"=>"index/Apppay/service_notifyurl",//服务商异步处理(支付宝IOS对接)
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/
-    "service_notifyurl"=>"index/Apppay/service_notifyurl",//服务商异步处理(支付宝IOS对接)
     "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_order_button_by_shop"=>"index/OrderParts/ios_api_order_button_by_shop",//购物车提交订单
 //    "ios_api_alipay"=>"index/OrderParts/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名

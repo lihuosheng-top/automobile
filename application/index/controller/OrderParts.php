@@ -215,7 +215,6 @@ class OrderParts extends Controller{
                                     ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
                                     ->select();
-
                                 $names = Db::name('order_parts')
                                     ->where('store_id', $da_v)
                                     ->where('user_id', $member_id['id'])
@@ -1709,7 +1708,6 @@ class OrderParts extends Controller{
                 }
                 $max =max($store_id_price);//最大的钱
                 $all_order_store_id =array_search(max($store_id_price), $store_id_price);//最大钱的store_id
-
                 foreach ($shopping_data as $key=>$val){
                     //积分抵扣
                     if(!empty($data["setting_id"])){
@@ -1732,7 +1730,6 @@ class OrderParts extends Controller{
                         $integral_deductible_num =NULL;
                         $order_real_pay =$store_id_price[$val["store_id"]];//价钱(未使用积分的情况)
                     }
-
                     $order_amount =$request->only("order_amount")["order_amount"]; //订单总价
                     $buy_messages =$request->only("buy_message")["buy_message"]; //买家留言
                     $commodity_id =$val["goods_id"];//商品id
@@ -1759,7 +1756,7 @@ class OrderParts extends Controller{
                                 'harvest_phone_num' => $is_address_status['harvester_phone_num'],//收货人手机
                                 'harvester_address' => $harvest_address,//收货人地址
                                 'order_create_time' => $create_time,//订单创建时间
-                                'order_amount' =>$val['money'] * $val['goods_unit'], //订单金额（变动）
+                                'order_amount' => $val['money'] * $val['goods_unit'], //订单金额（变动）(减了积分抵扣的钱)
                                 "order_real_pay"=>$order_real_pay,//订单实际支付的金额(即积分抵扣之后的价钱）（变动*）
                                 'status' => 1,//状态
                                 'goods_id' => $commodity_id,//商品id
@@ -1775,7 +1772,6 @@ class OrderParts extends Controller{
                                 "show_status"=>1,
                             ];
                             $res = Db::name('order_parts')->insertGetId($datas);
-
                         }
                     }
                 }
@@ -1786,6 +1782,19 @@ class OrderParts extends Controller{
                         ->where("user_id",$user_id)
                         ->find();
                     if(!empty($data["setting_id"])){
+                        //进行对使用了积分抵扣的进行修改
+//                        //计算最大的价额进行减积分抵扣
+//                        $order_all_data =Db::name("order_parts")
+//                            ->where("parts_order_number",$order_datas["parts_order_number"])
+//                            ->select();
+//                        foreach ($order_all_data as $s=>$j){
+//                            $order_id_price[$s] = $j["order_amount"];
+//                        }
+////                        $max =max($store_id_price);//最大的钱
+//                        $all_order_order_id =array_search(max($order_id_price), $order_id_price);//最大钱的order_id
+//                        halt($all_order_order_id);
+
+
                         //积分消费记录
                         $user_integral_wallet =$user_information["user_integral_wallet"]; //之前的积分余额
                         $user_integral_wallets =$user_integral_wallet - $setting_data["integral_full"];//减了之后的积分

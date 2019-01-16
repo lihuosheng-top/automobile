@@ -426,7 +426,6 @@ class Apppay extends Controller
     public function ios_api_alipay(Request $request){
         if($request->isPost()){
             $order_num =$request->only(['order_num'])['order_num'];
-//            $order_num =15428821121022;
             $product_code ="QUICK_MSECURITY_PAY";
             $out_trade_no="ZQLM3O56MJD4SK3";
             $time =date('Y-m-d H:i:s');
