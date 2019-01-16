@@ -637,7 +637,7 @@ AMap.plugin([
                                                             (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+`"></i>
                                                             <span>营业时间：`+ele.shop_time+`</span>
                                                         </div>
-                                                        <p class="txt-hid-two hotshop-detail">`+ele.shop_address.split(',').join('')+`</p>
+                                                        <p class="txt-hid-two hotshop-detail">约`+sortDistArr[i + curPage * 10].dist+`米  `+ele.shop_address.split(',').join('')+`</p>
                                                     </div>
                                                 </li>`
                                     }
