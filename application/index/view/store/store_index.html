@@ -14,7 +14,7 @@
     <div class="wrapper">
         <div class="head">
             <a href="classify_index" class="spr back"></a>
-            <input type="text" placeholder="输入你要搜索的品牌">
+            <input type="text" id="search" placeholder="输入你要搜索的品牌">
             <i class="spr icon_search"></i>
             <a href="javascript:;" class="spr icon_share"></a>
         </div>
@@ -29,7 +29,6 @@
             <button class="current">综合</button>
             <button>销量</button>
             <button>价格</button>
-            <button>筛选</button>
         </div>
         <ul class="list_cont clearfix">
             <!-- <li>
@@ -128,6 +127,70 @@
                 }
             })
         })
+        
+        // 搜索
+        var timer = null;
+        $('#search').on('input', function(){
+            var _self = this;
+            clearTimeout(timer);
+            timer = setTimeout(function(){
+                searchAjax('store_index_search', store_id, _self.value);
+            }, 500);
+        })
+        function searchAjax(url, store_id, searchTxt){
+            console.log(arguments)
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': store_id,
+                    'goods_name': searchTxt
+                },
+                success: function(res){
+                    console.log(res);
+                    var str = '';
+                    $.each(res.data, function(idx, val){
+                        if(idx % 2 == 0){
+                            str += '<li>\
+                                        <a href="goods_detail?id='+val.id+'&preid='+store_id+'">\
+                                            <div class="img_div">\
+                                                <img src="uploads/'+val.goods_show_images+'">\
+                                            </div>\
+                                            <div class="goods_name">\
+                                                <p class="txt-hid-two">'+val.goods_name+'</p>\
+                                            </div>\
+                                            <div class="goods_price">\
+                                                <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
+                                                <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
+                                            </div>\
+                                        </a>\
+                                    </li>'
+                            return;
+                        }
+                        str += '<li class="mgr0">\
+                                    <a href="goods_detail?id='+val.id+'&preid='+store_id+'">\
+                                        <div class="img_div">\
+                                            <img src="uploads/'+val.goods_show_images+'">\
+                                        </div>\
+                                        <div class="goods_name">\
+                                            <p class="txt-hid-two">'+val.goods_name+'</p>\
+                                        </div>\
+                                        <div class="goods_price">\
+                                            <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
+                                            <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
+                                        </div>\
+                                    </a>\
+                                </li>'
+                        
+                    })
+                    $('.list_cont').html('').html(str);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        }
     </script>
 </body>
 </html>

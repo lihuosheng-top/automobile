@@ -1,6 +1,17 @@
 $('.filter_box button').click(function(){
     $(this).addClass('current').siblings().removeClass('current');
-    var idx = $(this).index();
+    var $index = $(this).index();
+    switch($index){
+        case 0: 
+            layDataAjax('goods_list', brandid);
+            break;
+        case 1: 
+            layDataAjax('goods_list_sales_volume', brandid);
+            break;
+        case 2: 
+            layDataAjax('goods_list', brandid);
+            break;
+    }
 })
 
 // 获取url地址id
