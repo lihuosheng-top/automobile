@@ -55,27 +55,51 @@ class Reservation extends Controller{
             //$num = strpos($store_user_address,"区");
             //$store_address = substr($store_user_address,0,$num);
             $user_id = Session::get("user");
-            $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
-            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->field("vehicle_model")->find();
-            $serve_goods = db("serve_goods")->where("vehicle_model",$car_series["vehicle_model"])->where("service_setting_id",$service_setting_id)->select();
-            foreach ($serve_goods as $key=>$value){
-                $where = "`operation_status` = '1' and `store_is_button` = '1' and `del_status` = '1'";
-                $address = db("store")->where($where)->select();
-                foreach ($address as $val){
-                    if($val["store_id"] == $value["store_id"]){
-                        $serve_goods[$key]["serve_name"] = $val;
-                        $serve_goods[$key]["service_setting_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
+            if(!empty($user_id)){
+                $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
+                $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->field("vehicle_model")->find();
+                $serve_goods = db("serve_goods")->where("vehicle_model",$car_series["vehicle_model"])->where("service_setting_id",$service_setting_id)->select();
+                foreach ($serve_goods as $key=>$value){
+                    $where = "`operation_status` = '1' and `store_is_button` = '1' and `del_status` = '1'";
+                    $address = db("store")->where($where)->order("store_order_num")->select();
+                    foreach ($address as $val){
+                        if($val["store_id"] == $value["store_id"]){
+                            $serve_goods[$key]["serve_name"] = $val;
+                            $serve_goods[$key]["service_setting_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
+                        }
                     }
                 }
+                if ($serve_goods) {
+                    return ajax_success("获取成功", $serve_goods);
+                } else {
+                    return ajax_error("获取失败");
+                }
+            }else{
+                $user_car = db("user_car")->where("status",1)->select();
+                $serve_goods = [];
+                foreach ($user_car as $k_1=>$v_1){
+                    $car_series = db("car_series")->where("brand",$v_1["brand"])->where("series",$v_1["series"])->field("vehicle_model")->find();
+                    $serve_goods[] = db("serve_goods")->where("vehicle_model",$car_series["vehicle_model"])->where("service_setting_id",$service_setting_id)->find();
+                }
+                foreach ($serve_goods as $key=>$value){
+                    if($value == null) {
+                        unset($serve_goods[$key]);
+                    }
+                        $where = "`operation_status` = '1' and `store_is_button` = '1' and `del_status` = '1'";
+                        $address = db("store")->where($where)->order("store_order_num")->select();
+                        foreach ($address as $val) {
+                            if ($val["store_id"] == $value["store_id"]) {
+                                $serve_goods[$key]["serve_name"] = $val;
+                                $serve_goods[$key]["service_setting_name"] = db("service_setting")->where("service_setting_id", $value["service_setting_id"])->value("service_setting_name");
+                            }
+                        }
+                }
+                if ($serve_goods) {
+                    return ajax_success("获取成功", $serve_goods);
+                } else {
+                    return ajax_error("获取失败");
+                }
             }
-            if ($serve_goods) {
-                return ajax_success("获取成功", $serve_goods);
-            } else {
-                return ajax_error("获取失败");
-            }
-
-
-            //地图显示
 
         }
 
