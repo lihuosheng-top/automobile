@@ -226,7 +226,7 @@ class Index extends Controller
                     }
                 }
                 $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
-                $store = db("store")->where("store_id", $shop_id)->select();
+                $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
                 $service_setting = db("service_setting")->select();
                 $serve_data = [];
                 foreach ($service_setting as $key => $value) {
@@ -259,7 +259,7 @@ class Index extends Controller
                     }
                     $serve_vehicle_model = db("serve_goods")->where("store_id", $shop_id)->where("vehicle_model", $car_series["vehicle_model"])->find();
                     $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
-                    $store = db("store")->where("store_id", $shop_id)->select();
+                    $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
                     $serve_data = [];
                     $serve = [];
                     foreach ($serve_goods as $k => $val) {
@@ -294,7 +294,7 @@ class Index extends Controller
                         }
                     }
                     $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
-                    $store = db("store")->where("store_id", $shop_id)->select();
+                    $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
                     $service_setting = db("service_setting")->select();
                     $serve_data = [];
                     foreach ($service_setting as $key => $value) {
