@@ -37,12 +37,15 @@ class Apppay extends Controller
                 $result = Db::name('order_parts')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
             }
             if ($result) {
-                $parts =Db::name("order_parts")->field("parts_goods_name")->where("parts_order_number",$_GET['out_trade_no'])->select();
+                $parts =Db::name("order_parts")
+                    ->field("parts_goods_name")
+                    ->where("parts_order_number",$out_trade_no)
+                    ->select();
                 foreach($parts as $ks=>$vs){
                     $titles[] = $vs["parts_goods_name"];
                 }
                 $title =implode("",$titles);
-                $money =Db::name("order_parts")->where("parts_order_number",$_GET['out_trade_no'])->sum("order_real_pay");
+                $money =Db::name("order_parts")->where("parts_order_number",$out_trade_no)->sum("order_real_pay");
                 $datas["user_id"] =$parts[0]["user_id"]; //用户ID
                 $datas["wallet_operation"] = -$money; //消费金额
                 $datas["wallet_type"] = -1; //消费操作(1入，-1出)
@@ -297,7 +300,10 @@ class Apppay extends Controller
             }
             if ($result) {
                 //进行钱包消费记录
-                $parts =Db::name("order_service")->field("service_goods_name")->where("service_order_number",$_GET['out_trade_no'])->select();
+                $parts =Db::name("order_service")
+                    ->field("service_goods_name")
+                    ->where($condition)
+                    ->select();
                 foreach($parts as $ks=>$vs){
                     $titles[] = $vs["parts_goods_name"];
                 }
@@ -311,7 +317,7 @@ class Apppay extends Controller
                 $datas["wallet_img"] = "index/image/alipay.png"; //图标
                 $datas["title"] = $title; //标题（消费内容）
                 Db::name("wallet")->insert($datas);
-//                $this->redirect('index/OrderService/order_service_wait_deliver');
+                $this->redirect('index/OrderService/order_service_wait_deliver');
                 return ajax_success('支付成功', ['status' => 1]);
             } else {
                 return ajax_error('验证失败了', ['status' => 0]);
