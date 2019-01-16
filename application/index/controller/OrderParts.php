@@ -361,7 +361,7 @@ class OrderParts extends Controller{
                     }
                     if (!empty($end_info)) {
                         //把退货的和待评价的区分开
-                        foreach ($end_info as $imt => $em){
+//                        foreach ($end_info as $imt => $em){
 //                            if(count($em["info"]) >2){
 //                                foreach ($em["info"] as $h =>$s){
 //
