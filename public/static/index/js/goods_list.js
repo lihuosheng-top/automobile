@@ -9,7 +9,7 @@ $('.filter_box button').click(function(){
             layDataAjax('goods_list_sales_volume', brandid);
             break;
         case 2: 
-            layDataAjax('goods_list', brandid);
+            layDataAjax('goods_list_sales_price', brandid);
             break;
     }
 })

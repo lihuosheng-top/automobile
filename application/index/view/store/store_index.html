@@ -52,7 +52,18 @@
     <script>
         $('.filter_box button').click(function(){
             $(this).addClass('current').siblings().removeClass('current');
-            var idx = $(this).index();
+            var $index = $(this).index();
+            switch($index){
+                case 0: 
+                    layDataAjax('store_goods_info', store_id);
+                    break;
+                case 1: 
+                    layDataAjax('store_list_sales_volume', store_id);
+                    break;
+                case 2: 
+                    layDataAjax('store_list_sales_price', store_id);
+                    break;
+            }
         })
         var url = location.search;
         var store_id;
