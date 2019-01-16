@@ -26,31 +26,52 @@
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">真实姓名</p>
-                    <i class="spr icon-more"></i>
+                    <div class="cot">
+                        <span>222</span>
+                        <i class="spr icon-more"></i>
+                    </div>
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">手机号</p>
-                    <i class="spr icon-more"></i>
+                    <div class="cot">
+                        <span>222</span>
+                        <i class="spr icon-more"></i>
+                    </div>
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">昵称</p>
-                    <i class="spr icon-more"></i>
+                    <div class="cot">
+                        <span>222</span>
+                        <i class="spr icon-more"></i>
+                    </div>
                 </li>
                 <li class="info-li sex-li">
                     <p class="list-title-p">性别</p>
-                    <i class="spr icon-more"></i>
+                    <div class="cot">
+                        <span>222</span>
+                        <i class="spr icon-more"></i>
+                    </div>
                 </li>
                 <!-- <li class="info-li">
                     <p class="list-title-p">会员等级</p>
-                    <i class="spr icon-more"></i>
+                    <div class="cot">
+                        <span>222</span>
+                        <i class="spr icon-more"></i>
+                    </div>
                 </li> -->
                 <li class="info-li">
                     <p class="list-title-p">我的积分</p>
-                    <i class="spr icon-more"></i>
+                    <div class="cot">
+                        <span>222</span>
+                        <i class="spr icon-more"></i>
+                    </div>
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">钱包</p>
-                    <i class="spr icon-more"></i>
+                    <div class="cot">
+                        <span>222</span>
+                        <i class="spr icon-more"></i>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -76,6 +97,12 @@
                     if(res.data.user_img !== null){
                         $('.user-img')[0].src = 'userimg/' + res.data.user_img;
                     }
+                    $('.info-li:eq(1)').find('span').text(res.data.real_name);
+                    $('.info-li:eq(2)').find('span').text(res.data.phone_num);
+                    $('.info-li:eq(3)').find('span').text(res.data.user_name);
+                    $('.info-li:eq(4)').find('span').text(res.data.sex);
+                    $('.info-li:eq(5)').find('span').text(res.data.user_integral_wallet);
+                    $('.info-li:eq(6)').find('span').text(res.data.user_wallet);
                 }
             },
             error: function(){
@@ -116,19 +143,11 @@
                 data: formData,
                 success: function(res){
                     console.log(res);
-                    if(res.status == 1){
-                        layer.open({
-                            skin: 'msg',
-                            content: res.info,
-                            time: 1
-                        })
-                    }else{
-                        layer.open({
-                            skin: 'msg',
-                            content: res.info,
-                            time: 1
-                        })
-                    }
+                    layer.open({
+                        skin: 'msg',
+                        content: '更新成功',
+                        time: 1
+                    })
                 },
                 error: function(){
                     console.log('error');
@@ -180,21 +199,13 @@
                 },
                 success: function(res){
                     console.log(res);
-                    if(res.status == 1){
-                        layer.open({
-                            skin: 'msg',
-                            content: res.info,
-                            time: 1
-                        })
-                        $('.mask').hide();
-                        $('.sex-pop').animate({'bottom': '-100%'});
-                    }else{
-                        layer.open({
-                            skin: 'msg',
-                            content: res.info,
-                            time: 1
-                        })
-                    }
+                    layer.open({
+                        skin: 'msg',
+                        content: '更新成功',
+                        time: 1
+                    })
+                    $('.mask').hide();
+                    $('.sex-pop').animate({'bottom': '-100%'});
                 },
                 error: function(){
                     console.log('error');
