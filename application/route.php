@@ -679,6 +679,7 @@ Route::group("admin",[
 
     /*设置*/
     "install_index"=>"admin/Install/index",
+    "install_index_del"=>"admin/Install/goods_ratio_del",
     "recommend_index"=>"admin/Install/recommend",//推荐奖励积分设置
     "recommend_update"=>"admin/Install/recommend_update",//推荐奖励积分设置更新
 
@@ -687,6 +688,7 @@ Route::group("admin",[
     "integral_setting_del"=>"admin/Install/integral_setting_del",//积分折扣设置删除功能
 
     "putaway_index"=>"admin/Install/putaway",
+    "putaway_index_del"=>"admin/Install/putaway_del",
 
     "recharge_index"=>"admin/Install/recharge",//设置之充值设置
     "recharge_setting_add"=>"admin/Install/recharge_setting_add",//设置之充值设置添加数据

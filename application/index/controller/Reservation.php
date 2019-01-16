@@ -98,7 +98,6 @@ class Reservation extends Controller{
                         }
                 }
 
-
                 if ($serve_goods) {
                     return ajax_success("获取成功", $serve_goods);
                 } else {
