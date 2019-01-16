@@ -325,7 +325,7 @@
             <label class="layui-form-label">是否付费上架：</label>
             <div class="layui-input-block">
                 {if $vo.store_is_pay ==0}
-                <input type="radio" name="store_is_pay" value="1" title="选择付费上架" >
+                <input type="radio" name="store_is_pay" value="1" title="选择付费上架"  checked="">
                 <input type="radio" name="store_is_pay" value="-1" title="选择不付费上架" >
                 {elseif $vo.store_is_pay==1}
                 <input type="radio" name="store_is_pay" value="1" title="付费上架" checked="">
@@ -353,7 +353,7 @@
             <label class="layui-form-label">当前可操作：</label>
             <div class="layui-input-block">
                 {if $vo.operation_status ==0}
-                <input type="radio" name="operation_status" value="1" title="选择通过" >
+                <input type="radio" name="operation_status" value="1" title="选择通过" checked="">
                 <input type="radio" name="operation_status" value="-1" title="选择拒绝" >
                 {/if}
                 {if $vo.operation_status ==1}
