@@ -418,6 +418,7 @@
                                         console.log(res);
                                         Android.alipay(res.data);
                                         function alipayCallback(res){
+                                            alert(111)
                                             alert(typeof res.resultStatus, res.resultStatus);
                                             if(res.resultStatus == '6001'){
                                                 location.href = 'order_parts_wait_pay';
