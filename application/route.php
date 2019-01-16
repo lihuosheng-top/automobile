@@ -264,9 +264,9 @@ Route::group("",[
 
 
 
-
     /*配件商品*/
     "goods_list"=>"index/Classify/goods_list",//商品列表
+    "goods_list_sales_volume"=>"index/Classify/goods_list_sales_volume",//商品列表销量排行
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
     /*TODO:商品详情页面信息开始*/
