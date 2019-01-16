@@ -697,15 +697,16 @@
             if(res.resultStatus == '6001'){
                 location.href = 'order_parts_wait_pay';
             }else if(res.resultStatus == '9000'){
+                alert(res.resultStatus)
                 var res = res.result.alipay_trade_app_pay_response;
                 $.ajax({
                     url: 'notifyurl',
                     type: 'GET',
                     dataType: 'JSON',
                     data: {
-                        out_trade_no: res.out_trade_no,
-                        trade_no: res.trade_no,
-                        trade_status: res.msg
+                        'out_trade_no': res.out_trade_no,
+                        'trade_no': res.trade_no,
+                        'trade_status': res.msg
                     },
                     success: function(res){
                         location.href = 'order_parts_all';
