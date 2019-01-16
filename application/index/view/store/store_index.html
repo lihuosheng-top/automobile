@@ -14,7 +14,7 @@
     <div class="wrapper">
         <div class="head">
             <a href="classify_index" class="spr back"></a>
-            <input type="text" placeholder="输入你要搜索的品牌">
+            <input type="text" id="search" placeholder="输入你要搜索的品牌">
             <i class="spr icon_search"></i>
             <a href="javascript:;" class="spr icon_share"></a>
         </div>
@@ -29,7 +29,6 @@
             <button class="current">综合</button>
             <button>销量</button>
             <button>价格</button>
-            <button>筛选</button>
         </div>
         <ul class="list_cont clearfix">
             <!-- <li>
@@ -53,7 +52,18 @@
     <script>
         $('.filter_box button').click(function(){
             $(this).addClass('current').siblings().removeClass('current');
-            var idx = $(this).index();
+            var $index = $(this).index();
+            switch($index){
+                case 0: 
+                    layDataAjax('store_goods_info', store_id);
+                    break;
+                case 1: 
+                    layDataAjax('store_list_sales_volume', store_id);
+                    break;
+                case 2: 
+                    layDataAjax('store_list_sales_price', store_id);
+                    break;
+            }
         })
         var url = location.search;
         var store_id;
@@ -92,42 +102,104 @@
             })
         })
         // 店铺商品信息
-        $(function(){
+        function layDataAjax(url, brandid){
             $.ajax({
-                url: 'store_goods_info',
+                url: url,
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
-                    'id': store_id
+                    'id': brandid
                 },
                 success: function(res){
-                    console.log('店铺商品',res);
-                    if(res.status == 1){
-                        var str = '';
-                        res.data.forEach(function(ele, idx){
-                            str += `<li class="`+(idx%2!=0? 'mgr0':'')+`">
-                                        <a href="goods_detail?id=`+ele.id+`&preId=`+ele.goods_brand_id+`&preStoreId=`+store_id+`">
-                                            <div class="img_div">
-                                                <img src="uploads/`+ele.goods_show_images+`">
-                                            </div>
-                                            <div class="goods_name">
-                                                <p class="txt-hid-two">`+ele.goods_name+`</p>
-                                            </div>
-                                            <div class="goods_price">
-                                                <span class="price">￥`+ele.special[0].goods_adjusted_price+`</span>
-                                                <span class="pay_num">`+ele.statistical_quantity+`人购买</span>
-                                            </div>
-                                        </a>
-                                    </li>`
-                        })
-                        $('.list_cont').html(str);
-                    }
+                    console.log(res);
+                    var str = '';
+                    $.each(res.data, function(idx, val){
+                        str += `<li class="`+(idx%2!=0? 'mgr0':'')+`">
+                                    <a href="goods_detail?id=`+val.id+`&preId=`+val.goods_brand_id+`&preStoreId=`+store_id+`">
+                                        <div class="img_div">
+                                            <img src="uploads/`+val.goods_show_images+`">
+                                        </div>
+                                        <div class="goods_name">
+                                            <p class="txt-hid-two">`+val.goods_name+`</p>
+                                        </div>
+                                        <div class="goods_price">
+                                            <span class="price">￥`+val.special[0].goods_adjusted_price+`</span>
+                                            <span class="pay_num">`+val.statistical_quantity+`人购买</span>
+                                        </div>
+                                    </a>
+                                </li>`
+                    })
+                    $('.list_cont').html(str);
                 },
                 error: function(){
                     console.log('error');
                 }
             })
+        }
+        layDataAjax('store_goods_info', store_id)
+        // 搜索
+        var timer = null;
+        $('#search').on('input', function(){
+            var _self = this;
+            clearTimeout(timer);
+            timer = setTimeout(function(){
+                searchAjax('store_index_search', store_id, _self.value);
+            }, 500);
         })
+        function searchAjax(url, store_id, searchTxt){
+            console.log(arguments)
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': store_id,
+                    'goods_name': searchTxt
+                },
+                success: function(res){
+                    console.log(res);
+                    var str = '';
+                    $.each(res.data, function(idx, val){
+                        if(idx % 2 == 0){
+                            str += '<li>\
+                                        <a href="goods_detail?id='+val.id+'&preid='+store_id+'">\
+                                            <div class="img_div">\
+                                                <img src="uploads/'+val.goods_show_images+'">\
+                                            </div>\
+                                            <div class="goods_name">\
+                                                <p class="txt-hid-two">'+val.goods_name+'</p>\
+                                            </div>\
+                                            <div class="goods_price">\
+                                                <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
+                                                <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
+                                            </div>\
+                                        </a>\
+                                    </li>'
+                            return;
+                        }
+                        str += '<li class="mgr0">\
+                                    <a href="goods_detail?id='+val.id+'&preid='+store_id+'">\
+                                        <div class="img_div">\
+                                            <img src="uploads/'+val.goods_show_images+'">\
+                                        </div>\
+                                        <div class="goods_name">\
+                                            <p class="txt-hid-two">'+val.goods_name+'</p>\
+                                        </div>\
+                                        <div class="goods_price">\
+                                            <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
+                                            <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
+                                        </div>\
+                                    </a>\
+                                </li>'
+                        
+                    })
+                    $('.list_cont').html('').html(str);
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        }
     </script>
 </body>
 </html>
