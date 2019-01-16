@@ -304,7 +304,7 @@
 						<div class="z_photo upimg-div clear">
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-								<input type="file" name="all_imgs[]" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="20" />
+								<input type="file" name="all_imgs[]" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="4" />
 							</section>
 						</div>
 					</section>
@@ -422,7 +422,32 @@
 
             checks();
         });
-
+             //  图片上传限制
+        function imglimit(a){
+        
+        	var img=a.parent().parent().parent().parent().parent().siblings(".imgcontent").children("span").length;
+        	 var max_list=a.data("id")-img;
+             console.log(a.parent().parent().parent().parent().parent().siblings(".imgcontent"));
+        	 a.data('id',max_list);
+//          console.log(a.data("id"));
+        }
+       
+       setTimeout(
+       	function(){ 
+       		for(var i=0;i<$(".file").length;i++){
+        		imglimit($("#"+$(".file")[i].id));
+        } }, 
+       	1000);
+        
+       $(".file").change(function(){
+       	if($(this).data("id")==0){
+       		alert("请删除商品后再进行上传操作");
+       		return false;
+       	}
+       })
+        //  图片上传限制 
+	
+       
         function checks() {
 
             if ($("#account")[0].value == '') {
