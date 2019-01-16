@@ -39,9 +39,9 @@ $(".UCleft-fixed").children("dl").on("click","dt",function(){
         
         	var img=a.parent().parent().parent().parent().parent().siblings(".imgcontent").children("span").length;
         	 var max_list=a.data("id")-img;
-
+             console.log(a.parent().parent().parent().parent().parent().siblings(".imgcontent").children("span"));
         	 a.data('id',max_list);
-            console.log(a.data("id"));
+//          console.log(a.data("id"));
         }
        
        setTimeout(
