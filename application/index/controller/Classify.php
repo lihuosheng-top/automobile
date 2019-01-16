@@ -295,7 +295,7 @@ class Classify extends Controller
                     foreach ($goods_data as $vl){
                         $ords[] =intval($vl["goods_adjusted_money"]);
                     }
-                    array_multisort($ords,SORT_DESC,$goods_data);
+                    array_multisort($ords,SORT_ASC,$goods_data);
                     return ajax_success("获取成功", $goods_data);
                 } else {
                     return ajax_error("获取失败");
@@ -341,7 +341,7 @@ class Classify extends Controller
                     foreach ($goods_data as $vl){
                         $ords[] =intval($vl["goods_adjusted_money"]);
                     }
-                    array_multisort($ords,SORT_DESC,$goods_data);
+                    array_multisort($ords,SORT_ASC,$goods_data);
                     return ajax_success("获取成功", $goods_data);
                 } else {
                     return ajax_error("获取失败");
