@@ -181,6 +181,8 @@ class Index extends Controller
                 $shop_data[$key]["id"] = $value["store_id"];
                 $shop_data[$key]["shop_time"] = $value["store_do_bussiness_time"];
                 $shop_data[$key]["shop_name"] = $value["store_name"];
+                $shop_data[$key]["latitude"] = $value["latitude"];
+                $shop_data[$key]["longitude"] = $value["longitude"];
                 $parts_attitude_stars =Db::name("order_parts_evaluate")
                     ->where("store_id",$value["store_id"])
                     ->avg('service_attitude_stars');
