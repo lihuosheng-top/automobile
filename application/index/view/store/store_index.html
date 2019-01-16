@@ -102,43 +102,41 @@
             })
         })
         // 店铺商品信息
-        $(function(){
+        function layDataAjax(url, brandid){
             $.ajax({
-                url: 'store_goods_info',
+                url: url,
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
-                    'id': store_id
+                    'id': brandid
                 },
                 success: function(res){
-                    console.log('店铺商品',res);
-                    if(res.status == 1){
-                        var str = '';
-                        res.data.forEach(function(ele, idx){
-                            str += `<li class="`+(idx%2!=0? 'mgr0':'')+`">
-                                        <a href="goods_detail?id=`+ele.id+`&preId=`+ele.goods_brand_id+`&preStoreId=`+store_id+`">
-                                            <div class="img_div">
-                                                <img src="uploads/`+ele.goods_show_images+`">
-                                            </div>
-                                            <div class="goods_name">
-                                                <p class="txt-hid-two">`+ele.goods_name+`</p>
-                                            </div>
-                                            <div class="goods_price">
-                                                <span class="price">￥`+ele.special[0].goods_adjusted_price+`</span>
-                                                <span class="pay_num">`+ele.statistical_quantity+`人购买</span>
-                                            </div>
-                                        </a>
-                                    </li>`
-                        })
-                        $('.list_cont').html(str);
-                    }
+                    console.log(res);
+                    var str = '';
+                    $.each(res.data, function(idx, val){
+                        str += `<li class="`+(idx%2!=0? 'mgr0':'')+`">
+                                    <a href="goods_detail?id=`+val.id+`&preId=`+val.goods_brand_id+`&preStoreId=`+store_id+`">
+                                        <div class="img_div">
+                                            <img src="uploads/`+val.goods_show_images+`">
+                                        </div>
+                                        <div class="goods_name">
+                                            <p class="txt-hid-two">`+val.goods_name+`</p>
+                                        </div>
+                                        <div class="goods_price">
+                                            <span class="price">￥`+val.special[0].goods_adjusted_price+`</span>
+                                            <span class="pay_num">`+val.statistical_quantity+`人购买</span>
+                                        </div>
+                                    </a>
+                                </li>`
+                    })
+                    $('.list_cont').html(str);
                 },
                 error: function(){
                     console.log('error');
                 }
             })
-        })
-        
+        }
+        layDataAjax('store_goods_info', store_id)
         // 搜索
         var timer = null;
         $('#search').on('input', function(){
