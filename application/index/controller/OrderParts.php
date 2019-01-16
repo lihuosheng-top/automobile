@@ -1784,14 +1784,17 @@ class OrderParts extends Controller{
                     if(!empty($data["setting_id"])){
                         //进行对使用了积分抵扣的进行修改
 //                        //计算最大的价额进行减积分抵扣
-//                        $order_all_data =Db::name("order_parts")
-//                            ->where("parts_order_number",$order_datas["parts_order_number"])
-//                            ->order("order_amount","desc")
-//                            ->select();
-//                        $all_order_order_id =array_search(max($order_id_price), $order_id_price);//最大钱的order_id
-//                        halt($all_order_order_id);
-
-
+                        $order_all_data =Db::name("order_parts")
+                            ->where("parts_order_number",$order_datas["parts_order_number"])
+                            ->order("order_amount","desc")
+                            ->select();
+                        foreach ($order_all_data as $a =>$b){
+                            if($a =0){
+                                Db::name("order_parts")->where("id",$b["id"])->update(["order_amount"=>$b["order_amount"]-$b["integral_deductible"]]);
+                            }else if($a>0){
+                                Db::name("order_parts")->where("id",$b["id"])->update(["integral_deductible"=>null]);
+                            }
+                        }
                         //积分消费记录
                         $user_integral_wallet =$user_information["user_integral_wallet"]; //之前的积分余额
                         $user_integral_wallets =$user_integral_wallet - $setting_data["integral_full"];//减了之后的积分
