@@ -1786,11 +1786,8 @@ class OrderParts extends Controller{
 //                        //计算最大的价额进行减积分抵扣
 //                        $order_all_data =Db::name("order_parts")
 //                            ->where("parts_order_number",$order_datas["parts_order_number"])
+//                            ->order("order_amount","desc")
 //                            ->select();
-//                        foreach ($order_all_data as $s=>$j){
-//                            $order_id_price[$s] = $j["order_amount"];
-//                        }
-////                        $max =max($store_id_price);//最大的钱
 //                        $all_order_order_id =array_search(max($order_id_price), $order_id_price);//最大钱的order_id
 //                        halt($all_order_order_id);
 
