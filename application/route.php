@@ -230,11 +230,8 @@ Route::group("",[
     "store_index"=>"index/Store/index",             //店铺首页(所有的店铺信息)
     "store_goods_info"=>"index/Store/store_goods_info",             //店铺首页 店铺内的商品（综合）
     "store_list_sales_volume"=>"index/Store/goods_list_sales_volume",             //店铺首页 店铺内的商品（销量）
-    "goods_list_sales_price"=>"index/Store/goods_list_sales_price",             //店铺首页 店铺内的商品（价格）
-
-
+    "store_list_sales_price"=>"index/Store/goods_list_sales_price",             //店铺首页 店铺内的商品（价格）
     "store_index_search"=>"index/Store/store_index_search",             //店铺首页 店铺内的商品（搜索）
-
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
 
