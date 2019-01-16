@@ -86,6 +86,7 @@ class Reservation extends Controller{
                         unset($serve_goods[$k_1]);
                     }
                 }
+                //数组去重
                 $serve_goods = unique_arr($serve_goods);
                 foreach ($serve_goods as $key=>$value){
                    $where = "`operation_status` = '1' and `store_is_button` = '1' and `del_status` = '1'";
