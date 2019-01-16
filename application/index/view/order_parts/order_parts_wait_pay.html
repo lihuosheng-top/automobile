@@ -238,7 +238,6 @@
                         },
                         success: function(res){
                             console.log(res);
-                            // alert(res.data);
                             Android.alipay(res.data);
                             function alipayCallback(res){
                                 if(res.resultStatus == '6001'){
