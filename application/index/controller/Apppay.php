@@ -277,11 +277,12 @@ class Apppay extends Controller
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:配件商订单回调
+     * Notes:服务商订单回调
      **************************************
      */
     public function service_notifyurl()
     {
+        return ajax_success("成功",["status"=>1]);
         //这里可以做一下你自己的订单逻辑处理
         $pay_time = time();
         $data['pay_time'] = $pay_time;
@@ -296,6 +297,7 @@ class Apppay extends Controller
             $data['trade_no'] = $trade_no;//支付宝交易号
             $condition['service_order_number'] = $out_trade_no;
             $result = Db::name('order_service')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
+            $this->redirect('index/OrderService/order_service_wait_deliver');
             if ($result) {
                 //进行钱包消费记录
 //                $parts =Db::name("order_service")
