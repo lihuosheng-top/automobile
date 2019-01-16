@@ -32,12 +32,10 @@ class Apppay extends Controller
         if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="Success") {
             $data['status'] = 2;
             $condition['parts_order_number'] = $out_trade_no;
-            $select_data = Db::name('order_parts')->where($condition)->select();
-            foreach ($select_data as $key => $val) {
-                $result = Db::name('order_parts')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
-            }
+//            $select_data = Db::name('order_parts')->where($condition)->select();
+//            foreach ($select_data as $key => $val) {
+            $result = Db::name('order_parts')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
             if ($result) {
-
 //                $parts =Db::name("order_parts")
 //                    ->field("parts_goods_name")
 //                    ->where("parts_order_number",$out_trade_no)
@@ -282,7 +280,6 @@ class Apppay extends Controller
      */
     public function service_notifyurl()
     {
-        return ajax_success("成功",["status"=>1]);
         //这里可以做一下你自己的订单逻辑处理
         $pay_time = time();
         $data['pay_time'] = $pay_time;
