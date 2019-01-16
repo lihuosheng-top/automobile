@@ -109,7 +109,6 @@ function calculator(){
         }) 
     })
 }
-
 // 编辑  完成切换
 $('.edit').click(function(){
     $(this).hide();

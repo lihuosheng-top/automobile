@@ -167,6 +167,7 @@
                         Android.call(val.car_owner_phone_number);
                     })
                     $('.to-map').click(function(){
+                        console.log(val.latitude, val.longitude, val.store_name)
                         Android.openGdMap(val.latitude, val.longitude, val.store_name)
                     })
                     // 服务项目名称

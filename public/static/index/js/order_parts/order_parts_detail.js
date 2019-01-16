@@ -15,7 +15,7 @@ function countDown(id, endTime, storeId, orderNum, reason){
     var endDate = new Date(endTime * 1000);
     // 相差总秒数
     var totalSecond = parseInt((endDate - nowDate) / 1000);
-    if(totalSecond > 0){
+    if(totalSecond >= 0){
         // console.log(totalSecond)
         // 小时
         var hours = Math.floor(totalSecond / 3600);
@@ -31,120 +31,27 @@ function countDown(id, endTime, storeId, orderNum, reason){
             countDown(id, endTime, storeId, orderNum, reason);
         }, 1000)
     }else{
-        (function(){
-            return $.ajax({
-                url: 'order_parts_detail_cancel',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    'store_id': storeId,
-                    'parts_order_number': orderNum,
-                    'cancel_order_description': reason
+        return $.ajax({
+            url: 'order_parts_detail_cancel',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'store_id': storeId,
+                'parts_order_number': orderNum,
+                'cancel_order_description': reason
+            },
+            success: function(res){
+                console.log(res)
+                if(res.status == 1){
+                    layer.open({
+                        skin: 'msg',
+                        content: '订单已过期，自动关闭',
+                        time: .8
+                    })
+                    setTimeout(function () {
+                        location.href = 'order_parts_wait_pay';
+                    }, 1000)
                 }
-            })
-        })().then(function(){
-            return $.ajax({
-                url: 'order_parts_save_record',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    'parts_order_number': orderNum,
-                    'store_id': storeId,
-                    'status': 9
-                }
-            })
-        }).then(function(){
-            return $.ajax({
-                url: 'order_parts_detail',
-                type: 'POST',
-                dataType: 'JSON'
-            })
-        }).then(function(res){
-            console.log(res);
-            var val = res.data;
-            var statusTxt = '';
-            if(val.status === 1){
-                statusTxt = `待付款`;
-                $('.cancel-order-btn')
-                    .add('.to-payment-btn')
-                    .show();
-                $('.time-count-down').show();
-                countDown('time-count-down', val.normal_future_time, val.store_id, val.parts_order_number, '超过规定时间未付款，系统自动关闭订单');
-            }else if(val.status === 2 || val.status === 3 || val.status === 4 || val.status === 5){
-                statusTxt = `待收货`;
-                $('.check-logistics-btn')
-                    .add('.conf-receipt-btn')
-                    .show();
-            }else if(val.status === 6 || val.status === 7){
-                statusTxt = `待评价`;
-                $('.evaluation-btn')
-                    .add('.del-order-btn')
-                    .add('.return-goods')
-                        .show();
-            }else if(val.status === 8){
-                statusTxt = `已完成`;
-            }else if(val.status === 9 || val.status === 10){
-                statusTxt = `已取消`;
-                $('.del-order-btn').show();
-            }else if(val.status === 11 || val.status === 13 || val.status === 15){
-                statusTxt = `退货中`;
-                // $('.del-order-btn').show();
-            }else if(val.status === 12){
-                statusTxt = `已退货`;
-                $('.del-order-btn').show();
-            }else if(val.status === 14){
-                statusTxt = `拒绝退货`;
-            }
-            // 状态值
-            $('.status').text(statusTxt);
-            // 订单编号
-            $('.order-num span').text(val.parts_order_number);
-            // 收货人
-            $('.user-name span').text(val.harvester);
-            // 电话
-            $('.user-phone').text(val.harvest_phone_num);
-            // 配送地址
-            $('.address-txt').text(val.harvester_address);
-            // 店铺名
-            $('.order-shop-namp').text(val.store_name);
-            $('.order-shop-namp').attr('id', val.store_id);
-            $('.order-shop-namp').data({'data-status': val.status});
-            // 订单商品
-            var str = '';
-            $.each(val.info, function(idx, val){
-                str += `<div class="order-goods-detail" id="`+val.id+`">
-                            <div class="order-goods-img">
-                                <img src="uploads/`+val.goods_image+`">
-                            </div>
-                            <div class="order-info-box">
-                                <p class="order-goods-p txt-hid-two">`+val.parts_goods_name+`</p>
-                                <p class="order-selling-point txt-hid-two">`+val.goods_describe+`</p>
-                                <div class="unit-price-quantity">
-                                    <p class="unit-price-p">￥`+val.goods_money+`</p>
-                                    <p class="quantity-p">×`+val.order_quantity+`</p>
-                                    <p style="display:`+(val.status==11?'block': 
-                                                        (val.status==13?'block':
-                                                        (val.status==15?'block':'none')))+`;">退货中</p>
-                                    <p style="display:`+(val.status==12?'block':'none')+`;">已退货</p>
-                                    <button class="return-goods" style="display:`+(val.status==7?'block':'none')+`;">退货</button>
-                                </div>
-                            </div>
-                        </div>`
-            })
-            $('.order-shop-box').after(str);
-            // 商品总额
-            $('.total-box span').text(val.all_goods_pays);
-            // 抵扣金额
-            $('.discount-box span').text(val.integral_deductible);
-            // 买家留言
-            $('.leave-message').text(val.buy_message);
-            // 需付款
-            $('.pay-amount-span span').text(val.all_order_real_pay);
-            // 创建时间
-            $('.create-time span').text(timetrans(val.create_time));
-            // 支付时间
-            if(val.pay_time !== null){
-                $('.create-time').after('<p class="pay-time">支付时间：<span>'+timetrans(val.pay_time)+'</span></p>')
             }
         })
     }
@@ -358,26 +265,26 @@ $.ajax({
             })
         })
         // 查看订单详情 √
-        // $('.all-goods-box').click(function(){
-        //     var store_id = $('.order-shop-namp').attr('id');
-        //     var parts_order_number = $('.order-num span').text();
-        //     $.ajax({
-        //         url: 'order_parts_save_record',
-        //         type: 'POST',
-        //         dataType: 'JSON',
-        //         data: {
-        //             'parts_order_number': parts_order_number,
-        //             'store_id': store_id
-        //         },
-        //         success: function(res){
-        //             console.log(res);
-        //             location.href = 'order_parts_detail'; 
-        //         },
-        //         error: function(){
-        //             console.log('error');
-        //         }
-        //     })
-        // })
+        $('.all-goods-box').click(function(){
+            var store_id = $('.order-shop-namp').attr('id');
+            var parts_order_number = $('.order-num span').text();
+            $.ajax({
+                url: 'order_parts_save_record',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'parts_order_number': parts_order_number,
+                    'store_id': store_id
+                },
+                success: function(res){
+                    console.log(res);
+                    location.href = 'order_parts_detail'; 
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        })
         // 去评价
         $('.evaluation-btn').click(function(){
             var store_id = $('.order-shop-namp').attr('id');
