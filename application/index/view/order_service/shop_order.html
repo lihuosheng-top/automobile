@@ -144,13 +144,16 @@
                                 }else if(res.resultStatus == '9000'){
                                     var res = res.result.alipay_trade_app_pay_response;
                                     $.ajax({
-                                        url: 'notifyurl',
+                                        url: 'service_notifyurl',
                                         type: 'POST',
                                         dataType: 'JSON',
                                         data: {
                                             out_trade_no: res.out_trade_no,
                                             trade_no: res.trade_no,
                                             trade_status: res.msg
+                                        },
+                                        success: function(res){
+                                            location.href = 'order_service_all';
                                         }
                                     })
                                 }
