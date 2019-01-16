@@ -135,6 +135,7 @@ class Reservation extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");
             $data = Session::get("role_name_store_id");
+            $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
             $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
             $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->field("vehicle_model")->find();
             $serve_goods_id = $request->only(["id"])["id"];
@@ -149,7 +150,7 @@ class Reservation extends Controller{
             $store = db("store")->where("store_id",$serve_goods_id)->select();
             $serve_data = [];
             foreach ($store as $key=>$value){
-                $serve_data[$key]["serve_goods"] = db("serve_goods")->where("store_id",$value["store_id"])->where("vehicle_model",$car_series["vehicle_model"])->select();
+                $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id",$service_setting_id)->where("store_id",$value["store_id"])->where("vehicle_model",$car_series["vehicle_model"])->select();
                 $serve_data[$key]["serve_name"] = db("service_setting")->where("service_setting_id",$serve_data[$key]["serve_goods"][0]["service_setting_id"])->value("service_setting_name");
                 $serve_data[$key]["service_setting_id"] = $serve_data[$key]["serve_goods"][0]["service_setting_id"];
             }
