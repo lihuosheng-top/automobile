@@ -37,6 +37,7 @@ class Apppay extends Controller
                 $result = Db::name('order_parts')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
             }
             if ($result) {
+
 //                $parts =Db::name("order_parts")
 //                    ->field("parts_goods_name")
 //                    ->where("parts_order_number",$out_trade_no)
@@ -294,10 +295,7 @@ class Apppay extends Controller
             $data['status'] = 2;//状态值
             $data['trade_no'] = $trade_no;//支付宝交易号
             $condition['service_order_number'] = $out_trade_no;
-            $select_data = Db::name('order_service')->where($condition)->select();
-            foreach ($select_data as $key => $val) {
-                $result = Db::name('order_service')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
-            }
+            $result = Db::name('order_service')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
             if ($result) {
                 //进行钱包消费记录
 //                $parts =Db::name("order_service")
