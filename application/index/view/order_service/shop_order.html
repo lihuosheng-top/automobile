@@ -141,8 +141,19 @@
                             function alipayCallback(res){
                                 if(res.resultStatus == '6001'){
                                     location.href = 'order_parts_wait_pay';
+                                }else if(res.resultStatus == '9000'){
+                                    var res = res.result.alipay_trade_app_pay_response;
+                                    $.ajax({
+                                        url: 'notifyurl',
+                                        type: 'POST',
+                                        dataType: 'JSON',
+                                        data: {
+                                            out_trade_no: res.out_trade_no,
+                                            trade_no: res.trade_no,
+                                            trade_status: res.msg
+                                        }
+                                    })
                                 }
-                                
                             }
                         },
                         error: function(){
