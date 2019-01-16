@@ -1789,9 +1789,9 @@ class OrderParts extends Controller{
                             ->order("order_amount","desc")
                             ->select();
                         foreach ($order_all_data as $a =>$b){
-                            if($a =0){
+                            if($a==0){
                                 Db::name("order_parts")->where("id",$b["id"])->update(["order_amount"=>$b["order_amount"]-$b["integral_deductible"]]);
-                            }else if($a>0){
+                            }else if($a > 0){
                                 Db::name("order_parts")->where("id",$b["id"])->update(["integral_deductible"=>null]);
                             }
                         }

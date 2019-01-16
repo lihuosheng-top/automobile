@@ -68,6 +68,8 @@ class OrderService extends Controller{
             $data =Db::name("order_service")
                 ->where("service_order_number",$order_id)
                 ->find();
+            $data["longitude"] =Db::name("store")->where("store_id",$data["store_id"])->value("longitude");
+            $data["latitude"] =Db::name("store")->where("store_id",$data["store_id"])->value("latitude");
             if(!empty($data)){
                 return ajax_success("订单信息返回成功",$data);
             }else{
