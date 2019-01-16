@@ -584,7 +584,6 @@ AMap.plugin([
                 var distArr = [];
                 var dist = 0;
                 if(res.status == 1){
-                    var str = '';
                     $.each(res.data, function(idx, val){
                         var markerLngLat = [parseFloat(val.longitude), parseFloat(val.latitude)];
                         if(userLngLat.length !== 0){
@@ -599,31 +598,56 @@ AMap.plugin([
                     })
                     // 距离排序
                     var sortDistArr = distArr.sort(sortNum);
-                    console.log(sortDistArr)
-                    $.each(sortDistArr, function(idx, val){
-                        $.each(res.data, function(idx, ele){
-                            if(val.id == ele.id){
-                                str += `<li class="hot-item" id="`+ele.id+`">
-                                            <div class="hot-headimg">
-                                                <img src="uploads/`+ele.shop_images+`">
-                                            </div>
-                                            <div class="hotshop-info">
-                                                <p class="hot-name">`+ele.shop_name+`</p>
-                                                <div class="star-time">
-                                                    <i class="spr star1 `+
-                                                    (ele.shop_star > 0 && ele.shop_star < 1 ? '' : 
-                                                    (ele.shop_star >= 1 && ele.shop_star < 2 ? 'star2' :
-                                                    (ele.shop_star >= 2 && ele.shop_star < 3 ? 'star3' : 
-                                                    (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+`"></i>
-                                                    <span>营业时间：`+ele.shop_time+`</span>
-                                                </div>
-                                                <p class="txt-hid-two hotshop-detail">`+ele.shop_address.split(',').join('')+`</p>
-                                            </div>
-                                        </li>`
+                    // console.log(sortDistArr)
+                    (function(sortDistArr, res){
+                        console.log(sortDistArr)
+                        console.log(res)
+                        var curPage = 0;
+                        // 页面滚动到底部 加载新的店铺
+                        $(document).ready(function() {
+                            $(window).scroll(function() {
+                                if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                                    // 滚动底部 页数+1
+                                    ++curPage;
+                                    var len = Math.ceil( sortDistArr.length / 10 );
+                                    if(curPage < len){
+                                        renderPage(sortDistArr, res);
+                                    }
+                                }
+                            });
+                        });
+                        function renderPage(sortDistArr, res){
+                            var str = '';
+                            var len = (sortDistArr.length - curPage * 10) >= 10 ? 10 : sortDistArr.length - curPage * 10;
+                            // 循环距离数组 一次10条
+                            for(var i = 0; i < len; i++){
+                                $.each(res.data, function(idx, ele){
+                                    if(sortDistArr[i + curPage * 10].id == ele.id){
+                                        str += `<li class="hot-item" id="`+ele.id+`">
+                                                    <div class="hot-headimg">
+                                                        <img src="uploads/`+ele.shop_images+`">
+                                                    </div>
+                                                    <div class="hotshop-info">
+                                                        <p class="hot-name">`+ele.shop_name+`</p>
+                                                        <div class="star-time">
+                                                            <i class="spr star1 `+
+                                                            (ele.shop_star > 0 && ele.shop_star < 1 ? '' : 
+                                                            (ele.shop_star >= 1 && ele.shop_star < 2 ? 'star2' :
+                                                            (ele.shop_star >= 2 && ele.shop_star < 3 ? 'star3' : 
+                                                            (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+`"></i>
+                                                            <span>营业时间：`+ele.shop_time+`</span>
+                                                        </div>
+                                                        <p class="txt-hid-two hotshop-detail">`+ele.shop_address.split(',').join('')+`</p>
+                                                    </div>
+                                                </li>`
+                                    }
+                                })
                             }
-                        })
-                    })
-                    $('.hot-ul').html(str);
+                            $('.hot-ul').append(str);
+                        }
+                        renderPage(sortDistArr, res);
+                    })(sortDistArr, res)
+
                     $('.hot-item').click(function(){
                         var id = $(this).attr('id');
                         intoHotShop(id);

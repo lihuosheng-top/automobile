@@ -89,7 +89,6 @@ function showShops(addr){
             (function(sortDisArr, data){
                 console.log(sortDisArr)
                 console.log(data)
-                var $ShopList = $('.shop_list');
                 var curPage = 0;
                 // 页面滚动到底部 加载新的店铺
                 $(document).ready(function() {
