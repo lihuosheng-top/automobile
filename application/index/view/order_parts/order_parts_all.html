@@ -327,29 +327,27 @@
                         },
                         success: function(res){
                             console.log(res);
-                            // alert(res.data);
                             Android.alipay(res.data);
-                            function alipayCallback(res){
-                                if(res.resultStatus == '6001'){
-                                    location.href = 'order_parts_wait_pay';
-                                }else if(res.resultStatus == '9000'){
-                                    var res = res.result.alipay_trade_app_pay_response;
-                                    $.ajax({
-                                        url: 'notifyurl',
-                                        type: 'POST',
-                                        dataType: 'JSON',
-                                        data: {
-                                            out_trade_no: res.out_trade_no,
-                                            trade_no: res.trade_no,
-                                            trade_status: res.msg
-                                        },
-                                        success: function(res){
-                                            location.href = 'order_parts_all';
-                                        }
-                                    })
-                                }
-                            }
-                            
+                            // function alipayCallback(res){
+                            //     if(res.resultStatus == '6001'){
+                            //         location.href = 'order_parts_wait_pay';
+                            //     }else if(res.resultStatus == '9000'){
+                            //         var res = res.result.alipay_trade_app_pay_response;
+                            //         $.ajax({
+                            //             url: 'notifyurl',
+                            //             type: 'GET',
+                            //             dataType: 'JSON',
+                            //             data: {
+                            //                 out_trade_no: res.out_trade_no,
+                            //                 trade_no: res.trade_no,
+                            //                 trade_status: res.msg
+                            //             },
+                            //             success: function(res){
+                            //                 location.href = 'order_parts_all';
+                            //             }
+                            //         })
+                            //     }
+                            // }
                         },
                         error: function(){
                             console.log('error');
@@ -471,5 +469,25 @@
                 console.log('err');
             }
         })
+        function alipayCallback(res){
+            if(res.resultStatus == '6001'){
+                location.href = 'order_parts_wait_pay';
+            }else if(res.resultStatus == '9000'){
+                var res = res.result.alipay_trade_app_pay_response;
+                $.ajax({
+                    url: 'notifyurl',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    data: {
+                        out_trade_no: res.out_trade_no,
+                        trade_no: res.trade_no,
+                        trade_status: res.msg
+                    },
+                    success: function(res){
+                        location.href = 'order_parts_all';
+                    }
+                })
+            }
+        }
     </script>
 </html>
