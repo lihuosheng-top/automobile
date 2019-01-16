@@ -33,7 +33,10 @@ AMap.plugin([
     function onComplete(e){
         console.log(e);
         userLngLat = [e.position.lng, e.position.lat];
-        showShops(e.formattedAddress);
+        if(e.status === 1){
+            $('.shop_list').empty();
+            showShops(e.formattedAddress);
+        }
     };
     function onError(e){
         console.log(e);
@@ -84,22 +87,33 @@ function showShops(addr){
             })
             // 从小到大排序
             var sortDisArr = disArr.sort(sortNum);
-            // console.log(sortDisArr)
-            // renderPage(sortDisArr, data);
             (function(sortDisArr, data){
                 console.log(sortDisArr)
                 console.log(data)
                 var $ShopList = $('.shop_list');
                 var curPage = 0;
+                // 页面滚动到底部 加载新的店铺
+                $(document).ready(function() {
+                    $(window).scroll(function() {
+                        if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                            // 滚动底部 页数+1
+                            ++curPage;
+                            var len = Math.ceil( sortDisArr.length / 10 );
+                            if(curPage < len){
+                                renderPage(sortDisArr, data);
+                            }
+                        }
+                    });
+                });
                 function renderPage(sortDisArr, data){
                     var str = '';
-                    var len = (data.length - curPage * 10) >= 10 ? 10 : data.length - curPage * 10;
+                    var len = (sortDisArr.length - curPage * 10) >= 10 ? 10 : sortDisArr.length - curPage * 10;
                     // 循环距离数组 一次10条
                     for(var i = 0; i < len; i++){
                         $.each(data.data, function(idx, ele){
                             if(ele.serve_name !== undefined){
                                 if(ele.serve_name.longitude !== null && ele.serve_name.latitude !== null){
-                                    if(sortDisArr[i].id == ele.id){
+                                    if(sortDisArr[i + curPage * 10].id == ele.id){
                                         str += '<div>\
                                                     <a href="reservation_detail?store_id='+ele.store_id+'&service_setting_id='+service_setting_id+'" class="shop_box">\
                                                         <div class="addr_info_box">\
@@ -109,7 +123,7 @@ function showShops(addr){
                                                                 <p class="statistic_member">'+ele.service_setting_name+'<span class="member_num">2000</span>人去过</p>\
                                                             </div>\
                                                             <p class="distance_addr_box">\
-                                                                <span class="distance_span">约'+val.dis+'米</span>\
+                                                                <span class="distance_span">约'+sortDisArr[i + curPage * 10].dis+'米</span>\
                                                                 <span class="addr_span">'+ele.serve_name.store_detailed_address+'</span>\
                                                             </p>\
                                                         </div>\
@@ -124,10 +138,10 @@ function showShops(addr){
                             }
                         })
                     }
-                    console.log(str)
-                    $('.shop_list').html('').html(str);
+                    $('.shop_list').append(str);
                 }
                 renderPage(sortDisArr, data);
+
             })(sortDisArr, data)
 
             map.add(markerList);
@@ -142,33 +156,3 @@ function showShops(addr){
 function sortNum(a, b){
     return a.dis - b.dis;
 }
-// $.each(sortDisArr, function(idx, val){
-                        // 循环店铺
-                        // $.each(data.data, function(idx, ele){
-                        //     if(ele.serve_name !== undefined){
-                        //         if(ele.serve_name.longitude !== null && ele.serve_name.latitude !== null){
-                        //             if(ele.id == val.id){
-                        //                 str += '<div>\
-                        //                             <a href="reservation_detail?store_id='+ele.store_id+'&service_setting_id='+service_setting_id+'" class="shop_box">\
-                        //                                 <div class="addr_info_box">\
-                        //                                     <p class="shop_name_p">'+ele.serve_name.store_name+'</p>\
-                        //                                     <div class="comment_box">\
-                        //                                         <i class="spr icon_star"></i>\
-                        //                                         <p class="statistic_member">'+ele.service_setting_name+'<span class="member_num">2000</span>人去过</p>\
-                        //                                     </div>\
-                        //                                     <p class="distance_addr_box">\
-                        //                                         <span class="distance_span">约'+val.dis+'米</span>\
-                        //                                         <span class="addr_span">'+ele.serve_name.store_detailed_address+'</span>\
-                        //                                     </p>\
-                        //                                 </div>\
-                        //                                 <div class="service_type">\
-                        //                                     <p class="service_price">￥'+(ele.service_money !== null ? ele.service_money:'面议')+'</p>\
-                        //                                     <p class="service_text">'+ele.service_setting_name+'</p>\
-                        //                                 </div>\
-                        //                             </a>\
-                        //                         </div>'
-                        //             }
-                        //         }
-                        //     }
-                        // })
-                    // })
