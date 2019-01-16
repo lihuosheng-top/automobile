@@ -58,7 +58,7 @@
 	<h4>（单个商品）</h4> {volist name="year" id="value"}
 	<div class="show">
 		<div style=" " class="text">年限<input type="text" name="year" id="" value="{$value.year}" style="width: 100px;" disabled="disabled" />费用<input type="text" name="money" id="" value="{$value.money}" style="width: 100px;" disabled="disabled" />元 
-			<i class="layui-icon remove_img " data-id="放删除id">&#x1007;</i></div>
+			<i class="layui-icon remove_img " data-id="{$value.id}">&#x1007;</i></div>
 	</div>
 	{/volist}
 	<form action="{:url('admin/Install/putaway')}" method="post">
@@ -99,7 +99,7 @@
 					remove.remove();
 					$.ajax({
 						type: "POST",
-						url: "{:url('')}",
+						url: "{:url('admin/Install/putaway_del')}",
 						data: {
 							"id": id
 						},
