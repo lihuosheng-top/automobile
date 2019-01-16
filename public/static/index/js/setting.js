@@ -360,6 +360,11 @@ $.ajax({
                 location.href = 'my_index';
             }
         })
+        if(res.status == 0){
+            $('.customer-box').find('input').prop('checked', true);
+        }else if(res.status == 1){
+            $('.supplier-box').find('input').prop('checked', true);
+        }
     },
     error: function(){
         console.log('error');

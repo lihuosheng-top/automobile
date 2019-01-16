@@ -343,10 +343,6 @@
     <script src="__STATIC__/index/js/plugin/threecity/js/CNAddrArr.min.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
     <script>
-        // 默认广告
-        if(!getCookie('pcd')){
-            getAdvertisment('广东,深圳,福田区');
-        }
         // 调用安卓方法
         function callAndroid() {
             Android.getLocation();
@@ -357,7 +353,9 @@
             if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
                 callAndroid();
             }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
-                console.log('ios')
+                console.log('ios');
+                // 默认广告
+                getAdvertisment('广东,深圳,福田区');
             }
         })()
         // 接收安卓回调内容
@@ -365,20 +363,20 @@
             // 定位成功
             if(e.errorCode === 0){
                 // 首次定位
-                if(!getCookie('district')){
+                // if(!getCookie('district')){
                     // alert(e.district);
                     var province = e.province;
                     var city = e.city;
                     var district = e.district;
                     threeAdress = province+','+city+','+district;
-                    setCookie('district', e.district, 3650);
-                    setCookie('pcd', threeAdress, 3650);
+                    // setCookie('district', e.district, 3650);
+                    // setCookie('pcd', threeAdress, 3650);
                     document.getElementById('space-input').innerHTML = district;
                     getAdvertisment(threeAdress);
-                }else{
-                    // alert('cookie')
-                    document.getElementById('space-input').innerHTML = getCookie('district');
-                }
+                // }else{
+                //     // alert('cookie')
+                //     document.getElementById('space-input').innerHTML = getCookie('district');
+                // }
             }else{
                 layer.open({
                     skin: 'msg',
@@ -465,21 +463,21 @@
             })
         }
         //设置cookie
-        function setCookie(name, value, day) {
-            var date = new Date();
-            date.setDate(date.getDate() + day);
-            document.cookie = name + '=' + value + ';expires=' + date;
-        };
+        // function setCookie(name, value, day) {
+        //     var date = new Date();
+        //     date.setDate(date.getDate() + day);
+        //     document.cookie = name + '=' + value + ';expires=' + date;
+        // };
         //获取cookie
-        function getCookie(name) {
-            var reg = RegExp(name + '=([^;]+)');
-            var arr = document.cookie.match(reg);
-            if (arr) {
-                return arr[1];
-            } else {
-                return '';
-            }
-        };
+        // function getCookie(name) {
+        //     var reg = RegExp(name + '=([^;]+)');
+        //     var arr = document.cookie.match(reg);
+        //     if (arr) {
+        //         return arr[1];
+        //     } else {
+        //         return '';
+        //     }
+        // };
         $('#search').on('focus', function(){
             location.href = 'goods_list';
         })

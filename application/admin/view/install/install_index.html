@@ -10,41 +10,41 @@
 	body {
 		background: #fff;
 	}
-	
+
 	h2,
 	h4 {
 		text-align: center;
 	}
-	
+
 	th,
 	td {
 		height: 40px;
 		text-align: center;
 		padding: 5px;
 	}
-	
+
 	.layui-form-item {
 		margin: 40px auto;
 	}
-	
+
 	input {
 		width: 40px;
 		margin-left: 10px;
 		margin-right: 10px;
 	}
-	
+
 	div {
 		text-align: center;
 		margin-top: 10px;
 	}
-	
+
 	.text {
 		top: 2px;
 		width: 590px;
 		margin: 20px auto;
 		position: relative;
 	}
-	
+
 	.layui-icon {
 		position: absolute;
 		right: -10px;
@@ -63,7 +63,7 @@
 	<div class="show">
 		<div style=" " class="text">最小金额<input type="text" name="year" id="" value="{$value.min_money}" style="width: 100px;" disabled="disabled" />至最大金额
 			<input disabled="disabled" type="text" name="money" id="" value="{$value.max_money}" style="width: 100px;" />，加价比例<input disabled="disabled" type="text" name="money" id="" value="{$value.ratio}" style="width: 100px;" />%
-			<i class="layui-icon remove_img " data-id="放删除id">&#x1007;</i>
+			<i class="layui-icon remove_img " data-id="{$value.id}">&#x1007;</i>
 		</div>
 	</div>
 	{/volist}
@@ -105,7 +105,7 @@
 					remove.remove();
 					$.ajax({
 						type: "POST",
-						url: "{:url('')}",
+						url: "{:url('admin/Install/goods_ratio_del')}",
 						data: {
 							"id": id
 						},
@@ -129,9 +129,9 @@
 				var remove = $(this).parent();
 				remove.remove();
 			});
-			
+
 		});
-	
+
 
 		})
 	</script>

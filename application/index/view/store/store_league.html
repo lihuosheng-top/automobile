@@ -198,7 +198,7 @@
                 SCS.init({
                     navArr: navArr,
                     onOk: function(selectedKey, selectedValue) {
-                        $input.val(selectedValue).attr("data-key", selectedKey);
+                        $input.val(selectedValue.split(' ').join(',')).attr("data-key", selectedKey);
                     }
                 });
                 var distScroller = new SCS.scrollCascadeSelect({

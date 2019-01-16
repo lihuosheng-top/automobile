@@ -41,6 +41,26 @@ class Install extends Controller{
 
 
     /**
+     * 价格调整删除
+     * 陈绪
+     */
+    public function goods_ratio_del(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $bool = db("goods_ratio")->where("id",$id)->delete();
+            if($bool){
+                return ajax_success("成功");
+            }else{
+                return ajax_error("失败");
+            }
+        }
+
+    }
+
+
+
+    /**
      * 推荐奖励积分设置
      ***** GY *****
      */
@@ -169,6 +189,27 @@ class Install extends Controller{
         return view("putaway_index",["year"=>$year]);
 
     }
+
+
+
+    /**
+     * 上架年限删除
+     * 陈绪
+     */
+    public function putaway_del(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $bool = db("year")->where("id",$id)->delete();
+            if($bool){
+                return ajax_success("成功");
+            }else{
+                return ajax_error("失败");
+            }
+        }
+
+    }
+
 
 
     /**
