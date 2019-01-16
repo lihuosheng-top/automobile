@@ -1,5 +1,4 @@
-
-        <!-- 上架年限设置 -->
+<!-- 上架年限设置 -->
 
 {include file="template/_meta" /}
 <title></title>
@@ -11,84 +10,126 @@
 	body {
 		background: #fff;
 	}
-    h2,h4{
+	
+	h2,
+	h4 {
 		text-align: center;
 	}
-	.layui-form-item{
-		margin: 40px ;
+	
+	.layui-form-item {
+		margin: 40px;
 	}
-			body{
-			background: #fff;
-		}
-		input{
-			width: 40px;
-				margin-left: 10px;
-				margin-right: 10px;
-		}
-		div{
-			text-align: center;
-			margin-top: 10px;
-		}
-		.text{
-				top: 2px;
-			width: 344px;
-			margin: 20px auto;
-			position: relative;
-		}
-		.layui-icon{
-			position: absolute;
-			right: 0;
-			top: -9px;
-		}
+	
+	body {
+		background: #fff;
+	}
+	
+	input {
+		width: 40px;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	
+	div {
+		text-align: center;
+		margin-top: 10px;
+	}
+	
+	.text {
+		top: 2px;
+		width: 344px;
+		margin: 20px auto;
+		position: relative;
+	}
+	
+	.layui-icon {
+		position: absolute;
+		right: 0;
+		top: -9px;
+	}
 </style>
 
- 
-
 {/block}
+
 <body>
 
-{block name="content"}
-<h2 style="padding: 10px;">商品上架付费设置</h2>
-<h4>（单个商品）</h4>
-	  {volist name="year" id="value"}
-	  <div class="show">
-	  	   <div style=" " class="text">年限<input type="text" name="year" id="" value="{$value.year}" style="width: 100px;"/>费用<input type="text" name="money" id="" value="{$value.money}" style="width: 100px;"/>元 <i class="layui-icon remove_img " data-id="">&#x1007;</i></div>
-	  </div>
-	 {/volist}
-	 <form action="{:url('admin/Install/putaway')}" method="post">
-	   <div class="content">
-	 </div>
-	   <div class="bts" style="text-align: center;margin-top: 20px;">
-	   <button type="button" class="add-bts" style="background: #FFF; width: 100px; color: #0099FF; border:solid 1px #0099FF;border-radius:4px ;">+添加</button>
-         </div>
-		 <div style="margin-top: 30px; text-align: center;">
-		 	<button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
-		 	<button class="layui-btn" type="submit" id="submits"  style="margin-left: 190px;">保存</button>	
-		 	</div>
-      </form>
-{/block}
+	{block name="content"}
+	<h2 style="padding: 10px;">商品上架付费设置</h2>
+	<h4>（单个商品）</h4> {volist name="year" id="value"}
+	<div class="show">
+		<div style=" " class="text">年限<input type="text" name="year" id="" value="{$value.year}" style="width: 100px;" disabled="disabled" />费用<input type="text" name="money" id="" value="{$value.money}" style="width: 100px;" disabled="disabled" />元 
+			<i class="layui-icon remove_img " data-id="{$value.id}">&#x1007;</i></div>
+	</div>
+	{/volist}
+	<form action="{:url('admin/Install/putaway')}" method="post">
+		<div class="content">
+		</div>
+		<div class="bts" style="text-align: center;margin-top: 20px;">
+			<button type="button" class="add-bts" style="background: #FFF; width: 100px; color: #0099FF; border:solid 1px #0099FF;border-radius:4px ;">+添加</button>
+		</div>
+		<div style="margin-top: 30px; text-align: center;">
+			<button type="button" class="layui-btn  layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
+			<button class="layui-btn" type="submit" id="submits" style="margin-left: 190px;">保存</button>
+		</div>
+	</form>
+	{/block}
 
-<!--_footer 作为公共模版分离出去-->
-{include file="template/_footer" /}
-<!--/_footer 作为公共模版分离出去-->
+	<!--_footer 作为公共模版分离出去-->
+	{include file="template/_footer" /}
+	<!--/_footer 作为公共模版分离出去-->
 
-
-
-<!--请在下方写此页面业务相关的脚本-->
-{block name="bottom"}
-<script type="text/javascript">
-		 	$(".add-bts").click(function(){
-				var dhtml="";
-				dhtml+='<div style=" " class="text">年限<input type="text" name="year[]" id="" value="" style="width: 100px;"/>费用<input type="text" name="money[]" id="" value="" style="width: 100px;"/>元 <i class="layui-icon remove-img">&#x1007;</i></div></div>';
+	<!--请在下方写此页面业务相关的脚本-->
+	{block name="bottom"}
+	<script type="text/javascript">
+		layui.config({
+			base: "js/"
+		}).use(['form', 'layer', 'jquery', 'laypage'], function() {
+			var form = layui.form(),
+				layer = parent.layer === undefined ? layui.layer : parent.layer,
+				laypage = layui.laypage,
+				$ = layui.jquery;
+			//				点击删除图标事件
+			$(".remove_img").click(function() {
+				var id = $(this).data("id");
+				var remove = $(this).parent();
+				layer.confirm('你确认要删除吗？', {
+					btn: ['确认', '取消'] //按钮
+				}, function(index) {
+					layer.close(index);
+					remove.remove();
+					$.ajax({
+						type: "POST",
+						url: "{:url('admin/Install/putaway_del')}",
+						data: {
+							"id": id
+						},
+						async: false,
+						success: function(data) {
+							//删除公共之后需要隐藏
+							console.log(data)
+						},
+						error: function(data) {
+							console.log("失败")
+						}
+					});
+				});
+			});
+			$(".add-bts").click(function() {
+				var dhtml = "";
+				dhtml += '<div style=" " class="text">年限<input type="text" name="year[]" id="" value="" style="width: 100px;"/>费用<input type="text" name="money[]" id="" value="" style="width: 100px;"/>元 <i class="layui-icon remove-img">&#x1007;</i></div></div>';
 				$(".content").append(dhtml);
-				$(".content ").on('click','.layui-icon',function(){
+				$(".content ").on('click', '.layui-icon', function() {
 					// console.log(this)
-					var remove=$(this).parent();
+					var remove = $(this).parent();
 					remove.remove();
 				});
 			});
-		 </script>
-{/block}
+
+		})
+	</script>
+
+	{/block}
 
 </body>
+
 </html>

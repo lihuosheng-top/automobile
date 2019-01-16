@@ -81,11 +81,15 @@ class Reservation extends Controller{
                     $car_series = db("car_series")->where("brand",$v_1["brand"])->where("series",$v_1["series"])->field("vehicle_model")->find();
                     $serve_goods[] = db("serve_goods")->where("vehicle_model",$car_series["vehicle_model"])->where("service_setting_id",$service_setting_id)->find();
                 }
-                foreach ($serve_goods as $key=>$value){
-                    if($value == null) {
-                        unset($serve_goods[$key]);
+                foreach ($serve_goods as $k_1=>$v_1){
+                    if($v_1 == null) {
+                        unset($serve_goods[$k_1]);
                     }
-                        $where = "`operation_status` = '1' and `store_is_button` = '1' and `del_status` = '1'";
+                }
+                //数组去重
+                $serve_goods = unique_arr($serve_goods);
+                foreach ($serve_goods as $key=>$value){
+                   $where = "`operation_status` = '1' and `store_is_button` = '1' and `del_status` = '1'";
                         $address = db("store")->where($where)->order("store_order_num")->select();
                         foreach ($address as $val) {
                             if ($val["store_id"] == $value["store_id"]) {
@@ -94,6 +98,7 @@ class Reservation extends Controller{
                             }
                         }
                 }
+
                 if ($serve_goods) {
                     return ajax_success("获取成功", $serve_goods);
                 } else {
@@ -101,6 +106,18 @@ class Reservation extends Controller{
                 }
             }
 
+        }
+        $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
+        $user_car = db("user_car")->where("status",1)->select();
+        $serve_goods = [];
+        foreach ($user_car as $k_1=>$v_1){
+            $car_series = db("car_series")->where("brand",$v_1["brand"])->where("series",$v_1["series"])->field("vehicle_model")->find();
+            $serve_goods[] = db("serve_goods")->where("vehicle_model",$car_series["vehicle_model"])->where("service_setting_id",$service_setting_id)->find();
+        }
+        foreach ($serve_goods as $k_1=>$v_1){
+            if($v_1 == null) {
+                unset($serve_goods[$k_1]);
+            }
         }
 
         return view("reservation");

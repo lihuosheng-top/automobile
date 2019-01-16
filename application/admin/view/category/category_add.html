@@ -51,14 +51,17 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
+			
 			<label class="layui-form-label">父级分类</label>
 			<div class="layui-input-block">
 				{if !empty($goods_list)}
 				<select name="pid" id="admin_role" class="role_list">
-					<option value="0">顶级</option>
-					{volist name="goods_list" id="value"}
-					<option value="{$value.id}">{$value.name}</option>
-					{/volist}
+					<option value="0" class="aaa">顶级</option>
+					
+					 {foreach name="goods_list" item="value" key="abc"}
+					<option value="{$value.id}" class="aaa_{$abc}">{$value.name}</option>
+					{/foreach}
+			
 				</select><br/>
 				{else /}
 				<select name="pid" class="role_list">
@@ -126,6 +129,21 @@
 			form.render();
 			//创建一个编辑器
 			//var editIndex = layedit.build('LAY_demo_editor');
+			  for(var i=0;i<$("option").length;i++){
+			     var Cts = $("option")[i].innerHTML;
+//			     
+			     if(Cts.indexOf("&nbsp;")==0)
+				{
+					
+				
+				}
+				else{
+//					console.log("."+$("option")[i].className)
+				   $("."+$("option")[i].className).attr('disabled','disabled');
+				}
+			  }
+			  form.render();
+          
 
 		});
 
