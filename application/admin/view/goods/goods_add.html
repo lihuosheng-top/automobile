@@ -305,10 +305,10 @@
 			<label class="layui-form-label">商品分组：</label>
 			<div class="layui-input-inline" style="margin-left: 30px;">
 				<select name="goods_type_id" id="goods_type_id" lay-filter="goods_type_id">
-					<option value="请选择" check>请选择</option>
-					{volist name="goods_list" id="value"}
-					<option value="{$value.id}">{$value.name}</option>
-					{/volist}
+					<option value="请选择" check class="aaa">请选择</option>
+					 {foreach name="goods_list" item="value" key="abc"}
+					<option value="{$value.id}" class="aaa_{$abc}">{$value.name}</option>
+					{/foreach}
 				</select>
 			</div>
 			<div class="layui-input-inline">
@@ -644,6 +644,24 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 			layedit.build('demo');
+			 for(var i=0;i<$("#goods_type_id option").length;i++){
+			     var Cts = $("option")[i].innerHTML;
+//			     
+			     if(Cts.indexOf("&nbsp;")==0)
+				{
+					
+				
+				}
+				else{
+					if($("option")[i].className!="aaa"){
+						$("."+$("option")[i].className).attr('disabled','disabled');
+					}
+				
+//					console.log("."+$("option")[i].className)
+				   
+				}
+			  }
+			  form.render();
 			// TODO商品规格变化
 			form.on('radio(guige)', function(data) {
 				var checkval = data.value;
@@ -1176,6 +1194,7 @@
                 }
 
             });
+          
 			// end商品规格变化
 			// TODO获取车牌Ajax
 			$.ajax({
