@@ -246,7 +246,7 @@
                                     var res = res.result.alipay_trade_app_pay_response;
                                     $.ajax({
                                         url: 'notifyurl',
-                                        type: 'POST',
+                                        type: 'GET',
                                         dataType: 'JSON',
                                         data: {
                                             out_trade_no: res.out_trade_no,

@@ -418,13 +418,14 @@
                                         console.log(res);
                                         Android.alipay(res.data);
                                         function alipayCallback(res){
+                                            alert(typeof res.resultStatus, res.resultStatus);
                                             if(res.resultStatus == '6001'){
                                                 location.href = 'order_parts_wait_pay';
                                             }else if(res.resultStatus == '9000'){
                                                 var res = res.result.alipay_trade_app_pay_response;
                                                 $.ajax({
                                                     url: 'notifyurl',
-                                                    type: 'POST',
+                                                    type: 'GET',
                                                     dataType: 'JSON',
                                                     data: {
                                                         out_trade_no: res.out_trade_no,
@@ -563,7 +564,7 @@
                                                     var res = res.result.alipay_trade_app_pay_response;
                                                     $.ajax({
                                                         url: 'notifyurl',
-                                                        type: 'POST',
+                                                        type: 'GET',
                                                         dataType: 'JSON',
                                                         data: {
                                                             out_trade_no: res.out_trade_no,
@@ -648,7 +649,7 @@
                                                     var res = res.result.alipay_trade_app_pay_response;
                                                     $.ajax({
                                                         url: 'notifyurl',
-                                                        type: 'POST',
+                                                        type: 'GET',
                                                         dataType: 'JSON',
                                                         data: {
                                                             out_trade_no: res.out_trade_no,
