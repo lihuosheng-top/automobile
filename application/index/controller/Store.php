@@ -306,7 +306,6 @@ class Store extends Controller{
                         $ords[] =intval($vl["statistical_quantity"]);
                     }
                     array_multisort($ords,SORT_ASC,$goods_data);
-                    return ajax_success("获取成功", $goods_data);
                     return ajax_success("获取成功",$goods_data);
                 }else{
                     return ajax_error("获取失败");
@@ -351,7 +350,6 @@ class Store extends Controller{
                     }
                     array_multisort($ords,SORT_ASC,$goods_data);
                     return ajax_success("获取成功", $goods_data);
-                    return ajax_success("获取成功",$goods_data);
                 }else{
                     return ajax_error("获取失败");
                 }

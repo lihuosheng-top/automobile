@@ -29,7 +29,7 @@ class Apppay extends Controller
         $trade_no = input('trade_no');
         //交易状态
         $trade_status = input('trade_status');
-        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
+        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="SUCCESS") {
             $data['status'] = 2;
             $condition['parts_order_number'] = $out_trade_no;
             $select_data = Db::name('order_parts')->where("parts_order_number",$condition)->select();
@@ -273,10 +273,9 @@ class Apppay extends Controller
         $trade_no = input('trade_no');
         //交易状态
         $trade_status = input('trade_status');
-        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
+        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="SUCCESS") {
             $data['status'] = 2;//状态值
             $data['trade_no'] = $trade_no;//支付宝交易号
-
             $condition['service_order_number'] = $out_trade_no;
             $select_data = Db::name('order_service')->where("service_order_number",$condition)->select();
             foreach ($select_data as $key => $val) {
@@ -284,7 +283,6 @@ class Apppay extends Controller
             }
             if ($result) {
                 //进行钱包消费记录
-
                 return ajax_success('支付成功', ['status' => 1]);
             } else {
                 return ajax_error('验证失败了', ['status' => 0]);
