@@ -162,7 +162,7 @@
                     // 到店时间
                     $('.service-time span').text(val.got_to_time);
                     // 打电话
-                    $('.call-phone a').prop('href', 'tel:'+val.car_owner_phone_number);
+                    $('.call-phone a').prop('href', 'javascript:call("'+val.car_owner_phone_number+'");');
                     // 服务项目名称
                     $('.service-item-name').text(val.service_goods_name);
                     // 服务项目价格 服务总价值服务总价值  积分抵扣 实付款

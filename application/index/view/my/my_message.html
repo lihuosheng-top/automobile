@@ -116,19 +116,11 @@
                 data: formData,
                 success: function(res){
                     console.log(res);
-                    if(res.status == 1){
-                        layer.open({
-                            skin: 'msg',
-                            content: res.info,
-                            time: 1
-                        })
-                    }else{
-                        layer.open({
-                            skin: 'msg',
-                            content: res.info,
-                            time: 1
-                        })
-                    }
+                    layer.open({
+                        skin: 'msg',
+                        content: '更新成功',
+                        time: 1
+                    })
                 },
                 error: function(){
                     console.log('error');
@@ -180,21 +172,13 @@
                 },
                 success: function(res){
                     console.log(res);
-                    if(res.status == 1){
-                        layer.open({
-                            skin: 'msg',
-                            content: res.info,
-                            time: 1
-                        })
-                        $('.mask').hide();
-                        $('.sex-pop').animate({'bottom': '-100%'});
-                    }else{
-                        layer.open({
-                            skin: 'msg',
-                            content: res.info,
-                            time: 1
-                        })
-                    }
+                    layer.open({
+                        skin: 'msg',
+                        content: '更新成功',
+                        time: 1
+                    })
+                    $('.mask').hide();
+                    $('.sex-pop').animate({'bottom': '-100%'});
                 },
                 error: function(){
                     console.log('error');

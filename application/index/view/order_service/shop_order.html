@@ -138,6 +138,12 @@
                         success: function(res){
                             console.log(res);
                             Android.alipay(res.data);
+                            function alipayCallback(res){
+                                if(res.resultStatus == '6001'){
+                                    location.href = 'order_parts_wait_pay';
+                                }
+                                
+                            }
                         },
                         error: function(){
                             console.log('error');
