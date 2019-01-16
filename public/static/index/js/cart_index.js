@@ -135,25 +135,27 @@ $('.settle_button').click(function(){
     $.each($('.goods-circle.circle-on'), function(idx, val){
         number.push($(val).siblings().find('.calculator_val').val());
     })
-    $.ajax({
-        url: 'save_shopping_id',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'id': id,
-            'goods_unit': number,
-            'money': totalMoney
-        },
-        success: function(res){
-            console.log(res);
-            if(res.status == 1){
-                location.href = 'ios_api_order_parts_firm_order';
+    if(id.length !== 0){
+        $.ajax({
+            url: 'save_shopping_id',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'id': id,
+                'goods_unit': number,
+                'money': totalMoney
+            },
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    location.href = 'ios_api_order_parts_firm_order';
+                }
+            },
+            error: function(){
+                console.log('error');
             }
-        },
-        error: function(){
-            console.log('error');
-        }
-    }) 
+        }) 
+    }
 })
 $('.del-btn').click(function(){
     var id = [];
