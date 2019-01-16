@@ -193,6 +193,7 @@ html{
 .fill-detail-info li input{
     outline: none;
     height: 78%;
+    font-size: .34rem;
 }
 .fill-detail-info li:last-of-type{
     border: 0;
@@ -251,12 +252,12 @@ html{
     color: #c5c6c7;
 }
 .save-btn{
-    /* display: block; */
-    /* margin: 0 auto; */
-    position: fixed;
-    bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
+    /* position: fixed; */
+    /* bottom: 1rem; */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+    display: block;
+    margin: 0 auto;
     width: 6rem;
     height: .8rem;
     border-radius: .1rem;
