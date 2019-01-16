@@ -20,59 +20,118 @@ class Cart extends Controller
     public function cart_index(Request $request)
     {
         if($request->isPost()){
+            //商家（专用通用都能看）
+            $is_boss =Session::get("role_name_store_id");
             $user_id = Session::get("user");
-            if(empty($user_id)){
-                exit(json_encode(array("status" => 2, "info" => "请登录")));
-            }
-            $shopping_data = db("shopping")->where("user_id",$user_id)->select();
-            if(!empty($shopping_data)){
+            if(!empty($is_boss)){
+                if(empty($user_id)){
+                    exit(json_encode(array("status" => 2, "info" => "请登录")));
+                }
+                $shopping_data = db("shopping")->where("user_id",$user_id)->select();
+                if(!empty($shopping_data)){
                     foreach ($shopping_data as $key=>$val){
                         $store_all_id[] =$val["store_id"];
                     }
-                $da_store_id = array_unique($store_all_id); //去重之后的商户
-                //购物车信息
-                foreach ($da_store_id as $keys=>$vals){
+                    $da_store_id = array_unique($store_all_id); //去重之后的商户
+                    //购物车信息
+                    foreach ($da_store_id as $keys=>$vals){
 //                    $da_store_ids[] =$vals; //去重之后的id数组
-                    $shopping_datas[] =Db::table('tb_shopping')
-                        ->field("tb_shopping.*,tb_special.name special_name,tb_special.goods_adjusted_price goods_prices")
-                        ->join("tb_special","tb_shopping.goods_standard_id=tb_special.id",'left')
-                        ->where('store_id', $vals)
-                        ->where('user_id',  $user_id)
-                        ->select();
-                }
-                //店铺id和店铺名称
-                if(!empty($shopping_datas)){
-                    foreach ($shopping_datas as $k=>$v){
-                        $shopping_informations[$k]["info"] =$v;
+                        $shopping_datas[] =Db::table('tb_shopping')
+                            ->field("tb_shopping.*,tb_special.name special_name,tb_special.goods_adjusted_price goods_prices")
+                            ->join("tb_special","tb_shopping.goods_standard_id=tb_special.id",'left')
+                            ->where('store_id', $vals)
+                            ->where('user_id',  $user_id)
+                            ->select();
+                    }
+                    //店铺id和店铺名称
+                    if(!empty($shopping_datas)){
+                        foreach ($shopping_datas as $k=>$v){
+                            $shopping_informations[$k]["info"] =$v;
                             foreach ($v as  $ks=>$vs){
                                 $store_ids[$k] =$vs["store_id"];
                                 $store_names[$k] =$vs["store_name"];
                             }
-                    }
-                }
-                if(!empty($store_ids) && (!empty($store_names))){
-                    //店铺id
-                    foreach ($store_ids as $i => $j) {
-                        if(!empty($j)){
-                            $shopping_informations[$i]["store_id"] =$j;
                         }
                     }
-                    //店铺名称
-                    foreach ($store_names as $i => $j) {
-                        if(!empty($j)){
-                            $shopping_informations[$i]["store_name"] =$j;
+                    if(!empty($store_ids) && (!empty($store_names))){
+                        //店铺id
+                        foreach ($store_ids as $i => $j) {
+                            if(!empty($j)){
+                                $shopping_informations[$i]["store_id"] =$j;
+                            }
+                        }
+                        //店铺名称
+                        foreach ($store_names as $i => $j) {
+                            if(!empty($j)){
+                                $shopping_informations[$i]["store_name"] =$j;
+                            }
                         }
                     }
-                }
-                if(!empty($shopping_informations)){
-                    exit(json_encode(array("status" => 1, "info" => "购物车数据返回成功","data"=>$shopping_informations)));
+                    if(!empty($shopping_informations)){
+                        exit(json_encode(array("status" => 1, "info" => "购物车数据返回成功","data"=>$shopping_informations)));
+                    }else{
+                        exit(json_encode(array("status" => 0, "info" => "购物车未添加商品")));
+                    }
+
                 }else{
                     exit(json_encode(array("status" => 0, "info" => "购物车未添加商品")));
                 }
-
             }else{
-                exit(json_encode(array("status" => 0, "info" => "购物车未添加商品")));
+                if(empty($user_id)){
+                    exit(json_encode(array("status" => 2, "info" => "请登录")));
+                }
+                $shopping_data = db("shopping")->where("goods_type","通用")->where("user_id",$user_id)->select();
+                if(!empty($shopping_data)){
+                    foreach ($shopping_data as $key=>$val){
+                        $store_all_id[] =$val["store_id"];
+                    }
+                    $da_store_id = array_unique($store_all_id); //去重之后的商户
+                    //购物车信息
+                    foreach ($da_store_id as $keys=>$vals){
+//                    $da_store_ids[] =$vals; //去重之后的id数组
+                        $shopping_datas[] =Db::table('tb_shopping')
+                            ->field("tb_shopping.*,tb_special.name special_name,tb_special.goods_adjusted_price goods_prices")
+                            ->join("tb_special","tb_shopping.goods_standard_id=tb_special.id",'left')
+                            ->where('store_id', $vals)
+                            ->where("tb_shopping.goods_type","通用")
+                            ->where('user_id',  $user_id)
+                            ->select();
+                    }
+                    //店铺id和店铺名称
+                    if(!empty($shopping_datas)){
+                        foreach ($shopping_datas as $k=>$v){
+                            $shopping_informations[$k]["info"] =$v;
+                            foreach ($v as  $ks=>$vs){
+                                $store_ids[$k] =$vs["store_id"];
+                                $store_names[$k] =$vs["store_name"];
+                            }
+                        }
+                    }
+                    if(!empty($store_ids) && (!empty($store_names))){
+                        //店铺id
+                        foreach ($store_ids as $i => $j) {
+                            if(!empty($j)){
+                                $shopping_informations[$i]["store_id"] =$j;
+                            }
+                        }
+                        //店铺名称
+                        foreach ($store_names as $i => $j) {
+                            if(!empty($j)){
+                                $shopping_informations[$i]["store_name"] =$j;
+                            }
+                        }
+                    }
+                    if(!empty($shopping_informations)){
+                        exit(json_encode(array("status" => 1, "info" => "购物车数据返回成功","data"=>$shopping_informations)));
+                    }else{
+                        exit(json_encode(array("status" => 0, "info" => "购物车未添加商品")));
+                    }
+
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "购物车未添加商品")));
+                }
             }
+
         }
         return view("cart_index");
     }
@@ -152,6 +211,7 @@ class Cart extends Controller
                 $data['goods_standard_id'] =$goods_standard_id;
                 $data["special_name"] =$goods_end_money["name"];
                 $data['goods_delivery'] =$goods_delivery;
+                $data['goods_type'] =$goods["goods_standard"]; //专用通用
                 $bool = db("shopping")->insert($data);
                  exit(json_encode(array("status" => 1, "info" => "加入购物车成功" ,"data"=>$bool)));
             }
