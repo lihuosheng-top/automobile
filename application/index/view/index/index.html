@@ -343,10 +343,6 @@
     <script src="__STATIC__/index/js/plugin/threecity/js/CNAddrArr.min.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
     <script>
-        // 默认广告
-        // if(!getCookie('pcd')){
-        getAdvertisment('广东,深圳,福田区');
-        // }
         // 调用安卓方法
         function callAndroid() {
             Android.getLocation();
@@ -358,6 +354,8 @@
                 callAndroid();
             }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
                 console.log('ios');
+                // 默认广告
+                getAdvertisment('广东,深圳,福田区');
             }
         })()
         // 接收安卓回调内容
