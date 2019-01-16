@@ -34,7 +34,30 @@ $(".UCleft-fixed").children("dl").on("click","dt",function(){
   });
 
     
-    
+     //  图片上传限制
+        function imglimit(a){
+        
+        	var img=a.parent().parent().parent().parent().parent().siblings(".imgcontent").children("span").length;
+        	 var max_list=a.data("id")-img;
+
+        	 a.data('id',max_list);
+            console.log(a.data("id"));
+        }
+       
+       setTimeout(
+       	function(){ 
+       		for(var i=0;i<$(".file").length;i++){
+        		imglimit($("#"+$(".file")[i].id));
+        } }, 
+       	1000);
+        
+       $(".file").change(function(){
+       	if($(this).data("id")==0){
+       		alert("请删除商品后再进行上传操作");
+       		return false;
+       	}
+       })
+        //  图片上传限制 
 	
 
 });

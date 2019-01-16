@@ -131,7 +131,6 @@ class Cart extends Controller
                     exit(json_encode(array("status" => 0, "info" => "购物车未添加商品")));
                 }
             }
-
         }
         return view("cart_index");
     }
