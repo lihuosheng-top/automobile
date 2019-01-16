@@ -89,7 +89,7 @@ function showShops(addr){
                 $.each(data.data, function(idx, ele){
                     if(ele.serve_name !== undefined){
                         if(ele.serve_name.longitude !== null && ele.serve_name.latitude !== null){
-                            if(ele.id == val.id){
+                            if(ele.id == val.id && val.dis <= 100000){
                                 str += '<div>\
                                             <a href="reservation_detail?store_id='+ele.store_id+'&service_setting_id='+service_setting_id+'" class="shop_box">\
                                                 <div class="addr_info_box">\
@@ -127,4 +127,4 @@ function showShops(addr){
 function sortNum(a, b){
     return a.dis - b.dis;
 }
-// console.log(arr.sort(sortNum));
+
