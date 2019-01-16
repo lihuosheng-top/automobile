@@ -8,7 +8,6 @@ var userLngLat = [];//用户定位
 
 var map = new AMap.Map('container', {
     zoom: 12, //级别
-    // center: [114.07, 22.62]
 });
 AMap.plugin([
     'AMap.Scale',

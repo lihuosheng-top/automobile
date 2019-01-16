@@ -337,7 +337,7 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/jquery.charfirst.pinyin.js"></script>
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
-    <!-- <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script>  -->
+    <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/plugin/threecity/js/jquery.scs.min.js"></script>
     <script src="__STATIC__/index/js/plugin/threecity/js/CNAddrArr.min.js"></script>
@@ -362,21 +362,12 @@
         function getAndroid(e) {
             // 定位成功
             if(e.errorCode === 0){
-                // 首次定位
-                // if(!getCookie('district')){
-                    // alert(e.district);
-                    var province = e.province;
-                    var city = e.city;
-                    var district = e.district;
-                    threeAdress = province+','+city+','+district;
-                    // setCookie('district', e.district, 3650);
-                    // setCookie('pcd', threeAdress, 3650);
-                    document.getElementById('space-input').innerHTML = district;
-                    getAdvertisment(threeAdress);
-                // }else{
-                //     // alert('cookie')
-                //     document.getElementById('space-input').innerHTML = getCookie('district');
-                // }
+                var province = e.province;
+                var city = e.city;
+                var district = e.district;
+                threeAdress = province+','+city+','+district;
+                document.getElementById('space-input').innerHTML = district;
+                getAdvertisment(threeAdress);
             }else{
                 layer.open({
                     skin: 'msg',
