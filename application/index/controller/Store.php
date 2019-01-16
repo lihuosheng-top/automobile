@@ -159,6 +159,8 @@ class Store extends Controller{
     public function store_index_search(Request $request){
         if($request->isPost()){
             $is_boss =Session::get("role_name_store_id");
+            $goods_name =$request->only(["goods_name"])["goods_name"];
+            $condition = " `goods_name` like '%{$goods_name}%'";
             /**
              * 这是商家的
              */
@@ -166,6 +168,7 @@ class Store extends Controller{
                 $store_id = $request->only(["id"])["id"];
                 $goods_data = [];
                 $goods = db("goods")
+                    ->where($condition)
                     ->where("store_id",$store_id)
                     ->select();
                 foreach ($goods as $kye=>$value){
@@ -203,6 +206,7 @@ class Store extends Controller{
                 $store_id = $request->only(["id"])["id"];
                 $goods_data = [];
                 $goods = db("goods")
+                    ->where($condition)
                     ->where("goods_standard","通用")
                     ->where("store_id",$store_id)
                     ->select();
