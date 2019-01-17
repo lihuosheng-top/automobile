@@ -179,7 +179,7 @@ class OrderService extends Controller{
                         ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->where('user_id',$member_id['id'])
                         ->where($condition)
-                        ->order('create_time','desc')
+                        ->order('pay_time','desc')
                         ->select();
                     if(!empty($data)){
                         return ajax_success('全部信息返回成功',$data);
@@ -433,7 +433,8 @@ class OrderService extends Controller{
                                 "time"=>$data["time"],   //预约到店时间
                                 "integral_info"=> $integral_discount, //积分抵扣
                                 "user_info"=> $user_info,//用户信息
-                                "car_series"=>$car_series,//车信息
+//                                "car_series"=>$car_series,//车信息
+                                "car_series"=>$user_car,//车信息
                                 "user_love_info"=>$user_love_info, //爱车信息（默认）
                             ];
                             if($serve_data){
