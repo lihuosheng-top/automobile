@@ -621,13 +621,6 @@ class Apppay extends Controller
                     ->find();
                 $title ="余额充值";
                 $money =$parts["recharge_money"];//金额
-//                $old_wallet =Db::name("user")
-//                    ->where("id",$parts["user_id"])
-//                    ->value("user_wallet"); //旧的余额
-//                $new_wallet =Db::name("user")
-//                    ->where("id",$parts["user_id"])
-//                    ->update(["user_wallet" =>$old_wallet+$money]); //新增加的余额
-
                 $recharge_record_data = Db::name("recharge_record")
                     ->where("recharge_order_number",$out_trade_no)
                     ->find();
@@ -643,7 +636,7 @@ class Apppay extends Controller
                     $recharge_data =[
                         "user_id" =>$parts["user_id"],//用户id
                         "operation_time"=>date("Y-m-d H:i:s"),//操作时间
-                        "operation_type"=>-1,//充值为1，提现为负一
+                        "operation_type"=>1,//充值为1，提现为负一
                         "pay_type_content"=>$recharge_record_data["pay_type_name"],//支付方式
                         "money_status"=>2 , //到款状态（1到账，2未到款）
                         "img_url"=>"index/image/alipay.png", //对应的图片链接
