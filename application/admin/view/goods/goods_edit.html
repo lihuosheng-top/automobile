@@ -1023,30 +1023,33 @@
 				formData.append("id", id);
 				formData.append("file", filess);
 				$.ajax({
-					type: "POST",
-					url: "{:url('admin/Goods/addphoto')}",
-					processData: false,
-					contentType: false,
-					data: formData,
-					success: function(data) {
-						$.ajax({
 							type: "POST",
 							url: "{:url('admin/Goods/photos')}",
 							data: {
 								"id": id,
 							},
 							success: function(data) {
-								layer.msg("修改成功");
+								$.ajax({
+										type: "POST",
+										url: "{:url('admin/Goods/addphoto')}",
+										processData: false,
+										contentType: false,
+										data: formData,
+										success: function(data) {
+											layer.msg("修改成功");
+										},
+										error: function(data) {
+											console.log("失败")
+										}
+									});
+								
 							},
 							error: function(data) {
 								console.log("失败")
 							}
 						});
-					},
-					error: function(data) {
-						console.log("失败")
-					}
-				});
+					
+			
 			});
 
 			// TODO限制分组和品牌
