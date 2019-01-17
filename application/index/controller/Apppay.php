@@ -664,8 +664,8 @@ class Apppay extends Controller
                     ->value("user_wallet");
                 $datas=[
                     "user_id"=>$parts["user_id"],//用户ID
-                    "wallet_operation"=> -$money,//消费金额
-                    "wallet_type"=>-1,//消费操作(1入，-1出)
+                    "wallet_operation"=> $money,//消费金额
+                    "wallet_type"=>1,//消费操作(1入，-1出)
                     "operation_time"=>date("Y-m-d H:i:s"),//操作时间
                     "wallet_remarks"=>"订单号：".$out_trade_no."，支付宝消费，支出".$money."元",//消费备注
                     "wallet_img"=>"index/image/alipay.png",//图标
