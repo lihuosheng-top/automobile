@@ -117,7 +117,7 @@
                         str += `<li class="`+(idx%2!=0? 'mgr0':'')+`">
                                     <a href="goods_detail?id=`+val.id+`&preId=`+val.goods_brand_id+`&preStoreId=`+store_id+`">
                                         <div class="img_div">
-                                            <img src="uploads/`+val.goods_show_images+`">
+                                            <img src="uploads/`+val.special[0].images+`">
                                         </div>
                                         <div class="goods_name">
                                             <p class="txt-hid-two">`+val.goods_name+`</p>

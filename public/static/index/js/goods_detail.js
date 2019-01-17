@@ -710,7 +710,7 @@ $(function(){
                 res.data.forEach(function(val, idx){
                     str += `<li class="`+(idx % 2 !== 0?'mgr0':'')+`" data-storeId="`+val.store_id+`">
                                 <div class="img_div">
-                                    <img src="uploads/`+val.goods_show_images+`">
+                                    <img src="uploads/`+val.special_info[0].images+`">
                                 </div>
                                 <div class="goods_name">
                                     <p class="txt-hid-two">`+val.goods_name+`</p>

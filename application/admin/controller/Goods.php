@@ -37,14 +37,12 @@ class Goods extends Controller
             $goods = db("goods")->order("id desc")->select();
 
             foreach ($goods as $key => $value) {
-                //$goods[$key]["max_price"] = db("special")->where("goods_id", $value['id'])->max("price");//最高价格
-                //$goods[$key]["min_price"] = db("special")->where("goods_id", $value['id'])->min("price");//最低价格
+                $goods[$key]["max_price"] = db("special")->where("goods_id", $value['id'])->max("price");//最高价格
+                $goods[$key]["min_price"] = db("special")->where("goods_id", $value['id'])->min("price");//最低价格
                 $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $value['id'])->value("stock");//库存
-                //$goods[$key]["max_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->max("goods_adjusted_price");//最高价格
-                //$goods[$key]["min_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->min("goods_adjusted_price");//最低价格
+                $goods[$key]["max_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->max("goods_adjusted_price");//最高价格
+                $goods[$key]["min_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->min("goods_adjusted_price");//最低价格
             }
-            echo 1;
-            exit();
             //调整规格后的价格显示
             $adjusted_price = db("special")->field("price,id")->select();
             foreach ($adjusted_price as $kw => $vl) {

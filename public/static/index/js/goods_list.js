@@ -44,27 +44,10 @@ function layDataAjax(url, brandid){
             console.log(res);
             var str = '';
             $.each(res.data, function(idx, val){
-                if(idx % 2 == 0){
-                    str += '<li>\
-                                <a href="goods_detail?id='+val.id+'&preid='+brandid+'">\
-                                    <div class="img_div">\
-                                        <img src="uploads/'+val.goods_show_images+'">\
-                                    </div>\
-                                    <div class="goods_name">\
-                                        <p class="txt-hid-two">'+val.goods_name+'</p>\
-                                    </div>\
-                                    <div class="goods_price">\
-                                        <span class="price">￥'+val.special[0].goods_adjusted_price+'</span>\
-                                        <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
-                                    </div>\
-                                </a>\
-                            </li>'
-                    return;
-                }
-                str += '<li class="mgr0">\
+                str += '<li class="'+(idx % 2 == 0?'':'mgr0')+'">\
                             <a href="goods_detail?id='+val.id+'&preid='+brandid+'">\
                                 <div class="img_div">\
-                                    <img src="uploads/'+val.goods_show_images+'">\
+                                    <img src="uploads/'+val.special[0].images+'">\
                                 </div>\
                                 <div class="goods_name">\
                                     <p class="txt-hid-two">'+val.goods_name+'</p>\
@@ -75,7 +58,6 @@ function layDataAjax(url, brandid){
                                 </div>\
                             </a>\
                         </li>'
-                
             })
             $('.list_cont').html(str);
         },
