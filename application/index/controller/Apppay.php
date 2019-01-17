@@ -32,10 +32,13 @@ class Apppay extends Controller
         if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="Success") {
             $data['status'] = 2;
             $data["trade_no"] =$trade_no;
+            $data['pay_type_content'] = "支付宝";//支付宝交易号
             $condition['parts_order_number'] = $out_trade_no;
             $select_data = Db::name('order_parts')->where($condition)->select();
             foreach ($select_data as $key => $val) {
-                $result = Db::name('order_parts')->where("parts_order_number", $val["parts_order_number"])->update($data);//修改订单状态,支付宝单号到数据库
+                $result = Db::name('order_parts')
+                    ->where("parts_order_number", $val["parts_order_number"])
+                    ->update($data);//修改订单状态,支付宝单号到数据库
             }
             if ($result >0) {
                 $parts =Db::name("order_parts")
@@ -295,20 +298,18 @@ class Apppay extends Controller
         if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="Success") {
             $data['status'] = 2;//状态值
             $data['trade_no'] = $trade_no;//支付宝交易号
+            $data['pay_type_content'] = "支付宝";//支付宝交易号
             $condition['service_order_number'] = $out_trade_no;
             $result = Db::name('order_service')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
             if ($result) {
                 //进行钱包消费记录
                 $parts =Db::name("order_service")
-                    ->field("service_goods_name")
+                    ->field("service_goods_name,service_real_pay,user_id")
                     ->where($condition)
-                    ->select();
-                foreach($parts as $ks=>$vs){
-                    $titles[] = $vs["parts_goods_name"];
-                }
-                $title =implode("",$titles);
-                $money =$parts[0]["service_real_pay"];//金额
-                $datas["user_id"] =$parts[0]["user_id"]; //用户ID
+                    ->find();
+                $title =$parts["service_goods_name"];
+                $money =$parts["service_real_pay"];//金额
+                $datas["user_id"] =$parts["user_id"]; //用户ID
                 $datas["wallet_operation"] = -$money; //消费金额
                 $datas["wallet_type"] = -1; //消费操作(1入，-1出)
                 $datas["operation_time"] = date("Y-m-d H:i:s"); //操作时间
