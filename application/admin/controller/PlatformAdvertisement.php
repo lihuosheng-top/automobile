@@ -23,7 +23,7 @@ class  PlatformAdvertisement extends  Controller{
      */
     public function platform_business_index(Request $request)
     {
-        $platform = db("platform") -> order("status",0)->order("start_time desc")->select();
+        $platform = db("platform") ->order("start_time asc")->order("status",2)->select();
         $all_idents = $platform;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
         $listRow = 20;//每页20行记录

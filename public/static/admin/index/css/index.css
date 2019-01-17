@@ -1,8 +1,8 @@
 /*å­—ä½“*/
 /** iconfont CSSÃ¦Â Â·Ã¥Â¼Â **/
 @font-face {font-family: 'iconfont1';
-    src: url('../font/iconfont1/iconfont.eot'); /* IE9*/
-    src: url('../font/iconfont1/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    src: url('../font/iconfont1/iconfont.eot');                                      /* IE9*/
+    src: url('../font/iconfont1/iconfont.eot?#iefix') format('embedded-opentype'),   /* IE6-IE8 */
     url('../font/iconfont1/iconfont.woff') format('woff'), /* chromeÃ£â‚¬Âfirefox */
     url('../font/iconfont1/iconfont.ttf') format('truetype'), /* chromeÃ£â‚¬ÂfirefoxÃ£â‚¬ÂoperaÃ£â‚¬ÂSafari, Android, iOS 4.2+*/
     url('../font/iconfont1/iconfont.svg#uxiconfont') format('svg'); /* iOS 4.1- */
@@ -11,41 +11,46 @@
 .bg_red{
 	background: red;
 }
+
+.bg_gray{
+	background: #bbb;
+}
+
 button{
 	border: 0 !important;
 }
 /*修改layui样式*/
 /*.layui-btn{
 	line-height: 35px !important;
-	height: 35px !important;
+	height     : 35px !important;
 }*/
 .tdimg{
-	width: 50px !important;
+	width : 50px !important;
 	height: 50px !important;
 	margin: 0 auto !important;
 }
 .clear {
-	clear: both;
+	clear   : both;
 	overflow: hidden !important;
 }
 .layui-table th{
-    padding: 9px 14px;	
+    padding: 9px 14px;
 }
 .layui-table td{
-    padding: 4px 8px;	
+    padding  : 4px 8px;
     font-size: 10px;
 }
 .operation_three{
 	width: ;
 }
 .overflow{
-	width: 100px;
-	overflow: hidden;
-text-overflow: ellipsis;
-display: -webkit-box;
--webkit-line-clamp: 2;
--webkit-box-orient: vertical;
-white-space: normal !important;
+	width             : 100px;
+	overflow          : hidden;
+	text-overflow     : ellipsis;
+	display           : -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	white-space       : normal !important;
 
 	
 }
@@ -53,32 +58,32 @@ white-space: normal !important;
 	line-height: 43px;
 }
 .line{
-	display: flex;
+	display    : flex;
 	align-items: center;
 }
 .line input{
-	width: 200px;
+	width       : 200px;
 	margin-right: 20px;
 }
 /*搜索样式*/
 	.seach{
-		display: flex;
-		 flex-wrap: wrap;
-		 align-items: center;
+		display    : flex;
+		flex-wrap  : wrap;
+		align-items: center;
 	}
 	.seach_list{
-		display: flex;
+		display    : flex;
 		align-items: center;
-	    padding: 4px;
+		padding    : 4px;
 	}
 	.seach_laber{
-		font-size: 13px;
-	    width: 80px;
-	    text-align: center;
-	    color: #333;
+		font-size : 13px;
+		width     : 80px;
+		text-align: center;
+		color     : #333;
 	}
 	.seach_input{
-		width: 208px;
+		width    : 208px;
 		font-size: 16px;
 	}
 	.seach .layui-btn{
@@ -94,9 +99,9 @@ white-space: normal !important;
    	padding: 6px;
    }
    .form-label{
-   	width: 140px;
+   	width     : 140px;
    	text-align: center;
-   	color: #999999;
+   	color     : #999999;
    }
    .form-input{
    	width: 734px;
@@ -109,14 +114,14 @@ white-space: normal !important;
 
 /*修改layui样式*/
 .iconfont1{
-    font-family:'iconfont1' !important;
-    font-size:16px;font-style:normal;
-    -webkit-font-smoothing: antialiased;
+    font-family            : 'iconfont1' !important;
+    font-size              : 16px;font-style                        : normal;
+    -webkit-font-smoothing : antialiased;
     -moz-osx-font-smoothing: grayscale;    -webkit-text-stroke-width: 0.2px;  vertical-align: middle;}
 
 *{
 	padding: 0;
-	margin: 0;
+	margin : 0;
 }
 .tips{
 	color: #999;
@@ -125,25 +130,25 @@ white-space: normal !important;
 		float: right;
 	}
 .UCleft-fixed dl dd p{
-	cursor:pointer;
+	cursor: pointer;
 }
 .layui-form-select{
 	font-size: 14px;
 }
 .layui-form label{
-	font-size: 13px;
-	height: 38px;
+	font-size  : 13px;
+	height     : 38px;
 	line-height: 38px;
 	/*width: 21%;*/
 	padding: 0;
 	
 }
 .layui-form-item{
-	max-width: 662px;
-	width: 40%;
+	max-width    : 662px;
+	width        : 40%;
 	margin-bottom: 27px;
 	/* margin-top: 20px; */
-	box-sizing: border-box;
+	box-sizing : border-box;
 	margin-left: 20px;
 }
 .layui-form-select .layui-edge{
@@ -161,7 +166,7 @@ white-space: normal !important;
 
 img{
 	vertical-align: -6px;
-	width: 100%;
+	width         : 100%;
 }
 body{
 	background-color: #F4F4F4 ;
@@ -174,33 +179,33 @@ a{
 }
 /*toubu*/
 .header{
-	color: #fff;
-	display: flex;
+	color          : #fff;
+	display        : flex;
 	justify-content: space-between;
 	/* padding-left: 32px; */
-	height: 52px;
+	height     : 52px;
 	line-height: 52px;
-	background: #585E6B;
+	background : #585E6B;
 }
 /*.loading{
-	width: 400px;
+	width  : 400px;
 	display: flex;
 }*/
 .loading-box{
 	display: flex;
-	width: 400px;
+	width  : 400px;
 }
 .logo{
-	float: left;
+	float       : left;
 	padding-left: 37px;
-	width: 25px;
+	width       : 25px;
 }
 .name{
-	width: 83%;
-	font-size: 21px;
-	float: left;
+	width      : 83%;
+	font-size  : 21px;
+	float      : left;
 	font-weight: bold;
-	text-align: center;
+	text-align : center;
 	line-height: 52px;
 }
 .message{
@@ -208,55 +213,55 @@ a{
 	width: 26px;
 }
 .company_information{
-	width: 48%;
-	text-align: center;
-	float: left;
+	width      : 48%;
+	text-align : center;
+	float      : left;
 	line-height: 51px;
 }
 .information-photo{
 	display: inline-block;
 }
 .self_information{
-	float: left;
-	width: 100%;
+	float     : left;
+	width     : 100%;
 	text-align: center;
 	/* line-height: 55px; */
 }
 .self_information span{
-	font-size: 15px;
+	font-size   : 15px;
 	padding-left: 12px;
-	display: inline-block;
+	display     : inline-block;
 }
 .self_information span a{
 	text-decoration: none;
-	color: #fff;
+	color          : #fff;
 }
 .befor_loading{
-	float: left;
-	width: 29%;
+	float     : left;
+	width     : 29%;
 	text-align: center;
 }
 .befor_loading span{
 	margin-left: 50px;
 }
 .befor_loading span a{
-	color: #fff;
+	color    : #fff;
 	font-size: 14px;
 }
 /*daohang*/
 .uMain {
 	margin-top: 20px;
-	overflow: hidden;
+	overflow  : hidden;
 }
 
 .UCleft {
-	margin-left: 10px;
+	margin-left : 10px;
 	margin-right: 10px;
-	height: 910px;
-	background: #fff;
-	width: 13%;
-	float: left;
-	margin-top: 10px;
+	height      : 910px;
+	background  : #fff;
+	width       : 13%;
+	float       : left;
+	margin-top  : 10px;
 }
 
 .UCleft-fixed {
@@ -264,31 +269,31 @@ a{
 }
 
 .UCleft dl {
-	overflow: hidden;
+	overflow     : hidden;
 	margin-bottom: 2px;
 }
 
 .UCleft dl dt {
-	height: 45px;
-	background: #eeeeee;
+	height       : 45px;
+	background   : #eeeeee;
 	border-radius: 3px;
-	overflow: hidden;
-	color: #666666;
-	font-size: 14px;
-	padding: 0px 20px 0px 25px;
-	line-height: 45px;
-	cursor: pointer;
+	overflow     : hidden;
+	color        : #666666;
+	font-size    : 14px;
+	padding      : 0px 20px 0px 25px;
+	line-height  : 45px;
+	cursor       : pointer;
 }
 
 .UCleft dl dt i {
-	width: 25px;
-	text-align: center;
-	display: inline-block;
+	width         : 25px;
+	text-align    : center;
+	display       : inline-block;
 	vertical-align: middle;
-	font-size: 25px;
-	margin-right: 10px;
-	float: left;
-	line-height: 45px;
+	font-size     : 25px;
+	margin-right  : 10px;
+	float         : left;
+	line-height   : 45px;
 }
 
 .UCleft dl dt font {
@@ -297,26 +302,26 @@ a{
 
 .UCleft dl dd {
 	overflow: hidden;
-	padding: 10px 0px;
-	display: none;
+	padding : 10px 0px;
+	display : none;
 }
 
 .UCleft dl dd p{
 	text-indent: 42px;
-	display: block;
+	display    : block;
 	line-height: 31px;
-	height: 31px;
-	color: #666666;
+	height     : 31px;
+	color      : #666666;
 }
 
-.UCleft dl dd p a:hover,
+.UCleft dl dd p a: hover,
 .UCleft dl dd p a.curr {
-	color: #585E6B;
+	color      : #585E6B;
 	font-weight: bold;
 }
 
 .UCleft dl dt:hover {
-	color: #fff;
+	color     : #fff;
 	background: #585E6B;
 }
 
@@ -325,7 +330,7 @@ a{
 }
 
 .UCleft dl.curr dt {
-	color: #fff;
+	color     : #fff;
 	background: #585E6B;
 }
 
@@ -334,27 +339,27 @@ a{
 }
 
 .UserCenter {
-	padding: 25px 0px 50px 0px;
+	padding : 25px 0px 50px 0px;
 	overflow: hidden
 }
 
 .UCright {
-	float: right;
-	width: 972px;
+	float     : right;
+	width     : 972px;
 	background: #fff;
 	min-height: 785px;
-	border: 1px solid #eee;
+	border    : 1px solid #eee;
 }
 
 .UCright .ucPanel {
 	background: #fff;
-	border: 1px solid #eee;
+	border    : 1px solid #eee;
 }
 
 .UCright .uctt {
 	border-bottom: 1px solid #eeeeee;
-	height: 55px;
-	line-height: 55px;
+	height       : 55px;
+	line-height  : 55px;
 }
 
 .UCright .uctt span {
@@ -363,12 +368,12 @@ a{
 
 .UCright .uctt span i {
 	margin-right: 5px;
-	font-size: 20px
+	font-size   : 20px
 }
 
 .UCright .uctt .more {
-	color: #999999;
-	float: right;
+	color    : #999999;
+	float    : right;
 	font-size: 12px;
 }
 
@@ -377,30 +382,30 @@ a{
 }
 
 .ucMyproduct {
-	overflow: hidden;
+	overflow     : hidden;
 	margin-bottom: 40px;
 }
 
 .ucMyproduct li {
-	float: left;
-	width: 225px;
-	height: 195px;
-	border: 1px solid #cccccc;
-	display: inline-block;
-	overflow: hidden;
-	text-align: center;
+	float       : left;
+	width       : 225px;
+	height      : 195px;
+	border      : 1px solid #cccccc;
+	display     : inline-block;
+	overflow    : hidden;
+	text-align  : center;
 	margin-right: 55px;
-	margin: 32px 45px 0px 32px;
+	margin      : 32px 45px 0px 32px;
 }
 
 .ucMyproduct li a {
-	display: block;
-	height: 100%;
-	width: 100%;
-	float: left;
+	display   : block;
+	height    : 100%;
+	width     : 100%;
+	float     : left;
 	text-align: center;
-	overflow: hidden;
-	padding: 0px 12px;
+	overflow  : hidden;
+	padding   : 0px 12px;
 }
 
 .ucMyproduct li .user {
@@ -408,25 +413,25 @@ a{
 }
 
 .ucMyproduct li .user .img {
-	height: 35px;
-	width: 35px;
-	border-radius: 50%;
-	overflow: hidden;
-	display: inline-block;
+	height        : 35px;
+	width         : 35px;
+	border-radius : 50%;
+	overflow      : hidden;
+	display       : inline-block;
 	vertical-align: middle;
 }
 
 .ucMyproduct li .user .img img {
 	min-height: 35px;
-	width: 35px;
+	width     : 35px;
 }
 
 .ucMyproduct li .user .char {
-	margin-left: -15px;
-	position: relative;
-	z-index: 5;
+	margin-left   : -15px;
+	position      : relative;
+	z-index       : 5;
 	vertical-align: bottom;
-	display: inline-block;
+	display       : inline-block;
 }
 
 .ucMyproduct li .user .char img {
@@ -434,29 +439,29 @@ a{
 }
 
 .ucMyproduct li .tt {
-	font-size: 14px;
-	margin: 15px 0px 4px 0px;
-	display: block;
-	overflow: hidden;
-	white-space: nowrap;
+	font-size       : 14px;
+	margin          : 15px 0px 4px 0px;
+	display         : block;
+	overflow        : hidden;
+	white-space     : nowrap;
 	-o-text-overflow: ellipsis;
-	text-overflow: ellipsis;
+	text-overflow   : ellipsis;
 }
 
 .ucMyproduct li .tt img {
-	margin-left: 5px;
+	margin-left   : 5px;
 	vertical-align: super;
 }
 
-.ucMyproduct li .tt:hover,
+.ucMyproduct li .tt: hover,
 .ucMyproduct li .p1 {
-	color: #999999;
+	color    : #999999;
 	font-size: 14px;
 }
 
 .ucMyproduct li .p2 {
-	color: #555555;
-	font-size: 14px;
+	color     : #555555;
+	font-size : 14px;
 	margin-top: 5px;
 }
 
@@ -465,28 +470,28 @@ a{
 }
 
 .ucMyproduct li .prossc {
-	width: 195px;
-	background: #eeeeee;
+	width        : 195px;
+	background   : #eeeeee;
 	border-radius: 10px;
-	height: 8px;
-	text-align: left;
-	margin-top: 15px;
+	height       : 8px;
+	text-align   : left;
+	margin-top   : 15px;
 }
 
 .ucMyproduct li .prossc span {
-	display: inline-block;
-	height: 8px;
-	background: #e62d31;
-	float: left;
+	display      : inline-block;
+	height       : 8px;
+	background   : #e62d31;
+	float        : left;
 	border-radius: 10px;
-	position: relative;
+	position     : relative;
 }
 
 .ucMyproduct li .prossc font {
-	float: right;
+	float   : right;
 	position: absolute;
-	left: 0px;
-	top: 15px;
+	left    : 0px;
+	top     : 15px;
 }
 
 .ucMyproduct li:hover {
@@ -497,40 +502,40 @@ a{
 	color: #e62d31;
 }
 .index_text{
-	font-size: 20px;
-	height: 44px;
+	font-size  : 20px;
+	height     : 44px;
 	line-height: 44px;
-	text-align: center;
-	color: #585E6B;
+	text-align : center;
+	color      : #585E6B;
 }
 /*å³è¾¹å†…å®¹*/
 .right-content{
-	float: right;
-	width: 84.5%;
+	float : right;
+	width : 84.5%;
 	height: 910px;
 	/* background: #fff; */
-	margin-top: 10px;
+	margin-top  : 10px;
 	margin-right: 10px;
 }
 .right-content-title{
 	overflow: hidden;
-	height: 100px;
+	height  : 100px;
 }
 .right-content-title-img{
-	margin-top: 23px;
+	margin-top : 23px;
 	margin-left: 45px;
-	width: 43px;
-	float: left;
+	width      : 43px;
+	float      : left;
 }
 .right-content-title-text{
-	font-size: 33px;
-	margin-top: 21px;
-	float: left;
+	font-size  : 33px;
+	margin-top : 21px;
+	float      : left;
 	margin-left: 30px;
-	color: #666666;
+	color      : #666666;
 }
 .recontent{
-	width: 100%;
+	width     : 100%;
 	min-height: 910px;
 	background: #fff;
 }

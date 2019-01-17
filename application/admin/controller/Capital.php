@@ -57,7 +57,7 @@ class Capital extends Controller{
         /*添加一天（23：59：59）*/
         $time_max_data =strtotime(input('date_max'));
         $t=date('Y-m-d H:i:s',$time_max_data+1*24*60*60);
-        $timemax  =strtotime($t);
+        $timemax  = strtotime($t);
         if(empty($keywords)){
                 if((!empty($timemin))&&(empty($timemax))){
                     $time_condition  = "create_time>{$timemin}";
