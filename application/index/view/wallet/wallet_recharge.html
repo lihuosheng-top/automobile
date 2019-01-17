@@ -25,7 +25,7 @@
 
     <div class="mask" style="display: none;"></div>
     <!-- 支付弹窗 -->
-    <form name=alipayment action="{:url('index/Apppay/recharge_aliPay')}" method="post">
+    <!-- <form name=alipayment action="{:url('index/Apppay/recharge_aliPay')}" method="post">
         <div class="alipay-pop">
             <header>
                 <a href="javascript:;" class="close-alipay">×</a>
@@ -50,7 +50,7 @@
             </div>
             <button type="submit" class="alipay-submit">立即付款</button>
         </div>
-    </form>
+    </form> -->
 
     <!-- 选择支付方式 -->
     <div class="chose-payment">
@@ -95,10 +95,10 @@
         // 充值 （下一步按钮）
         $('.recharge-next').click(function(){
             if($('.recharge-box input').val() !== ''){
-                $('.mask').show();
-                $('.alipay-pop').animate({'bottom': '0'});
+                // $('.mask').show();
+                // $('.alipay-pop').animate({'bottom': '0'});
                 var rechargeAmount = $('.recharge-box input').val();
-                $('#WIDtotal_amount').val(rechargeAmount);
+                // $('#WIDtotal_amount').val(rechargeAmount);
                 $.ajax({
                     url: 'wallet_recharge',
                     type: 'POST',
@@ -108,29 +108,44 @@
                     },
                     success: function(res){
                         console.log(res);
-                        if(res.status === 1){
-                            $('#WIDout_trade_no').val(res.data)
-                        }
-                        $('.close-alipay').click(function(e){
-                            e.preventDefault();
-                            $('.mask').hide();
-                            $('.alipay-pop').animate({'bottom': '-100%'});
-                            var id = $(this).attr('id');
-                            $.ajax({
-                                url: 'wallet_recharge_del',
-                                type: 'POST',
-                                dataType: 'JSON',
-                                data: {
-                                    'recharge_id': res.data,
-                                },
-                                success: function(res){
-                                    console.log(res);
-                                },
-                                error: function(){
-                                    console.log('error');
-                                }
-                            })
+                        $.ajax({
+                            url: 'ios_api_alipay',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'order_num': res.data,
+                            },
+                            success: function(res){
+                                console.log(res);
+                                Android.alipay(res.data);
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
                         })
+                        // if(res.status === 1){
+                        //     $('#WIDout_trade_no').val(res.data)
+                        // }
+                        // $('.close-alipay').click(function(e){
+                        //     e.preventDefault();
+                        //     $('.mask').hide();
+                        //     $('.alipay-pop').animate({'bottom': '-100%'});
+                        //     var id = $(this).attr('id');
+                        //     $.ajax({
+                        //         url: 'wallet_recharge_del',
+                        //         type: 'POST',
+                        //         dataType: 'JSON',
+                        //         data: {
+                        //             'recharge_id': res.data,
+                        //         },
+                        //         success: function(res){
+                        //             console.log(res);
+                        //         },
+                        //         error: function(){
+                        //             console.log('error');
+                        //         }
+                        //     })
+                        // })
                     },
                     error: function(){
                         console.log('error');
@@ -146,32 +161,37 @@
                 })
             }
         })
+        function alipayCallback(res){
+            if(res.resultStatus == '9000'){
+                location.href = 'wallet_index';
+            }
+        }
 
-        $('#WIDbody').click(function(){
-            $('.alipay-pop').animate({'bottom': '-100%'});
-            $('.chose-payment').animate({'bottom': '0'});
-        })
+        // $('#WIDbody').click(function(){
+        //     $('.alipay-pop').animate({'bottom': '-100%'});
+        //     $('.chose-payment').animate({'bottom': '0'});
+        // })
 
         // 选择支付方式
-        function backMethod(){
-            $('.alipay-pop').animate({'bottom': '0'});
-            $('.chose-payment').animate({'bottom': '-100%'});
-        }
-        $('.method-div').click(function(){
-            $(this).siblings().find('.check-a').removeClass('icon-check');
-            $(this).find('.check-a').addClass('icon-check');
-            var paymentMethod = $(this).find('p').text();
-            $('#WIDbody').val(paymentMethod);
-            backMethod();
-        })
-        $('.chose-payment-back').click(function(){
-            backMethod();
-        })
+        // function backMethod(){
+        //     $('.alipay-pop').animate({'bottom': '0'});
+        //     $('.chose-payment').animate({'bottom': '-100%'});
+        // }
+        // $('.method-div').click(function(){
+        //     $(this).siblings().find('.check-a').removeClass('icon-check');
+        //     $(this).find('.check-a').addClass('icon-check');
+        //     var paymentMethod = $(this).find('p').text();
+        //     $('#WIDbody').val(paymentMethod);
+        //     backMethod();
+        // })
+        // $('.chose-payment-back').click(function(){
+        //     backMethod();
+        // })
 
         // 添加银行卡付款
-        $('.add-bank-card').click(function(){
-            location.href = 'wallet_block';
-        })
+        // $('.add-bank-card').click(function(){
+        //     location.href = 'wallet_block';
+        // })
     </script>
 </body>
 </html>
