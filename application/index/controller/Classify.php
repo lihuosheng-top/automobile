@@ -903,7 +903,6 @@ class Classify extends Controller
 
         if($request->isPost()) {
             $parets_id = Session::get("parets_id");
-            Session::delete("parets_id");
             return ajax_success("获取成功", $parets_id);
         }
     }
