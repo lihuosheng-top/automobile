@@ -390,11 +390,7 @@ class Goods extends Controller
             if ($bool_data) {
                 $this->success("删除成功", url("admin/Goods/index"));
             } else {
-<<<<<<< HEAD
-                $this->success("删除失败", url('admin/Goods/index'));
-=======
                 $this->success("失败", url('admin/Goods/add'));
->>>>>>> 43e93d08b0f74e153b1bd15e382e4957ab068f64
             }
 
         }
