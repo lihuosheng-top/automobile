@@ -33,37 +33,18 @@ class Goods extends Controller
     {
         $admin_id = Session::get("user_id");
         $admin_role = db("admin")->where("id", $admin_id)->field("role_id")->find();
-        if ($admin_role["role_id"] == 2) {
+        if ($admin_role["role_id"] == 2 || $admin_role["role_id"] == 18) {
             $goods = db("goods")->order("id desc")->select();
-            $goods_year = db("goods")->field("goods_year_id,id")->select();
-            $time = date("Y-m-d");
-            foreach ($goods_year as $key => $value) {
-                $year = db("year")->where("id", $value["goods_year_id"])->value("year");
-                $date = date("Y-m-d", strtotime("+$year year"));
-                if ($time == $date) {
-                    $bool = db("goods")->where("id", $value["id"])->update(["goods_status" => 0, "putaway_status" => null]);
-                }
-            }
-            // $goods_money = db("goods")->field("goods_new_money,id")->select();
 
-            // foreach ($goods_money as $k => $val) {
-            //     $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
-            //     $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
-            //     db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
-            // }
 
             foreach ($goods as $key => $value) {
-                $max[$key] = db("special")->where("goods_id", $goods[$key]['id'])->max("price");//最高价格
-                $min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("price");//最低价格
-                $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $goods[$key]['id'])->sum("stock");//库存
-                $goods[$key]["max_price"] = $max[$key];
-                $goods[$key]["min_price"] = $min[$key];
-                $goods_adjusted_price_max[$key] = db("special")->where("goods_id", $goods[$key]['id'])->max("goods_adjusted_price");//最高价格
-                $goods_adjusted_price_min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("goods_adjusted_price");//最低价格
-                $goods[$key]["max_goods_adjusted_price"] = $goods_adjusted_price_max[$key];
-                $goods[$key]["min_goods_adjusted_price"] = $goods_adjusted_price_min[$key];
-                db("goods")->where("id",$value["id"])->update(["goods_adjusted_money"=>$goods_adjusted_price_min[$key]]);
+                $goods[$key]["max_price"] = db("special")->where("goods_id", $value['id'])->max("price");//最高价格
+                $goods[$key]["min_price"] = db("special")->where("goods_id", $value['id'])->min("price");//最低价格
+                $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $value['id'])->sum("stock");//库存
+                $goods[$key]["max_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->max("goods_adjusted_price");//最高价格
+                $goods[$key]["min_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->min("goods_adjusted_price");//最低价格
             }
+
             //调整规格后的价格显示
             $adjusted_price = db("special")->field("price,id")->select();
             foreach ($adjusted_price as $kw => $vl) {
@@ -95,17 +76,6 @@ class Goods extends Controller
             $user_id = db("user")->where("phone_num", $admin_phone)->value("id");
             $store_id = db("store")->where("user_id", $user_id)->value("store_id");
             $goods = db("goods")->order("id desc")->where("store_id", $store_id)->select();
-            $goods_year = db("goods")->field("goods_year_id,id")->select();
-            $time = date("Y-m-d");
-            foreach ($goods_year as $key => $value) {
-                $year = db("year")->where("id", $value["goods_year_id"])->value("year");
-                $date = date("Y-m-d", strtotime("+$year year"));
-                if ($time == $date) {
-                    $bool = db("goods")->where("id", $value["id"])->update(["goods_status" => 0, "putaway_status" => null]);
-                }
-            }
-
-
             foreach ($goods as $key => $value) {
                 $max[$key] = db("special")->where("goods_id", $goods[$key]['id'])->max("price");//最高价格
                 $min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("price");//最低价格
@@ -116,15 +86,8 @@ class Goods extends Controller
                 $goods_adjusted_price_min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("goods_adjusted_price");//最低价格
                 $goods[$key]["max_goods_adjusted_price"] = $goods_adjusted_price_max[$key];
                 $goods[$key]["min_goods_adjusted_price"] = $goods_adjusted_price_min[$key];
-                db("goods")->where("id",$value["id"])->update(["goods_adjusted_money"=>$goods_adjusted_price_min[$key]]);
-
             }
-            // $goods_money = db("goods")->field("goods_new_money,id")->select();
-            // foreach ($goods_money as $k => $val) {
-            //     $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
-            //     $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
-            //     db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
-            // }
+
             //调整规格后的价格显示
             $adjusted_price = db("special")->field("price,id")->select();
             foreach ($adjusted_price as $kw => $vl) {
@@ -425,9 +388,9 @@ class Goods extends Controller
                 $bool_data = db("goods_images")->where("id", $value['id'])->delete();
             }
             if ($bool_data) {
-                $this->success("添加成功", url("admin/Goods/index"));
+                $this->success("删除成功", url("admin/Goods/index"));
             } else {
-                $this->success("添加失败", url('admin/Goods/add'));
+                $this->success("失败", url('admin/Goods/add'));
             }
 
         }
@@ -463,7 +426,7 @@ class Goods extends Controller
             }
             //图片添加
             $show_images = $request->file("goods_show_images");
-
+            halt($show_images);
             if (!empty($show_images)) {
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());

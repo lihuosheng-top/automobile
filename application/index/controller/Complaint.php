@@ -56,7 +56,8 @@ class Complaint extends Controller{
      */
     public function detail(Request $request){
         if($request->isPost()){
-            $issue = db("complaint")->select();
+            $user_id = Session::get("user");
+            $issue = db("complaint")->where("user_id",$user_id)->select();
             foreach ($issue as $key=>$value){
                 $issue[$key]["phone"] = db("user")->where("id",$value["user_id"])->value("phone_num");
                 $issue[$key]["user_images"] = db("user")->where("id",$value["user_id"])->value("user_img");
