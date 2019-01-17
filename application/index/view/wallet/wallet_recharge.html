@@ -92,6 +92,7 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
+        var cancelOrderNum = '';
         // 充值 （下一步按钮）
         $('.recharge-next').click(function(){
             if($('.recharge-box input').val() !== ''){
@@ -117,6 +118,7 @@
                             },
                             success: function(res){
                                 console.log(res);
+                                cancelOrderNum = res.data;
                                 Android.alipay(res.data);
                             },
                             error: function(){
@@ -162,7 +164,17 @@
             }
         })
         function alipayCallback(res){
-            if(res.resultStatus == '9000'){
+            if(res.resultStatus == '6001'){
+                $.ajax({
+                    url: 'wallet_recharge_del',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'recharge_id': cancelOrderNum,
+                    }
+                })
+                
+            }else if(res.resultStatus == '9000'){
                 location.href = 'wallet_index';
             }
         }
