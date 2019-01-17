@@ -69,6 +69,7 @@ class Goods extends Controller
             $goods->appends($_GET);
             $this->assign('listpage', $goods->render());
             return view("goods_index", ["store" => $store, "goods" => $goods, "year" => $year, "role_name" => $role_name]);
+
         } else {
             $admin_phone = db("admin")->where("id", $admin_id)->value("phone");
             $user_id = db("user")->where("phone_num", $admin_phone)->value("id");
@@ -197,6 +198,7 @@ class Goods extends Controller
             }
             //图片添加
             $show_images = $request->file("goods_show_images");
+
             $imgs = $request->file("imgs");
 
             if (!empty($show_images)) {
@@ -388,11 +390,7 @@ class Goods extends Controller
             if ($bool_data) {
                 $this->success("删除成功", url("admin/Goods/index"));
             } else {
-<<<<<<< HEAD
-                $this->success("删除失败", url('admin/Goods/index'));
-=======
                 $this->success("失败", url('admin/Goods/add'));
->>>>>>> 43e93d08b0f74e153b1bd15e382e4957ab068f64
             }
 
         }
@@ -427,7 +425,8 @@ class Goods extends Controller
                 $goods_data["goods_delivery"] = $goods_delivery;
             }
             //图片添加
-            $show_images = $request->file("goods_show_images");
+            $show_images = request()->file("goods_show_images");
+            halt($show_images);
             if (!empty($show_images)) {
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
