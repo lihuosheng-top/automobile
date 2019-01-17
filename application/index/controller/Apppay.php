@@ -605,7 +605,7 @@ class Apppay extends Controller
         $trade_status = input('trade_status');
         if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="Success") {
             $data['status'] = 1;
-            $data['pay_type_content'] = "支付宝";//支付宝交易号
+            $data['pay_type_name'] = "支付宝";//支付宝交易号
             $condition['recharge_order_number'] = $out_trade_no;
             $select_data = Db::name('recharge_record')->where($condition)->select();
             foreach ($select_data as $key => $val) {
