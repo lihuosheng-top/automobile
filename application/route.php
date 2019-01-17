@@ -60,19 +60,20 @@ Route::group("",[
 
 
     /*TODO:服务商订单开始*/
-    "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_order_service_button"=>"index/OrderService/ios_api_order_service_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_return_num"=>"index/OrderService/ios_return_num",//生成订单(未用)
     'index_aliPay'=>"index/Apppay/index_aliPay", //服务商提交支付（付款）（弹窗支付）
     'index_pay_code'=>"index/Apppay/index_pay_code", //状态修改(回调地址修改状态)
     "recharge_aliPay"=>"index/Apppay/recharge_aliPay",     //充值订单提交支付（付款）
     "recharge_pay_code"=>"index/Apppay/recharge_pay_code",     //充值订单支付（成功回调修改状态）
+    "notifyurls"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_alipay"=>"index/Apppay/ios_api_alipay",//生成支付宝签名 TODO:配件商支付宝签名
     "ios_api_service_alipay"=>"index/Apppay/ios_api_service_alipay",//生成支付宝签名 TODO:服务商支付宝签名
+    "service_notifyurl"=>"index/Apppay/service_notifyurl",//服务商异步处理(支付宝IOS对接)
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/
-    "service_notifyurl"=>"index/Apppay/service_notifyurl",//服务商异步处理(支付宝IOS对接)
+
     "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_order_button_by_shop"=>"index/OrderParts/ios_api_order_button_by_shop",//购物车提交订单
 //    "ios_api_alipay"=>"index/OrderParts/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
@@ -229,6 +230,9 @@ Route::group("",[
     /*TODO：店铺开始*/
     "store_index"=>"index/Store/index",             //店铺首页(所有的店铺信息)
     "store_goods_info"=>"index/Store/store_goods_info",             //店铺首页 店铺内的商品（综合）
+    "store_list_sales_volume"=>"index/Store/store_goods_sales_volume",             //店铺首页 店铺内的商品（销量）
+    "store_list_sales_price"=>"index/Store/store_goods_sales_price",             //店铺首页 店铺内的商品（价格）
+    "store_index_search"=>"index/Store/store_index_search",             //店铺首页 店铺内的商品（搜索）
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
 
@@ -262,9 +266,10 @@ Route::group("",[
 
 
 
-
     /*配件商品*/
     "goods_list"=>"index/Classify/goods_list",//商品列表
+    "goods_list_sales_volume"=>"index/Classify/goods_list_sales_volume",//商品列表销量排行
+    "goods_list_sales_price"=>"index/Classify/goods_list_sales_price",//商品列表价格排行
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
     /*TODO:商品详情页面信息开始*/
@@ -672,6 +677,7 @@ Route::group("admin",[
 
     /*设置*/
     "install_index"=>"admin/Install/index",
+    "install_index_del"=>"admin/Install/goods_ratio_del",
     "recommend_index"=>"admin/Install/recommend",//推荐奖励积分设置
     "recommend_update"=>"admin/Install/recommend_update",//推荐奖励积分设置更新
 
@@ -680,6 +686,7 @@ Route::group("admin",[
     "integral_setting_del"=>"admin/Install/integral_setting_del",//积分折扣设置删除功能
 
     "putaway_index"=>"admin/Install/putaway",
+    "putaway_index_del"=>"admin/Install/putaway_del",
 
     "recharge_index"=>"admin/Install/recharge",//设置之充值设置
     "recharge_setting_add"=>"admin/Install/recharge_setting_add",//设置之充值设置添加数据
@@ -733,6 +740,8 @@ Route::group("admin",[
     /*TODO:店铺管理开始*/
     "shop_index"=>"admin/Shop/index",//店铺列表
     "shop_add"=>"admin/Shop/add",//店铺详情
+    "shop_img_del"=>"admin/Shop/img_del",//店铺验证是体面店的删除
+    "shop_img_store_img_del"=>"admin/Shop/img_store_img_del",//店铺店内体面店的删除
     "shop_update"=>"admin/Shop/update",//店铺详情更新
     "store_hot_status"=>"admin/Shop/store_hot_status",//店铺热门店铺修改（-1为正常，1为热门店铺）
     "shop_del"=>"admin/Shop/del",//店铺列表删除

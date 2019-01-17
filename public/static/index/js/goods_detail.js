@@ -1,20 +1,29 @@
 // 获取url地址id
 var url = location.search;
 // preStoreId 从店铺商品进来的详情
-var id, preId, specId, store_id, preStoreId;
+var id, preId, specId, store_id, preStoreId, hotStatus, settingid;
 if(url.indexOf('?') != -1){
     id = url.substr(1).split('&')[0].split('=')[1];
     preId = url.substr(1).split('&')[1].split('=')[1];
-    if(url.substr(1).split('&').length == 3){
+    var urlLen = url.substr(1).split('&').length;
+    if(urlLen == 3){
         preStoreId = url.substr(1).split('&')[2].split('=')[1];
+    }else if(urlLen == 4){
+        hotStatus = 1;
+    }else if(urlLen == 5){
+        settingid = url.substr(1).split('&')[4].split('=')[1];
     }
-    console.log(preStoreId);
+    console.log(hotStatus);
 }
 $('.wrapper').find('a.back').click(function(){
-    if(preStoreId == undefined){
-        location.href = 'goods_list?id=' + preId;
-    }else{
+    if(preStoreId != undefined){
         location.href = 'store_index?storeId=' + preStoreId;
+    }else if(hotStatus != undefined){
+        location.href = 'reservation_detail?store_id=' + store_id;
+    }else if(settingid != undefined){
+        location.href = 'reservation_detail?store_id=' + store_id+'&service_setting_id='+settingid;
+    }else{
+        location.href = 'goods_list?id=' + preId;
     }
 })
 $.ajax({
@@ -384,18 +393,8 @@ $(function(){
                 if(loginStatus === 0){
                     location.href = 'login';
                 }else{
-                    $(this).toggleClass('collect-on');
-                    if($(this).hasClass('collect-on')){
-                        var goodsId = {
-                            'id': id
-                        }
-                        myAjax('collection_add', goodsId, myLayer('收藏成功'));
-                    }else{
-                        var goodsId = {
-                            'id': id
-                        }
-                        myAjax('collection_del', goodsId, myLayer('取消收藏'));
-                    }
+                    var goodsId = {id: id}
+                    myAjax('collection_add', goodsId);
                 }
             })
         },
@@ -425,7 +424,7 @@ function myLayer(info){
         time: 1
     })
 }
-function myAjax(url, data, succCallBack){
+function myAjax(url, data){
     $.ajax({
         url: url,
         type: 'POST',
@@ -433,7 +432,12 @@ function myAjax(url, data, succCallBack){
         data: data,
         success: function(res){
             console.log(res);
-            succCallBack();
+            if(res.status === 3){
+                myLayer(res.info);
+            }else{
+                myLayer(res.info);
+                $('.collect').toggleClass('collect-on');
+            }
         },
         error: function(){
             console.log('error')
@@ -465,7 +469,10 @@ $(function(){
                                 <p>￥`+val.special_info[0].goods_adjusted_price+`</p>
                             </div>`
                 })
-                $('.card-show').html(str);
+                $('.card-show').html(str).click(function(){
+                    location.href = `store_index?storeId=`+res.data.store_id;
+                });
+
             }
         },
         error: function(){
@@ -553,6 +560,8 @@ $.ajax({
                 }
                 $('html').css('overflow', 'auto');
             })
+        }else{
+            $('.comment_title span').text('0');
         }
     },
     error: function(){
@@ -688,8 +697,6 @@ function evaluateDetailAjax(id){
         }
     })
 }
-
-
 // 你可能喜欢
 $(function(){
     $.ajax({
@@ -701,22 +708,7 @@ $(function(){
             if(res.status == 1){
                 var str = '';
                 res.data.forEach(function(val, idx){
-                    if(idx % 2 !== 0){
-                        str += `<li class="mgr0">
-                                    <div class="img_div">
-                                        <img src="uploads/`+val.goods_show_images+`">
-                                    </div>
-                                    <div class="goods_name">
-                                        <p class="txt-hid-two">`+val.goods_name+`</p>
-                                    </div>
-                                    <div class="goods_price">
-                                        <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
-                                        <span class="pay_num">`+val.statistical_quantity+`人购买</span>
-                                    </div>
-                                </li>`
-                        return;
-                    }
-                    str += `<li>
+                    str += `<li class="`+(idx % 2 !== 0?'mgr0':'')+`" data-storeId="`+val.store_id+`">
                                 <div class="img_div">
                                     <img src="uploads/`+val.goods_show_images+`">
                                 </div>
@@ -729,7 +721,9 @@ $(function(){
                                 </div>
                             </li>`
                 })
-                $('.like_cont_ul').html(str);
+                $('.like_cont_ul').html(str).on('click', 'li', function(){
+                    location.href = 'store_index?storeId='+$(this).attr('data-storeId');
+                });
             }
         },
         error: function(){

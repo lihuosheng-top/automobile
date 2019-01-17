@@ -181,6 +181,8 @@ class Index extends Controller
                 $shop_data[$key]["id"] = $value["store_id"];
                 $shop_data[$key]["shop_time"] = $value["store_do_bussiness_time"];
                 $shop_data[$key]["shop_name"] = $value["store_name"];
+                $shop_data[$key]["latitude"] = $value["latitude"];
+                $shop_data[$key]["longitude"] = $value["longitude"];
                 $parts_attitude_stars =Db::name("order_parts_evaluate")
                     ->where("store_id",$value["store_id"])
                     ->avg('service_attitude_stars');
@@ -215,12 +217,18 @@ class Index extends Controller
     public function shop_goods(Request $request){
 
         if($request->isPost()) {
+            $data = Session::get("role_name_store_id");
             $user_id = Session::get("user");
             if (empty($user_id)) {
                 $shop_id = $request->only(["id"])["id"];
                 $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+                foreach ($goods as $k_1=>$v_1){
+                    if($v_1["goods_standard"] != "通用"){
+                        unset($goods[$k_1]);
+                    }
+                }
                 $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
-                $store = db("store")->where("store_id", $shop_id)->select();
+                $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
                 $service_setting = db("service_setting")->select();
                 $serve_data = [];
                 foreach ($service_setting as $key => $value) {
@@ -244,9 +252,16 @@ class Index extends Controller
                 if (!empty($car_series)) {
                     $shop_id = $request->only(["id"])["id"];
                     $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+                    if(empty($data)){
+                        foreach ($goods as $k_1=>$v_1){
+                            if($v_1["goods_standard"] != "通用"){
+                                unset($goods[$k_1]);
+                            }
+                        }
+                    }
                     $serve_vehicle_model = db("serve_goods")->where("store_id", $shop_id)->where("vehicle_model", $car_series["vehicle_model"])->find();
                     $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
-                    $store = db("store")->where("store_id", $shop_id)->select();
+                    $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
                     $serve_data = [];
                     $serve = [];
                     foreach ($serve_goods as $k => $val) {
@@ -273,8 +288,15 @@ class Index extends Controller
                 } else {
                     $shop_id = $request->only(["id"])["id"];
                     $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+                    if(empty($data)){
+                        foreach ($goods as $k_1=>$v_1){
+                            if($v_1["goods_standard"] != "通用"){
+                                unset($goods[$k_1]);
+                            }
+                        }
+                    }
                     $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
-                    $store = db("store")->where("store_id", $shop_id)->select();
+                    $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
                     $service_setting = db("service_setting")->select();
                     $serve_data = [];
                     foreach ($service_setting as $key => $value) {

@@ -50,14 +50,24 @@ html, body, .wrapper{
     font-size: .3rem;
     color: #333;
 }
+.cot{
+    position: relative;
+}
+.cot span{
+    display: inline-block;
+    margin-right: .6rem;
+}
 .icon-more{
     position: absolute;
     top: 50%;
-    right: .3rem;
+    right: 0;
     width: .26rem;
     height: .38rem;
     background-position: -7.25rem -1.75rem;
     transform: translateY(-50%);
+}
+.info-ul .info-li a.icon-more{
+    right: .3rem;
 }
 .user-img{
     width: .7rem;

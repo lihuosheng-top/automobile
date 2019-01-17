@@ -48,6 +48,10 @@ class  Collection extends Controller{
      */
     public function  collection_add(Request $request){
         if($request->isPost()){
+            $is_boss =Session::get("role_name_store_id");
+            if(!empty($is_boss)){
+                exit(json_encode(array("status" => 3, "info" => "请切回车主身份进行收藏")));
+            }
             $user_id =Session::get("user");
             if(!empty($user_id)){
                 $datas =$request->only("id")["id"];

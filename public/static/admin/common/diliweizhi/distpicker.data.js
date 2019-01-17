@@ -1,11 +1,11 @@
 /*!
- * Distpicker v@VERSION
+ * Distpicker v1.0.4
  * https://github.com/fengyuanchen/distpicker
  *
- * Copyright (c) 2014-@YEAR Fengyuan Chen
+ * Copyright (c) 2014-2016 Fengyuan Chen
  * Released under the MIT license
  *
- * Date: @DATE
+ * Date: 2016-06-01T15:05:52.606Z
  */
 
 (function (factory) {
@@ -2454,7 +2454,8 @@
       440305: '南山区',
       440306: '宝安区',
       440307: '龙岗区',
-      440308: '盐田区'
+      440308: '盐田区',
+      440309: '龙华区',
     },
     440400: {
       440402: '香洲区',
@@ -3114,7 +3115,9 @@
       520329: '余庆县',
       520330: '习水县',
       520381: '赤水市',
-      520382: '仁怀市'
+      520382: '仁怀市',
+      520383: '播州区',
+      520384: '新蒲新区',
     },
     520400: {
       520402: '西秀区',

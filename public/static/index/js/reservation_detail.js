@@ -46,8 +46,8 @@ $('.filter-com-ul').on('click', 'li', function(){
 // console.log($(window).height());
 // console.log($(document).height());
 $(window).on('scroll', function(){
-    var $window = $(window);
-    console.log($window.scrollTop());
+    // var $window = $(window);
+    // console.log($window.scrollTop());
     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
     if(scrollTop > 0){
         $('.wrapper .head').css('background', 'rgba(255, 255, 255, .5)');
@@ -149,6 +149,15 @@ if(urlLen > 1){
                 // 商品
                 var str = myGoods(data);
                 $('.goods-content').prepend(str);
+
+                $('.goods-colla-item').click(function(){
+                    var id = $(this).attr('data-id');
+                    var standid = $(this).attr('data-standid');
+                    var storeid = $(this).attr('data-storeid');
+
+                    location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=1`+`&service_setting_id=`+serviceSettingId;
+                })
+
                 // 服务项目
                 var str2 = myService(data);
                 $('.service-content').append(str2);
@@ -184,6 +193,10 @@ if(urlLen > 1){
             console.log('error');
         }
     })
+    // 从预约服务进来 返回上一页
+    $('.back').click(function(){
+        location.href = 'reservation?service_setting_id='+serviceSettingId;
+    })
 }else{
     // 首页热门店铺进来
     $('.bespeak-btn').prop('disabled', true);
@@ -200,6 +213,14 @@ if(urlLen > 1){
                 // 商品
                 var str = myGoods(data);
                 $('.goods-content').prepend(str);
+
+                $('.goods-colla-item').click(function(){
+                    var id = $(this).attr('data-id');
+                    var standid = $(this).attr('data-standid');
+                    var storeid = $(this).attr('data-storeid');
+                    location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=1`;
+                })
+
                 // 服务项目
                 var str2 = myService(data);
                 $('.service-content').append(str2);
@@ -235,6 +256,10 @@ if(urlLen > 1){
         error: function(){
             console.log('error');
         }
+    })
+    // 从热门店铺进来 返回上一页
+    $('.back').click(function(){
+        location.href = 'index';
     })
 }
 // 评论数量
@@ -342,7 +367,7 @@ function myEvaluate(settingid, storeid, content, flag, url){
 function myGoods(data){
     var str = '';
     $.each(data.data.goods, function(idx, val){
-        str += `<div class="goods-colla-item">
+        str += `<div class="goods-colla-item" data-id="`+val.id+`" data-standid="`+val.goods_brand_id+`" data-storeid="`+val.store_id+`">
                     <div class="goods-img-box">
                         <img src="uploads/`+val.goods_show_images+`">
                     </div>
@@ -363,22 +388,27 @@ function myService(data){
         $('.shop_name').text(val.store_name);
         $('.addr_p span').text(val.store_detailed_address);
         $('.shop-describe').text(val.store_information);
-        swiperImgArr.push(val.verifying_physical_storefront_one);
-        var storeInnerImg = val.verifying_physical_storefront_two.split(',').splice(0, 3);
-        $.each(storeInnerImg, function(idx, val){
-            swiperImgArr.push(val);
-        }) 
+        if(val.verifying_physical_storefront_one !== null){
+            swiperImgArr.push(val.verifying_physical_storefront_one);
+        }
+        if(val.verifying_physical_storefront_two !== null){
+            var storeInnerImg = val.verifying_physical_storefront_two.split(',').splice(0, 3);
+            $.each(storeInnerImg, function(idx, val){
+                swiperImgArr.push(val);
+            }) 
+        }
     })
     // 轮播图
     var myStr = '';
-    $.each(swiperImgArr, function(idx, val){
-        myStr += `<div class="swiper-slide">
-                    <img src="uploads/`+val+`">
-                </div>`
-    })
-    $('.swiper-wrapper').append(myStr);
-    mySwiper();
-
+    if(swiperImgArr.length !== 0){
+        $.each(swiperImgArr, function(idx, val){
+            myStr += `<div class="swiper-slide">
+                        <img src="uploads/`+val+`">
+                    </div>`
+        })
+        $('.swiper-wrapper').append(myStr);
+        mySwiper();
+    }
     $.each(data.data.serve_data, function(idx, val){
         str2 += `<div class="service-colla-item" data-goodsid="`+val.service_setting_id+`">
                     <div class="service-colla-title">

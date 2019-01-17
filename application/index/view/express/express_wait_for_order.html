@@ -124,12 +124,12 @@
                                                 <span class="shop-name">`+val.store_name+`</span>
                                                 <span class="shop-address">`+val.store_address+`</span>
                                             </div>
-                                            <a href="call:`+parseInt(val.store_number)+`" class="spr shop-phone"></a>
+                                            <a href="javascript:Android.call('`+parseInt(val.store_number)+`');" class="spr shop-phone"></a>
                                         </div>
                                         <div class="send-goods" id="send-`+val.order_id+`">
                                             <span>送：</span>
                                             <span class="send-address">`+val.order_address+`</span>
-                                            <a href="call:`+parseInt(val.order_user_number)+`" class="spr customer-phone"></a>
+                                            <a href="javascript:Android.call('`+parseInt(val.order_user_number)+`');" class="spr customer-phone"></a>
                                         </div>
                                     </div>
                                     <div class="time-container">

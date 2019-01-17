@@ -33,35 +33,20 @@ class Goods extends Controller
     {
         $admin_id = Session::get("user_id");
         $admin_role = db("admin")->where("id", $admin_id)->field("role_id")->find();
-        if ($admin_role["role_id"] == 2) {
+        if ($admin_role["role_id"] == 2 || $admin_role["role_id"] == 18) {
             $goods = db("goods")->order("id desc")->select();
-            $goods_year = db("goods")->field("goods_year_id,id")->select();
-            $time = date("Y-m-d");
-            foreach ($goods_year as $key => $value) {
-                $year = db("year")->where("id", $value["goods_year_id"])->value("year");
-                $date = date("Y-m-d", strtotime("+$year year"));
-                if ($time == $date) {
-                    $bool = db("goods")->where("id", $value["id"])->update(["goods_status" => 0, "putaway_status" => null]);
-                }
-            }
-            // $goods_money = db("goods")->field("goods_new_money,id")->select();
-            
-            // foreach ($goods_money as $k => $val) {
-            //     $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
-            //     $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
-            //     db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
-            // }
-   
+
+
             foreach ($goods as $key => $value) {
-                $max[$key] = db("special")->where("goods_id", $goods[$key]['id'])->max("price");//最高价格
-                $min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("price");//最低价格
-                $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $goods[$key]['id'])->sum("stock");//库存
-                $goods[$key]["max_price"] = $max[$key];
-                $goods[$key]["min_price"] = $min[$key];
-                        
+                $goods[$key]["max_price"] = db("special")->where("goods_id", $value['id'])->max("price");//最高价格
+                $goods[$key]["min_price"] = db("special")->where("goods_id", $value['id'])->min("price");//最低价格
+                $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $value['id'])->sum("stock");//库存
+                $goods[$key]["max_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->max("goods_adjusted_price");//最高价格
+                $goods[$key]["min_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->min("goods_adjusted_price");//最低价格
             }
+
             //调整规格后的价格显示
-            $adjusted_price = db("special")->field("price,id")->select();          
+            $adjusted_price = db("special")->field("price,id")->select();
             foreach ($adjusted_price as $kw => $vl) {
                 $ratio[] = db("goods_ratio")->where("min_money", "<=", $vl["price"])->where("max_money", ">=", $vl["price"])->field("ratio")->find();
                 $goods_adjusted_moneys[] = $vl["price"] + ($vl["price"] * $ratio[$kw]["ratio"]);
@@ -79,7 +64,7 @@ class Goods extends Controller
             $showdata = array_slice($all_idents, ($curPage - 1) * $listRow, $listRow, true);// 数组中根据条件取出一段值，并返回
             $goods = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                 'var_page' => 'page',
-                'path' => url('admin/Category/index'),//这里根据需要修改url
+                'path' => url('admin/Goods/index'),//这里根据需要修改url
                 'query' => [],
                 'fragment' => '',
             ]);
@@ -91,33 +76,20 @@ class Goods extends Controller
             $user_id = db("user")->where("phone_num", $admin_phone)->value("id");
             $store_id = db("store")->where("user_id", $user_id)->value("store_id");
             $goods = db("goods")->order("id desc")->where("store_id", $store_id)->select();
-            $goods_year = db("goods")->field("goods_year_id,id")->select();
-            $time = date("Y-m-d");
-            foreach ($goods_year as $key => $value) {
-                $year = db("year")->where("id", $value["goods_year_id"])->value("year");
-                $date = date("Y-m-d", strtotime("+$year year"));
-                if ($time == $date) {
-                    $bool = db("goods")->where("id", $value["id"])->update(["goods_status" => 0, "putaway_status" => null]);
-                }
-            }
-
-
             foreach ($goods as $key => $value) {
                 $max[$key] = db("special")->where("goods_id", $goods[$key]['id'])->max("price");//最高价格
                 $min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("price");//最低价格
                 $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $goods[$key]['id'])->sum("stock");//库存
                 $goods[$key]["max_price"] = $max[$key];
                 $goods[$key]["min_price"] = $min[$key];
-                        
+                $goods_adjusted_price_max[$key] = db("special")->where("goods_id", $goods[$key]['id'])->max("goods_adjusted_price");//最高价格
+                $goods_adjusted_price_min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("goods_adjusted_price");//最低价格
+                $goods[$key]["max_goods_adjusted_price"] = $goods_adjusted_price_max[$key];
+                $goods[$key]["min_goods_adjusted_price"] = $goods_adjusted_price_min[$key];
             }
-            // $goods_money = db("goods")->field("goods_new_money,id")->select();
-            // foreach ($goods_money as $k => $val) {
-            //     $goods_ratio[] = db("goods_ratio")->where("min_money", "<=", $val["goods_new_money"])->where("max_money", ">=", $val["goods_new_money"])->field("ratio")->find();
-            //     $goods_adjusted_money[] = $val["goods_new_money"] + ($val["goods_new_money"] * $goods_ratio[$k]["ratio"]);
-            //     db("goods")->where("id", $val["id"])->update(["goods_adjusted_money" => $goods_adjusted_money[$k]]);
-            // }
+
             //调整规格后的价格显示
-            $adjusted_price = db("special")->field("price,id")->select();          
+            $adjusted_price = db("special")->field("price,id")->select();
             foreach ($adjusted_price as $kw => $vl) {
                 $ratio[] = db("goods_ratio")->where("min_money", "<=", $vl["price"])->where("max_money", ">=", $vl["price"])->field("ratio")->find();
                 $goods_adjusted_moneys[] = $vl["price"] + ($vl["price"] * $ratio[$kw]["ratio"]);
@@ -135,7 +107,7 @@ class Goods extends Controller
             $showdata = array_slice($all_idents, ($curPage - 1) * $listRow, $listRow, true);// 数组中根据条件取出一段值，并返回
             $goods = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
                 'var_page' => 'page',
-                'path' => url('admin/Category/index'),//这里根据需要修改url
+                'path' => url('admin/Goods/index'),//这里根据需要修改url
                 'query' => [],
                 'fragment' => '',
             ]);
@@ -418,7 +390,11 @@ class Goods extends Controller
             if ($bool_data) {
                 $this->success("删除成功", url("admin/Goods/index"));
             } else {
+<<<<<<< HEAD
                 $this->success("删除失败", url('admin/Goods/index'));
+=======
+                $this->success("失败", url('admin/Goods/add'));
+>>>>>>> 43e93d08b0f74e153b1bd15e382e4957ab068f64
             }
 
         }
@@ -454,7 +430,7 @@ class Goods extends Controller
             }
             //图片添加
             $show_images = $request->file("goods_show_images");
-
+            halt($show_images);
             if (!empty($show_images)) {
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
@@ -499,17 +475,20 @@ class Goods extends Controller
     {
 
         if ($request->isPost()) {
+            $admin_id = Session::get("user_id");
             $status = $request->only(["status"])["status"];
-            if ($status == 0) {
+            $admin_role = db("admin")->where("id",$admin_id)->value("role_id");
+            $admin = db("admin")->where("id", $admin_id)->select();
+            $user = db("user")->where("phone_num",$admin[0]["account"])->find();
+            $store = db("store")->where("user_id",$user["id"])->find();
+            //管理员状态修改
+            if ($status == 0 && $admin_role == 2) {
                 $id = $request->only(["id"])["id"];
-                $admin_id = Session::get("user_id");
+                $bool = [];
                 foreach ($id as $value) {
-                    if ($admin_id == 2) {
-                        $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
-                    } else {
-                        $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
-                    }
+                    $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
                 }
+
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
@@ -517,21 +496,82 @@ class Goods extends Controller
                 }
 
             }
-            if ($status == 1) {
+            if ($status == 1 && $admin_role == 2) {
                 $id = $request->only(["id"])["id"];
-                $admin_id = Session::get("user_id");
+                $bool = [];
                 foreach ($id as $val) {
                     $goods = db("goods")->where("id", $val)->field("putaway_status")->find();
                     if ($admin_id == 2 || $goods["putaway_status"] != null) {
                         $bool = db("goods")->where("id", $val)->update(["goods_status" => 1, "putaway_status" => 1]);
                     }
                 }
+
+                if ($bool) {
+                    return ajax_success("成功");
+                } else {
+                    return ajax_error("失败");
+                }
+            }
+            //店铺状态修改
+            if ($status == 0 && $admin_role != 2 && $store["store_is_pay"] == 1) {
+                $id = $request->only(["id"])["id"];
+                $bool = [];
+                foreach ($id as $value) {
+                    $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
+                }
+
                 if ($bool) {
                     return ajax_success("成功");
                 } else {
                     return ajax_error("失败");
                 }
 
+            }
+
+            if ($status == 1 && $admin_role != 2 && $store["store_is_pay"] == 1) {
+                $id = $request->only(["id"])["id"];
+                $bool = [];
+                foreach ($id as $val) {
+                    $goods = db("goods")->where("id", $val)->field("putaway_status")->find();
+                    if ($admin_id != 2 || $goods["putaway_status"] != null) {
+                        $bool = db("goods")->where("id", $val)->update(["goods_status" => 1, "putaway_status" => 1]);
+                    }
+                }
+
+                if ($bool) {
+                    return ajax_success("成功");
+                } else {
+                    return ajax_error("失败");
+                }
+            }
+
+            //店铺不需要付款修改状态
+            if ($status == 0 && $admin_role != 2 && $store["store_is_pay"] == -1) {
+                $id = $request->only(["id"])["id"];
+                $bool = [];
+                foreach ($id as $value) {
+                    $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
+                }
+
+                if ($bool) {
+                    return ajax_success("成功");
+                } else {
+                    return ajax_error("失败");
+                }
+
+            }
+            if ($status == 1 && $admin_role != 2 && $store["store_is_pay"] == -1) {
+                $id = $request->only(["id"])["id"];
+                $bool = [];
+                foreach ($id as $val) {
+                    $bool = db("goods")->where("id", $val)->update(["goods_status" => 1]);
+                }
+
+                if ($bool) {
+                    return ajax_success("成功");
+                } else {
+                    return ajax_error("失败");
+                }
             }
         }
 
@@ -776,11 +816,16 @@ class Goods extends Controller
      */
     public function role_name(Request $request)
     {
-
         if ($request->isPost()) {
             $user_id = Session::get("user_id");
             $admin = db("admin")->where("id", $user_id)->select();
-            return ajax_success("获取成功", array("admin" => $admin));
+            $user = db("user")->where("phone_num",$admin[0]["account"])->find();
+            $store = db("store")->where("user_id",$user["id"])->find();
+            $store_status = [];
+            if($store["store_is_pay"] == -1){
+                $store_status = $store["store_is_pay"];
+            }
+            return ajax_success("获取成功", array("admin" => $admin,"store_status"=>$store_status));
         }
 
     }
@@ -794,7 +839,6 @@ class Goods extends Controller
      */
     public function alipay(Request $request)
     {
-
         if ($request->isPost()) {
             include('../extend/AliPay_demo/f2fpay/model/builder/AlipayTradePrecreateContentBuilder.php');
             include('../extend/AliPay_demo/f2fpay/service/AlipayTradeService.php');
