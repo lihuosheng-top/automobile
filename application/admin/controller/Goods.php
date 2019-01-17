@@ -198,7 +198,6 @@ class Goods extends Controller
             }
             //图片添加
             $show_images = $request->file("goods_show_images");
-
             $imgs = $request->file("imgs");
 
             if (!empty($show_images)) {
@@ -425,17 +424,19 @@ class Goods extends Controller
                 $goods_data["goods_delivery"] = $goods_delivery;
             }
             //图片添加
-            $show_images = request()->file("goods_show_images");
-            halt($show_images);
+            $show_images = $request->file("goods_show_images");
             if (!empty($show_images)) {
-                $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
-                $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
+                foreach ($show_images as $key => $val) {
+                    $show_image = $val->move(ROOT_PATH . 'public' . DS . 'uploads');
+                    $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
+                }
             }
             $admin_id = Session::get("user_id");
             $admin_phone = db("admin")->where("id", $admin_id)->value("phone");
             $user_id = db("user")->where("phone_num", $admin_phone)->value("id");
             $store_id = db("store")->where("user_id", $user_id)->value("store_id");
             $goods_data["store_id"] = $store_id;
+            halt($goods_data);
             $bool = db("goods")->where("id", $id)->update($goods_data);
             if ($bool) {
                 //取出图片在存到数据库

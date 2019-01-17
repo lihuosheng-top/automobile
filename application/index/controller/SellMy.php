@@ -271,7 +271,6 @@ class  SellMy extends Controller{
                 $timetoday = strtotime(date("Y-m-d",time()));//今天0点的时间点
                 $time2 = time() + 3600*24;//今天24点的时间点，两个值之间即为今天一天内的数据
                 $time_condition  = "order_create_time>$timetoday and order_create_time< $time2";
-
                 $data =Db::name("order_parts")
                     ->field('parts_order_number,order_create_time,group_concat(id) order_id')
                     ->where($time_condition)
@@ -451,7 +450,7 @@ class  SellMy extends Controller{
                 if(!empty($end_info)){
                     $ords =array();
                     foreach ($end_info as $vl){
-                        $ords[] =$vl["order_create_times"];
+                        $ords[] =$vl["pay_time"];
                     }
                     array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
@@ -645,7 +644,7 @@ class  SellMy extends Controller{
                 if(!empty($end_info)){
                     $ords =array();
                     foreach ($end_info as $vl){
-                        $ords[] =$vl["order_create_times"];
+                        $ords[] =$vl["pay_time"];
                     }
                     array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
@@ -839,7 +838,7 @@ class  SellMy extends Controller{
                 if(!empty($end_info)){
                     $ords =array();
                     foreach ($end_info as $vl){
-                        $ords[] =$vl["order_create_times"];
+                        $ords[] =$vl["pay_time"];
                     }
                     array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
@@ -1228,7 +1227,7 @@ class  SellMy extends Controller{
                 if(!empty($end_info)){
                     $ords =array();
                     foreach ($end_info as $vl){
-                        $ords[] =$vl["order_create_times"];
+                        $ords[] =$vl["pay_time"];
                     }
                     array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
@@ -1419,7 +1418,7 @@ class  SellMy extends Controller{
                 if(!empty($end_info)){
                     $ords =array();
                     foreach ($end_info as $vl){
-                        $ords[] =$vl["order_create_times"];
+                        $ords[] =$vl["pay_time"];
                     }
                     array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
@@ -1608,7 +1607,7 @@ class  SellMy extends Controller{
                 if(!empty($end_info)){
                     $ords =array();
                     foreach ($end_info as $vl){
-                        $ords[] =$vl["order_create_times"];
+                        $ords[] =$vl["pay_time"];
                     }
                     array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
