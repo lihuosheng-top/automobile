@@ -433,7 +433,8 @@ class OrderService extends Controller{
                                 "time"=>$data["time"],   //预约到店时间
                                 "integral_info"=> $integral_discount, //积分抵扣
                                 "user_info"=> $user_info,//用户信息
-                                "car_series"=>$car_series,//车信息
+//                                "car_series"=>$car_series,//车信息
+                                "car_series"=>$user_car,//车信息
                                 "user_love_info"=>$user_love_info, //爱车信息（默认）
                             ];
                             if($serve_data){
