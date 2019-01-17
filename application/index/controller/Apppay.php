@@ -42,10 +42,11 @@ class Apppay extends Controller
                     ->field("parts_goods_name")
                     ->where("parts_order_number",$out_trade_no)
                     ->select();
-                foreach($parts as $ks=>$vs){
-                    $titles[] = $vs["parts_goods_name"];
-                }
-                $title =implode("",$titles);
+//                foreach($parts as $ks=>$vs){
+//                    $titles[] = $vs["parts_goods_name"];
+//                }
+//                $title =implode("",$titles);
+                $title ="消费测试";
                 $money =Db::name("order_parts")->where("parts_order_number",$out_trade_no)->sum("order_real_pay");
                 $datas["user_id"] =$parts[0]["user_id"]; //用户ID
                 $datas["wallet_operation"] = -$money; //消费金额
