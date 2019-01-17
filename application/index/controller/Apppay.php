@@ -303,20 +303,30 @@ class Apppay extends Controller
             $result = Db::name('order_service')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
             if ($result > 0) {
                 //进行钱包消费记录
-                $parts =Db::name("order_service")
-                    ->field("service_goods_name,service_real_pay,user_id")
-                    ->where($condition)
-                    ->find();
-                $title =$parts["service_goods_name"];
-                $money =$parts["service_real_pay"];//金额
-                $datas["user_id"] =$parts["user_id"]; //用户ID
-                $datas["wallet_operation"] = -$money; //消费金额
+//                $parts =Db::name("order_service")
+//                    ->field("service_goods_name,service_real_pay,user_id")
+//                    ->where($condition)
+//                    ->find();
+//                $title =$parts["service_goods_name"];
+//                $money =$parts["service_real_pay"];//金额
+//                $datas["user_id"] =$parts["user_id"]; //用户ID
+//                $datas["wallet_operation"] = -$money; //消费金额
+//                $datas["wallet_type"] = -1; //消费操作(1入，-1出)
+//                $datas["operation_time"] = date("Y-m-d H:i:s"); //操作时间
+//                $datas["wallet_remarks"] = "订单号：".$out_trade_no."，支付宝消费".$money; //消费备注
+//                $datas["wallet_img"] = "index/image/alipay.png"; //图标
+//                $datas["title"] = $title; //标题（消费内容）
+//                $datas["order_number"] =$out_trade_no; //订单编号
+//                $datas["pay_type"] ="支付宝";//消费类型
+//                $datas["wallet_balance"] =1; //此刻钱包余额
+                $datas["user_id"] =1; //用户ID
+                $datas["wallet_operation"] = -1; //消费金额
                 $datas["wallet_type"] = -1; //消费操作(1入，-1出)
                 $datas["operation_time"] = date("Y-m-d H:i:s"); //操作时间
-                $datas["wallet_remarks"] = "订单号：".$out_trade_no."，支付宝消费".$money; //消费备注
+                $datas["wallet_remarks"] = 1; //消费备注
                 $datas["wallet_img"] = "index/image/alipay.png"; //图标
-                $datas["title"] = $title; //标题（消费内容）
-                $datas["order_number"] =$out_trade_no; //订单编号
+                $datas["title"] = 1; //标题（消费内容）
+                $datas["order_number"] =1; //订单编号
                 $datas["pay_type"] ="支付宝";//消费类型
                 $datas["wallet_balance"] =1; //此刻钱包余额
                 Db::name("wallet")->insert($datas);
