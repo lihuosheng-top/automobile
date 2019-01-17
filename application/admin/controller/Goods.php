@@ -426,9 +426,10 @@ class Goods extends Controller
             //图片添加
             $show_images = $request->file("goods_show_images");
             if (!empty($show_images)) {
-
-                $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
-                $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
+                foreach ($show_images as $key => $val) {
+                    $show_image = $val->move(ROOT_PATH . 'public' . DS . 'uploads');
+                    $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());
+                }
             }
             $admin_id = Session::get("user_id");
             $admin_phone = db("admin")->where("id", $admin_id)->value("phone");
