@@ -66,10 +66,10 @@ Route::group("",[
     'index_pay_code'=>"index/Apppay/index_pay_code", //状态修改(回调地址修改状态)
     "recharge_aliPay"=>"index/Apppay/recharge_aliPay",     //充值订单提交支付（付款）
     "recharge_pay_code"=>"index/Apppay/recharge_pay_code",     //充值订单支付（成功回调修改状态）
-    "notifyurls"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_alipay"=>"index/Apppay/ios_api_alipay",//生成支付宝签名 TODO:配件商支付宝签名
     "ios_api_service_alipay"=>"index/Apppay/ios_api_service_alipay",//生成支付宝签名 TODO:服务商支付宝签名
     "ios_api_recharge_alipay"=>"index/Apppay/ios_api_recharge_alipay",//生成支付宝签名 TODO:充值支付宝签名
+    "notifyurls"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "service_notifyurl"=>"index/Apppay/service_notifyurl",//服务商异步处理(支付宝IOS对接)
     "recharge_notifyurl"=>"index/Apppay/recharge_notifyurl",//充值订单异步处理(支付宝IOS对接)
     /*TODO:服务商订单结束*/
