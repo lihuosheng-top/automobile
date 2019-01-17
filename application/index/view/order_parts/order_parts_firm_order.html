@@ -653,12 +653,11 @@
         })
 
         function alipayCallback(res){
-            // alert(res.resultStatus);
             if(res.resultStatus == '6001'){
                 location.href = 'order_parts_wait_pay';
             }else if(res.resultStatus == '9000'){
                 // var res = res.result.alipay_trade_app_pay_response;
-                location.href = 'order_parts_all';
+                location.href = 'order_wait_deliver';
                 // $.ajax({
                 //     url: 'notifyurl',
                 //     type: 'GET',
