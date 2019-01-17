@@ -638,7 +638,7 @@ class Apppay extends Controller
                         "operation_time"=>date("Y-m-d H:i:s"),//操作时间
                         "operation_type"=>1,//充值为1，提现为负一
                         "pay_type_content"=>$recharge_record_data["pay_type_name"],//支付方式
-                        "money_status"=>2 , //到款状态（1到账，2未到款）
+                        "money_status"=>1 , //到款状态（1到账，2未到款）
                         "img_url"=>"index/image/alipay.png", //对应的图片链接
                         "operation_amount" =>$recharge_record_data["recharge_money"]+$lists, //操作金额
                         "recharge_describe" =>"充值".$recharge_record_data["recharge_money"]."元,送了".$lists,//描述
@@ -664,10 +664,10 @@ class Apppay extends Controller
                     ->value("user_wallet");
                 $datas=[
                     "user_id"=>$parts["user_id"],//用户ID
-                    "wallet_operation"=> -$money,//消费金额
-                    "wallet_type"=>-1,//消费操作(1入，-1出)
+                    "wallet_operation"=> $money,//消费金额
+                    "wallet_type"=>1,//消费操作(1入，-1出)
                     "operation_time"=>date("Y-m-d H:i:s"),//操作时间
-                    "wallet_remarks"=>"订单号：".$out_trade_no."，支付宝消费，支出".$money."元",//消费备注
+                    "wallet_remarks"=>"订单号：".$out_trade_no."，充值，余额增加".$money."元",//消费备注
                     "wallet_img"=>"index/image/alipay.png",//图标
                     "title"=>$title,//标题（消费内容）
                     "order_nums"=>$out_trade_no,//订单编号

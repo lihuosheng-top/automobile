@@ -131,7 +131,15 @@
 			});
 
 		});
-
+		$(":submit").click(function(){
+			if($(".content .text").length==0){
+				alert("你没有改动")
+				return false;
+			}
+		// console.log($(".content .text").length)
+		// return false;
+		})
+		
 
 		})
 	</script>

@@ -51,9 +51,6 @@ class Reservation extends Controller{
 
         if($request->isPost()) {
             $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
-            $store_user_address = $request->only(["store_user_address"])["store_user_address"];
-            //$num = strpos($store_user_address,"区");
-            //$store_address = substr($store_user_address,0,$num);
             $user_id = Session::get("user");
             if(!empty($user_id)){
                 $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();

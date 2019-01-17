@@ -814,7 +814,7 @@ class OrderParts extends Controller{
                     if (!empty($end_info)) {
                         $ords =array();
                         foreach ($end_info as $vl){
-                            $ords[] =intval($vl["order_create_time"]);
+                            $ords[] =intval($vl["pay_time"]);
                         }
                         array_multisort($ords,SORT_DESC,$end_info);
                         return ajax_success('数据', $end_info);
@@ -1548,15 +1548,13 @@ class OrderParts extends Controller{
                 return ajax_error("未登录",['status'=>0]);
             }
             $user_information =Db::name("user")->where("id",$user_id)->find();
-            $is_address = Db::name('user_address')->where('user_id', $user_id)->find();
             $store_name =Db::name("store")->where("store_id",$data["store_id"])->find();
-            if (empty($is_address) ) {
+            if (empty($data["address_id"]) ) {
                 return ajax_error('请填写收货地址',['status'=>0]);
             }else{
-                $is_address_status = Db::name('user_address')->where('user_id', $user_id)->where('status',1)->find();
-                if (empty($is_address_status) ) {
-                    $is_address_status =$is_address;
-                }
+                $is_address_status = Db::name('user_address')
+                    ->where("id",$data["address_id"])
+                    ->find();
                 $commodity_id = $_POST['goods_id'];
                 if (!empty($commodity_id)) {
                     $goods_data = Db::name('goods')->where('id', $commodity_id)->find();
@@ -1667,15 +1665,13 @@ class OrderParts extends Controller{
                 return ajax_error("未登录",['status'=>0]);
             }
             $user_information =Db::name("user")->where("id",$user_id)->find(); //用户信息
-            $is_address = Db::name('user_address')->where('user_id', $user_id)->find();//用户地址
-            if (empty($is_address) ) {
+            if (empty($data["address_id"]) ) {
                 return ajax_error('请填写收货地址',['status'=>0]);
             }else{
                 //收货地址
-                $is_address_status = Db::name('user_address')->where('user_id', $user_id)->where('status',1)->find();
-                if (empty($is_address_status) ) {
-                    $is_address_status =$is_address;
-                }
+                $is_address_status = Db::name('user_address')
+                    ->where("id",$data["address_id"])
+                    ->find();
                 //商id
                 $shopping_id =$request->only("shoppingId")["shoppingId"]; //购物车id
                 foreach ($shopping_id as $keys=>$values){
