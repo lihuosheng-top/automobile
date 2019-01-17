@@ -301,7 +301,7 @@ class Apppay extends Controller
             $data['pay_type_content'] = "支付宝";//支付宝交易号
             $condition['service_order_number'] = $out_trade_no;
             $result = Db::name('order_service')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
-            if ($result) {
+            if ($result > 0) {
                 //进行钱包消费记录
                 $parts =Db::name("order_service")
                     ->field("service_goods_name,service_real_pay,user_id")
