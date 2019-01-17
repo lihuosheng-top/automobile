@@ -24,7 +24,7 @@ $.ajax({
     success: function (res) {
         console.log(res);
         if (res.status == 1) {
-            $('.user-name').text('收货人：' + res.data.harvester);
+            $('.user-name').text('收货人：' + res.data.harvester).data({'address_id': res.data.id});
             $('.user-phone').text(res.data.harvester_phone_num);
             var addr = res.data.address_name.split(',').join('');
             $('.address-txt').text(addr + res.data.harvester_real_address);
