@@ -28,8 +28,10 @@ class Advertisement extends Controller
         if ($request->isPost()) {
             $area = $request->only(["area"])["area"];
             Session::set("area", $area);
+            $time = time();
             $area_data = Db::name("platform")->where('area', $area)->where("status", 1)->order("start_time desc")->select();
             $adress_data = Db::name("platform")->where('department', "platform_business")->where("status", 1)->order("start_time desc")->select();
+            //$status = Db::name("platform")->where('end_time', "<=" ,$time)->where("status", 1)->update(['status' => 3]);
 
 
             //平台
