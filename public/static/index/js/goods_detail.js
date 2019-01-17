@@ -393,18 +393,8 @@ $(function(){
                 if(loginStatus === 0){
                     location.href = 'login';
                 }else{
-                    $(this).toggleClass('collect-on');
-                    if($(this).hasClass('collect-on')){
-                        var goodsId = {
-                            'id': id
-                        }
-                        myAjax('collection_add', goodsId, myLayer('收藏成功'));
-                    }else{
-                        var goodsId = {
-                            'id': id
-                        }
-                        myAjax('collection_del', goodsId, myLayer('取消收藏'));
-                    }
+                    var goodsId = {id: id}
+                    myAjax('collection_add', goodsId);
                 }
             })
         },
@@ -434,7 +424,7 @@ function myLayer(info){
         time: 1
     })
 }
-function myAjax(url, data, succCallBack){
+function myAjax(url, data){
     $.ajax({
         url: url,
         type: 'POST',
@@ -442,7 +432,12 @@ function myAjax(url, data, succCallBack){
         data: data,
         success: function(res){
             console.log(res);
-            succCallBack();
+            if(res.status === 3){
+                myLayer(res.info);
+            }else{
+                myLayer(res.info);
+                $('.collect').toggleClass('collect-on');
+            }
         },
         error: function(){
             console.log('error')
