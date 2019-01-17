@@ -66,13 +66,14 @@ Route::group("",[
     'index_pay_code'=>"index/Apppay/index_pay_code", //状态修改(回调地址修改状态)
     "recharge_aliPay"=>"index/Apppay/recharge_aliPay",     //充值订单提交支付（付款）
     "recharge_pay_code"=>"index/Apppay/recharge_pay_code",     //充值订单支付（成功回调修改状态）
+    "notifyurls"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_alipay"=>"index/Apppay/ios_api_alipay",//生成支付宝签名 TODO:配件商支付宝签名
-    "notifyurl"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "ios_api_service_alipay"=>"index/Apppay/ios_api_service_alipay",//生成支付宝签名 TODO:服务商支付宝签名
     "service_notifyurl"=>"index/Apppay/service_notifyurl",//服务商异步处理(支付宝IOS对接)
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/
+
     "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_order_button_by_shop"=>"index/OrderParts/ios_api_order_button_by_shop",//购物车提交订单
 //    "ios_api_alipay"=>"index/OrderParts/ios_api_alipay",//生成支付宝签名 TODO:支付宝签名
@@ -229,12 +230,9 @@ Route::group("",[
     /*TODO：店铺开始*/
     "store_index"=>"index/Store/index",             //店铺首页(所有的店铺信息)
     "store_goods_info"=>"index/Store/store_goods_info",             //店铺首页 店铺内的商品（综合）
-    "store_list_sales_volume"=>"index/Store/goods_list_sales_volume",             //店铺首页 店铺内的商品（销量）
-    "goods_list_sales_price"=>"index/Store/goods_list_sales_price",             //店铺首页 店铺内的商品（价格）
-
-
+    "store_list_sales_volume"=>"index/Store/store_goods_sales_volume",             //店铺首页 店铺内的商品（销量）
+    "store_list_sales_price"=>"index/Store/store_goods_sales_price",             //店铺首页 店铺内的商品（价格）
     "store_index_search"=>"index/Store/store_index_search",             //店铺首页 店铺内的商品（搜索）
-
     "store_league"=>"index/Store/league",           //我要加盟
     "store_verify"=>"index/Store/verify",           //身份验证
 

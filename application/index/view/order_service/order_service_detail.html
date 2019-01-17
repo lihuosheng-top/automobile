@@ -44,7 +44,7 @@
                             <a href="javascript:;" class="spr icon-phone"></a>
                             拨打电话
                         </div>
-                        <div>
+                        <div class="to-map">
                             <a href="javascript:;" class="spr icon-map"></a>
                             导航路线
                         </div>
@@ -162,7 +162,14 @@
                     // 到店时间
                     $('.service-time span').text(val.got_to_time);
                     // 打电话
-                    $('.call-phone a').prop('href', 'javascript:Android.call("'+val.car_owner_phone_number+'");');
+                    // $('.call-phone a').prop('href', 'javascript:;');
+                    $('.call-phone').click(function(){
+                        Android.call(val.car_owner_phone_number);
+                    })
+                    $('.to-map').click(function(){
+                        console.log(val.latitude, val.longitude, val.store_name)
+                        Android.openGdMap(val.latitude, val.longitude, val.store_name)
+                    })
                     // 服务项目名称
                     $('.service-item-name').text(val.service_goods_name);
                     // 服务项目价格 服务总价值服务总价值  积分抵扣 实付款
@@ -311,7 +318,26 @@
             // var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
             return Y+M+D+h+m;
         }
-
+        function alipayCallback(res){
+            if(res.resultStatus == '6001'){
+                location.href = 'order_service_wait_pay';
+            }else if(res.resultStatus == '9000'){
+                // var res = res.result.alipay_trade_app_pay_response;
+                // $.ajax({
+                //     url: 'service_notifyurl',
+                //     type: 'GET',
+                //     dataType: 'JSON',
+                //     data: {
+                //         out_trade_no: res.out_trade_no,
+                //         trade_no: res.trade_no,
+                //         trade_status: res.msg
+                //     },
+                //     success: function(res){
+                        location.href = 'order_service_wait_deliver';
+                //     }
+                // })
+            }
+        }
     </script>
 </body>
 </html>
