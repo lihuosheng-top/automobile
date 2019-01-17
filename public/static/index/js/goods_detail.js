@@ -55,7 +55,7 @@ $.ajax({
             // 售价
             $('.sale').html('￥' + val.goods_standard[0].goods_adjusted_price);
             // 库存
-            $('.stock').html('库存' + val.goods_standard[0].stock + '件');
+            $('.stock span').text( val.goods_standard[0].stock);
             // 商品详情
             $('.detail-img-box').html(val.goods_text);
             if(val.dedicated_vehicle == null){
@@ -309,9 +309,12 @@ function myCalculator(addBtn, minusBtn, val){
     })
     // 加
     $(aBtn).click(function(){
-        var add =  value.value - 0;
-        add += 1;
-        value.value = add;
+        var stock = parseInt($('.select-goods-stock span').text());
+        if(stock > value.value){
+            var add =  value.value - 0;
+            add += 1;
+            value.value = add;
+        }
     })
 }
 
