@@ -322,7 +322,7 @@ class Apppay extends Controller
                 $datas["user_id"] =1; //用户ID
                 $datas["wallet_operation"] = -1; //消费金额
                 $datas["wallet_type"] = -1; //消费操作(1入，-1出)
-                $datas["operation_time"] = date("Y-m-d H:i:s"); //操作时间
+                $datas["operation_time"] = null; //操作时间
                 $datas["wallet_remarks"] = 1; //消费备注
                 $datas["wallet_img"] = "index/image/alipay.png"; //图标
                 $datas["title"] = 1; //标题（消费内容）
@@ -331,7 +331,7 @@ class Apppay extends Controller
                 $datas["wallet_balance"] =1; //此刻钱包余额
                 Db::name("wallet")->insert($datas);
                 return ajax_success('支付成功', ['status' => 1]);
-            } else {
+            }else {
                 return ajax_error('验证失败了', ['status' => 0]);
             }
         } else {
