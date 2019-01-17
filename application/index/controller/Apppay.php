@@ -622,48 +622,48 @@ class Apppay extends Controller
                     ->find();
                 $title ="余额充值";
                 $money =$parts["recharge_money"];//金额
-//                $old_wallet =Db::name("user")
-//                    ->where("id",$parts["user_id"])
-//                    ->value("user_wallet"); //旧的余额
-//                $new_wallet =Db::name("user")
-//                    ->where("id",$parts["user_id"])
-//                    ->update(["user_wallet" =>$old_wallet+$money]); //新增加的余额
-
-                $recharge_record_data = Db::name("recharge_record")->where("recharge_order_number",$out_trade_no)->find();
-                $list =Db::name("recharge_setting")->field("recharge_full,send_money")->select();
-                $lists =null;
-                foreach($list as $k=>$v){
-                    if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
-                        $lists =$v["send_money"];
-                    }
-                }
-                //如果达到充值送积分条件
-                if(!empty($lists)){
-                    $recharge_data =[
-                        "operation_amount" =>$recharge_record_data["recharge_money"]+$lists, //操作金额
-                        "recharge_describe" =>"充值".$recharge_record_data["recharge_money"]."元,送了".$lists,//描述
-                    ];
-//                    $recahrge_data["operation_amount"]=$recharge_record_data["recharge_money"]+$lists; //操作金额
-//                    $recahrge_data["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元,送了".$lists; //描述
-                    Db::name("recharge_reflect")->insert($recharge_data);//插到记录
-                    $user_wallet =Db::name("user")
-                        ->field("user_wallet")
-                        ->where("id",$recharge_record_data["user_id"])
-                        ->find();
-                    Db::name("user")->where("id",$recharge_record_data["user_id"])
-                        ->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $lists]);
-                }else {
-                    $recharge_data =[
-                        "operation_amount" =>$recharge_record_data["recharge_money"], //操作金额
-                        "recharge_describe" =>"充值" . $recharge_record_data["recharge_money"] . "元",//描述
-                    ];
-                    Db::name("recharge_reflect")->insert($recharge_data);//插到记录
-                    $user_wallet = Db::name("user")->field("user_wallet")->where("id", $recharge_record_data["user_id"])->find();
-                    Db::name("user")->where("id", $recharge_record_data["user_id"])->update(["user_wallet" => $user_wallet["user_wallet"] + $recharge_record_data["recharge_money"]]);
-                }
+                $old_wallet =Db::name("user")
+                    ->where("id",$parts["user_id"])
+                    ->value("user_wallet"); //旧的余额
                 $new_wallet =Db::name("user")
-                    ->where("id",$recharge_record_data["user_id"])
-                    ->value("user_wallet");
+                    ->where("id",$parts["user_id"])
+                    ->update(["user_wallet" =>$old_wallet+$money]); //新增加的余额
+
+//                $recharge_record_data = Db::name("recharge_record")->where("recharge_order_number",$out_trade_no)->find();
+//                $list =Db::name("recharge_setting")->field("recharge_full,send_money")->select();
+//                $lists =null;
+//                foreach($list as $k=>$v){
+//                    if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
+//                        $lists =$v["send_money"];
+//                    }
+//                }
+//                //如果达到充值送积分条件
+//                if(!empty($lists)){
+//                    $recharge_data =[
+//                        "operation_amount" =>$recharge_record_data["recharge_money"]+$lists, //操作金额
+//                        "recharge_describe" =>"充值".$recharge_record_data["recharge_money"]."元,送了".$lists,//描述
+//                    ];
+////                    $recahrge_data["operation_amount"]=$recharge_record_data["recharge_money"]+$lists; //操作金额
+////                    $recahrge_data["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元,送了".$lists; //描述
+//                    Db::name("recharge_reflect")->insert($recharge_data);//插到记录
+//                    $user_wallet =Db::name("user")
+//                        ->field("user_wallet")
+//                        ->where("id",$recharge_record_data["user_id"])
+//                        ->find();
+//                    Db::name("user")->where("id",$recharge_record_data["user_id"])
+//                        ->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $lists]);
+//                }else {
+//                    $recharge_data =[
+//                        "operation_amount" =>$recharge_record_data["recharge_money"], //操作金额
+//                        "recharge_describe" =>"充值" . $recharge_record_data["recharge_money"] . "元",//描述
+//                    ];
+//                    Db::name("recharge_reflect")->insert($recharge_data);//插到记录
+//                    $user_wallet = Db::name("user")->field("user_wallet")->where("id", $recharge_record_data["user_id"])->find();
+//                    Db::name("user")->where("id", $recharge_record_data["user_id"])->update(["user_wallet" => $user_wallet["user_wallet"] + $recharge_record_data["recharge_money"]]);
+//                }
+//                $new_wallet =Db::name("user")
+//                    ->where("id",$recharge_record_data["user_id"])
+//                    ->value("user_wallet");
                 $datas=[
                     "user_id"=>$parts["user_id"],//用户ID
                     "wallet_operation"=> -$money,//消费金额
