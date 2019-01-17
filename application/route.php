@@ -17,6 +17,7 @@ use think\Route;
  * 陈绪
  */
 Route::group("",[
+
     /*首页*/
     "/$"=>"index/index/home",
     "index"=>"index/index/index",
@@ -24,8 +25,6 @@ Route::group("",[
     "weixin_notify"=>"index/index/weixin_notify",
     "index_shop"=>"index/index/shop",                               //热门配件店铺
     "index_shop_goods"=>"index/index/shop_goods",                   //热门配件店铺商品显示
-    "index_serve_shop"=>"index/index/serve_shop",                   //热门配件店铺商品
- 
 
 
 
@@ -45,6 +44,7 @@ Route::group("",[
     "reservation"=>"index/reservation/reservation",//预约服务 首页
     "reservation_detail"=>"index/reservation/reservation_detail",//预约服务 详情
     "reservation_info"=>"index/reservation/reservation_info",//预约服务 详情
+
     /*TODO:预约服务评价信息开始*/
     "reservation_evaluate_numbers"=>"index/reservation/reservation_evaluate_numbers",//全部评价数量，好评数量，中评数量，差评数量，有图数量
     "reservation_evaluate_return"=>"index/reservation/reservation_evaluate_return",//预约服务全部评价数据
