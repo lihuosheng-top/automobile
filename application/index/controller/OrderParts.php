@@ -1670,11 +1670,8 @@ class OrderParts extends Controller{
             }else{
                 //收货地址
                 $is_address_status = Db::name('user_address')
-                    ->where("")
+                    ->where("id",$data["address_id"])
                     ->find();
-                if (empty($is_address_status) ) {
-                    $is_address_status =$is_address;
-                }
                 //商id
                 $shopping_id =$request->only("shoppingId")["shoppingId"]; //购物车id
                 foreach ($shopping_id as $keys=>$values){
