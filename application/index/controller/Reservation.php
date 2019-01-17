@@ -107,18 +107,6 @@ class Reservation extends Controller{
             }
 
         }
-        $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
-        $user_car = db("user_car")->where("status",1)->select();
-        $serve_goods = [];
-        foreach ($user_car as $k_1=>$v_1){
-            $car_series = db("car_series")->where("brand",$v_1["brand"])->where("series",$v_1["series"])->field("vehicle_model")->find();
-            $serve_goods[] = db("serve_goods")->where("vehicle_model",$car_series["vehicle_model"])->where("service_setting_id",$service_setting_id)->find();
-        }
-        foreach ($serve_goods as $k_1=>$v_1){
-            if($v_1 == null) {
-                unset($serve_goods[$k_1]);
-            }
-        }
 
         return view("reservation");
     }

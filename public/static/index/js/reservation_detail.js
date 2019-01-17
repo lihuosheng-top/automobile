@@ -388,22 +388,27 @@ function myService(data){
         $('.shop_name').text(val.store_name);
         $('.addr_p span').text(val.store_detailed_address);
         $('.shop-describe').text(val.store_information);
-        swiperImgArr.push(val.verifying_physical_storefront_one);
-        var storeInnerImg = val.verifying_physical_storefront_two.split(',').splice(0, 3);
-        $.each(storeInnerImg, function(idx, val){
-            swiperImgArr.push(val);
-        }) 
+        if(val.verifying_physical_storefront_one !== null){
+            swiperImgArr.push(val.verifying_physical_storefront_one);
+        }
+        if(val.verifying_physical_storefront_two !== null){
+            var storeInnerImg = val.verifying_physical_storefront_two.split(',').splice(0, 3);
+            $.each(storeInnerImg, function(idx, val){
+                swiperImgArr.push(val);
+            }) 
+        }
     })
     // 轮播图
     var myStr = '';
-    $.each(swiperImgArr, function(idx, val){
-        myStr += `<div class="swiper-slide">
-                    <img src="uploads/`+val+`">
-                </div>`
-    })
-    $('.swiper-wrapper').append(myStr);
-    mySwiper();
-
+    if(swiperImgArr.length !== 0){
+        $.each(swiperImgArr, function(idx, val){
+            myStr += `<div class="swiper-slide">
+                        <img src="uploads/`+val+`">
+                    </div>`
+        })
+        $('.swiper-wrapper').append(myStr);
+        mySwiper();
+    }
     $.each(data.data.serve_data, function(idx, val){
         str2 += `<div class="service-colla-item" data-goodsid="`+val.service_setting_id+`">
                     <div class="service-colla-title">

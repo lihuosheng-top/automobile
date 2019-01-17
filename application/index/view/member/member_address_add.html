@@ -8,7 +8,7 @@
     <script src="__STATIC__/index/js/adaptation.js"></script>
     <link rel="stylesheet" href="__STATIC__/index/css/common.css">
     <!-- 三级城市 -->
-    <link rel="stylesheet" href="__STATIC__/index/css/plugin/LArea.min.css">
+    <link rel="stylesheet" href="__STATIC__/index/js/plugin/threecity/css/scs.min.css">
     <title>添加收货地址</title>
     <style>
         html, body, .wrapper{background-color: #fff;}
@@ -51,7 +51,6 @@
                 <p class="p-title">所在地区</p>
                 <a href="javascript:;" class="spr icon-more"></a>
                 <input type="text" id="area-li" readonly class="text-input" placeholder="请选择">
-                <input type="hidden" id="value1">
             </li>
             <li>
                 <p class="p-title">详细地址</p>
@@ -72,26 +71,116 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <!-- 三级城市脚本 start -->
-    <script src="__STATIC__/index/js/plugin/LAreaData1.js"></script>
-    <script src="__STATIC__/index/js/plugin/LAreaData2.js"></script>
-    <script src="__STATIC__/index/js/plugin/LArea.min.js"></script>
+    <script src="__STATIC__/index/js/plugin/threecity/js/jquery.scs.min.js"></script>
+    <script src="__STATIC__/index/js/plugin/threecity/js/CNAddrArr.min.js"></script>
     <!-- 三级城市脚本 end -->
     <script>
-        // http://www.jq22.com/jquery-info8371 插件地址  三级城市
-        var area = new LArea();
-        area.init({
-            'trigger': '#area-li',//触发选择控件的文本框，同时选择完毕后name属性输出到该位置
-            'valueTo': '#value1',//选择完毕后id属性输出到该位置
-            'keys': { //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
-                id: 'id',
-                name: 'name'
-            },
-            'type': 1,//数据源类型
-            'data': LAreaData//数据源
-        })
-        area.value=[1,13,1];//控制初始位置，注意：该方法并不会影响到input的value
-    </script>
-    <script>
+        $(function() {
+            function getAddrsArrayById(id) {
+                var results = [];
+                if (addr_arr[id] != undefined)
+                    addr_arr[id].forEach(function(subArr) {
+                        results.push({
+                            key: subArr[0],
+                            val: subArr[1]
+                        });
+                    });
+                else {
+                    return;
+                }
+                return results;
+            }        
+            function getStartIndexByKeyFromStartArr(startArr, key) {
+                var result = 0;
+                if (startArr != undefined)
+                    startArr.forEach(function(obj, index) {
+                        if (obj.key == key) {
+                            result = index;
+                            return false;
+                        }
+                    });
+                return result;
+            }
+            //bind the click event for 'input' element
+            $("#area-li").click(function() {
+                var PROVINCES = [],
+                    startCities = [],
+                    startDists = [];
+                //Province data，shall never change.
+                addr_arr[0].forEach(function(prov) {
+                    PROVINCES.push({
+                        key: prov[0],
+                        val: prov[1]
+                    });
+                });
+                //init other data.
+                var $input = $(this),
+                    dataKey = $input.attr("data-key"),
+                    provKey = 1, //default province 北京
+                    cityKey = 36, //default city 北京
+                    distKey = 37, //default district 北京东城区
+                    distStartIndex = 0, //default 0
+                    cityStartIndex = 0, //default 0
+                    provStartIndex = 0; //default 0
+
+                if (dataKey != "" && dataKey != undefined) {
+                    var sArr = dataKey.split("-");
+                    if (sArr.length == 3) {
+                        provKey = sArr[0];
+                        cityKey = sArr[1];
+                        distKey = sArr[2];
+
+                    } else if (sArr.length == 2) { //such as 台湾，香港 and the like.
+                        provKey = sArr[0];
+                        cityKey = sArr[1];
+                    }
+                    startCities = getAddrsArrayById(provKey);
+                    startDists = getAddrsArrayById(cityKey);
+                    provStartIndex = getStartIndexByKeyFromStartArr(PROVINCES, provKey);
+                    cityStartIndex = getStartIndexByKeyFromStartArr(startCities, cityKey);
+                    distStartIndex = getStartIndexByKeyFromStartArr(startDists, distKey);
+                }
+                var navArr = [{
+                    title: "省",
+                    id: "scs_items_prov"
+                }, {
+                    title: "市",
+                    id: "scs_items_city"
+                }, {
+                    title: "区",
+                    id: "scs_items_dist"
+                }];
+                SCS.init({
+                    navArr: navArr,
+                    onOk: function(selectedKey, selectedValue) {
+                        $input.val(selectedValue.split(' ').join(',')).attr("data-key", selectedKey);
+                    }
+                });
+                var distScroller = new SCS.scrollCascadeSelect({
+                    el: "#" + navArr[2].id,
+                    dataArr: startDists,
+                    startIndex: distStartIndex
+                });
+                var cityScroller = new SCS.scrollCascadeSelect({
+                    el: "#" + navArr[1].id,
+                    dataArr: startCities,
+                    startIndex: cityStartIndex,
+                    onChange: function(selectedItem, selectedIndex) {
+                        distScroller.render(getAddrsArrayById(selectedItem.key), 0); //re-render distScroller when cityScroller change
+                    }
+                });
+                var provScroller = new SCS.scrollCascadeSelect({
+                    el: "#" + navArr[0].id,
+                    dataArr: PROVINCES,
+                    startIndex: provStartIndex,
+                    onChange: function(selectedItem, selectedIndex) { //re-render both cityScroller and distScroller when provScroller change
+                        cityScroller.render(getAddrsArrayById(selectedItem.key), 0);
+                        distScroller.render(getAddrsArrayById(cityScroller.getSelectedItem().key), 0);
+                    }
+                });
+            });
+        });
+
         var url = location.search;
         var id, preId, gid;
         if(url.indexOf('?') != -1){
@@ -102,6 +191,7 @@
             }
             console.log(id,preId, gid);
         }
+
         // 新建保存
         $('.save-btn').click(function(){
             var harvester,

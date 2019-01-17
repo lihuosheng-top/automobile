@@ -708,24 +708,9 @@ $(function(){
             if(res.status == 1){
                 var str = '';
                 res.data.forEach(function(val, idx){
-                    if(idx % 2 !== 0){
-                        str += `<li class="mgr0" data-storeId="`+val.store_id+`">
-                                    <div class="img_div">
-                                        <img src="uploads/`+val.goods_show_images+`">
-                                    </div>
-                                    <div class="goods_name">
-                                        <p class="txt-hid-two">`+val.goods_name+`</p>
-                                    </div>
-                                    <div class="goods_price">
-                                        <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
-                                        <span class="pay_num">`+val.statistical_quantity+`人购买</span>
-                                    </div>
-                                </li>`
-                        return;
-                    }
-                    str += `<li data-storeId="`+val.store_id+`">
+                    str += `<li class="`+(idx % 2 !== 0?'mgr0':'')+`" data-storeId="`+val.store_id+`">
                                 <div class="img_div">
-                                    <img src="uploads/`+val.goods_show_images+`">
+                                    <img src="uploads/`+val.special_info[0].images+`">
                                 </div>
                                 <div class="goods_name">
                                     <p class="txt-hid-two">`+val.goods_name+`</p>
@@ -737,7 +722,6 @@ $(function(){
                             </li>`
                 })
                 $('.like_cont_ul').html(str).on('click', 'li', function(){
-                    // console.log($(this).attr('data-storeId'))
                     location.href = 'store_index?storeId='+$(this).attr('data-storeId');
                 });
             }

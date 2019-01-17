@@ -225,6 +225,7 @@
 		<div class="form-item">
 			<label class="form-label">验证实体店面：</label>
 			<div class="img-edit">
+				{if !empty($vo.verifying_physical_storefront_one)}
 				<div class="imgcontent">
 
 					<span class="img">
@@ -235,6 +236,7 @@
                                 </span>
 
 				</div>
+				{/if}
 				<!--验证实体店面-->
 				<div class="form-input">
 					<div class="img-box full">
@@ -279,21 +281,23 @@
 		<div class="form-item">
 			<label class="form-label">店内照片：</label>
 			<div class="img-edit">
+				{if !empty($lists)}
 				<div class="imgcontent">
-
 					{foreach name="imgs" item="lists" key="abc"}
 					<span class="img">
                                 <img src="__UPLOADS__/{$lists}" width="100%" height="100%" style="margin-bottom: 10px;" class="open_img">
                                 <i class="remove-img" name="" value="" data-id="{$vo.store_id}" data-value="{$lists}" data-title="1" data-toggle="{$abc}"><img src="__STATIC__/admin/common/img/a7.png"></i>
-                            </span> {/foreach}
+                            </span>
+					{/foreach}
 				</div>
+				{/if}
 				<div class="form-input">
 					<div class="img-box full">
 						<section class=" img-section">
 							<div class="z_photo upimg-div clear">
 								<section class="z_file fl">
 									<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-									<input type="file" name="all_imgs[]" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="4" />
+									<input type="file" name="all_imgs[]" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="20" />
 								</section>
 							</div>
 						</section>

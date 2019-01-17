@@ -36,15 +36,13 @@ class Goods extends Controller
         if ($admin_role["role_id"] == 2 || $admin_role["role_id"] == 18) {
             $goods = db("goods")->order("id desc")->select();
 
-
             foreach ($goods as $key => $value) {
                 $goods[$key]["max_price"] = db("special")->where("goods_id", $value['id'])->max("price");//最高价格
                 $goods[$key]["min_price"] = db("special")->where("goods_id", $value['id'])->min("price");//最低价格
-                $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $value['id'])->sum("stock");//库存
+                $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $value['id'])->value("stock");//库存
                 $goods[$key]["max_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->max("goods_adjusted_price");//最高价格
                 $goods[$key]["min_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->min("goods_adjusted_price");//最低价格
             }
-
             //调整规格后的价格显示
             $adjusted_price = db("special")->field("price,id")->select();
             foreach ($adjusted_price as $kw => $vl) {
@@ -390,7 +388,11 @@ class Goods extends Controller
             if ($bool_data) {
                 $this->success("删除成功", url("admin/Goods/index"));
             } else {
+<<<<<<< HEAD
+                $this->success("删除失败", url('admin/Goods/index'));
+=======
                 $this->success("失败", url('admin/Goods/add'));
+>>>>>>> 43e93d08b0f74e153b1bd15e382e4957ab068f64
             }
 
         }
@@ -426,7 +428,6 @@ class Goods extends Controller
             }
             //图片添加
             $show_images = $request->file("goods_show_images");
-            halt($show_images);
             if (!empty($show_images)) {
                 $show_image = $show_images->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $goods_data["goods_show_images"] = str_replace("\\", "/", $show_image->getSaveName());

@@ -13,60 +13,7 @@ use think\Request;
 use think\Session;
 class Apppay extends Controller
 {
-    /**
-     **************李火生*******************
-     * TODO:配件商订单异步处理(支付宝IOS对接)（只对ios有用）
-     **************************************
-     */
-    public function notifyurl()
-    {
-        //这里可以做一下你自己的订单逻辑处理
-        $pay_time = time();
-        $data['pay_time'] = $pay_time;
-        //原始订单号
-        $out_trade_no = input('out_trade_no');
-        //支付宝交易号
-        $trade_no = input('trade_no');
-        //交易状态
-        $trade_status = input('trade_status');
-        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="Success") {
-            $data['status'] = 2;
-            $data["trade_no"] =$trade_no;
-            $data['pay_type_content'] = "支付宝";//支付宝交易号
-            $condition['parts_order_number'] = $out_trade_no;
-            $select_data = Db::name('order_parts')->where($condition)->select();
-            foreach ($select_data as $key => $val) {
-                $result = Db::name('order_parts')
-                    ->where("parts_order_number", $val["parts_order_number"])
-                    ->update($data);//修改订单状态,支付宝单号到数据库
-            }
-            if ($result >0) {
-                $parts =Db::name("order_parts")
-                    ->field("parts_goods_name")
-                    ->where("parts_order_number",$out_trade_no)
-                    ->select();
-//                foreach($parts as $ks=>$vs){
-//                    $titles[] = $vs["parts_goods_name"];
-//                }
-//                $title =implode("",$titles);
-                $title ="消费测试";
-                $money =Db::name("order_parts")->where("parts_order_number",$out_trade_no)->sum("order_real_pay");
-                $datas["user_id"] =$parts[0]["user_id"]; //用户ID
-                $datas["wallet_operation"] = -$money; //消费金额
-                $datas["wallet_type"] = -1; //消费操作(1入，-1出)
-                $datas["operation_time"] = date("Y-m-d H:i:s"); //操作时间
-                $datas["wallet_remarks"] = "订单号：".$_GET['out_trade_no']."，支付宝消费".$money; //消费备注
-                $datas["wallet_img"] = "index/image/alipay.png"; //图标
-                $datas["title"] = $title; //标题（消费内容）
-                Db::name("wallet")->insert($datas);
-                return ajax_success('支付成功', ['status' => 1]);
-            } else {
-                return ajax_error('验证失败了', ['status' => 0]);
-            }
-        }else {
-            return ajax_error('验证失败', ['status' => 0]);
-        }
-    }
+
     /**
      **************李火生*******************
      * @param Request $
@@ -278,56 +225,6 @@ class Apppay extends Controller
     }
 
 
-    /**
-     **************李火生*******************
-     * @param Request $request
-     * Notes:服务商订单回调
-     **************************************
-     */
-    public function service_notifyurl()
-    {
-        //这里可以做一下你自己的订单逻辑处理
-        $pay_time = time();
-        $data['pay_time'] = $pay_time;
-        //原始订单号
-        $out_trade_no = input('out_trade_no');
-        //支付宝交易号
-        $trade_no = input('trade_no');
-        //交易状态
-        $trade_status = input('trade_status');
-        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="Success") {
-            $data['status'] = 2;//状态值
-            $data['trade_no'] = $trade_no;//支付宝交易号
-            $data['pay_type_content'] = "支付宝";//支付宝交易号
-            $condition['service_order_number'] = $out_trade_no;
-            $result = Db::name('order_service')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
-            if ($result > 0) {
-                //进行钱包消费记录
-                $parts =Db::name("order_service")
-                    ->field("service_goods_name,service_real_pay,user_id")
-                    ->where($condition)
-                    ->find();
-                $title =$parts["service_goods_name"];
-                $money =$parts["service_real_pay"];//金额
-                $datas["user_id"] =$parts["user_id"]; //用户ID
-                $datas["wallet_operation"] = -$money; //消费金额
-                $datas["wallet_type"] = -1; //消费操作(1入，-1出)
-                $datas["operation_time"] = date("Y-m-d H:i:s"); //操作时间
-                $datas["wallet_remarks"] = "订单号：".$out_trade_no."，支付宝消费".$money; //消费备注
-                $datas["wallet_img"] = "index/image/alipay.png"; //图标
-                $datas["title"] = $title; //标题（消费内容）
-                $datas["order_number"] =$out_trade_no; //订单编号
-                $datas["pay_type"] ="支付宝";//消费类型
-                $datas["wallet_balance"] =1; //此刻钱包余额
-                Db::name("wallet")->insert($datas);
-                return ajax_success('支付成功', ['status' => 1]);
-            } else {
-                return ajax_error('验证失败了', ['status' => 0]);
-            }
-        } else {
-            return ajax_error('验证失败', ['status' => 0]);
-        }
-    }
 
 
     /**
@@ -399,7 +296,6 @@ class Apppay extends Controller
             return ;
         }
     }
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -449,10 +345,6 @@ class Apppay extends Controller
             }
         }
     }
-
-
-
-
     /**
      **************陈绪*******************
      * 生成支付宝签名 TODO:配件商支付宝支付生成签名
@@ -515,10 +407,6 @@ class Apppay extends Controller
             }
         }
     }
-
-
-
-
     /**
      **************陈绪*******************
      * 生成支付宝签名 TODO:服务商支付宝支付生成签名
@@ -583,11 +471,282 @@ class Apppay extends Controller
             }
         }
     }
+    /**
+     **************李火生*******************
+     * TODO:配件商订单异步处理(支付宝IOS对接)（只对ios有用）
+     **************************************
+     */
+    public function notifyurl()
+    {
+        //这里可以做一下你自己的订单逻辑处理
+        $pay_time = time();
+        $data['pay_time'] = $pay_time;
+        //原始订单号
+        $out_trade_no = input('out_trade_no');
+        //支付宝交易号
+        $trade_no = input('trade_no');
+        //交易状态
+        $trade_status = input('trade_status');
+        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="Success") {
+            $data['status'] = 2;
+            $data["trade_no"] =$trade_no;
+            $data['pay_type_content'] = "支付宝";//支付宝交易号
+            $condition['parts_order_number'] = $out_trade_no;
+            $select_data = Db::name('order_parts')->where($condition)->select();
+            foreach ($select_data as $key => $val) {
+                $result = Db::name('order_parts')
+                    ->where("parts_order_number", $val["parts_order_number"])
+                    ->update($data);//修改订单状态,支付宝单号到数据库
+            }
+            if ($result > 0) {
+                $parts =Db::name("order_parts")
+                    ->field("parts_goods_name,service_real_pay,user_id")
+                    ->where("parts_order_number",$out_trade_no)
+                    ->select();
+                foreach($parts as $ks=>$vs){
+                    $titles[] = $vs["parts_goods_name"];
+                }
+                $title =implode("",$titles);
+                $money =Db::name("order_parts")->where("parts_order_number",$out_trade_no)->sum("order_real_pay");
+                //进行钱包消费记录
+                $new_wallet =Db::name("user")->where("id",$parts["user_id"])->value("user_wallet");
+                $datas=[
+                    "user_id"=>$parts[0]["user_id"],//用户ID
+                    "wallet_operation"=>-$money,//消费金额
+                    "wallet_type"=>-1,//消费操作(1入，-1出)
+                    "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                    "wallet_remarks"=>"订单号：".$out_trade_no."，支付宝消费，支出".$money."元",//消费备注
+                    "wallet_img"=>"index/image/alipay.png",//图标
+                    "title"=>$title,//标题（消费内容）
+                    "order_nums"=>$out_trade_no,//订单编号
+                    "pay_type"=>"支付宝", //支付方式
+                    "wallet_balance"=>$new_wallet,//此刻钱包余额
+                ];
+                Db::name("wallet")->insert($datas);
+                return ajax_success('支付成功', ['status' => 1]);
+            } else {
+                return ajax_error('验证失败了', ['status' => 0]);
+            }
+        }else {
+            return ajax_error('验证失败', ['status' => 0]);
+        }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:TODO:服务商订单异步处理(支付宝IOS对接)服务商订单回调
+     **************************************
+     */
+    public function service_notifyurl()
+    {
+        //这里可以做一下你自己的订单逻辑处理
+        $pay_time = time();
+        $data['pay_time'] = $pay_time;
+        //原始订单号
+        $out_trade_no = input('out_trade_no');
+        //支付宝交易号
+        $trade_no = input('trade_no');
+        //交易状态
+        $trade_status = input('trade_status');
+        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
+            $data['status'] = 2;//状态值
+            $data['trade_no'] = $trade_no;//支付宝交易号
+            $data['pay_type_content'] = "支付宝";//支付宝交易号
+            $condition['service_order_number'] = $out_trade_no;
+            $result = Db::name('order_service')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
+            if ($result > 0) {
+                //进行钱包消费记录
+                $parts =Db::name("order_service")
+                    ->field("service_goods_name,service_real_pay,user_id")
+                    ->where($condition)
+                    ->find();
+                $title =$parts["service_goods_name"];
+                $money =$parts["service_real_pay"];//金额
+                $new_wallet =Db::name("user")->where("id",$parts["user_id"])->value("user_wallet");
+                $datas=[
+                    "user_id"=>$parts["user_id"],//用户ID
+                    "wallet_operation"=>-$money,//消费金额
+                    "wallet_type"=>-1,//消费操作(1入，-1出)
+                    "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                    "wallet_remarks"=>"订单号：".$out_trade_no."，支付宝消费，支出".$money."元",//消费备注
+                    "wallet_img"=>"index/image/alipay.png",//图标
+                    "title"=>$title,//标题（消费内容）
+                    "order_nums"=>$out_trade_no,//订单编号
+                    "pay_type"=>"支付宝", //支付方式/
+                    "wallet_balance"=>$new_wallet,//此刻钱包余额
+                ];
+                Db::name("wallet")->insert($datas);
+                return ajax_success('支付成功', ['status' => 1]);
+            }else {
+                return ajax_error('验证失败了', ['status' => 0]);
+            }
+        } else {
+            return ajax_error('验证失败', ['status' => 0]);
+        }
+    }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:TODO:充值订单异步处理(支付宝IOS对接)充值订单回调
+     **************************************
+     */
+    public function recharge_notifyurl()
+    {
+        //这里可以做一下你自己的订单逻辑处理
+        $pay_time = time();
+        $data['pay_time'] = $pay_time;
+        //原始订单号
+        $out_trade_no = input('out_trade_no');
+        //支付宝交易号
+        $trade_no = input('trade_no');
+        //交易状态
+        $trade_status = input('trade_status');
+        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="Success") {
+            $data['status'] = 1;
+            $data['pay_type_name'] = "支付宝";//支付宝交易号
+            $condition['recharge_order_number'] = $out_trade_no;
+            $select_data = Db::name('recharge_record')->where($condition)->select();
+            foreach ($select_data as $key => $val) {
+                $result = Db::name('recharge_record')
+                    ->where("recharge_order_number", $val["recharge_order_number"])
+                    ->update($data);//修改订单状态,支付宝单号到数据库
+            }
+            if ($result > 0) {
+                //进行钱包消费记录
+                $parts =Db::name("recharge_record")
+                    ->field("recharge_money,user_id")
+                    ->where($condition)
+                    ->find();
+                $title ="余额充值";
+                $money =$parts["recharge_money"];//金额
+                $recharge_record_data = Db::name("recharge_record")
+                    ->where("recharge_order_number",$out_trade_no)
+                    ->find();
+                $list =Db::name("recharge_setting")->field("recharge_full,send_money")->select();
+                $lists =null;
+                foreach($list as $k=>$v){
+                    if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
+                        $lists =$v["send_money"];
+                    }
+                }
+                //如果达到充值送积分条件
+                if(!empty($lists)){
+                    $recharge_data =[
+                        "user_id" =>$parts["user_id"],//用户id
+                        "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                        "operation_type"=>1,//充值为1，提现为负一
+                        "pay_type_content"=>$recharge_record_data["pay_type_name"],//支付方式
+                        "money_status"=>2 , //到款状态（1到账，2未到款）
+                        "img_url"=>"index/image/alipay.png", //对应的图片链接
+                        "operation_amount" =>$recharge_record_data["recharge_money"]+$lists, //操作金额
+                        "recharge_describe" =>"充值".$recharge_record_data["recharge_money"]."元,送了".$lists,//描述
+                    ];
+                    Db::name("recharge_reflect")->insert($recharge_data);//插到记录
+                    $user_wallet =Db::name("user")
+                        ->field("user_wallet")
+                        ->where("id",$recharge_record_data["user_id"])
+                        ->find();
+                    Db::name("user")->where("id",$recharge_record_data["user_id"])
+                        ->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $lists]);
+                }else {
+                    $recharge_data =[
+                        "operation_amount" =>$recharge_record_data["recharge_money"], //操作金额
+                        "recharge_describe" =>"充值" . $recharge_record_data["recharge_money"] . "元",//描述
+                    ];
+                    Db::name("recharge_reflect")->insert($recharge_data);//插到记录
+                    $user_wallet = Db::name("user")->field("user_wallet")->where("id", $recharge_record_data["user_id"])->find();
+                    Db::name("user")->where("id", $recharge_record_data["user_id"])->update(["user_wallet" => $user_wallet["user_wallet"] + $recharge_record_data["recharge_money"]]);
+                }
+                $new_wallet =Db::name("user")
+                    ->where("id",$recharge_record_data["user_id"])
+                    ->value("user_wallet");
+                $datas=[
+                    "user_id"=>$parts["user_id"],//用户ID
+                    "wallet_operation"=> $money,//消费金额
+                    "wallet_type"=>1,//消费操作(1入，-1出)
+                    "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                    "wallet_remarks"=>"订单号：".$out_trade_no."，支付宝消费，支出".$money."元",//消费备注
+                    "wallet_img"=>"index/image/alipay.png",//图标
+                    "title"=>$title,//标题（消费内容）
+                    "order_nums"=>$out_trade_no,//订单编号
+                    "pay_type"=>"支付宝", //支付方式/
+                    "wallet_balance"=>$new_wallet,//此刻钱包余额
+                ];
+                Db::name("wallet")->insert($datas); //存入消费记录表
 
+                return ajax_success('支付成功', ['status' => 1]);
+            } else {
+                return ajax_error('验证失败了', ['status' => 0]);
+            }
+        }else {
+            return ajax_error('验证失败', ['status' => 0]);
+        }
+    }
 
+    /**
+     **************陈绪*******************
+     * 生成支付宝签名 TODO:充值支付宝支付生成签名
+     **************************************
+     */
+    public function ios_api_recharge_alipay(Request $request){
+        if($request->isPost()){
+            $order_num =$request->only(['order_num'])['order_num'];
+            $product_code ="QUICK_MSECURITY_PAY";
+            $out_trade_no="ZQLM3O56MJD4SK3";
+            $time =date('Y-m-d H:i:s');
+            if(!empty( $order_num)){
+                $counts =Db::name('recharge_record')->where('recharge_order_number',$order_num)->count();
+                if(!empty($counts)){
+                    $data = Db::name('recharge_record')->where('recharge_order_number',$order_num)->select();
+                    if(!empty($data)){
+                        foreach ($data as $k=>$v){
+                            $goods_name = "充值";
+                            $order_num = $v['recharge_order_number'];
+                            $goods_pay_money =$v['recharge_money'];
+                            $subject =1;
+                            $app_id ="{'timeout_express':'30m','seller_id':"."'".$order_num."'".",'product_code':"."'".$product_code."'".",'total_amount':"."'".$goods_pay_money."'".",'subject':"."'".$subject."'".",'body':"."'".$goods_name."'".",'out_trade_no':"."'".$out_trade_no."'"."}";
+                            $app_ids =urlencode($app_id);
+                            $time_encode =urlencode($time);
+                            // 订单信息，在iOS端加密
+                            include VENDOR_PATH."AliPay/aop/AopClient.php";
+                            $private_path="MIIEpQIBAAKCAQEAvPQu30qb4OsdxvU7e+5QlbK6xlku6q/Gm940nrGciz46+ICyAuifLs0OF+qH4HH9hIf5rxslsHTOHREMk/6SyUmkpE/ChYm4vp1tHcIknqWQsDaYHKFs9ML0OW4BI3xZxSs3YKOkdNTgmKFUZLAK1z59guo14MbpYskDmk8WaNHkKJgipTnwYMaXac8hHCDUOH0asMCbb2ZNwlCM9M4rGNaL62USeKhq26HiX7uct3Xd5I4a+l9Bk0COx05DGRLdX7Qo5TCatTK+g89BFCk2REQHYlSoIfR1rzJkSz2wyw/wz4GcfRxRO8t6khVJ5TclRL1BqH0P5aCwmqru4ZwqbQIDAQABAoIBACNadKKmrP+qPgoJvDV143H+3N9btGGIvdpP+vxuMuICpLn2KlhM+euhxi9HXGDsMwjnABp5M9YOJLpfhED0crZipwFvQvAFUqGnhtD4kC12wNmXfWJt+ZraFyPfpyrii1FOwq+8LnsFkXg9RzMHlR+su4MRGz+RN/2Zqqjmf0ThHYWl9bMzkl77s7TNK98zdsyLYf12qa/PZEPl7Zf2Sg5ksVZl+ilkHeR02OKt+zj04SIhw/IgZO/0jfaq9xHUTWXfJH45WWIjOKwsS5aV74iL9iHIdoFfGsPRsA0am9Hrj0lEH/WWHyQoNSzZpNCcvkGUh2q4dBQoOT1fw5D4GykCgYEA++njkSiclymIQu6JdSEGPHISH6R0IcBe2mvTWBZ6j+PXiStk/I33QWo4fxT4Qx0lRcuD2bc44rWYgCbZXm90GdymeSkZ94lpl0/4XEfdrT6deWrS7wEnV+U+Nu/3M3RmoxNAmq1w/IYc5MPkPhrkxoAZf7eqQFtVuAeNfI+s4eMCgYEAwATX/XuWAi/PP00dUoiq0I/MbPrU3W0zYA/V55+8/tyrLBs/1XXQXirp7GzmjTFBz5xh8FflIISv6KVdQ+5R/gx/66qYq7MklGeNvnLS8bvL6T+loF7w2xY7FHQ7J5q8Jtgd6ENe525WFBefHohxCsASbedOWNwVqZUj23GiM28CgYEA55tMLINoJNp8ev0Qx+2K7Dv8SbdLRlS1YJ/N+akBGhXibizFdiWX9D6SntRKxHmhcSABo0N/O4C2KuyM4PQbjEN/ktmlFB70Q7e0ojM4rjVpVt5N/IvU/ky3/I53eolEbB4hQZTA0osDOZiY2jijqZTQ3Mmh7/WJQ989yA3YZv0CgYEAvzCTdvrk5AyCiH7Z4WHe4ocrfp9J76dZbh6WV2g/oGxLq0D+kCYccIa+IABWluMiqfsFsW9y3qv/EuAEOy1CSnhbrmVQWjWnCHULN0PRMYxRfk83NLUTkLFT5gvNEqQJD4xESw05o6nC34KdlqM4GwIf13pmEighEZdD+q3sWNUCgYEAhTz2NfzdDfT0gZGxfpUhhK0nkqdNI8HX2CfUVMPQjmnbgZ9Hfav+RMMf+02ftUzmZX0f/VyytSu5i0bkIUClUqxvjaKXRwwoiv3Tb2JHTururXBViUOCQeCJuXarX89EoReIvUXBBw2G6HcULGfuuNZM81fd/cav4EZfMO2+zPM=";
+                            //构造业务请求参数的集合(订单信息)
+                            $content = array();
+                            $content['subject'] = $goods_name;
+                            $content['out_trade_no'] = $order_num;
+                            $content['timeout_express'] = "90m";
+                            $content['total_amount'] = $goods_pay_money;
+                            $content['product_code'] = "QUICK_MSECURITY_PAY";
+                            $con = json_encode($content);//$content是biz_content的值,将之转化成json字符串
+                            //公共参数
+                            $Client = new \AopClient();//实例化支付宝sdk里面的AopClient类,下单时需要的操作,都在这个类里面
+                            $param['app_id'] = '2018120762470526';
+                            $param['method'] = 'alipay.trade.app.pay';//接口名称，固定值
+                            $param['charset'] = 'utf-8';//请求使用的编码格式
+                            $param['sign_type'] = 'RSA2';//商户生成签名字符串所使用的签名算法类型
+                            $param['timestamp'] = date("Y-m-d H:i:s");//发送请求的时间
+                            $param['version'] = '1.0';//调用的接口版本，固定为：1.0
+                            $param['notify_url'] = 'https://automobile.siring.com.cn/recharge_notifyurl';
+                            $param['biz_content'] = $con;//业务请求参数的集合,长度不限,json格式，即前面一步得到的
+                            $paramStr = $Client->getSignContent($param);//组装请求签名参数
+                            $sign = $Client->alonersaSign($paramStr, $private_path, 'RSA2', false);//生成签名()
+                            $param['sign'] = $sign;
+                            $str = $Client->getSignContentUrlencode($param);//最终请求参数
 
-
+                        }
+                        return ajax_success('数据成功返回',$str);
+                    }else{
+                        return ajax_error('数据返回不成功',['status'=>0]);
+                    }
+                }else{
+                    return ajax_error('没有这个订单号',['status'=>0]);
+                }
+            }else{
+                return ajax_error('失败',['status'=>0]);
+            }
+        }
+    }
 
 }
