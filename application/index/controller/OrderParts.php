@@ -1665,12 +1665,13 @@ class OrderParts extends Controller{
                 return ajax_error("未登录",['status'=>0]);
             }
             $user_information =Db::name("user")->where("id",$user_id)->find(); //用户信息
-            $is_address = Db::name('user_address')->where('user_id', $user_id)->find();//用户地址
-            if (empty($is_address) ) {
+            if (empty($data["address_id"]) ) {
                 return ajax_error('请填写收货地址',['status'=>0]);
             }else{
                 //收货地址
-                $is_address_status = Db::name('user_address')->where('user_id', $user_id)->where('status',1)->find();
+                $is_address_status = Db::name('user_address')
+                    ->where("")
+                    ->find();
                 if (empty($is_address_status) ) {
                     $is_address_status =$is_address;
                 }
