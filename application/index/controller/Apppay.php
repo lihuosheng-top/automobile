@@ -628,7 +628,9 @@ class Apppay extends Controller
 //                    ->where("id",$parts["user_id"])
 //                    ->update(["user_wallet" =>$old_wallet+$money]); //新增加的余额
 
-                $recharge_record_data = Db::name("recharge_record")->where("recharge_order_number",$out_trade_no)->find();
+                $recharge_record_data = Db::name("recharge_record")
+                    ->where("recharge_order_number",$out_trade_no)
+                    ->find();
                 $list =Db::name("recharge_setting")->field("recharge_full,send_money")->select();
                 $lists =null;
                 foreach($list as $k=>$v){
@@ -639,11 +641,15 @@ class Apppay extends Controller
                 //如果达到充值送积分条件
                 if(!empty($lists)){
                     $recharge_data =[
+                        "user_id" =>$parts["user_id"],//用户id
+                        "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                        "operation_type"=>-1,//充值为1，提现为负一
+                        "pay_type_content"=>$recharge_record_data["pay_type_name"],//支付方式
+                        "money_status"=>2 , //到款状态（1到账，2未到款）
+                        "img_url"=>"index/image/alipay.png", //对应的图片链接
                         "operation_amount" =>$recharge_record_data["recharge_money"]+$lists, //操作金额
                         "recharge_describe" =>"充值".$recharge_record_data["recharge_money"]."元,送了".$lists,//描述
                     ];
-//                    $recahrge_data["operation_amount"]=$recharge_record_data["recharge_money"]+$lists; //操作金额
-//                    $recahrge_data["recharge_describe"] ="充值".$recharge_record_data["recharge_money"]."元,送了".$lists; //描述
                     Db::name("recharge_reflect")->insert($recharge_data);//插到记录
                     $user_wallet =Db::name("user")
                         ->field("user_wallet")
