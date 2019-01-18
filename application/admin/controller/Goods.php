@@ -846,7 +846,7 @@ class Goods extends Controller
         if($request->isPost()){
             $id = $request->only(["id"])["id"];
             $distribution = db("goods")->where("id",$id)->field("goods_delivery")->find();
-            $goods_distribution = explode(",",$distribution);
+            $goods_distribution = explode(",",$distribution["goods_delivery"]);
             return ajax_success("获取成功",$goods_distribution);
         }
 
