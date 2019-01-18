@@ -219,6 +219,21 @@ class Goods extends Controller
             }
 
             $goods_id = db('goods')->insertGetId($goods_special);
+            if ($goods_id) {
+                //取出图片在存到数据库
+                $goods_images = [];
+                $file = request()->file('goods_images');
+                if (!empty($file)) {
+                    foreach ($file as $key => $value) {
+                        $info = $value->move(ROOT_PATH . 'public' . DS . 'uploads');
+                        $goods_url = str_replace("\\", "/", $info->getSaveName());
+                        $goods_images[] = ["goods_images" => $goods_url, "goods_id" => $goods_id];
+                    }
+                }
+                
+                $booldata = model("goods_images")->saveAll($goods_images);
+            }
+            
             if (!empty($goods_data)) {
                 foreach ($goods_data as $kn => $nl) {
                     if (substr($kn, 0, 3) == "sss") {
@@ -267,19 +282,7 @@ class Goods extends Controller
 
                 }
             }
-            if ($goods_id) {
-                //取出图片在存到数据库
-                $goods_images = [];
-                $file = request()->file('goods_images');
-                if (!empty($file)) {
-                    foreach ($file as $key => $value) {
-                        $info = $value->move(ROOT_PATH . 'public' . DS . 'uploads');
-                        $goods_url = str_replace("\\", "/", $info->getSaveName());
-                        $goods_images[] = ["goods_images" => $goods_url, "goods_id" => $goods_id];
-                    }
-                }
-                $booldata = model("goods_images")->saveAll($goods_images);
-            }
+            
             
             if ($booldata && $goods_id) {
                 $this->success("添加成功", url("admin/Goods/index"));

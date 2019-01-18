@@ -369,6 +369,7 @@ Route::group("",[
     /*汽车广告管理前端开始*/
     "advertisement_index"=>"index/Advertisement/advertisement_index", //汽车广告显示
     "machine_index"=>"index/Advertisement/machine_index",             //汽车配件商广告显示
+    "advert_index"=>"index/Advertisement/advert_index",             //后台汽车广告显示
 
 
 
