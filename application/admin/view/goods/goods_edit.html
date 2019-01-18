@@ -583,11 +583,13 @@
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_vehicle" id="province" lay-filter="province">
-								{volist name="car_series" id="car"} {if $value.dedicated_vehicle == $car.brand}
+								{volist name="car_series" id="car"}
+								{if $value.dedicated_vehicle == $car.brand}
 								<option value="{$value.dedicated_vehicle}" selected>{$value.dedicated_vehicle}</option>
 								{else}
 								<option value="{$car.brand}">{$car.brand}</option>
-								{/if} {/volist}
+								{/if}
+								{/volist}
 							</select>
 						</div>
 						<div class="layui-input-inline">
@@ -778,7 +780,11 @@
 			<div class="layui-input-block">
 				<select name="goods_year_id">
 					{volist name="year" id="v"}
-					<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
+					{if $value.goods_year_id == $v.id}
+					<option value="{$v.id}" selected>{$v.year}年{$v.money}元/单个商品</option>
+					{else}
+                	<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
+					{/if}
 					{/volist}
 				</select>
 			</div>
@@ -809,12 +815,10 @@
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label">配送与安装服务：</label>
 			<div class="layui-input-block" id="">
-
-				<input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" checked="" class="hot">
+				<input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" class="" checked>
 				<input type="checkbox" name="goods_delivery[]" value="上门安装" title="上门安装" class="">
 				<input type="checkbox" name="goods_delivery[]" value="无需安装" title="无需安装" class="">
 				<input type="checkbox" name="goods_delivery[]" value="到店安装" title="到店安装" class="">
-
 			</div>
 		</div>
 
