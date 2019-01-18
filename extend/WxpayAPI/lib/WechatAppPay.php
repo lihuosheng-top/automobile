@@ -175,12 +175,20 @@ class WechatAppPay
     public function getAppPayParams( $prepayid ){
         $data['appid'] = $this->appid;
         $data['partnerid'] = $this->mch_id;
-        $data['prepayid'] = $prepayid['prepay_id'];
+        //$data['prepayid'] = $prepayid['prepay_id'];
         $data['package'] = 'Sign=WXPay';
-        $data['noncestr'] = $prepayid['nonce_str'];
+        $data['noncestr'] = $this->_makeRandom();
         $data['timestamp'] = time();
         $data['sign'] = $this->MakeSign( $data );
         return $data;
+    }
+
+
+    /**
+     * 生成随机字符串
+     */
+    private  function _makeRandom(){
+        return md5(uniqid());
     }
 
     /**
@@ -217,6 +225,10 @@ class WechatAppPay
         }
         return  $string;
     }
+
+
+
+
 
     /**
      * 输出xml字符
