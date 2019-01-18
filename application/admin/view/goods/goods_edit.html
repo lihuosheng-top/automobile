@@ -814,11 +814,11 @@
 		</div>
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label">配送与安装服务：</label>
-			<div class="layui-input-block" id="">
-				<input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" class="" checked>
-				<input type="checkbox" name="goods_delivery[]" value="上门安装" title="上门安装" class="">
-				<input type="checkbox" name="goods_delivery[]" value="无需安装" title="无需安装" class="">
-				<input type="checkbox" name="goods_delivery[]" value="到店安装" title="到店安装" class="">
+			<div class="layui-input-block" id="send">
+				<input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" class="checkbox1" >
+				<input type="checkbox" name="goods_delivery[]" value="上门安装" title="上门安装" class="checkbox1">
+				<input type="checkbox" name="goods_delivery[]" value="无需安装" title="无需安装" class="checkbox2">
+				<input type="checkbox" name="goods_delivery[]" value="到店安装" title="到店安装" class="checkbox3">
 			</div>
 		</div>
 
@@ -843,7 +843,19 @@
 	<script src="__STATIC__/admin/index/common/formSelects-v4.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
        
-		// TODO获取车牌Ajax
+		
+
+		var formSelects = layui.formSelects;
+		layui.config({
+			base: "js/"
+		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
+			var form = layui.form(),
+				layedit = layui.layedit,
+				layer = parent.layer === undefined ? layui.layer : parent.layer,
+				laypage = layui.laypage,
+				$ = layui.jquery;
+			layedit.build('demo');
+			// TODO获取车牌Ajax
 		var times_id = new Array();
 		var displacements_id = new Array();
 		var years_id = new Array();
@@ -881,6 +893,7 @@
 				for(var key in city_obj) {
 					$("#province").append("<option value='" + key + "'>" + key + "</option>");
 				}
+				form.render();
 
 			},
 			error: function(data) {
@@ -944,17 +957,32 @@
 				}
 			});
 		}
+			// 配送方式
+			
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Goods/distribution')}",
+			data: {
+				id: pageName()
+			},
+			dataType: "json",
+			success: function(data) {
+				console.log(data)
+				var data=data;
+				for(var i=0;i<data.length;i++){
+					for(var j=0;j<$("#send input[type='checkbox']").length;j++){
+                        if(data[i]==$("#send input[type='checkbox']")[i].defaultValue){
+							// console.log($("#send input[type='checkbox']")[i]);
+						}
+					}
+				}
+				form.render();
 
-		var formSelects = layui.formSelects;
-		layui.config({
-			base: "js/"
-		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
-			var form = layui.form(),
-				layedit = layui.layedit,
-				layer = parent.layer === undefined ? layui.layer : parent.layer,
-				laypage = layui.laypage,
-				$ = layui.jquery;
-			layedit.build('demo');
+			},
+			error: function(data) {
+				console.log("错误");
+			}
+		});
 			//			价格库存等修改事件
 			$(".inputs").change(function() {
 				var change_val = $(this).val();
