@@ -25,12 +25,11 @@ class Advertisement extends Controller
             Session::set("area", $area);
             $t= date('Y-m-d H:i:s');
             $time  = strtotime($t);
-            //halt($time);
             $end_time =  "end_time < {$time}";
             $status = Db::name("platform")->where($end_time)->where("status", 1)->update(["status"=>3]);
             $area_data = Db::name("platform")->where('area', $area)->where("status", 1)->order("start_time desc")->select();
             $adress_data = Db::name("platform")->where('department', "platform_business")->where("status", 1)->order("start_time desc")->select();
-            //$data = Db::name("platform")->select();          
+                     
             
             //平台
             foreach ($adress_data as $k => $v) {
@@ -218,13 +217,15 @@ class Advertisement extends Controller
                                 $reste["hot_six"] = $hot_six;
                                 }else{
                                     $reste["hot_six"] = NULL;
-                                }
-                                halt($reste);
-     
+                                }                               
+                                     
             if ((!empty($reste)) && (!empty($area))) {
-                return ajax_success('传输成功', $reste);
-            } else {
-                return ajax_error("数据为空");
+                return ajax_success('获取成功', $reste);
+            } 
+            if ((!empty($reste)) && (empty($area))) {
+                return ajax_success('获取位置失败', $reste);
+            }else {
+                return ajax_error("暂无广告显示");
             }
         }
     }
@@ -308,14 +309,17 @@ class Advertisement extends Controller
             if(count($reste["discount"])>0){
                 $reste["discount"] = array_slice($reste["discount"],0,3);
                 }
- 
-            if ((!empty($reste)) && (!empty($area))) {
-                return ajax_success('传输成功', $reste);
-            } else {
-                return ajax_error("数据为空");
+                
+                if ((!empty($reste)) && (!empty($area))) {
+                    return ajax_success('获取成功', $reste);
+                } 
+                if ((!empty($reste)) && (empty($area))) {
+                    return ajax_success('获取位置失败', $reste);
+                }else {
+                    return ajax_error("暂无广告显示");
+                }
             }
         }
-    }
 
        /**
      * [汽车广告配件商城显示]
@@ -356,7 +360,7 @@ class Advertisement extends Controller
                 }
             }
         }
-       // halt($homes);
+      
         foreach($homes as $pp => $z){
             if( $z["status"]== 2){ //待审核
                 if (isset($z)) {
