@@ -193,19 +193,13 @@
             <button type="submit" class="alipay-submit">立即付款</button>
         </div>
     </form> -->
+
     <!-- 选择支付方式 -->
     <div class="chose-payment">
         <header>
             <a href="javascript:;" class="spr chose-payment-back"></a>
             <h3 class="chose-title">选择支付方式</h3>
         </header>
-        <div class="method-div">
-            <div class="icon-div">
-                <img src="__STATIC__/index/image/money.png">
-            </div>
-            <p>余额支付</p>
-            <a href="javascript:;" class="spr check-a"></a>
-        </div>
         <div class="method-div">
             <div class="icon-div">
                 <img src="__STATIC__/index/image/wechat.png">
@@ -218,6 +212,13 @@
                 <img src="__STATIC__/index/image/alipay.png">
             </div>
             <p>支付宝支付</p>
+            <a href="javascript:;" class="spr check-a"></a>
+        </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/money2.png">
+            </div>
+            <p>余额支付</p>
             <a href="javascript:;" class="spr check-a"></a>
         </div>
     </div>
@@ -378,7 +379,6 @@
                         location.href = 'goods_detail?id=' + id + '&preid=' + preId;
                     })
 
-                    // 支付弹窗
                     var goodsId = res.data.goods[0].id;
                     var storeId = res.data.goods[0].store_id;
                     $('#order-buy').click(function () {
@@ -388,42 +388,73 @@
                         var goods_standard_id = $('.standard').attr('id');
                         var buy_message = $('.leave-msg').val();
                         var address_id = $('.user-name').data('address_id');
-                        $.ajax({
-                            url: 'ios_api_order_parts_button',
-                            type: 'POST',
-                            dataType: 'JSON',
-                            data: {
-                                'goods_id': goodsId,
-                                'store_id': storeId,
-                                'order_amount': orderAmount,
-                                'order_quantity': quantity,
-                                'goods_standard': goods_standard,
-                                'buy_message': buy_message,
-                                'setting_id': deductionId,
-                                'goods_standard_id': goods_standard_id,
-                                'address_id': address_id
-                            },
-                            success: function (res) {
-                                console.log(res);
-                                $.ajax({
-                                    url: 'ios_api_alipay',
-                                    type: 'POST',
-                                    dataType: 'JSON',
-                                    data: {
-                                        'order_num': res.data.parts_order_number,
-                                    },
-                                    success: function(res){
-                                        console.log(res);
-                                        Android.alipay(res.data);
-                                    },
-                                    error: function(){
-                                        console.log('error');
-                                    }
-                                })
-                            },
-                            error: function () {
-                                console.log('error');
-                            }
+                        //生成订单号
+                        (function(){
+                            return $.ajax({
+                                url: 'ios_api_order_parts_button',
+                                type: 'POST',
+                                dataType: 'JSON',
+                                data: {
+                                    'goods_id': goodsId,
+                                    'store_id': storeId,
+                                    'order_amount': orderAmount,
+                                    'order_quantity': quantity,
+                                    'goods_standard': goods_standard,
+                                    'buy_message': buy_message,
+                                    'setting_id': deductionId,
+                                    'goods_standard_id': goods_standard_id,
+                                    'address_id': address_id
+                                }
+                            })
+                        })().then(function(res){
+                            //选择支付方式弹窗
+                            $('.mask').show();
+                            $('.chose-payment').animate({'bottom': '0'});
+                            console.log(res);
+                            $('.method-div').click(function(){
+                                $(this).siblings().find('.check-a').removeClass('icon-check');
+                                $(this).find('.check-a').addClass('icon-check');
+//                            backMethod();
+                                var $index = $(this).index();
+                                switch ($index){
+                                    case 1:
+                                        //用户选择微信支付，发送订单号给后台
+                                        (function(){
+                                            return $.ajax({
+                                                url: 'app_wxpay',
+                                                type: 'POST',
+                                                dataType: 'JSON',
+                                                data: {
+                                                    'order_num': res.data.parts_order_number,
+                                                }
+                                            })
+                                        })().then(function(res){
+                                            console.log(res);
+                                            //接受支付宝签名 发送给android
+//                                            Android.alipay(res.data);
+                                        })
+                                        break;
+                                    case 2:
+                                        //用户选择支付宝支付，发送订单号给后台
+                                        (function(){
+                                            return $.ajax({
+                                                url: 'ios_api_alipay',
+                                                type: 'POST',
+                                                dataType: 'JSON',
+                                                data: {
+                                                    'order_num': res.data.parts_order_number,
+                                                }
+                                            })
+                                        })().then(function(res){
+                                            console.log(res);
+                                            //接受支付宝签名 发送给android
+                                            Android.alipay(res.data);
+                                        })
+                                        break;
+                                    case 3:
+                                        break;
+                                }
+                            })
                         })
                     })
                 }else if(res.status === 3){
@@ -481,8 +512,8 @@
                         var buy_message = $('.leave-msg').val();
                         var order_amount = $('.total-money').text();
                         var address_id = $('.user-name').data('address_id')
-                        if($('.order-goods-info').length > 2){
-                            $.ajax({
+                        (function(){
+                            return $.ajax({
                                 url: 'ios_api_order_button_by_shop',
                                 type: 'POST',
                                 dataType: 'JSON',
@@ -492,70 +523,42 @@
                                     'shoppingId': shoppingId,
                                     'setting_id': deductionId,
                                     'address_id': address_id
-                                },
-                                success: function (res) {
-                                    console.log(res);
-                                    $.ajax({
-                                        url: 'ios_api_alipay',
-                                        type: 'POST',
-                                        dataType: 'JSON',
-                                        data: {
-                                            'order_num': res.data.parts_order_number,
-                                        },
-                                        success: function(res){
-                                            console.log(res);
-                                            Android.alipay(res.data);
-                                        },
-                                        error: function(){
-                                            console.log('error');
-                                        }
-                                    })
-                                },
-                                error: function () {
-                                    console.log('error');
                                 }
                             })
-                        }else{
+                        })().then(function(res){
+                            console.log(res);
                             $.ajax({
-                                url: 'ios_api_order_button_by_shop',
+                                url: 'ios_api_alipay',
                                 type: 'POST',
                                 dataType: 'JSON',
                                 data: {
-                                    'buy_message': buy_message,
-                                    'order_amount': order_amount,
-                                    'shoppingId': shoppingId,
-                                    'setting_id': deductionId,
-                                    'address_id': address_id
+                                    'order_num': res.data.parts_order_number,
                                 },
-                                success: function (res) {
+                                success: function(res){
                                     console.log(res);
-                                    $.ajax({
-                                        url: 'ios_api_alipay',
-                                        type: 'POST',
-                                        dataType: 'JSON',
-                                        data: {
-                                            'order_num': res.data.parts_order_number,
-                                        },
-                                        success: function(res){
-                                            console.log(res);
-                                            Android.alipay(res.data);
-                                        },
-                                        error: function(){
-                                            console.log('error');
-                                        }
-                                    })
+                                    Android.alipay(res.data);
                                 },
-                                error: function () {
+                                error: function(){
                                     console.log('error');
                                 }
                             })
-                        }
+                        })
                     })
                 }
             },
             error: function () {
                 console.log('error');
             }
+        })
+
+        // 隐藏选择支付方式弹窗
+        function backMethod(){
+            $('.mask').hide();
+            $('.chose-payment').animate({'bottom': '-100%'});
+        }
+        $('.chose-payment-back').click(function(){
+            backMethod();
+            location.href = 'order_parts_wait_pay';
         })
 
         function alipayCallback(res){

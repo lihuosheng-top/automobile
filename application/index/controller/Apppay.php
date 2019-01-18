@@ -790,7 +790,7 @@ class Apppay extends Controller
             //创建APP端预支付参数
             $data = $wechatAppPay->getAppPayParams($result);
 
-            return $data;
+            return ajax_success("获取成功",$data);
 
         }
 
