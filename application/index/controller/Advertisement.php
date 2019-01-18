@@ -177,11 +177,11 @@ class Advertisement extends Controller
             }
             if($test[$m]["postid"]==9){
                 $hot_fives[] = $p;
-                $hot_five[] = array_slice($hot_fives,0,1);
+                $hot_five = array_slice($hot_fives,0,1);
             }
             if($test[$m]["postid"]==10){
                 $hot_sixs[] = $p;
-                $hot_six[] = array_slice($hot_sixs,0,1);
+                $hot_six = array_slice($hot_sixs,0,1);
             }
                
            }
