@@ -386,55 +386,6 @@
                             console.log(res);
                             // 存储订单号
                             cancelPayOrderNum = res.data.parts_order_number;
-                            $('.method-div').click(function(){
-                                $(this).siblings().find('.check-a').removeClass('icon-check');
-                                $(this).find('.check-a').addClass('icon-check');
-                                backMethod();
-                                var $index = $(this).index();
-                                switch ($index){
-                                    case 1:
-                                        //用户选择微信支付，发送订单号给后台
-                                        (function(){
-                                            return $.ajax({
-                                                url: 'app_wxpay',
-                                                type: 'POST',
-                                                dataType: 'JSON',
-                                                data: {
-                                                    'order_num': res.data.parts_order_number,
-                                                }
-                                            })
-                                        })().then(function(res){
-                                            console.log(res.responseData.app_response);
-                                            //接受支付宝签名 发送给android
-                                            Android.wxpay(JSON.stringify(res.responseData.app_response));
-                                        })
-                                        break;
-                                    case 2:
-                                        //用户选择支付宝支付，发送订单号给后台
-                                        (function(){
-                                            return $.ajax({
-                                                url: 'ios_api_alipay',
-                                                type: 'POST',
-                                                dataType: 'JSON',
-                                                data: {
-                                                    'order_num': res.data.parts_order_number,
-                                                }
-                                            })
-                                        })().then(function(res){
-                                            console.log(res);
-                                            //接受支付宝签名 发送给android
-                                            Android.alipay(res.data);
-                                        })
-                                        break;
-                                    case 3:
-                                        break;
-                                }
-                            })
-                            // 取消支付
-                            $('.chose-payment-back').click(function(){
-                                backMethod();
-                                cancelPayAjax(storeIdArr, res.data.parts_order_number);
-                            })
                         })
                     })
                 }else if(res.status === 3){
@@ -511,56 +462,6 @@
                             //选择支付方式弹窗
                             $('.mask').show();
                             $('.chose-payment').animate({'bottom': '0'});
-                            $('.method-div').click(function(){
-                                $(this).siblings().find('.check-a').removeClass('icon-check');
-                                $(this).find('.check-a').addClass('icon-check');
-                                backMethod();
-                                var $index = $(this).index();
-                                switch ($index){
-                                    case 1:
-                                        //用户选择微信支付，发送订单号给后台
-                                        (function(){
-                                            return $.ajax({
-                                                url: 'app_wxpay',
-                                                type: 'POST',
-                                                dataType: 'JSON',
-                                                data: {
-                                                    'order_num': res.data.parts_order_number,
-                                                }
-                                            })
-                                        })().then(function(res){
-                                            console.log(res.responseData.app_response);
-                                            //接受支付宝签名 发送给android
-                                            Android.wxpay(JSON.stringify(res.responseData.app_response));
-                                        })
-                                        break;
-                                    case 2:
-                                        //用户选择支付宝支付，发送订单号给后台
-                                        (function(){
-                                            return $.ajax({
-                                                url: 'ios_api_alipay',
-                                                type: 'POST',
-                                                dataType: 'JSON',
-                                                data: {
-                                                    'order_num': res.data.parts_order_number,
-                                                }
-                                            })
-                                        })().then(function(res){
-                                            console.log(res);
-                                            //接受支付宝签名 发送给android
-                                            Android.alipay(res.data);
-                                        })
-                                        break;
-                                    case 3:
-                                        break;
-                                }
-                            })
-                            
-                            // 取消支付
-                            $('.chose-payment-back').click(function(){
-                                backMethod();
-                                cancelPayAjax(storeIdArr, res.data.parts_order_number);
-                            })
                         })
                     })
                 }
@@ -575,6 +476,7 @@
             $('.mask').hide();
             $('.chose-payment').animate({'bottom': '-100%'});
         }
+        // 多店铺 取消付款 
         function cancelPayAjax(storeId, orderNum){
             $.ajax({
                 url: 'cart_store_more_cancel',
@@ -592,7 +494,57 @@
                 }
             })
         }
-
+        // 选择支付方式
+        $('.method-div').click(function(){
+            $(this).siblings().find('.check-a').removeClass('icon-check');
+            $(this).find('.check-a').addClass('icon-check');
+            backMethod();
+            var $index = $(this).index();
+            switch ($index){
+                case 1:
+                    //用户选择微信支付，发送订单号给后台
+                    (function(){
+                        return $.ajax({
+                            url: 'app_wxpay',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'order_num': cancelPayOrderNum,
+                            }
+                        })
+                    })().then(function(res){
+                        console.log(res.responseData.app_response);
+                        //接受支付宝签名 发送给android
+                        Android.wxpay(JSON.stringify(res.responseData.app_response));
+                    })
+                    break;
+                case 2:
+                    //用户选择支付宝支付，发送订单号给后台
+                    (function(){
+                        return $.ajax({
+                            url: 'ios_api_alipay',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'order_num': cancelPayOrderNum,
+                            }
+                        })
+                    })().then(function(res){
+                        console.log(res);
+                        //接受支付宝签名 发送给android
+                        Android.alipay(res.data);
+                    })
+                    break;
+                case 3:
+                    break;
+            }
+        })
+        // 取消支付
+        $('.chose-payment-back').click(function(){
+            backMethod();
+            cancelPayAjax(storeIdArr, res.data.parts_order_number);
+        })
+        // 支付宝支付 回调
         function alipayCallback(res){
             if(res !== undefined && res.resultStatus == '6001'){
                 cancelPayAjax(storeIdArr,cancelPayOrderNum);
