@@ -814,7 +814,7 @@ class OrderParts extends Controller{
                     if (!empty($end_info)) {
                         $ords =array();
                         foreach ($end_info as $vl){
-                            $ords[] =intval($vl["pay_time"]);
+                            $ords[] =intval($vl["order_create_time"]);
                         }
                         array_multisort($ords,SORT_DESC,$end_info);
                         return ajax_success('数据', $end_info);
