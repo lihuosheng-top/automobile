@@ -946,11 +946,12 @@
 
 						production.push(data.data[0].goods_car_year[i]);
 					}
-					console.log(city)
+				
 
 					layui.formSelects.value('city', city);
 					layui.formSelects.value('displacement', displacement);
 					layui.formSelects.value('production', production);
+					formSelects.render();
 				},
 				error: function(data) {
 					console.log(data)
@@ -967,12 +968,14 @@
 			},
 			dataType: "json",
 			success: function(data) {
-				console.log(data)
-				var data=data;
+				console.log(data.data[0]);
+				var data=data.data;
+				
 				for(var i=0;i<data.length;i++){
 					for(var j=0;j<$("#send input[type='checkbox']").length;j++){
                         if(data[i]==$("#send input[type='checkbox']")[i].defaultValue){
-							// console.log($("#send input[type='checkbox']")[i]);
+						    $("."+$("#send input[type='checkbox']")[i].className).attr("checked","checked");
+							continue;
 						}
 					}
 				}
