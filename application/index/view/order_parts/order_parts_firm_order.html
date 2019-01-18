@@ -414,7 +414,7 @@
                             $('.method-div').click(function(){
                                 $(this).siblings().find('.check-a').removeClass('icon-check');
                                 $(this).find('.check-a').addClass('icon-check');
-//                            backMethod();
+                                backMethod();
                                 var $index = $(this).index();
                                 switch ($index){
                                     case 1:
@@ -431,7 +431,7 @@
                                         })().then(function(res){
                                             console.log(res);
                                             //接受支付宝签名 发送给android
-//                                            Android.alipay(res.data);
+                                            Android.alipay(res.data);
                                         })
                                         break;
                                     case 2:
@@ -511,7 +511,7 @@
                     $('#order-buy').click(function () {
                         var buy_message = $('.leave-msg').val();
                         var order_amount = $('.total-money').text();
-                        var address_id = $('.user-name').data('address_id')
+                        var address_id = $('.user-name').data('address_id');
                         (function(){
                             return $.ajax({
                                 url: 'ios_api_order_button_by_shop',
@@ -527,19 +527,51 @@
                             })
                         })().then(function(res){
                             console.log(res);
-                            $.ajax({
-                                url: 'ios_api_alipay',
-                                type: 'POST',
-                                dataType: 'JSON',
-                                data: {
-                                    'order_num': res.data.parts_order_number,
-                                },
-                                success: function(res){
-                                    console.log(res);
-                                    Android.alipay(res.data);
-                                },
-                                error: function(){
-                                    console.log('error');
+                            //选择支付方式弹窗
+                            $('.mask').show();
+                            $('.chose-payment').animate({'bottom': '0'});
+                            $('.method-div').click(function(){
+                                $(this).siblings().find('.check-a').removeClass('icon-check');
+                                $(this).find('.check-a').addClass('icon-check');
+                                backMethod();
+                                var $index = $(this).index();
+                                switch ($index){
+                                    case 1:
+                                        //用户选择微信支付，发送订单号给后台
+                                        (function(){
+                                            return $.ajax({
+                                                url: 'app_wxpay',
+                                                type: 'POST',
+                                                dataType: 'JSON',
+                                                data: {
+                                                    'order_num': res.data.parts_order_number,
+                                                }
+                                            })
+                                        })().then(function(res){
+                                            console.log(res);
+                                            //接受支付宝签名 发送给android
+                                            Android.alipay(res.data);
+                                        })
+                                        break;
+                                    case 2:
+                                        //用户选择支付宝支付，发送订单号给后台
+                                        (function(){
+                                            return $.ajax({
+                                                url: 'ios_api_alipay',
+                                                type: 'POST',
+                                                dataType: 'JSON',
+                                                data: {
+                                                    'order_num': res.data.parts_order_number,
+                                                }
+                                            })
+                                        })().then(function(res){
+                                            console.log(res);
+                                            //接受支付宝签名 发送给android
+                                            Android.alipay(res.data);
+                                        })
+                                        break;
+                                    case 3:
+                                        break;
                                 }
                             })
                         })
