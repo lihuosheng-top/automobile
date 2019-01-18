@@ -14,7 +14,6 @@ use think\Request;
 use think\Db;
 use think\Session;
 class Extension extends  Controller{
-
     /**
      **************李火生*******************
      * @param Request $request
