@@ -816,9 +816,9 @@
 			<label class="layui-form-label">配送与安装服务：</label>
 			<div class="layui-input-block" id="send">
 				<input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" class="checkbox1" >
-				<input type="checkbox" name="goods_delivery[]" value="上门安装" title="上门安装" class="checkbox1">
-				<input type="checkbox" name="goods_delivery[]" value="无需安装" title="无需安装" class="checkbox2">
-				<input type="checkbox" name="goods_delivery[]" value="到店安装" title="到店安装" class="checkbox3">
+				<input type="checkbox" name="goods_delivery[]" value="上门安装" title="上门安装" class="checkbox2">
+				<input type="checkbox" name="goods_delivery[]" value="无需安装" title="无需安装" class="checkbox3">
+				<input type="checkbox" name="goods_delivery[]" value="到店安装" title="到店安装" class="checkbox4">
 			</div>
 		</div>
 
@@ -935,6 +935,7 @@
 				},
 				success: function(data) {
 					var data = eval('(' + data + ')');
+					
 					for(var i = 0; i < data.data[0].goods_car_series.length; i++) {
 						city.push(data.data[0].goods_car_series[i]);
 					}
@@ -973,13 +974,17 @@
 				
 				for(var i=0;i<data.length;i++){
 					for(var j=0;j<$("#send input[type='checkbox']").length;j++){
-                        if(data[i]==$("#send input[type='checkbox']")[i].defaultValue){
+					
+                        if(data[i]==$("#send input[type='checkbox']")[j].defaultValue){
 						    $("."+$("#send input[type='checkbox']")[i].className).attr("checked","checked");
+							
 							continue;
+							
 						}
 					}
 				}
 				form.render();
+			
 
 			},
 			error: function(data) {
