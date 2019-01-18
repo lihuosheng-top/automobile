@@ -222,9 +222,12 @@ class Advertisement extends Controller
                                 
      
             if ((!empty($reste)) && (!empty($area))) {
-                return ajax_success('传输成功', $reste);
-            } else {
-                return ajax_error("数据为空");
+                return ajax_success('获取成功', $reste);
+            } 
+            if ((!empty($reste)) && (empty($area))) {
+                return ajax_error('获取位置失败', $reste);
+            }else {
+                return ajax_error("暂无广告显示");
             }
         }
     }
