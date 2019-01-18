@@ -528,7 +528,7 @@
                                         })().then(function(res){
                                             console.log(res);
                                             //接受支付宝签名 发送给android
-                                            Android.alipay(res.data);
+                                            Android.wxpay(res.data);
                                         })
                                         break;
                                     case 2:
@@ -551,6 +551,12 @@
                                     case 3:
                                         break;
                                 }
+                            })
+                            
+                            // 取消支付
+                            $('.chose-payment-back').click(function(){
+                                backMethod();
+                                cancelPayAjax(storeId, res.data.parts_order_number);
                             })
                         })
                     })
