@@ -186,6 +186,12 @@ class Goods extends Controller
                 unset($goods_data["goods_car_brand"]);
                 unset($goods_data["dedicated_property"]);
             }
+            if($goods_data["goods_type_id"] == "请选择"){
+                unset($goods_data["goods_type_id"]);
+            }
+            if($goods_data["goods_brand_id"] == "请选择"){
+                unset($goods_data["goods_brand_id"]);
+            }
             if (!empty($goods_data["goods_standard_name"])) {
                 $goods_standard_name = implode(",", $goods_data["goods_standard_name"]);
                 $goods_standard_value = implode(",", $goods_data["goods_standard_value"]);
