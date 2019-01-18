@@ -402,9 +402,9 @@
                                                 }
                                             })
                                         })().then(function(res){
-                                            console.log(res);
+                                            console.log(res.responseData);
                                             //接受支付宝签名 发送给android
-                                            Android.wxpay(res.data);
+                                            Android.wxpay(res.responseData);
                                         })
                                         break;
                                     case 2:
@@ -528,7 +528,7 @@
                                         })().then(function(res){
                                             console.log(res);
                                             //接受支付宝签名 发送给android
-                                            Android.wxpay(res.data);
+                                            Android.wxpay(res.responseData);
                                         })
                                         break;
                                     case 2:
