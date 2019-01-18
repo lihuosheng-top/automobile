@@ -144,9 +144,8 @@
                             time: .8
                         })
                         // 判断机型
-                        (function(){
+                        setTimeout(function(){
                             var u = navigator.userAgent;
-                            alert(u);
                             if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
 //                                android
                                 location.href = 'https://www.pgyer.com/khdu';
@@ -154,7 +153,7 @@
 //                                ios
                                 alert('IOS版本敬请期待！');
                             }
-                        })()
+                        }, 1000)
                     }
                 },
                 error: function(){
