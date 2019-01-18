@@ -580,7 +580,18 @@
 	<script type="text/javascript">
 		//实例化编辑器
 		var ue = UE.getEditor('editor');
-		// TODO获取车牌Ajax
+		
+		var formSelects = layui.formSelects;
+		layui.config({
+			base: "js/"
+		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
+			var form = layui.form(),
+				layedit = layui.layedit,
+				layer = parent.layer === undefined ? layui.layer : parent.layer,
+				laypage = layui.laypage,
+				$ = layui.jquery;
+			layedit.build('demo');
+			// TODO获取车牌Ajax
 		var times_id = new Array();
 		var displacements_id = new Array();
 		var years_id = new Array();
@@ -618,6 +629,7 @@
 				for(var key in city_obj) {
 					$("#province").append("<option value='" + key + "'>" + key + "</option>");
 				}
+				form.render();
 
 			},
 			error: function(data) {
@@ -634,16 +646,6 @@
 			}
 			return b;
 		}
-		var formSelects = layui.formSelects;
-		layui.config({
-			base: "js/"
-		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
-			var form = layui.form(),
-				layedit = layui.layedit,
-				layer = parent.layer === undefined ? layui.layer : parent.layer,
-				laypage = layui.laypage,
-				$ = layui.jquery;
-			layedit.build('demo');
 			 for(var i=0;i<$("#goods_type_id option").length;i++){
 			     var Cts = $("option")[i].innerHTML;
 //			     
@@ -1007,6 +1009,7 @@
 			});
 			//TODO监听车牌变化时间
 			form.on('select(province)', function(data) {
+			
 				var now_province = data.value;
 				$("#city").html('<option value="">请选择车系</option>');
 				$("#displacement").html('<option value="">请选择排量</option>');
@@ -1031,6 +1034,7 @@
 					$("#production").append('<option value="' + now_production + '">' + now_production + '</option>');
 				}
 				formSelects.render();
+				
 
 			});
 			// TODO点击添加页面

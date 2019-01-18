@@ -16,6 +16,10 @@
 	background: #bbb;
 }
 
+.bg_yellow{
+	background: #FFFF00;
+}
+
 button{
 	border: 0 !important;
 }
