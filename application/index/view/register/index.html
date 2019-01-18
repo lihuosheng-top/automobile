@@ -151,7 +151,11 @@
                                 location.href = 'https://www.pgyer.com/khdu';
                             }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
 //                                ios
-                                alert('IOS版本敬请期待！');
+                                layer.open({
+                                    skin: 'msg',
+                                    content: 'IOS版本敬请期待！',
+                                    time: 1
+                                })
                             }
                         }, 1000)
                     }
