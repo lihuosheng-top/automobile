@@ -75,8 +75,15 @@
 			var remove = $(this).parent();
 			remove.remove();
 		});
+		$(":submit").click(function(){
+			if($(".addcontents .text").length==0){
+				alert("你没有改动")
+				return false;
+			}
+	
+		})
 		//	点击渲染出来的删除图片触发
-		console.log($(".remove_img"));
+		
 		$(".remove_img").click(function() {
 			var id = $(this).data("id");
 			var remove = $(this).parent();
