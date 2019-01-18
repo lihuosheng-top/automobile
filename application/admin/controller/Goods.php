@@ -186,6 +186,12 @@ class Goods extends Controller
                 unset($goods_data["goods_car_brand"]);
                 unset($goods_data["dedicated_property"]);
             }
+            if($goods_data["goods_type_id"] == "请选择"){
+                unset($goods_data["goods_type_id"]);
+            }
+            if($goods_data["goods_brand_id"] == "请选择"){
+                unset($goods_data["goods_brand_id"]);
+            }
             if (!empty($goods_data["goods_standard_name"])) {
                 $goods_standard_name = implode(",", $goods_data["goods_standard_name"]);
                 $goods_standard_value = implode(",", $goods_data["goods_standard_value"]);
@@ -217,8 +223,20 @@ class Goods extends Controller
                     $goods_special[$kt] = $vq;
                 }
             }
-
             $goods_id = db('goods')->insertGetId($goods_special);
+            if ($goods_id) {
+                //取出图片在存到数据库
+                $goods_images = [];
+                $file = request()->file('goods_images');
+                if (!empty($file)) {
+                    foreach ($file as $key => $value) {
+                        $info = $value->move(ROOT_PATH . 'public' . DS . 'uploads');
+                        $goods_url = str_replace("\\", "/", $info->getSaveName());
+                        $goods_images[] = ["goods_images" => $goods_url, "goods_id" => $goods_id];
+                    }
+                }
+                $booldata = model("goods_images")->saveAll($goods_images);
+            }
             if (!empty($goods_data)) {
                 foreach ($goods_data as $kn => $nl) {
                     if (substr($kn, 0, 3) == "sss") {
@@ -267,21 +285,8 @@ class Goods extends Controller
 
                 }
             }
-            if ($goods_id) {
-                //取出图片在存到数据库
-                $goods_images = [];
-                $file = request()->file('goods_images');
-                if (!empty($file)) {
-                    foreach ($file as $key => $value) {
-                        $info = $value->move(ROOT_PATH . 'public' . DS . 'uploads');
-                        $goods_url = str_replace("\\", "/", $info->getSaveName());
-                        $goods_images[] = ["goods_images" => $goods_url, "goods_id" => $goods_id];
-                    }
-                }
-                $booldata = model("goods_images")->saveAll($goods_images);
-            }
             
-            if ($booldata && $goods_id) {
+            if ($rest) {
                 $this->success("添加成功", url("admin/Goods/index"));
             } else {
                 $this->success("添加失败", url('admin/Goods/add'));
