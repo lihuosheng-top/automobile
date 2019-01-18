@@ -68,10 +68,10 @@ Route::group("",[
     "recharge_pay_code"=>"index/Apppay/recharge_pay_code",     //充值订单支付（成功回调修改状态）
     "ios_api_alipay"=>"index/Apppay/ios_api_alipay",//生成支付宝签名 TODO:配件商支付宝签名
     "ios_api_service_alipay"=>"index/Apppay/ios_api_service_alipay",//生成支付宝签名 TODO:服务商支付宝签名
-    "ios_api_recharge_alipay"=>"index/Apppay/ios_api_recharge_alipay",//生成支付宝签名 TODO:充值支付宝签名
-    "notifyurls"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
-    "service_notifyurl"=>"index/Apppay/service_notifyurl",//服务商异步处理(支付宝IOS对接)
-    "recharge_notifyurl"=>"index/Apppay/recharge_notifyurl",//充值订单异步处理(支付宝IOS对接)
+    "ios_api_recharge_alipay"=>"index/Apppay/ios_api_recharge_alipay",//生成支付宝签名 TODO:余额充值支付宝签名
+    "notifyurls"=>"index/Apppay/notifyurl",//TODO：配件商异步处理(支付宝IOS对接)
+    "service_notifyurl"=>"index/Apppay/service_notifyurl",//TODO：服务商异步处理(支付宝IOS对接)
+    "recharge_notifyurl"=>"index/Apppay/recharge_notifyurl",//TODO：余额充值订单异步处理(支付宝IOS对接)
     "app_wxpay"=>"index/Apppay/app_wxpay",//微信app支付
     "wxpay_notifyurl"=>"index/Apppay/wxpay_notifyurl",//微信app支付回调
 
@@ -267,7 +267,6 @@ Route::group("",[
     "classify_index"=>"index/Classify/classify_index",
     "classify_recommend"=>"index/Classify/classify_recommend",//分类推荐
     "classify_parets_id"=>"index/Classify/parets_id",        //配件商城id
-
 
 
     /*配件商品*/
