@@ -74,13 +74,6 @@
             <p>支付宝支付</p>
             <a href="javascript:;" class="spr check-a"></a>
         </div>
-        <div class="method-div">
-            <div class="icon-div">
-                <img src="__STATIC__/index/image/money2.png">
-            </div>
-            <p>余额支付</p>
-            <a href="javascript:;" class="spr check-a"></a>
-        </div>
     </div>
 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
@@ -135,8 +128,6 @@
                                     Android.alipay(res.data);
                                 })
                                 break;
-                            case 3:
-                                break;
                         }
                     })
                 })
@@ -185,6 +176,12 @@
                 dataType: 'JSON',
                 data: {
                     'recharge_id': cancelOrderNum
+                },
+                success: function(res){
+                    console.log(res);
+                },
+                error: function(){
+                    console.log('error');
                 }
             })
             backMethod();
