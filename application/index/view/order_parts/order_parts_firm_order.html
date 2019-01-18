@@ -262,7 +262,7 @@
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_firm_order.js"></script>
     <script>
-        var cancelPayOrderNum = '', storeId;
+        var cancelPayOrderNum = '', storeIdArr = [];
         // 商品详情 传过来的数据
         $.ajax({
             url: 'return_order_buy_information',
@@ -352,7 +352,8 @@
                     })
 
                     var goodsId = res.data.goods[0].id;
-                    storeId = res.data.goods[0].store_id;
+                    var storeId = res.data.goods[0].store_id;
+                    storeIdArr.push(res.data.goods[0].store_id);
                     $('#order-buy').click(function () {
                         var orderAmount = $('.total-money').text();
                         var quantity = $('.total-num').text();
@@ -405,6 +406,8 @@
                                         })().then(function(res){
                                             console.log(res.responseData.app_response);
                                             //接受支付宝签名 发送给android
+                                            var a = 0;
+                                            alert(++a);
                                             Android.wxpay(JSON.stringify(res.responseData.app_response));
                                         })
                                         break;
@@ -462,6 +465,7 @@
                                     </div>`
                         })
                         str += `</div>`;
+                        // storeIdArr
                     })
                     $('.user-info-box').after(str);
                     // 折扣
