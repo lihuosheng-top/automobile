@@ -106,8 +106,13 @@ div {
                     $(this).attr("type", "submit");
                 }
                 else{
-                    alert(2223);
+                    return false;
                 }
+                if($(".addcontents .text").length==0){
+				alert("你没有改动")
+				return false;
+			}
+	
 
             })
             //	点击渲染出来的删除图片触发
@@ -138,6 +143,13 @@ div {
             });
         });
 
+        $(":submit").click(function(){
+			if($(".addcontents .text").length==0){
+				alert("你没有改动")
+				return false;
+			}
+	
+		})
     });
 </script>
 {/block}
