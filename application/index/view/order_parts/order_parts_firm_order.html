@@ -406,8 +406,6 @@
                                         })().then(function(res){
                                             console.log(res.responseData.app_response);
                                             //接受支付宝签名 发送给android
-                                            var a = 0;
-                                            alert(++a);
                                             Android.wxpay(JSON.stringify(res.responseData.app_response));
                                         })
                                         break;
