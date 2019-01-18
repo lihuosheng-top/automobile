@@ -580,7 +580,18 @@
 	<script type="text/javascript">
 		//实例化编辑器
 		var ue = UE.getEditor('editor');
-		// TODO获取车牌Ajax
+		
+		var formSelects = layui.formSelects;
+		layui.config({
+			base: "js/"
+		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
+			var form = layui.form(),
+				layedit = layui.layedit,
+				layer = parent.layer === undefined ? layui.layer : parent.layer,
+				laypage = layui.laypage,
+				$ = layui.jquery;
+			layedit.build('demo');
+			// TODO获取车牌Ajax
 		var times_id = new Array();
 		var displacements_id = new Array();
 		var years_id = new Array();
@@ -635,16 +646,6 @@
 			}
 			return b;
 		}
-		var formSelects = layui.formSelects;
-		layui.config({
-			base: "js/"
-		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
-			var form = layui.form(),
-				layedit = layui.layedit,
-				layer = parent.layer === undefined ? layui.layer : parent.layer,
-				laypage = layui.laypage,
-				$ = layui.jquery;
-			layedit.build('demo');
 			 for(var i=0;i<$("#goods_type_id option").length;i++){
 			     var Cts = $("option")[i].innerHTML;
 //			     
