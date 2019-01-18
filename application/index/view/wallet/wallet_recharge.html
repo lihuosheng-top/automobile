@@ -153,6 +153,8 @@
 //            Android回调方法， 支付成功状态码9000，失败状态码6001
             if(res !== undefined && res.resultStatus == '9000'){
                 location.href = 'wallet_index';
+            }else {
+                location.href = 'classify_index';
             }
         }
 //         隐藏支付方式弹窗
