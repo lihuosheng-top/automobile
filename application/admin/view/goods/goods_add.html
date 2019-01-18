@@ -618,6 +618,7 @@
 				for(var key in city_obj) {
 					$("#province").append("<option value='" + key + "'>" + key + "</option>");
 				}
+				form.render();
 
 			},
 			error: function(data) {
@@ -1007,7 +1008,7 @@
 			});
 			//TODO监听车牌变化时间
 			form.on('select(province)', function(data) {
-				form.render();
+			
 				var now_province = data.value;
 				$("#city").html('<option value="">请选择车系</option>');
 				$("#displacement").html('<option value="">请选择排量</option>');
