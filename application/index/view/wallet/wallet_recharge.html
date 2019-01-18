@@ -154,7 +154,14 @@
             if(res !== undefined && res.resultStatus == '9000'){
                 location.href = 'wallet_index';
             }else {
-                location.href = 'classify_index';
+                $.ajax({
+                    url: 'wallet_recharge_del',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'recharge_id': cancelOrderNum
+                    }
+                })
             }
         }
 //         隐藏支付方式弹窗
