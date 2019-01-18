@@ -219,7 +219,7 @@ class Advertisement extends Controller
                                 }else{
                                     $reste["hot_six"] = NULL;
                                 }
-                                halt($reste);
+                                
      
             if ((!empty($reste)) && (!empty($area))) {
                 return ajax_success('传输成功', $reste);
