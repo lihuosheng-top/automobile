@@ -62,7 +62,7 @@
 	<h4>(零售商品)</h4> {volist name="goods_ratio" id="value"}
 	<div class="show">
 		<div style=" " class="text">最小金额<input type="text" name="year" id="" value="{$value.min_money}" style="width: 100px;" disabled="disabled" />至最大金额
-			<input disabled="disabled" type="text" name="money" id="" value="{$value.max_money}" style="width: 100px;" />，加价比例<input disabled="disabled" type="text" name="money" id="" value="{$value.ratio}" style="width: 100px;" />%
+			<input disabled="disabled" type="text" name="money" id="" value="{$value.max_money}" style="width: 100px;" />，加价比例<input disabled="disabled" type="text" name="money" id="" value="{$value.ratio*100}" style="width: 100px;" />%
 			<i class="layui-icon remove_img " data-id="{$value.id}">&#x1007;</i>
 		</div>
 	</div>
