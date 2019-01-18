@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="__STATIC__/index/css/wallet/wallet_recharge.css">
     <title>充值</title>
 </head>
+
 <body>
     <div class="wrapper">
         <header class="header">
@@ -86,11 +88,11 @@
     <script>
         var cancelOrderNum = '';
         // 充值 （下一步按钮）
-        $('.recharge-next').click(function(){
+        $('.recharge-next').click(function () {
             var rechargeMoney = $('.recharge-box input').val();
-            if(rechargeMoney !== '' && rechargeMoney > 0){
-                (function(){
-//                    下单获取订单号
+            if (rechargeMoney !== '' && rechargeMoney > 0) {
+                (function () {
+                    //                    下单获取订单号
                     return $.ajax({
                         url: 'wallet_recharge',
                         type: 'POST',
@@ -99,25 +101,25 @@
                             'recharge_money': rechargeMoney
                         }
                     })
-                })().then(function(res){
+                })().then(function (res) {
                     console.log(res);
                     cancelOrderNum = res.data;
-//                    显示选择支付方式弹窗
+                    //                    显示选择支付方式弹窗
                     $('.mask').show();
-                    $('.chose-payment').animate({'bottom': '0'});
+                    $('.chose-payment').animate({ 'bottom': '0' });
                     //         选择支付方式
-                    $('.method-div').click(function(){
+                    $('.method-div').click(function () {
                         $(this).siblings().find('.check-a').removeClass('icon-check');
                         $(this).find('.check-a').addClass('icon-check');
                         backMethod();
                         var $index = $(this).index();
                         //发送给后台订单号，获取签名
-                        switch($index){
+                        switch ($index) {
                             case 1:
 
                                 break;
                             case 2:
-                                (function(){
+                                (function () {
                                     //用户选择支付宝支付，发送订单号给后台，获取签名
                                     return $.ajax({
                                         url: 'ios_api_recharge_alipay',
@@ -127,7 +129,7 @@
                                             'order_num': res.data
                                         }
                                     })
-                                })().then(function(res){
+                                })().then(function (res) {
                                     console.log(res);
                                     //发送签名给 Android 唤起支付宝
                                     Android.alipay(res.data);
@@ -138,8 +140,8 @@
                         }
                     })
                 })
-            }else{
-//                用户未填写充值金额
+            } else {
+                //用户未填写充值金额
                 layer.open({
                     style: 'bottom:100px;',
                     type: 0,//弹窗类型 0表示信息框，1表示页面层，2表示加载层
@@ -149,30 +151,45 @@
                 })
             }
         })
-        function alipayCallback(res){
-//            Android回调方法， 支付成功状态码9000，失败状态码6001
-            if(res !== undefined && res.resultStatus == '9000'){
+        function alipayCallback(res) {
+            //Android回调方法， 支付成功状态码9000，失败状态码6001
+            if (res !== undefined && res.resultStatus == '9000') {
                 location.href = 'wallet_index';
+            }else if(res.resultStatus == '6001'){
+                (function(){
+                    return $.ajax({
+                        url: 'wallet_recharge_del',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'recharge_id': cancelOrderNum
+                        }
+                    })
+                })().then(function(res){
+                    console.log(res);
+                    location.reload();
+                })
             }
         }
-//         隐藏支付方式弹窗
-         function backMethod(){
-             $('.chose-payment').animate({'bottom': '-100%'});
-             $('.mask').hide();
-         }
+        //隐藏支付方式弹窗
+        function backMethod() {
+            $('.chose-payment').animate({ 'bottom': '-100%' });
+            $('.mask').hide();
+        }
 
-//        取消选择支付方式
-         $('.chose-payment-back').click(function(){
-             $.ajax({
-                 url: 'wallet_recharge_del',
-                 type: 'POST',
-                 dataType: 'JSON',
-                 data: {
-                     'recharge_id': cancelOrderNum
-                 }
-             })
-             backMethod();
-         })
+        //取消选择支付方式
+        $('.chose-payment-back').click(function () {
+            $.ajax({
+                url: 'wallet_recharge_del',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'recharge_id': cancelOrderNum
+                }
+            })
+            backMethod();
+        })
     </script>
 </body>
+
 </html>
