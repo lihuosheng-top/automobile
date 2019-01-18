@@ -228,7 +228,7 @@ $('.select-buy').click(function(){
                     btn: ['确定', '取消'],
                     yes: function (index) {
                         layer.close(index);
-                        location.href = 'member_address_add?id=271&preid=10';
+                        location.href = 'member_address_add?id='+id+'&preid='+preId+'';
                     }
                 });
             }else if(res.status == 2){
