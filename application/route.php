@@ -72,6 +72,9 @@ Route::group("",[
     "notifyurls"=>"index/Apppay/notifyurl",//异步处理(支付宝IOS对接)
     "service_notifyurl"=>"index/Apppay/service_notifyurl",//服务商异步处理(支付宝IOS对接)
     "recharge_notifyurl"=>"index/Apppay/recharge_notifyurl",//充值订单异步处理(支付宝IOS对接)
+    "app_wxpay"=>"index/Apppay/app_wxpay",//微信app支付
+    "wxpay_notifyurl"=>"index/Apppay/wxpay_notifyurl",//微信app支付回调
+
     /*TODO:服务商订单结束*/
 
     /*TODO:配件商订单开始*/

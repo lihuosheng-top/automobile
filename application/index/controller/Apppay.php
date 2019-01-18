@@ -749,4 +749,82 @@ class Apppay extends Controller
         }
     }
 
+
+    /**
+     * 微信app支付
+     * 陈绪
+     * @param Request $request
+     * @return array|false|mixed|\PDOStatement|string|\think\Collection
+     */
+    public function app_wxpay(Request $request){
+
+        if($request->isPost()){
+            $order_num =$request->only(['order_num'])['order_num'];
+            include EXTEND_PATH."WxpayAPI/lib/WechatAppPay.php";
+            //填写配置参数
+            $options = array(
+                'appid'    => 'wxfa30dbf87b781811',    //填写微信分配的公众账号ID
+                'mch_id'   => '1523937771',             //填写微信支付分配的商户号
+                'notify_url'    => 'https://automobile.siring.com.cn/wxpay_notifyurl',  //填写微信支付结果回调地址
+                'key'     => 'Zlh188cnZwxcqgzyszunlianhuiappZy'        //填写微信商户支付密钥
+            );
+            $data = Db::name('order_parts')->where('parts_order_number',$order_num)->select();
+            foreach ($data as $k=>$v){
+                $goods_name = $v['parts_goods_name'];
+                $order_number = $v['parts_order_number'];
+                $goods_pay_money =$v['order_real_pay'];
+            }
+            //初始化配置
+            $wechatAppPay = new \wechatAppPay($options);
+            $total_fee   =  floatval($goods_pay_money);
+            //下单必要的参数
+            $params['body'] = $goods_name;    //商品描述
+            $params['out_trade_no'] = $order_num;//自定义的订单号
+            $params['total_fee'] = $total_fee;//订单金额 只能为整数 单位为分
+            $params['nonce_str'] = $order_number;//随机数
+            $params['spbill_create_ip'] = $this->get_client_ip();
+            $params['trade_type'] = 'APP';             //交易类型 JSAPI | NATIVE | APP | WAP
+            //统一下单
+            $result = $wechatAppPay->unifiedOrder($params);
+
+            //创建APP端预支付参数
+            $data = $wechatAppPay->getAppPayParams($result);
+
+            return $data;
+
+        }
+
+    }
+
+
+    /**
+     * 生成终端IP
+     * 陈绪
+     * @return array|false|string
+     */
+    public function get_client_ip(){
+        if ($_SERVER['REMOTE_ADDR']) {
+            $cip = $_SERVER['REMOTE_ADDR'];
+        } elseif (getenv("REMOTE_ADDR")) {
+            $cip = getenv("REMOTE_ADDR");
+        } elseif (getenv("HTTP_CLIENT_IP")) {
+            $cip = getenv("HTTP_CLIENT_IP");
+        } else {
+            // $cip = "unknown";
+            $cip = "127.0.0.1";
+        }
+        return $cip;
+    }
+
+
+
+
+    /**
+     * 微信支付回调
+     * 陈绪
+     */
+    public function wxpay_notifyurl(){
+
+    }
+
 }
