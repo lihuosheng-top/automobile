@@ -1,45 +1,36 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: GY
  * Date: 2018/12/18 
  * Time: 11:20
  */
-
 namespace app\index\controller;
-
 use think\console\Input;
 use think\Controller;
 use think\Db;
 use think\Request;
 use think\Image;
 use think\Session;
-
 class Advertisement extends Controller
 {
-
     /**
      * [汽车广告显示]
      * 郭杨
      */
     public function advertisement_index(Request $request)
     {
-        if ($request->isGet()) {
-            // $area = $request->only(["area"])["area"];
-            $area = '广东省,深圳市,福田区';
+        if ($request->isPost()) {
+            $area = $request->only(["area"])["area"];
             Session::set("area", $area);
             $t= date('Y-m-d H:i:s');
             $time  = strtotime($t);
-            //halt($time);
             $end_time =  "end_time < {$time}";
             $status = Db::name("platform")->where($end_time)->where("status", 1)->update(["status"=>3]);
-            //halt($status);
             $area_data = Db::name("platform")->where('area', $area)->where("status", 1)->order("start_time desc")->select();
             $adress_data = Db::name("platform")->where('department', "platform_business")->where("status", 1)->order("start_time desc")->select();
+                     
             
-            
-
             //平台
             foreach ($adress_data as $k => $v) {
                 if ($v['pid'] == 18) //首页轮播
@@ -71,7 +62,6 @@ class Advertisement extends Controller
                     }
                 }
             }
-
             //配件商and服务商
             foreach ($area_data as $k => $v) {
                 if ($v['pid'] == 18) //首页轮播
@@ -91,7 +81,6 @@ class Advertisement extends Controller
                     $machine[] = $v;
                 }
             }
-
             //首页轮播
             if ((!isset($homes)) && (!isset($home))) {
                 $reste["home"] = null;
@@ -108,6 +97,7 @@ class Advertisement extends Controller
                     $reste["home"] = $homes;
                 }
             }
+ 
 
             //首页固定
             if ((!isset($fixeds)) && (!isset($fixed))) {
@@ -125,7 +115,9 @@ class Advertisement extends Controller
                     $reste["fixed"] = $fixeds;
                 }
             }
-
+            if(count($reste["fixed"])>0){
+            $reste["fixed"] = array_slice($reste["fixed"],0,1);
+            }
             //热门推荐
             if ((!isset($hots)) && (!isset($hot))) {
                 $reste["hot"] = null;
@@ -142,7 +134,6 @@ class Advertisement extends Controller
                     $reste["hot"] = $hots;
                 }
             }
-
             //配件商城
             if ((!isset($machines)) && (!isset($machine))) {
                 $reste["machine"] = null;
@@ -159,28 +150,38 @@ class Advertisement extends Controller
                     $reste["machine"] = $machines;
                 }
             }
+
+            if(count($reste["machine"])>0){
+                $reste["machine"] = array_slice($reste["machine"],0,3);
+                }
            
           $test = $reste["hot"];
           if(!empty($test)){
            foreach($test as $m => $p)
            {
             if($test[$m]["postid"]==5){
-                $hot_one[] = $p;
+                $hot_ones[] = $p;
+                $hot_one = array_slice($hot_ones,0,1);
             }
             if($test[$m]["postid"]==6){
-                $hot_two[] = $p;
+                $hot_twos[] = $p;
+                $hot_two = array_slice($hot_twos,0,1);
             }
             if($test[$m]["postid"]==7){
-                $hot_three[] = $p;
+                $hot_threes[] = $p;
+                $hot_three = array_slice($hot_threes,0,1);
             }
             if($test[$m]["postid"]==8){
-                $hot_four[] = $p;
+                $hot_fours[] = $p;
+                $hot_four = array_slice($hot_fours,0,1);
             }
             if($test[$m]["postid"]==9){
-                $hot_five[] = $p;
+                $hot_fives[] = $p;
+                $hot_five = array_slice($hot_fives,0,1);
             }
             if($test[$m]["postid"]==10){
-                $hot_six[] = $p;
+                $hot_sixs[] = $p;
+                $hot_six = array_slice($hot_sixs,0,1);
             }
                
            }
@@ -214,21 +215,18 @@ class Advertisement extends Controller
                                 $reste["hot_six"] = $hot_six;
                                 }else{
                                     $reste["hot_six"] = NULL;
-                                }
-                                halt($reste);
-     
+                                }                               
+                                     
             if ((!empty($reste)) && (!empty($area))) {
-                return ajax_success('传输成功', $reste);
-            } else {
-                return ajax_error("数据为空");
-
+                return ajax_success('获取成功', $reste);
+            } 
+            if ((!empty($reste)) && (empty($area))) {
+                return ajax_success('获取位置失败', $reste);
+            }else {
+                return ajax_error("暂无广告显示");
             }
-
         }
-
     }
-
-
     /**
      * [汽车广告配件商城显示]
      * 郭杨
@@ -239,7 +237,6 @@ class Advertisement extends Controller
             $area = Session::get("area");
             $area_data = Db::name("platform")->where('area', $area)->where("status", 1)->order("start_time desc")->select();
             $adress_data = Db::name("platform")->where('department', "platform_business")->where("status", 1)->order("start_time desc")->select();
-
             //平台
             foreach ($adress_data as $k => $v) {
                 if ($v['pid'] == 21) //配件商城
@@ -260,7 +257,6 @@ class Advertisement extends Controller
             
             //配件商and服务商
             foreach ($area_data as $k => $v) {
-
                 if ($v['pid'] == 21) //配件商城
                 {
                     $machine[] = $v;
@@ -270,7 +266,6 @@ class Advertisement extends Controller
                     $discount[] = $v;
                 }
             }
-
             //配件商城
             if ((!isset($machines)) && (!isset($machine))) {
                 $reste["machine"] = null;
@@ -288,6 +283,10 @@ class Advertisement extends Controller
                 }
             }
 
+            if(count($reste["machine"])>0){
+                $reste["machine"] = array_slice($reste["machine"],0,3);
+                }
+
             //配件商城优惠推荐
             if ((!isset($discounts)) && (!isset($discount))) {
                 $reste["discount"] = null;
@@ -304,16 +303,130 @@ class Advertisement extends Controller
                     $reste["discount"] = $discounts;
                 }
             }
- 
-            if ((!empty($reste)) && (!empty($area))) {
-                return ajax_success('传输成功', $reste);
-            } else {
-                return ajax_error("数据为空");
 
+            if(count($reste["discount"])>0){
+                $reste["discount"] = array_slice($reste["discount"],0,3);
+                }
+                
+                if ((!empty($reste)) && (!empty($area))) {
+                    return ajax_success('获取成功', $reste);
+                } 
+                if ((!empty($reste)) && (empty($area))) {
+                    return ajax_success('获取位置失败', $reste);
+                }else {
+                    return ajax_error("暂无广告显示");
+                }
             }
-
         }
 
-    }
+       /**
+     * [汽车广告配件商城显示]
+     * 郭杨
+     */
+    public function advert_index()
+    {
+        $data = db("platform")->order("start_time asc")->select();
+            foreach ($data as $k => $v) {
+            if ($v['pid'] == 18) //首页轮播
+            {
+                if (isset($v)) {
+                    $homes[] = $v;                                   
+                }
+            }
+            if ($v['pid'] == 19) //首页固定
+            {
+                if (isset($v)) {
+                    $fixeds[] = $v;                   
+                }
+            }
+            if ($v['pid'] == 20) //热门推荐
+            {
+                if (isset($v)) {
+                    $hots[] = $v;               
+                }
+            }
+            if ($v['pid'] == 21) //配件商城
+            {
+                if (isset($v)) {
+                    $machines[] = $v;                   
+                }
+            }
+            if ($v['pid'] == 27) //配件商城优惠推荐
+            {
+                if (isset($v)) {
+                    $discounts[] = $v;                    
+                }
+            }
+        }
+      
+        foreach($homes as $pp => $z){
+            if( $z["status"]== 2){ //待审核
+                if (isset($z)) {
+                    $qq[] = $z;                                   
+                }                             
+            }else{
+                $qq = array() ;
+            }
+            if($z["status"]== 1){
+                if (isset($z)) { //通过
+                    $ww[] = $z;                                   
+                }else{
+                    $ww = array();
+                }
+            }
+            if($z["status"]== 0){
+                if (isset($z)) { // 拒绝
+                    $ee[] = $z;                                   
+                }else{
+                    $ee = array();
+                }
+            }
+            if($z["status"]== 3){
+                if (isset($z)) { // 已过期
+                    $rr[] = $z;                                   
+                }else{
+                    $rr = array();
+                }
+            }
+            
+        }
+        $home = array_merge($qq,$ww,$ee,$rr);
 
+        foreach($fixeds as $aa => $x){
+            if( $x["status"]== 2){ //待审核
+                if (isset($x)) {
+                    $tt[] = $x;                                   
+                }                             
+            }else{
+                $tt = array() ;
+            }
+            if($x["status"]== 1){
+                if (isset($x)) { //通过
+                    $yy[] = $x;                                   
+                }else{
+                    $yy = array();
+                }
+            }
+            if($x["status"]== 0){
+                if (isset($x)) { // 拒绝
+                    $uu[] = $x;                                   
+                }else{
+                    $uu = array();
+                }
+            }
+            if($x["status"]== 3){
+                if (isset($x)) { // 已过期
+                    $ii[] = $x;                                   
+                }else{
+                    $ii = array();
+                }
+            }
+            
+        }
+        $fixed = array_merge($tt,$yy,$uu,$ii);
+
+
+
+        
+    }
 }
