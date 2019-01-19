@@ -146,12 +146,12 @@ class Wxpayandroid
     * @param int $second url执行超时时间，默认30s
     * @throws WxPayException
     */
-    function postXmlCurl($xml, $url, $second=30, $useCert=false, $sslcert_path='', $sslkey_path='')
+    function postXmlCurl($xml, $url, $second=30, $useCert=false)
     {
         $ch = curl_init();
         //设置超时
-        curl_setopt($ch, CURLOPT_TIMEOUT, $second);
         curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $second);
         //设置header
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         //要求结果为字符串且输出到屏幕上
@@ -164,9 +164,7 @@ class Wxpayandroid
         //设置证书
         //使用证书：cert 与 key 分别属于两个.pem文件
         curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
-        curl_setopt($ch,CURLOPT_SSLCERT, $sslcert_path);
         curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
-        curl_setopt($ch,CURLOPT_SSLKEY, $sslkey_path);
         }
         //post提交方式
         curl_setopt($ch, CURLOPT_POST, TRUE);
