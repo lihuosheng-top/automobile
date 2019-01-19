@@ -287,11 +287,10 @@ class Wxpayandroid
         //将微信返回的结果xml转成数组
         $responseArr = $this->xmlToArray($response);
         if(isset($responseArr["return_code"]) && $responseArr["return_code"]=='SUCCESS'){
-            return $this->getOrder($responseArr['prepay_id']);
+        return $this->getOrder($responseArr['prepay_id']);
         }
         return $responseArr;
     }
-
     /**
     * 执行第二次签名，才能返回给客户端使用
     * @param int $prepayId:预支付交易会话标识
@@ -308,7 +307,6 @@ class Wxpayandroid
         $data["packagevalue"] = "Sign=WXPay";
         return $data;
     }
-
     /**
     * 异步通知信息验证
     * @return boolean|mixed
