@@ -26,7 +26,7 @@ class Install extends Controller{
             $max_money = $request->only(["max_money"])["max_money"];
             $rati = $request->only(["ratio"])["ratio"];
             foreach ($min_money as $key=>$value){
-                $ratio = (float)$rati[$key]*100;
+                $ratio = (float)$rati[$key]/100;
                 $bool = db("goods_ratio")->insert(["min_money"=>$value,"max_money"=>$max_money[$key],"ratio"=>$ratio]);
             }
             if($bool){
