@@ -343,25 +343,26 @@ class OrderService extends Controller{
                 if($res){
                     //需要加入到商家余额里面
                    $order_info = Db::name("order_service")
-                       ->field("service_real_pay,store_id,service_order_number,service_goods_name,pay_type_content")
+                       ->field("service_real_pay,store_id,service_order_number,service_goods_name,pay_type_content,service_order_amount")
                        ->where("id",$order_id)
                        ->find();
                     $business_id =Db::name("store")->where("store_id",$order_info["store_id"])->value("user_id");
-                   //原本的钱包余额
+                   //商家原本的钱包余额
                     $old_wallet =Db::name("user")
                         ->where("id",$business_id)
                         ->value("user_wallet");
-                    $new_wallet =$order_info["service_real_pay"] + $old_wallet;
+                    //商家添加的余额添加的是商家发布的服务项目价钱，不是抵扣之后的金额
+                    $new_wallet =$order_info["service_order_amount"] + $old_wallet;
                    //余额更新
                     $arr =Db::name('user')->where('id',$business_id)->update(['user_wallet'=>$new_wallet]);
                     //添加消费记录
                     if($arr){
                         $data=[
                             "user_id"=>$business_id,
-                            "wallet_operation"=>$order_info["service_real_pay"],
+                            "wallet_operation"=>$order_info["service_order_amount"],
                             "wallet_type"=>1,
                             "operation_time"=>date("Y-m-d H:i:s"),
-                            "wallet_remarks"=>"订单号：".$order_info['service_order_number']."，完成交易，收入".$order_info['service_real_pay']."元",
+                            "wallet_remarks"=>"订单号：".$order_info['service_order_number']."，完成交易，收入".$order_info['service_order_amount']."元",
                             "wallet_img"=>"index/image/money2.png",
                             "title"=>$order_info["service_goods_name"],
                             "order_nums"=>$order_info["service_order_number"],
@@ -550,6 +551,7 @@ class OrderService extends Controller{
                         "integral_deductible"=> $integral_deductible,//积分抵扣（元）
                         "integral_discount_setting_id"=>$integral_discount_setting_id, //积分设置中的id
                         "integral_deductible_num" =>$integral_deductible_num, //使用了多少积分
+                        "is_face" =>$data["is_face"], //是否面议（面议为-1，正常流程为1）
                     ];
                     //判断是面议还是直接有价钱购买
                     if($goods_data["service_money"] != 0){
