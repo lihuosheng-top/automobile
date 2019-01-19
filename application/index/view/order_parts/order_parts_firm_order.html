@@ -270,7 +270,9 @@
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_firm_order.js"></script>
     <script>
-        var cancelPayOrderNum = '', storeIdArr = [];
+        var cancelPayOrderNum = '', storeIdArr = [], stock;
+        // 上架价格*数量
+        var totalMoney;
         // 商品详情 传过来的数据
         $.ajax({
             url: 'return_order_buy_information',
@@ -285,6 +287,8 @@
                     // 用户选择的规格
                     $('.standard').text(res.data.goods_standard).attr('id', res.data.goods_standard_id);;
                     $.each(res.data.goods, function (idx, val) {
+                        // 库存
+                        stock = parseInt(val.goods_standard_id.stock);
                         // 店铺名
                         $('.order-shop-namp').text(val.store_name);
                         // 商品名
@@ -295,6 +299,7 @@
                         $('.unit-price-p span').text(val.goods_standard_id.goods_adjusted_price);
                         // 总价
                         $('.total-money').text(toFixed(res.data.goods_number * val.goods_standard_id.goods_adjusted_price, 2));
+                        totalMoney = toFixed(res.data.goods_number * val.goods_standard_id.goods_adjusted_price, 2);
                         // 图片
                         $('.order-goods-img img').attr('src', 'uploads/' + val.goods_standard_id.images);
                     })
@@ -334,12 +339,16 @@
                         // 加
                         $('.sundry-increase').click(function () {
                             var add = calculator_val.value - 0;
-                            add += 1;
+                            if(add < stock){
+                                add += 1;
+                            }
                             calculator_val.value = add;
+                            // 显示数量
                             $('.quantity-p span').text(calculator_val.value);
                             $('.total-num').text(calculator_val.value);
                             // 数量*单价
-                            var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2)
+                            var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2);
+                            totalMoney = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2);
                             // 用户选择抵扣金额后  增加购买数量
                             if ($('.discount').text() != '不使用积分') {
                                 // 保存用户选择的抵扣金额

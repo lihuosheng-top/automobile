@@ -143,19 +143,25 @@ $('.invoice-container .icon_back').click(function(){
 $('.invoice-btn').click(function(){
     var text = $('.choose').text();
     if(text == '不开发票'){
-        $('.invoice-container').hide();
-        $('.place-order-pop').show();
+        hideInvoicePop();
         $('.invoice').text(text);
+        // 不开发票 隐藏税费 手续费
+        $('.poundage-li').hide();
+        $('.taxation-li').hide();
     }else{
         var invoiceObjId = $('.invoice-object input:checked').attr('id');
         if(invoiceObjId == 'personal'){
             var personalHead = $('.invoice-header span').text();
             var personalPhone = $('.invoice-phone span').text();
+            invoiceAjax(totalMoney);
+            $('.invoice').text('个人发票');
         }else{
             if($('#company-header-input').val() !== '' && $('#company-phone-input').val() !== ''){
                 var companyHead = $('#company-header-input').val();
                 var companyPhone = $('#company-phone-input').val();
                 var companyIdentify = $('#company-identify').val();
+                invoiceAjax(totalMoney);
+                $('.invoice').text('公司发票');
             }else{
                 layer.open({
                     skin: 'msg',
@@ -164,7 +170,30 @@ $('.invoice-btn').click(function(){
                 })
             }
         }
-        // $('.invoice-container').hide();
-        // $('.place-order-pop').show();
     }
 })
+function invoiceAjax(money){
+    hideInvoicePop();
+    $.ajax({
+        url: 'invoice_index',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'invoice_money': money
+        },
+        success: function(res){
+            console.log(res);
+            if(res.status == 1){
+                $('.poundage-li').show().find('.poundage span').text(res.data.poundage);
+                $('.taxation-li').show().find('.taxation span').text(res.data.taxation);
+            }
+        },
+        error: function(res){
+            console.log(res.status, res.statusText);
+        }
+    })
+}
+function hideInvoicePop(){
+    $('.invoice-container').hide();
+    $('.place-order-pop').show();
+}
