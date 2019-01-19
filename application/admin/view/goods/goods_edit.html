@@ -583,11 +583,13 @@
 						<label class="layui-form-label">适用车型：</label>
 						<div class="layui-input-inline">
 							<select name="dedicated_vehicle" id="province" lay-filter="province">
-								{volist name="car_series" id="car"} {if $value.dedicated_vehicle == $car.brand}
+								{volist name="car_series" id="car"}
+								{if $value.dedicated_vehicle == $car.brand}
 								<option value="{$value.dedicated_vehicle}" selected>{$value.dedicated_vehicle}</option>
 								{else}
 								<option value="{$car.brand}">{$car.brand}</option>
-								{/if} {/volist}
+								{/if}
+								{/volist}
 							</select>
 						</div>
 						<div class="layui-input-inline">
@@ -778,7 +780,11 @@
 			<div class="layui-input-block">
 				<select name="goods_year_id">
 					{volist name="year" id="v"}
-					<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
+					{if $value.goods_year_id == $v.id}
+					<option value="{$v.id}" selected>{$v.year}年{$v.money}元/单个商品</option>
+					{else}
+                	<option value="{$v.id}">{$v.year}年{$v.money}元/单个商品</option>
+					{/if}
 					{/volist}
 				</select>
 			</div>
@@ -808,13 +814,11 @@
 		</div>
 		<div class="layui-form-item" class="biaoji">
 			<label class="layui-form-label">配送与安装服务：</label>
-			<div class="layui-input-block" id="">
-
-				<input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" checked="" class="hot">
-				<input type="checkbox" name="goods_delivery[]" value="上门安装" title="上门安装" class="">
-				<input type="checkbox" name="goods_delivery[]" value="无需安装" title="无需安装" class="">
-				<input type="checkbox" name="goods_delivery[]" value="到店安装" title="到店安装" class="">
-
+			<div class="layui-input-block" id="send">
+				<input type="checkbox" name="goods_delivery[]" value="到店自提" title="到店自提" class="checkbox1" >
+				<input type="checkbox" name="goods_delivery[]" value="上门安装" title="上门安装" class="checkbox2">
+				<input type="checkbox" name="goods_delivery[]" value="无需安装" title="无需安装" class="checkbox3">
+				<input type="checkbox" name="goods_delivery[]" value="到店安装" title="到店安装" class="checkbox4">
 			</div>
 		</div>
 
@@ -839,7 +843,19 @@
 	<script src="__STATIC__/admin/index/common/formSelects-v4.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
        
-		// TODO获取车牌Ajax
+		
+
+		var formSelects = layui.formSelects;
+		layui.config({
+			base: "js/"
+		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
+			var form = layui.form(),
+				layedit = layui.layedit,
+				layer = parent.layer === undefined ? layui.layer : parent.layer,
+				laypage = layui.laypage,
+				$ = layui.jquery;
+			layedit.build('demo');
+			// TODO获取车牌Ajax
 		var times_id = new Array();
 		var displacements_id = new Array();
 		var years_id = new Array();
@@ -877,6 +893,7 @@
 				for(var key in city_obj) {
 					$("#province").append("<option value='" + key + "'>" + key + "</option>");
 				}
+				form.render();
 
 			},
 			error: function(data) {
@@ -918,6 +935,7 @@
 				},
 				success: function(data) {
 					var data = eval('(' + data + ')');
+					
 					for(var i = 0; i < data.data[0].goods_car_series.length; i++) {
 						city.push(data.data[0].goods_car_series[i]);
 					}
@@ -929,28 +947,51 @@
 
 						production.push(data.data[0].goods_car_year[i]);
 					}
-					console.log(city)
+				
 
 					layui.formSelects.value('city', city);
 					layui.formSelects.value('displacement', displacement);
 					layui.formSelects.value('production', production);
+					formSelects.render();
 				},
 				error: function(data) {
 					console.log(data)
 				}
 			});
 		}
+			// 配送方式
+			
+		$.ajax({
+			type: "POST",
+			url: "{:url('admin/Goods/distribution')}",
+			data: {
+				id: pageName()
+			},
+			dataType: "json",
+			success: function(data) {
+				console.log(data.data[0]);
+				var data=data.data;
+				
+				for(var i=0;i<data.length;i++){
+					for(var j=0;j<$("#send input[type='checkbox']").length;j++){
+					
+                        if(data[i]==$("#send input[type='checkbox']")[j].defaultValue){
+							
+						    $("."+$("#send input[type='checkbox']")[j].className).attr("checked","checked");
+							
+							continue;
+							
+						}
+					}
+				}
+				form.render();
+			
 
-		var formSelects = layui.formSelects;
-		layui.config({
-			base: "js/"
-		}).use(['form', 'layer', 'jquery', 'laypage', 'layedit'], function() {
-			var form = layui.form(),
-				layedit = layui.layedit,
-				layer = parent.layer === undefined ? layui.layer : parent.layer,
-				laypage = layui.laypage,
-				$ = layui.jquery;
-			layedit.build('demo');
+			},
+			error: function(data) {
+				console.log("错误");
+			}
+		});
 			//			价格库存等修改事件
 			$(".inputs").change(function() {
 				var change_val = $(this).val();

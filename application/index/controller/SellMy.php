@@ -243,7 +243,9 @@ class  SellMy extends Controller{
         if($request->isPost()){
             $id =$request->only("id")["id"];
             $price =$request->only("price")["price"];//价钱
-            $bool =Db::name("order_service")->where("id",$id)->update(["order_amount"=>$price,"status"=>1]);
+            $bool =Db::name("order_service")
+                ->where("id",$id)
+                ->update(["service_real_pay"=>$price,"order_amount"=>$price,"service_order_amount"=>$price,"status"=>1]);
             if($bool){
                 return ajax_success("保存价格成功",$price);
             }else{

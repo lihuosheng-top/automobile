@@ -749,4 +749,61 @@ class Apppay extends Controller
         }
     }
 
+
+    /**
+     * 微信app支付
+     * 陈绪
+     * @param Request $request
+     * @return array|false|mixed|\PDOStatement|string|\think\Collection
+     */
+    public function app_wxpay(Request $request){
+
+        if($request->isPost()){
+            $order_num =$request->only(['order_num'])['order_num'];
+            include EXTEND_PATH."WxpayAPI/lib/Wxpayandroid.php";
+
+            $data = Db::name('order_parts')->where('parts_order_number',$order_num)->select();
+            foreach ($data as $k=>$v){
+                $goods_name = $v['parts_goods_name'];    //商品名称
+                $order_number = $v['parts_order_number'];    //订单号
+                $goods_pay_money =$v['order_real_pay'];     //支付金额
+            }
+            $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name);  //实例化微信支付类
+            return ajax_success("获取成功",$wxpayandroid);
+
+        }
+
+    }
+
+
+    /**
+     * 生成终端IP
+     * 陈绪
+     * @return array|false|string
+     */
+    public function get_client_ip(){
+        if ($_SERVER['REMOTE_ADDR']) {
+            $cip = $_SERVER['REMOTE_ADDR'];
+        } elseif (getenv("REMOTE_ADDR")) {
+            $cip = getenv("REMOTE_ADDR");
+        } elseif (getenv("HTTP_CLIENT_IP")) {
+            $cip = getenv("HTTP_CLIENT_IP");
+        } else {
+            // $cip = "unknown";
+            $cip = "127.0.0.1";
+        }
+        return $cip;
+    }
+
+
+
+
+    /**
+     * 微信支付回调
+     * 陈绪
+     */
+    public function wxpay_notifyurl(){
+
+    }
+
 }

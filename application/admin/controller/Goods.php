@@ -486,34 +486,38 @@ class Goods extends Controller
             $user = db("user")->where("phone_num",$admin[0]["account"])->find();
             $store = db("store")->where("user_id",$user["id"])->find();
             //管理员状态修改
-            if ($status == 0 && $admin_role == 2) {
-                $id = $request->only(["id"])["id"];
-                $bool = [];
-                foreach ($id as $value) {
-                    $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
-                }
+            if ($admin_role == 2 || $admin_role == 18) {
+                if($status == 0) {
+                    $id = $request->only(["id"])["id"];
+                    $bool = [];
+                    foreach ($id as $value) {
+                        $bool = db("goods")->where("id", $value)->update(["goods_status" => 0]);
+                    }
 
-                if ($bool) {
-                    return ajax_success("成功");
-                } else {
-                    return ajax_error("失败");
-                }
-
-            }
-            if ($status == 1 && $admin_role == 2) {
-                $id = $request->only(["id"])["id"];
-                $bool = [];
-                foreach ($id as $val) {
-                    $goods = db("goods")->where("id", $val)->field("putaway_status")->find();
-                    if ($admin_id == 2 || $goods["putaway_status"] != null) {
-                        $bool = db("goods")->where("id", $val)->update(["goods_status" => 1, "putaway_status" => 1]);
+                    if ($bool) {
+                        return ajax_success("成功");
+                    } else {
+                        return ajax_error("失败");
                     }
                 }
 
-                if ($bool) {
-                    return ajax_success("成功");
-                } else {
-                    return ajax_error("失败");
+            }
+            if ($admin_role == 2 || $admin_role == 18) {
+                if($status == 1) {
+                    $id = $request->only(["id"])["id"];
+                    $bool = [];
+                    foreach ($id as $val) {
+                        $goods = db("goods")->where("id", $val)->field("putaway_status")->find();
+                        if ($admin_id == 2 || $goods["putaway_status"] != null) {
+                            $bool = db("goods")->where("id", $val)->update(["goods_status" => 1, "putaway_status" => 1]);
+                        }
+                    }
+
+                    if ($bool) {
+                        return ajax_success("成功");
+                    } else {
+                        return ajax_error("失败");
+                    }
                 }
             }
             //店铺状态修改
@@ -830,6 +834,24 @@ class Goods extends Controller
                 $store_status = $store["store_is_pay"];
             }
             return ajax_success("获取成功", array("admin" => $admin,"store_status"=>$store_status));
+        }
+
+    }
+
+
+
+
+    /**
+     * 配送方式
+     * 陈绪
+     */
+    public function distribution(Request $request){
+
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $distribution = db("goods")->where("id",$id)->field("goods_delivery")->find();
+            $goods_distribution = explode(",",$distribution["goods_delivery"]);
+            return ajax_success("获取成功",$goods_distribution);
         }
 
     }

@@ -48,6 +48,13 @@ html{
     background-color: #fff;
     margin-bottom: .1rem;
 }
+.goods_cont .hot{
+    display: inline-block;
+    padding: 0 3px;
+    color: #fff;
+    background-color: #f71616;
+    border-radius: 3px;
+}
 .goods_cont .goods_name{
     font-size: .3rem;
     line-height: normal;

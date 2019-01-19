@@ -47,7 +47,9 @@ $.ajax({
             // 店铺id
             store_id = val.store_id;
             // 商品名字
-            $('.goods_cont .goods_name').html(val.goods_name);
+            $('.goods_cont .goods_name .name').text(val.goods_name);
+            // 热门
+            $('.goods_cont .goods_name .hot').text(val.goods_sign);
             // 卖点
             $('.selling-point').html(val.goods_selling);
             // 划线价
@@ -228,7 +230,7 @@ $('.select-buy').click(function(){
                     btn: ['确定', '取消'],
                     yes: function (index) {
                         layer.close(index);
-                        location.href = 'member_address_add?id=271&preid=10';
+                        location.href = 'member_address_add?id='+id+'&preid='+preId+'';
                     }
                 });
             }else if(res.status == 2){
