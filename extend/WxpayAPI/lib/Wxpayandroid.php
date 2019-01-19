@@ -146,26 +146,20 @@ class Wxpayandroid
     * @param int $second url执行超时时间，默认30s
     * @throws WxPayException
     */
-    function postXmlCurl($xml, $url, $second=30, $useCert=false)
+    function postXmlCurl($xml, $url, $second=30)
     {
         $ch = curl_init();
         //设置超时
-        curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_TIMEOUT, $second);
+
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,2);
         //设置header
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         //要求结果为字符串且输出到屏幕上
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
-        if($useCert == true){
-        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,TRUE);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,2);//严格校验
-        //设置证书
-        //使用证书：cert 与 key 分别属于两个.pem文件
-        curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
-        curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
-        }
+
         //post提交方式
         curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
@@ -174,12 +168,14 @@ class Wxpayandroid
         //返回结果
         if($data){
             curl_close($ch);
+            file_put_contents(EXTEND_PATH."WxpayAPI/data.txt",$data);
             return $data;
         } else {
             $error = curl_errno($ch);
             curl_close($ch);
             return false;
         }
+
     }
     /**
     * 获取当前服务器的IP
@@ -291,10 +287,11 @@ class Wxpayandroid
         //将微信返回的结果xml转成数组
         $responseArr = $this->xmlToArray($response);
         if(isset($responseArr["return_code"]) && $responseArr["return_code"]=='SUCCESS'){
-        return $this->getOrder($responseArr['prepay_id']);
+            return $this->getOrder($responseArr['prepay_id']);
         }
         return $responseArr;
     }
+
     /**
     * 执行第二次签名，才能返回给客户端使用
     * @param int $prepayId:预支付交易会话标识
@@ -311,6 +308,7 @@ class Wxpayandroid
         $data["packagevalue"] = "Sign=WXPay";
         return $data;
     }
+
     /**
     * 异步通知信息验证
     * @return boolean|mixed
