@@ -500,7 +500,7 @@ class Apppay extends Controller
             }
             if ($result > 0) {
                 $parts =Db::name("order_parts")
-                    ->field("parts_goods_name,service_real_pay,user_id")
+                    ->field("parts_goods_name,order_real_pay,user_id")
                     ->where("parts_order_number",$out_trade_no)
                     ->select();
                 foreach($parts as $ks=>$vs){
@@ -509,7 +509,7 @@ class Apppay extends Controller
                 $title =implode("",$titles);
                 $money =Db::name("order_parts")->where("parts_order_number",$out_trade_no)->sum("order_real_pay");
                 //进行钱包消费记录
-                $new_wallet =Db::name("user")->where("id",$parts["user_id"])->value("user_wallet");
+                $new_wallet =Db::name("user")->where("id",$parts[0]["user_id"])->value("user_wallet");
                 $datas=[
                     "user_id"=>$parts[0]["user_id"],//用户ID
                     "wallet_operation"=>-$money,//消费金额
