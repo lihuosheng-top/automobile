@@ -137,17 +137,10 @@
                         <td>{$value.end_time|date="Y-m-d",###}</td>
                         <td class="td-status">
                             {if $value.status == 1}
-<<<<<<< HEAD
-                            <span class="label label-success radius">通过</span> {/if} {if $value.status == 4}
-                            <span class="bg_yellow">拒绝</span> {/if} {if $value.status == 2}
-                            <span class="bg_red">待审核</span> {/if} {if $value.status == 3}
-                            <span class="bg_gray">已过期</span>{/if}
-=======
                             <span class="label label-success radius">通过</span> {/if} {if $value.status == 0}
                             <span class="bg_yellow label radius">拒绝</span> {/if} {if $value.status == 2}
                             <span class="bg_red label radius">待审核</span> {/if} {if $value.status == 3}
                             <span class="bg_gray label radius">已过期</span>{/if}
->>>>>>> da7331aa3b24c4f0fe05420a7f9d8d86f9bdca9e
                         </td>
 
                         <td>
