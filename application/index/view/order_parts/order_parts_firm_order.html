@@ -318,20 +318,33 @@
                                 $('.quantity-p span').text(calculator_val.value);
                                 $('.total-num').text(calculator_val.value);
                                 // 数量*单价
-                                var minusP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2)
-                                console.log(minusP)
+                                totalMoney = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2);
                                 $('.discount').text('不使用积分');
                                 $('.default').click();
                                 // 用户选择抵扣金额后  增加购买数量
                                 if ($('.discount').text() != '不使用积分') {
                                     // 保存用户选择的抵扣金额
                                     var choseD = $('.discount').text().split('￥')[1];
-                                    $('.total-money').text(toFixed(minusP - choseD, 2));
+                                    // 税费 手续费
+                                    if(!$('.poundage-li').is(':hidden')){
+                                        invoiceAjax(totalMoney, 1);
+                                        var poundageTaxation = parseFloat($('.poundage span').text())+parseFloat($('.taxation span').text());
+                                        $('.total-money').text(toFixed(totalMoney - choseD + poundageTaxation, 2));
+                                    }else{
+                                        $('.total-money').text(toFixed(totalMoney - choseD, 2));
+                                    }
                                 } else {
-                                    $('.total-money').text(minusP);
+                                    // 税费 手续费
+                                    if(!$('.poundage-li').is(':hidden')){
+                                        invoiceAjax(totalMoney, 1);
+                                        var poundageTaxation = parseFloat($('.poundage span').text())+parseFloat($('.taxation span').text());
+                                        $('.total-money').text(toFixed(parseFloat(totalMoney) + poundageTaxation, 2));
+                                    }else{
+                                        $('.total-money').text(totalMoney);
+                                    }
                                 }
                                 // 保存没有抵扣的金额
-                                finalMoney = parseFloat(minusP);
+                                finalMoney = parseFloat(totalMoney);
                             } else {
                                 calculator_val.value = 1;
                             }
@@ -347,19 +360,31 @@
                             $('.quantity-p span').text(calculator_val.value);
                             $('.total-num').text(calculator_val.value);
                             // 数量*单价
-                            var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2);
                             totalMoney = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2);
                             // 用户选择抵扣金额后  增加购买数量
                             if ($('.discount').text() != '不使用积分') {
-                                // 保存用户选择的抵扣金额
+                                // 抵扣金额
                                 var choseD = $('.discount').text().split('￥')[1];
-                                console.log(choseD)
-                                $('.total-money').text(toFixed(increaseP - choseD, 2));
+                                // 税费 手续费
+                                if(!$('.poundage-li').is(':hidden')){
+                                    invoiceAjax(totalMoney, 1);
+                                    var poundageTaxation = parseFloat($('.poundage span').text())+parseFloat($('.taxation span').text());
+                                    $('.total-money').text(toFixed(totalMoney - choseD + poundageTaxation, 2));
+                                }else{
+                                    $('.total-money').text(toFixed(totalMoney - choseD, 2));
+                                }
                             } else {
-                                $('.total-money').text(increaseP);
+                                // 税费 手续费
+                                if(!$('.poundage-li').is(':hidden')){
+                                    invoiceAjax(totalMoney, 1);
+                                    var poundageTaxation = parseFloat($('.poundage span').text())+parseFloat($('.taxation span').text());
+                                    $('.total-money').text(toFixed(parseFloat(totalMoney) + poundageTaxation, 2));
+                                }else{
+                                    $('.total-money').text(totalMoney);
+                                }
                             }
                             // 保存没有抵扣的金额
-                            finalMoney = parseFloat(increaseP);
+                            finalMoney = parseFloat(totalMoney);
                         })
                     })
 

@@ -1,4 +1,3 @@
-var finalMoney;
 var deductionId = '';
 // 解决计算精度问题
 function toFixed(num, s) {
@@ -65,8 +64,7 @@ $.ajax({
             e.preventDefault();
             // var index = $(this).index() - 1;
             var consumptionFul = $(this).find('.dis-introduce span').text();
-            console.log(consumptionFul)
-            if (finalMoney >= consumptionFul) {
+            if (+totalMoney >= consumptionFul) {
                 var cut = $(this).find('.deduction-money').text().split('￥')[1];
                 $(this).find('input').prop('checked', 'checked');
                 $('.discount').text('-￥' + cut);
@@ -74,10 +72,9 @@ $.ajax({
                 $('.place-order-pop').show();
 
                 // 抵扣后的总价格
-                $('.total-money').text(toFixed(finalMoney - cut, 2));
+                $('.total-money').text(toFixed(totalMoney - cut, 2));
                 // 存储积分券id
                 deductionId = $(this).find('input')[0].id.split('-')[1];
-                console.log(deductionId)
             } else {
                 layer.open({
                     skin: 'msg',
@@ -97,7 +94,7 @@ $.ajax({
             $(this).find('input').prop('checked', 'checked');
             $('.discount').text(dont);
             // 不适用积分 重新计算价格
-            $('.total-money').text(toFixed(finalMoney, 2));
+            $('.total-money').text(toFixed(totalMoney, 2));
         })
 
     },
@@ -148,19 +145,21 @@ $('.invoice-btn').click(function(){
         // 不开发票 隐藏税费 手续费
         $('.poundage-li').hide();
         $('.taxation-li').hide();
+        // 传0 总价钱减去 税费 手续费
+        invoiceAjax(totalMoney, 0);
     }else{
         var invoiceObjId = $('.invoice-object input:checked').attr('id');
         if(invoiceObjId == 'personal'){
             var personalHead = $('.invoice-header span').text();
             var personalPhone = $('.invoice-phone span').text();
-            invoiceAjax(totalMoney);
+            invoiceAjax(totalMoney, 1);
             $('.invoice').text('个人发票');
         }else{
             if($('#company-header-input').val() !== '' && $('#company-phone-input').val() !== ''){
                 var companyHead = $('#company-header-input').val();
                 var companyPhone = $('#company-phone-input').val();
                 var companyIdentify = $('#company-identify').val();
-                invoiceAjax(totalMoney);
+                invoiceAjax(totalMoney, 1);
                 $('.invoice').text('公司发票');
             }else{
                 layer.open({
@@ -172,7 +171,7 @@ $('.invoice-btn').click(function(){
         }
     }
 })
-function invoiceAjax(money){
+function invoiceAjax(money, key){
     hideInvoicePop();
     $.ajax({
         url: 'invoice_index',
@@ -184,8 +183,15 @@ function invoiceAjax(money){
         success: function(res){
             console.log(res);
             if(res.status == 1){
-                $('.poundage-li').show().find('.poundage span').text(res.data.poundage);
-                $('.taxation-li').show().find('.taxation span').text(res.data.taxation);
+                if(key === 1){
+                    $('.poundage-li').show().find('.poundage span').text(res.data.poundage);
+                    $('.taxation-li').show().find('.taxation span').text(res.data.taxation);
+                    $('.total-money').text(toFixed(parseFloat(money)+res.data.poundage+res.data.taxation, 2));
+                }else{
+                    $('.poundage-li').find('.poundage span').text('');
+                    $('.taxation-li').find('.taxation span').text('');
+                    $('.total-money').text(toFixed(parseFloat(money)-(res.data.poundage+res.data.taxation), 2));
+                }
             }
         },
         error: function(res){
