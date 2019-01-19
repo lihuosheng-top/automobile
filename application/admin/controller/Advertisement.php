@@ -25,6 +25,10 @@ class  Advertisement extends  Controller{
 
     public function accessories_business_advertising(Request $request){
         $user_phone = Session::get("user_info");
+        $t= date('Y-m-d H:i:s');
+        $time  = strtotime($t);
+        $end_time =  "end_time < {$time}";
+        $status = Db::name("platform")->where($end_time)->where("status", 1)->update(["status"=>3]);
         $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
         $store_name = db("store")->where("user_id",$user)->value("store_name");
 
@@ -96,8 +100,13 @@ class  Advertisement extends  Controller{
             $id = $user_phone[0]["id"];
             $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
             $store_name = db("store")->where("user_id",$user)->value("store_name");
+            $store_id = db("store")->where("user_id",$user)->value("store_id");
             $area = db("store")->where("user_id",$user)->value("store_city_address");
             $position = db("position") -> where("id",$data["pid"])->value("name");
+
+            //http://127.0.0.1/automobile/public/store_index?storeId=58
+            $data["url"] =config('domain_url.address')."store_index?storeId=".$store_id;
+
 
             //插入配件商表
             if ($show_images) {
@@ -120,6 +129,7 @@ class  Advertisement extends  Controller{
             $data["pgd"] = $userId;
             $data["department"] = $user_phone[0]["department"];
             $data["shop_name"] = $store_name;
+
             unset($data["pgone"]);
             
 
@@ -147,6 +157,11 @@ class  Advertisement extends  Controller{
             $data["location"] = $position;
             $data["start_time"] = strtotime($data["start_time"]);
             $data["end_time"] = strtotime($data["end_time"]);
+
+            $user_phone = Session::get("user_info");
+            $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
+            $store_id = db("store")->where("user_id",$user)->value("store_id");
+            $data["url"] =config('domain_url.address')."store_index?storeId=".$store_id;
             $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
             $show_images = $request->file("advert_picture");
             if ($show_images) {

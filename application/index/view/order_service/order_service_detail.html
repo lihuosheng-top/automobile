@@ -87,33 +87,6 @@
             </div>
         </div>
     </div>
-    <!-- 支付弹窗 -->
-    <!-- <form name=alipayment action="{:url('index/Apppay/index_aliPay')}" method=post >
-        <div class="alipay-pop">
-            <header>
-                <a href="javascript:;" class="close-alipay">×</a>
-                <h3 class="alipay-title">确认付款</h3>
-            </header>
-            <div class="middle_box">
-                <div class="price-box">
-                    <span>￥</span>
-                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="" readonly>
-                </div>
-                <ul class="content">
-                    <li>
-                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="" readonly>
-                    </li>
-                    <li>
-                        订单名称: <input id="WIDsubject" name="WIDsubject" value="预约洗车" readonly>
-                    </li>
-                    <li>
-                        商品描述: <input id="WIDbody" name="WIDbody" value="预约洗车" readonly>
-                    </li>
-                </ul>
-            </div>
-            <button type="submit" class="alipay-submit">立即付款</button>
-        </div>
-    </form> -->
     <div class="mask" style="display:none;"></div>
     
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
@@ -217,10 +190,6 @@
                         var outTradeNo = val.service_order_number;
                         var subjuect = val.service_goods_name;
                         var body = val.service_goods_name;
-                        // $('#WIDtotal_amount').val(totalAmount);
-                        // $('#WIDout_trade_no').val(outTradeNo);
-                        // $('#WIDsubject').val(subjuect);
-                        // $('#WIDbody').val(body);
                         if(totalAmount !== 0){
                             $.ajax({
                                 url: 'ios_api_service_alipay',
@@ -237,9 +206,6 @@
                                     console.log('error');
                                 }
                             })
-                            // $('.mask').show();
-                            // $('.alipay-pop').animate({'bottom': '0'});
-                            // $('html').css('overflow', 'hidden');
                         }else{
                             layer.open({
                                 skin: 'msg',
@@ -322,20 +288,7 @@
             if(res.resultStatus == '6001'){
                 location.href = 'order_service_wait_pay';
             }else if(res.resultStatus == '9000'){
-                // var res = res.result.alipay_trade_app_pay_response;
-                // $.ajax({
-                //     url: 'service_notifyurl',
-                //     type: 'GET',
-                //     dataType: 'JSON',
-                //     data: {
-                //         out_trade_no: res.out_trade_no,
-                //         trade_no: res.trade_no,
-                //         trade_status: res.msg
-                //     },
-                //     success: function(res){
-                        location.href = 'order_service_wait_deliver';
-                //     }
-                // })
+                location.href = 'order_service_wait_deliver';
             }
         }
     </script>
