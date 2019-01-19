@@ -143,11 +143,11 @@
                         <span class="discount">不使用积分</span>
                         <a href="javascript:;" class="spr icon-more"></a>
                     </li>
-                    <!-- <li class="sundry-li invoice-li">
+                    <li class="sundry-li invoice-li">
                         <p class="sundry-title">发票信息</p>
                         <span class="invoice">不开发票</span>
                         <a href="javascript:;" class="spr icon-more"></a>
-                    </li> -->
+                    </li>
                     <li class="sundry-li">
                         <p class="sundry-title">买家留言</p>
                         <input type="text" placeholder="请填写内容(选填)" class="leave-msg">
@@ -217,7 +217,7 @@
             <div class="invoice-type-title">发票类型</div>
             <div class="invoice-type-box">
                 <span class="choose neednt">不开发票</span>
-                <span class="need">电子发票</span>
+                <span class="need">开发票</span>
             </div>
         </div>
         <div class="need-invoice" style="display:none;">
@@ -237,7 +237,7 @@
             <div class="invoice-detail-container">
                 <div class="personal-invoice-detail" style="display: block;">
                     <div class="invoice-header">发票抬头 <span>个人</span>（不可修改）</div>
-                    <div class="invoice-phone">手机号 <span>18998906797</span></div>
+                    <div class="invoice-phone">手机号 <span></span></div>
                 </div>
                 <div class="company-invoice-detail" style="display: none;">
                     <div class="company-invoice-header">
@@ -542,7 +542,7 @@
         // 取消支付
         $('.chose-payment-back').click(function(){
             backMethod();
-            cancelPayAjax(storeIdArr, res.data.parts_order_number);
+            cancelPayAjax(storeIdArr, cancelPayOrderNum);
         })
         // 支付宝支付 回调
         function alipayCallback(res){
