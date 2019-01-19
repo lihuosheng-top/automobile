@@ -26,7 +26,7 @@ class Advertisement extends Controller
             $t= date('Y-m-d H:i:s');
             $time  = strtotime($t);
             $end_time =  "end_time < {$time}";
-            $status = Db::name("platform")->where($end_time)->where("status", 1)->update(["status"=>3]);
+            $status = Db::name("platform")->where($end_time)->update(["status"=>3]);
             $area_data = Db::name("platform")->where('area', $area)->where("status", 1)->order("start_time desc")->select();
             $adress_data = Db::name("platform")->where('department', "platform_business")->where("status", 1)->order("start_time desc")->select();
                      
@@ -329,35 +329,35 @@ class Advertisement extends Controller
             foreach ($data as $k => $v) {
             if ($v['pid'] == 18) //首页轮播
             {
-                if (isset($v)) {
-                    $homes[] = $v;                                   
-                }
+                $homes[] = $v;                                   
             }
+            $home = foreach_plater($homes);
             if ($v['pid'] == 19) //首页固定
             {
-                if (isset($v)) {
-                    $fixeds[] = $v;                   
-                }
+                $fixeds[] = $v;                   
             }
+             $fixed = foreach_plater($fixeds);
             if ($v['pid'] == 20) //热门推荐
             {
-                if (isset($v)) {
-                    $hots[] = $v;               
-                }
+                $hots[] = $v;               
             }
+            $hot = foreach_plater($hots);
             if ($v['pid'] == 21) //配件商城
             {
-                if (isset($v)) {
-                    $machines[] = $v;                   
-                }
+                $machines[] = $v;                   
             }
+            $machine = foreach_plater($machines);
             if ($v['pid'] == 27) //配件商城优惠推荐
             {
-                if (isset($v)) {
-                    $discounts[] = $v;                    
-                }
+                $discounts[] = $v;                    
             }
+            $discount = foreach_plater($discounts);
         }
+        
+        
+        
+        $resttt= array_merge($home,$fixed,$hot,$machine,$discount);
+        halt($resttt);
       
         foreach($homes as $pp => $z){
             if( $z["status"]== 2){ //待审核

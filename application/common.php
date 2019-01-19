@@ -885,5 +885,67 @@ function unique_arr($array2D,$stkeep=false,$ndformat=true)
     return $output;
 }
 
+//平台广告显示顺序
+function foreach_plater($data){
+    $qq = array();
+    $ww = array();
+    $ee = array();
+    $rr = array();
+
+    foreach($data as $pp => $z){
+        if( $z["status"] == 2){ //待审核
+            $qq[] = $z;                                               
+        }
+        if($z["status"]== 1){ //通过                 
+            $ww[] = $z;                                               
+        }
+        if($z["status"]== 4){ // 拒绝
+            $ee[] = $z;                                             
+        } 
+        if($z["status"]== 3){ // 已过期
+            $rr[] = $z;                                   
+        }        
+    }
+    $home = array_merge($qq,$ww,$ee,$rr);
+    return $home; 
+}
+//平台广告位置排序
+function foreach_pid($arr){
+    $aa = array();
+    $bb = array();
+    $cc = array();
+    $dd = array();
+    $ff = array();
+
+    foreach($arr as $key => $value){
+        if($value["pid"] == 18){ //首页轮播  array_value_exists($value,18)
+            $aa[] = $value;                                                          
+        }        
+        if($value["pid"]== 19){//首页固定               
+            $bb[] =$value;                                               
+        } 
+
+        if($value["pid"]== 20){ //热门推荐
+            $cc[] = $value;                                             
+        }
+
+        if($value["pid"]== 21){ //配件商城
+            $dd[] = $value;                                   
+        } 
+
+        if($value["pid"]== 27){ //配件商城优惠推荐
+            $ff[] = $value;                                   
+        } 
+        
+    }
+    $a = foreach_plater($aa);
+    $b = foreach_plater($bb);
+    $c = foreach_plater($cc);
+    $d = foreach_plater($dd);
+    $f = foreach_plater($ff);
+    $rest = array_merge($a,$b,$c,$d,$f);
+    return $rest; 
+}
+
 
 
