@@ -31,6 +31,7 @@ $.ajax({
             $('.user-info-box').click(function () {
                 location.href = 'member_address?id=' + id + '&preid=' + preId;
             })
+            $('.invoice-phone span').text(res.data.user_phone_number);
         }
     },
     error: function () {
