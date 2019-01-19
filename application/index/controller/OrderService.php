@@ -94,7 +94,7 @@ class OrderService extends Controller{
                 if(!empty($datas)){
                     $data =Db::name('order_service')
                         ->where('user_id',$member_id['id'])
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay,is_face")
                         ->order('create_time','desc')
                         ->select();
                     if(!empty($data)){
@@ -134,7 +134,7 @@ class OrderService extends Controller{
                 $member_id =Db::name('user')->field('id')->where('phone_num',$datas['phone_num'])->find();
                 if(!empty($datas)){
                     $data =Db::name('order_service')
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay,is_face")
                         ->where('user_id',$member_id['id'])
                         ->where('status',1)
                         ->order('create_time','desc')
