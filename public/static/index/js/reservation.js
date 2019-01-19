@@ -62,12 +62,6 @@ function showShops(addr){
                 // 店铺匹配
                 if(val.serve_name !== undefined){
                     if(val.serve_name.longitude !== null && val.serve_name.latitude !== null){
-                        // 存储标记点
-                        markerList.push(new AMap.Marker({
-                            position: new AMap.LngLat(parseFloat(val.serve_name.longitude),parseFloat(val.serve_name.latitude)),
-                            title: val.serve_name.real_address,
-                            offset: new AMap.Pixel(-20, -62),
-                        }));
                         var markerLngLat = [parseFloat(val.serve_name.longitude),parseFloat(val.serve_name.latitude)];
                         // 定位成功 计算用户与店铺距离
                         if(userLngLat.length !== 0){
@@ -80,6 +74,12 @@ function showShops(addr){
                                 id: val.id,
                                 dis: dis
                             })
+                            // 存储标记点
+                            markerList.push(new AMap.Marker({
+                                position: new AMap.LngLat(parseFloat(val.serve_name.longitude),parseFloat(val.serve_name.latitude)),
+                                title: val.serve_name.real_address,
+                                offset: new AMap.Pixel(-20, -62),
+                            }));
                         }
                     }
                 }

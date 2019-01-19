@@ -34,6 +34,7 @@ class Install extends Controller{
             }
         }
         $goods_ratio = db("goods_ratio")->select();
+
         return view("install_index",["goods_ratio"=>$goods_ratio]);
 
     }

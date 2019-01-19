@@ -760,37 +760,16 @@ class Apppay extends Controller
 
         if($request->isPost()){
             $order_num =$request->only(['order_num'])['order_num'];
-            include EXTEND_PATH."WxpayAPI/lib/WechatAppPay.php";
-            //填写配置参数
-            $options = array(
-                'appid'    => 'wxfa30dbf87b781811',    //填写微信分配的公众账号ID
-                'mch_id'   => '1523937771',             //填写微信支付分配的商户号
-                'notify_url'    => 'https://automobile.siring.com.cn/wxpay_notifyurl',  //填写微信支付结果回调地址
-                'key'     => 'Zlh188cnZwxcqgzyszunlianhuiappZy'        //填写微信商户支付密钥
-            );
+            include EXTEND_PATH."WxpayAPI/lib/Wxpayandroid.php";
+
             $data = Db::name('order_parts')->where('parts_order_number',$order_num)->select();
             foreach ($data as $k=>$v){
-                $goods_name = $v['parts_goods_name'];
-                $order_number = $v['parts_order_number'];
-                $goods_pay_money =$v['order_real_pay'];
+                $goods_name = $v['parts_goods_name'];    //商品名称
+                $order_number = $v['parts_order_number'];    //订单号
+                $goods_pay_money =$v['order_real_pay'];     //支付金额
             }
-            //初始化配置
-            $wechatAppPay = new \wechatAppPay($options);
-            $total_fee   =  floatval($goods_pay_money);
-            //下单必要的参数
-            $params['body'] = $goods_name;    //商品描述
-            $params['out_trade_no'] = $order_num;//自定义的订单号
-            $params['total_fee'] = $total_fee;//订单金额 只能为整数 单位为分
-            $params['nonce_str'] = $order_number;//随机数
-            $params['spbill_create_ip'] = $this->get_client_ip();
-            $params['trade_type'] = 'APP';             //交易类型 JSAPI | NATIVE | APP | WAP
-            //统一下单
-            $result = $wechatAppPay->unifiedOrder($params);
-
-            //创建APP端预支付参数
-            $data = $wechatAppPay->getAppPayParams($result);
-
-            return ajax_success("获取成功",$data);
+            $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name);  //实例化微信支付类
+            return ajax_success("获取成功",$wxpayandroid);
 
         }
 
