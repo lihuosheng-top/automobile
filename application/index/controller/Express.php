@@ -62,7 +62,7 @@ class  Express extends  Controller{
             $store = db("store")->where("store_city_address", $delivery_data[0]["area"])->where($where)->select();
             $delivery = [];
             foreach ($store as $key => $value) {
-                $order = db("order_parts")->where("store_id", $value["store_id"])->where("status",2)->select();
+                $order = db("order_parts")->where("store_id", $value["store_id"])->where("status",3)->select();
                 foreach ($order as $val) {
                     $delivery[] = array("store_name" => $value["store_name"],
                         "store_address" => $value["store_detailed_address"],
@@ -130,7 +130,7 @@ class  Express extends  Controller{
                     Session::set("order_status",$order_status);
                     db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>15]);
                 }else{
-                    db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>3]);
+                    db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>4]);
                 }
                 return ajax_success("入库成功");
             } else {
@@ -181,8 +181,6 @@ class  Express extends  Controller{
                 $order_status = Session::get("order_status");
                 if($order_status == 13){
                     db("order_parts")->where("id",$order)->update(["status"=>15]);
-                }else{
-                    db("order_parts")->where("id",$order)->update(["status"=>4]);
                 }
 
                 return ajax_success("已取货");
