@@ -168,6 +168,7 @@ class Wxpayandroid
         //返回结果
         if($data){
             curl_close($ch);
+            file_put_contents(EXTEND_PATH."WxpayAPI/data.txt",$data);
             return $data;
         } else {
             $error = curl_errno($ch);
@@ -283,8 +284,6 @@ class Wxpayandroid
         $data["sign"]    = $this->getSign($data, $this->config['api_key']);//签名
         $xml  = $this->arrayToXml($data);
         $response = $this->postXmlCurl($xml, $url);
-        var_dump($response);
-        exit();
         //将微信返回的结果xml转成数组
         $responseArr = $this->xmlToArray($response);
         if(isset($responseArr["return_code"]) && $responseArr["return_code"]=='SUCCESS'){

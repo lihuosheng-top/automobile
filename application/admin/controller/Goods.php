@@ -507,10 +507,7 @@ class Goods extends Controller
                     $id = $request->only(["id"])["id"];
                     $bool = [];
                     foreach ($id as $val) {
-                        $goods = db("goods")->where("id", $val)->field("putaway_status")->find();
-                        if ($admin_id == 2 || $goods["putaway_status"] != null) {
-                            $bool = db("goods")->where("id", $val)->update(["goods_status" => 1, "putaway_status" => 1]);
-                        }
+                        $bool = db("goods")->where("id", $val)->update(["goods_status" => 1]);
                     }
 
                     if ($bool) {
