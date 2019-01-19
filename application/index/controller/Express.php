@@ -62,7 +62,7 @@ class  Express extends  Controller{
             $store = db("store")->where("store_city_address", $delivery_data[0]["area"])->where($where)->select();
             $delivery = [];
             foreach ($store as $key => $value) {
-                $order = db("order_parts")->where("store_id", $value["store_id"])->where("status",2)->select();
+                $order = db("order_parts")->where("store_id", $value["store_id"])->where("status",3)->select();
                 foreach ($order as $val) {
                     $delivery[] = array("store_name" => $value["store_name"],
                         "store_address" => $value["store_detailed_address"],

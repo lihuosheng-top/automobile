@@ -86,7 +86,7 @@ Route::group("",[
 
     "ios_api_order_parts_button"=>"index/OrderParts/ios_api_order_parts_button",//os提交订单传过来的参数形成订单存库并返回对应的订单号给IOS
     "ios_api_order_button_by_shop"=>"index/OrderParts/ios_api_order_button_by_shop",//购物车提交订单
-   "ios_return_parts_num"=>"index/OrderParts/ios_return_parts_num",//生成订单(未用)
+    "ios_return_parts_num"=>"index/OrderParts/ios_return_parts_num",//生成订单(未用)
     "invoice_index"=>"index/OrderParts/invoice_index",//发票显示页面
     'index_parts_aliPay'=>"index/Apppay/index_parts_aliPay", //配件商支付接口（弹窗支付）
     'index_parts_pay_code'=>"index/Apppay/index_parts_pay_code",//配件商支付回调修改订单状态

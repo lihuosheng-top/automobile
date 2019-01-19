@@ -1620,7 +1620,7 @@ class OrderParts extends Controller{
                         $res = Db::name('order_parts')->insertGetId($datas);
                         if ($res) {
                             $order_datas =Db::name("order_parts")
-                                ->field("order_real_pay,parts_goods_name,parts_order_number")
+                                ->field("goods_money,order_real_pay,parts_goods_name,parts_order_number,order_create_time")
                                 ->where('id',$res)
                                 ->where("user_id",$user_id)
                                 ->find();
@@ -1640,6 +1640,33 @@ class OrderParts extends Controller{
                                 Db::name("user")->where("id",$user_id)->update(["user_integral_wallet"=>$user_integral_wallets,"user_integral_wallet_consumed"=>$setting_data["integral_full"]+$user_information["user_wallet_consumed"]]);
                                     Db::name("integral")->insert($integral_data); //插入积分消费记录
                             }
+                            if(!empty($data["invoice_type"])){
+                                if($data["invoice_type"] == "个人") {
+                                    $invoice_data = array([
+                                        "order_number" => $order_datas["parts_order_number"],
+                                        "user_name" => $user_information["user_name"],
+                                        "order_time" => $order_datas["order_create_time"],
+                                        "invoice_type" => $data["invoice_type"],
+                                        "invoice_money" => $order_datas["order_real_pay"],
+                                        "user_id" => $user_id,
+                                    ]);
+                                }else{
+                                    $invoice_data = array([
+                                        "order_number" => $order_datas["parts_order_number"],
+                                        "user_name" => $user_information["user_name"],
+                                        "order_time" => $order_datas["order_create_time"],
+                                        "invoice_type" => $data["invoice_type"],
+                                        "invoice_money" => $order_datas["order_real_pay"],
+                                        "user_id" => $user_id,
+                                        "invoice_rise"=>$data["invoice_rise"],
+                                        "company_phone"=>$data["company_phone"],
+                                        "company_number"=>$data["company_number"],
+
+                                    ]);
+                                }
+                                db("invoice")->insert($invoice_data);
+                            }
+
                             return ajax_success('下单成功',$order_datas);
                         }else{
                             return ajax_error('失败',['status'=>0]);
@@ -1649,6 +1676,7 @@ class OrderParts extends Controller{
             }
         }
     }
+
 
     /**
      **************李火生*******************
@@ -2008,8 +2036,21 @@ class OrderParts extends Controller{
      * 发票显示页面
      * 陈绪
      */
-    public function invoice_index(){
+    public function invoice_index(Request $request){
 
+        if($request->isPost()){
+            $invoice_money = $request->only(["invoice_money"])["invoice_money"];
+            if(!empty($invoice_money)){
+                $receipt = db("receipt")->select();
+                $money_data = [];
+                foreach ($receipt as $key=>$value){
+                    $money_data["poundage"] = (float)($value["poundage"]/100*$invoice_money);
+                    $money_data["taxation"] = (float)($value["taxation"]/100*$invoice_money);
+                }
+                return ajax_success("获取成功",$money_data);
+            }
+
+        }
         return view("invoice_index");
 
     }
