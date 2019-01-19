@@ -59,6 +59,7 @@ class  Member extends Controller{
             $address_id =Session::get("address_id");
             if(!empty($address_id)){
                 $is_address =Db::name("user_address")->where("user_id",$user_id)->where("id",$address_id)->find();
+                $is_address["user_phone_number"] = db("user")->where("id",$is_address["user_id"])->value("phone_num");
                 if(!empty($is_address)){
                     Session::delete("address_id");
                     return ajax_success('收货地址成功返回', $is_address);
@@ -72,6 +73,7 @@ class  Member extends Controller{
             $is_address_status = Db::name('user_address')->where('user_id', $user_id)->order("id","desc")->find();
             if (!empty($is_address_status)) {
                 $is_address = Db::name('user_address')->where('user_id', $user_id)->where("status", 1)->find();
+                $is_address["user_phone_number"] = db("user")->where("id",$is_address["user_id"])->value("phone_num");
                 if(!empty($is_address)){
                     return ajax_success('收货地址成功返回', $is_address);
                 }else{

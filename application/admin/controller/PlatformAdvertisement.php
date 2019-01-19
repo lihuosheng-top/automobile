@@ -23,7 +23,12 @@ class  PlatformAdvertisement extends  Controller{
      */
     public function platform_business_index(Request $request)
     {
-        $platform = db("platform")->order("start_time asc")->select();
+        $t= date('Y-m-d H:i:s');
+        // $time  = strtotime($t);
+        // $end_time =  "end_time < {$time}";
+        // $status = Db::name("platform")->where($end_time)->where("status", 1)->update(["status"=>3]);
+        $data = db("platform")->select();
+        $platform = foreach_pid($data);
         $all_idents = $platform;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
         $listRow = 20;//每页20行记录
@@ -81,7 +86,12 @@ class  PlatformAdvertisement extends  Controller{
             $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
             $store_name = db("store")->where("user_id",$user)->value("store_name");
             $area = db("store")->where("user_id",$user)->value("store_city_address");
+            $store_id = db("store")->where("user_id",$user)->value("store_id");
             $position = db("position") -> where("id",$data["pid"])->value("name");
+
+            //http://127.0.0.1/automobile/public/store_index?storeId=58
+            $data["url"] =config('domain_url.address')."store_index?storeId=".$store_id;
+
 
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
@@ -194,14 +204,23 @@ class  PlatformAdvertisement extends  Controller{
      * 郭杨
      */
     public function platform_business_search(){
-        $ppd = input('key');          //广告名称
-        $interest = input('keys');    //广告位置
+        $platform = input('platform');    //店铺名称
+        $name = input('name');           //广告名称
+        $location = input('location');  //广告位置
+        $status = input('status');     //广告状态
 
-        if ((!empty($ppd)) || (!empty($interest))) {
-            $activ = db("platform")->where("name", "like", "%" . $ppd . "%")->where("location", "like", "%" . $interest . "%")->paginate(2);    
+
+        if ((!empty($platform)) && (!empty($name)) && (!empty($location)) && (!empty($status)) ) {
+            $activ = db("platform")
+                ->where("shop_name", "like", "%" . $platform . "%")
+                ->whereOr("name", "like", "%" . $name . "%")
+                ->whereOr("location", "like", "%" . $location . "%")
+                ->whereOr("status", "like", "%" . $status . "%")
+                ->select();
         }else{
-            $activ = db("platform")->paginate(20);
+            $activ = db("platform")->select();
         }
+        halt($activ);
         if(!empty($activ)){
             return view('platform_business_index',['platform'=>$activ]);
         }
