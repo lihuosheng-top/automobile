@@ -29,13 +29,14 @@
         .address-container{margin-bottom: .3rem;}
         .get-goods{display: flex; justify-content: space-around; line-height: normal;}
         .get-goods>span{font-size: .32rem; color: #ff0600; margin-right: .2rem;}
-        .get-goods .shop-name{font-size: .32rem; color: #333;}
+        .get-goods .shop-name a{font-size: .32rem; color: #333;}
         .get-goods div{display: flex; flex-direction: column; line-height: normal; flex: 1;}
         .get-goods .shop-address{font-size: .28rem; color: #999;}
         .get-goods .shop-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -4.15rem}
         .send-goods{display: flex; justify-content: space-around; align-items: center;}
         .send-goods span:first-of-type{font-size: .32rem; color: #09b10d;}
-        .send-goods .send-address{flex: 1; font-size: .32rem; color: #333;}
+        .send-goods .send-address{flex: 1; font-size: .32rem;}
+        .send-goods .send-address a{color: #333;}
         .send-goods .customer-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -5.05rem}
         .time-container{display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;}
         .time-container>span{border: 1px solid #39a3f5; font-size: .24rem; color: #678;padding: 0 .15rem; border-radius: .3rem; height: .4rem; margin-bottom: .2rem;}
@@ -114,15 +115,15 @@
                                         <div class="get-goods" id="store-`+val.store_id+`">
                                             <span>取：</span>
                                             <div>
-                                                <span class="shop-name"><a href="order_information_details?order_id=`+val.order_id+`">`+val.store_name+`</a></span>
+                                                <span class="shop-name"><a href="express_detail?order_id=`+val.order_id+`">`+val.store_name+`</a></span>
                                                 <span class="shop-address">`+val.store_address+`</span>
                                             </div>
-                                            <a href="javascript:('`+val.store_phone+`');" class="spr shop-phone"></a>
+                                            <a href="javascript:Android.call('`+val.store_phone+`');" class="spr shop-phone"></a>
                                         </div>
                                         <div class="send-goods" id="send-`+val.order_id+`">
                                             <span>送：</span>
-                                            <span class="send-address"><a href="order_information_details?order_id=`+val.order_id+`">`+val.user_order_address+`</a></span>
-                                            <a href="javascript:('`+val.user_order_phone+`');" class="spr customer-phone"></a>
+                                            <span class="send-address"><a href="express_detail?order_id=`+val.order_id+`">`+val.user_order_address+`</a></span>
+                                            <a href="javascript:Android.call('`+val.user_order_phone+`');" class="spr customer-phone"></a>
                                         </div>
                                     </div>
                                     <div class="time-container">
@@ -187,7 +188,6 @@
                 console.log('error');
             }
         })
-
         function timetrans(date){
             var date = new Date(date*1000);//如果date为13位不需要乘1000
             var Y = date.getFullYear() + '-';
