@@ -180,13 +180,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label">开始时间：</label>
             <div class="layui-input-block">
-                <input type="text" name="start_time" value="{$value.start_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input">
+                <!-- <input type="text" name="start_time" value="{$value.start_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input"> -->
+                <input name="start_time" type="text" class="text datetimepicker" readonly="readonly" id="beginsTime"  value="{$value.start_time | date=" Y-m-d ",###}" style="width: 316px;height: 38px;padding-left: 10px; font-size: 13px;">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">结束时间：</label>
             <div class="layui-input-block">
-                <input type="text" name="end_time" value="{$value.end_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input">
+                <!-- <input type="text" name="end_time" value="{$value.end_time | date=" Y-m-d ",###}" lay-verify="title" class="layui-input"> -->
+                <input name="end_time" type="text" class="text datetimepicker" readonly="readonly" id="endsTime"  value="{$value.end_time | date=" Y-m-d ",###}" style="width: 316px;height: 38px;padding-left: 10px; font-size: 13px;">
             </div>
         </div>
         <div class="layui-form-item">
@@ -269,6 +271,25 @@
     {block name="bottom"}
 
     <script type="text/javascript">
+     $('#endsTime').datetimepicker({
+            onGenerate: function(ct) {
+                $(this).find('.xdsoft_date')
+                    .removeClass('xdsoft_disabled');
+            },
+            minDate: '-1970/01/2',
+            maxDate: '+1970/01/2',
+            timepicker: false
+        });
+        $('#beginsTime').datetimepicker({
+            onGenerate: function(ct) {
+                $(this).find('.xdsoft_date')
+                    .removeClass('xdsoft_disabled');
+            },
+            minDate: '-1970/01/2',
+            maxDate: '+1970/01/2',
+            timepicker: false
+        });
+
         layui.config({
             base: "js/"
         }).use(['form', 'layer', 'jquery', 'laypage'], function() {
