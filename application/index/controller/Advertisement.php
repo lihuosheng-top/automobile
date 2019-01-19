@@ -97,7 +97,9 @@ class Advertisement extends Controller
                     $reste["home"] = $homes;
                 }
             }
- 
+            if(count($reste["home"])>0){
+                $reste["home"] = array_slice($reste["machine"],0,5);
+                }
 
             //首页固定
             if ((!isset($fixeds)) && (!isset($fixed))) {

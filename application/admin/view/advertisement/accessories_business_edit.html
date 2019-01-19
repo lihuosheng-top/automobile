@@ -107,7 +107,7 @@
 
             </div>
         </div>
-
+        {if !empty($value.advert_picture)}
         <div class="layui-form-item">
             <label class="layui-form-label">上传广告图片</label>
             <div class="layui-input-block">
@@ -138,6 +138,29 @@
 				<p style="color:#999999 ; ">建议尺寸：750*750像素</p>
 			</div>
         </div>
+        {else}
+        <div class="layui-form-item">
+            <label class="layui-form-label">上传广告图片</label>
+            <div class="layui-input-block">
+                <div class="img-box full">
+                    <section class=" img-section">
+                        <div class="z_photo upimg-div clear">
+                            <section class="z_file fl">
+                                <img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+                                <input type="file" name="advert_picture" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="1" />
+                            </section>
+                        </div>
+                    </section>
+                </div>
+                <aside class="mask works-mask">
+                    <div class="mask-content">
+                        <p class="del-p ">您确定要删除作品图片吗？</p>
+                        <p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+        {/if}
         <div class="layui-form-item">
             <label class="layui-form-label">或图片网址:</label>
             <div class="layui-input-block">
