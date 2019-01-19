@@ -331,7 +331,7 @@ Route::group("",[
     "ios_api_order_parts_collect_goods"=>"index/OrderParts/ios_api_order_parts_collect_goods",//配件商订单状态修改（买家确认收货）（ajax）
     /*TODO:配件商订单状态结束*/
     /*TODO：查看物流信息开始*/
-    "logistics_index"=>"index/Logistics/logistics_index",//查看物流页面
+    "logistics_index"=>"index/Logistics/logistics_index",//查看物流页面(ajax)
     /*TODO：查看物流信息结束*/
 
 
