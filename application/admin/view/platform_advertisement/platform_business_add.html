@@ -134,7 +134,7 @@
         $('#endsTime').datetimepicker({
             onGenerate: function(ct) {
                 $(this).find('.xdsoft_date')
-                    .toggleClass('xdsoft_disabled');
+                    .removeClass('xdsoft_disabled');
             },
             minDate: '-1970/01/2',
             maxDate: '+1970/01/2',
@@ -143,7 +143,7 @@
         $('#beginsTime').datetimepicker({
             onGenerate: function(ct) {
                 $(this).find('.xdsoft_date')
-                    .toggleClass('xdsoft_disabled');
+                    .removeClass('xdsoft_disabled');
             },
             minDate: '-1970/01/2',
             maxDate: '+1970/01/2',
