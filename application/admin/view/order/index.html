@@ -326,12 +326,7 @@
 								<span>选择状态</span>
 								<select id="static_select">
 									<option value="" selecte="" >请选择</option>
-									<option value="1">待付款</option>
-									<option value="3">待发货</option>
-									<option value="4">已发货</option>
-									<option value="5">待收货</option>
-									<option value="0">已关闭</option>
-									<option value="7">取消订单</option>
+									<option value="3">待发货</option>	
 								</select>
 							</div>
 						
@@ -679,6 +674,8 @@
 			$(".state").on('click', function() {
 				var id = $(this).parent("td").data(id).id;
 			$(".btu-sumit").data('id', id);
+			orders_state=null;
+		
 			$.ajax({
 				type: "POST",
 				url: "{:url('admin/Order/order_processing')}",
@@ -689,8 +686,8 @@
 				success: function(data) {
 					$(".tanchuang").removeClass("noshow");
 					data = eval("(" + data + ")");
-					console.log(data)
-					// var order_create_time=timestampToTime(data.data[0].service[0].order_create_time);
+					orders_state=data.data[0].status;
+					$("#note_tip").val(data.data[0].sell_message)
 					if(data.data[0].status==0){
 						$("#order_status").html('已关闭');
 					}
@@ -835,41 +832,91 @@
 		
 		});
 		// 点击弹窗确认按钮
-			$(".tanchuang").addClass("noshow");
-				var id = $(this).data("id");
-				var note_tip = $("#note_tip").val();
-				var static_select = $("#static_select  option:selected").val();
-				$.ajax({
-					type: "POST",
-					url: "{:url('admin/Order/order_update_status')}",
-					async: false,
-					data: {
-						"id": id,
-						"sell_message": note_tip,
-						"status": static_select,
-						"pay_type_content": "",
-						"refund_amount": "",
-					},
-					success: function(data) {
-						console.log(data)
-					},
-					error: function(data) {
-						console.log("失败");
-					}
-				});
+			// $(".tanchuang").addClass("noshow");
+			// 	var id = $(this).data("id");
+			// 	var note_tip = $("#note_tip").val();
+			// 	var static_select = $("#static_select  option:selected").val();
+			// 	$.ajax({
+			// 		type: "POST",
+			// 		url: "{:url('admin/Order/order_update_status')}",
+			// 		async: false,
+			// 		data: {
+			// 			"id": id,
+			// 			"sell_message": note_tip,
+			// 			"status": static_select,
+			// 			"pay_type_content": "",
+			// 			"refund_amount": "",
+			// 		},
+			// 		success: function(data) {
+			// 			console.log(data)
+			// 		},
+			// 		error: function(data) {
+			// 			console.log("失败");
+			// 		}
+			// 	});
 		$(".btu-sumit").on('click', function() {
-			$(".tanchuang").addClass("noshow");
+			if(orders_state==null){
+				alert("系统错误，请再次操作");
+			}
+			else{
 				var id = $(this).data("id");
 				var note_tip = $("#note_tip").val();
 				var static_select = $("#static_select  option:selected").val();
-				$.ajax({
+				if(orders_state==2){
+                     if(static_select==3){
+						$.ajax({
+						type: "POST",
+						url: "{:url('admin/Order/order_update_status')}",
+						async: false,
+						data: {
+							"id": id,
+							"sell_message": note_tip,
+							"status": 3,
+							"pay_type_content": "",
+							"refund_amount": "",
+						},
+						success: function(data) {
+							// console.log(data)
+							location.reload();
+
+						},
+						error: function(data) {
+							console.log("失败");
+						}
+					});
+
+					 }
+					 else{
+						$.ajax({
+									type: "POST",
+									url: "{:url('admin/Order/order_update_status')}",
+									async: false,
+									data: {
+										"id": id,
+										"sell_message": note_tip,
+										"status": orders_state,
+										"pay_type_content": "",
+										"refund_amount": "",
+									},
+									success: function(data) {
+										console.log(data)
+									},
+									error: function(data) {
+										console.log("失败");
+									}
+								});
+
+					 }    
+				}
+				else{
+					$.ajax({
 					type: "POST",
 					url: "{:url('admin/Order/order_update_status')}",
 					async: false,
 					data: {
 						"id": id,
 						"sell_message": note_tip,
-						"status": static_select,
+						"status": orders_state,
 						"pay_type_content": "",
 						"refund_amount": "",
 					},
@@ -880,6 +927,12 @@
 						console.log("失败");
 					}
 				});
+
+				}
+				$(".tanchuang").addClass("noshow");
+				
+			}
+			
 				
 		
 				});

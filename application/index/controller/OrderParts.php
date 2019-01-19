@@ -1640,6 +1640,7 @@ class OrderParts extends Controller{
                                 Db::name("user")->where("id",$user_id)->update(["user_integral_wallet"=>$user_integral_wallets,"user_integral_wallet_consumed"=>$setting_data["integral_full"]+$user_information["user_wallet_consumed"]]);
                                     Db::name("integral")->insert($integral_data); //插入积分消费记录
                             }
+
                             return ajax_success('下单成功',$order_datas);
                         }else{
                             return ajax_error('失败',['status'=>0]);
@@ -1649,6 +1650,7 @@ class OrderParts extends Controller{
             }
         }
     }
+
 
     /**
      **************李火生*******************
@@ -2008,8 +2010,21 @@ class OrderParts extends Controller{
      * 发票显示页面
      * 陈绪
      */
-    public function invoice_index(){
+    public function invoice_index(Request $request){
 
+        if($request->isPost()){
+            $invoice_money = $request->only(["invoice_money"])["invoice_money"];
+            if(!empty($invoice_money)){
+                $receipt = db("receipt")->select();
+                $money_data = [];
+                foreach ($receipt as $key=>$value){
+                    $money_data["poundage"] = floatval($value["poundage"]/100*$invoice_money);
+                    $money_data["taxation"] = floatval($value["taxation"]/100*$invoice_money);
+                }
+                return ajax_success("获取成功",$money_data);
+            }
+
+        }
         return view("invoice_index");
 
     }
