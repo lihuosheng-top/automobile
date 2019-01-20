@@ -322,9 +322,9 @@ class  Express extends  Controller{
             $id = $request->only(["id"])["id"];
             $bool = db("delivery_order")->where("id", $id)->delete();
             if ($bool) {
-                $this->success("删除成功", url("index/Express/express_completed"));
+                return ajax_success("成功");
             } else {
-                $this->error("删除失败", url("index/Express/express_completed"));
+                return ajax_error("失败");
             }
         }
 
