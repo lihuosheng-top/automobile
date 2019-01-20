@@ -81,12 +81,15 @@ class  PlatformAdvertisement extends  Controller{
             $data = $request->param();
             $show_images = $request->file("advert_picture");
             $store_id = db("store")->where("store_name",$data["url"])->value("store_id");
+            
             $position = db("position") -> where("id",$data["pid"])->value("name");
 
             //http://127.0.0.1/automobile/public/store_index?storeId=58
             if(!empty($store_id)){
                 $data["url"] = config('domain_url.address')."store_index?storeId=".$store_id;
-            } 
+            } else if(empty($store_id)){
+                $data["url"] = null;
+            }
 
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
@@ -137,6 +140,8 @@ class  PlatformAdvertisement extends  Controller{
                 //http://127.0.0.1/automobile/public/store_index?storeId=58
                 if(!empty($store_id)){
                     $data["url"] = config('domain_url.address')."store_index?storeId=".$store_id;
+                } else {
+                    unset($data["url"]);
                 } 
             }
 
