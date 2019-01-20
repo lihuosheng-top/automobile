@@ -70,9 +70,15 @@ $.ajax({
                 $('.discount').text('-￥' + cut);
                 $('.discount_pop').hide();
                 $('.place-order-pop').show();
-
+                // 开发票 使用积分
+                if($('.invoice').text() != '不开发票'){
+                    invoiceAjax(totalMoney, 1);
+                }else{
+                    // 不开发票 使用积分
+                    invoiceAjax(totalMoney, 0);
+                }
                 // 抵扣后的总价格
-                $('.total-money').text(toFixed(totalMoney - cut, 2));
+                // $('.total-money').text(toFixed(totalMoney - cut, 2));
                 // 存储积分券id
                 deductionId = $(this).find('input')[0].id.split('-')[1];
             } else {
@@ -93,8 +99,15 @@ $.ajax({
             var dont = $(this).find('label').text();
             $(this).find('input').prop('checked', 'checked');
             $('.discount').text(dont);
+            // 开发票 不使用积分
+            if($('.invoice').text() != '不开发票'){
+                invoiceAjax(totalMoney, 1);
+            }else{
+                // 不开发票 不适用积分
+                invoiceAjax(totalMoney, 0);
+            }
             // 不适用积分 重新计算价格
-            $('.total-money').text(toFixed(totalMoney, 2));
+            // $('.total-money').text(toFixed(totalMoney, 2));
         })
 
     },
@@ -186,11 +199,25 @@ function invoiceAjax(money, key){
                 if(key === 1){
                     $('.poundage-li').show().find('.poundage span').text(res.data.poundage);
                     $('.taxation-li').show().find('.taxation span').text(res.data.taxation);
-                    $('.total-money').text(toFixed(parseFloat(money)+res.data.poundage+res.data.taxation, 2));
+                    // 使用积分
+                    if($('.discount').text() != '不使用积分'){
+                        // 抵扣金额
+                        var choseD = $('.discount').text().split('￥')[1];
+                        $('.total-money').text(toFixed(parseFloat(money)+res.data.poundage+res.data.taxation-choseD, 2));
+                    }else{
+                        $('.total-money').text(toFixed(+money+res.data.poundage+res.data.taxation, 2));
+                    }
                 }else{
                     $('.poundage-li').find('.poundage span').text('');
                     $('.taxation-li').find('.taxation span').text('');
-                    $('.total-money').text(toFixed(parseFloat(money)-(res.data.poundage+res.data.taxation), 2));
+                    // 使用积分
+                    if($('.discount').text() != '不使用积分'){
+                        // 抵扣金额
+                        var choseD = $('.discount').text().split('￥')[1];
+                        $('.total-money').text(toFixed(parseFloat(money)-res.data.poundage+res.data.taxation-choseD, 2));
+                    }else{
+                        $('.total-money').text(toFixed(parseFloat(money)-res.data.poundage+res.data.taxation, 2));
+                    }
                 }
             }
         },

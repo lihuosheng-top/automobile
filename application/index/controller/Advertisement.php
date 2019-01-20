@@ -97,8 +97,8 @@ class Advertisement extends Controller
                     $reste["home"] = $homes;
                 }
             }
-            if(count($reste["home"])>0){
-                $reste["home"] = array_slice($reste["machine"],0,5);
+            if(count($reste["home"])>5){
+                $reste["home"] = array_slice($reste["home"],0,5);
                 }
 
             //首页固定
@@ -117,7 +117,7 @@ class Advertisement extends Controller
                     $reste["fixed"] = $fixeds;
                 }
             }
-            if(count($reste["fixed"])>0){
+            if(count($reste["fixed"])>1){
             $reste["fixed"] = array_slice($reste["fixed"],0,1);
             }
             //热门推荐
@@ -153,7 +153,7 @@ class Advertisement extends Controller
                 }
             }
 
-            if(count($reste["machine"])>0){
+            if(count($reste["machine"])>3){
                 $reste["machine"] = array_slice($reste["machine"],0,3);
                 }
            
@@ -285,7 +285,7 @@ class Advertisement extends Controller
                 }
             }
 
-            if(count($reste["machine"])>0){
+            if(count($reste["machine"])>3){
                 $reste["machine"] = array_slice($reste["machine"],0,3);
                 }
 
@@ -306,7 +306,7 @@ class Advertisement extends Controller
                 }
             }
 
-            if(count($reste["discount"])>0){
+            if(count($reste["discount"])>3){
                 $reste["discount"] = array_slice($reste["discount"],0,3);
                 }
                 
@@ -321,114 +321,5 @@ class Advertisement extends Controller
             }
         }
 
-       /**
-     * [汽车广告配件商城显示]
-     * 郭杨
-     */
-    public function advert_index()
-    {
-        $data = db("platform")->order("start_time asc")->select();
-            foreach ($data as $k => $v) {
-            if ($v['pid'] == 18) //首页轮播
-            {
-                $homes[] = $v;                                   
-            }
-            $home = foreach_plater($homes);
-            if ($v['pid'] == 19) //首页固定
-            {
-                $fixeds[] = $v;                   
-            }
-             $fixed = foreach_plater($fixeds);
-            if ($v['pid'] == 20) //热门推荐
-            {
-                $hots[] = $v;               
-            }
-            $hot = foreach_plater($hots);
-            if ($v['pid'] == 21) //配件商城
-            {
-                $machines[] = $v;                   
-            }
-            $machine = foreach_plater($machines);
-            if ($v['pid'] == 27) //配件商城优惠推荐
-            {
-                $discounts[] = $v;                    
-            }
-            $discount = foreach_plater($discounts);
-        }
-        
-        
-        
-        $resttt= array_merge($home,$fixed,$hot,$machine,$discount);
-        halt($resttt);
-      
-        foreach($homes as $pp => $z){
-            if( $z["status"]== 2){ //待审核
-                if (isset($z)) {
-                    $qq[] = $z;                                   
-                }                             
-            }else{
-                $qq = array() ;
-            }
-            if($z["status"]== 1){
-                if (isset($z)) { //通过
-                    $ww[] = $z;                                   
-                }else{
-                    $ww = array();
-                }
-            }
-            if($z["status"]== 0){
-                if (isset($z)) { // 拒绝
-                    $ee[] = $z;                                   
-                }else{
-                    $ee = array();
-                }
-            }
-            if($z["status"]== 3){
-                if (isset($z)) { // 已过期
-                    $rr[] = $z;                                   
-                }else{
-                    $rr = array();
-                }
-            }
-            
-        }
-        $home = array_merge($qq,$ww,$ee,$rr);
 
-        foreach($fixeds as $aa => $x){
-            if( $x["status"]== 2){ //待审核
-                if (isset($x)) {
-                    $tt[] = $x;                                   
-                }                             
-            }else{
-                $tt = array() ;
-            }
-            if($x["status"]== 1){
-                if (isset($x)) { //通过
-                    $yy[] = $x;                                   
-                }else{
-                    $yy = array();
-                }
-            }
-            if($x["status"]== 0){
-                if (isset($x)) { // 拒绝
-                    $uu[] = $x;                                   
-                }else{
-                    $uu = array();
-                }
-            }
-            if($x["status"]== 3){
-                if (isset($x)) { // 已过期
-                    $ii[] = $x;                                   
-                }else{
-                    $ii = array();
-                }
-            }
-            
-        }
-        $fixed = array_merge($tt,$yy,$uu,$ii);
-
-
-
-        
-    }
 }

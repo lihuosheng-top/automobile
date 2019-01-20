@@ -22,7 +22,6 @@ $.ajax({
                 goodsLi += '<li class="first_li tyre" id="1">\
                                 <div class="adop-box">\
                                     <p class="subtitle" id="'+val.id+'">轮胎品牌区</p>\
-                                    <span class="click-adop">点击适配</span>\
                                 </div>\
                                 <ul class="bgw">';
             }else{

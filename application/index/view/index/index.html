@@ -351,6 +351,7 @@
         (function(){
             var u = navigator.userAgent;
             if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                console.log(getCookie('threeAdress'));
                 callAndroid();
             }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
                 console.log('ios');
@@ -541,21 +542,21 @@
             })
         }
         //设置cookie
-        // function setCookie(name, value, day) {
-        //     var date = new Date();
-        //     date.setDate(date.getDate() + day);
-        //     document.cookie = name + '=' + value + ';expires=' + date;
-        // };
+        function setCookie(name, value, day) {
+            var date = new Date();
+            date.setDate(date.getDate() + day);
+            document.cookie = name + '=' + value + ';expires=' + date;
+        };
         //获取cookie
-        // function getCookie(name) {
-        //     var reg = RegExp(name + '=([^;]+)');
-        //     var arr = document.cookie.match(reg);
-        //     if (arr) {
-        //         return arr[1];
-        //     } else {
-        //         return '';
-        //     }
-        // };
+        function getCookie(name) {
+            var reg = RegExp(name + '=([^;]+)');
+            var arr = document.cookie.match(reg);
+            if (arr) {
+                return arr[1];
+            } else {
+                return '';
+            }
+        };
         $('#search').on('focus', function(){
             location.href = 'goods_list';
         })
