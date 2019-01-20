@@ -160,7 +160,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 价格：</label>
 			<div class="layui-input-block">
-				<input type="text" name="service_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="money">
+				<input type="text" name="service_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="money" required>
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -248,10 +248,13 @@
 				 form.on('select(service_setting_id)', function(data) {
 				 	if(data.value==10){
 				 		$("#money").removeAttr("disabled");
+						 $("#money").attr("required","true");
 				 		$("#line_money").removeAttr("disabled");
+
 				 	}
 				 	else{
 				 		$("#money").attr("disabled","disabled");
+						 $("#money").removeAttr('required');
 				 		$("#line_money").attr("disabled","disabled");
 				 	}
 				 })

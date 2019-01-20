@@ -65,10 +65,14 @@ class  PlatformAdvertisement extends  Controller{
      * [汽车平台广告编辑]
      * 郭杨
      */
-    public function platform_business_edit($id){
+    public function platform_business_edit($pid=0,$id){
+        $goods_liste = [];
+        if ($pid == 0) {
+            $goods_liste = selectList("position");
+        }
 
         $plat = db("platform")->where("id",$id)->select();
-        return view('platform_business_edit',['plat'=>$plat]);
+        return view('platform_business_edit',['plat'=>$plat,"goods_liste" => $goods_liste]);
     }
 
 
