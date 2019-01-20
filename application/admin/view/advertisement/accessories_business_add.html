@@ -37,9 +37,11 @@
             <div class="layui-input-block">
                 {if !empty($goods_liste)}
                 <select name="pid" id="admin_role" class="role_list">
-                    {volist name="goods_liste" id="value"}
-                    <option value="{$value.id}">{$value.name}</option>
-                    {/volist}
+                    <option value="" selected class="aaa">请选择</option>
+                    {foreach name="goods_liste" item="value" key="abc"}
+                    <option value="{$value.id}" class="aaa_{$abc}" >{$value.name}</option>
+                    {/foreach}
+                  
                     </select><br/> {else}
                 <select name="pid" class="role_list">
                    </select><br/> {/if}
@@ -144,11 +146,25 @@
                 layer = parent.layer === undefined ? layui.layer : parent.layer,
                 laypage = layui.laypage,
                 $ = layui.jquery;
-                $("#submit_btn").click(function(){
-                    alert(111);
-                    return false;
-                })
-
+                for(var i=0;i<$("#admin_role option").length;i++){
+			     var Cts = $("option")[i].innerHTML;
+//			     
+			     if(Cts.indexOf("&nbsp;")==0)
+				{
+					
+				
+				}
+				else{
+					if($("option")[i].className!="aaa"){
+						$("."+$("option")[i].className).attr('disabled','disabled');
+					}
+				
+//					console.log("."+$("option")[i].className)
+				   
+				}
+			  }
+			  form.render();
+              
         })
     </script>
 
