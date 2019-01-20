@@ -2081,7 +2081,13 @@ class  SellMy extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");//用户的id
             if(!empty($user_id)){
-                $money =Db::name("user")->where("id",$user_id)->value("user_wallet");
+                //这是可提现资金（客户要求只能体现上两周的资金）
+                $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-14,date("Y")); //时间戳
+                $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                $money =Db::name("business_wallet")
+                    ->where($two_condition)
+                    ->where("create_time","<",$two_weekds_ago)
+                    ->sum("money");
             }else{
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
@@ -2090,7 +2096,7 @@ class  SellMy extends Controller{
             $apply_bank =$request->only("apply_bank")["apply_bank"];   //开户银行
             $apply_bank_code =$request->only("apply_bank_code")["apply_bank_code"];  //开户银行卡号
             if($apply_money > $money){
-                exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于余额")));
+                exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于可提现余额")));
             }
             $time=date("Y-m-d",time());
             $v=explode('-',$time);
@@ -2113,12 +2119,25 @@ class  SellMy extends Controller{
             ];
            $res = Db::name("recharge_reflect")->insert($data);
            if($res){
-               //余额进行减少
-               $old_wallet =Db::name("user")->where("id",$user_id)->value("user_wallet");
-               $user_data=[
-                   "user_wallet"=>$old_wallet - $apply_money,
-               ];
-               Db::name("user")->where("id",$user_id)->update($user_data);
+               //余额状态修改为-1 （状态值（1正常状态，-1申请提现但未处理，方便拒绝修改回状态，2提现已成功）
+               $business_wallet_data =Db::name("business_wallet")
+                   ->where($two_condition)
+                   ->where("create_time","<",$two_weekds_ago)
+                   ->select();
+               //把状态都改为体现待审核状态
+               foreach ($business_wallet_data as $key=>$value){
+                   Db::name("business_wallet")
+                       ->where("id",$value["id"])
+                       ->update(["status"=>-1]);
+               }
+               //商家余额消费进行状态修改（支出部分，即用商家角色进行购买商品)
+               $pay_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
+               $business_wallet_pay =Db::name("business_wallet")
+                   ->where($two_condition)
+                   ->where("create_time","<",time())
+                   ->select();
+
+
                //进行消费记录
                $wallet_data =[
                    "user_id"=>$user_id,
