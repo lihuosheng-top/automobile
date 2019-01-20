@@ -129,8 +129,6 @@ class  Advertisement extends  Controller{
             $data["postid"] = $unset_id;
             $data["pgd"] = $userId;
             $data["department"] = $user_phone[0]["department"];
-            
-
             unset($data["pgone"]);
             
 
