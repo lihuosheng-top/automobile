@@ -125,7 +125,7 @@ class Balance extends Controller
                                 //进行钱包消费记录
                                 Db::name("user")->where("id", $select_data[0]["user_id"])->update(["user_wallet" => $user_info["user_wallet"] - $money]);
                                 $owner_wallet = Db::name("user")->where("id", $select_data[0]["user_id"])->value("user_wallet");
-                                $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $business_id;
+                                $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $select_data[0]["user_id"];
                                 $business_wallet = Db::name("business_wallet")
                                     ->where($arr_condition)
                                     ->sum("money");
