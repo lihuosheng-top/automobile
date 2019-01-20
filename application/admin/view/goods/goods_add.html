@@ -319,10 +319,10 @@
 			<label class="layui-form-label">商品品牌:</label>
 			<div class="layui-input-inline" style="margin-left: 30px;">
 				<select name="goods_brand_id" lay-filter="goods_brand_id" id="goods_brand_id">
-					<option value="请选择" check>请选择</option>
-					{volist name="goods_brand" id="val"}
-					<option value="{$val.id}">{$val.name}</option>
-					{/volist}
+					<option value="请选择" check class="bbb">请选择</option>
+					{foreach name="goods_brand" item="val" key="abc"}
+					<option value="{$val.id}"  class="bbb_{$abc}">{$val.name}</option>
+					{/foreach}
 				</select>
 			</div>
 			<div class="layui-input-inline">
@@ -647,8 +647,9 @@
 			}
 			return b;
 		}
-			 for(var i=0;i<$("#goods_type_id option").length;i++){
-			     var Cts = $("option")[i].innerHTML;
+		var goods_type_id=$("#goods_type_id option");
+			 for(var i=0;i<goods_type_id.length;i++){
+			     var Cts = goods_type_id[i].innerHTML;
 //			     
 			     if(Cts.indexOf("&nbsp;")==0)
 				{
@@ -656,8 +657,8 @@
 				
 				}
 				else{
-					if($("option")[i].className!="aaa"){
-						$("."+$("option")[i].className).attr('disabled','disabled');
+					if(goods_type_id[i].className!="aaa"){
+						$("."+goods_type_id[i].className).attr('disabled','disabled');
 					}
 				
 //					console.log("."+$("option")[i].className)
@@ -665,6 +666,26 @@
 				}
 			  }
 			  form.render();
+			  var goods_brand_id=$("#goods_brand_id option");
+			  for(var j=0;j<goods_brand_id.length;j++){
+			     var Ctss = goods_brand_id[j].innerHTML;
+			     
+			     if(Ctss.indexOf("&nbsp;")==0)
+				{
+					continue;
+				
+				}
+				else{
+					if(goods_brand_id[j].className!="bbb"){
+						$("."+goods_brand_id[j].className).attr('disabled','disabled');
+					}
+				
+//					console.log("."+$("option")[i].className)
+				   
+				}
+			  }
+			  form.render();
+			  
 			// TODO商品规格变化
 			form.on('radio(guige)', function(data) {
 				var checkval = data.value;

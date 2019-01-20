@@ -65,10 +65,14 @@ class  PlatformAdvertisement extends  Controller{
      * [汽车平台广告编辑]
      * 郭杨
      */
-    public function platform_business_edit($id){
+    public function platform_business_edit($pid=0,$id){
+        $goods_liste = [];
+        if ($pid == 0) {
+            $goods_liste = selectList("position");
+        }
 
         $plat = db("platform")->where("id",$id)->select();
-        return view('platform_business_edit',['plat'=>$plat]);
+        return view('platform_business_edit',['plat'=>$plat,"goods_liste" => $goods_liste]);
     }
 
 
@@ -81,12 +85,15 @@ class  PlatformAdvertisement extends  Controller{
             $data = $request->param();
             $show_images = $request->file("advert_picture");
             $store_id = db("store")->where("store_name",$data["url"])->value("store_id");
+            
             $position = db("position") -> where("id",$data["pid"])->value("name");
 
             //http://127.0.0.1/automobile/public/store_index?storeId=58
             if(!empty($store_id)){
                 $data["url"] = config('domain_url.address')."store_index?storeId=".$store_id;
-            } 
+            } else if(empty($store_id)){
+                $data["url"] = null;
+            }
 
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
@@ -137,6 +144,8 @@ class  PlatformAdvertisement extends  Controller{
                 //http://127.0.0.1/automobile/public/store_index?storeId=58
                 if(!empty($store_id)){
                     $data["url"] = config('domain_url.address')."store_index?storeId=".$store_id;
+                } else {
+                    unset($data["url"]);
                 } 
             }
 

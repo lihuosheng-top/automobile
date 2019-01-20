@@ -34,7 +34,7 @@ class  Advertisement extends  Controller{
         $data= db("accessories")->where("pgone",$user_phone[0]["id"]) -> select();
         $platform = foreach_pid($data);
 
-    
+
         $all_idents = $platform;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
         $listRow = 20;//每页20行记录
@@ -70,14 +70,15 @@ class  Advertisement extends  Controller{
      * [汽车配件商广告编辑]
      * 郭杨
      */
-    public function accessories_business_edit($id,$pid=0)
+    public function accessories_business_edit($pid=0,$id)
     {
         
         $goods_liste = [];
         if ($pid == 0) {
             $goods_liste = selectList("position");
         }
-        $plat = db("accessories")->where("id",$id)->select();       
+        
+        $plat = db("accessories")->where("id",$id)->select();      
         return view('accessories_business_edit',['plat'=>$plat,"goods_liste" => $goods_liste]);
     }
 
@@ -123,14 +124,12 @@ class  Advertisement extends  Controller{
             $data["pgone"] = $id;
             $data["area"] = $area;
             $data["location"] = $position;
+            $data["postid"] = $unset_id;
             $userId = db('accessories')->insertGetId($data);
 
             //插入平台列表
-            $data["postid"] = $unset_id;
             $data["pgd"] = $userId;
             $data["department"] = $user_phone[0]["department"];
-            
-
             unset($data["pgone"]);
             
 
