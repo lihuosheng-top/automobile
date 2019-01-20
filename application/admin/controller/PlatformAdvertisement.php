@@ -24,9 +24,9 @@ class  PlatformAdvertisement extends  Controller{
     public function platform_business_index(Request $request)
     {
         $t= date('Y-m-d H:i:s');
-        // $time  = strtotime($t);
-        // $end_time =  "end_time < {$time}";
-        // $status = Db::name("platform")->where($end_time)->where("status", 1)->update(["status"=>3]);
+        $time  = strtotime($t);
+        $end_time =  "end_time < {$time}";
+        $status = Db::name("platform")->where($end_time)->update(["status"=>3]);
         $data = db("platform")->select();
         $platform = foreach_pid($data);
         $all_idents = $platform;//这里是需要分页的数据
@@ -80,18 +80,13 @@ class  PlatformAdvertisement extends  Controller{
         if ($request->isPost()) {
             $data = $request->param();
             $show_images = $request->file("advert_picture");
-
-            $user_phone = Session::get("user_info");
-            $id = $user_phone[0]["id"];
-            $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
-            $store_name = db("store")->where("user_id",$user)->value("store_name");
-            $area = db("store")->where("user_id",$user)->value("store_city_address");
-            $store_id = db("store")->where("user_id",$user)->value("store_id");
+            $store_id = db("store")->where("store_name",$data["url"])->value("store_id");
             $position = db("position") -> where("id",$data["pid"])->value("name");
 
             //http://127.0.0.1/automobile/public/store_index?storeId=58
-            $data["url"] =config('domain_url.address')."store_index?storeId=".$store_id;
-
+            if(!empty($store_id)){
+                $data["url"] = config('domain_url.address')."store_index?storeId=".$store_id;
+            } 
 
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
@@ -101,11 +96,15 @@ class  PlatformAdvertisement extends  Controller{
             }
 
             $data["start_time"] = strtotime($data["start_time"]);
-            $data["end_time"] = strtotime($data["end_time"]);           
+            $data_times = strtotime($data["end_time"]);   
+            $t= date('Y-m-d H:i:s',$data_times+1*24*60*60);
+            $data["end_time"]  = strtotime($t);  
+                   
             $data["location"] = $position;
             $data["postid"] = $data["pid"];
             $data["pid"] = db("position") -> where("id",$data["pid"])->value("pid");
             $data["department"] = "platform_business";
+            $data["shop_name"] = '平台广告';
 
             $bool = db("platform")->insert($data);
             if ($bool) {
@@ -128,14 +127,22 @@ class  PlatformAdvertisement extends  Controller{
         if ($request->isPost()) {
             $data = $request->param();
             $find = db("platform")->where('id', $request->only(["id"])["id"])->find();
+ 
 
-            if(isset($find['pgd']))
+            if($find["department"] == "platform_business")
+            {
+                $data["start_time"] = strtotime($data["start_time"]);
+                $data["end_time"]  = strtotime($data["end_time"]); 
+                $store_id = db("store")->where("store_name",$data["url"])->value("store_id");
+                //http://127.0.0.1/automobile/public/store_index?storeId=58
+                if(!empty($store_id)){
+                    $data["url"] = config('domain_url.address')."store_index?storeId=".$store_id;
+                } 
+            }
+
+            if(!empty($find['pgd']))
             {
                $bools = db("accessories")->where('id', $find['pgd'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
-            }
-            if(isset($find['pfd']))
-            {
-                $boolse = db("facilitator")->where('id', $find['pfd'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
             }
 
             $show_images = $request->file("advert_picture");
@@ -143,19 +150,12 @@ class  PlatformAdvertisement extends  Controller{
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
             }  
-
-            if(empty($find['shop_name']))
-            {
-              $data["start_time"] = strtotime($data["start_time"]);
-              $data["end_time"] = strtotime($data["end_time"]);  
-            }     
-              $bool = db("platform")->where('id', $request->only(["id"])["id"])->update($data);
-               
-
+            $bool = db("platform")->where('id', $request->only(["id"])["id"])->update($data);
+            
             if ($bool) {
                 $this->success("编辑成功", url("admin/platform_advertisement/platform_business_index"));
             } else {
-                $this->error("编辑失败", url("admin/platform_advertisement/platform_business_edit"));
+                $this->error("编辑失败", url("admin/platform_advertisement/platform_business_index"));
             }
         }
     }

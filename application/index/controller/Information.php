@@ -92,11 +92,8 @@ class  Information extends  Controller{
      * 订单助手详情页面
      * 陈绪
      */
-    public function order_information_details($order_id){
-        $order = db("order_parts")->where("id",$order_id)->select();
-        foreach ($order as $key=>$value){
-            $order[$key]["store"] = db("store")->where("store_id",$value["store_id"])->find();
-        }
+    public function order_information_details(){
+
         return view("order_information_details",["order"=>$order]);
 
     }

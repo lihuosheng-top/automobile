@@ -273,7 +273,20 @@ class  Express extends  Controller{
      **************************************
      * @return \think\response\View
      */
-    public function express_detail(){
+    public function express_detail(Request $request){
+        if($request->isPost()){
+            $order_id = $request->only(["order_id"])["order_id"];
+            $order = db("order_parts")->where("id",$order_id)->select();
+            foreach ($order as $key=>$value){
+                $order[$key]["store"] = db("store")->where("store_id",$value["store_id"])->find();
+            }
+            if($order){
+                return ajax_success("获取成功",$order);
+            }else{
+                return ajax_error("失败");
+            }
+
+        }
         return view("express_detail");
     }
 
