@@ -351,10 +351,14 @@
         (function(){
             var u = navigator.userAgent;
             if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
-                console.log(getCookie('threeAdress'));
-                callAndroid();
+                // 第一次访问
+                if(!getCookie('threeAdress')){
+                    callAndroid();
+                }else{
+                    alert(getCookie('threeAdress'));
+                    alert(getCookie('lngLat'));
+                }
             }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
-                console.log('ios');
                 // 默认广告
                 getAdvertisment('广东,深圳,福田区');
             }
@@ -369,8 +373,10 @@
                 threeAdress = province+','+city+','+district;
                 document.getElementById('space-input').innerHTML = district;
                 getAdvertisment(threeAdress);
-
                 userLngLat = [e.lon, e.lat];
+                // 存储地址 经纬度
+                setCookie('threeAdress', threeAdress, 1000);
+                setCookie('lngLat', userLngLat, 1000);
                 // 热门店铺
                 (function(){
                     return $.ajax({
@@ -396,10 +402,7 @@
                             })
                             // 距离排序
                             var sortDistArr = distArr.sort(sortNum);
-                            // console.log(sortDistArr)
                             (function(sortDistArr, res){
-                                console.log(sortDistArr)
-                                console.log(res)
                                 var curPage = 0;
                                 // 页面滚动到底部 加载新的店铺
                                 $(document).ready(function() {
