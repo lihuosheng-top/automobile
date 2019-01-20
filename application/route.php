@@ -500,6 +500,7 @@ Route::group("admin",[
     "serve_updata"=>"admin/Serve/updata",
     "serve_del"=>"admin/Serve/del",
     "serve_batches"=>"admin/Serve/batches",                                     //服务商品批量删除
+    "serve_serve_show"=>"admin/Serve/serve_show",                                     //服务商品批量删除
 
 
 

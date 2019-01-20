@@ -205,4 +205,26 @@ class Serve extends Controller{
         }
     }
 
+
+
+
+    /**
+     * [服务添加商品检测]
+     * 陈绪
+     */
+    public function serve_show(Request $request){
+
+        if($request->isPost()){
+            $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
+            $vehicle_model = $request->only(["vehicle_model"])["vehicle_model"];
+            $serve_data = db("serve_goods")->where("service_setting_id",$service_setting_id)->where("vehicle_model",$vehicle_model)->find();
+            if($serve_data["service_money"] != null){
+                return ajax_success("已经添加过相应的服务商品");
+            }else{
+                return ajax_error("没有添加过相应的服务商品");
+            }
+        }
+
+    }
+
 }
