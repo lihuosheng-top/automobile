@@ -75,7 +75,7 @@
             <div class="layui-input-block">
                 <select name="pid" id="admin_role" class="role_list">
                             {volist name="goods_liste" id="vl"}
-                            {if $value.pid == $vl.id}
+                            {if $value.postid == $vl.id}
                             <option value="{$vl.id}" selected="">{$vl.name}</option>
                             {else}
                             <option value="{$vl.id}">{$vl.name}</option>
