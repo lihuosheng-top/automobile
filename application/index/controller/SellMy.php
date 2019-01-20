@@ -63,8 +63,6 @@ class  SellMy extends Controller{
             }else{
                 exit(json_encode(array("status" => 1, "info" => "店铺信息返回成功","data"=> $store_info)));
             }
-
-
         }
         return view("sell_my_index");
     }
@@ -2043,11 +2041,27 @@ class  SellMy extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");//用户的id
             if(!empty($user_id)){
-                $money =Db::name("user")->field("user_wallet")->where("id",$user_id)->find();
+               //这是商家所有余额
+                $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                $money =Db::name("business_wallet")
+                    ->where($arr_condition)
+                    ->sum("money");
                 if(!empty($money)){
-                    exit(json_encode(array("status" => 1, "info" => "我的钱包余额返回成功","data"=>$money)));
+                    //这是可提现资金（客户要求只能体现上两周的资金）
+                    $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-14,date("Y")); //时间戳
+                    $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                    $tow_weeks_money =Db::name("business_wallet")
+                        ->where($two_condition)
+                        ->where("create_time","<",$two_weekds_ago)
+                        ->sum("money");
+                    if(!empty($tow_weeks_money)){
+                        $tow_weeks_money =round($tow_weeks_money,2);
+                    }else{
+                        $tow_weeks_money =0;
+                    }
+                    exit(json_encode(array("status" => 1, "info" => "我的钱包余额返回成功","data"=>["tow_weeks_money"=>$tow_weeks_money,"user_wallet"=>round($money,2)])));
                 }else{
-                    exit(json_encode(array("status" => 0, "info" => "我的钱包余额返回失败")));
+                    exit(json_encode(array("status" => 1, "info" => "我的钱包余额返回成功","data"=>["tow_weeks_money"=>0,"user_wallet"=>0])));
                 }
             }else{
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
