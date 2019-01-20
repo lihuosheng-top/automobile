@@ -143,11 +143,19 @@
                         <span class="discount">不使用积分</span>
                         <a href="javascript:;" class="spr icon-more"></a>
                     </li>
-                    <!-- <li class="sundry-li invoice-li">
+                    <li class="sundry-li invoice-li">
                         <p class="sundry-title">发票信息</p>
                         <span class="invoice">不开发票</span>
                         <a href="javascript:;" class="spr icon-more"></a>
-                    </li> -->
+                    </li>
+                    <li class="sundry-li poundage-li" style="display: none;">
+                        <p class="sundry-title">手续费</p>
+                        <span class="poundage">￥<span></span></span>
+                    </li>
+                    <li class="sundry-li taxation-li" style="display: none;">
+                        <p class="sundry-title">税费</p>
+                        <span class="taxation">￥<span></span></span>
+                    </li>
                     <li class="sundry-li">
                         <p class="sundry-title">买家留言</p>
                         <input type="text" placeholder="请填写内容(选填)" class="leave-msg">
@@ -217,7 +225,7 @@
             <div class="invoice-type-title">发票类型</div>
             <div class="invoice-type-box">
                 <span class="choose neednt">不开发票</span>
-                <span class="need">电子发票</span>
+                <span class="need">开发票</span>
             </div>
         </div>
         <div class="need-invoice" style="display:none;">
@@ -237,7 +245,7 @@
             <div class="invoice-detail-container">
                 <div class="personal-invoice-detail" style="display: block;">
                     <div class="invoice-header">发票抬头 <span>个人</span>（不可修改）</div>
-                    <div class="invoice-phone">手机号 <span>18998906797</span></div>
+                    <div class="invoice-phone">手机号 <span></span></div>
                 </div>
                 <div class="company-invoice-detail" style="display: none;">
                     <div class="company-invoice-header">
@@ -262,7 +270,9 @@
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_firm_order.js"></script>
     <script>
-        var cancelPayOrderNum = '', storeIdArr = [];
+        var cancelPayOrderNum = '', storeIdArr = [], stock;
+        // 上架价格*数量
+        var totalMoney;
         // 商品详情 传过来的数据
         $.ajax({
             url: 'return_order_buy_information',
@@ -277,6 +287,8 @@
                     // 用户选择的规格
                     $('.standard').text(res.data.goods_standard).attr('id', res.data.goods_standard_id);;
                     $.each(res.data.goods, function (idx, val) {
+                        // 库存
+                        stock = parseInt(val.goods_standard_id.stock);
                         // 店铺名
                         $('.order-shop-namp').text(val.store_name);
                         // 商品名
@@ -287,6 +299,7 @@
                         $('.unit-price-p span').text(val.goods_standard_id.goods_adjusted_price);
                         // 总价
                         $('.total-money').text(toFixed(res.data.goods_number * val.goods_standard_id.goods_adjusted_price, 2));
+                        totalMoney = toFixed(res.data.goods_number * val.goods_standard_id.goods_adjusted_price, 2);
                         // 图片
                         $('.order-goods-img img').attr('src', 'uploads/' + val.goods_standard_id.images);
                     })
@@ -305,20 +318,33 @@
                                 $('.quantity-p span').text(calculator_val.value);
                                 $('.total-num').text(calculator_val.value);
                                 // 数量*单价
-                                var minusP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2)
-                                console.log(minusP)
+                                totalMoney = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2);
                                 $('.discount').text('不使用积分');
                                 $('.default').click();
                                 // 用户选择抵扣金额后  增加购买数量
                                 if ($('.discount').text() != '不使用积分') {
                                     // 保存用户选择的抵扣金额
                                     var choseD = $('.discount').text().split('￥')[1];
-                                    $('.total-money').text(toFixed(minusP - choseD, 2));
+                                    // 税费 手续费
+                                    if(!$('.poundage-li').is(':hidden')){
+                                        invoiceAjax(totalMoney, 1);
+                                        var poundageTaxation = parseFloat($('.poundage span').text())+parseFloat($('.taxation span').text());
+                                        $('.total-money').text(toFixed(totalMoney - choseD + poundageTaxation, 2));
+                                    }else{
+                                        $('.total-money').text(toFixed(totalMoney - choseD, 2));
+                                    }
                                 } else {
-                                    $('.total-money').text(minusP);
+                                    // 税费 手续费
+                                    if(!$('.poundage-li').is(':hidden')){
+                                        invoiceAjax(totalMoney, 1);
+                                        var poundageTaxation = parseFloat($('.poundage span').text())+parseFloat($('.taxation span').text());
+                                        $('.total-money').text(toFixed(parseFloat(totalMoney) + poundageTaxation, 2));
+                                    }else{
+                                        $('.total-money').text(totalMoney);
+                                    }
                                 }
                                 // 保存没有抵扣的金额
-                                finalMoney = parseFloat(minusP);
+                                finalMoney = parseFloat(totalMoney);
                             } else {
                                 calculator_val.value = 1;
                             }
@@ -326,23 +352,39 @@
                         // 加
                         $('.sundry-increase').click(function () {
                             var add = calculator_val.value - 0;
-                            add += 1;
+                            if(add < stock){
+                                add += 1;
+                            }
                             calculator_val.value = add;
+                            // 显示数量
                             $('.quantity-p span').text(calculator_val.value);
                             $('.total-num').text(calculator_val.value);
                             // 数量*单价
-                            var increaseP = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2)
+                            totalMoney = toFixed(calculator_val.value * res.data.goods[0].goods_standard_id.goods_adjusted_price, 2);
                             // 用户选择抵扣金额后  增加购买数量
                             if ($('.discount').text() != '不使用积分') {
-                                // 保存用户选择的抵扣金额
+                                // 抵扣金额
                                 var choseD = $('.discount').text().split('￥')[1];
-                                console.log(choseD)
-                                $('.total-money').text(toFixed(increaseP - choseD, 2));
+                                // 税费 手续费
+                                if(!$('.poundage-li').is(':hidden')){
+                                    invoiceAjax(totalMoney, 1);
+                                    var poundageTaxation = parseFloat($('.poundage span').text())+parseFloat($('.taxation span').text());
+                                    $('.total-money').text(toFixed(totalMoney - choseD + poundageTaxation, 2));
+                                }else{
+                                    $('.total-money').text(toFixed(totalMoney - choseD, 2));
+                                }
                             } else {
-                                $('.total-money').text(increaseP);
+                                // 税费 手续费
+                                if(!$('.poundage-li').is(':hidden')){
+                                    invoiceAjax(totalMoney, 1);
+                                    var poundageTaxation = parseFloat($('.poundage span').text())+parseFloat($('.taxation span').text());
+                                    $('.total-money').text(toFixed(parseFloat(totalMoney) + poundageTaxation, 2));
+                                }else{
+                                    $('.total-money').text(totalMoney);
+                                }
                             }
                             // 保存没有抵扣的金额
-                            finalMoney = parseFloat(increaseP);
+                            finalMoney = parseFloat(totalMoney);
                         })
                     })
 
@@ -542,7 +584,7 @@
         // 取消支付
         $('.chose-payment-back').click(function(){
             backMethod();
-            cancelPayAjax(storeIdArr, res.data.parts_order_number);
+            cancelPayAjax(storeIdArr, cancelPayOrderNum);
         })
         // 支付宝支付 回调
         function alipayCallback(res){
