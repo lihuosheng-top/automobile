@@ -69,7 +69,7 @@ $('.exit').click(function(){
 // 清除缓存
 $('.clearing-li').click(function(){
     layer.open({
-        content: '将清除缓存并退出登录，是否继续？',
+        content: '  ',
         btn: ['确定', '取消'],
         yes: function (index) {
             layer.close(index);
@@ -205,6 +205,7 @@ $('.reset-payment-back').click(function(){
 $('.get-code').click(function(){
     var phone = $('.phone').val();
     var reg = /^1[34578]\d{9}$/;
+    var _self = this;
     if(phone!== '' && phone.match(reg)){
         $.ajax({
             url: 'sendMobileCodes',
@@ -221,7 +222,7 @@ $('.get-code').click(function(){
                         content: data.info,
                         time: 1
                     })
-                    buttonCountdown($(this), 1000 * 60 * 1, "ss");
+                    buttonCountdown($(_self), 1000 * 60 * 1, "ss");
                 }else if(data.status == 0){
                     layer.open({
                         skin: 'msg',
@@ -247,6 +248,7 @@ $('.phone-code').blur(function(){
         $('.reset-payment-btn').attr('disabled', false);
     }
 })
+var reg = /[^\d]/g;
 $('.reset-payment-btn').click(function(){
     var phone = $('.phone').val();
     var phoneCode = $('.phone-code').val();
@@ -256,6 +258,18 @@ $('.reset-payment-btn').click(function(){
         layer.open({
             skin: 'msg',
             content: '两次输入密码不一致',
+            time: 1
+        })
+    }else if(newPwd == '' || repeatPwd == ''){
+        layer.open({
+            skin: 'msg',
+            content: '请输入密码',
+            time: 1
+        })
+    }else if(reg.test(newPwd) || reg.test(repeatPwd)){
+        layer.open({
+            skin: 'msg',
+            content: '密码格式不正确',
             time: 1
         })
     }else{
@@ -272,6 +286,15 @@ $('.reset-payment-btn').click(function(){
             success: function(data){
                 console.log(data);
                 if(data.status == 1){
+                    layer.open({
+                        skin: 'msg',
+                        content: data.info,
+                        time: 1
+                    })
+                    $('.reset-payment-pop').hide();
+                    $('.wrapper').show();
+                    location.reload();
+                }else{
                     layer.open({
                         skin: 'msg',
                         content: data.info,
