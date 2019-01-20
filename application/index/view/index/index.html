@@ -356,6 +356,7 @@
                     callAndroid();
                 }else{
                     getAdvertisment(getCookie('threeAdress'));
+                    document.getElementById('space-input').innerHTML = getCookie('district');
                     // 热门店铺
                     (function(){
                         return $.ajax({
@@ -456,6 +457,7 @@
                 // 存储地址 经纬度
                 setCookie('threeAdress', threeAdress, 1000);
                 setCookie('lngLat', userLngLat, 1000);
+                setCookie('district', district, 1000);
                 // 热门店铺
                 (function(){
                     return $.ajax({
