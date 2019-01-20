@@ -137,15 +137,16 @@
             <div class="layui-input-block">
                 {if $value.status == 1}
                 <input type="radio" name="status" value="1" title="同意" checked="">
-                <input type="radio" name="status" value="0" title="拒绝"> {else}
+                <input type="radio" name="status" value="4" title="拒绝"> {else}
                 <input type="radio" name="status" value="1" title="同意">
-                <input type="radio" name="status" value="0" title="拒绝" checked="">{/if}
+                <input type="radio" name="status" value="4" title="拒绝" checked="">{/if}
+            </div>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">操作员备注：</label>
             <div class="layui-input-block">
-                <textarea name="remarks" value="{$value.remarks}" rows="10" cols="60"></textarea>
+                <textarea name="remarks"  rows="10" cols="60">{$value.remarks}</textarea>
             </div>
         </div>
         <div class="layui-form-item">
@@ -172,11 +173,22 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">广告位置：</label>
-            <div class="layui-input-block">
-                <input type="text" name="location" value="{$value.location}" lay-verify="title" class="layui-input">
+                <label class="layui-form-label">广告位置：</label>
+                <div class="layui-input-block">
+                    <select name="pid" id="admin_role" class="role_list">
+                           
+                                {foreach name="goods_liste" item="vl" key="abc"}
+                                {if $value.postid == $vl.id}
+                                <option value="{$vl.id}" selected="" class="aaa_{$abc}">{$vl.name}</option>
+                                {else}
+                                <option value="{$vl.id}" class="aaa_{$abc}">{$vl.name}</option>
+                                {/if}
+                                {/foreach}
+                            </select><br/>
+                    </select>
+                    <!--  <input type="text" name="location" value="{$value.location}" lay-verify="title" class="layui-input">-->
+                </div>
             </div>
-        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">开始时间：</label>
             <div class="layui-input-block">
@@ -198,7 +210,7 @@
 
             </div>
         </div>
-
+        {if !empty($value.advert_picture)}
         <div class="layui-form-item">
             <label class="layui-form-label">上传广告图片</label>
             <div class="layui-input-block">
@@ -208,7 +220,7 @@
 						<i class="remove-img" data-id="{$value.id}" data-value="1"><img src="__STATIC__/admin/common/img/a7.png"></i>
 					</span>
 				</div>
-			</div>
+            </div>
             <div class="layui-input-block">
 				<div class="img-box full">
 					<section class=" img-section">
@@ -227,7 +239,28 @@
 					</div>
 				</aside>
 				<p style="color:#999999 ; ">建议尺寸：750*750像素</p>
-			</div>
+            </div>
+            {else}
+            <div class="layui-input-block">
+				<div class="img-box full">
+					<section class=" img-section">
+						<div class="z_photo upimg-div clear">
+							<section class="z_file fl">
+								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
+								<input type="file" name="advert_picture" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" data-id="1" />
+							</section>
+						</div>
+					</section>
+				</div>
+				<aside class="mask works-mask">
+					<div class="mask-content">
+						<p class="del-p ">您确定要删除作品图片吗？</p>
+						<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+					</div>
+				</aside>
+				<p style="color:#999999 ; ">建议尺寸：750*750像素</p>
+            </div>
+            {/if}
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">或图片网址:</label>
@@ -249,7 +282,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">操作员备注：</label>
             <div class="layui-input-block">
-                <textarea name="remarks" value="{$value.remarks}" rows="10" cols="60"></textarea>
+                <textarea name="remarks"  rows="10" cols="60">{$value.remarks}</textarea>
             </div>
         </div>
         <div class="layui-form-item">
@@ -297,6 +330,24 @@
                 layer = parent.layer === undefined ? layui.layer : parent.layer,
                 laypage = layui.laypage,
                 $ = layui.jquery;
+                for(var i=0;i<$("#admin_role option").length;i++){
+			     var Cts = $("option")[i].innerHTML;
+//			     
+			     if(Cts.indexOf("&nbsp;")==0)
+				{
+					
+				
+				}
+				else{
+					if($("option")[i].className!="aaa"){
+						$("."+$("option")[i].className).attr('disabled','disabled');
+					}
+				
+//					console.log("."+$("option")[i].className)
+				   
+				}
+			  }
+			  form.render();
                 	// 图片删除
 		$(".remove-img").click(function() {
 			var remove = $(this).parent();

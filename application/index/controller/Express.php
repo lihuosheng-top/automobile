@@ -130,7 +130,7 @@ class  Express extends  Controller{
                     Session::set("order_status",$order_status);
                     db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>15]);
                 }else{
-                    db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>3]);
+                    db("order_parts")->where("id",$express_data["order_id"])->update(["status"=>4]);
                 }
                 return ajax_success("入库成功");
             } else {
@@ -181,8 +181,6 @@ class  Express extends  Controller{
                 $order_status = Session::get("order_status");
                 if($order_status == 13){
                     db("order_parts")->where("id",$order)->update(["status"=>15]);
-                }else{
-                    db("order_parts")->where("id",$order)->update(["status"=>4]);
                 }
 
                 return ajax_success("已取货");
@@ -275,7 +273,20 @@ class  Express extends  Controller{
      **************************************
      * @return \think\response\View
      */
-    public function express_detail(){
+    public function express_detail(Request $request){
+        if($request->isPost()){
+            $order_id = $request->only(["order_id"])["order_id"];
+            $order = db("order_parts")->where("id",$order_id)->select();
+            foreach ($order as $key=>$value){
+                $order[$key]["store"] = db("store")->where("store_id",$value["store_id"])->find();
+            }
+            if($order){
+                return ajax_success("获取成功",$order);
+            }else{
+                return ajax_error("失败");
+            }
+
+        }
         return view("express_detail");
     }
 
@@ -305,13 +316,16 @@ class  Express extends  Controller{
      * 快递单删除
      * 陈绪
      */
-    public function express_distribution_del($id){
+    public function express_distribution_del(Request $request){
 
-        $bool = db("delivery_order")->where("id",$id)->delete();
-        if($bool){
-            $this->success("删除成功",url("index/Express/express_completed"));
-        }else{
-            $this->error("删除失败",url("index/Express/express_completed"));
+        if($request->isPost()) {
+            $id = $request->only(["id"])["id"];
+            $bool = db("delivery_order")->where("id", $id)->delete();
+            if ($bool) {
+                return ajax_success("成功");
+            } else {
+                return ajax_error("失败");
+            }
         }
 
     }

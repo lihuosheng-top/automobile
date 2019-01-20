@@ -351,9 +351,94 @@
         (function(){
             var u = navigator.userAgent;
             if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
-                callAndroid();
+                // 第一次访问
+                if(!getCookie('threeAdress')){
+                    callAndroid();
+                }else{
+                    getAdvertisment(getCookie('threeAdress'));
+                    document.getElementById('space-input').innerHTML = getCookie('district');
+                    // 热门店铺
+                    (function(){
+                        return $.ajax({
+                            url: 'index_shop',
+                            type: 'POST',
+                            dataType: 'JSON',
+                        }).then(function(res){
+                            console.log('热门店铺',res);
+                            var distArr = [];
+                            var dist = 0;
+                            var lngLat = getCookie('lngLat').split(',');
+                            if(res.status == 1){
+                                $.each(res.data, function(idx, val){
+                                    var markerLngLat = [parseFloat(val.longitude), parseFloat(val.latitude)];
+                                    if(lngLat.length !== 0){
+                                        dist = parseInt(AMap.GeometryUtil.distance(markerLngLat, lngLat));
+                                    }
+                                    if(dist <= 100000){
+                                        distArr.push({
+                                            id: val.id,
+                                            dist: dist
+                                        })
+                                    }
+                                })
+                                // 距离排序
+                                var sortDistArr = distArr.sort(sortNum);
+                                (function(sortDistArr, res){
+                                    var curPage = 0;
+                                    // 页面滚动到底部 加载新的店铺
+                                    $(document).ready(function() {
+                                        $(window).scroll(function() {
+                                            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                                                // 滚动底部 页数+1
+                                                ++curPage;
+                                                var len = Math.ceil( sortDistArr.length / 10 );
+                                                if(curPage < len){
+                                                    renderPage(sortDistArr, res);
+                                                }
+                                            }
+                                        });
+                                    });
+                                    function renderPage(sortDistArr, res){
+                                        var str = '';
+                                        var len = (sortDistArr.length - curPage * 10) >= 10 ? 10 : sortDistArr.length - curPage * 10;
+                                        // 循环距离数组 一次10条
+                                        for(var i = 0; i < len; i++){
+                                            $.each(res.data, function(idx, ele){
+                                                if(sortDistArr[i + curPage * 10].id == ele.id){
+                                                    str += `<li class="hot-item" id="`+ele.id+`">
+                                                                <div class="hot-headimg">
+                                                                    <img src="uploads/`+ele.shop_images+`">
+                                                                </div>
+                                                                <div class="hotshop-info">
+                                                                    <p class="hot-name">`+ele.shop_name+`</p>
+                                                                    <div class="star-time">
+                                                                        <i class="spr star1 `+
+                                                                        (ele.shop_star > 0 && ele.shop_star < 1 ? '' : 
+                                                                        (ele.shop_star >= 1 && ele.shop_star < 2 ? 'star2' :
+                                                                        (ele.shop_star >= 2 && ele.shop_star < 3 ? 'star3' : 
+                                                                        (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+`"></i>
+                                                                        <span>营业时间：`+ele.shop_time+`</span>
+                                                                    </div>
+                                                                    <p class="txt-hid-two hotshop-detail">约`+sortDistArr[i + curPage * 10].dist+`米  `+ele.shop_address.split(',').join('')+`</p>
+                                                                </div>
+                                                            </li>`
+                                                }
+                                            })
+                                        }
+                                        $('.hot-ul').append(str);
+                                    }
+                                    renderPage(sortDistArr, res);
+                                })(sortDistArr, res)
+
+                                $('.hot-item').click(function(){
+                                    var id = $(this).attr('id');
+                                    intoHotShop(id);
+                                })
+                            }
+                        })
+                    })()
+                }
             }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
-                console.log('ios');
                 // 默认广告
                 getAdvertisment('广东,深圳,福田区');
             }
@@ -368,8 +453,12 @@
                 threeAdress = province+','+city+','+district;
                 document.getElementById('space-input').innerHTML = district;
                 getAdvertisment(threeAdress);
-
-                userLngLat = [e.lon, e.lat];
+                var userLngLat = [e.lon, e.lat];
+                // 存储地址 经纬度
+                alert(district);
+                setCookie('threeAdress', threeAdress, 1000);
+                setCookie('lngLat', userLngLat, 1000);
+                setCookie('district', district, 1000);
                 // 热门店铺
                 (function(){
                     return $.ajax({
@@ -395,10 +484,7 @@
                             })
                             // 距离排序
                             var sortDistArr = distArr.sort(sortNum);
-                            // console.log(sortDistArr)
                             (function(sortDistArr, res){
-                                console.log(sortDistArr)
-                                console.log(res)
                                 var curPage = 0;
                                 // 页面滚动到底部 加载新的店铺
                                 $(document).ready(function() {
@@ -482,7 +568,7 @@
                         $.each(res.data.home, function(idx, val){
                             if(idx < 5){
                                 topSwiperStr += `<div class="swiper-slide">
-                                                    <a href="`+val.url+`">
+                                                    <a href="`+(val.url==null?'javascript:;':val.url)+`">
                                                         <img src="uploads/`+val.advert_picture+`">
                                                     </a>
                                                 </div>`;
@@ -492,40 +578,40 @@
                         mySwiper();
                         // 首页固定广告
                         var indexFixStr = '';
-                        indexFixStr += `<a href="`+res.data.fixed[0].url+`">
+                        indexFixStr += `<a href="`+(res.data.fixed[0].url==null?'javascript:;':res.data.fixed[0].url)+`">
                                             <img src="uploads/`+res.data.fixed[0].advert_picture+`">
                                         </a>`
                         $('.banner').html('').html(indexFixStr);
                         // 热门推荐
                         var data = res.data;
                         var hotStr = `<div class="recommend_top">
-                                        <a href="`+data.hot_one[0].url+`">
+                                        <a href="`+(data.hot_one[0].url==null?'javascript:;':data.hot_one[0].url)+`">
                                             <img src="uploads/`+data.hot_one[0].advert_picture+`">
                                         </a>
-                                        <a href="`+data.hot_two[0].url+`">
+                                        <a href="`+(data.hot_two[0].url==null?'javascript:;':data.hot_two[0].url)+`">
                                             <img src="uploads/`+data.hot_two[0].advert_picture+`">
                                         </a>
                                     </div>
                                     <div class="recommend_bottom">
                                         <div class="recommend_bottom_left">
-                                            <a href="`+data.hot_three[0].url+`">
+                                            <a href="`+(data.hot_three[0].url==null?'javascript:;':data.hot_three[0].url)+`">
                                                 <img src="uploads/`+data.hot_three[0].advert_picture+`">
                                             </a>
                                         </div>
                                         <div class="recommend_bottom_right">
                                             <div class="recommend_bottom_right_one">
-                                                <a href="`+data.hot_four[0].url+`">
+                                                <a href="`+(data.hot_four[0].url==null?'javascript:;':data.hot_four[0].url)+`">
                                                     <img src="uploads/`+data.hot_four[0].advert_picture+`">
                                                 </a>
                                             </div>
                                             <div class="recommend_bottom_right_two">
                                                 <div class="recommend_bottom_right_three">
-                                                    <a href="`+data.hot_five[0].url+`">
+                                                    <a href="`+(data.hot_five[0].url==null?'javascript:;':data.hot_five[0].url)+`">
                                                         <img src="uploads/`+data.hot_five[0].advert_picture+`">
                                                     </a>
                                                 </div>
                                                 <div class="recommend_bottom_right_four">
-                                                    <a href="`+data.hot_six[0].url+`">
+                                                    <a href="`+(data.hot_six[0].url==null?'javascript:;':data.hot_six[0].url)+`">
                                                         <img src="uploads/`+data.hot_six[0].advert_picture+`">
                                                     </a>
                                                 </div>
@@ -541,21 +627,21 @@
             })
         }
         //设置cookie
-        // function setCookie(name, value, day) {
-        //     var date = new Date();
-        //     date.setDate(date.getDate() + day);
-        //     document.cookie = name + '=' + value + ';expires=' + date;
-        // };
+        function setCookie(name, value, day) {
+            var date = new Date();
+            date.setDate(date.getDate() + day);
+            document.cookie = name + '=' + value + ';expires=' + date;
+        };
         //获取cookie
-        // function getCookie(name) {
-        //     var reg = RegExp(name + '=([^;]+)');
-        //     var arr = document.cookie.match(reg);
-        //     if (arr) {
-        //         return arr[1];
-        //     } else {
-        //         return '';
-        //     }
-        // };
+        function getCookie(name) {
+            var reg = RegExp(name + '=([^;]+)');
+            var arr = document.cookie.match(reg);
+            if (arr) {
+                return arr[1];
+            } else {
+                return '';
+            }
+        };
         $('#search').on('focus', function(){
             location.href = 'goods_list';
         })

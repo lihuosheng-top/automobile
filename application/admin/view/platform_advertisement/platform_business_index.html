@@ -126,7 +126,7 @@
                         {if $value.shop_name}
                         <td>{$value.shop_name}</td>
                         {else}
-                        <td>本地广告</td>{/if}
+                        <td>平台广告</td>{/if}
                         <td>{$value.name}</td>
                         <td>
                             <div class="tdimg"><img src="__UPLOADS__/{$value.advert_picture}" /></div>
@@ -137,7 +137,7 @@
                         <td>{$value.end_time|date="Y-m-d",###}</td>
                         <td class="td-status">
                             {if $value.status == 1}
-                            <span class="label label-success radius">通过</span> {/if} {if $value.status == 0}
+                            <span class="label label-success radius">通过</span> {/if} {if $value.status == 4}
                             <span class="bg_yellow label radius">拒绝</span> {/if} {if $value.status == 2}
                             <span class="bg_red label radius">待审核</span> {/if} {if $value.status == 3}
                             <span class="bg_gray label radius">已过期</span>{/if}

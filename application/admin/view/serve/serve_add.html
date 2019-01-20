@@ -117,6 +117,7 @@
 	}
 	.layui-btn{
 		width: 100px;
+	}
 </style>
 
 {/block}
@@ -133,7 +134,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">服务类型：</label>
 			<div class="layui-input-block">
-				<select name="service_setting_id" lay-filter="service_setting_id">
+				<select name="service_setting_id" lay-filter="service_setting_id" class="service_setting_id">
 					{if !empty($service_setting)}
 					{volist name="service_setting" id="val"}
 					<option value="{$val.service_setting_id}">{$val.service_setting_name}</option>
@@ -146,7 +147,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">适用车型：</label>
 			<div class="layui-input-block">
-				<select name="vehicle_model">
+				<select name="vehicle_model" class="vehicle_model">
 					{if !empty($data)}
 					{volist name="data" id="value"}
 					<option value="{$value}">{$value}</option>
@@ -159,7 +160,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label"> 价格：</label>
 			<div class="layui-input-block">
-				<input type="text" name="service_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="money">
+				<input type="text" name="service_money" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" id="money" required>
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -182,7 +183,7 @@
 	
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+				<button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1" id="submit_btn">保存</button>
 				<button type="button" class="layui-btn layui-btn-primary" onClick="javascript :history.back(-1);"> 返回</button>
 			</div>
 		</div>
@@ -206,15 +207,54 @@
 				layer = parent.layer === undefined ? layui.layer : parent.layer,
 				laypage = layui.laypage,
 				$ = layui.jquery;
+				$("#submit_btn").click(function(){
+					var service_setting_id=$(".service_setting_id").val();
+					var vehicle_model=$(".vehicle_model").val();
+					var status=0;
+					$.ajax({
+                            type: "POST",
+                            url: "serve_serve_show",
+							async:false,
+                            data: {
+                                "service_setting_id": service_setting_id,
+								"vehicle_model":vehicle_model
+                            },
+                            success: function(data) {
+                              var data=eval ("(" + data + ")");
+							  
+							  if(data.status==1){
+								   status=1;
+							  }
+							  else{
+								status=0;
+							  }
+							  
+                            },
+                            error: function(data) {
+                               
+                            }
+                        });	
+					
+			       if(status==1){
+					alert("该项目已存在，请重新添加！");
+                        return false;
+					}
+					
+				
+					
+                    // return false;
+                })
+
 				 form.on('select(service_setting_id)', function(data) {
 				 	if(data.value==10){
-				 		
-				 		
 				 		$("#money").removeAttr("disabled");
+						 $("#money").attr("required","true");
 				 		$("#line_money").removeAttr("disabled");
+
 				 	}
 				 	else{
 				 		$("#money").attr("disabled","disabled");
+						 $("#money").removeAttr('required');
 				 		$("#line_money").attr("disabled","disabled");
 				 	}
 				 })
@@ -229,4 +269,3 @@
 
 </body>
 
-</html>

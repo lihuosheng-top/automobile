@@ -116,9 +116,10 @@
                         <td>{$value.end_time|date="Y-m-d",###}</td>
                         <td class="td-status">
                             {if $value.status == 1}
-                            <span class="label label-success radius">通过</span> {/if} {if $value.status == 0}
-                            <span class="label label-success radius">拒绝</span> {/if} {if $value.status == 2}
-                            <span class="label label-success radius">待审核</span>{/if}
+                            <span class="label label-success radius">通过</span> {/if} {if $value.status == 4}
+                            <span class="bg_yellow label radius">拒绝</span> {/if} {if $value.status == 2}
+                            <span class="bg_red label radius">待审核</span> {/if} {if $value.status == 3}
+                            <span class="bg_gray label radius">已过期</span>{/if}
                         </td>
 
                         <td>
@@ -159,6 +160,7 @@
                 laypage = layui.laypage,
                 $ = layui.jquery;
             var vals = $("input").data("id");
+           
             //是否展示
             form.on('switch(isShow)', function(data) {
                 if ($(this).val() == 0) {

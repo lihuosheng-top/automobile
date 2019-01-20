@@ -23,22 +23,18 @@ class  Advertisement extends  Controller{
      * 郭杨
      */
 
-    public function accessories_business_advertising(Request $request){
+    public function accessories_business_advertising(Request $request)
+    {
+
         $user_phone = Session::get("user_info");
         $t= date('Y-m-d H:i:s');
         $time  = strtotime($t);
         $end_time =  "end_time < {$time}";
-        $status = Db::name("platform")->where($end_time)->where("status", 1)->update(["status"=>3]);
-        $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
-        $store_name = db("store")->where("user_id",$user)->value("store_name");
+        $status = Db::name("accessories")->where($end_time)->update(["status"=>3]);
+        $data= db("accessories")->where("pgone",$user_phone[0]["id"]) -> select();
+        $platform = foreach_pid($data);
 
-        $platform = db("accessories")->where("pgone",$user_phone[0]["id"]) -> select();
-        foreach ($platform as $key => $value) {
-            if ($value["id"]) {
-                $platform[$key]["shop_name"] = $store_name;
-            }
-        }
-    
+
         $all_idents = $platform;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
         $listRow = 20;//每页20行记录
@@ -74,14 +70,15 @@ class  Advertisement extends  Controller{
      * [汽车配件商广告编辑]
      * 郭杨
      */
-    public function accessories_business_edit($id,$pid=0)
+    public function accessories_business_edit($pid=0,$id)
     {
         
         $goods_liste = [];
         if ($pid == 0) {
             $goods_liste = selectList("position");
         }
-        $plat = db("accessories")->where("id",$id)->select();       
+        
+        $plat = db("accessories")->where("id",$id)->select();      
         return view('accessories_business_edit',['plat'=>$plat,"goods_liste" => $goods_liste]);
     }
 
@@ -103,6 +100,7 @@ class  Advertisement extends  Controller{
             $store_id = db("store")->where("user_id",$user)->value("store_id");
             $area = db("store")->where("user_id",$user)->value("store_city_address");
             $position = db("position") -> where("id",$data["pid"])->value("name");
+            
 
             //http://127.0.0.1/automobile/public/store_index?storeId=58
             $data["url"] =config('domain_url.address')."store_index?storeId=".$store_id;
@@ -115,21 +113,23 @@ class  Advertisement extends  Controller{
                 $str = explode('.',$data["advert_picture"]);
                 $data["forms"] = $str[1];
             }
-
+            $unset_id = $data["pid"];
+            $test_id = db("position") -> where("id",$data["pid"])->value("pid");
+            $data["shop_name"] = $store_name;
+            $data["pid"] = $test_id;
             $data["start_time"] = strtotime($data["start_time"]);
-            $data["end_time"] = strtotime($data["end_time"]);
+            $data_times = strtotime($data["end_time"]);   
+            $t= date('Y-m-d H:i:s',$data_times+1*24*60*60);
+            $data["end_time"]  = strtotime($t);  
             $data["pgone"] = $id;
             $data["area"] = $area;
             $data["location"] = $position;
+            $data["postid"] = $unset_id;
             $userId = db('accessories')->insertGetId($data);
 
             //插入平台列表
-            $data["postid"] = $data["pid"];
-            $data["pid"] = db("position") -> where("id",$data["pid"])->value("pid"); //找到广告位置pid
             $data["pgd"] = $userId;
             $data["department"] = $user_phone[0]["department"];
-            $data["shop_name"] = $store_name;
-
             unset($data["pgone"]);
             
 
@@ -162,21 +162,24 @@ class  Advertisement extends  Controller{
             $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
             $store_id = db("store")->where("user_id",$user)->value("store_id");
             $data["url"] =config('domain_url.address')."store_index?storeId=".$store_id;
-            $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
+            
             $show_images = $request->file("advert_picture");
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
             }
+            
+            $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
             $data["postid"] = $data["pid"];
             unset($data["id"]);
             unset($data["pid"]);
+            
             $boole = db("platform")->where('pgd', $request->only(["id"])["id"])->update($data);
 
             if ($bool && $boole) {
                 $this->success("编辑成功", url("admin/Advertisement/accessories_business_advertising"));
             } else {
-                $this->error("编辑失败", url("admin/Advertisement/accessories_business_edit"));
+                $this->error("编辑失败", url("admin/Advertisement/accessories_business_advertising"));
             }
         }
     }
@@ -188,7 +191,7 @@ class  Advertisement extends  Controller{
      * 郭杨
      */
     public function accessories_business_del($id){
-
+       
         $bool = db("accessories")->where("id", $id)->delete();
         $boole = db("platform")->where("pgd", $id)->delete();
         if ($bool && $boole) {
@@ -231,7 +234,27 @@ class  Advertisement extends  Controller{
         $interest = input('keys');    //广告位置
 
         if ((!empty($ppd)) || (!empty($interest))) {
-            $activ = db("accessories")->where("name", "like", "%" . $ppd . "%")->where("location", "like", "%" . $interest . "%")->paginate(2);    
+            $platform = db("accessories")->where("name", "like", "%" . $ppd . "%")->where("location", "like", "%" . $interest . "%")->select(); 
+            $platform = foreach_pid($data);
+            foreach ($platform as $key => $value) {
+                if ($value["id"]) {
+                    $platform[$key]["shop_name"] = $store_name;
+                }
+            }
+        
+            $all_idents = $platform;//这里是需要分页的数据
+            $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
+            $listRow = 20;//每页20行记录
+            $showdata = array_slice($all_idents, ($curPage - 1) * $listRow, $listRow, true);// 数组中根据条件取出一段值，并返回
+            $platform = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
+                'var_page' => 'page',
+                'path' => url('admin/Advertisement/accessories_business_advertising'),//这里根据需要修改url
+                'query' => [],
+                'fragment' => '',
+            ]);
+            $platform->appends($_GET);
+            $this->assign('platform', $platform->render());
+            return view('accessories_business_advertising',['platform'=>$platform]);   
         }else{
             $activ = db("accessories")->paginate(2);
         }
