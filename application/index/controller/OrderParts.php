@@ -2044,8 +2044,8 @@ class OrderParts extends Controller{
                 $receipt = db("receipt")->select();
                 $money_data = [];
                 foreach ($receipt as $key=>$value){
-                    $money_data["poundage"] = (float)($value["poundage"]/100*$invoice_money);
-                    $money_data["taxation"] = (float)($value["taxation"]/100*$invoice_money);
+                    $money_data["poundage"] = round($value["poundage"]/100*$invoice_money,2);
+                    $money_data["taxation"] = round($value["taxation"]/100*$invoice_money,2);
                 }
                 return ajax_success("获取成功",$money_data);
             }
