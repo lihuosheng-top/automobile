@@ -38,6 +38,7 @@ class  SellMy extends Controller{
             $timetoday = date("Y-m",time());//今月时间戳
             $condition = " `operation_time` like '%{$timetoday}%' ";
             $now_data = Db::name("wallet")
+                ->where("is_business",2)
                 ->where("user_id",$user_id)
                 ->where($condition)
                 ->sum("wallet_operation");
@@ -50,6 +51,7 @@ class  SellMy extends Controller{
             $last_time = date("Y-m",strtotime("-1 month"));//今月时间戳
             $last_condition = " `operation_time` like '%{$last_time}%' ";
             $last_data = Db::name("wallet")
+                ->where("is_business",2)
                 ->where("user_id",$user_id)
                 ->where($last_condition)
                 ->sum("wallet_operation");
@@ -63,8 +65,6 @@ class  SellMy extends Controller{
             }else{
                 exit(json_encode(array("status" => 1, "info" => "店铺信息返回成功","data"=> $store_info)));
             }
-
-
         }
         return view("sell_my_index");
     }
@@ -1747,6 +1747,7 @@ class  SellMy extends Controller{
             $condition = " `operation_time` like '%{$now_time_one}%' ";
             $data = Db::name("wallet")
                 ->where("user_id",$user_id)
+                ->where("is_business",2)
                 ->where($condition)
                 ->order("operation_time","desc")
                 ->select();
@@ -2021,7 +2022,9 @@ class  SellMy extends Controller{
         if($request->isPost()){
             $wallet_id =Session::get("wallet_id");
             if(!empty($wallet_id)){
-                $data =Db::name("wallet")->where("wallet_id",$wallet_id)->find();
+                $data =Db::name("wallet")
+                    ->where("wallet_id",$wallet_id)
+                    ->find();
                 if(!empty($data)){
                     return ajax_success("消费详情返回成功",$data);
                 }
@@ -2043,11 +2046,27 @@ class  SellMy extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");//用户的id
             if(!empty($user_id)){
-                $money =Db::name("user")->field("user_wallet")->where("id",$user_id)->find();
+               //这是商家所有余额
+                $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                $money =Db::name("business_wallet")
+                    ->where($arr_condition)
+                    ->sum("money");
                 if(!empty($money)){
-                    exit(json_encode(array("status" => 1, "info" => "我的钱包余额返回成功","data"=>$money)));
+                    //这是可提现资金（客户要求只能体现上两周的资金）
+                    $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-14,date("Y")); //时间戳
+                    $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                    $tow_weeks_money =Db::name("business_wallet")
+                        ->where($two_condition)
+                        ->where("create_time","<",$two_weekds_ago)
+                        ->sum("money");
+                    if(!empty($tow_weeks_money)){
+                        $tow_weeks_money =round($tow_weeks_money,2);
+                    }else{
+                        $tow_weeks_money =0;
+                    }
+                    exit(json_encode(array("status" => 1, "info" => "我的钱包余额返回成功","data"=>["tow_weeks_money"=>$tow_weeks_money,"user_wallet"=>round($money,2)])));
                 }else{
-                    exit(json_encode(array("status" => 0, "info" => "我的钱包余额返回失败")));
+                    exit(json_encode(array("status" => 1, "info" => "我的钱包余额返回成功","data"=>["tow_weeks_money"=>0,"user_wallet"=>0])));
                 }
             }else{
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
@@ -2067,7 +2086,13 @@ class  SellMy extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");//用户的id
             if(!empty($user_id)){
-                $money =Db::name("user")->where("id",$user_id)->value("user_wallet");
+                //这是可提现资金（客户要求只能体现上两周的资金）
+                $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-14,date("Y")); //时间戳
+                $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                $money =Db::name("business_wallet")
+                    ->where($two_condition)
+                    ->where("create_time","<",$two_weekds_ago)
+                    ->sum("money");
             }else{
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
@@ -2076,7 +2101,7 @@ class  SellMy extends Controller{
             $apply_bank =$request->only("apply_bank")["apply_bank"];   //开户银行
             $apply_bank_code =$request->only("apply_bank_code")["apply_bank_code"];  //开户银行卡号
             if($apply_money > $money){
-                exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于余额")));
+                exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于可提现余额")));
             }
             $time=date("Y-m-d",time());
             $v=explode('-',$time);
@@ -2097,14 +2122,47 @@ class  SellMy extends Controller{
                 "back_name"=>$apply_bank,//开户银行
                 "status"=>2
             ];
-           $res = Db::name("recharge_reflect")->insert($data);
+           $res = Db::name("recharge_reflect")->insertGetId($data);
            if($res){
-               //余额进行减少
-               $old_wallet =Db::name("user")->where("id",$user_id)->value("user_wallet");
-               $user_data=[
-                   "user_wallet"=>$old_wallet - $apply_money,
-               ];
-               Db::name("user")->where("id",$user_id)->update($user_data);
+               //余额状态修改为-1 （状态值（1正常状态，-1申请提现但未处理，方便拒绝修改回状态，2提现已成功）
+               $business_wallet_data =Db::name("business_wallet")
+                   ->where($two_condition)
+                   ->where("create_time","<",$two_weekds_ago)
+                   ->select();
+               //把状态都改为体现待审核状态
+               if(!empty($business_wallet_data)){
+                   foreach ($business_wallet_data as $key=>$value){
+                       $business_wallet_ids[] =$value["id"]; //存起来方便提现不通过的时候修改状态为正常状态1
+                       Db::name("business_wallet")
+                           ->where("id",$value["id"])
+                           ->update(["status"=>-1]);
+                   }
+                   $wallet_income_ids = implode(",",$business_wallet_ids);
+                 Db::name("recharge_reflect")->where("id",$res)->update(["wallet_income_ids"=>$wallet_income_ids]);
+               }
+               //商家余额消费进行状态修改（支出部分，即用商家角色进行购买商品(当前时间之前的都进行修改))
+               $pay_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
+               $business_wallet_pay =Db::name("business_wallet")
+                   ->where($pay_condition)
+                   ->where("create_time","<",time())
+                   ->select();
+               if(!empty($business_wallet_pay)){
+                   foreach ($business_wallet_pay as $k=>$v){
+                       $business_wallet_id[]  =$v["id"]; //存起来方便提现不通过的时候修改状态为正常状态1
+                       Db::name("business_wallet")
+                           ->where("id",$v["id"])
+                           ->update(["is_deduction"=>-1]);
+                   }
+                   $wallet_expenditure_ids = implode(",",$business_wallet_id);
+                   Db::name("recharge_reflect")->where("id",$res)->update(["wallet_expenditure_ids"=>$wallet_expenditure_ids]);
+               }
+
+               $new_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $user_id;
+               $business_wallets = Db::name("business_wallet")
+                   ->where($new_condition)
+                   ->sum("money");
+               $owner_wallets = Db::name("user")->where("id", $user_id)->value("user_wallet");
+               $new_wallet = $business_wallets+$owner_wallets;
                //进行消费记录
                $wallet_data =[
                    "user_id"=>$user_id,
@@ -2116,7 +2174,7 @@ class  SellMy extends Controller{
                    "title"=>"提现",
                    "order_nums"=>$parts_order_number,//订单编号
                    "pay_type"=>"余额抵扣", //支付宝微信支付
-                   "wallet_balance"=>$old_wallet - $apply_money, //余额
+                   "wallet_balance"=>$new_wallet, //余额
                ];
                Db::name("wallet")->insert($wallet_data);
                exit(json_encode(array("status" => 1, "info" =>"提现成功")));
@@ -2127,8 +2185,6 @@ class  SellMy extends Controller{
         }
         return view("sell_application");
     }
-
-
 
 
 

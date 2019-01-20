@@ -60,9 +60,15 @@ class OrderParts extends Controller{
             $store_id = intval(Session::get("store_id"));
             $parts_order_number = Session::get("parts_order_number");//订单编号
             $parts_status = intval(Session::get("parts_status"));//订单状态
-            $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number . " and `status` = " .$parts_status;
+            if($parts_status ==2 || $parts_status==3){
+               $status_condition = " `status` = 2 or `status` = 3 " ;
+            }else{
+                $status_condition = " `status` = ".$parts_status ;
+            }
+            $condition = "`user_id` = " . $user_id . " and `store_id` = " . $store_id . " and `parts_order_number` = " . $parts_order_number;
             $data = Db::name("order_parts")
                 ->where($condition)
+                ->where($status_condition)
                 ->order("order_amount","desc")
                 ->select();
             if (!empty($data)) {
@@ -369,7 +375,6 @@ class OrderParts extends Controller{
 //                            }
 //                        }
 
-
                         $ords =array();
                         foreach ($end_info as $vl){
                             $ords[] =intval($vl["order_create_time"]);
@@ -436,7 +441,6 @@ class OrderParts extends Controller{
                                     ->where("status",1)
                                     ->where('user_id', $member_id['id'])
                                     ->where('parts_order_number', $value['parts_order_number'])
-//                                    ->order('order_create_time', 'desc')
                                     ->select();
 
                                 $names = Db::name('order_parts')
@@ -1498,15 +1502,33 @@ class OrderParts extends Controller{
                         foreach ($order_info as $kk=>$vv){
                             $all_price[] =$vv["goods_business_price"] *$vv["order_quantity"];
                         }
-                        $business_all_price =array_sum($all_price);
+                        $business_all_price =array_sum($all_price); //所有订单里面的总和钱
                         $business_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
-                        //原本的钱包余额
-                        $old_wallet =Db::name("user")
+//                        TODO:对这个收入进行存储
+                        $business_data =[
+                            "user_id" =>$business_id,//商家用户id
+                            "create_time"=>time(), //时间戳
+                            "status"=>1, //状态值（1正常状态，-1申请提现但未处理，方便拒绝修改回状态，2提现已成功）
+                            "order_num"=>$parts_order_number,//订单编号
+                            "type" =>"配件商", //服务类型(配件商，服务商）
+                            "money"=>$business_all_price, //进账的钱
+                            "is_pay"=>1, //(判断是否1收入，还是-1支出）
+                            "is_deduction"=>1,//正常的流程
+                        ];
+                        $arr =Db::name("business_wallet")->insertGetId($business_data);
+                        $arr_condition ="`status` = '1' and `is_deduction` = '1'  and  `user_id` = ".$business_id;
+                        $business_wallet =Db::name("business_wallet")
+                            ->where($arr_condition)
+                            ->sum("money");
+                       //原本的钱包余额
+                        $owner_wallet =Db::name("user")
                             ->where("id",$business_id)
                             ->value("user_wallet");
-                        $new_wallet =$business_all_price + $old_wallet;
-                        //余额更新
-                        $arr =Db::name('user')->where('id',$business_id)->update(['user_wallet'=>$new_wallet]);
+                        if(!empty($business_wallet)){
+                            $new_wallet =$business_wallet +$owner_wallet;
+                        }else{
+                            $new_wallet =$owner_wallet;
+                        }
                         //添加消费记录
                         if($arr){
                             $data=[
@@ -1520,6 +1542,7 @@ class OrderParts extends Controller{
                                 "order_nums"=>$parts_order_number,
                                 "pay_type"=>$order_info[0]["pay_type_content"], //支付方式
                                 "wallet_balance"=>$new_wallet,
+                                "is_business"=>2,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                             ];
                             Db::name("wallet")->insert($data);
                         }
