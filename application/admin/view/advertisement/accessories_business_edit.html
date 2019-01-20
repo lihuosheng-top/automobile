@@ -71,15 +71,15 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">广告位置：</label>
+            <label class="layui-form-label">广告位置:</label>
             <div class="layui-input-block">
                 <select name="pid" id="admin_role" class="role_list"> 
                         {foreach name="goods_liste" item="vl" key="abc"}
-                        {if $value.pid == $vl.id}
-                        <option value="{$vl.id}" selected="" class="aaa_{$abc}">{$vl.name}</option>
-                        {else}
-                        <option value="{$vl.id}" class="aaa_{$abc}">{$vl.name}</option>
-                        {/if}
+                            {if $value.pid == $vl.id}
+                            <option value="{$vl.id}" selected="" class="aaa_{$abc}">{$vl.name}</option>
+                            {else}
+                            <option value="{$vl.id}" class="aaa_{$abc}">{$vl.name}</option>
+                            {/if}
                         {/foreach}
                           
                         </select><br/>
