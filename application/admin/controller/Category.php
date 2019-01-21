@@ -13,6 +13,7 @@ use think\Controller;
 use think\Db;
 use think\Request;
 use think\Image;
+use images\Upload;
 
 class Category extends Controller{
 
@@ -52,6 +53,7 @@ class Category extends Controller{
      * 陈绪
      */
     public function save(Request $request){
+
         if($request->isPost()){
             $data = $request->param();
             unset($data["taglocation"]);

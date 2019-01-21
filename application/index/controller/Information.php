@@ -79,10 +79,25 @@ class  Information extends  Controller{
      * 系统消息详情
      * 陈绪
      */
-    public function information_system_details($id){
+    public function information_system_details(Request $request){
 
-        $system_data = db("message")->where("id",$id)->select();
-        return view("information_system_details",["system_data"=>$system_data]);
+        if($request->isGet()){
+            $id = $request->only(["id"])["id"];
+            $system_data = db("message")->where("id",$id)->select();
+            $this->assign(["system_data"=>$system_data]);
+        }
+        if($request->isPost()){
+            $id = $request->only(["id"])["id"];
+            $system_data = db("message")->where("id",$id)->select();
+            if($system_data){
+                return ajax_success("成功",$system_data);
+            }else{
+                return ajax_error("失败");
+            }
+
+        }
+
+        return view("information_system_details");
 
     }
 
@@ -94,7 +109,7 @@ class  Information extends  Controller{
      */
     public function order_information_details(){
 
-        return view("order_information_details",["order"=>$order]);
+        return view("order_information_details");
 
     }
 
