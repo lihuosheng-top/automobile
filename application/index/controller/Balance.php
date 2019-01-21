@@ -40,7 +40,7 @@ class Balance extends Controller
                         return ajax_error("余额不足，请换其他方式支付", ["status" => 0]);
                     } else {
                         $select_data = Db::name("order_parts")
-                            ->where("parts_order_num", $order_num)
+                            ->where("parts_order_number", $order_num)
                             ->select();
                         //对订单状态进行修改
                         $data['status'] = 2;
@@ -105,7 +105,7 @@ class Balance extends Controller
                             return ajax_error("余额不足，请换其他方式支付", ["status" => 0]);
                         } else {
                             $select_data = Db::name("order_parts")
-                                ->where("parts_order_num", $order_num)
+                                ->where("parts_order_number", $order_num)
                                 ->select();
                             //对订单状态进行修改
                             $data['status'] = 2;
@@ -175,7 +175,7 @@ class Balance extends Controller
                             ->where($arr_condition)
                             ->sum("money");
                         if($money > $user_wallet){
-                            return ajax_error("商家余额不足，请换其他方式支付", ["status" => 0]);
+                            exit(json_encode(array("status" => 3, "info" => "商家余额不足，请换其他方式支付")));
                         }else{
                             $data['status'] = 2;//状态值
                             $data['trade_no'] = time();//交易号
@@ -233,7 +233,7 @@ class Balance extends Controller
                     }else{
                         //车主
                         if ($money > $user_info["user_wallet"]) {
-                            return ajax_error("余额不足，请换其他方式支付", ["status" => 0]);
+                            exit(json_encode(array("status" => 3, "info" => "商家余额不足，请换其他方式支付")));
                         } else {
                             $data['status'] = 2;//状态值
                             $data['trade_no'] = time();//交易号
