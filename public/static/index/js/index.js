@@ -557,29 +557,29 @@ $('.add-back').click(function(){
 // })
 // 城市定位 首字母匹配 end
 
-var map = new AMap.Map('container', {
-    zoom: 12, //级别
-});
-AMap.plugin([
-    'AMap.Geolocation',
-], function(){
-    var geolocation = new AMap.Geolocation({
-        enableHighAccuracy: true,
-        timeout: 1000,
-        zoomToAccuracy: true
-    })
-    map.addControl(geolocation);
-    geolocation.getCurrentPosition();
-    AMap.event.addListener(geolocation, 'complete', onComplete);
-    AMap.event.addListener(geolocation, 'error', onError);
-    function onComplete(e){
-        console.log(e);
-        // userLngLat = [e.position.lng, e.position.lat];
-    };
-    function onError(e){
-        console.log(e);
-    };
-})
+// var map = new AMap.Map('container', {
+//     zoom: 12, //级别
+// });
+// AMap.plugin([
+//     'AMap.Geolocation',
+// ], function(){
+//     var geolocation = new AMap.Geolocation({
+//         enableHighAccuracy: true,
+//         timeout: 1000,
+//         zoomToAccuracy: true
+//     })
+//     map.addControl(geolocation);
+//     geolocation.getCurrentPosition();
+//     AMap.event.addListener(geolocation, 'complete', onComplete);
+//     AMap.event.addListener(geolocation, 'error', onError);
+//     function onComplete(e){
+//         console.log(e);
+//         // userLngLat = [e.position.lng, e.position.lat];
+//     };
+//     function onError(e){
+//         console.log(e);
+//     };
+// })
 // 获取商家的信息，如果存在则是商家角色，不存在则为车主
 $.ajax({
     url: 'select_role_get',
