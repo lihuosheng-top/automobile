@@ -328,6 +328,7 @@ class Goods extends Controller
             $res = explode(',', $v["lv1"]);
         }
         $goods_list = getSelectList("goods_type");
+        halt($goods_list);
         $goods_brand = getSelectList("brand");
         $year = db("year")->select();
         $car_series = db("car_series")->distinct(true)->field("brand")->select();
