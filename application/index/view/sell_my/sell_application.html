@@ -40,8 +40,8 @@
         </div>
         <div class="info-container">
             <div class="apply-container">
-                <span>申请提现金额：</span>
-                <span><input type="text" placeholder="请输入金额，不能小于100">元</span>
+                <span>可提现金额：</span>
+                <span><input type="text" placeholder="可提现金额" readonly>元</span>
             </div>
             <div class="name-container">
                 <span>开户名：</span>
@@ -79,6 +79,7 @@
                 console.log(res);
                 if(res.status === 1){
                     $('.balance-txt').text(res.data.user_wallet);
+                    $('.apply-container input').val(res.data.tow_weeks_money);
                 }
             },
             error: function(){
@@ -91,41 +92,39 @@
             var apply_bank = $('.bank-container input').val();
             var apply_bank_code = $('.bank-num-container input').val();
             if(apply_money !== '' && apply_member !== '' && apply_bank !== '' && apply_bank_code !== ''){
-                if(apply_money >= 100){
-                    $.ajax({
-                        url: 'sell_application',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: {
-                            'apply_money': apply_money,
-                            'apply_member': apply_member,
-                            'apply_bank': apply_bank,
-                            'apply_bank_code': apply_bank_code,
-                        },
-                        success: function(res){
-                            console.log(res);
-                            if(res.status === 1){
-                                layer.open({
-                                    skin: 'msg',
-                                    content: '提交申请成功',
-                                    time: .8
-                                })
-                                setTimeout(() => {
-                                    location.href = 'sell_wallet';
-                                }, 1000);
-                            }
-                        },
-                        error: function(){
-                            console.log('error');
+                $.ajax({
+                    url: 'sell_application',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'apply_money': apply_money,
+                        'apply_member': apply_member,
+                        'apply_bank': apply_bank,
+                        'apply_bank_code': apply_bank_code,
+                    },
+                    success: function(res){
+                        console.log(res);
+                        if(res.status === 1){
+                            layer.open({
+                                skin: 'msg',
+                                content: '提交申请成功',
+                                time: .8
+                            })
+                            setTimeout(() => {
+                                location.href = 'sell_wallet';
+                            }, 1000);
+                        }else{
+                            layer.open({
+                                skin: 'msg',
+                                content: res.info,
+                                time: .8
+                            })
                         }
-                    })
-                }else{
-                    layer.open({
-                        skin: 'msg',
-                        content: '提现金额不能小于100元',
-                        time: 1.2
-                    })
-                }
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
             }else{
                 layer.open({
                     skin: 'msg',

@@ -291,43 +291,47 @@
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_firm_order.js"></script>
     <script>
-        function balanceEvent(order_num){
-            var reg = /^1[34578]\d{9}$/;
-            var aInput = document.getElementsByClassName('psdinput');
-            for(var i = 0; i < aInput.length; i++){
-                (function(i){
-                    aInput[i].oninput = function(){
-                        if(aInput[i].value !== ''){
-                            if(aInput[i+1]){
-                                aInput[i+1].focus();
-                            }
-                            if(i == 5){
-                                var password = aInput[0].value+aInput[1].value+aInput[2].value+aInput[3].value+aInput[4].value+aInput[5].value;
-                                $.ajax({
-                                    url: 'parts_balance_payment',
-                                    dataType: 'JSON',
-                                    type: 'POST',
-                                    data: {
-                                        'passwords': password,
-                                        'order_num': order_num
-                                    },
-                                    success: function(res){
-                                        console.log(res);
-                                    },
-                                    error: function(res){
-                                        console.log(res.status, res.statusText);
-                                    }
-                                })
-                            }
-                        }else{
-                            if(aInput[i-1]){
-                                aInput[i-1].focus();
-                            }
-                        }
-                    }
-                })(i)
-            }
-        }
+        $('.close-balance-pwd').click(function(){
+            $('.mask').hide();
+            $('.balance-psd-pop').hide();
+        })
+        // function balanceEvent(order_num){
+        //     var reg = /^1[34578]\d{9}$/;
+        //     var aInput = document.getElementsByClassName('psdinput');
+        //     for(var i = 0; i < aInput.length; i++){
+        //         (function(i){
+        //             aInput[i].oninput = function(){
+        //                 if(aInput[i].value !== ''){
+        //                     if(aInput[i+1]){
+        //                         aInput[i+1].focus();
+        //                     }
+        //                     if(i == 5){
+        //                         var password = aInput[0].value+aInput[1].value+aInput[2].value+aInput[3].value+aInput[4].value+aInput[5].value;
+        //                         $.ajax({
+        //                             url: 'parts_balance_payment',
+        //                             dataType: 'JSON',
+        //                             type: 'POST',
+        //                             data: {
+        //                                 'passwords': password,
+        //                                 'order_num': order_num
+        //                             },
+        //                             success: function(res){
+        //                                 console.log(res);
+        //                             },
+        //                             error: function(res){
+        //                                 console.log(res.status, res.statusText);
+        //                             }
+        //                         })
+        //                     }
+        //                 }else{
+        //                     if(aInput[i-1]){
+        //                         aInput[i-1].focus();
+        //                     }
+        //                 }
+        //             }
+        //         })(i)
+        //     }
+        // }
     </script>
     <script>
         var cancelPayOrderNum = '', storeIdArr = [], stock;
@@ -653,7 +657,7 @@
                     $('.mask').show();
                     $('.balance-psd-pop').show();
                     $('.psdinput:first').focus();
-                    balanceEvent(cancelPayOrderNum);
+                    // balanceEvent(cancelPayOrderNum);
                     break;
             }
         })

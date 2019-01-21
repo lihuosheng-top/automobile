@@ -125,12 +125,14 @@
 				<p style="color:#999999 ; ">建议尺寸：750*750像素</p>
 			</div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">或图片网址:</label>
-            <div class="layui-input-block">
-                <input type="text" name="picture_url" value="{$value.picture_url}" lay-verify="title" class="layui-input" disabled="disabled">
-            </div>
-        </div>
+        <div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">商品描述：</label>
+			<div class="layui-input-block">
+				<div id="goods_text">
+					<script id="editor" type="text/plain" name="" style="width:800px;height:500px;" ></script>
+				</div>
+			</div>
+		</div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">当前可操作：</label>
@@ -158,6 +160,7 @@
             </div>
         </div>
     </form>
+   
     {else}
     <form class="layui-form" action="{:url('admin/platform_advertisement/platform_business_updata')}" method="post" enctype="multipart/form-data">
         <div class="layui-form-item " style="display:none">
@@ -262,12 +265,14 @@
             </div>
             {/if}
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">或图片网址:</label>
-            <div class="layui-input-block">
-                <input type="text" name="picture_url" value="{$value.picture_url}" lay-verify="title" class="layui-input">
-            </div>
-        </div>
+        <div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">商品描述：</label>
+			<div class="layui-input-block">
+				<div id="goods_text">
+					<script id="editor" type="text/plain" name="" style="width:800px;height:500px;" ></script>
+				</div>
+			</div>
+		</div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">当前可操作：</label>
@@ -294,6 +299,7 @@
             </div>
         </div>
     </form>
+   
     {/if} {/volist} {/if} {/block}
 
     <!--_footer 作为公共模版分离出去-->
@@ -304,6 +310,7 @@
     {block name="bottom"}
 
     <script type="text/javascript">
+    	var ue = UE.getEditor('editor');
      $('#endsTime').datetimepicker({
             onGenerate: function(ct) {
                 $(this).find('.xdsoft_date')
