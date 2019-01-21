@@ -247,5 +247,11 @@ return [
     ],
 
 
+    'ACCESSKEY' => 'soGfh5lHiFhkhfziSHOHZ5F1sJls4Yjf6fHDnHUB',//你的accessKey
+    'SECRETKEY' => 'nk5Zhdc6OcjQGdgWLtHzlIgDWAna2e3r1yYoInSm',//你的secretKey
+    'BUCKET' => 'tongchenweilaiecar',//上传的空间
+    'DOMAIN'=>'https://zlh188.cn/'//空间绑定的域名
+
+
 
 ];

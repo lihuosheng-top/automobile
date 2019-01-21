@@ -107,7 +107,30 @@ class  Information extends  Controller{
      * 订单助手详情页面
      * 陈绪
      */
-    public function order_information_details(){
+    public function order_information_details(Request $request){
+
+        if($request->isPost()){
+            $order_id = $request->only(["order_id"])["order_id"];
+            $order = db("order_parts")->where("id", $order_id)->select();
+            foreach ($order as $key => $value) {
+                $order[$key]["store"] = db("store")->where("store_id", $value["store_id"])->find();
+            }
+            if($order){
+                return ajax_success("成功",$order);
+            }else{
+                return ajax_error("失败");
+            }
+
+        }
+        if($request->isGet()){
+            $order_id = $request->only(["order_id"])["order_id"];
+            $order = db("order_parts")->where("id", $order_id)->select();
+            foreach ($order as $key => $value) {
+                $order[$key]["store"] = db("store")->where("store_id", $value["store_id"])->find();
+            }
+            $this->assign(["order"=>$order]);
+        }
+
 
         return view("order_information_details");
 
