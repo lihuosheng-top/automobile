@@ -22,9 +22,9 @@ class Balance extends Controller
             $order_num = $request->only(['order_num'])['order_num'];
             //验证支付密码
             $user_id = Session::get("user");
-            $user_info = Db::name("user")->field("password,user_wallet")->where("id", $user_id)->find();//用户信息
-            $password = $request->only("password")["password"]; //输入的密码
-            if (password_verify($password, $user_info["passwords"])) {
+            $user_info = Db::name("user")->field("pay_passwd,user_wallet")->where("id", $user_id)->find();//用户信息
+            $password = $request->only("passwords")["passwords"]; //输入的密码
+            if (password_verify($password, $user_info["pay_passwd"])) {
                 //真实支付的价钱
                 $money = Db::name("order_parts")->where("parts_order_number", $order_num)->sum("order_amount");
                 //判断是商家角色买还是车主角色进行购买
@@ -162,13 +162,14 @@ class Balance extends Controller
                 $order_num = $request->only(['order_num'])['order_num'];
                 //验证支付密码
                 $user_id = Session::get("user");
-                $user_info = Db::name("user")->field("password,user_wallet")->where("id", $user_id)->find();//用户信息
-                $password = $request->only("password")["password"]; //输入的密码
-                if (password_verify($password, $user_info["passwords"])) {
+                $user_info = Db::name("user")->field("pay_passwd,user_wallet")->where("id", $user_id)->find();//用户信息
+                $password = $request->only("passwords")["passwords"]; //输入的密码
+                if (password_verify($password, $user_info["pay_passwd"])) {
                     $money = Db::name("order_service")->where("service_order_number", $order_num)->value("service_real_pay");
                     $business_store_id = Session::get("role_name_store_id"); //店铺id
                     if (!empty($business_store_id)) {
                         //商家
+                        $business_id = Db::name("store")->where("store_id", $business_store_id)->value("user_id");
                         $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $business_id;
                         $user_wallet = Db::name("business_wallet")
                             ->where($arr_condition)
