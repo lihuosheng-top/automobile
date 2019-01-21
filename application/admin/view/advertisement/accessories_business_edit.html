@@ -105,7 +105,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">广告链接：</label>
             <div class="layui-input-block">
-                <input type="text" name="url" value="{$value.url}" lay-verify="title" class="layui-input">
+                <input type="text" name="url" value="{$value.shop_name}" lay-verify="title" class="layui-input">
 
             </div>
         </div>
@@ -166,8 +166,8 @@
         <div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
-				<div id="goods_text">
-					<script id="editor" type="text/plain" name="" style="width:800px;height:500px;"></script>
+				<div id="advert_text">
+					<script id="editor" type="text/plain" name="advert_text" style="width:800px;height:500px;">{$value.advert_text}</script>
 				</div>
 			</div>
 		</div>

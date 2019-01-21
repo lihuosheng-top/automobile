@@ -113,7 +113,6 @@ class  PlatformAdvertisement extends  Controller{
             $data["pid"] = db("position") -> where("id",$data["pid"])->value("pid");
             $data["department"] = "platform_business";
             $data["shop_name"] = '平台广告';
-
             $bool = db("platform")->insert($data);
             if ($bool) {
                 $this->success("添加成功", url("admin/platform_advertisement/platform_business_index"));
@@ -135,7 +134,7 @@ class  PlatformAdvertisement extends  Controller{
         if ($request->isPost()) {
             $data = $request->param();
             $find = db("platform")->where('id', $request->only(["id"])["id"])->find();
- 
+            
 
             if($find["department"] == "platform_business")
             {
@@ -144,7 +143,7 @@ class  PlatformAdvertisement extends  Controller{
                 $store_data = db("store")->where("store_name",$data["url"])->find();
                 //http://127.0.0.1/automobile/public/store_index?storeId=58
                 if(!empty($store_data)){
-                    $data["url"] = config('domain_url.address')."store_index?storeId=".$store_data['id'];
+                    $data["url"] = config('domain_url.address')."store_index?storeId=".$store_data['store_id'];
                     $data["longitude"] = $store_data['longitude']; //坐标经度
                     $data["latitude"] = $store_data['latitude'];   //坐标纬度
                 } else {
@@ -232,7 +231,7 @@ class  PlatformAdvertisement extends  Controller{
         }else{
             $activ = db("platform")->select();
         }
-        halt($activ);
+        
         if(!empty($activ)){
             return view('platform_business_index',['platform'=>$activ]);
         }
