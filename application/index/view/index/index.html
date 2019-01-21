@@ -130,9 +130,9 @@
                 <img src="__STATIC__/index/image/banner2.jpg">
             </a> -->
         </div>
-        <!-- 热门推荐 -->
+        <!-- 活动商家 -->
         <div class="hot_recommend">
-            <p class="subtitle">热门推荐</p>
+            <p class="subtitle">活动商家</p>
             <div class="recommend_goods">
                 <!-- <div class="recommend_top">
                     <a href="javascript:;">
@@ -582,7 +582,7 @@
                                             <img src="uploads/`+res.data.fixed[0].advert_picture+`">
                                         </a>`
                         $('.banner').html('').html(indexFixStr);
-                        // 热门推荐
+                        // 活动商家
                         var data = res.data;
                         var hotStr = `<div class="recommend_top">
                                         <a href="`+(data.hot_one[0].url==null?'javascript:;':data.hot_one[0].url)+`">
