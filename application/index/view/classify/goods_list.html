@@ -22,6 +22,10 @@
             <button class="current">综合</button>
             <button>销量</button>
             <button>价格</button>
+            <button class="district">区域</button>
+        </div>
+        <div class="district-container">
+            <!-- <div class="district-item">福田</div> -->
         </div>
         <ul class="list_cont clearfix">
             <!-- <li>
@@ -41,7 +45,41 @@
             </li> -->
         </ul>
     </div>
+    <div id="map-container"></div>
+    <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/goods_list.js"></script>
+    <script>
+        // 获取用户所在城市行政区
+        var map = new AMap.Map('map-container', {
+            zoom: 12, //级别
+        });
+        AMap.plugin([
+            'AMap.DistrictSearch',
+            'AMap.CitySearch'
+        ], function(){
+            var citySearch = new AMap.CitySearch();
+            var districtSearch = new AMap.DistrictSearch({
+                level: 'city',
+                subdistrict: 1
+            })
+            // 获取用户当前定位城市
+            citySearch.getLocalCity(function (status, result) {
+                if (status === 'complete' && result.info === 'OK') {
+                    // 获取当前城市 行政区
+                    districtSearch.search(result.city, function(status, result){
+                        var str = '';
+                        $.each(result.districtList[0].districtList, function(idx, val){
+                            str += '<div class="district-item">'+val.name+'</div>';
+                        })
+                        $('.district-container').html(str);
+                        $('.district-container').on('click', '.district-item', function(){
+                            $('.district-container').hide();
+                        })
+                    })
+                }
+            })
+        })
+    </script>
 </body>
 </html>
