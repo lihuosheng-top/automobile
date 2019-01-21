@@ -132,9 +132,14 @@
                                         <button class="del-order-btn">删除订单</button>
                                     </div>
                                 </div>`
-                        }else if(statusTxt == '待付款'){
+                        }else if(statusTxt == '待付款' && val.is_face == 1){
                             str += `<div class="button-box">
                                         <button class="cancel-order-btn">取消订单</button>
+                                        <button class="to-payment-btn">去付款</button>
+                                    </div>
+                                </div>`
+                        }else if(statusTxt == '待付款' && val.is_face == -1){
+                            str += `<div class="button-box">
                                         <button class="to-payment-btn">去付款</button>
                                     </div>
                                 </div>`
@@ -197,12 +202,6 @@
                         });
                         var totalAmount = res.data[index].service_real_pay;
                         var outTradeNo = res.data[index].service_order_number;
-                        // var subjuect = res.data[index].service_goods_name;
-                        // var body = res.data[index].service_goods_name;
-                        // $('#WIDtotal_amount').val(totalAmount);
-                        // $('#WIDout_trade_no').val(outTradeNo);
-                        // $('#WIDsubject').val(subjuect);
-                        // $('#WIDbody').val(body);
                         if(totalAmount !== 0){
                             $.ajax({
                                 url: 'ios_api_service_alipay',
@@ -219,9 +218,6 @@
                                     console.log('error');
                                 }
                             })
-                            // $('.mask').show();
-                            // $('.alipay-pop').animate({'bottom': '0'});
-                            // $('html').css('overflow', 'hidden');
                         }else{
                             layer.open({
                                 skin: 'msg',
@@ -229,11 +225,6 @@
                                 time: 1.2
                             })
                         }
-                        // $('.close-alipay').click(function () {
-                        //     $('.mask').hide();
-                        //     $('.alipay-pop').animate({ 'bottom': '-100%' });
-                        //     $('html').css('overflow', 'auto');
-                        // })
                     })
                 }
             },

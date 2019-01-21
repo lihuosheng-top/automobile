@@ -72,8 +72,8 @@
                 <button class="get-code">获取验证码</button>
             </div>
             <input type="text" placeholder="输入验证码" class="reset-payment-input phone-code">
-            <input type="password" placeholder="输入新的密码" class="reset-payment-input new-pwd">
-            <input type="password" placeholder="确认新密码" class="repeat-payment-input repeat-pwd">
+            <input type="password" placeholder="输入六位新密码(数字)" class="reset-payment-input new-pwd" maxlength="6">
+            <input type="password" placeholder="确认新密码" class="repeat-payment-input repeat-pwd" maxlength="6">
         </div>
         <button class="reset-payment-btn" disabled>确认</button>
     </div>
@@ -92,10 +92,6 @@
             <input type="radio" name="role" class="supplier" id="supplier">
             <label for="supplier">配件商和服务商</label>
         </div>
-        <!-- <div class="facilitator-box">
-            <input type="radio" name="role" class="facilitator" id="facilitator">
-            <label for="facilitator">服务商</label>
-        </div> -->
         <button class="change-role-btn">确定</button>
     </div>
 

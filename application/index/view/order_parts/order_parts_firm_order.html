@@ -87,6 +87,13 @@
         .company-invoice-detail span{display: inline-block; width: 1.5rem; line-height: normal;}
         .company-invoice-identify{display: flex;}
         .company-invoice-identify textarea{flex: 1; font-size: .3rem; resize: none; border: 0; outline: none;}
+
+        /* 余额支付密码弹窗 */
+        .balance-psd-pop{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: .5rem; background-color: #fff; z-index: 999; border-radius: .15rem;}
+        .balance-psd-pop .close-balance-pwd{position: absolute; right: 5px; top: 5px; width: .4rem; height: .4rem; background-position: .05rem -1.15rem;}
+        .balance-psd-pop .balance-psd-title{text-align: center; font-size: .35rem;}
+        .balance-psd-pop .input-container{display: flex;}
+        .balance-psd-pop .input-container .psdinput{border: 1px solid #eee; width: .8rem; height: .8rem; text-align: center; font-size: .8rem;}
     </style>
 </head>
 <body>
@@ -170,7 +177,21 @@
             </div>
         </div>
     </div>
-    <div class="mask"></div>
+    <div class="mask" style="display: none;"></div>
+
+    <!-- 输入余额密码弹窗 -->
+    <div class="balance-psd-pop" style="display: none;">
+        <span class="close-balance-pwd spr"></span>
+        <p class="balance-psd-title">支付密码</p>
+        <div class="input-container">
+            <input type="password" maxlength="1" class="psdinput">
+            <input type="password" maxlength="1" class="psdinput">
+            <input type="password" maxlength="1" class="psdinput">
+            <input type="password" maxlength="1" class="psdinput">
+            <input type="password" maxlength="1" class="psdinput">
+            <input type="password" maxlength="1" class="psdinput">
+        </div>
+    </div>
 
     <!-- 选择支付方式 -->
     <div class="chose-payment">
@@ -269,6 +290,49 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_firm_order.js"></script>
+    <script>
+        $('.close-balance-pwd').click(function(){
+            $('.mask').hide();
+            $('.balance-psd-pop').hide();
+        })
+        // function balanceEvent(order_num){
+        //     var reg = /^1[34578]\d{9}$/;
+        //     var aInput = document.getElementsByClassName('psdinput');
+        //     for(var i = 0; i < aInput.length; i++){
+        //         (function(i){
+        //             aInput[i].oninput = function(){
+        //                 if(aInput[i].value !== ''){
+        //                     if(aInput[i+1]){
+        //                         aInput[i+1].focus();
+        //                     }
+        //                     if(i == 5){
+        //                         var password = aInput[0].value+aInput[1].value+aInput[2].value+aInput[3].value+aInput[4].value+aInput[5].value;
+        //                         $.ajax({
+        //                             url: 'parts_balance_payment',
+        //                             dataType: 'JSON',
+        //                             type: 'POST',
+        //                             data: {
+        //                                 'passwords': password,
+        //                                 'order_num': order_num
+        //                             },
+        //                             success: function(res){
+        //                                 console.log(res);
+        //                             },
+        //                             error: function(res){
+        //                                 console.log(res.status, res.statusText);
+        //                             }
+        //                         })
+        //                     }
+        //                 }else{
+        //                     if(aInput[i-1]){
+        //                         aInput[i-1].focus();
+        //                     }
+        //                 }
+        //             }
+        //         })(i)
+        //     }
+        // }
+    </script>
     <script>
         var cancelPayOrderNum = '', storeIdArr = [], stock;
         // 上架价格*数量
@@ -538,6 +602,7 @@
         }
         // 选择支付方式
         $('.method-div').click(function(){
+            var u = navigator.userAgent;
             $(this).siblings().find('.check-a').removeClass('icon-check');
             $(this).find('.check-a').addClass('icon-check');
             backMethod();
@@ -555,9 +620,14 @@
                             }
                         })
                     })().then(function(res){
-                        console.log(res.responseData.app_response);
-                        //接受支付宝签名 发送给android
-                        Android.wxpay(JSON.stringify(res.responseData.app_response));
+                        console.log(res.responseData);
+                        if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                            //接受支付宝签名 发送给android
+                            Android.wxpay(JSON.stringify(res.responseData.app_response));
+                        }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
+                            //接受支付宝签名 发送给ios
+                            alipay(JSON.stringify(res.responseData));
+                        }
                     })
                     break;
                 case 2:
@@ -573,11 +643,21 @@
                         })
                     })().then(function(res){
                         console.log(res);
-                        //接受支付宝签名 发送给android
-                        Android.alipay(res.data);
+                        if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                            //接受支付宝签名 发送给android
+                            Android.alipay(res.data);
+                        }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
+                            //接受支付宝签名 发送给ios
+                            alipay(res.data);
+                        }
                     })
                     break;
                 case 3:
+                    //用户选择余额支付，发送订单号给后台
+                    $('.mask').show();
+                    $('.balance-psd-pop').show();
+                    $('.psdinput:first').focus();
+                    // balanceEvent(cancelPayOrderNum);
                     break;
             }
         })

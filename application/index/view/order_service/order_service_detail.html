@@ -105,9 +105,12 @@
                     if(val.status === 0 || val.status === 9 || val.status === 10){
                         statusTxt = '已关闭';
                         $('.del-order-btn').show();
-                    }else if(val.status === 1){
+                    }else if(val.status === 1 && val.is_face == 1){
                         statusTxt = '待付款';
                         $('.cancel-order-btn').add('.to-payment-btn').show();
+                    }else if(val.status === 1 && val.is_face == -1){
+                        statusTxt = '待付款';
+                        $('.to-payment-btn').show();
                     }else if(val.status === 2 || val.status === 3){
                         statusTxt = '待服务';
                         $('.conf-receipt-btn').show();

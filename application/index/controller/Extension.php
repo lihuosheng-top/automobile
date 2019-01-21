@@ -29,8 +29,7 @@ class Extension extends  Controller{
             }
             $user_invitation =Db::name("user")->where("id",$user_id)->find();
             if(!empty($user_invitation)){
-                $domain_name = 'https://automobile.siring.com.cn';//域名
-//                $domain_name = 'https://www.zlh188.cn';//域名
+                $domain_name =config("domain_url.address");//域名
                 $reg = 'register';  //注册地址
                 $share_url = $domain_name."/".$reg."?a=".$user_invitation["invitation"];
                 /*二维码*/

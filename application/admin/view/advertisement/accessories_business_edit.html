@@ -74,9 +74,10 @@
             <label class="layui-form-label">广告位置:</label>
             <div class="layui-input-block">
                 <select name="pid" id="admin_role" class="role_list">
-                            {volist name="goods_liste" id="vl"}
+                       
+                       {foreach name="goods_liste" item="vl" key="abc"}
                             {if $value.postid == $vl.id}
-                            <option value="{$vl.id}" selected="">{$vl.name}</option>
+                            <option value="{$vl.id}" selected=""  class="aaa_{$abc}">{$vl.name}</option>
                             {else}
                             <option value="{$vl.id}" class="aaa_{$abc}">{$vl.name}</option>
                             {/if}
@@ -162,12 +163,14 @@
             </div>
         </div>
         {/if}
-        <div class="layui-form-item">
-            <label class="layui-form-label">或图片网址:</label>
-            <div class="layui-input-block">
-                <input type="text" name="picture_url" value="{$value.picture_url}" lay-verify="title" class="layui-input">
-            </div>
-        </div>
+        <div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">商品描述：</label>
+			<div class="layui-input-block">
+				<div id="goods_text">
+					<script id="editor" type="text/plain" name="" style="width:800px;height:500px;"></script>
+				</div>
+			</div>
+		</div>
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn submit_btn" lay-submit="" lay-filter="demo1" type="submit">保存</button>
@@ -187,6 +190,7 @@
     {block name="bottom"}
 
     <script type="text/javascript">
+    	var ue = UE.getEditor('editor');
             $('#endsTime').datetimepicker({
             onGenerate: function(ct) {
                 $(this).find('.xdsoft_date')

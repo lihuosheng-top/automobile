@@ -267,7 +267,7 @@ class  Express extends  Controller{
 
 
  /**
-     **************李火生*******************
+     **************陈绪*******************
      * @param Request $request
      * Notes:快递详情页面
      **************************************
@@ -316,13 +316,16 @@ class  Express extends  Controller{
      * 快递单删除
      * 陈绪
      */
-    public function express_distribution_del($id){
+    public function express_distribution_del(Request $request){
 
-        $bool = db("delivery_order")->where("id",$id)->delete();
-        if($bool){
-            $this->success("删除成功",url("index/Express/express_completed"));
-        }else{
-            $this->error("删除失败",url("index/Express/express_completed"));
+        if($request->isPost()) {
+            $id = $request->only(["id"])["id"];
+            $bool = db("delivery_order")->where("id", $id)->delete();
+            if ($bool) {
+                return ajax_success("成功");
+            } else {
+                return ajax_error("失败");
+            }
         }
 
     }
