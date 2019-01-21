@@ -452,7 +452,7 @@ class  SellMy extends Controller{
                 if(!empty($end_info)){
                     $ords =array();
                     foreach ($end_info as $vl){
-                        $ords[] =$vl["pay_time"];
+                        $ords[] =$vl["order_create_times"];
                     }
                     array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));

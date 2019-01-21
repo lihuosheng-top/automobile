@@ -657,6 +657,7 @@ class Apppay extends Controller
                         "img_url"=>"index/image/alipay.png", //对应的图片链接
                         "operation_amount" =>$recharge_record_data["recharge_money"]+$lists, //操作金额
                         "recharge_describe" =>"充值".$recharge_record_data["recharge_money"]."元,送了".$lists,//描述
+                        "status"=>1,
                     ];
                     Db::name("recharge_reflect")->insert($recharge_data);//插到记录
                     $user_wallet =Db::name("user")
