@@ -500,7 +500,7 @@ class Install extends Controller{
     public function express_index()
     {
      
-        $express = db("delivery")->paginate(4);
+        $express = db("delivery")->paginate(20);
         return view("express_index",['express' => $express]);
 
     }
@@ -585,12 +585,13 @@ class Install extends Controller{
             $data["areas"] = implode("", $addressed);
             $data["area"] = implode(",", $addressed);
             $data["passwords"] = password_hash($data["password"],PASSWORD_DEFAULT);
+            
             foreach ($data as $k => $v) {
                 if (in_array($v, $addressed)) {
                     unset($data[$k]);
                 }
             }
-
+           
             $bool = db("delivery") -> where('id', $id) ->update($data);
             if ($bool) {
                 $this->success("编辑成功", url("admin/Install/express_index"));
