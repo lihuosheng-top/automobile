@@ -49,16 +49,7 @@
                     $('.money-txt span').text(res.data.user_wallet);
                 }
                 $('.recharge').click(function(){
-                    var myMoney = parseFloat($('.money-txt span').text());
-                    if(myMoney >= 100){
-                        location.href = 'sell_application';
-                    }else{
-                        layer.open({
-                            skin: 'msg',
-                            content: '余额小于100',
-                            time: 1.2
-                        })
-                    }
+                    location.href = 'sell_application';
                 })
             },
             error: function(){

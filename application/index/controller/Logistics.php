@@ -18,15 +18,18 @@ class  Logistics extends  Controller{
         if($request->isPost()) {
             $id = $request->only(['id'])['id'];
             if (!empty($id)) {
-                $data = Db::name('order_parts')->where('id', $id)->select();
-                foreach ($data as $key => $value) {
-                    $data[$key]["delivery_status"] = db("delivery_order")
-                        ->where("order_id", $value["id"])
-                        ->field("status,delivery_id")
-                        ->find();
-                    $data[$key]["delivery_name_phone"] = db("delivery")
-                        ->where("id", $data[$key]["delivery_status"]["delivery_id"])
-                        ->find();
+                //配送状态
+                $data = db("delivery_order")
+                    ->where("order_id", $id)
+                    ->field("status,delivery_id")
+                    ->find();
+                $datas = db("delivery")
+                    ->where("id", $data["delivery_id"])
+                    ->field("name,number")
+                    ->find();
+                if (!empty($datas)) {
+                    $data["name"] = $datas["name"]; //配送人
+                    $data["number"] = $datas["number"]; //配送人电话
                 }
                 if (!empty($data)) {
                     return ajax_success('订单信息成功返回', $data);

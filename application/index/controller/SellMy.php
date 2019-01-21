@@ -2053,12 +2053,29 @@ class  SellMy extends Controller{
                     ->sum("money");
                 if(!empty($money)){
                     //这是可提现资金（客户要求只能体现上两周的资金）
+//                    $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-14,date("Y")); //时间戳
+//                    $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+//                    $tow_weeks_money =Db::name("business_wallet")
+//                        ->where($two_condition)
+//                        ->where("create_time","<",$two_weekds_ago)
+//                        ->sum("money");
+
+                    //这是可提现资金（客户要求只能体现上两周的资金）
                     $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-14,date("Y")); //时间戳
-                    $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
-                    $tow_weeks_money =Db::name("business_wallet")
+                    $two_condition ="`status` = '1' and `is_deduction` = '1'and `is_pay` = '1' and `user_id` = ".$user_id;
+                    $moneys =Db::name("business_wallet")
                         ->where($two_condition)
                         ->where("create_time","<",$two_weekds_ago)
                         ->sum("money");
+                    halt($moneys);
+                    $pays_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
+                    $business_wallet_pay =Db::name("business_wallet")
+                        ->where($pays_condition)
+                        ->where("create_time","<",time())
+                        ->sum("money");
+                    $tow_weeks_money =$moneys + $business_wallet_pay;
+
+
                     if(!empty($tow_weeks_money)){
                         $tow_weeks_money =round($tow_weeks_money,2);
                     }else{
@@ -2089,10 +2106,16 @@ class  SellMy extends Controller{
                 //这是可提现资金（客户要求只能体现上两周的资金）
                 $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-14,date("Y")); //时间戳
                 $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
-                $money =Db::name("business_wallet")
+                $moneys =Db::name("business_wallet")
                     ->where($two_condition)
                     ->where("create_time","<",$two_weekds_ago)
                     ->sum("money");
+                $pays_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
+                $business_wallet_pay =Db::name("business_wallet")
+                    ->where($pays_condition)
+                    ->where("create_time","<",time())
+                    ->sum("money");
+                $money =$moneys + $business_wallet_pay;
             }else{
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
