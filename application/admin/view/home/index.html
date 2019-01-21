@@ -241,10 +241,10 @@
 						<th colspan="4">用户总览</th>
 					</tr>
 					<tr>
-						<td>
+						<!-- <td>
 							<p class="red">21</p>
 							<p>今日新增</p>
-						</td>
+						</td> -->
 						<td>
 							<p class="red">3529</p>
 							<p>昨日新增</p>
@@ -359,6 +359,27 @@
 <!--/_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="__STATIC__/admin/common/zhexian/highcharts.js"></script>
 <script language="JavaScript">
+	  $('#endTime1').datetimepicker({
+            onGenerate: function(ct) {
+                $(this).find('.xdsoft_date')
+                    .removeClass('xdsoft_disabled');
+            },
+            minDate: '-1970/01/2',
+            maxDate: '+1970/01/2',
+            timepicker: false
+        });
+        $('#beginTime1').datetimepicker({
+            onGenerate: function(ct) {
+                $(this).find('.xdsoft_date')
+                    .removeClass('xdsoft_disabled');
+            },
+           
+            minDate: '-1970/01/2',
+            maxDate: '+1970/01/2',
+            timepicker: false
+        });
+	
+     
 		var title = {
 			text: '本月订单统计'
 		};
@@ -366,8 +387,7 @@
 			text: 'Source: runoob.com'
 		};
 		var xAxis = {
-			categories: ['2018/10/01', '2018/10/01', '2018/10/01', '2018/10/01', '2018/10/01', '2018/10/01','2018/10/01',
-			]
+			categories: []
 		};
 		var yAxis = {
 			title: {
@@ -392,8 +412,7 @@
 
 		var series = [{
 				name: '日期',
-				data: [0,0,0,0,0,0,0
-				]
+				data: []
 			},
 
 		];
@@ -408,9 +427,113 @@
 		json.series = series;
 		$('#container').highcharts(json);
 		$('#containerb').highcharts(json);
+			// 时间戳转化
+	function timestampToTime(timestamp) {
+        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var Y = date.getFullYear() + '/';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '/';
+        var D = date.getDate() + ' ';
+        var h = date.getHours() + ':';
+        var m = date.getMinutes() + ':';
+        var s = date.getSeconds();
+        return Y+M+D;
+       }
+	  
 		$("#data1_refash").click(function(){
-             
+			var data_aaa=[];
+			var data_bbb=[];
+            var beginTime=$("#beginTime").val();
+			var endTime=$("#endTime").val();
+			var beginTimea = Date.parse(beginTime);
+			var endTimea = Date.parse(endTime);
+			var utc=endTimea-beginTimea;
+			var day=utc/(24*60*60*1000);
+			for(var i=0;i<day+1;i++){
+				data_aaa.push(timestampToTime((beginTimea+86400000*i)/1000));
+			    data_bbb.push(0)
+				
+			}
+			series[0].data=data_bbb;
+			xAxis.categories=data_aaa;
+		
+			var json = {};
+			json.title = title;
+			json.subtitle = subtitle;
+			json.xAxis = xAxis;
+			json.yAxis = yAxis;
+			json.tooltip = tooltip;
+			json.legend = legend;
+			json.series = series;
+			$('#container').highcharts(json);
+			
 		})
+		$("#data2_refash").click(function(){
+			
+			var data_aaa=[];
+			var data_bbb=[];
+            var beginTime=$("#beginTime1").val();
+			var endTime=$("#endTime").val();
+			var beginTimea = Date.parse(beginTime);
+			var endTimea = Date.parse(endTime1);
+			var utc=endTimea-beginTimea;
+			var day=utc/(24*60*60*1000);
+			for(var i=0;i<day+1;i++){
+				data_aaa.push(timestampToTime((beginTimea+86400000*i)/1000));
+			    data_bbb.push(0)
+				
+			}
+			series[0].data=data_bbb;
+			xAxis.categories=data_aaa;
+		
+			var json = {};
+			json.title = title;
+			json.subtitle = subtitle;
+			json.xAxis = xAxis;
+			json.yAxis = yAxis;
+			json.tooltip = tooltip;
+			json.legend = legend;
+			json.series = series;
+			$('#containerb').highcharts(json);
+			  
+			
+		})
+		var myDate = new Date();
+		var timestamp = (new Date()).valueOf();
+		var load_time=myDate.getDate();
+		    var data_aaa=[];
+			var data_bbb=[];
+			var beginTimea = timestamp;
+			for(var i=0;i<load_time;i++){
+				data_aaa.push(timestampToTime((beginTimea-86400000*i)/1000));
+			    data_bbb.push(0)
+				
+			}
+			series[0].data=data_bbb;
+			xAxis.categories=reverse(data_aaa);
+		
+			var json = {};
+			json.title = title;
+			json.subtitle = subtitle;
+			json.xAxis = xAxis;
+			json.yAxis = yAxis;
+			json.tooltip = tooltip;
+			json.legend = legend;
+			json.series = series;
+			$('#container').highcharts(json);
+			$('#containerb').highcharts(json);
+			
+				function reverse(a){
+				var len = a.length;//获取数组的长度
+				var mid = parseInt(len/2);//获取数组长度的中间值，由于有可能是不是整数，将得到的数字转为整数
+				//利用交换的思想，将数组内的元素放在相应的地方，循环次数为mid+1次
+				for(i = 0;i <= mid;i++){
+					var temp = a[i];
+					a[i] = a[len-1-i];
+					a[len-1-i] = temp;  
+				}
+				return a;
+				}
+		
 </script>
 
 

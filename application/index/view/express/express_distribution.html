@@ -34,7 +34,7 @@
         .get-goods .shop-address{font-size: .28rem; color: #999;}
         .get-goods .shop-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -4.15rem}
         .send-goods{display: flex; justify-content: space-around; align-items: center;}
-        .send-goods span:first-of-type{font-size: .32rem; color: #09b10d;}
+        .send-goods span:first-of-type{font-size: .32rem; color: #09b10d; margin-right: .2rem;}
         .send-goods .send-address{flex: 1; font-size: .32rem; color: #333;}
         .send-goods .customer-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -5.05rem}
         .time-container{display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;}
@@ -111,17 +111,17 @@
                     $.each(data.express, function(idx, val){
                         str += `<div class="order-item">
                                     <div class="address-container">
-                                        <div class="get-goods" id="store-`+val.store_id+`">
+                                        <div class="get-goods">
                                             <span>取：</span>
                                             <div>
-                                                <span class="shop-name"><a href="order_information_details?order_id=`+val.order_id+`">`+val.store_name+`</a></span>
+                                                <span class="shop-name" data-orderId="`+val.order_id+`">`+val.store_name+`</span>
                                                 <span class="shop-address">`+val.store_address+`</span>
                                             </div>
                                             <a href="javascript:Android.call('`+parseInt(val.store_phone)+`');" class="spr shop-phone"></a>
                                         </div>
-                                        <div class="send-goods" id="send-`+val.order_id+`">
+                                        <div class="send-goods">
                                             <span>送：</span>
-                                            <span class="send-address"><a href="order_information_details?order_id=`+val.order_id+`">`+val.user_order_address+`</a></span>
+                                            <span class="send-address" data-orderId="`+val.order_id+`">`+val.user_order_address+`</span>
                                             <a href="javascript:Android.call('`+val.user_order_phone+`');" class="spr customer-phone"></a>
                                         </div>
                                     </div>
@@ -176,12 +176,34 @@
                             }
                         });
                     })
+                    // 查看详情
+                    $('.shop-name').add('.send-address').click(function(){
+                        var orderId = $(this).attr('data-orderId');
+                        $.ajax({
+                            url: 'express_detail',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                order_id: orderId
+                            },
+                            success: function(res){
+                                console.log(res);
+                                if(res.status == 1){
+                                    location.href = 'express_detail?orderId='+orderId+'&status='+2;
+                                }
+                            },
+                            error: function(res){
+                                console.log(res.status, res.statusText);
+                            }
+                        })
+                    })
                 }
                 if(res.status == 0){
                     var data = res.data;
                     $('.info .name').text(data[0].name);
                     $('.info .phone').text(data[0].number);
                 }
+
             },
             error: function(){
                 console.log('error');

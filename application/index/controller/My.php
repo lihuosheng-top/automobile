@@ -127,6 +127,7 @@ class My extends Controller
             $condition = " `operation_time` like '%{$now_time_one}%' ";
             $data = Db::name("wallet")
                 ->where("user_id",$user_id)
+                ->where("is_business",1)
                 ->where($condition)
                 ->order("operation_time","desc")
                 ->select();
@@ -488,7 +489,9 @@ class My extends Controller
         if($request->isPost()){
             $wallet_id =Session::get("wallet_id");
             if(!empty($wallet_id)){
-                $data =Db::name("wallet")->where("wallet_id",$wallet_id)->find();
+                $data =Db::name("wallet")
+                    ->where("wallet_id",$wallet_id)
+                    ->find();
                 if(!empty($data)){
                     return ajax_success("消费详情返回成功",$data);
                 }

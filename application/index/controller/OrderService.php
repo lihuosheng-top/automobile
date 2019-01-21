@@ -347,14 +347,33 @@ class OrderService extends Controller{
                        ->where("id",$order_id)
                        ->find();
                     $business_id =Db::name("store")->where("store_id",$order_info["store_id"])->value("user_id");
+                    //                        TODO:对这个收入进行存储
+                    $business_data =[
+                        "user_id" =>$business_id,//商家用户id
+                        "create_time"=>time(), //时间戳
+                        "status"=>1, //状态值（1正常状态，-1申请提现但未处理，方便拒绝修改回状态，2提现已成功）
+                        "order_num"=>$order_info["service_order_number"],//订单编号
+                        "type" =>"服务商", //服务类型(配件商，服务商）
+                        "money"=>$order_info["service_order_amount"], //进账的钱
+                        "is_pay"=>1, //(判断是否1收入，还是-1支出）
+                        "is_deduction"=>1,//正常的流程
+                    ];
+                    $arr =Db::name("business_wallet")->insertGetId($business_data);
+                    //服务商配件商身份
+                    $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$business_id;
+                    $business_wallet =Db::name("business_wallet")
+                        ->where($arr_condition)
+                        ->sum("money");
                    //商家原本的钱包余额
-                    $old_wallet =Db::name("user")
+                    //车主的身份
+                    $owner_wallet =Db::name("user")
                         ->where("id",$business_id)
                         ->value("user_wallet");
-                    //商家添加的余额添加的是商家发布的服务项目价钱，不是抵扣之后的金额
-                    $new_wallet =$order_info["service_order_amount"] + $old_wallet;
-                   //余额更新
-                    $arr =Db::name('user')->where('id',$business_id)->update(['user_wallet'=>$new_wallet]);
+                    if(!empty($business_wallet)){
+                        $new_wallet =$business_wallet +$owner_wallet;
+                    }else{
+                        $new_wallet =$owner_wallet;
+                    }
                     //添加消费记录
                     if($arr){
                         $data=[
@@ -368,6 +387,7 @@ class OrderService extends Controller{
                             "order_nums"=>$order_info["service_order_number"],
                             "pay_type"=>$order_info["pay_type_content"], //支付方式
                             "wallet_balance"=>$new_wallet,
+                            "is_business"=>2,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                         ];
                         Db::name("wallet")->insert($data);
                     }

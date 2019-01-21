@@ -114,9 +114,6 @@ class Apppay extends Controller
             }
         }
     }
-
-
-
     /**
      **************李火生*******************
      * @param Request $
@@ -223,9 +220,6 @@ class Apppay extends Controller
             }
         }
     }
-
-
-
 
     /**
      **************李火生*******************
@@ -345,6 +339,8 @@ class Apppay extends Controller
             }
         }
     }
+
+
     /**
      **************陈绪*******************
      * 生成支付宝签名 TODO:配件商支付宝支付生成签名
@@ -509,7 +505,17 @@ class Apppay extends Controller
                 $title =implode("",$titles);
                 $money =Db::name("order_parts")->where("parts_order_number",$out_trade_no)->sum("order_real_pay");
                 //进行钱包消费记录
-                $new_wallet =Db::name("user")->where("id",$parts[0]["user_id"])->value("user_wallet");
+                $owner_wallet =Db::name("user")->where("id",$parts[0]["user_id"])->value("user_wallet");
+                $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " .$parts["user_id"];
+                $business_wallet = Db::name("business_wallet")
+                    ->where($arr_condition)
+                    ->sum("money");
+                if(!empty($business_wallet)){
+                    $new_wallet =$owner_wallet + $business_wallet;
+                }else{
+                    $new_wallet =$owner_wallet;
+                }
+
                 $datas=[
                     "user_id"=>$parts[0]["user_id"],//用户ID
                     "wallet_operation"=>-$money,//消费金额
@@ -521,6 +527,7 @@ class Apppay extends Controller
                     "order_nums"=>$out_trade_no,//订单编号
                     "pay_type"=>"支付宝", //支付方式
                     "wallet_balance"=>$new_wallet,//此刻钱包余额
+                    "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                 ];
                 Db::name("wallet")->insert($datas);
                 return ajax_success('支付成功', ['status' => 1]);
@@ -562,7 +569,16 @@ class Apppay extends Controller
                     ->find();
                 $title =$parts["service_goods_name"];
                 $money =$parts["service_real_pay"];//金额
-                $new_wallet =Db::name("user")->where("id",$parts["user_id"])->value("user_wallet");
+                $owner_wallet =Db::name("user")->where("id",$parts["user_id"])->value("user_wallet");
+                $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " .$parts["user_id"];
+                $business_wallet = Db::name("business_wallet")
+                    ->where($arr_condition)
+                    ->sum("money");
+                if(!empty($business_wallet)){
+                    $new_wallet =$owner_wallet + $business_wallet;
+                }else{
+                    $new_wallet =$owner_wallet;
+                }
                 $datas=[
                     "user_id"=>$parts["user_id"],//用户ID
                     "wallet_operation"=>-$money,//消费金额
@@ -574,6 +590,7 @@ class Apppay extends Controller
                     "order_nums"=>$out_trade_no,//订单编号
                     "pay_type"=>"支付宝", //支付方式/
                     "wallet_balance"=>$new_wallet,//此刻钱包余额
+                    "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                 ];
                 Db::name("wallet")->insert($datas);
                 return ajax_success('支付成功', ['status' => 1]);
@@ -584,8 +601,6 @@ class Apppay extends Controller
             return ajax_error('验证失败', ['status' => 0]);
         }
     }
-
-
     /**
      **************李火生*******************
      * @param Request $request
@@ -673,6 +688,7 @@ class Apppay extends Controller
                     "order_nums"=>$out_trade_no,//订单编号
                     "pay_type"=>"支付宝", //支付方式/
                     "wallet_balance"=>$new_wallet,//此刻钱包余额
+                    "is_business"=>1,//判断是车主消费还是商家消费（充值只能是 1车主消费）
                 ];
                 Db::name("wallet")->insert($datas); //存入消费记录表
 
@@ -684,7 +700,6 @@ class Apppay extends Controller
             return ajax_error('验证失败', ['status' => 0]);
         }
     }
-
     /**
      **************陈绪*******************
      * 生成支付宝签名 TODO:充值支付宝支付生成签名
@@ -748,8 +763,6 @@ class Apppay extends Controller
             }
         }
     }
-
-
     /**
      * 微信app支付
      * 陈绪
@@ -774,8 +787,6 @@ class Apppay extends Controller
         }
 
     }
-
-
     /**
      * 生成终端IP
      * 陈绪
@@ -794,8 +805,6 @@ class Apppay extends Controller
         }
         return $cip;
     }
-
-
 
 
     /**

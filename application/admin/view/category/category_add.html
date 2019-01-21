@@ -127,23 +127,7 @@
 			var form = layui.form(),
 				$ = layui.jquery;
 			form.render();
-			//创建一个编辑器
-			//var editIndex = layedit.build('LAY_demo_editor');
-			  for(var i=0;i<$("option").length;i++){
-			     var Cts = $("option")[i].innerHTML;
-//			     
-			     if(Cts.indexOf("&nbsp;")==0)
-				{
-					
-				
-				}
-				else{
-//					console.log("."+$("option")[i].className)
-				   $("."+$("option")[i].className).attr('disabled','disabled');
-				}
-			  }
-			  form.render();
-          
+	
 
 		});
 
