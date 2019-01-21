@@ -96,9 +96,12 @@ class  Advertisement extends  Controller{
             $user_phone = Session::get("user_info");
             $id = $user_phone[0]["id"];
             $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
-            $store_name = db("store")->where("user_id",$user)->value("store_name");
-            $store_id = db("store")->where("user_id",$user)->value("store_id");
-            $area = db("store")->where("user_id",$user)->value("store_city_address");
+            $store_data = db("store")->where("user_id",$user)->find(); //找到店铺信息
+            $longitude = $store_data["longitude"];
+            $latitude = $store_data["latitude"];
+            $store_name = $store_data["store_name"];
+            $store_id = $store_data["store_id"];
+            $area = $store_data["store_city_address"];
             $position = db("position") -> where("id",$data["pid"])->value("name");
             
 
@@ -125,6 +128,8 @@ class  Advertisement extends  Controller{
             $data["area"] = $area;
             $data["location"] = $position;
             $data["postid"] = $unset_id;
+            $data["longitude"] = $longitude;
+            $data["latitude"] = $latitude;
             $userId = db('accessories')->insertGetId($data);
 
             //插入平台列表
