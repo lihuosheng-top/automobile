@@ -90,10 +90,22 @@
 
         /* 余额支付密码弹窗 */
         .balance-psd-pop{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: .5rem; background-color: #fff; z-index: 999; border-radius: .15rem;}
-        .balance-psd-pop .close-balance-pwd{position: absolute; right: 5px; top: 5px; width: .4rem; height: .4rem; background-position: .05rem -1.15rem;}
+        .balance-psd-pop .close-balance-pwd{position: absolute; right: .1rem; top: .1rem; width: .4rem; height: .4rem; background-position: .05rem -1.15rem;}
         .balance-psd-pop .balance-psd-title{text-align: center; font-size: .35rem;}
         .balance-psd-pop .input-container{display: flex;}
-        .balance-psd-pop .input-container .psdinput{border: 1px solid #eee; width: .8rem; height: .8rem; text-align: center; font-size: .8rem;}
+        .balance-psd-pop .confirm-psd{width: 100%; margin-top: .2rem; border: 0; background-color: #eee; border-radius: .1rem; height: .8rem; outline: none; color: #333;}
+        .clearfix:after {clear: both;}
+		.clearfix:before,.clearfix:after {content: " ";display: table;}
+		.alieditContainer {position: relative;}
+		.sixDigitPassword {position: absolute;left: 0;top: 0;width: 100%;height: .68rem;color: #fff;font-size: .24rem;-webkit-box-sizing: content-box;box-sizing: content-box;-webkit-user-select: initial;outline: 'none';z-index: 999;opacity: 0;filter: alpha(opacity=0);}
+		.sixDigitPassword-box {cursor: text;background: #fff;outline: none;position: relative;padding: .16rem 0;height: .3rem;border: 1px solid #cccccc;border-radius: 2px;}		
+		.sixDigitPassword-box i {float: left;display: block;padding: 4px 0;height: .14rem;border-left: 1px solid #cccccc;}		
+		.sixDigitPassword-box .active {background: url(__STATIC__/index/image/password-blink.gif) no-repeat center center;}
+		.sixDigitPassword-box b {display: block;margin: 0 auto;width: .14rem;height: .14rem;overflow: hidden;visibility: hidden;background: url(__STATIC__/index/image/passeord-dot.png) no-repeat;}
+		.sixDigitPassword-box span {position: absolute;display: block;left: 0px;top: 0px;height: .6rem;border: 1px solid #f2cb80;border-radius: 2px;visibility: hidden;-webkit-box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.75), 0 0 .16rem rgba(82, 168, 236, 0.6);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 .16rem rgba(82, 168, 236, 0.6);}
+		.ui-securitycore .ui-form-item .ui-form-explain {margin-top: .16rem;}		
+		.i-block {display: inline-block;}		
+		.six-password {position: relative;height: .68rem; width: 3.7rem;overflow: hidden;vertical-align: middle;}
     </style>
 </head>
 <body>
@@ -184,13 +196,26 @@
         <span class="close-balance-pwd spr"></span>
         <p class="balance-psd-title">支付密码</p>
         <div class="input-container">
-            <input type="password" maxlength="1" class="psdinput">
-            <input type="password" maxlength="1" class="psdinput">
-            <input type="password" maxlength="1" class="psdinput">
-            <input type="password" maxlength="1" class="psdinput">
-            <input type="password" maxlength="1" class="psdinput">
-            <input type="password" maxlength="1" class="psdinput">
+            <div id="payPassword_container" class="alieditContainer clearfix" data-busy="0">
+                <div class="i-block" data-error="i_error">
+                    <div class="i-block six-password">
+                        <input class="i-text sixDigitPassword" id="payPassword_rsainput" type="password" autocomplete="off" required="required"
+                            name="payPassword_rsainput" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6"
+                            aria-required="true">
+                        <div tabindex="0" class="sixDigitPassword-box">
+                            <i style="width: .58rem; border-color: transparent;" class=""><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <span style="width: .58rem; left: 0px; visibility: hidden;" id="cardwrap" data-role="cardwrap"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <button class="confirm-psd">确定</button>
     </div>
 
     <!-- 选择支付方式 -->
@@ -291,47 +316,101 @@
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_firm_order.js"></script>
     <script>
-        $('.close-balance-pwd').click(function(){
-            $('.mask').hide();
-            $('.balance-psd-pop').hide();
+        var payPassword = $("#payPassword_container"),
+			_this = payPassword.find('i'),
+			k = 0, j = 0,
+			_cardwrap = $('#cardwrap');
+		//点击隐藏的input密码框,在6个显示的密码框的第一个框显示光标
+		payPassword.on('focus', "input[name='payPassword_rsainput']", function () {
+			var _this = payPassword.find('i');
+			if (payPassword.attr('data-busy') === '0') {
+				//在第一个密码框中添加光标样式
+				_this.eq(k).addClass("active");
+				_cardwrap.css('visibility', 'visible');
+				payPassword.attr('data-busy', '1');
+			}
+
+		});
+		//change时去除输入框的高亮，用户再次输入密码时需再次点击
+		payPassword.on('change', "input[name='payPassword_rsainput']", function () {
+			_cardwrap.css('visibility', 'hidden');
+			_this.eq(k).removeClass("active");
+			payPassword.attr('data-busy', '0');
+		}).on('blur', "input[name='payPassword_rsainput']", function () {
+			_cardwrap.css('visibility', 'hidden');
+			_this.eq(k).removeClass("active");
+			payPassword.attr('data-busy', '0');
+		});
+
+		//使用keyup事件，绑定键盘上的数字按键和backspace按键
+		payPassword.on('keyup', "input[name='payPassword_rsainput']", function (e) {
+			var e = (e) ? e : window.event;
+			//键盘上的数字键按下才可以输入
+			if (e.keyCode == 8 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
+				k = this.value.length;//输入框里面的密码长度
+				l = _this.length;//6
+				for (; l--;) {
+					//输入到第几个密码框，第几个密码框就显示高亮和光标（在输入框内有2个数字密码，第三个密码框要显示高亮和光标，之前的显示黑点后面的显示空白，输入和删除都一样）
+					if (l === k) {
+						_this.eq(l).addClass("active");
+						_this.eq(l).find('b').css('visibility', 'hidden');
+					} else {
+						_this.eq(l).removeClass("active");
+						_this.eq(l).find('b').css('visibility', l < k ? 'visible' : 'hidden');
+					}
+					if (k === 6) {
+						j = 5;
+					} else {
+						j = k;
+					}
+					$('#cardwrap').css('left', j * 0.6 + 'rem');
+				}
+			} else {
+				//输入其他字符，直接清空
+				var _val = this.value;
+				this.value = _val.replace(/\D/g, '');
+			}
+		});	
+        $('.confirm-psd').click(function(){
+            var psd = $('#payPassword_rsainput').val();
+            if(psd !== ''){
+                (function(){
+                    return $.ajax({
+                        url: 'parts_balance_payment',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'order_num': cancelPayOrderNum,
+                            'passwords': psd
+                        }
+                    })
+                })().then(function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        layer.open({
+                            skin: 'msg',
+                            content: '支付成功',
+                            time: .8
+                        })
+                        setTimeout(function(){
+                            location.href = 'order_wait_deliver';
+                        }, 1000);
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: .8
+                        })
+                    }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请输入密码',
+                    time: 1
+                })
+            }
         })
-        // function balanceEvent(order_num){
-        //     var reg = /^1[34578]\d{9}$/;
-        //     var aInput = document.getElementsByClassName('psdinput');
-        //     for(var i = 0; i < aInput.length; i++){
-        //         (function(i){
-        //             aInput[i].oninput = function(){
-        //                 if(aInput[i].value !== ''){
-        //                     if(aInput[i+1]){
-        //                         aInput[i+1].focus();
-        //                     }
-        //                     if(i == 5){
-        //                         var password = aInput[0].value+aInput[1].value+aInput[2].value+aInput[3].value+aInput[4].value+aInput[5].value;
-        //                         $.ajax({
-        //                             url: 'parts_balance_payment',
-        //                             dataType: 'JSON',
-        //                             type: 'POST',
-        //                             data: {
-        //                                 'passwords': password,
-        //                                 'order_num': order_num
-        //                             },
-        //                             success: function(res){
-        //                                 console.log(res);
-        //                             },
-        //                             error: function(res){
-        //                                 console.log(res.status, res.statusText);
-        //                             }
-        //                         })
-        //                     }
-        //                 }else{
-        //                     if(aInput[i-1]){
-        //                         aInput[i-1].focus();
-        //                     }
-        //                 }
-        //             }
-        //         })(i)
-        //     }
-        // }
     </script>
     <script>
         var cancelPayOrderNum = '', storeIdArr = [], stock;
@@ -656,8 +735,6 @@
                     //用户选择余额支付，发送订单号给后台
                     $('.mask').show();
                     $('.balance-psd-pop').show();
-                    $('.psdinput:first').focus();
-                    // balanceEvent(cancelPayOrderNum);
                     break;
             }
         })
