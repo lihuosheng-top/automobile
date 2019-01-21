@@ -35,13 +35,13 @@ class Goods extends Controller
         $admin_role = db("admin")->where("id", $admin_id)->field("role_id")->find();
         if ($admin_role["role_id"] == 2 || $admin_role["role_id"] == 18) {
             $goods = db("goods")->order("id desc")->select();
-
             foreach ($goods as $key => $value) {
                 $goods[$key]["max_price"] = db("special")->where("goods_id", $value['id'])->max("price");//最高价格
                 $goods[$key]["min_price"] = db("special")->where("goods_id", $value['id'])->min("price");//最低价格
                 $goods[$key]["goods_repertory"] = db("special")->where("goods_id", $value['id'])->value("stock");//库存
                 $goods[$key]["max_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->max("goods_adjusted_price");//最高价格
                 $goods[$key]["min_goods_adjusted_price"] = db("special")->where("goods_id", $value['id'])->min("goods_adjusted_price");//最低价格
+                $goods[$key]["store_name"] = db("store")->where("store_id",$value["store_id"])->value("store_name");
             }
             //调整规格后的价格显示
             $adjusted_price = db("special")->field("price,id")->select();
@@ -54,7 +54,6 @@ class Goods extends Controller
             $year = db("year")->select();
             $user_id = Session::get("user_id");
             $role_name = db("admin")->where("id", $user_id)->select();
-            $store = db("store")->select();
             //halt($goods);
             $all_idents = $goods;//这里是需要分页的数据
             $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
@@ -68,7 +67,7 @@ class Goods extends Controller
             ]);
             $goods->appends($_GET);
             $this->assign('listpage', $goods->render());
-            return view("goods_index", ["store" => $store, "goods" => $goods, "year" => $year, "role_name" => $role_name]);
+            return view("goods_index", ["goods" => $goods, "year" => $year, "role_name" => $role_name]);
 
         } else {
             $admin_phone = db("admin")->where("id", $admin_id)->value("phone");
@@ -85,6 +84,7 @@ class Goods extends Controller
                 $goods_adjusted_price_min[$key] = db("special")->where("goods_id", $goods[$key]['id'])->min("goods_adjusted_price");//最低价格
                 $goods[$key]["max_goods_adjusted_price"] = $goods_adjusted_price_max[$key];
                 $goods[$key]["min_goods_adjusted_price"] = $goods_adjusted_price_min[$key];
+                $goods[$key]["store_name"] = db("store")->where("store_id",$value["store_id"])->value("store_name");
             }
 
             //调整规格后的价格显示
@@ -98,7 +98,6 @@ class Goods extends Controller
             $year = db("year")->select();
             $user_id = Session::get("user_id");
             $role_name = db("admin")->where("id", $user_id)->select();
-            $store = db("store")->select();
             //halt($goods);
             $all_idents = $goods;//这里是需要分页的数据
             $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
@@ -112,7 +111,7 @@ class Goods extends Controller
             ]);
             $goods->appends($_GET);
             $this->assign('listpage', $goods->render());
-            return view("goods_index", ["store" => $store, "goods" => $goods, "year" => $year, "role_name" => $role_name]);
+            return view("goods_index", ["goods" => $goods, "year" => $year, "role_name" => $role_name]);
         }
 
     }
