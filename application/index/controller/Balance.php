@@ -37,7 +37,7 @@ class Balance extends Controller
                         ->where($arr_condition)
                         ->sum("money");
                     if ($money > $user_wallet) {
-                        return ajax_error("余额不足，请换其他方式支付", ["status" => 0]);
+                        exit(json_encode(array("status" => 3, "info" => "商家余额不足，请换其他方式支付")));
                     } else {
                         $select_data = Db::name("order_parts")
                             ->where("parts_order_number", $order_num)
@@ -102,7 +102,7 @@ class Balance extends Controller
                     } else{
                         $user_wallet = $user_info["user_wallet"];
                         if ($money > $user_wallet) {
-                            return ajax_error("余额不足，请换其他方式支付", ["status" => 0]);
+                            exit(json_encode(array("status" => 3, "info" => "商家余额不足，请换其他方式支付")));
                         } else {
                             $select_data = Db::name("order_parts")
                                 ->where("parts_order_number", $order_num)
