@@ -113,6 +113,12 @@
                             setTimeout(() => {
                                 location.href = 'sell_wallet';
                             }, 1000);
+                        }else{
+                            layer.open({
+                                skin: 'msg',
+                                content: res.info,
+                                time: .8
+                            })
                         }
                     },
                     error: function(){
