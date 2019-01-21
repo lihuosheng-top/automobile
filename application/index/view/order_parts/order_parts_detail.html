@@ -14,7 +14,7 @@
 <body>
     <div class="place-order-pop">
         <header class="place-order-header">
-            <a href="order_parts_all" class="spr place-order-back"></a>
+            <a href="javascript:;" class="spr place-order-back"></a>
             <h3 class="place-order-title">订单详情</h3>
         </header>
         <div class="order-detail-box">
@@ -247,9 +247,7 @@
                     countDown('time-count-down', val.normal_future_time, val.store_id, val.parts_order_number, '超过规定时间未付款，系统自动关闭订单');
                 }else if(val.status === 2 || val.status === 3 || val.status === 4 || val.status === 5){
                     statusTxt = `待收货`;
-                    $('.check-logistics-btn')
-                        .add('.conf-receipt-btn')
-                        .show();
+                    $('.conf-receipt-btn').show();
                 }else if(val.status === 6 || val.status === 7){
                     statusTxt = `待评价`;
                     $('.evaluation-btn')
@@ -302,6 +300,7 @@
                                                             (val.status==15?'block':'none')))+`;">退货中</p>
                                         <p style="display:`+(val.status==12?'block':'none')+`;">已退货</p>
                                         <button class="return-goods" style="display:`+(val.status==7?'block':'none')+`;">退货</button>
+                                        <button class="check-logis" style="display:`+(val.status==3?'block':'none')+`;">查看物流</button>
                                     </div>
                                 </div>
                             </div>`
@@ -418,11 +417,6 @@
                 })
                 // 去付款 √
                 $('.to-payment-btn').click(function(){
-                    // $('.mask').show();
-                    // $('.alipay-pop').animate({ 'bottom': '0' });
-                    // $('html').css('overflow', 'hidden');
-                    // // 付款金额
-                    // var totalAmount = $('.pay-amount-span span').text();
                     var outTradeNo = $('.order-num span').text();
                     $.ajax({
                         url: 'ios_api_alipay',
@@ -434,39 +428,6 @@
                         success: function(res){
                             console.log(res);
                             Android.alipay(res.data);
-                        },
-                        error: function(){
-                            console.log('error');
-                        }
-                    })
-                    // var subjuect = $('.order-goods-p').text();
-                    // var body = $('.order-selling-point').text();
-                    // $('#WIDtotal_amount').val(totalAmount);
-                    // $('#WIDout_trade_no').val(outTradeNo);
-                    // $('#WIDsubject').val(subjuect);
-                    // $('#WIDbody').val(body);
-
-                    // $('.close-alipay').click(function () {
-                    //     $('.mask').hide();
-                    //     $('.alipay-pop').animate({ 'bottom': '-100%' });
-                    //     $('html').css('overflow', 'auto');
-                    // })
-                })
-                // 查看订单详情 √
-                $('.all-goods-box').click(function(){
-                    var store_id = $('.order-shop-namp').attr('id');
-                    var parts_order_number = $('.order-num span').text();
-                    $.ajax({
-                        url: 'order_parts_save_record',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: {
-                            'parts_order_number': parts_order_number,
-                            'store_id': store_id
-                        },
-                        success: function(res){
-                            console.log(res);
-                            location.href = 'order_parts_detail'; 
                         },
                         error: function(){
                             console.log('error');
@@ -499,20 +460,18 @@
                     })
                 })
                 // 查看物流
-                $('.check-logistics-btn').click(function(){
-                    var store_id = $('.order-shop-namp').attr('id');
-                    var parts_order_number = $('.order-num span').text();
+                $('.check-logis').click(function(){
+                    var id = $(this).parents('.order-goods-detail').attr('id');
                     $.ajax({
-                        url: 'ios_api_order_parts_no_pay_cancel',
+                        url: 'logistics_index',
                         type: 'POST',
                         dataType: 'JSON',
                         data: {
-                            'parts_order_number': parts_order_number,
-                            'store_id': store_id
+                            'id': id
                         },
                         success: function(res){
                             console.log(res);
-                            location.href = 'logistics_index';
+                            location.href = 'logistics_index?id='+id;
                         },
                         error: function(){
                             console.log('error');
@@ -550,21 +509,25 @@
                 location.href = 'order_parts_wait_pay';
             }else if(res.resultStatus == '9000'){
                 location.href = 'order_wait_deliver';
-                // var res = res.result.alipay_trade_app_pay_response;
-                // $.ajax({
-                //     url: 'notifyurl',
-                //     type: 'GET',
-                //     dataType: 'JSON',
-                //     data: {
-                //         out_trade_no: res.out_trade_no,
-                //         trade_no: res.trade_no,
-                //         trade_status: res.msg
-                //     },
-                //     success: function(res){
-                //     }
-                // })
             }
         }
+        var lsearch = location.search;
+        if(lsearch.indexOf('?') !== -1){
+            var pageNumber = lsearch.substr(1).split('=')[1];
+        }
+        $('.place-order-back').click(function(){
+            if(pageNumber == 1){
+                location.href = 'order_parts_all';
+            }else if(pageNumber == 2){
+                location.href = 'order_parts_wait_pay';
+            }else if(pageNumber == 3){
+                location.href = 'order_wait_deliver';
+            }else if(pageNumber == 4){
+                location.href = 'order_wait_evaluate';
+            }else if(pageNumber == 5){
+                location.href = 'order_parts_return_goods';
+            }
+        })
     </script>
 </body>
 </html>

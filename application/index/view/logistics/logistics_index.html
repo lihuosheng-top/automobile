@@ -84,6 +84,24 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/plugin/layui/layui.js"></script>
-    
+    <script>
+        (function(){
+            var urlHash = location.search;
+            var id;
+            if(urlHash.indexOf('?') !== -1){
+                id = urlHash.substr(1).split('=')[1];
+            }
+            return $.ajax({
+                url: 'logistics_index',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': id
+                }
+            })
+        })().then(function(res){
+            console.log(res);
+        })
+    </script>
 </body>
 </html>
