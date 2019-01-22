@@ -63,12 +63,14 @@
                 subdistrict: 1
             })
             var geolocation = new AMap.Geolocation({
-                enableHighAccuracy: true
+                enableHighAccuracy: true,
+                timeout: 1000
             });
             geolocation.getCurrentPosition();
             AMap.event.addListener(geolocation, 'complete', function(res){
                 console.log('complete', res);
                 var city = res.addressComponent.city;
+                var lngLat = [res.position.lng, res.position.lat];
                 // 获取当前城市 行政区
                 districtSearch.search(city, function(status, result){
                     var str = '';
@@ -76,6 +78,7 @@
                         str += '<div class="district-item">'+val.name+'</div>';
                     })
                     $('.district-container').html(str);
+                    // 用户选择行政区
                     $('.district-container').on('click', '.district-item', function(){
                         $('.district-container').hide();
                         var districtText = $(this).text();
@@ -91,6 +94,62 @@
                             })
                         })().then(function(res){
                             console.log(res);
+                            var goodsDistArr = [];
+                            var distance = 0;
+                            $.each(res.data, function(idx, val){
+                                var markerLngLat = [parseFloat(val.longitude), parseFloat(val.latitude)];
+                                distance = parseInt(AMap.GeometryUtil.distance(markerLngLat, lngLat));
+                                goodsDistArr.push({
+                                    id: val.id,
+                                    distance: distance
+                                })
+                            })
+                            // 商品距离排序
+                            var sortGoodsDistArr = goodsDistArr.sort(sortNum);
+                            (function(sortGoodsDistArr, res){
+                                // init 页码
+                                var curPage = 0;
+                                function renderPage(sortGoodsDistArr, res){
+                                    var str = '',
+                                        length = (sortGoodsDistArr.length - curPage * 10) >= 10 ? 10 : sortGoodsDistArr.length - curPage * 10;
+                                    // 渲染一次10条商品
+                                    for(var i = 0; i < length; i++){
+                                        $.each(res.data, function(idx, val){
+                                            if(sortGoodsDistArr[i + curPage * 10].id == val.id){
+                                                str += `<li class="`+(idx % 2 == 0 ? '' : 'mgr0')+`">
+                                                            <a href="goods_detail?id=`+val.id+`&preid=`+brandid+`">
+                                                                <div class="img_div">
+                                                                    <img src="uploads/`+val.special[0].images+`">
+                                                                </div>
+                                                                <div class="goods_name">
+                                                                    <p class="txt-hid-two">`+val.goods_name+`</p>
+                                                                </div>
+                                                                <div class="goods_price">
+                                                                    <span class="price">￥`+val.special[0].goods_adjusted_price+`</span>
+                                                                    <span class="pay_num">`+val.statistical_quantity+`人购买</span>
+                                                                </div>
+                                                            </a>
+                                                        </li>`
+                                            }
+                                        })
+                                    }
+                                    $('.list_cont').html(str);
+                                }
+                                renderPage(sortGoodsDistArr, res);
+                                // 页面滚动到底部 加载新的店铺
+                                $(document).ready(function() {
+                                    $(window).scroll(function() {
+                                        if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                                            // 滚动底部 页数+1
+                                            ++curPage;
+                                            var len = Math.ceil( sortGoodsDistArr.length / 10 );
+                                            if(curPage < len){
+                                                renderPage(sortGoodsDistArr, res);
+                                            }
+                                        }
+                                    });
+                                })
+                            })(sortGoodsDistArr, res)
                         })
                     })
                 })
@@ -99,6 +158,11 @@
                 console.log('error', res);
             })
         })
+
+        // 排位距离
+        function sortNum(a, b){
+            return a.distance - b.distance;
+        }
     </script>
 </body>
 </html>
