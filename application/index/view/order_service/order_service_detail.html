@@ -15,7 +15,7 @@
     <div id="app">
         <div class="place-order-pop">
             <header class="place-order-header">
-                <a href="order_service_all" class="spr place-order-back"></a>
+                <a href="javascript:;" class="spr place-order-back"></a>
                 <h3 class="place-order-title">订单详情</h3>
             </header>
             <div class="order-detail-box">
@@ -453,6 +453,31 @@
                 location.href = 'order_service_wait_deliver';
             }
         }
+
+        var url = location.search, pageNum;
+        if(url.indexOf('?') !== -1){
+            pageNum = url.substr(1).split('=')[1];
+        }
+        $('.place-order-back').click(function(){
+            switch(parseInt(pageNum)){
+                case 1: 
+                    location.href = 'order_service_all';
+                    break;
+                case 2: 
+                    location.href = 'order_service_wait_pay';
+                    break;
+                case 3: 
+                    location.href = 'order_service_wait_deliver';
+                    break;
+                case 4: 
+                    location.href = 'order_service_wait_evaluate';
+                    break;
+                case 5: 
+                    location.href = 'order_service_return_goods';
+                    break;
+            }
+        })
+
     </script>
 </body>
 </html>
