@@ -133,3 +133,19 @@ html{
     background-position: -1rem -.5rem;
     margin-top: .1rem;
 }
+.district-container{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 1.58rem;
+    height: 6rem;
+    overflow-y: auto;
+    background-color: #fff;
+    width: 100%;
+    box-shadow: 1px 0 0 0 rgba(220, 220, 220, .6);
+}
+.district-container .district-item{
+    padding: .15rem .3rem;
+    border-bottom: 1px solid #eee;
+    font-size: .28rem;
+}

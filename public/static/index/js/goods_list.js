@@ -4,12 +4,18 @@ $('.filter_box button').click(function(){
     switch($index){
         case 0: 
             layDataAjax('goods_list', brandid);
+            $('.district-container').hide();
             break;
         case 1: 
             layDataAjax('goods_list_sales_volume', brandid);
+            $('.district-container').hide();
             break;
         case 2: 
             layDataAjax('goods_list_sales_price', brandid);
+            $('.district-container').hide();
+            break;
+        case 3:
+            $('.district-container').show();
             break;
     }
 })

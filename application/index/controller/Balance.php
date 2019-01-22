@@ -24,24 +24,25 @@ class Balance extends Controller
             $user_id = Session::get("user");
             $user_info = Db::name("user")->field("pay_passwd,user_wallet")->where("id", $user_id)->find();//用户信息
             $password = $request->only("passwords")["passwords"]; //输入的密码
-            if (password_verify($password, $user_info["pay_passwd"])) {
+            if (password_verify($password,$user_info["pay_passwd"])) {
                 //真实支付的价钱
                 $money = Db::name("order_parts")->where("parts_order_number", $order_num)->sum("order_amount");
                 //判断是商家角色买还是车主角色进行购买
                 $business_store_id = Session::get("role_name_store_id"); //店铺id
-                if (!empty($business_store_id)) {
+                if (!empty($business_store_id["store_id"])) {
                     //商家
-                    $business_id = Db::name("store")->where("store_id", $business_store_id)->value("user_id");
+                    $business_id = Db::name("store")->where("store_id", $business_store_id["store_id"])->value("user_id");
                     $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $business_id;
                     $user_wallet = Db::name("business_wallet")
                         ->where($arr_condition)
                         ->sum("money");
                     if ($money > $user_wallet) {
-                        return ajax_error("余额不足，请换其他方式支付", ["status" => 0]);
+                        exit(json_encode(array("status" => 3, "info" => "商家余额不足，请换其他方式支付")));
                     } else {
                         $select_data = Db::name("order_parts")
                             ->where("parts_order_number", $order_num)
                             ->select();
+
                         //对订单状态进行修改
                         $data['status'] = 2;
                         $data["trade_no"] = time();
@@ -70,6 +71,7 @@ class Balance extends Controller
                                 "is_deduction" => 1,//正常的流程
                             ];
                             $arr = Db::name("business_wallet")->insertGetId($business_data);
+
                             if (!empty($arr)) {
                                 $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $business_id;
                                 $business_wallet = Db::name("business_wallet")
@@ -102,7 +104,7 @@ class Balance extends Controller
                     } else{
                         $user_wallet = $user_info["user_wallet"];
                         if ($money > $user_wallet) {
-                            return ajax_error("余额不足，请换其他方式支付", ["status" => 0]);
+                            exit(json_encode(array("status" => 3, "info" => "车主余额不足，请换其他方式支付")));
                         } else {
                             $select_data = Db::name("order_parts")
                                 ->where("parts_order_number", $order_num)
@@ -167,9 +169,9 @@ class Balance extends Controller
                 if (password_verify($password, $user_info["pay_passwd"])) {
                     $money = Db::name("order_service")->where("service_order_number", $order_num)->value("service_real_pay");
                     $business_store_id = Session::get("role_name_store_id"); //店铺id
-                    if (!empty($business_store_id)) {
+                    if (!empty($business_store_id["store_id"])) {
                         //商家
-                        $business_id = Db::name("store")->where("store_id", $business_store_id)->value("user_id");
+                        $business_id = Db::name("store")->where("store_id", $business_store_id["store_id"])->value("user_id");
                         $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $business_id;
                         $user_wallet = Db::name("business_wallet")
                             ->where($arr_condition)
@@ -233,7 +235,7 @@ class Balance extends Controller
                     }else{
                         //车主
                         if ($money > $user_info["user_wallet"]) {
-                            exit(json_encode(array("status" => 3, "info" => "商家余额不足，请换其他方式支付")));
+                            exit(json_encode(array("status" => 3, "info" => "车主余额不足，请换其他方式支付")));
                         } else {
                             $data['status'] = 2;//状态值
                             $data['trade_no'] = time();//交易号
