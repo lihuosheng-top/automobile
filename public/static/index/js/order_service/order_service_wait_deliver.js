@@ -41,7 +41,7 @@ $.ajax({
                                 </div>
                             </div>
                             <div class="button-box">
-                                <button class="conf-receipt-btn">已服务</button>
+                                <button class="conf-receipt-btn">取消订单</button>
                             </div>
                         </div>`
             })
@@ -49,12 +49,12 @@ $.ajax({
              // 查看详情
              $('.reservation-info-container').click(function(){
                 var orderNum = $(this).parents('.reservation-tab').find('.order-num span').text();
-                detailAndEva('order_service_save_record', orderNum, 'order_service_detail');
+                detailAndEva('order_service_save_record', orderNum, 'order_service_detail?page=3');
             })
             // 已服务 
             $('.conf-receipt-btn').click(function(){
                 var id = $(this).parents('.reservation-tab').attr('id');
-                btnEvent('服务已完成？', 'ios_api_order_service_already_served', id);
+                btnEvent('是否取消订单？', 'ios_api_order_service_already_served', id);
             })
         }
     },
@@ -62,7 +62,7 @@ $.ajax({
         console.log();
     }
 })
-// 已服务
+// 取消订单
 function btnEvent(info, url, id){
     layer.open({
         content: info,

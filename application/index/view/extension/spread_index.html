@@ -51,7 +51,7 @@
             </div>
             <div class="bg3-container">
                 <div class="invite-code">
-                    邀请码：<input id="code-number" class="code-number" value="900850" readonly></input><button class="copy-btn">复制</button>
+                    邀请码：<input id="code-number" class="code-number" value="" readonly></input><button class="copy-btn">复制</button>
                 </div>
             </div>
             <div class="bg4-container">
@@ -60,7 +60,7 @@
         </div>
     </div>  
     <div class="mask" style="display: none;"></div>
-    <div class="share-box">
+    <!-- <div class="share-box">
         <h4 class="share-title">分享</h4>
         <ul class="share-ul">
             <li class="share-item">
@@ -73,19 +73,14 @@
             </li>
         </ul>
         <button class="cancel-share" >取消</button>
-    </div>
+    </div> -->
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
         // 立即邀请
         $('.invite-btn').click(function(){
-            $('.mask').show();
-            $('.share-box').animate({'bottom': '0'});
-        })
-        // 取消分享
-        $('.cancel-share').click(function(){
-            $('.mask').hide();
-            $('.share-box').animate({'bottom': '-100%'});
+            var code = $('#code-number').val();
+            Android.share(code);
         })
 
         // 复制邀请码
@@ -103,15 +98,11 @@
             url: 'spread_index',
             type: 'POST',
             dataType: 'JSON',
-            data: {
-
-            },
             success: function(res){
                 console.log(res);
                 if(res.status ===1){
                     $('#code-number').val(res.data.invitation);
                     $('.code-box img').attr('src', res.data.invitation_images_url);
-                    
                 }
             },
             error: function(){
