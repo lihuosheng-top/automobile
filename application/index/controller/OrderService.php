@@ -179,7 +179,7 @@ class OrderService extends Controller{
                         ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                         ->where('user_id',$member_id['id'])
                         ->where($condition)
-                        ->order('pay_time','desc')
+                        ->order('pay_time','asc')
                         ->select();
                     if(!empty($data)){
                         return ajax_success('全部信息返回成功',$data);
