@@ -238,7 +238,6 @@ class  Advertisement extends  Controller{
     public function accessories_business_search(){
         $ppd = input('key');          //广告名称
         $interest = input('keys');    //广告位置
-        
         if ((!empty($ppd)) && (!empty($interest))) {
             $data = db("accessories")->where("name", "like", "%" . $ppd . "%")->where("pid", "like", "%" . $interest . "%")->select(); 
             $platform = foreach_pid($data);
