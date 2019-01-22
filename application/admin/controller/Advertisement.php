@@ -173,12 +173,12 @@ class  Advertisement extends  Controller{
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
             }
-            
-            $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
             $data["postid"] = $data["pid"];
+            $test_id = db("position") -> where("id",$data["pid"])->value("pid");
+            $data["pid"] = $test_id; 
+            $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
             unset($data["id"]);
-            unset($data["pid"]);
-            
+                       
             $boole = db("platform")->where('pgd', $request->only(["id"])["id"])->update($data);
 
             if ($bool && $boole) {
