@@ -685,10 +685,10 @@
         })
         // 支付宝支付 回调
         function alipayCallback(res){
-            if(res !== undefined && res.resultStatus == '6001'){
-                cancelPayAjax(storeIdArr,cancelPayOrderNum);
-            }else if(res.resultStatus == '9000'){
+            if(res !== undefined && res.resultStatus == '9000'){
                 location.href = 'order_wait_deliver';
+            }else{
+                cancelPayAjax(storeIdArr, cancelPayOrderNum);
             }
         }
         // function wxpayCallback(res){

@@ -56,42 +56,47 @@
         });
         AMap.plugin([
             'AMap.DistrictSearch',
-            'AMap.CitySearch'
+            'AMap.Geolocation'
         ], function(){
-            var citySearch = new AMap.CitySearch();
             var districtSearch = new AMap.DistrictSearch({
                 level: 'city',
                 subdistrict: 1
             })
-            // 获取用户当前定位城市
-            citySearch.getLocalCity(function (status, result) {
-                if (status === 'complete' && result.info === 'OK') {
-                    // 获取当前城市 行政区
-                    districtSearch.search(result.city, function(status, result){
-                        var str = '';
-                        $.each(result.districtList[0].districtList, function(idx, val){
-                            str += '<div class="district-item">'+val.name+'</div>';
-                        })
-                        $('.district-container').html(str);
-                        $('.district-container').on('click', '.district-item', function(){
-                            $('.district-container').hide();
-                            var districtText = $(this).text();
-                            (function(){
-                                return $.ajax({
-                                    url: 'goods_list_area',
-                                    type: 'POST',
-                                    dataType: 'JSON',
-                                    data: {
-                                        "id": brandid,
-                                        "area": districtText
-                                    }
-                                })
-                            })().then(function(res){
-                                console.log(res);
+            var geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true
+            });
+            geolocation.getCurrentPosition();
+            AMap.event.addListener(geolocation, 'complete', function(res){
+                console.log('complete', res);
+                var city = res.addressComponent.city;
+                // 获取当前城市 行政区
+                districtSearch.search(city, function(status, result){
+                    var str = '';
+                    $.each(result.districtList[0].districtList, function(idx, val){
+                        str += '<div class="district-item">'+val.name+'</div>';
+                    })
+                    $('.district-container').html(str);
+                    $('.district-container').on('click', '.district-item', function(){
+                        $('.district-container').hide();
+                        var districtText = $(this).text();
+                        (function(){
+                            return $.ajax({
+                                url: 'goods_list_area',
+                                type: 'POST',
+                                dataType: 'JSON',
+                                data: {
+                                    "id": brandid,
+                                    "area": districtText
+                                }
                             })
+                        })().then(function(res){
+                            console.log(res);
                         })
                     })
-                }
+                })
+            })
+            AMap.event.addListener(geolocation, 'error', function(res){
+                console.log('error', res);
             })
         })
     </script>
