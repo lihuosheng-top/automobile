@@ -353,7 +353,7 @@ class Cart extends Controller
             $mun =count($store_id);//长度
             if($mun > 1){
                 foreach ($store_id as $key=>$val){
-                    $parts_order_number_end =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(10,99).$val.$user_id; //订单编号
+                    $parts_order_number_end =intval($v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(10,99).$val.$user_id)+$key; //订单编号
                     $number_order = $parts_order_number_end;
                     $bool = Db::name('order_parts')
                         ->where('store_id', $val)
@@ -379,8 +379,6 @@ class Cart extends Controller
                     return ajax_error("失败",["status"=>0]);
                 }
             }
-
-
         }
     }
 }

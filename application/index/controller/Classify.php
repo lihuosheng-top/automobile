@@ -491,10 +491,6 @@ class Classify extends Controller
     }
 
 
-
-
-
-
     // 商品详情
     public function goods_detail(Request $request)
     {
