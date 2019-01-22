@@ -334,4 +334,14 @@ class Advertisement extends Controller
         }
 
 
+    /**
+     * [汽车广告热门店铺显示]
+     * 郭杨
+     */
+    public function hot_index()
+    {
+        $hot_data = Db::name("platform")->where("status", 1)->where("pid",20)->order("start_time desc")->select();
+    }
+
+
 }
