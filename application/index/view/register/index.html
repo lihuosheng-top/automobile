@@ -37,11 +37,11 @@
             <label for="agree-input" class="agree-label">我已阅读并同意《<span>用户服务协议</span>》</label>
         </div>
         <button class="reg-confirm" disabled>确定</button>
-        <div class="third-part">
+        <!-- <div class="third-part">
             <h3 class="third-txt">第三方登录</h3>
             <a href="javascript:;" class="spr wechat"></a>
             <a href="javascript:;" class="spr QQ"></a>
-        </div>
+        </div> -->
     </div>
     
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
@@ -147,10 +147,10 @@
                         setTimeout(function(){
                             var u = navigator.userAgent;
                             if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
-//                                android
+                                // android
                                 location.href = 'https://www.pgyer.com/khdu';
                             }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
-//                                ios
+                                //ios
                                 layer.open({
                                     skin: 'msg',
                                     content: 'IOS版本敬请期待！',
