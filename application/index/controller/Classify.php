@@ -435,6 +435,7 @@ class Classify extends Controller
                             ->find();
                         if (!empty($store)) {
                             if ($value["goods_status"] == 1 && !empty($store)) {
+                                //规格
                                 $special_data[] = db("special")
                                     ->where("goods_id", $value["id"])
                                     ->select();
@@ -442,7 +443,10 @@ class Classify extends Controller
                                 $statistical_quantity[] = db("order_parts")
                                     ->where("goods_id", $value["id"])
                                     ->count();
-                                //经纬度
+                                //经度
+                                $longitude[] =$store["longitude"];
+                                //纬度
+                                $latitude[] =$store["latitude"];
                                 unset($goods[$kye]);
                                 $goods_data[] = $value;
                             }
@@ -457,6 +461,18 @@ class Classify extends Controller
                 if (!empty($statistical_quantity)) {
                     foreach ($statistical_quantity as $k => $v) {
                         $goods_data[$k]["statistical_quantity"] = $v;
+                    }
+                }
+                //经度
+                if(!empty($longitude)){
+                    foreach ($longitude as $k=>$v){
+                        $goods_data[$k]["longitude"] =$v;
+                    }
+                }
+                //纬度
+                if(!empty($latitude)){
+                    foreach ($latitude as $k=>$v){
+                        $goods_data[$k]["latitude"] =$v;
                     }
                 }
                 if ($goods_data) {
