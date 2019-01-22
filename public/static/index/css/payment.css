@@ -14,7 +14,7 @@
 
 .mask{display: none;position: fixed;top: 0;left: 0;right: 0;background-color: rgba(0, 0, 0, .6);width: 100%;height: 100vh;z-index: 8;}
 
-.chose-payment{position: fixed;left: 0;right: 0;bottom: -100%;background-color: #fff;width: 100%;height: 60vh;z-index: 9;}
+.chose-payment{position: fixed;left: 0;right: 0;bottom: -100%;background-color: #fff;width: 100%;height: 60vh;z-index: 9; transition: all .3s;}
 .chose-payment header{position: relative;width: 100%;height: .88rem;border-bottom: 1px solid #eee;box-sizing: border-box;background-color: #fff;}
 .chose-payment .chose-payment-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
 .chose-payment header .chose-title{width: 100%;height: .88rem;line-height: .88rem;text-align: center;font-weight: normal;}
@@ -38,3 +38,22 @@
 .reason-list .reason-li .icon-reason{display: inline-block;width: .38rem;height: .38rem;background-position: -2.05rem -.85rem;vertical-align: middle;margin-right: .2rem;}
 .reason-list .reason-selected i{background-position: -2.05rem -1.25rem !important;}
 .select-reason-btn{position: absolute;bottom: .4rem;left: 50%;transform: translate(-50%);width: 90%;height: .7rem;border: 0;outline: none;background-color: #504cfb;color: #fff;border-radius: .1rem;}
+
+/* 余额支付密码弹窗 */
+.balance-psd-pop{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: .5rem; background-color: #fff; z-index: 999; border-radius: .15rem;}
+.balance-psd-pop .close-balance-pwd{position: absolute; right: .1rem; top: .1rem; width: .4rem; height: .4rem; background-position: .05rem -1.15rem;}
+.balance-psd-pop .balance-psd-title{text-align: center; font-size: .35rem;}
+.balance-psd-pop .input-container{display: flex;}
+.balance-psd-pop .confirm-psd{width: 100%; margin-top: .2rem; border: 0; background-color: #eee; border-radius: .1rem; height: .8rem; outline: none; color: #333;}
+.clearfix:after {clear: both;}
+.clearfix:before,.clearfix:after {content: " ";display: table;}
+.alieditContainer {position: relative;}
+.sixDigitPassword {position: absolute;left: 0;top: 0;width: 100%;height: .68rem;color: transparent; caret-color: transparent; text-shadow: 0 0 0 #fff; font-size: .24rem;-webkit-box-sizing: content-box;box-sizing: content-box;-webkit-user-select: initial;outline: 'none';z-index: 999;opacity: 0;filter: alpha(opacity=0);}
+.sixDigitPassword-box {cursor: text;background: #fff;outline: none;position: relative;padding: .16rem 0;height: .3rem;border: 1px solid #cccccc;border-radius: 2px;}		
+.sixDigitPassword-box i {float: left;display: block;padding: 4px 0;height: .14rem;border-left: 1px solid #cccccc;}		
+.sixDigitPassword-box .active {background: url(../image/password-blink.gif) no-repeat center center;}
+.sixDigitPassword-box b {display: block;margin: 0 auto;width: .14rem;height: .14rem;overflow: hidden;visibility: hidden;background: url(../image/passeord-dot.png) no-repeat;}
+.sixDigitPassword-box span {position: absolute;display: block;left: 0px;top: 0px;height: .6rem;border: 1px solid #f2cb80;border-radius: 2px;visibility: hidden;-webkit-box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.75), 0 0 .16rem rgba(82, 168, 236, 0.6);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 .16rem rgba(82, 168, 236, 0.6);}
+.ui-securitycore .ui-form-item .ui-form-explain {margin-top: .16rem;}		
+.i-block {display: inline-block;}		
+.six-password {position: relative;height: .68rem; width: 3.7rem;overflow: hidden;vertical-align: middle;}
