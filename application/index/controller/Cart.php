@@ -367,7 +367,6 @@ class Cart extends Controller
                     return ajax_error("失败",["status"=>0]);
                 }
             }else if($mun==1){
-                exit();
                 $parts_order_number_end =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
                 $bool= Db::name('order_parts')
                     ->where('store_id', $store_id[0])
