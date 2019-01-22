@@ -385,7 +385,7 @@ class Apppay extends Controller
                         $param['sign_type'] = 'RSA2';//商户生成签名字符串所使用的签名算法类型
                         $param['timestamp'] = date("Y-m-d H:i:s");//发送请求的时间
                         $param['version'] = '1.0';//调用的接口版本，固定为：1.0
-                        $param['notify_url'] = 'https://automobile.siring.com.cn/notifyurls';
+                        $param['notify_url'] = config("domain_url.address").'notifyurls';
                         $param['biz_content'] = $con;//业务请求参数的集合,长度不限,json格式，即前面一步得到的
                         $paramStr = $Client->getSignContent($param);//组装请求签名参数
                         $sign = $Client->alonersaSign($paramStr, $private_path, 'RSA2', false);//生成签名()
@@ -447,7 +447,7 @@ class Apppay extends Controller
                             $param['sign_type'] = 'RSA2';//商户生成签名字符串所使用的签名算法类型
                             $param['timestamp'] = date("Y-m-d H:i:s");//发送请求的时间
                             $param['version'] = '1.0';//调用的接口版本，固定为：1.0
-                            $param['notify_url'] = 'https://automobile.siring.com.cn/service_notifyurl';
+                            $param['notify_url'] = config("domain_url.address").'service_notifyurl';
                             $param['biz_content'] = $con;//业务请求参数的集合,长度不限,json格式，即前面一步得到的
                             $paramStr = $Client->getSignContent($param);//组装请求签名参数
                             $sign = $Client->alonersaSign($paramStr, $private_path, 'RSA2', false);//生成签名()
@@ -744,7 +744,7 @@ class Apppay extends Controller
                             $param['sign_type'] = 'RSA2';//商户生成签名字符串所使用的签名算法类型
                             $param['timestamp'] = date("Y-m-d H:i:s");//发送请求的时间
                             $param['version'] = '1.0';//调用的接口版本，固定为：1.0
-                            $param['notify_url'] = 'https://automobile.siring.com.cn/recharge_notifyurl';
+                            $param['notify_url'] = config("domain_url.address").'recharge_notifyurl';
                             $param['biz_content'] = $con;//业务请求参数的集合,长度不限,json格式，即前面一步得到的
                             $paramStr = $Client->getSignContent($param);//组装请求签名参数
                             $sign = $Client->alonersaSign($paramStr, $private_path, 'RSA2', false);//生成签名()
