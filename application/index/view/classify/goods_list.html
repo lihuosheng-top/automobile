@@ -75,6 +75,20 @@
                         $('.district-container').html(str);
                         $('.district-container').on('click', '.district-item', function(){
                             $('.district-container').hide();
+                            var districtText = $(this).text();
+                            (function(){
+                                return $.ajax({
+                                    url: 'goods_list_area',
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    data: {
+                                        "id": brandid,
+                                        "area": districtText
+                                    }
+                                })
+                            })().then(function(res){
+                                console.log(res);
+                            })
                         })
                     })
                 }
