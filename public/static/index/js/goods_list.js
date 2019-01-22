@@ -17,8 +17,10 @@ $('.filter_box button').click(function(){
         case 3:
             if($('.district-container').is(':hidden')){
                 $('.district-container').show();
+                $('.list_cont').css({'overflow': 'hidden'});
             }else{
                 $('.district-container').hide();
+                $('.list_cont').css({'overflow': 'auto'});
             }
             break;
     }

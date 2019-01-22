@@ -87,8 +87,6 @@ function showShops(addr){
             // 从小到大排序
             var sortDisArr = disArr.sort(sortNum);
             (function(sortDisArr, data){
-                console.log(sortDisArr)
-                console.log(data)
                 var curPage = 0;
                 // 页面滚动到底部 加载新的店铺
                 $(document).ready(function() {

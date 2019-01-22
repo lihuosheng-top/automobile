@@ -585,9 +585,10 @@
                             })
                         })().then(function(res){
                             console.log(res);
+                            // 存储订单号
+                            cancelPayOrderNum = res.data.parts_order_number;
                             //选择支付方式弹窗
-                            $('.mask').show();
-                            $('.chose-payment').css({'bottom': '0'});
+                            showSelectMethod();
                         })
                     })
                 }
@@ -685,10 +686,10 @@
         })
         // 支付宝支付 回调
         function alipayCallback(res){
-            if(res !== undefined && res.resultStatus == '6001'){
-                cancelPayAjax(storeIdArr,cancelPayOrderNum);
-            }else if(res.resultStatus == '9000'){
+            if(res !== undefined && res.resultStatus == '9000'){
                 location.href = 'order_wait_deliver';
+            }else{
+                cancelPayAjax(storeIdArr, cancelPayOrderNum);
             }
         }
         // function wxpayCallback(res){
