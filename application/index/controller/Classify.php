@@ -438,9 +438,11 @@ class Classify extends Controller
                                 $special_data[] = db("special")
                                     ->where("goods_id", $value["id"])
                                     ->select();
+                                //数量
                                 $statistical_quantity[] = db("order_parts")
                                     ->where("goods_id", $value["id"])
                                     ->count();
+                                //经纬度
                                 unset($goods[$kye]);
                                 $goods_data[] = $value;
                             }

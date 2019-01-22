@@ -31,7 +31,7 @@ class Extension extends  Controller{
             if(!empty($user_invitation)){
                 $domain_name =config("domain_url.address");//域名
                 $reg = 'register';  //注册地址
-                $share_url = $domain_name."/".$reg."?a=".$user_invitation["invitation"];
+                $share_url = $domain_name.$reg."?a=".$user_invitation["invitation"];
                 /*二维码*/
                 $share_code ='http://b.bshare.cn/barCode?site=weixin&url='.$share_url;
                     $data =[
