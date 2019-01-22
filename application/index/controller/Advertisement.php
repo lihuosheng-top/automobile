@@ -349,4 +349,30 @@ class Advertisement extends Controller
     }
 
 
+    // public function returnSquarePoint($lng, $lat,$distance=5)
+    // {
+    //         $earthdata = 6371;//地球半径,平均半径为6371km
+    //         $dlng =  2 * asin(sin($distance / (2 * $earthdata)) / cos(deg2rad($lat)));
+    //         $dlng = rad2deg($dlng);
+    //         $dlat = $distance/$earthdata;
+    //         $dlat = rad2deg($dlat);
+    //             'left_top'=>array('lat'=>$lat + $dlat,'lng'=>$lng-$dlng),
+    //             'right_top'=>array('lat'=>$lat + $dlat, 'lng'=>$lng + $dlng),
+    //             'left_bottom'=>array('lat'=>$lat - $dlat, 'lng'=>$lng - $dlng),
+    //             'right_bottom'=>array('lat'=>$lat - $dlat, 'lng'=>$lng + $dlng)
+    //         ]
+    //         
+    //     
+    //     //使用此函数计算得到结果后，带入sql查询。
+    //   //  $point = $this->returnSquarePoint($lng,$lat,5);        //计算经纬度的周围某段距离的正方形的四个点
+    //   //  $right_bottom_lat = $point['right_bottom']['lat'];   //右下纬度
+    //   //  $left_top_lat = $point['left_top']['lat'];           //左上纬度
+    //    // $left_top_lng = $point['left_top']['lng'];           //左上经度
+    //     //$right_bottom_lng = $point['right_bottom']['lng'];   //右下经度
+    //    // $sql = "SELECT * FROM `表名` WHERE LastGpsWei<>0 AND latitude>$right_bottom_lat AND latitude<$left_top_lat AND longitude>$left_top_lng AND longitude<$right_bottom_lng";
+    //     //return $arr;
+    // }
+    
+
+
 }
