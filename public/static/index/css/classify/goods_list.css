@@ -134,7 +134,6 @@ html{
     margin-top: .1rem;
 }
 .district-container{
-    display: none;
     position: absolute;
     left: 0;
     top: 1.58rem;
