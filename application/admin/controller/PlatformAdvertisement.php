@@ -218,26 +218,115 @@ class  PlatformAdvertisement extends  Controller{
      * 郭杨
      */
     public function platform_business_search(){
-        $platform = input('platform');    //店铺名称
+        $shop_name = input('platform');    //店铺名称
         $name = input('name');           //广告名称
-        $location = input('location');  //广告位置
+        $pid = input('keys');      //广告位置
         $status = input('status');     //广告状态
 
 
-        if ((!empty($platform)) && (!empty($name)) && (!empty($location)) && (!empty($status)) ) {
-            $activ = db("platform")
-                ->where("shop_name", "like", "%" . $platform . "%")
-                ->whereOr("name", "like", "%" . $name . "%")
-                ->whereOr("location", "like", "%" . $location . "%")
-                ->whereOr("status", "like", "%" . $status . "%")
-                ->select();
-        }else{
-            $activ = db("platform")->select();
+        if ((!empty($shop_name)) && (!empty($name)) && (!empty($pid)) && (!empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        }else if ((!empty($shop_name)) && (empty($name)) && (!empty($pid)) && (!empty($status))){
+            $data = db("platform")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select();
+                    $platform = foreach_pid($data);
+        }else if ((!empty($shop_name)) && (!empty($name)) && (empty($pid)) && (!empty($status))){
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select();
+                    $platform = foreach_pid($data);
+        }else if ((!empty($shop_name)) && (!empty($name)) && (!empty($pid)) && (empty($status))){
+            $data = db("platform")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->select();
+                    $platform = foreach_pid($data);
+        } else if ((!empty($shop_name)) && (!empty($name)) && (!empty($pid)) && (!empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((!empty($shop_name)) && (empty($name)) && (empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((empty($shop_name)) && (!empty($name)) && (empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((empty($shop_name)) && (empty($name)) && (!empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((empty($shop_name)) && (empty($name)) && (empty($pid)) && (!empty($status)) ) {
+            $data = db("platform")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((!empty($shop_name)) && (!empty($name)) && (empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((!empty($shop_name)) && (empty($name)) && (!empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((!empty($shop_name)) && (empty($name)) && (empty($pid)) && (!empty($status)) ) {
+            $data = db("platform")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((empty($shop_name)) && (!empty($name)) && (!empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((empty($shop_name)) && (!empty($name)) && (empty($pid)) && (!empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
         }
+        $all_idents = $platform;//这里是需要分页的数据
+        $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
+        $listRow = 20;//每页20行记录
+        $showdata = array_slice($all_idents, ($curPage - 1) * $listRow, $listRow, true);// 数组中根据条件取出一段值，并返回
+        $platform = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
+            'var_page' => 'page',
+            'path' => url('admin/platform_advertisement/platform_business_index'),//这里根据需要修改url
+            'query' => [],
+            'fragment' => '',
+        ]);
+        $platform->appends($_GET);
+        $this->assign('platforme', $platform->render());
+        return view('platform_business_index',['platform'=>$platform]);
         
-        if(!empty($activ)){
-            return view('platform_business_index',['platform'=>$activ]);
-        }
+
     }
 
 }
