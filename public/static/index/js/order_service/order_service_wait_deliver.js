@@ -41,7 +41,7 @@ $.ajax({
                                 </div>
                             </div>
                             <div class="button-box">
-                                <button class="conf-receipt-btn">取消订单</button>
+                                <button class="conf-receipt-btn">已服务</button>
                             </div>
                         </div>`
             })
@@ -54,7 +54,7 @@ $.ajax({
             // 已服务 
             $('.conf-receipt-btn').click(function(){
                 var id = $(this).parents('.reservation-tab').attr('id');
-                btnEvent('是否取消订单？', 'ios_api_order_service_already_served', id);
+                btnEvent('服务已完成？', 'ios_api_order_service_already_served', id);
             })
         }
     },

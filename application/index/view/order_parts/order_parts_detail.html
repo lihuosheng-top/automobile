@@ -614,6 +614,15 @@
                 location.href = 'order_wait_deliver';
             }
         }
+        function wxpayCallback(res){
+            if(res !== undefined && res == '0'){
+                location.href = 'order_wait_deliver';
+            }else if(res == '-2'){
+                location.href = 'order_parts_wait_pay';
+            }
+        }
+
+
         var lsearch = location.search;
         if(lsearch.indexOf('?') !== -1){
             var pageNumber = lsearch.substr(1).split('=')[1];
