@@ -341,6 +341,11 @@ class Advertisement extends Controller
     public function hot_index()
     {
         $hot_data = Db::name("platform")->where("status", 1)->where("pid",20)->order("start_time desc")->select();
+        if(!empty($hot_data)){
+            return ajax_success("获取广告成功",$hot_data);
+        } else {
+            return ajax_error("暂无广告显示");
+        }
     }
 
 
