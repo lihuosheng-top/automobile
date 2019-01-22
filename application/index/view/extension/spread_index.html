@@ -77,19 +77,6 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-        
-
-        // 复制邀请码
-        $('.copy-btn').click(function(){
-            var code = document.getElementById('code-number');
-            code.select();
-            document.execCommand('Copy');
-            layer.open({
-                skin: 'msg',
-                content: '复制成功',
-                time: .8
-            })
-        })
         (function(){
             return $.ajax({
                 url: 'spread_index',
@@ -108,6 +95,18 @@
                     Android.share(inviteUrl);
                 })
             }
+        })
+        
+        // 复制邀请码
+        $('.copy-btn').click(function(){
+            var code = document.getElementById('code-number');
+            code.select();
+            document.execCommand('Copy');
+            layer.open({
+                skin: 'msg',
+                content: '复制成功',
+                time: .8
+            })
         })
     </script>
 </body>
