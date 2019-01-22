@@ -365,6 +365,7 @@ class Classify extends Controller
         if($request->isPost()){
             $data =Session::get("role_name_store_id");
             if(!empty($data)) {
+                //这个是商家
                 $goods_type_id = $request->only(["id"])["id"];
                 $area_address =$request->only(["area"])["area"];
                 $goods_data = [];
@@ -414,6 +415,7 @@ class Classify extends Controller
                     return ajax_error("获取失败");
                 }
             }else{
+                //这个是车主的
                 $goods_type_id = $request->only(["id"])["id"];
                 $area_address =$request->only(["area"])["area"];
                 $goods_data = [];
@@ -436,9 +438,11 @@ class Classify extends Controller
                                 $special_data[] = db("special")
                                     ->where("goods_id", $value["id"])
                                     ->select();
+                                //数量
                                 $statistical_quantity[] = db("order_parts")
                                     ->where("goods_id", $value["id"])
                                     ->count();
+                                //经纬度
                                 unset($goods[$kye]);
                                 $goods_data[] = $value;
                             }
@@ -462,7 +466,7 @@ class Classify extends Controller
                     }
                     array_multisort($ords,SORT_ASC,$goods_data);
                     return ajax_success("获取成功", $goods_data);
-                } else {
+                }else {
                     return ajax_error("获取失败");
                 }
             }

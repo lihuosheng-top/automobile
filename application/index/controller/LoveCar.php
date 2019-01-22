@@ -114,7 +114,6 @@ class LoveCar extends Controller{
                 return ajax_error("设置失败");
             }
         }
-
     }
 
 
@@ -166,16 +165,18 @@ class LoveCar extends Controller{
                 if($bool){
                     //判断是否完善资料
                     $data =Db::name("user_car")
-                        ->where('id',$user_id)
+                        ->where('user_id',$user_id)
                         ->select();
                     foreach ($data as $k=>$v){
-                        $car_is_full_messige =Db::name("user_car_message")->where("user_car_id",$v["id"])->value("plate_number");
+                        $car_is_full_messige =Db::name("user_car_message")
+                            ->where("user_car_id",$v["id"])
+                            ->value("plate_number");
                         if(!empty($car_is_full_messige)){
-                            $car_is_full_messiges[] =$car_is_full_messige;
+                            $car_is_full_messiges =$car_is_full_messige;
                         }
                     }
                     //判断是否完善爱车资料
-                    if(!empty($car_is_full_messige)){
+                    if(!empty($car_is_full_messiges)){
                         $is_perfect = Db::name("user_is_perfect")
                             ->where("user_id",$user_id)
                             ->find();
@@ -191,7 +192,6 @@ class LoveCar extends Controller{
                             $add_res = Db::name("user")
                                 ->where("id",$user_id)
                                 ->update(["user_integral_wallet"=>$old_integral_wallet+$send_integral]);
-
                             if($add_res){
 //                                //余额添加成功(做积分消费记录)
 //                                //插入积分记录
