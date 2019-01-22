@@ -182,7 +182,6 @@ class My extends Controller
             }
         }
         return view("my_consume");
-
     }
 
 
@@ -350,38 +349,38 @@ class My extends Controller
                 $data =Db::name("user")->where('id',$user_id)->find();
                 if(!empty($data)){
                     //判断是否完善资料
-                    if(!empty($data["user_img"])&&(!empty($data["real_name"]))&&(!empty($data["phone_num"]))&&(!empty($data["user_name"]))&&(!empty($data["sex"]))){
-                    $is_perfect = Db::name("user_is_perfect")
-                        ->where("user_id",$user_id)
-                        ->find();
-                        if(empty($is_perfect)){
-                        //完善进行积分奖励
-                            $send_integral =Db::name("recommend_integral")
-                                ->where("id",1)
-                                ->value("datum_integral");
-                            $old_integral_wallet = Db::name("user")
-                                ->where("id",$user_id)
-                                ->value("user_integral_wallet");
-                            //推荐人的积分添加
-                            $add_res = Db::name("user")
-                                ->where("id",$user_id)
-                                ->update(["user_integral_wallet"=>$old_integral_wallet+$send_integral]);
-                            if($add_res){
-                                //余额添加成功(做积分消费记录)
-                                //插入积分记录
-                                $integral_data =[
-                                    "user_id"=>$user_id,
-                                    "integral_operation"=>$send_integral,//获得积分
-                                    "integral_balance"=>$send_integral+$old_integral_wallet,//积分余额
-                                    "integral_type"=>1, //积分类型（1获得，-1消费）
-                                    "operation_time"=>date("Y-m-d H:i:s"), //操作时间
-                                    "integral_remarks"=>"完善资料送".$send_integral."积分",
-                                ];
-                                Db::name("integral")->insert($integral_data);
-                                Db::name("user_is_perfect")->insert(["user_id"=>$user_id]);//记录起来
-                            }
-                        }
-                    }
+//                    if(!empty($data["user_img"])&&(!empty($data["real_name"]))&&(!empty($data["phone_num"]))&&(!empty($data["user_name"]))&&(!empty($data["sex"]))){
+//                    $is_perfect = Db::name("user_is_perfect")
+//                        ->where("user_id",$user_id)
+//                        ->find();
+//                        if(empty($is_perfect)){
+//                        //完善进行积分奖励
+//                            $send_integral =Db::name("recommend_integral")
+//                                ->where("id",1)
+//                                ->value("datum_integral");
+//                            $old_integral_wallet = Db::name("user")
+//                                ->where("id",$user_id)
+//                                ->value("user_integral_wallet");
+//                            //推荐人的积分添加
+//                            $add_res = Db::name("user")
+//                                ->where("id",$user_id)
+//                                ->update(["user_integral_wallet"=>$old_integral_wallet+$send_integral]);
+//                            if($add_res){
+//                                //余额添加成功(做积分消费记录)
+//                                //插入积分记录
+//                                $integral_data =[
+//                                    "user_id"=>$user_id,
+//                                    "integral_operation"=>$send_integral,//获得积分
+//                                    "integral_balance"=>$send_integral+$old_integral_wallet,//积分余额
+//                                    "integral_type"=>1, //积分类型（1获得，-1消费）
+//                                    "operation_time"=>date("Y-m-d H:i:s"), //操作时间
+//                                    "integral_remarks"=>"完善资料送".$send_integral."积分",
+//                                ];
+//                                Db::name("integral")->insert($integral_data);
+//                                Db::name("user_is_perfect")->insert(["user_id"=>$user_id]);//记录起来
+//                            }
+//                        }
+//                    }
                         return ajax_success('信息返回成功',$data);
                 }else {
                     return ajax_success('用户不存在');

@@ -278,6 +278,8 @@ Route::group("",[
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_list_sales_volume"=>"index/Classify/goods_list_sales_volume",//商品列表销量排行
     "goods_list_sales_price"=>"index/Classify/goods_list_sales_price",//商品列表价格排行
+    "goods_list_area"=>"index/Classify/goods_list_area",//商品列表区域排行
+
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
     /*TODO:商品详情页面信息开始*/

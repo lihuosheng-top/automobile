@@ -508,8 +508,7 @@
                             })
                         })().then(function(res){
                             //选择支付方式弹窗
-                            $('.mask').show();
-                            $('.chose-payment').css({'bottom': '0'});
+                            showSelectMethod();
                             console.log(res);
                             // 存储订单号
                             cancelPayOrderNum = res.data.parts_order_number;
