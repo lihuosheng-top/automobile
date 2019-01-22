@@ -15,7 +15,11 @@ $('.filter_box button').click(function(){
             $('.district-container').hide();
             break;
         case 3:
-            $('.district-container').show();
+            if($('.district-container').is(':hidden')){
+                $('.district-container').show();
+            }else{
+                $('.district-container').hide();
+            }
             break;
     }
 })
