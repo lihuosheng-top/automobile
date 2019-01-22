@@ -143,16 +143,6 @@
     <script src="__STATIC__/index/js/payment.js"></script>
     <script>
         var outTradeNo = 0;
-        function timetrans(date){
-            var date = new Date(date*1000);//如果date为13位不需要乘1000
-            var Y = date.getFullYear() + '-';
-            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-            var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
-            var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-            var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes());
-            // var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
-            return Y+M+D+h+m;
-        }
         $.ajax({
             url: 'ios_api_order_parts_all',
             type: 'POST',
@@ -162,6 +152,10 @@
                 var str = '';
                 var statusTxt = '';
                 if(res.status == 1){
+                    // var length = (res.data.length - curPage * 10) >= 10 ? 10 : res.data.length - curPage * 10;
+                    // for(var i = 0; i < length; i++){
+
+                    // }
                     $.each(res.data, function(idx, val){
                         if(val.status === 1){
                             statusTxt = `待付款`;
@@ -244,7 +238,6 @@
                     $('.shops-goods-wrap').append(str);
                 }
                 
-
                 // 取消订单 √
                 $('.cancel-order-btn').click(function(){
                     var store_id = $(this).parents('.single-shop-box').attr('data-id');
@@ -539,6 +532,14 @@
                 location.href = 'order_parts_wait_pay';
             }else if(res.resultStatus == '9000'){
                 location.href = 'order_wait_deliver';
+            }
+        }
+        
+        function wxpayCallback(res){
+            if(res !== undefined && res == '0'){
+                location.href = 'order_wait_deliver';
+            }else if(res == '-2'){
+                location.href = 'order_parts_wait_pay';
             }
         }
     </script>

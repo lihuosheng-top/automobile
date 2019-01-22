@@ -692,9 +692,13 @@
                 cancelPayAjax(storeIdArr, cancelPayOrderNum);
             }
         }
-        // function wxpayCallback(res){
-
-        // }
+        function wxpayCallback(res){
+            if(res !== undefined && res == '0'){
+                location.href = 'order_wait_deliver';
+            }else if(res == '-2'){
+                cancelPayAjax(storeIdArr, cancelPayOrderNum);
+            }
+        }
     </script>
 </body>
 </html>

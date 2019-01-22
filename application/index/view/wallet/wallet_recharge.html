@@ -162,6 +162,25 @@
                 })
             }
         }
+        function wxpayCallback(res){
+            if(res !== undefined && res == '0'){
+                location.href = 'wallet_index';
+            }else if(res == '-2'){
+                (function(){
+                    return $.ajax({
+                        url: 'wallet_recharge_del',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'recharge_id': cancelOrderNum
+                        }
+                    })
+                })().then(function(res){
+                    console.log(res);
+                    location.reload();
+                })
+            }
+        }
         //隐藏支付方式弹窗
         function backMethod() {
             $('.chose-payment').animate({ 'bottom': '-100%' });
