@@ -93,7 +93,7 @@
 						<td>{$vo.all_reflect}</td>
 						<td>{$vo.user_wallet_consumed} </td>
 						<td>{$vo.create_time|date="Y-m-d H:i:s",###} </td>
-						<td>{$vo.user_wallet} </td>
+						<td>{$vo.all_balance} </td>
 						<td><a class="layui-btn layui-btn-mini edit" href="{:url('admin/Capital/detail',['id'=>$vo.id])}"><i class="iconfont icon-edit"></i> 查看详情</a></td>
 					</tr>
 					{/volist}

@@ -24,11 +24,28 @@ class Capital extends Controller{
         $user_list = Db::name("user") ->select();
         foreach ($user_list as $key=>$val){
             /*提现*/
-            $all_del =Db::name('recharge_reflect')->where('operation_type',"-1")->where('user_id',$val['id'])->sum("operation_amount");
+            $all_del =Db::name('recharge_reflect')
+                ->where('operation_type',"-1")
+                ->where('user_id',$val['id'])
+                ->where("status",1)
+                ->sum("operation_amount");
             $user_list[$key]['all_reflect']=round($all_del,2);
             /*充值*/
-            $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$val['id'])->sum("operation_amount");
+            $all_add=Db::name('recharge_reflect')
+                ->where('operation_type',"1")
+                ->where('user_id',$val['id'])
+                ->sum("operation_amount");
             $user_list[$key]['all_recharge'] =round($all_add,2);
+            /*账户余额（商家+车主）*/
+            $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
+            $money =Db::name("business_wallet")
+                ->where($arr_condition)
+                ->sum("money");
+            if(empty($money)){
+                $user_list[$key]['all_balance'] =$val["user_wallet"];
+            }else{
+                $user_list[$key]['all_balance'] =round($val["user_wallet"] + $money,2);
+            }
         }
         $all_idents =$user_list ;//这里是需要分页的数据
         $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
@@ -217,17 +234,27 @@ class Capital extends Controller{
             //用户的id
             $user_list = Db::name("user")->where("id",$id) ->find();
             /*提现*/
-            $all_del =Db::name('recharge_reflect')->where('operation_type',"-1")->where('user_id',$id)->sum("operation_amount");
+            $all_del =Db::name('recharge_reflect')
+                ->where('operation_type',"-1")
+                ->where("status",1)
+                ->where('user_id',$id)
+                ->sum("operation_amount");
             $user_list['all_reflect']=round($all_del,2);
             /*充值*/
-            $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$id)->sum("operation_amount");
+            $all_add=Db::name('recharge_reflect')
+                ->where('operation_type',"1")
+                ->where("status",1)
+                ->where('user_id',$id)
+                ->sum("operation_amount");
             $user_list['all_recharge'] =round($all_add,2);
+
             $wallet_data =Db::table('tb_wallet')
                 ->field("tb_wallet.*,tb_user.phone_num phone_num,tb_user.user_name user_name,tb_user.user_wallet user_wallet")
                 ->join("tb_user","tb_wallet.user_id=tb_user.id",'left')
                 ->where('tb_wallet.user_id',$id)
                 ->order('tb_wallet.operation_time','desc')
                 ->paginate(20);
+
             return view("detail",['user_list'=>$user_list,"wallet_data"=>$wallet_data]);
 
     }
