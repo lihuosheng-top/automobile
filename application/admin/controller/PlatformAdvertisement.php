@@ -160,9 +160,12 @@ class  PlatformAdvertisement extends  Controller{
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
-            }  
+            } 
+            $data["postid"] = $data["pid"];
+            $test_id = db("position") -> where("id",$data["pid"])->value("pid");
+            $data["pid"] = $test_id; 
             $bool = db("platform")->where('id', $request->only(["id"])["id"])->update($data);
-            
+           
             if ($bool) {
                 $this->success("编辑成功", url("admin/platform_advertisement/platform_business_index"));
             } else {
