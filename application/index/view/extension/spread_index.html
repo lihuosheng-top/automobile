@@ -77,11 +77,7 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
-        // 立即邀请
-        $('.invite-btn').click(function(){
-            var code = $('#code-number').val();
-            Android.share(code);
-        })
+        
 
         // 复制邀请码
         $('.copy-btn').click(function(){
@@ -94,19 +90,23 @@
                 time: .8
             })
         })
-        $.ajax({
-            url: 'spread_index',
-            type: 'POST',
-            dataType: 'JSON',
-            success: function(res){
-                console.log(res);
-                if(res.status ===1){
-                    $('#code-number').val(res.data.invitation);
-                    $('.code-box img').attr('src', res.data.invitation_images_url);
-                }
-            },
-            error: function(){
-                console.log('error');
+        (function(){
+            return $.ajax({
+                url: 'spread_index',
+                type: 'POST',
+                dataType: 'JSON'
+            })
+        })().then(function(res){
+            console.log(res);
+            if(res.status ===1){
+                $('#code-number').val(res.data.invitation);
+                $('.code-box img').attr('src', res.data.invitation_images_url);
+                
+                // 立即邀请
+                $('.invite-btn').click(function(){
+                    var inviteUrl = res.data.register_url;
+                    Android.share(inviteUrl);
+                })
             }
         })
     </script>
