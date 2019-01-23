@@ -125,36 +125,65 @@ $('.done').click(function(){
 
 // 结算 删除
 $('.settle_button').click(function(){
-    var id = [];
-    $.each($('.goods-circle.circle-on'), function(idx, val){
-        id.push($(val).attr('id'));
-    })
-    var totalMoney = $('.totalprice span').text();
-    var number = [];
-    $.each($('.goods-circle.circle-on'), function(idx, val){
-        number.push($(val).siblings().find('.calculator_val').val());
-    })
-    if(id.length !== 0){
-        $.ajax({
-            url: 'save_shopping_id',
+    (function(){
+        return $.ajax({
+            url: 'member_default_address_return',
             type: 'POST',
-            dataType: 'JSON',
-            data: {
-                'id': id,
-                'goods_unit': number,
-                'money': totalMoney
-            },
-            success: function(res){
-                console.log(res);
-                if(res.status == 1){
-                    location.href = 'ios_api_order_parts_firm_order';
+            dataType: 'JSON'
+        })
+    })().then(function(res){
+        console.log(res);
+        if(res.status == 0){
+            layer.open({
+                content: res.info,
+                btn: ['确定', '取消'],
+                yes: function (index) {
+                    layer.close(index);
+                    location.href = 'member_address_add';
                 }
-            },
-            error: function(){
-                console.log('error');
+            });
+        }else if(res.status == 2){
+            layer.open({
+                content: res.info,
+                btn: ['确定', '取消'],
+                yes: function (index) {
+                    layer.close(index);
+                    location.href = 'login';
+                }
+            });
+        }else{
+            var id = [];
+            $.each($('.goods-circle.circle-on'), function(idx, val){
+                id.push($(val).attr('id'));
+            })
+            var totalMoney = $('.totalprice span').text();
+            var number = [];
+            $.each($('.goods-circle.circle-on'), function(idx, val){
+                number.push($(val).siblings().find('.calculator_val').val());
+            })
+            if(id.length !== 0){
+                $.ajax({
+                    url: 'save_shopping_id',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'id': id,
+                        'goods_unit': number,
+                        'money': totalMoney
+                    },
+                    success: function(res){
+                        console.log(res);
+                        if(res.status == 1){
+                            location.href = 'ios_api_order_parts_firm_order';
+                        }
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                }) 
             }
-        }) 
-    }
+        }
+    })
 })
 $('.del-btn').click(function(){
     var id = [];
