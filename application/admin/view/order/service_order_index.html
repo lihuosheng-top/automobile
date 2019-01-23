@@ -326,10 +326,8 @@
 								<span>选择状态</span>
 								<select id="static_select">
 									<option value="" selecte="" >请选择</option>
-									<option value="1">待付款</option>
-									<option value="3">待服务</option>
-									<option value="4">已完成</option>
-									<option value="5">取消订单</option>
+									<option value="1">确认订单</option>
+									<option value="3">取消订单</option>
 								</select>
 							</div>
 						
@@ -676,98 +674,87 @@
 			  }  
 			  return num;  
 		  }
+		  var static=null;
 		$(".state").on('click', function() {
 			var id = $(this).parent("td").data(id).id;
-		$(".btu-sumit").data('id', id);
-		$.ajax({
-			type: "POST",
-			url: "{:url('admin/Order/service_order_processing')}",
-			async: false,
-			data: {
-				"id": id,
-			},
-			success: function(data) {
+			$(".btu-sumit").data('id', id);
+			$.ajax({
+				type: "POST",
+				url: "{:url('admin/Order/service_order_processing')}",
+				async: false,
+				data: {
+					"id": id,
+				},
+				success: function(data) {
+					$(".tanchuang").removeClass("noshow");
+					data = eval("(" + data + ")");
+					static=data.data.status;
+					if(data.data.status==0){
+						$("#order_status").html('已关闭');
+					}
+					else if(data.data.status==1){
+						$("#order_status").html('待支付');
+					}
+					else if(data.data.status==2){
+						$("#order_status").html('已付款');
+					}
+					if(data.data.status==3){
+						$("#order_status").html('待发货');
+					}
+					else if(data.data.status==4){
+						$("#order_status").html('已发货');
+					}
+					else if(data.data.status==5){
+						$("#order_status").html('待收货');
+					}
+					if(data.data.status==6){
+						$("#order_status").html('已收货');
+					}
+					else if(data.data.status==7){
+						$("#order_status").html('待评价');
+					}
+					else if(data.data.status==8){
+						$("#order_status").html('已完成');
+					}
+					
+					else if(data.data.status==9){
+						$("#order_status").html('未付款取消订单');
+					}
+					if(data.data.status==10){
+						$("#order_status").html('已付款取消订单');
+					}
+					else if(data.data.status==11){
+						$("#order_status").html('退货');
+					}
+					else if(data.data.status==12){
+						$("#order_status").html('已退货');
+					}
+					else if(data.data.status==13){
+						$("#order_status").html('退货中');
+					}
+					
+				if(data.data.pay_type_content!=null){
+					$("#payment").html(data.data.pay_type_content);
+				}
+				else{
+					$("#payment").html("无");
+				}
+				if(data.data.order_amount!=null){
+					$("#goods").html(data.data.order_amount);
+				}
+				else{
+					$("#goods").html("面议");
+				}
+				if(data.data.service_real_pay!=null){
+					$("#real_pay").html(data.data.service_real_pay);
+				}
+				else{
+					$("#real_pay").html("面议");
+				}
+					$("#points_deduction").html(data.data.integral_deductible);
+					$(".reply-content").html('');
+					$(".flowCell_content").html('');
 			
-				$(".tanchuang").removeClass("noshow");
-				data = eval("(" + data + ")");
-				console.log(data);
-				// var order_create_time=timestampToTime(data.data.service[0].order_create_time);
-				if(data.data.status==0){
-					$("#order_status").html('已关闭');
-				}
-				else if(data.data.status==1){
-					$("#order_status").html('待支付');
-				}
-				else if(data.data.status==2){
-					$("#order_status").html('已付款');
-				}
-				if(data.data.status==3){
-					$("#order_status").html('待发货');
-				}
-				else if(data.data.status==4){
-					$("#order_status").html('已发货');
-				}
-				else if(data.data.status==5){
-					$("#order_status").html('待收货');
-				}
-				if(data.data.status==6){
-					$("#order_status").html('已收货');
-				}
-				else if(data.data.status==7){
-					$("#order_status").html('待评价');
-				}
-				else if(data.data.status==8){
-					$("#order_status").html('已完成');
-				}
-				
-				else if(data.data.status==9){
-					$("#order_status").html('未付款取消订单');
-				}
-				if(data.data.status==10){
-					$("#order_status").html('已付款取消订单');
-				}
-				else if(data.data.status==11){
-					$("#order_status").html('退货');
-				}
-				else if(data.data.status==12){
-					$("#order_status").html('已退货');
-				}
-				else if(data.data.status==13){
-					$("#order_status").html('退货中');
-				}
-				
-			if(data.data.pay_type_content!=null){
-				$("#payment").html(data.data.pay_type_content);
-			}
-			else{
-				$("#payment").html("无");
-			}
-		    if(data.data.order_amount!=null){
-				$("#goods").html(data.data.order_amount);
-			}
-			else{
-				$("#goods").html("面议");
-			}
-			if(data.data.service_real_pay!=null){
-				$("#real_pay").html(data.data.service_real_pay);
-			}
-			else{
-				$("#real_pay").html("面议");
-			}
-				$("#points_deduction").html(data.data.integral_deductible);
-				$(".reply-content").html('');
-				$(".flowCell_content").html('');
-			// if(data.data.delivery_status!=null){
-			// 	for(var i=0;i<data.data.service_message.length;i++){
-			// 		var create_time= getMyDate(data.data.service_message[i].create_time*1000);
-			// 		var dhtml='';
-			// 		dhtml+='<div class="content_repay">';
-			// 		dhtml+='<div class="repay_time">'+create_time+'</div>';
-			// 		dhtml+='<div >'+data.data.service_message[i].service_dispose+'</div>';
-			// 		dhtml+='</div>';
-			// 		$(".reply-content").append(dhtml)
-			// 	} 
-			// }
 			if(data.data.delivery_status!=null){
 				for(var j=0; j<parseInt(data.data.delivery_status.status);j++){
 				
@@ -828,52 +815,31 @@
 		$("." + dait_id).siblings("div").addClass("noshow");
 	
 	});
-	// 点击弹窗确认按钮
-		$(".tanchuang").addClass("noshow");
-			var id = $(this).data("id");
-			var note_tip = $("#note_tip").val();
-			var static_select = $("#static_select  option:selected").val();
-			$.ajax({
-				type: "POST",
-				url: "{:url('admin/Order/order_update_status')}",
-				async: false,
-				data: {
-					"id": id,
-					"sell_message": note_tip,
-					"status": static_select,
-					"pay_type_content": "",
-					"refund_amount": "",
-				},
-				success: function(data) {
-					console.log(data)
-				},
-				error: function(data) {
-					console.log("失败");
-				}
-			});
+
 	$(".btu-sumit").on('click', function() {
 		$(".tanchuang").addClass("noshow");
 			var id = $(this).data("id");
 			var note_tip = $("#note_tip").val();
 			var static_select = $("#static_select  option:selected").val();
-			$.ajax({
-				type: "POST",
-				url: "{:url('admin/Order/order_update_status')}",
-				async: false,
-				data: {
-					"id": id,
-					"sell_message": note_tip,
-					"status": static_select,
-					"pay_type_content": "",
-					"refund_amount": "",
-				},
-				success: function(data) {
-					console.log(data)
-				},
-				error: function(data) {
-					console.log("失败");
-				}
-			});
+			console.log(static)
+			// $.ajax({
+			// 	type: "POST",
+			// 	url: "{:url('admin/Order/order_update_status')}",
+			// 	async: false,
+			// 	data: {
+			// 		"id": id,
+			// 		"sell_message": note_tip,
+			// 		"status": static_select,
+			// 		"pay_type_content": "",
+			// 		"refund_amount": "",
+			// 	},
+			// 	success: function(data) {
+			// 		console.log(static)
+			// 	},
+			// 	error: function(data) {
+			// 		console.log("失败");
+			// 	}
+			// });
 			
 	
 			});
