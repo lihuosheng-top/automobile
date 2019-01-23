@@ -27,6 +27,11 @@ class Balance extends Controller
             if (password_verify($password,$user_info["pay_passwd"])) {
                 //真实支付的价钱
                 $money = Db::name("order_parts")->where("parts_order_number", $order_num)->sum("order_amount");
+                if(!empty($money)){
+                    $money =round($money,2);
+                }else{
+                    $money =0;
+                }
                 //判断是商家角色买还是车主角色进行购买
                 $business_store_id = Session::get("role_name_store_id"); //店铺id
                 if (!empty($business_store_id["store_id"])) {
@@ -168,6 +173,7 @@ class Balance extends Controller
                 $password = $request->only("passwords")["passwords"]; //输入的密码
                 if (password_verify($password, $user_info["pay_passwd"])) {
                     $money = Db::name("order_service")->where("service_order_number", $order_num)->value("service_real_pay");
+                    $money =round($money,2);
                     $business_store_id = Session::get("role_name_store_id"); //店铺id
                     if (!empty($business_store_id["store_id"])) {
                         //商家

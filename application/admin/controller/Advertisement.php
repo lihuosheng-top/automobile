@@ -173,12 +173,13 @@ class  Advertisement extends  Controller{
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
             }
-            
-            $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
             $data["postid"] = $data["pid"];
+            $test_id = db("position") -> where("id",$data["pid"])->value("pid");
+            $data["pid"] = $test_id; 
+ 
+            $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
             unset($data["id"]);
-            unset($data["pid"]);
-            
+
             $boole = db("platform")->where('pgd', $request->only(["id"])["id"])->update($data);
 
             if ($bool && $boole) {
@@ -237,16 +238,20 @@ class  Advertisement extends  Controller{
     public function accessories_business_search(){
         $ppd = input('key');          //广告名称
         $interest = input('keys');    //广告位置
-
-        if ((!empty($ppd)) || (!empty($interest))) {
-            $platform = db("accessories")->where("name", "like", "%" . $ppd . "%")->where("location", "like", "%" . $interest . "%")->select(); 
+        if ((!empty($ppd)) && (!empty($interest))) {
+            $data = db("accessories")->where("name", "like", "%" . $ppd . "%")->where("pid", "like", "%" . $interest . "%")->select(); 
             $platform = foreach_pid($data);
-            foreach ($platform as $key => $value) {
-                if ($value["id"]) {
-                    $platform[$key]["shop_name"] = $store_name;
-                }
+            } else if((!empty($ppd)) && (empty($interest))){
+                $data = db("accessories")->where("name", "like", "%" . $ppd . "%")->select(); 
+                $platform = foreach_pid($data);
+            } else if((empty($ppd)) && (!empty($interest))){
+                $data = db("accessories")->where("pid", "like", "%" . $interest . "%")->select();  
+                $platform = foreach_pid($data);
+            } else {
+                $data = db("accessories")->select();
+                $platform = foreach_pid($data);
             }
-        
+    
             $all_idents = $platform;//这里是需要分页的数据
             $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
             $listRow = 20;//每页20行记录
@@ -260,12 +265,7 @@ class  Advertisement extends  Controller{
             $platform->appends($_GET);
             $this->assign('platform', $platform->render());
             return view('accessories_business_advertising',['platform'=>$platform]);   
-        }else{
-            $activ = db("accessories")->paginate(2);
-        }
-        if(!empty($activ)){
-            return view('accessories_business_advertising',['platform'=>$activ]);
-        }
+        
     }
 
 }

@@ -28,7 +28,8 @@
         .order-item{font-size: .3rem;color: #333;padding-left: .5rem;}
         .order-item span{display: inline-block;width: .2rem;height: .2rem;border-radius: 50%;background-color: #999999;vertical-align: baseline;margin-right: .15rem;}
         .button-box{text-align: right;}
-        .receipt{background-color: #504cfb; color: #fff; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none; border: 0;}
+        .calcel-order{background-color: #fff; color: #504cfb; border: 1px solid #504cfb; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none;}
+        .serviced{background-color: #504cfb; color: #fff; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none; border: 0;}
     </style>
 </head>
 <body>
@@ -59,7 +60,7 @@
                     <span></span>预约洗车
                 </div>
                 <div class="button-box">
-                    <button class="receipt">接单</button>
+                    <button class="calcel-order">取消订单</button>
                 </div>
             </div> -->
         </div>
@@ -133,25 +134,32 @@
                             statusTxt = '待确认';
                         }
                         str += `<div class="reservation-tab">
-                                    <div class="order-num-status">
-                                        <div class="order-num">
-                                            <i class="spr icon-order-num"></i>订单编号：<span>`+val.service_order_number+`</span>
+                                    <div class="reservation-info-container">
+                                        <div class="order-num-status">
+                                            <div class="order-num">
+                                                <i class="spr icon-order-num"></i>订单编号：<span>`+val.service_order_number+`</span>
+                                            </div>
+                                            <span class="status">`+statusTxt+`</span>
                                         </div>
-                                        <span class="status">`+statusTxt+`</span>
+                                        <p class="order-time">
+                                            <i class="spr icon-time"></i><span>`+val.got_to_time+`</span>
+                                        </p>
+                                        <p class="order-shop-name">
+                                            <i class="spr icon-shop"></i><span>`+val.store_name+`</span>
+                                        </p>
+                                        <div class="order-item">
+                                            <span></span>`+val.service_goods_name+`
+                                        </div>
                                     </div>
-                                    <p class="order-time">
-                                        <i class="spr icon-time"></i><span>`+val.got_to_time+`</span>
-                                    </p>
-                                    <p class="order-shop-name">
-                                        <i class="spr icon-shop"></i><span>`+val.store_name+`</span>
-                                    </p>
-                                    <div class="order-item">
-                                        <span></span>`+val.service_goods_name+`
+                                    <div class="button-box">
+                                        <button class="calcel-order" data-id="`+val.id+`" style="display: `+(val.status == 1 ? '' : 'none')+`">取消订单</button>
+                                        <button class="serviced" data-id="`+val.id+`" style="display: `+(val.status == 2 ? '' : 'none')+`">已服务</button>
                                     </div>
                                 </div>`;
                     })
                     $('.reservation-container').append(str);
-                    $('.reservation-tab').click(function(){
+                    // 查看详情
+                    $('.reservation-info-container').click(function(){
                         var orderNumber = $(this).find('.order-num span').text();
                         $.ajax({
                             url: 'sell_order_service_save_record',
@@ -171,11 +179,48 @@
                             }
                         })
                     })
+                    // 已服务
+                    $('.serviced').click(function(){
+                        var id = $(this).attr('data-id');
+                        btnEvent('服务已完成？', 'sell_order_service_already_served', id);
+                    })
+                    // 未付款 取消订单
+                    $('.calcel-order').click(function(){
+                        var id = $(this).attr('data-id');
+                        btnEvent('是否取消订单？', 'sell_order_service_no_pay_cancel', id);
+                    })
                 }
             },
             error: function(){
                 console.log('error');
             }
         })
+
+        function btnEvent(info, url, id){
+            layer.open({
+                content: info,
+                btn: ['确定', '取消'],
+                yes: function(index){
+                    layer.close(index);
+                    $.ajax({
+                        url: url,
+                        dataType: 'JSON',
+                        type: 'POST',
+                        data: {
+                            'order_id': id
+                        },
+                        success: function(res){
+                            console.log(res);
+                            if(res.status == 1){
+                                location.reload();
+                            }
+                        },
+                        error: function(){
+                            console.log('error');
+                        }
+                    })
+                }
+            })
+        }
     </script>
 </html>

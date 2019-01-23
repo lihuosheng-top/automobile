@@ -4,12 +4,24 @@ $('.filter_box button').click(function(){
     switch($index){
         case 0: 
             layDataAjax('goods_list', brandid);
+            $('.district-container').hide();
             break;
         case 1: 
             layDataAjax('goods_list_sales_volume', brandid);
+            $('.district-container').hide();
             break;
         case 2: 
             layDataAjax('goods_list_sales_price', brandid);
+            $('.district-container').hide();
+            break;
+        case 3:
+            if($('.district-container').is(':hidden')){
+                $('.district-container').show();
+                $('.list_cont').css({'overflow': 'hidden'});
+            }else{
+                $('.district-container').hide();
+                $('.list_cont').css({'overflow': 'auto'});
+            }
             break;
     }
 })

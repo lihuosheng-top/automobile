@@ -40,55 +40,52 @@ $.ajax({
                                     <span></span>`+val.service_goods_name+`
                                 </div>
                             </div>
-                            <div class="button-box">
-                                <button class="conf-receipt-btn">已服务</button>
-                            </div>
                         </div>`
             })
             $('.reservation-tab-container').append(str);
              // 查看详情
              $('.reservation-info-container').click(function(){
                 var orderNum = $(this).parents('.reservation-tab').find('.order-num span').text();
-                detailAndEva('order_service_save_record', orderNum, 'order_service_detail');
+                detailAndEva('order_service_save_record', orderNum, 'order_service_detail?page=3');
             })
             // 已服务 
-            $('.conf-receipt-btn').click(function(){
-                var id = $(this).parents('.reservation-tab').attr('id');
-                btnEvent('服务已完成？', 'ios_api_order_service_already_served', id);
-            })
+            // $('.conf-receipt-btn').click(function(){
+            //     var id = $(this).parents('.reservation-tab').attr('id');
+            //     btnEvent('服务已完成？', 'ios_api_order_service_already_served', id);
+            // })
         }
     },
     error: function(){
         console.log();
     }
 })
-// 已服务
-function btnEvent(info, url, id){
-    layer.open({
-        content: info,
-        btn: ['确定', '取消'],
-        yes: function(index){
-            layer.close(index);
-            $.ajax({
-                url: url,
-                dataType: 'JSON',
-                type: 'POST',
-                data: {
-                    'order_id': id
-                },
-                success: function(res){
-                    console.log(res);
-                    if(res.status == 1){
-                        location.reload();
-                    }
-                },
-                error: function(){
-                    console.log('error');
-                }
-            })
-        }
-    })
-}
+
+// function btnEvent(info, url, id){
+//     layer.open({
+//         content: info,
+//         btn: ['确定', '取消'],
+//         yes: function(index){
+//             layer.close(index);
+//             $.ajax({
+//                 url: url,
+//                 dataType: 'JSON',
+//                 type: 'POST',
+//                 data: {
+//                     'order_id': id
+//                 },
+//                 success: function(res){
+//                     console.log(res);
+//                     if(res.status == 1){
+//                         location.reload();
+//                     }
+//                 },
+//                 error: function(){
+//                     console.log('error');
+//                 }
+//             })
+//         }
+//     })
+// }
 // 查看详情
 function detailAndEva(url, orderNum, link){
     $.ajax({

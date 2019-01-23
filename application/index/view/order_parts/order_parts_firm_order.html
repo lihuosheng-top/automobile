@@ -88,24 +88,6 @@
         .company-invoice-identify{display: flex;}
         .company-invoice-identify textarea{flex: 1; font-size: .3rem; resize: none; border: 0; outline: none;}
 
-        /* 余额支付密码弹窗 */
-        .balance-psd-pop{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: .5rem; background-color: #fff; z-index: 999; border-radius: .15rem;}
-        .balance-psd-pop .close-balance-pwd{position: absolute; right: .1rem; top: .1rem; width: .4rem; height: .4rem; background-position: .05rem -1.15rem;}
-        .balance-psd-pop .balance-psd-title{text-align: center; font-size: .35rem;}
-        .balance-psd-pop .input-container{display: flex;}
-        .balance-psd-pop .confirm-psd{width: 100%; margin-top: .2rem; border: 0; background-color: #eee; border-radius: .1rem; height: .8rem; outline: none; color: #333;}
-        .clearfix:after {clear: both;}
-		.clearfix:before,.clearfix:after {content: " ";display: table;}
-		.alieditContainer {position: relative;}
-		.sixDigitPassword {position: absolute;left: 0;top: 0;width: 100%;height: .68rem;color: #fff;font-size: .24rem;-webkit-box-sizing: content-box;box-sizing: content-box;-webkit-user-select: initial;outline: 'none';z-index: 999;opacity: 0;filter: alpha(opacity=0);}
-		.sixDigitPassword-box {cursor: text;background: #fff;outline: none;position: relative;padding: .16rem 0;height: .3rem;border: 1px solid #cccccc;border-radius: 2px;}		
-		.sixDigitPassword-box i {float: left;display: block;padding: 4px 0;height: .14rem;border-left: 1px solid #cccccc;}		
-		.sixDigitPassword-box .active {background: url(__STATIC__/index/image/password-blink.gif) no-repeat center center;}
-		.sixDigitPassword-box b {display: block;margin: 0 auto;width: .14rem;height: .14rem;overflow: hidden;visibility: hidden;background: url(__STATIC__/index/image/passeord-dot.png) no-repeat;}
-		.sixDigitPassword-box span {position: absolute;display: block;left: 0px;top: 0px;height: .6rem;border: 1px solid #f2cb80;border-radius: 2px;visibility: hidden;-webkit-box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.75), 0 0 .16rem rgba(82, 168, 236, 0.6);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 .16rem rgba(82, 168, 236, 0.6);}
-		.ui-securitycore .ui-form-item .ui-form-explain {margin-top: .16rem;}		
-		.i-block {display: inline-block;}		
-		.six-password {position: relative;height: .68rem; width: 3.7rem;overflow: hidden;vertical-align: middle;}
     </style>
 </head>
 <body>
@@ -224,7 +206,7 @@
             <a href="javascript:;" class="spr chose-payment-back"></a>
             <h3 class="chose-title">选择支付方式</h3>
         </header>
-        <div class="method-div">
+        <div class="method-div" style="display: none;">
             <div class="icon-div">
                 <img src="__STATIC__/index/image/wechat.png">
             </div>
@@ -315,62 +297,8 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_firm_order.js"></script>
+    <script src="__STATIC__/index/js/payment.js"></script>
     <script>
-        var payPassword = $("#payPassword_container"),
-			_this = payPassword.find('i'),
-			k = 0, j = 0,
-			_cardwrap = $('#cardwrap');
-		//点击隐藏的input密码框,在6个显示的密码框的第一个框显示光标
-		payPassword.on('focus', "input[name='payPassword_rsainput']", function () {
-			var _this = payPassword.find('i');
-			if (payPassword.attr('data-busy') === '0') {
-				//在第一个密码框中添加光标样式
-				_this.eq(k).addClass("active");
-				_cardwrap.css('visibility', 'visible');
-				payPassword.attr('data-busy', '1');
-			}
-
-		});
-		//change时去除输入框的高亮，用户再次输入密码时需再次点击
-		payPassword.on('change', "input[name='payPassword_rsainput']", function () {
-			_cardwrap.css('visibility', 'hidden');
-			_this.eq(k).removeClass("active");
-			payPassword.attr('data-busy', '0');
-		}).on('blur', "input[name='payPassword_rsainput']", function () {
-			_cardwrap.css('visibility', 'hidden');
-			_this.eq(k).removeClass("active");
-			payPassword.attr('data-busy', '0');
-		});
-
-		//使用keyup事件，绑定键盘上的数字按键和backspace按键
-		payPassword.on('keyup', "input[name='payPassword_rsainput']", function (e) {
-			var e = (e) ? e : window.event;
-			//键盘上的数字键按下才可以输入
-			if (e.keyCode == 8 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
-				k = this.value.length;//输入框里面的密码长度
-				l = _this.length;//6
-				for (; l--;) {
-					//输入到第几个密码框，第几个密码框就显示高亮和光标（在输入框内有2个数字密码，第三个密码框要显示高亮和光标，之前的显示黑点后面的显示空白，输入和删除都一样）
-					if (l === k) {
-						_this.eq(l).addClass("active");
-						_this.eq(l).find('b').css('visibility', 'hidden');
-					} else {
-						_this.eq(l).removeClass("active");
-						_this.eq(l).find('b').css('visibility', l < k ? 'visible' : 'hidden');
-					}
-					if (k === 6) {
-						j = 5;
-					} else {
-						j = k;
-					}
-					$('#cardwrap').css('left', j * 0.6 + 'rem');
-				}
-			} else {
-				//输入其他字符，直接清空
-				var _val = this.value;
-				this.value = _val.replace(/\D/g, '');
-			}
-		});	
         $('.confirm-psd').click(function(){
             var psd = $('#payPassword_rsainput').val();
             if(psd !== ''){
@@ -395,6 +323,16 @@
                         setTimeout(function(){
                             location.href = 'order_wait_deliver';
                         }, 1000);
+                    }else if(res.status == 3){
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: .8
+                        })
+                        setTimeout(function(){
+                            $('.balance-psd-pop').hide();
+                            $('.chose-payment').css({'bottom': '0'});
+                        }, 1000)
                     }else{
                         layer.open({
                             skin: 'msg',
@@ -410,6 +348,10 @@
                     time: 1
                 })
             }
+        })
+        $('.close-balance-pwd').click(function(){
+            $('.balance-psd-pop').hide();
+            $('.chose-payment').css({'bottom': '0'});
         })
     </script>
     <script>
@@ -566,8 +508,7 @@
                             })
                         })().then(function(res){
                             //选择支付方式弹窗
-                            $('.mask').show();
-                            $('.chose-payment').animate({'bottom': '0'});
+                            showSelectMethod();
                             console.log(res);
                             // 存储订单号
                             cancelPayOrderNum = res.data.parts_order_number;
@@ -644,9 +585,10 @@
                             })
                         })().then(function(res){
                             console.log(res);
+                            // 存储订单号
+                            cancelPayOrderNum = res.data.parts_order_number;
                             //选择支付方式弹窗
-                            $('.mask').show();
-                            $('.chose-payment').animate({'bottom': '0'});
+                            showSelectMethod();
                         })
                     })
                 }
@@ -659,7 +601,7 @@
         // 隐藏选择支付方式弹窗
         function backMethod(){
             $('.mask').hide();
-            $('.chose-payment').animate({'bottom': '-100%'});
+            $('.chose-payment').css({'bottom': '-100%'});
         }
         // 多店铺 取消付款 
         function cancelPayAjax(storeId, orderNum){
@@ -733,8 +675,7 @@
                     break;
                 case 3:
                     //用户选择余额支付，发送订单号给后台
-                    $('.mask').show();
-                    $('.balance-psd-pop').show();
+                    showBalance();
                     break;
             }
         })
@@ -745,15 +686,19 @@
         })
         // 支付宝支付 回调
         function alipayCallback(res){
-            if(res !== undefined && res.resultStatus == '6001'){
-                cancelPayAjax(storeIdArr,cancelPayOrderNum);
-            }else if(res.resultStatus == '9000'){
+            if(res !== undefined && res.resultStatus == '9000'){
                 location.href = 'order_wait_deliver';
+            }else{
+                cancelPayAjax(storeIdArr, cancelPayOrderNum);
             }
         }
-        // function wxpayCallback(res){
-
-        // }
+        function wxpayCallback(res){
+            if(res !== undefined && res == '0'){
+                location.href = 'order_wait_deliver';
+            }else if(res == '-2'){
+                cancelPayAjax(storeIdArr, cancelPayOrderNum);
+            }
+        }
     </script>
 </body>
 </html>

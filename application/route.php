@@ -132,6 +132,8 @@ Route::group("",[
 
     "sell_service_order"=>"index/SellMy/sell_service_order",//卖家服务订单
     "sell_service_price_change"=>"index/SellMy/sell_service_price_change",//服务商面议修改价格
+    "sell_order_service_no_pay_cancel"=>"index/SellMy/sell_order_service_no_pay_cancel",//卖家取消订单接口(ajax)
+    "sell_order_service_already_served"=>"index/SellMy/sell_order_service_already_served",//卖家确认服务订单接口(ajax)
     "sell_parts_order"=>"index/SellMy/sell_parts_order",//卖家商品订单
     "sell_order_service_save_record"=>"index/SellMy/sell_order_service_save_record",//卖家进入服务订单详情需要保存的数据
     "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
@@ -278,6 +280,8 @@ Route::group("",[
     "goods_list"=>"index/Classify/goods_list",//商品列表
     "goods_list_sales_volume"=>"index/Classify/goods_list_sales_volume",//商品列表销量排行
     "goods_list_sales_price"=>"index/Classify/goods_list_sales_price",//商品列表价格排行
+    "goods_list_area"=>"index/Classify/goods_list_area",//商品列表区域排行
+
     "goods_detail"=>"index/Classify/goods_detail",//商品详情
 
     /*TODO:商品详情页面信息开始*/
@@ -362,8 +366,8 @@ Route::group("",[
     "order_service_return_goods"=>"index/OrderService/order_service_return_goods",//退货页面
     "ios_api_order_service_return_goods"=>"index/OrderService/ios_api_order_service_return_goods",//退货页面接口（ajax）
     /*修改状态值*/
-    "ios_api_order_service_no_pay_cancel"=>"index/OrderService/ios_api_order_service_no_pay_cancel",//买家未付款取消订单接口(ajax)
-    "ios_api_order_service_already_served"=>"index/OrderService/ios_api_order_service_already_served",//买家服务商订单买家确认服务（ajax）
+//    "ios_api_order_service_no_pay_cancel"=>"index/OrderService/ios_api_order_service_no_pay_cancel",//买家未付款取消订单接口(ajax)
+//    "ios_api_order_service_already_served"=>"index/OrderService/ios_api_order_service_already_served",//买家服务商订单买家确认服务（ajax）
     "service_del"=>"index/OrderService/service_del",//买家服务商订单删除（ajax）
 
     /*TODO:服务商订单状态结束*/
@@ -376,7 +380,7 @@ Route::group("",[
     /*汽车广告管理前端开始*/
     "advertisement_index"=>"index/Advertisement/advertisement_index", //汽车广告显示
     "machine_index"=>"index/Advertisement/machine_index",             //汽车配件商广告显示
-    "advert_index"=>"index/Advertisement/advert_index",             //后台汽车广告显示
+    "hot_index"=>"index/Advertisement/hot_index",                     //汽车热门推荐店铺广告
 
 
 
