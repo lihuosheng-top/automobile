@@ -106,7 +106,7 @@ class  Advertisement extends  Controller{
             
 
             //http://127.0.0.1/automobile/public/store_index?storeId=58
-            $data["url"] =config('domain_url.address')."store_index?storeId=".$store_id;
+            $data["url"] = config('domain_url.address')."store_index?storeId=".$store_id;
 
 
             //插入配件商表

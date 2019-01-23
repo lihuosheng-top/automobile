@@ -341,11 +341,15 @@ class Advertisement extends Controller
     public function hot_index()
     {
         $hot_data = Db::name("platform")->where("status", 1)->where("pid",20)->order("start_time desc")->select();
+        foreach($hot_data as $key => $value){
+
+        }
         if(!empty($hot_data)){
             return ajax_success("获取广告成功",$hot_data);
         } else {
             return ajax_error("暂无广告显示");
         }
+              
     }
 
 
@@ -373,6 +377,27 @@ class Advertisement extends Controller
     //     //return $arr;
     // }
     
+    public function returnSquarePoint($lng,$lat,$distance=5){
+        $earthdata = 6371; //地球半径，平均半径为6371km
+    }
+
+    public function rest(){
+        $str ='<p><a href="http://1000312" target="_blank"><img src="/ueditor/php/upload/image/20190123/1548212294670004.jpg" title="1548212294670004.jpg"/></a></p><p><a href="http://1000407" target="_self"><img src="/ueditor/php/upload/image/20190123/1548212294607049.jpg" title="1548212294607049.jpg"/></a></p><p><a href="http://1000413" target="_self"><img src="/ueditor/php/upload/image/20190123/1548212294111598.jpg" title="1548212294111598.jpg"/></a></p><p><br/></p>'; 
+        preg_match_all("/http:[\/]{2}[0-9]*/",$str,$array2); 
+        $wer = $array2[0];
+        foreach( $wer as $k => $value){
+            $values[] = str_replace("http://",'',$value)- 1000000; //获取商品id
+        }
+
+        foreach($values as $key => $vl){
+            $rest[$key] =  db("goods")-> where("id",$vl) -> value("store_id"); //找到自己的店铺id
+            $goods_brand_id[$key] = db("goods")-> where("id",$vl) -> value("goods_brand_id");//品牌id
+        }
+
+            halt($goods_brand_id);
+            halt($rest);
+        
+    }
 
 
 }

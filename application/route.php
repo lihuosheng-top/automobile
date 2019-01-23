@@ -379,6 +379,7 @@ Route::group("",[
     "advertisement_index"=>"index/Advertisement/advertisement_index", //汽车广告显示
     "machine_index"=>"index/Advertisement/machine_index",             //汽车配件商广告显示
     "hot_index"=>"index/Advertisement/hot_index",                     //汽车热门推荐店铺广告
+    "rest"=>"index/Advertisement/rest",                     //汽车热门推荐店铺广告
 
 
 
@@ -541,6 +542,7 @@ Route::group("admin",[
     "car_updata"=>"admin/Car/updata",
     "car_search"=>"admin/Car/search",
     "car_images"=>"admin/Car/images",
+    "car_status"=>"admin/Car/status",
 
 
     /*充值和提现*/
