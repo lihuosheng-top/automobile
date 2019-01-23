@@ -352,6 +352,144 @@ class Classify extends Controller
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:商品列表区域
+     **************************************
+     * @param Request $request
+     * @return \think\response\View|void
+     */
+    public function goods_list_area(Request $request)
+    {
+        if($request->isPost()){
+            $data =Session::get("role_name_store_id");
+            if(!empty($data)) {
+                //这个是商家
+                $goods_type_id = $request->only(["id"])["id"];
+                $area_address =$request->only(["area"])["area"];
+                $goods_data = [];
+                $goods = db("goods")
+                    ->where("goods_type_id", $goods_type_id)
+                    ->whereOr("goods_brand_id", $goods_type_id)
+                    ->select();
+                foreach ($goods as $kye => $value) {
+                    $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
+                    $area_condition = " `real_address` like '%{$area_address}%'";
+                    $store = db("store")
+                        ->where("store_id", $value["store_id"])
+                        ->where($area_condition)
+                        ->where($where)
+                        ->find();
+                    if (!empty($store)) {
+                        if ($value["goods_status"] == 1 && !empty($store)) {
+                            $special_data[] = db("special")
+                                ->where("goods_id", $value["id"])
+                                ->select();
+                            $statistical_quantity[] = db("order_parts")
+                                ->where("goods_id", $value["id"])
+                                ->count();
+                            unset($goods[$kye]);
+                            $goods_data[] = $value;
+                        }
+                    }
+                }
+                if (!empty($special_data)) {
+                    foreach ($special_data as $k => $v) {
+                        $goods_data[$k]["special"] = $v;
+                    }
+                }
+                if (!empty($statistical_quantity)) {
+                    foreach ($statistical_quantity as $k => $v) {
+                        $goods_data[$k]["statistical_quantity"] = $v;
+                    }
+                }
+                if ($goods_data) {
+                    $ords =array();
+                    foreach ($goods_data as $vl){
+                        $ords[] =intval($vl["goods_adjusted_money"]);
+                    }
+                    array_multisort($ords,SORT_ASC,$goods_data);
+                    return ajax_success("获取成功", $goods_data);
+                } else {
+                    return ajax_error("获取失败");
+                }
+            }else{
+                //这个是车主的
+                $goods_type_id = $request->only(["id"])["id"];
+                $area_address =$request->only(["area"])["area"];
+                $goods_data = [];
+                $goods = db("goods")
+                    ->where("goods_type_id", $goods_type_id)
+                    ->whereOr("goods_brand_id", $goods_type_id)
+                    ->select();
+                foreach ($goods as $kye => $value) {
+                    if($value["goods_standard"] == "通用") {
+                        unset($goods[$kye]);
+                        $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
+                        $area_condition = " `real_address` like '%{$area_address}%'";
+                        $store = db("store")
+                            ->where($area_condition)
+                            ->where("store_id", $value["store_id"])
+                            ->where($where)
+                            ->find();
+                        if (!empty($store)) {
+                            if ($value["goods_status"] == 1 && !empty($store)) {
+                                //规格
+                                $special_data[] = db("special")
+                                    ->where("goods_id", $value["id"])
+                                    ->select();
+                                //数量
+                                $statistical_quantity[] = db("order_parts")
+                                    ->where("goods_id", $value["id"])
+                                    ->count();
+                                //经度
+                                $longitude[] =$store["longitude"];
+                                //纬度
+                                $latitude[] =$store["latitude"];
+                                unset($goods[$kye]);
+                                $goods_data[] = $value;
+                            }
+                        }
+                    }
+                }
+                if (!empty($special_data)) {
+                    foreach ($special_data as $k => $v) {
+                        $goods_data[$k]["special"] = $v;
+                    }
+                }
+                if (!empty($statistical_quantity)) {
+                    foreach ($statistical_quantity as $k => $v) {
+                        $goods_data[$k]["statistical_quantity"] = $v;
+                    }
+                }
+                //经度
+                if(!empty($longitude)){
+                    foreach ($longitude as $k=>$v){
+                        $goods_data[$k]["longitude"] =$v;
+                    }
+                }
+                //纬度
+                if(!empty($latitude)){
+                    foreach ($latitude as $k=>$v){
+                        $goods_data[$k]["latitude"] =$v;
+                    }
+                }
+                if ($goods_data) {
+                    $ords =array();
+                    foreach ($goods_data as $vl){
+                        $ords[] =intval($vl["goods_adjusted_money"]);
+                    }
+                    array_multisort($ords,SORT_ASC,$goods_data);
+                    return ajax_success("获取成功", $goods_data);
+                }else {
+                    return ajax_error("获取失败");
+                }
+            }
+        }
+        return view("goods_list");
+    }
+
 
     // 商品详情
     public function goods_detail(Request $request)

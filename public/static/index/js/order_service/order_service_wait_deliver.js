@@ -49,7 +49,7 @@ $.ajax({
              // 查看详情
              $('.reservation-info-container').click(function(){
                 var orderNum = $(this).parents('.reservation-tab').find('.order-num span').text();
-                detailAndEva('order_service_save_record', orderNum, 'order_service_detail');
+                detailAndEva('order_service_save_record', orderNum, 'order_service_detail?page=3');
             })
             // 已服务 
             $('.conf-receipt-btn').click(function(){
@@ -62,7 +62,7 @@ $.ajax({
         console.log();
     }
 })
-// 已服务
+// 取消订单
 function btnEvent(info, url, id){
     layer.open({
         content: info,

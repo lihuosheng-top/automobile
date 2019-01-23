@@ -300,23 +300,23 @@ $(document).ready(function(){
     var oPassword = document.getElementsByClassName('password')[0];
     var oRemember = document.getElementById('remember-input');
     //页面初始化时，如果帐号密码cookie存在则填充
-    if (getCookie('user') && getCookie('pswd')) {
-        oPhoneNum.value = getCookie('user');
-        oPassword.value = getCookie('pswd');
+    if (getCookie(btoa('user')) && getCookie(btoa('pswd'))) {
+        oPhoneNum.value = atob(getCookie(btoa('user')));
+        oPassword.value = atob(getCookie(btoa('pswd')));
         oRemember.checked = true;
     }
     //复选框勾选状态发生改变时，如果未勾选则清除cookie
     oRemember.onchange = function () {
         if (!this.checked) {
-            delCookie('user');
-            delCookie('pswd'); 
+            delCookie(btoa('user'));
+            delCookie(btoa('pswd'));
         }
     };
     //提交事件触发时，如果复选框是勾选状态则保存cookie
     $('.login-btn').click(function(){
         if (oRemember.checked) {
-            setCookie('user', oPhoneNum.value, 7); //保存帐号到cookie，有效期7天
-            setCookie('pswd', oPassword.value, 7); //保存密码到cookie，有效期7天
+            setCookie(btoa('user'), btoa(oPhoneNum.value), 7); //保存帐号到cookie，有效期7天
+            setCookie(btoa('pswd'), btoa(oPassword.value), 7); //保存密码到cookie，有效期7天
         }
     })
 })

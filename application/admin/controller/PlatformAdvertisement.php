@@ -26,7 +26,7 @@ class  PlatformAdvertisement extends  Controller{
         $t= date('Y-m-d H:i:s');
         $time  = strtotime($t);
         $end_time =  "end_time < {$time}";
-        $status = Db::name("platform")->where($end_time)->update(["status"=>3]);
+        $status = Db::name("platform")->where($end_time)->update(["status"=>3]); //到时间自动下架
         $data = db("platform")->select();
         $platform = foreach_pid($data);
         $all_idents = $platform;//这里是需要分页的数据
@@ -84,13 +84,14 @@ class  PlatformAdvertisement extends  Controller{
         if ($request->isPost()) {
             $data = $request->param();
             $show_images = $request->file("advert_picture");
-            $store_id = db("store")->where("store_name",$data["url"])->value("store_id");
-            
+            $store_data = db("store")->where("store_name",$data["url"])->find();            
             $position = db("position") -> where("id",$data["pid"])->value("name");
 
             //http://127.0.0.1/automobile/public/store_index?storeId=58
-            if(!empty($store_id)){
-                $data["url"] = config('domain_url.address')."store_index?storeId=".$store_id;
+            if(!empty($store_data)){
+                $data["url"] = config('domain_url.address')."store_index?storeId=".$store_data['store_id'];
+                $data["longitude"] = $store_data['longitude']; //坐标经度
+                $data["latitude"] = $store_data['latitude'];   //坐标纬度
             } else if(empty($store_id)){
                 $data["url"] = null;
             }
@@ -112,7 +113,6 @@ class  PlatformAdvertisement extends  Controller{
             $data["pid"] = db("position") -> where("id",$data["pid"])->value("pid");
             $data["department"] = "platform_business";
             $data["shop_name"] = '平台广告';
-
             $bool = db("platform")->insert($data);
             if ($bool) {
                 $this->success("添加成功", url("admin/platform_advertisement/platform_business_index"));
@@ -134,18 +134,20 @@ class  PlatformAdvertisement extends  Controller{
         if ($request->isPost()) {
             $data = $request->param();
             $find = db("platform")->where('id', $request->only(["id"])["id"])->find();
- 
+            
 
             if($find["department"] == "platform_business")
             {
                 $data["start_time"] = strtotime($data["start_time"]);
                 $data["end_time"]  = strtotime($data["end_time"]); 
-                $store_id = db("store")->where("store_name",$data["url"])->value("store_id");
+                $store_data = db("store")->where("store_name",$data["url"])->find();
                 //http://127.0.0.1/automobile/public/store_index?storeId=58
-                if(!empty($store_id)){
-                    $data["url"] = config('domain_url.address')."store_index?storeId=".$store_id;
+                if(!empty($store_data)){
+                    $data["url"] = config('domain_url.address')."store_index?storeId=".$store_data['store_id'];
+                    $data["longitude"] = $store_data['longitude']; //坐标经度
+                    $data["latitude"] = $store_data['latitude'];   //坐标纬度
                 } else {
-                    unset($data["url"]);
+                    $data["url"] = null;
                 } 
             }
 
@@ -158,9 +160,12 @@ class  PlatformAdvertisement extends  Controller{
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
-            }  
+            } 
+            $data["postid"] = $data["pid"];
+            $test_id = db("position") -> where("id",$data["pid"])->value("pid");
+            $data["pid"] = $test_id; 
             $bool = db("platform")->where('id', $request->only(["id"])["id"])->update($data);
-            
+           
             if ($bool) {
                 $this->success("编辑成功", url("admin/platform_advertisement/platform_business_index"));
             } else {
@@ -213,26 +218,115 @@ class  PlatformAdvertisement extends  Controller{
      * 郭杨
      */
     public function platform_business_search(){
-        $platform = input('platform');    //店铺名称
+        $shop_name = input('platform');    //店铺名称
         $name = input('name');           //广告名称
-        $location = input('location');  //广告位置
+        $pid = input('keys');      //广告位置
         $status = input('status');     //广告状态
 
 
-        if ((!empty($platform)) && (!empty($name)) && (!empty($location)) && (!empty($status)) ) {
-            $activ = db("platform")
-                ->where("shop_name", "like", "%" . $platform . "%")
-                ->whereOr("name", "like", "%" . $name . "%")
-                ->whereOr("location", "like", "%" . $location . "%")
-                ->whereOr("status", "like", "%" . $status . "%")
-                ->select();
-        }else{
-            $activ = db("platform")->select();
+        if ((!empty($shop_name)) && (!empty($name)) && (!empty($pid)) && (!empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        }else if ((!empty($shop_name)) && (empty($name)) && (!empty($pid)) && (!empty($status))){
+            $data = db("platform")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select();
+                    $platform = foreach_pid($data);
+        }else if ((!empty($shop_name)) && (!empty($name)) && (empty($pid)) && (!empty($status))){
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select();
+                    $platform = foreach_pid($data);
+        }else if ((!empty($shop_name)) && (!empty($name)) && (!empty($pid)) && (empty($status))){
+            $data = db("platform")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->select();
+                    $platform = foreach_pid($data);
+        } else if ((!empty($shop_name)) && (!empty($name)) && (!empty($pid)) && (!empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((!empty($shop_name)) && (empty($name)) && (empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((empty($shop_name)) && (!empty($name)) && (empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((empty($shop_name)) && (empty($name)) && (!empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((empty($shop_name)) && (empty($name)) && (empty($pid)) && (!empty($status)) ) {
+            $data = db("platform")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((!empty($shop_name)) && (!empty($name)) && (empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((!empty($shop_name)) && (empty($name)) && (!empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((!empty($shop_name)) && (empty($name)) && (empty($pid)) && (!empty($status)) ) {
+            $data = db("platform")
+                    ->where("shop_name", "like", "%" . $shop_name . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((empty($shop_name)) && (!empty($name)) && (!empty($pid)) && (empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("pid", "like", "%" . $pid . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
+        } else if ((empty($shop_name)) && (!empty($name)) && (empty($pid)) && (!empty($status)) ) {
+            $data = db("platform")
+                    ->where("name", "like", "%" . $name . "%")
+                    ->where("status", "like", "%" . $status . "%")
+                    ->select(); 
+                    $platform = foreach_pid($data);
         }
-        halt($activ);
-        if(!empty($activ)){
-            return view('platform_business_index',['platform'=>$activ]);
-        }
+        $all_idents = $platform;//这里是需要分页的数据
+        $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
+        $listRow = 20;//每页20行记录
+        $showdata = array_slice($all_idents, ($curPage - 1) * $listRow, $listRow, true);// 数组中根据条件取出一段值，并返回
+        $platform = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
+            'var_page' => 'page',
+            'path' => url('admin/platform_advertisement/platform_business_index'),//这里根据需要修改url
+            'query' => [],
+            'fragment' => '',
+        ]);
+        $platform->appends($_GET);
+        $this->assign('platforme', $platform->render());
+        return view('platform_business_index',['platform'=>$platform]);
+        
+
     }
 
 }

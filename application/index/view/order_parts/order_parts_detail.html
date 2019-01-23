@@ -108,55 +108,19 @@
         <button class="select-reason-btn">确定</button>
     </div>
 
-    <!-- 支付弹窗 -->
-    <form name=alipayment action="{:url('index/Apppay/index_parts_aliPay')}" method="post">
-        <div class="alipay-pop">
-            <header>
-                <a href="javascript:;" class="close-alipay">×</a>
-                <h3 class="alipay-title">确认付款</h3>
-            </header>
-            <div class="middle_box">
-                <div class="price-box">
-                    <span>￥</span>
-                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="" readonly>
-                </div>
-                <ul class="content">
-                    <li>
-                        商户订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="" readonly>
-                    </li>
-                    <li>
-                        订单名称: <input id="WIDsubject" name="WIDsubject" value="" readonly>
-                    </li>
-                    <li>
-                        商品描述: <input id="WIDbody" name="WIDbody" value="" readonly>
-                    </li>
-                    <li>
-                        付款方式: <input id="WIDway" name="WIDway" class="widway" value="微信支付" readonly><i class="spr icon-more"></i>
-                    </li>
-                </ul>
-            </div>
-            <button type="submit" class="alipay-submit">立即付款</button>
-        </div>
-    </form>
     <!-- 选择支付方式 -->
     <div class="chose-payment">
         <header>
             <a href="javascript:;" class="spr chose-payment-back"></a>
             <h3 class="chose-title">选择支付方式</h3>
         </header>
-        <div class="method-div">
-            <div class="icon-div">
-                <img src="__STATIC__/index/image/money.png">
-            </div>
-            <p>余额支付</p>
-            <a href="javascript:;" class="spr check-a"></a>
-        </div>
-        <div class="method-div">
+        <div class="method-div" style="display: none;">
             <div class="icon-div">
                 <img src="__STATIC__/index/image/wechat.png">
             </div>
             <p>微信支付</p>
-            <a href="javascript:;" class="spr check-a icon-check"></a>
+            <!-- icon-check -->
+            <a href="javascript:;" class="spr check-a"></a>
         </div>
         <div class="method-div">
             <div class="icon-div">
@@ -165,10 +129,44 @@
             <p>支付宝支付</p>
             <a href="javascript:;" class="spr check-a"></a>
         </div>
+        <div class="method-div">
+            <div class="icon-div">
+                <img src="__STATIC__/index/image/money2.png">
+            </div>
+            <p>余额支付</p>
+            <a href="javascript:;" class="spr check-a"></a>
+        </div>
+    </div>
+    <!-- 输入余额密码弹窗 -->
+    <div class="balance-psd-pop" style="display: none;">
+        <span class="close-balance-pwd spr"></span>
+        <p class="balance-psd-title">支付密码</p>
+        <div class="input-container">
+            <div id="payPassword_container" class="alieditContainer clearfix" data-busy="0">
+                <div class="i-block" data-error="i_error">
+                    <div class="i-block six-password">
+                        <input class="i-text sixDigitPassword" id="payPassword_rsainput" type="password" autocomplete="off" required="required"
+                            name="payPassword_rsainput" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6"
+                            aria-required="true">
+                        <div tabindex="0" class="sixDigitPassword-box">
+                            <i style="width: .58rem; border-color: transparent;" class=""><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <span style="width: .58rem; left: 0px; visibility: hidden;" id="cardwrap" data-role="cardwrap"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="confirm-psd">确定</button>
     </div>
     
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/payment.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_detail.js"></script>
     <script>
         // 转换时间戳
@@ -229,7 +227,7 @@
                 })
             }
         }
-
+        var outTradeNo = 0;
         $.ajax({
             url: 'order_parts_detail',
             type: 'POST',
@@ -417,22 +415,8 @@
                 })
                 // 去付款 √
                 $('.to-payment-btn').click(function(){
-                    var outTradeNo = $('.order-num span').text();
-                    $.ajax({
-                        url: 'ios_api_alipay',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: {
-                            'order_num': outTradeNo,
-                        },
-                        success: function(res){
-                            console.log(res);
-                            Android.alipay(res.data);
-                        },
-                        error: function(){
-                            console.log('error');
-                        }
-                    })
+                    outTradeNo = $('.order-num span').text();
+                    showSelectMethod();
                 })
                 // 去评价
                 $('.evaluation-btn').click(function(){
@@ -504,6 +488,125 @@
                 console.log('error');
             }
         })
+
+        // 选择支付方式
+        $('.method-div').click(function(){
+            var u = navigator.userAgent;
+            $(this).siblings().find('.check-a').removeClass('icon-check');
+            $(this).find('.check-a').addClass('icon-check');
+            backMethod();
+            var $index = $(this).index();
+            switch ($index){
+                case 1:
+                    //用户选择微信支付，发送订单号给后台
+                    (function(){
+                        return $.ajax({
+                            url: 'app_wxpay',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'order_num': outTradeNo
+                            }
+                        })
+                    })().then(function(res){
+                        console.log(res.responseData);
+                        if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                            //接受支付宝签名 发送给android
+                            Android.wxpay(JSON.stringify(res.responseData.app_response));
+                        }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
+                            //接受支付宝签名 发送给ios
+                            alipay(JSON.stringify(res.responseData));
+                        }
+                    })
+                    break;
+                case 2:
+                    //用户选择支付宝支付，发送订单号给后台
+                    (function(){
+                        return $.ajax({
+                            url: 'ios_api_alipay',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'order_num': outTradeNo
+                            }
+                        })
+                    })().then(function(res){
+                        console.log(res);
+                        if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                            //接受支付宝签名 发送给android
+                            Android.alipay(res.data);
+                        }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
+                            //接受支付宝签名 发送给ios
+                            alipay(res.data);
+                        }
+                    })
+                    break;
+                case 3:
+                    //用户选择余额支付，发送订单号给后台
+                    showBalance();
+                    break;
+            }
+        })
+
+        // 取消支付
+        $('.chose-payment-back').click(function(){
+            backMethod();
+        })
+        $('.confirm-psd').click(function(){
+            var psd = $('#payPassword_rsainput').val();
+            if(psd !== ''){
+                (function(){
+                    return $.ajax({
+                        url: 'parts_balance_payment',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'order_num': outTradeNo,
+                            'passwords': psd
+                        }
+                    })
+                })().then(function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        layer.open({
+                            skin: 'msg',
+                            content: '支付成功',
+                            time: .8
+                        })
+                        setTimeout(function(){
+                            location.href = 'order_wait_deliver';
+                        }, 1000);
+                    }else if(res.status == 3){
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: .8
+                        })
+                        setTimeout(function(){
+                            $('.balance-psd-pop').hide();
+                            $('.chose-payment').css({'bottom': '0'});
+                        }, 1000)
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: .8
+                        })
+                    }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请输入密码',
+                    time: 1
+                })
+            }
+        })
+        $('.close-balance-pwd').click(function(){
+            $('.balance-psd-pop').hide();
+            $('.chose-payment').css({'bottom': '0'});
+        })
+
         function alipayCallback(res){
             if(res.resultStatus == '6001'){
                 location.href = 'order_parts_wait_pay';
@@ -511,6 +614,15 @@
                 location.href = 'order_wait_deliver';
             }
         }
+        function wxpayCallback(res){
+            if(res !== undefined && res == '0'){
+                location.href = 'order_wait_deliver';
+            }else if(res == '-2'){
+                location.href = 'order_parts_wait_pay';
+            }
+        }
+
+
         var lsearch = location.search;
         if(lsearch.indexOf('?') !== -1){
             var pageNumber = lsearch.substr(1).split('=')[1];

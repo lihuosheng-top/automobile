@@ -130,9 +130,9 @@
                 <img src="__STATIC__/index/image/banner2.jpg">
             </a> -->
         </div>
-        <!-- 热门推荐 -->
+        <!-- 活动商家 -->
         <div class="hot_recommend">
-            <p class="subtitle">热门推荐</p>
+            <p class="subtitle">活动商家</p>
             <div class="recommend_goods">
                 <!-- <div class="recommend_top">
                     <a href="javascript:;">
@@ -292,48 +292,7 @@
             <!-- <div class="year-txt">2018年款</div> -->
         </div>
     </div>
-    <!-- 定位城市 -->
-    <!-- <div class="geclocation-pop" style="display:none;">
-        <div class="container"></div>
-        <header class="geclocation-title">
-            <a href="javascript:;" class="spr gec-back"></a>
-            <h3 class="title-txt">选择城市</h3>
-        </header>
-        <div class="gec-cont">
-            <div>
-                <div class="city-search">
-                    <i class="spr icon_search"></i>
-                    <input type="text" name="gec-search-input" class="search-input" placeholder="输入城市名查询">
-                </div>
-                <div class="gec-curr-city">
-                    <div class="gec-curr-title">定位城市</div>
-                    <div class="gec-curr-box">
-                        <i class="gec-curr-icon spr"></i>
-                        <span class="gec-curr-txt"></span>
-                    </div>
-                </div>
-                <div class="hot-city">
-                    <div class="hot-city-title">热门城市</div>
-                    <ul class="hot-city-ul">
-                        <li class="hot-city-li">
-                            <span>深圳市</span>
-                        </li>
-                    </ul>
-                </div>
-                <div id="gec-letter" class="gec-letter"></div>
-                <div class="gec-sort-box">
-                    <div class="gec-sort-list">
-                        <div class="gec-city-name">遵义市</div>
-                    </div>
-                </div>
-                <div class="gec-initials">
-                    <ul>
-                        <li><img src="__STATIC__/index/image/icon2.png"></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div> -->
+    
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/jquery.charfirst.pinyin.js"></script>
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
@@ -455,7 +414,6 @@
                 getAdvertisment(threeAdress);
                 var userLngLat = [e.lon, e.lat];
                 // 存储地址 经纬度
-                alert(district);
                 setCookie('threeAdress', threeAdress, 1000);
                 setCookie('lngLat', userLngLat, 1000);
                 setCookie('district', district, 1000);
@@ -582,7 +540,7 @@
                                             <img src="uploads/`+res.data.fixed[0].advert_picture+`">
                                         </a>`
                         $('.banner').html('').html(indexFixStr);
-                        // 热门推荐
+                        // 活动商家
                         var data = res.data;
                         var hotStr = `<div class="recommend_top">
                                         <a href="`+(data.hot_one[0].url==null?'javascript:;':data.hot_one[0].url)+`">

@@ -64,13 +64,19 @@
 			
 						</div>
 					</div>
-					<div class="seach_list">
-						<div class="seach_laber">广告位置：</div>
-						<div class="seach_input">
-							<input type="text" name="keys" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-			
-						</div>
-					</div>
+                    <div class="seach_list">
+                        <div class="seach_laber">广告位置：</div>
+                        <div class="seach_input">
+                                <select name="keys" id="admin_status">
+                                        <option value="" selected="">请选择</option>
+                                        <option value="18" >首页轮播</option>
+                                        <option value="19">首页固定</option>
+                                        <option value="20">热门推荐</option>
+                                        <option value="21">配件商城</option>
+                                        <option value="27">配件商城优惠推荐</option>
+                                    </select>
+                        </div>
+                    </div>
 			
 					<button class="layui-btn" type="submit" id="seach">立即搜索</button>
 				</div>

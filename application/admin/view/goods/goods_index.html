@@ -204,14 +204,16 @@
 						{volist name="year" id="val"}
 						{if $value.goods_year_id == $val.id}
 						<td><input type="checkbox" data-text="{$val.year}" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加" data-action="{$value.putaway_status}"></td>
+						{else}
+						<td><input type="checkbox" data-text="{$val.year}" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加" data-action="{$value.putaway_status}"></td>
 						{/if}
 						{/volist}
 						<td>{$value.id +1000000}</td>
-						{volist name="store" id="shop"}
-						{if $value.store_id == $shop.store_id}
-						<td  ><div  class="shop_name overflow">{$shop.store_name}</div></td>
+						{if !empty($value.store_name)}
+						<td><div class="shop_name overflow">{$value.store_name}</div></td>
+						{else}
+						无
 						{/if}
-						{/volist}
 						<td style="width: 50px; height: 50px;"><img src="__UPLOADS__/{$value.goods_show_images}" /></td>
 						<td ><div class="overflow" >
 							{$value.goods_name}
@@ -231,11 +233,11 @@
 							{if $value.goods_status == 0}
 							{volist name="year" id="val"}
 							{if $value.goods_year_id == $val.id}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}" data-text="{$val.year}" data-action="{$value.putaway_status}" data-value="{$shop.store_name}" data-title="{$val.money}"  />
+							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}" data-text="{$val.year}" data-action="{$value.putaway_status}" data-value="{$value.store_name}" data-title="{$val.money}"  />
 							{/if}
 							{/volist}
 							{else /}
-							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}" data-action="{$value.putaway_status}" data-value="{$shop.store_name}" data-title="1" />
+							<input type="checkbox" class="Status" name="show" value="{$value.goods_status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}" data-action="{$value.putaway_status}" data-value="{$value.store_name}" data-title="1" />
 							{/if}
 						</td>
 						<td>
@@ -270,7 +272,7 @@
 							{/if}
 						</td>
 						<td style="width: 180px;">
-							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/look',['id'=>$value.id])}"> 查看详情</a>
+                            <a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/look',['id'=>$value.id])}"> 查看详情</a>
 							<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Goods/edit',['id'=>$value.id])}">编辑</a>
 							<a href="{:url('admin/Goods/del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"> 删除</a>
 						</td>

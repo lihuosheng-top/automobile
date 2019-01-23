@@ -109,7 +109,7 @@ $.ajax({
                 },
                 success: function(res){
                     console.log(res);
-                    location.href = 'order_parts_detail'; 
+                    location.href = 'order_parts_detail?page=3'; 
                 },
                 error: function(){
                     console.log('error');

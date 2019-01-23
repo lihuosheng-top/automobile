@@ -163,27 +163,39 @@ class Advertisement extends Controller
            {
             if($test[$m]["postid"]==5){
                 $hot_ones[] = $p;
+                if(count($hot_ones) > 0){
                 $hot_one = array_slice($hot_ones,0,1);
+                }
             }
             if($test[$m]["postid"]==6){
                 $hot_twos[] = $p;
+                if(count($hot_twos)>0){
                 $hot_two = array_slice($hot_twos,0,1);
+                }
             }
             if($test[$m]["postid"]==7){
                 $hot_threes[] = $p;
+                if(count($hot_threes)>0){
                 $hot_three = array_slice($hot_threes,0,1);
+                }
             }
             if($test[$m]["postid"]==8){
                 $hot_fours[] = $p;
+                if(count($hot_fours)>0){
                 $hot_four = array_slice($hot_fours,0,1);
+                }
             }
             if($test[$m]["postid"]==9){
                 $hot_fives[] = $p;
+                if(count($hot_fives)>0){
                 $hot_five = array_slice($hot_fives,0,1);
+                }
             }
             if($test[$m]["postid"]==10){
                 $hot_sixs[] = $p;
+                if(count($hot_sixs)>0){
                 $hot_six = array_slice($hot_sixs,0,1);
+                }
             }
                
            }
@@ -320,6 +332,47 @@ class Advertisement extends Controller
                 }
             }
         }
+
+
+    /**
+     * [汽车广告热门店铺显示]
+     * 郭杨
+     */
+    public function hot_index()
+    {
+        $hot_data = Db::name("platform")->where("status", 1)->where("pid",20)->order("start_time desc")->select();
+        if(!empty($hot_data)){
+            return ajax_success("获取广告成功",$hot_data);
+        } else {
+            return ajax_error("暂无广告显示");
+        }
+    }
+
+
+    // public function returnSquarePoint($lng, $lat,$distance=5)
+    // {
+    //         $earthdata = 6371;//地球半径,平均半径为6371km
+    //         $dlng =  2 * asin(sin($distance / (2 * $earthdata)) / cos(deg2rad($lat)));
+    //         $dlng = rad2deg($dlng);
+    //         $dlat = $distance/$earthdata;
+    //         $dlat = rad2deg($dlat);
+    //             'left_top'=>array('lat'=>$lat + $dlat,'lng'=>$lng-$dlng),
+    //             'right_top'=>array('lat'=>$lat + $dlat, 'lng'=>$lng + $dlng),
+    //             'left_bottom'=>array('lat'=>$lat - $dlat, 'lng'=>$lng - $dlng),
+    //             'right_bottom'=>array('lat'=>$lat - $dlat, 'lng'=>$lng + $dlng)
+    //         ]
+    //         
+    //     
+    //     //使用此函数计算得到结果后，带入sql查询。
+    //   //  $point = $this->returnSquarePoint($lng,$lat,5);        //计算经纬度的周围某段距离的正方形的四个点
+    //   //  $right_bottom_lat = $point['right_bottom']['lat'];   //右下纬度
+    //   //  $left_top_lat = $point['left_top']['lat'];           //左上纬度
+    //    // $left_top_lng = $point['left_top']['lng'];           //左上经度
+    //     //$right_bottom_lng = $point['right_bottom']['lng'];   //右下经度
+    //    // $sql = "SELECT * FROM `表名` WHERE LastGpsWei<>0 AND latitude>$right_bottom_lat AND latitude<$left_top_lat AND longitude>$left_top_lng AND longitude<$right_bottom_lng";
+    //     //return $arr;
+    // }
+    
 
 
 }

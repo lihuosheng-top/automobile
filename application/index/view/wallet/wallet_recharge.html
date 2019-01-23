@@ -60,7 +60,7 @@
             <a href="javascript:;" class="spr chose-payment-back"></a>
             <h3 class="chose-title">选择支付方式</h3>
         </header>
-        <div class="method-div">
+        <div class="method-div" style="display: none;">
             <div class="icon-div">
                 <img src="__STATIC__/index/image/wechat.png">
             </div>
@@ -147,6 +147,25 @@
             if (res !== undefined && res.resultStatus == '9000') {
                 location.href = 'wallet_index';
             }else if(res.resultStatus == '6001'){
+                (function(){
+                    return $.ajax({
+                        url: 'wallet_recharge_del',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'recharge_id': cancelOrderNum
+                        }
+                    })
+                })().then(function(res){
+                    console.log(res);
+                    location.reload();
+                })
+            }
+        }
+        function wxpayCallback(res){
+            if(res !== undefined && res == '0'){
+                location.href = 'wallet_index';
+            }else if(res == '-2'){
                 (function(){
                     return $.ajax({
                         url: 'wallet_recharge_del',

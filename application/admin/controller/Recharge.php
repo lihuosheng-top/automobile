@@ -199,7 +199,7 @@ class Recharge extends Controller{
                     $status =$request->only("status")["status"];
                     $recharge_describe =$request->only("recharge_describe")["recharge_describe"];
                     if($status==2){
-                        $this->error("请选择审核或者不通过");
+                        $this->error("请选择审核通过或者不通过");
                     }else if($status==1){
                         $data =[
                             "recharge_describe"=>$recharge_describe,
@@ -208,6 +208,16 @@ class Recharge extends Controller{
                         ];
                         $res =Db::name("recharge_reflect")->where("id",$id)->update($data);
                         if($res){
+                            $business_wallet_data =Db::name("recharge_reflect")
+                                ->where("id",$id)
+                                ->field("wallet_income_ids,wallet_expenditure_ids")
+                                ->find();
+                            if(!empty($business_wallet_data["wallet_income_ids"])){
+                                $id_arr =explode(",",$business_wallet_data["wallet_income_ids"]);
+                                foreach ($id_arr as $k =>$v){
+                                    Db::name("business_wallet")->where("id",$v)->update(["status"=>2]);
+                                }
+                            }
                             $this->success("审核成功","admin/Recharge/index");
                         }else{
                             $this->error("审核失败");
@@ -221,19 +231,34 @@ class Recharge extends Controller{
                         ];
                         $res =Db::name("recharge_reflect")->where("id",$id)->update($data);
                         if($res){
-
                             $money =Db::name("recharge_reflect")->where("id",$id)->find();
                             $time=date("Y-m-d",time());
                             $v=explode('-',$time);
                             $time_second=date("H:i:s",time());
                             $vs=explode(':',$time_second);
                             $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$money["user_id"]; //订单编号
-                            //用户钱包退回资金
+                            //修改回状态
+                            if(!empty( $money["wallet_income_ids"])){
+                                $id_arr =explode(",", $money["wallet_income_ids"]);
+                                foreach ($id_arr as $k =>$v){
+                                    Db::name("business_wallet")->where("id",$v)->update(["status"=>1]);
+                                }
+                            }
+                            //用户修改状态
+                            if(!empty($money["wallet_expenditure_ids"])){
+                                $id_arr =explode(",", $money["wallet_expenditure_ids"]);
+                                foreach ($id_arr as $k =>$v){
+                                    Db::name("business_wallet")->where("id",$v)->update(["is_deduction"=>1]);
+                                }
+                            }
+                            //车主用户钱包
                             $old_wallet =Db::name("user")->where("id",$money["user_id"])->value("user_wallet");
-                            $user_data=[
-                                "user_wallet"=>$old_wallet + $money["operation_amount"],
-                            ];
-                            Db::name("user")->where("id",$money["user_id"])->update($user_data);
+                            //商家钱包
+                            $new_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " .  $money["user_id"];
+                            $business_wallets = Db::name("business_wallet")
+                                ->where($new_condition)
+                                ->sum("money");
+                            $user_wallet=$old_wallet + $business_wallets;
                             //进行消费记录
                             $wallet_data =[
                                 "user_id"=>$money["user_id"],
@@ -245,6 +270,8 @@ class Recharge extends Controller{
                                 "title"=>"提现退回金额",
                                 "order_nums"=>$parts_order_number,//订单编号
                                 "pay_type"=>"平台退回", //支付宝微信支付
+                                "wallet_balance"=>$user_wallet,//钱包余额（车主+商家）
+                                "is_business"=>2,//判断是车主消费还是商家消费1车主消费，2商家消费
                             ];
                             Db::name("wallet")->insert($wallet_data);
                             $this->success("审核成功","admin/Recharge/index");

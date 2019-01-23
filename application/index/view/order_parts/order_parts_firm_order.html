@@ -88,12 +88,6 @@
         .company-invoice-identify{display: flex;}
         .company-invoice-identify textarea{flex: 1; font-size: .3rem; resize: none; border: 0; outline: none;}
 
-        /* 余额支付密码弹窗 */
-        .balance-psd-pop{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: .5rem; background-color: #fff; z-index: 999; border-radius: .15rem;}
-        .balance-psd-pop .close-balance-pwd{position: absolute; right: 5px; top: 5px; width: .4rem; height: .4rem; background-position: .05rem -1.15rem;}
-        .balance-psd-pop .balance-psd-title{text-align: center; font-size: .35rem;}
-        .balance-psd-pop .input-container{display: flex;}
-        .balance-psd-pop .input-container .psdinput{border: 1px solid #eee; width: .8rem; height: .8rem; text-align: center; font-size: .8rem;}
     </style>
 </head>
 <body>
@@ -184,13 +178,26 @@
         <span class="close-balance-pwd spr"></span>
         <p class="balance-psd-title">支付密码</p>
         <div class="input-container">
-            <input type="password" maxlength="1" class="psdinput">
-            <input type="password" maxlength="1" class="psdinput">
-            <input type="password" maxlength="1" class="psdinput">
-            <input type="password" maxlength="1" class="psdinput">
-            <input type="password" maxlength="1" class="psdinput">
-            <input type="password" maxlength="1" class="psdinput">
+            <div id="payPassword_container" class="alieditContainer clearfix" data-busy="0">
+                <div class="i-block" data-error="i_error">
+                    <div class="i-block six-password">
+                        <input class="i-text sixDigitPassword" id="payPassword_rsainput" type="password" autocomplete="off" required="required"
+                            name="payPassword_rsainput" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6"
+                            aria-required="true">
+                        <div tabindex="0" class="sixDigitPassword-box">
+                            <i style="width: .58rem; border-color: transparent;" class=""><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <span style="width: .58rem; left: 0px; visibility: hidden;" id="cardwrap" data-role="cardwrap"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <button class="confirm-psd">确定</button>
     </div>
 
     <!-- 选择支付方式 -->
@@ -199,7 +206,7 @@
             <a href="javascript:;" class="spr chose-payment-back"></a>
             <h3 class="chose-title">选择支付方式</h3>
         </header>
-        <div class="method-div">
+        <div class="method-div" style="display: none;">
             <div class="icon-div">
                 <img src="__STATIC__/index/image/wechat.png">
             </div>
@@ -290,48 +297,62 @@
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/order_parts/order_parts_firm_order.js"></script>
+    <script src="__STATIC__/index/js/payment.js"></script>
     <script>
-        $('.close-balance-pwd').click(function(){
-            $('.mask').hide();
-            $('.balance-psd-pop').hide();
+        $('.confirm-psd').click(function(){
+            var psd = $('#payPassword_rsainput').val();
+            if(psd !== ''){
+                (function(){
+                    return $.ajax({
+                        url: 'parts_balance_payment',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'order_num': cancelPayOrderNum,
+                            'passwords': psd
+                        }
+                    })
+                })().then(function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        layer.open({
+                            skin: 'msg',
+                            content: '支付成功',
+                            time: .8
+                        })
+                        setTimeout(function(){
+                            location.href = 'order_wait_deliver';
+                        }, 1000);
+                    }else if(res.status == 3){
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: .8
+                        })
+                        setTimeout(function(){
+                            $('.balance-psd-pop').hide();
+                            $('.chose-payment').css({'bottom': '0'});
+                        }, 1000)
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: .8
+                        })
+                    }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请输入密码',
+                    time: 1
+                })
+            }
         })
-        // function balanceEvent(order_num){
-        //     var reg = /^1[34578]\d{9}$/;
-        //     var aInput = document.getElementsByClassName('psdinput');
-        //     for(var i = 0; i < aInput.length; i++){
-        //         (function(i){
-        //             aInput[i].oninput = function(){
-        //                 if(aInput[i].value !== ''){
-        //                     if(aInput[i+1]){
-        //                         aInput[i+1].focus();
-        //                     }
-        //                     if(i == 5){
-        //                         var password = aInput[0].value+aInput[1].value+aInput[2].value+aInput[3].value+aInput[4].value+aInput[5].value;
-        //                         $.ajax({
-        //                             url: 'parts_balance_payment',
-        //                             dataType: 'JSON',
-        //                             type: 'POST',
-        //                             data: {
-        //                                 'passwords': password,
-        //                                 'order_num': order_num
-        //                             },
-        //                             success: function(res){
-        //                                 console.log(res);
-        //                             },
-        //                             error: function(res){
-        //                                 console.log(res.status, res.statusText);
-        //                             }
-        //                         })
-        //                     }
-        //                 }else{
-        //                     if(aInput[i-1]){
-        //                         aInput[i-1].focus();
-        //                     }
-        //                 }
-        //             }
-        //         })(i)
-        //     }
-        // }
+        $('.close-balance-pwd').click(function(){
+            $('.balance-psd-pop').hide();
+            $('.chose-payment').css({'bottom': '0'});
+        })
     </script>
     <script>
         var cancelPayOrderNum = '', storeIdArr = [], stock;
@@ -487,8 +508,7 @@
                             })
                         })().then(function(res){
                             //选择支付方式弹窗
-                            $('.mask').show();
-                            $('.chose-payment').animate({'bottom': '0'});
+                            showSelectMethod();
                             console.log(res);
                             // 存储订单号
                             cancelPayOrderNum = res.data.parts_order_number;
@@ -565,9 +585,10 @@
                             })
                         })().then(function(res){
                             console.log(res);
+                            // 存储订单号
+                            cancelPayOrderNum = res.data.parts_order_number;
                             //选择支付方式弹窗
-                            $('.mask').show();
-                            $('.chose-payment').animate({'bottom': '0'});
+                            showSelectMethod();
                         })
                     })
                 }
@@ -580,7 +601,7 @@
         // 隐藏选择支付方式弹窗
         function backMethod(){
             $('.mask').hide();
-            $('.chose-payment').animate({'bottom': '-100%'});
+            $('.chose-payment').css({'bottom': '-100%'});
         }
         // 多店铺 取消付款 
         function cancelPayAjax(storeId, orderNum){
@@ -654,10 +675,7 @@
                     break;
                 case 3:
                     //用户选择余额支付，发送订单号给后台
-                    $('.mask').show();
-                    $('.balance-psd-pop').show();
-                    $('.psdinput:first').focus();
-                    // balanceEvent(cancelPayOrderNum);
+                    showBalance();
                     break;
             }
         })
@@ -668,15 +686,19 @@
         })
         // 支付宝支付 回调
         function alipayCallback(res){
-            if(res !== undefined && res.resultStatus == '6001'){
-                cancelPayAjax(storeIdArr,cancelPayOrderNum);
-            }else if(res.resultStatus == '9000'){
+            if(res !== undefined && res.resultStatus == '9000'){
                 location.href = 'order_wait_deliver';
+            }else{
+                cancelPayAjax(storeIdArr, cancelPayOrderNum);
             }
         }
-        // function wxpayCallback(res){
-
-        // }
+        function wxpayCallback(res){
+            if(res !== undefined && res == '0'){
+                location.href = 'order_wait_deliver';
+            }else if(res == '-2'){
+                cancelPayAjax(storeIdArr, cancelPayOrderNum);
+            }
+        }
     </script>
 </body>
 </html>

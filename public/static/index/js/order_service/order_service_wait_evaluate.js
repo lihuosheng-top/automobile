@@ -51,7 +51,7 @@ $.ajax({
              // 查看详情
              $('.reservation-info-container').click(function(){
                 var orderNum = $(this).parents('.reservation-tab').find('.order-num span').text();
-                detailAndEva('order_service_save_record', orderNum, 'order_service_detail');
+                detailAndEva('order_service_save_record', orderNum, 'order_service_detail?page=4');
             })
             // 删除订单
             $('.del-order-btn').click(function(){

@@ -90,8 +90,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">广告链接：</label>
             <div class="layui-input-block">
-                <input type="text" name="url" value="{$value.url}" lay-verify="title" class="layui-input" disabled="disabled">
-
+                <input type="text" name="url" value="{$value.shop_name}"lay-verify="title" class="layui-input" disabled="disabled">
+                
             </div>
         </div>
 
@@ -128,8 +128,8 @@
         <div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
-				<div id="goods_text">
-					<script id="editor" type="text/plain" name="" style="width:800px;height:500px;" ></script>
+				<div id="advert_text">
+					<script id="editor" type="text/plain" name="" style="width:800px;height:500px;" >{$value.advert_text}</script>
 				</div>
 			</div>
 		</div>
@@ -178,8 +178,7 @@
         <div class="layui-form-item">
                 <label class="layui-form-label">广告位置：</label>
                 <div class="layui-input-block">
-                    <select name="pid" id="admin_role" class="role_list">
-                           
+                    <select name="pid" id="admin_role" class="role_list">                        
                                 {foreach name="goods_liste" item="vl" key="abc"}
                                 {if $value.postid == $vl.id}
                                 <option value="{$vl.id}" selected="" class="aaa_{$abc}">{$vl.name}</option>
@@ -210,7 +209,7 @@
             <label class="layui-form-label">广告链接：</label>
             <div class="layui-input-block">
                 <input type="text" name="url" value="{$value.url}" lay-verify="title" class="layui-input">
-
+                <p style="color:#999999 ; ">如若更换链接店铺,请输入正确的店铺名</p>
             </div>
         </div>
         {if !empty($value.advert_picture)}
@@ -268,8 +267,8 @@
         <div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">商品描述：</label>
 			<div class="layui-input-block">
-				<div id="goods_text">
-					<script id="editor" type="text/plain" name="" style="width:800px;height:500px;" ></script>
+				<div id="advert_text">
+					<script id="editor" type="text/plain" name="advert_text" style="width:800px;height:500px;" >{$value.advert_text}</script>
 				</div>
 			</div>
 		</div>

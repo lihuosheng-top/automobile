@@ -452,7 +452,7 @@ class  SellMy extends Controller{
                 if(!empty($end_info)){
                     $ords =array();
                     foreach ($end_info as $vl){
-                        $ords[] =$vl["pay_time"];
+                        $ords[] =$vl["order_create_times"];
                     }
                     array_multisort($ords,SORT_DESC,$end_info);
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$end_info)));
@@ -2067,15 +2067,12 @@ class  SellMy extends Controller{
                         ->where($two_condition)
                         ->where("create_time","<",$two_weekds_ago)
                         ->sum("money");
-                    halt($moneys);
                     $pays_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
                     $business_wallet_pay =Db::name("business_wallet")
                         ->where($pays_condition)
                         ->where("create_time","<",time())
                         ->sum("money");
                     $tow_weeks_money =$moneys + $business_wallet_pay;
-
-
                     if(!empty($tow_weeks_money)){
                         $tow_weeks_money =round($tow_weeks_money,2);
                     }else{
@@ -2115,7 +2112,7 @@ class  SellMy extends Controller{
                     ->where($pays_condition)
                     ->where("create_time","<",time())
                     ->sum("money");
-                $money =$moneys + $business_wallet_pay;
+                $money =round($moneys + $business_wallet_pay,2);
             }else{
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
@@ -2198,6 +2195,7 @@ class  SellMy extends Controller{
                    "order_nums"=>$parts_order_number,//订单编号
                    "pay_type"=>"余额抵扣", //支付宝微信支付
                    "wallet_balance"=>$new_wallet, //余额
+                   "is_business"=>2,
                ];
                Db::name("wallet")->insert($wallet_data);
                exit(json_encode(array("status" => 1, "info" =>"提现成功")));

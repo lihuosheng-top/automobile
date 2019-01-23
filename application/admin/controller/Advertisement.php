@@ -96,9 +96,12 @@ class  Advertisement extends  Controller{
             $user_phone = Session::get("user_info");
             $id = $user_phone[0]["id"];
             $user = db("user")->where("phone_num",$user_phone[0]["phone"])->value("id");
-            $store_name = db("store")->where("user_id",$user)->value("store_name");
-            $store_id = db("store")->where("user_id",$user)->value("store_id");
-            $area = db("store")->where("user_id",$user)->value("store_city_address");
+            $store_data = db("store")->where("user_id",$user)->find(); //找到店铺信息
+            $longitude = $store_data["longitude"];
+            $latitude = $store_data["latitude"];
+            $store_name = $store_data["store_name"];
+            $store_id = $store_data["store_id"];
+            $area = $store_data["store_city_address"];
             $position = db("position") -> where("id",$data["pid"])->value("name");
             
 
@@ -125,6 +128,8 @@ class  Advertisement extends  Controller{
             $data["area"] = $area;
             $data["location"] = $position;
             $data["postid"] = $unset_id;
+            $data["longitude"] = $longitude;
+            $data["latitude"] = $latitude;
             $userId = db('accessories')->insertGetId($data);
 
             //插入平台列表
@@ -168,12 +173,13 @@ class  Advertisement extends  Controller{
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
             }
-            
-            $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
             $data["postid"] = $data["pid"];
+            $test_id = db("position") -> where("id",$data["pid"])->value("pid");
+            $data["pid"] = $test_id; 
+ 
+            $bool = db("accessories")->where('id', $request->only(["id"])["id"])->update($data);
             unset($data["id"]);
-            unset($data["pid"]);
-            
+
             $boole = db("platform")->where('pgd', $request->only(["id"])["id"])->update($data);
 
             if ($bool && $boole) {
@@ -232,16 +238,20 @@ class  Advertisement extends  Controller{
     public function accessories_business_search(){
         $ppd = input('key');          //广告名称
         $interest = input('keys');    //广告位置
-
-        if ((!empty($ppd)) || (!empty($interest))) {
-            $platform = db("accessories")->where("name", "like", "%" . $ppd . "%")->where("location", "like", "%" . $interest . "%")->select(); 
+        if ((!empty($ppd)) && (!empty($interest))) {
+            $data = db("accessories")->where("name", "like", "%" . $ppd . "%")->where("pid", "like", "%" . $interest . "%")->select(); 
             $platform = foreach_pid($data);
-            foreach ($platform as $key => $value) {
-                if ($value["id"]) {
-                    $platform[$key]["shop_name"] = $store_name;
-                }
+            } else if((!empty($ppd)) && (empty($interest))){
+                $data = db("accessories")->where("name", "like", "%" . $ppd . "%")->select(); 
+                $platform = foreach_pid($data);
+            } else if((empty($ppd)) && (!empty($interest))){
+                $data = db("accessories")->where("pid", "like", "%" . $interest . "%")->select();  
+                $platform = foreach_pid($data);
+            } else {
+                $data = db("accessories")->select();
+                $platform = foreach_pid($data);
             }
-        
+    
             $all_idents = $platform;//这里是需要分页的数据
             $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
             $listRow = 20;//每页20行记录
@@ -255,12 +265,7 @@ class  Advertisement extends  Controller{
             $platform->appends($_GET);
             $this->assign('platform', $platform->render());
             return view('accessories_business_advertising',['platform'=>$platform]);   
-        }else{
-            $activ = db("accessories")->paginate(2);
-        }
-        if(!empty($activ)){
-            return view('accessories_business_advertising',['platform'=>$activ]);
-        }
+        
     }
 
 }
