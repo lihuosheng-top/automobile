@@ -55,7 +55,7 @@
         <div class="layui-form-item ">
             <label class="layui-form-label"><span>*</span>商品分类名称</label>
             <div class="layui-input-block">
-                <input type="text" name="name" value="{$val.name}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+                <input type="text" name="name" value="{$val.name}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" required>
             </div>
         </div>
         <div class="layui-form-item">
@@ -83,7 +83,7 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label"><span>*</span>排序</label>
+            <label class="layui-form-label">排序</label>
             <div class="layui-input-block">
                 <input type="number" name="sort_number" value="{$val.sort_number}" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
             </div>

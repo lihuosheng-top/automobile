@@ -116,7 +116,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label"> <span style="color: red;">*</span>品牌名称：</label>
             <div class="layui-input-block">
-                <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+                <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" required>
             </div>
         </div>
         <div class="layui-form-item">
@@ -131,14 +131,14 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">品牌LOGO：</label>
+            <label class="layui-form-label"><span style="color: red;">*</span>品牌LOGO：</label>
             <div class="layui-input-block">
                 <div class="img-box full">
                     <section class=" img-section">
                         <div class="z_photo upimg-div clear">
                             <section class="z_file fl">
                                 <img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
-                                <input type="file" name="brand_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="1" />
+                                <input type="file" name="brand_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-id="1" required />
                             </section>
                         </div>
                     </section>
@@ -153,9 +153,9 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">品牌描述：</label>
+            <label class="layui-form-label"><span style="color: red;">*</span>品牌描述：</label>
             <div class="layui-input-block">
-                <textarea rows="10" cols="100" name="brand_describe"></textarea>
+                <textarea rows="10" cols="100" name="brand_describe" required></textarea>
             </div>
         </div>
         <div class="layui-form-item">
