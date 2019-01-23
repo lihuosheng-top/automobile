@@ -824,6 +824,16 @@ class Apppay extends Controller
      */
     public function wxpay_notifyurl(){
 
+        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $val = json_decode(json_encode($xml_data), true);
+        if($val["result_code"] == "SUCCESS" ){
+
+            $order_number = $val["out_trade_no"];
+            halt($order_number);
+
+        }
+
     }
 
 }
