@@ -2060,7 +2060,6 @@ class OrderParts extends Controller{
      * 陈绪
      */
     public function invoice_index(Request $request){
-
         if($request->isPost()){
             $invoice_money = $request->only(["invoice_money"])["invoice_money"];
             if(!empty($invoice_money)){
