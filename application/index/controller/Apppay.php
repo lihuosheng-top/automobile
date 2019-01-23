@@ -830,7 +830,7 @@ class Apppay extends Controller
         if($val["result_code"] == "SUCCESS" ){
 
             $order_number = $val["out_trade_no"];
-            halt($order_number);
+            file_put_contents(EXTEND_PATH."data.txt",$order_number);
 
         }
 
