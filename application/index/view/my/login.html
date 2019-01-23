@@ -36,7 +36,6 @@
             <h3 class="third-txt">第三方登录</h3>
             <a href="javascript:;" class="spr wechat"></a>
             <a href="javascript:;" class="spr QQ"></a>
-            <!-- <a href="javascript:;" class="spr weibo"></a> -->
         </div>
     </div>
     <!-- 找回密码 -->
@@ -84,12 +83,37 @@
             <h3 class="third-txt">第三方登录</h3>
             <a href="javascript:;" class="spr wechat"></a>
             <a href="javascript:;" class="spr QQ"></a>
-            <!-- <a href="javascript:;" class="spr weibo"></a> -->
         </div>
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/plugin/base64.js"></script>
     <script src="__STATIC__/index/js/login.js"></script>
+    <script>
+        $('.wechat').click(function(){
+            Android.wxLogin();
+        })
+        $('.QQ').click(function(){
+            Android.qqLogin();
+        })
+        function loginCallback(openid, headurl){
+            if(openid != null){
+                (function(){
+                    return $.ajax({
+                        url: 'aaa',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'openid': openid,
+                            'headurl': headurl
+                        }
+                    })
+                })().then(function(res){
+                    console.log(res);
+                })
+            }
+        }
+    </script>
 </body>
 
 </html>

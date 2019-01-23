@@ -59,7 +59,7 @@
             <a href="javascript:;" class="spr chose-payment-back"></a>
             <h3 class="chose-title">选择支付方式</h3>
         </header>
-        <div class="method-div">
+        <div class="method-div" style="display: none;">
             <div class="icon-div">
                 <img src="__STATIC__/index/image/wechat.png">
             </div>
@@ -174,10 +174,7 @@
                                     </div>
                                 </div>`
                         }else if(statusTxt == '待服务'){
-                            str += `<div class="button-box">
-                                        <button class="conf-receipt-btn">已服务</button>
-                                    </div>
-                                </div>`
+                            str += `</div>`
                         }else if(statusTxt == '待评价'){
                             str += `<div class="button-box">
                                         <button class="del-order-btn">删除订单</button>
@@ -205,10 +202,10 @@
                         btnEvent('确认取消订单？', 'ios_api_order_service_no_pay_cancel', id);
                     })
                     // 已服务 
-                    $('.conf-receipt-btn').click(function(){
-                        var id = $(this).parents('.reservation-tab').attr('id');
-                        btnEvent('服务已完成？', 'ios_api_order_service_already_served', id);
-                    })
+                    // $('.conf-receipt-btn').click(function(){
+                    //     var id = $(this).parents('.reservation-tab').attr('id');
+                    //     btnEvent('服务已完成？', 'ios_api_order_service_already_served', id);
+                    // })
                     // 删除订单
                     $('.del-order-btn').click(function(){
                         var id = $(this).parents('.reservation-tab').attr('id');

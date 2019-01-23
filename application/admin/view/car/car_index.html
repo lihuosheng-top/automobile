@@ -73,9 +73,9 @@
 					</td>
 					<td>
 						{if $value.status == 1}
-						<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
+						<input type="checkbox" class="Status" name="status" value="{$value.status}" data-id="{$value.id}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
 						{else}
-						<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
+						<input type="checkbox" class="Status" name="status" value="{$value.status}" data-id="{$value.id}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
 						{/if}
 					</td>
 					<td>
@@ -97,9 +97,9 @@
 					</td>
 					<td>
 						{if $value.status == 1}
-						<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
+						<input type="checkbox" class="Status" name="status" data-id="{$value.id}" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
 						{else}
-						<input type="checkbox" class="Status" name="status" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
+						<input type="checkbox" class="Status" name="status" data-id="{$value.id}" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked>
 						{/if}
 					</td>
 					<td>
@@ -238,7 +238,7 @@
 				var status = $(this).val();
 				$.ajax({
 					type: "POST",
-					url: "{:url('')}",
+					url: "{:url('admin/Car/status')}",
 					data: {
 						"id": id,
 						"status": status

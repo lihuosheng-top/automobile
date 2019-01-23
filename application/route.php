@@ -129,9 +129,10 @@ Route::group("",[
     "sell_my_index"=>"index/SellMy/sell_my_index",//卖家我的页面
     "store_order_save"=>"index/SellMy/store_order_save",//卖家暂存订单信息（方便点击到对应的订单信息）
     "store_order_get"=>"index/SellMy/store_order_get",//卖家读取信息（方便判断点击的是哪个按钮进来）
-
     "sell_service_order"=>"index/SellMy/sell_service_order",//卖家服务订单
     "sell_service_price_change"=>"index/SellMy/sell_service_price_change",//服务商面议修改价格
+    "sell_order_service_no_pay_cancel"=>"index/SellMy/sell_order_service_no_pay_cancel",//卖家取消订单接口(ajax)
+    "sell_order_service_already_served"=>"index/SellMy/sell_order_service_already_served",//卖家确认服务订单接口(ajax)
     "sell_parts_order"=>"index/SellMy/sell_parts_order",//卖家商品订单
     "sell_order_service_save_record"=>"index/SellMy/sell_order_service_save_record",//卖家进入服务订单详情需要保存的数据
     "sell_service_order_detail"=>"index/SellMy/sell_service_order_detail",//卖家服务订单详情
@@ -365,7 +366,7 @@ Route::group("",[
     "ios_api_order_service_return_goods"=>"index/OrderService/ios_api_order_service_return_goods",//退货页面接口（ajax）
     /*修改状态值*/
     "ios_api_order_service_no_pay_cancel"=>"index/OrderService/ios_api_order_service_no_pay_cancel",//买家未付款取消订单接口(ajax)
-    "ios_api_order_service_already_served"=>"index/OrderService/ios_api_order_service_already_served",//买家服务商订单买家确认服务（ajax）
+//    "ios_api_order_service_already_served"=>"index/OrderService/ios_api_order_service_already_served",//买家服务商订单买家确认服务（ajax）
     "service_del"=>"index/OrderService/service_del",//买家服务商订单删除（ajax）
 
     /*TODO:服务商订单状态结束*/
@@ -542,6 +543,7 @@ Route::group("admin",[
     "car_updata"=>"admin/Car/updata",
     "car_search"=>"admin/Car/search",
     "car_images"=>"admin/Car/images",
+    "car_status"=>"admin/Car/status",
 
 
     /*充值和提现*/

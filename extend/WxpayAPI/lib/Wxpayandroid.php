@@ -23,7 +23,7 @@ class Wxpayandroid
         $this->total_fee = intval($total_fee * 100);//订单的金额 1元
         $this->out_trade_no = $tade_no;   //订单号
         $this->body = $goods_pay_money;  //支付描述信息
-        $this->time_expire = date('YmdHis', time() + 86400);//订单支付的过期时间(eg:一天过期)
+        $this->time_expire = date('YmdHis', time() + 7200);//订单支付的过期时间(eg:一天过期)
         $this->notify_url = "automobile.siring.com.cn/wxpay_notifyurl";//异步通知URL(更改支付状态)
         //数据以JSON的形式返回给APP
         $app_response = $this->doPay();
@@ -89,21 +89,42 @@ class Wxpayandroid
     * @param string $api_key
     * @return string
     */
-    function getSign($obj, $api_key)
-    {
-        foreach ($obj as $k => $v)
-        {
-            $Parameters[strtolower($k)] = $v;
-        }
-            //签名步骤一：按字典序排序参数
-            ksort($Parameters);
-            $String = $this->formatBizQueryParaMap($Parameters, false);
-            //签名步骤二：在string后加入KEY
-            $String = $String."&key=".$api_key;
-            //签名步骤三：MD5加密
-            $result = strtoupper(md5($String));
-            return $result;
+    private function getSign($params) {
+        //签名步骤一：按字典序排序参数
+        ksort($params);
+        $string = $this->ToUrlParams($params);
+        //签名步骤二：在string后加入KEY
+        $string = $string . "&key=".$this->config['api_key'];
+        //签名步骤三：MD5加密
+        $string = md5($string);
+        //签名步骤四：所有字符转为大写
+        $result = strtoupper($string);
+        return $result;
     }
+
+
+
+    /**
+     * 发送给app签名
+     * @param object $obj
+     * @param string $api_key
+     * @return string
+     */
+    private function getSigns($params) {
+        //签名步骤一：按字典序排序参数
+        ksort($params);
+        $string = $this->formatBizQueryParaMap($params,false);
+        //签名步骤二：在string后加入KEY
+        $string = $string . "&key=".$this->config['api_key'];
+        halt($string);
+        //签名步骤三：MD5加密
+        $string = md5($string);
+        //签名步骤四：所有字符转为大写
+        $result = strtoupper($string);
+        return $result;
+    }
+
+
     /**
     * 获取指定长度的随机字符串
     * @param int $length
@@ -200,24 +221,47 @@ class Wxpayandroid
     * @param bool $urlencode
     * @return string
     */
-    function formatBizQueryParaMap($paraMap, $urlencode)
+
+    public function ToUrlParams($params)
     {
         $buff = "";
-        ksort($paraMap);
-        foreach ($paraMap as $k => $v)
+        foreach ($params as $k => $v)
         {
-            if($urlencode) {
+            if($k != "sign" && $v != "" && !is_array($v)){
+                $buff .= $k . "=" . $v . "&";
+            }
+        }
+
+        $buff = trim($buff, "&");
+        return $buff;
+    }
+
+
+
+
+
+    /**
+     *  作用：格式化参数，签名过程需要使用
+     */
+    public function formatBizQueryParaMap($paraMap, $urlencode){
+        $buff = "";
+        ksort($paraMap);
+        foreach ($paraMap as $k => $v){
+            if($urlencode){
                 $v = urlencode($v);
             }
-            $buff .= strtolower($k) . "=" . $v . "&";
+            $buff .= $k . "=" . $v . "&";
         }
-            $reqPar;
-            if (strlen($buff) > 0)
-            {
+        $reqPar;
+        if (strlen($buff) > 0){
             $reqPar = substr($buff, 0, strlen($buff)-1);
-            }
-            return $reqPar;
+        }
+        return $reqPar;
     }
+
+
+
+
     /**
     * XML转数组
     * @param unknown $xml
@@ -281,13 +325,14 @@ class Wxpayandroid
         $data["total_fee"]  = $this->total_fee;//总金额
         $data["time_expire"]  = $this->time_expire;//交易结束时间
         $data["trade_type"]  = "APP";//交易类型
-        $data["sign"]    = $this->getSign($data, $this->config['api_key']);//签名
+        $data["sign_type"] = "MD5";
+        $data["sign"]    = $this->getSign($data);//签名
         $xml  = $this->arrayToXml($data);
         $response = $this->postXmlCurl($xml, $url);
         //将微信返回的结果xml转成数组
         $responseArr = $this->xmlToArray($response);
         if(isset($responseArr["return_code"]) && $responseArr["return_code"]=='SUCCESS'){
-        return $this->getOrder($responseArr['prepay_id']);
+            return $this->getOrder($responseArr['prepay_id'],$responseArr["sign"]);
         }
         return $responseArr;
     }
@@ -296,15 +341,17 @@ class Wxpayandroid
     * @param int $prepayId:预支付交易会话标识
     * @return array
     */
-    public function getOrder($prepayId)
+    public function getOrder($prepayId,$sign)
     {
         $data["appid"]  = $this->config['appid'];
         $data["noncestr"] = $this->getRandChar(32);
         $data["partnerid"] = $this->config['mch_id'];
         $data["prepayid"] = $prepayId;
         $data["timestamp"] = time();
-        $data["sign"]  = $this->getSign($data, $this->config['api_key']);
+        //$data["sign"]  = $sign;
         $data["packagevalue"] = "Sign=WXPay";
+        //$data["api_key"] = $this->config['api_key'];
+        $data["sign"]  =  $this->getSigns($data);//签名
         return $data;
     }
     /**

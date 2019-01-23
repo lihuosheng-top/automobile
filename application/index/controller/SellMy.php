@@ -233,6 +233,133 @@ class  SellMy extends Controller{
         return view("sell_service_order");
     }
 
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:卖家（买家未付款）取消订单接口(ajax)
+     **************************************
+     * @param Request $request
+     */
+    public function  sell_order_service_no_pay_cancel(Request $request){
+        if($request->isPost()){
+            $order_id =$_POST['order_id'];
+            if(!empty($order_id)){
+                $res =Db::name('order_service')
+                    ->where('id',$order_id)
+                    ->update(['status'=>9]);
+                if($res){
+                    //取消订单退回积分到积余额
+                    $is_use_integral=Db::name("order_service")
+                        ->where('id',$order_id)
+                        ->field("integral_discount_setting_id,id,integral_deductible_num,service_order_number,user_id")
+                        ->find();
+                    if(!empty($is_use_integral)){
+//                            foreach ($is_use_integral as $keys=>$values){
+                        if(!empty($is_use_integral["integral_deductible_num"])){
+                            $user_info = Db::name("user")
+                                ->field("user_integral_wallet,user_integral_wallet_consumed")
+                                ->where("id",$is_use_integral["user_id"])->find();
+                            $update_data =[
+                                "user_integral_wallet"=>$user_info["user_integral_wallet"] + $is_use_integral["integral_deductible_num"],
+                                "user_integral_wallet_consumed"=>$user_info["user_integral_wallet_consumed"] - $is_use_integral["integral_deductible_num"]
+                            ];
+                            Db::name("user")->where("id",$is_use_integral["user_id"])->update($update_data); //积分增加
+                            $integral_data =[
+                                "user_id"=>$is_use_integral["user_id"],//用户ID
+                                "integral_operation"=>"+".$is_use_integral["integral_deductible_num"],//积分操作
+                                "integral_balance"=>$user_info["user_integral_wallet"] + $is_use_integral["integral_deductible_num"],//积分余额
+                                "integral_type"=> 1,//积分类型
+                                "operation_time"=>date("Y-m-d H:i:s") ,//操作时间
+                                "integral_remarks"=>"订单号:".$is_use_integral['service_order_number']."取消退回".$is_use_integral["integral_deductible_num"]."积分",//积分备注
+                            ];
+                            Db::name("integral")->insert($integral_data); //插入积分消费记录
+                        }
+//                            }
+                    }
+                    return ajax_success('订单取消成功',['status'=>1]);
+                }else{
+                    return ajax_error('订单取消失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商确认服务（确认收货）
+     **************************************
+     * @param Request $request
+     */
+    public function sell_order_service_already_served(Request $request){
+        if($request->isPost()){
+            $order_id =$_POST['order_id'];
+            if(!empty($order_id)){
+                $res =Db::name('order_service')
+                    ->where('id',$order_id)
+                    ->update(['status'=>5]);
+                if($res){
+                    //需要加入到商家余额里面
+                    $order_info = Db::name("order_service")
+                        ->field("service_real_pay,store_id,service_order_number,service_goods_name,pay_type_content,service_order_amount")
+                        ->where("id",$order_id)
+                        ->find();
+                    $business_id =Db::name("store")->where("store_id",$order_info["store_id"])->value("user_id");
+                    //                        TODO:对这个收入进行存储
+                    $business_data =[
+                        "user_id" =>$business_id,//商家用户id
+                        "create_time"=>time(), //时间戳
+                        "status"=>1, //状态值（1正常状态，-1申请提现但未处理，方便拒绝修改回状态，2提现已成功）
+                        "order_num"=>$order_info["service_order_number"],//订单编号
+                        "type" =>"服务商", //服务类型(配件商，服务商）
+                        "money"=>$order_info["service_order_amount"], //进账的钱
+                        "is_pay"=>1, //(判断是否1收入，还是-1支出）
+                        "is_deduction"=>1,//正常的流程
+                    ];
+                    $arr =Db::name("business_wallet")->insertGetId($business_data);
+                    //服务商配件商身份
+                    $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$business_id;
+                    $business_wallet =Db::name("business_wallet")
+                        ->where($arr_condition)
+                        ->sum("money");
+                    //商家原本的钱包余额
+                    //车主的身份
+                    $owner_wallet =Db::name("user")
+                        ->where("id",$business_id)
+                        ->value("user_wallet");
+                    if(!empty($business_wallet)){
+                        $new_wallet =$business_wallet +$owner_wallet;
+                    }else{
+                        $new_wallet =$owner_wallet;
+                    }
+                    //添加消费记录
+                    if($arr){
+                        $data=[
+                            "user_id"=>$business_id,
+                            "wallet_operation"=>$order_info["service_order_amount"],
+                            "wallet_type"=>1,
+                            "operation_time"=>date("Y-m-d H:i:s"),
+                            "wallet_remarks"=>"订单号：".$order_info['service_order_number']."，完成交易，收入".$order_info['service_order_amount']."元",
+                            "wallet_img"=>"index/image/money2.png",
+                            "title"=>$order_info["service_goods_name"],
+                            "order_nums"=>$order_info["service_order_number"],
+                            "pay_type"=>$order_info["pay_type_content"], //支付方式
+                            "wallet_balance"=>$new_wallet,
+                            "is_business"=>2,//判断是车主消费还是商家消费（1车主消费，2商家消费）
+                        ];
+                        Db::name("wallet")->insert($data);
+                    }
+                    return ajax_success('确认服务成功',['status'=>1]);
+                }else{
+                    return ajax_error('确认服务失败',['status'=>0]);
+                }
+            }
+        }
+    }
+
     /**
      **************李火生*******************
      * @param Request $request
