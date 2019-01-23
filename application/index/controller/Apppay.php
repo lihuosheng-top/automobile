@@ -556,10 +556,20 @@ class Apppay extends Controller
         //交易状态
         $trade_status = input('trade_status');
         if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
-            $data['status'] = 2;//状态值
-            $data['trade_no'] = $trade_no;//支付宝交易号
-            $data['pay_type_content'] = "支付宝";//支付宝交易号
             $condition['service_order_number'] = $out_trade_no;
+            //如果是面议，则直接改为待评价
+            $is_face = Db::name('order_service')->where($condition)->value("is_face");
+            if($is_face ==1){
+                //如果不是面议，则直接改为已付款
+                $data['status'] = 2;//状态值
+                $data['trade_no'] = $trade_no;//支付宝交易号
+                $data['pay_type_content'] = "支付宝";//支付宝交易号
+            }else{
+                //如果不是面议，则直接改为已付款
+                $data['status'] =5 ;//状态值
+                $data['trade_no'] = $trade_no;//支付宝交易号
+                $data['pay_type_content'] = "支付宝";//支付宝交易号
+            }
             $result = Db::name('order_service')->where($condition)->update($data);//修改订单状态,支付宝单号到数据库
             if ($result > 0) {
                 //进行钱包消费记录
