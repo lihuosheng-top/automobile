@@ -20,7 +20,7 @@ AMap.plugin([
     map.addControl(new AMap.ToolBar());
     var geolocation = new AMap.Geolocation({
         enableHighAccuracy: true,
-        timeout: 1000,
+        timeout: 100,
         buttonPosition: 'RB',
         buttonOffset: new AMap.Pixel(10, 20),
         zoomToAccuracy: true

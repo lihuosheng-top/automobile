@@ -64,7 +64,7 @@
             })
             var geolocation = new AMap.Geolocation({
                 enableHighAccuracy: true,
-                timeout: 1000
+                timeout: 100
             });
             geolocation.getCurrentPosition();
             AMap.event.addListener(geolocation, 'complete', function(res){
