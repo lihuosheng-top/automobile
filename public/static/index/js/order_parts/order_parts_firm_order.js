@@ -71,7 +71,7 @@ $.ajax({
                 $('.discount_pop').hide();
                 $('.place-order-pop').show();
                 // 开发票 使用积分
-                if($('.invoice').text() != '不开发票'){
+                if(!$('.poundage-li').is(':hidden')){
                     invoiceAjax(totalMoney, 1);
                 }else{
                     // 不开发票 使用积分
@@ -214,9 +214,9 @@ function invoiceAjax(money, key){
                     if($('.discount').text() != '不使用积分'){
                         // 抵扣金额
                         var choseD = $('.discount').text().split('￥')[1];
-                        $('.total-money').text(toFixed(parseFloat(money)-res.data.poundage+res.data.taxation-choseD, 2));
+                        $('.total-money').text(toFixed(parseFloat(money)-choseD, 2));
                     }else{
-                        $('.total-money').text(toFixed(parseFloat(money)-res.data.poundage+res.data.taxation, 2));
+                        $('.total-money').text(toFixed(+money, 2));
                     }
                 }
             }
