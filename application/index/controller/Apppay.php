@@ -792,7 +792,8 @@ class Apppay extends Controller
                 $order_number = $v['parts_order_number'];    //订单号
                 $goods_pay_money =$v['order_real_pay'];     //支付金额
             }
-            $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name);  //实例化微信支付类
+            $notify_url = "automobile.siring.com.cn/wxpay_notifyurl";//异步通知URL(更改支付状态)
+            $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name,$notify_url);  //实例化微信支付类
             return ajax_success("获取成功",$wxpayandroid);
 
         }
@@ -830,7 +831,6 @@ class Apppay extends Controller
         if($val["result_code"] == "SUCCESS" ){
 
             $order_number = $val["out_trade_no"];
-            file_put_contents(EXTEND_PATH."data.txt",$order_number);
 
         }
 
