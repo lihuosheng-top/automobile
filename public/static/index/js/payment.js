@@ -28,7 +28,7 @@ payPassword.on('change', "input[name='payPassword_rsainput']", function () {
 payPassword.on('keyup', "input[name='payPassword_rsainput']", function (e) {
     var e = (e) ? e : window.event;
     //键盘上的数字键按下才可以输入
-    if (e.keyCode == 8 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
+    // if (e.keyCode == 8 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
         k = this.value.length;//输入框里面的密码长度
         l = _this.length;//6
         for (; l--;) {
@@ -47,11 +47,11 @@ payPassword.on('keyup', "input[name='payPassword_rsainput']", function (e) {
             }
             $('#cardwrap').css('left', j * 0.6 + 'rem');
         }
-    } else {
-        //输入其他字符，直接清空
-        var _val = this.value;
-        this.value = _val.replace(/\D/g, '');
-    }
+    // } else {
+    //     //输入其他字符，直接清空
+    //     var _val = this.value;
+    //     this.value = _val.replace(/\D/g, '');
+    // }
 });	
 
 // 隐藏选择支付方式弹窗

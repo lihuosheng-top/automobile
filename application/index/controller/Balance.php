@@ -173,8 +173,20 @@ class Balance extends Controller
                 $password = $request->only("passwords")["passwords"]; //输入的密码
                 if (password_verify($password, $user_info["pay_passwd"])) {
                     $money = Db::name("order_service")->where("service_order_number", $order_num)->value("service_real_pay");
+                    $is_face =Db::name("order_service")->where("service_order_number",$order_num)->value("is_face");
                     $money =round($money,2);
                     $business_store_id = Session::get("role_name_store_id"); //店铺id
+                        if($is_face ==1){
+                            //如果不是面议，则直接改为已付款
+                            $data['status'] = 2;//状态值
+                            $data['trade_no'] = time();//交易号
+                            $data['pay_type_content'] = "余额支付";
+                        }else{
+                            //如果不是面议，则直接改为已付款
+                            $data['status'] = 5;//状态值
+                            $data['trade_no'] = time();//交易号
+                            $data['pay_type_content'] = "余额支付";
+                        }
                     if (!empty($business_store_id["store_id"])) {
                         //商家
                         $business_id = Db::name("store")->where("store_id", $business_store_id["store_id"])->value("user_id");
@@ -185,9 +197,6 @@ class Balance extends Controller
                         if($money > $user_wallet){
                             exit(json_encode(array("status" => 3, "info" => "商家余额不足，请换其他方式支付")));
                         }else{
-                            $data['status'] = 2;//状态值
-                            $data['trade_no'] = time();//交易号
-                            $data['pay_type_content'] = "余额支付";
                             $condition['service_order_number'] = $order_num;
                             $result = Db::name('order_service')->where($condition)->update($data);//修改订单状态，到数据库
                             if ($result > 0) {
@@ -243,9 +252,6 @@ class Balance extends Controller
                         if ($money > $user_info["user_wallet"]) {
                             exit(json_encode(array("status" => 3, "info" => "车主余额不足，请换其他方式支付")));
                         } else {
-                            $data['status'] = 2;//状态值
-                            $data['trade_no'] = time();//交易号
-                            $data['pay_type_content'] = "余额支付";
                             $condition['service_order_number'] = $order_num;
                             $result = Db::name('order_service')->where($condition)->update($data);//修改订单状态，到数据库
                             if ($result > 0) {
