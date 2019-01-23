@@ -358,14 +358,14 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">商品规格</label>
 			<div class="layui-input-block">
-				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige">
+				<input type="radio" name="goods_standard" value="通用" title="通用" class="general-radio" lay-filter="guige" checked>
 				<input type="radio" name="goods_standard" value="专用" title="专用" class="special" lay-filter="guige">
 			</div>
 		</div>
 		<!--规格区-->
 		<div>
 			<!--通用区-->
-			<div class="layui-form-item general noshow">
+			<div class="layui-form-item general">
 			   <div class="layui-input-block general-kuang">
                 <div class="control-group">
                     <div class="controls" style="padding: 10px;">
@@ -1249,6 +1249,13 @@
             $(".tanchuang").click(function() {
                 $(".tanchuang").addClass("noshow");
             });
+			$("form").submit(function(e){
+				if($("#lv_table").find("tbody tr").length==0){
+					alert("请添加规格项, 并刷新规格表");
+					return false;
+				}
+				
+				});
 
 		})
 	</script>
