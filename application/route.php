@@ -542,6 +542,7 @@ Route::group("admin",[
     "car_updata"=>"admin/Car/updata",
     "car_search"=>"admin/Car/search",
     "car_images"=>"admin/Car/images",
+    "car_status"=>"admin/Car/status",
 
 
     /*充值和提现*/
