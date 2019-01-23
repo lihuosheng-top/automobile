@@ -127,6 +127,7 @@ class Reservation extends Controller{
             $goods = db("goods")->where("store_id",$serve_goods_id)->where("goods_status",1)->select();
             if(empty($data)){
                 foreach ($goods as $k_1=>$v_1){
+                    $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
                     if($v_1["goods_standard"] != "通用"){
                         unset($goods[$k_1]);
                     }

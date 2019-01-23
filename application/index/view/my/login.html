@@ -32,11 +32,11 @@
             </div>
             <button class="login-btn">登录</button>
         </div>
-        <!-- <div class="third-part">
+        <div class="third-part">
             <h3 class="third-txt">第三方登录</h3>
             <a href="javascript:;" class="spr wechat"></a>
             <a href="javascript:;" class="spr QQ"></a>
-        </div> -->
+        </div>
     </div>
     <!-- 找回密码 -->
     <div class="find-password" style="display:none;">
@@ -79,16 +79,41 @@
             <label for="agree-input" class="agree-label">我已阅读并同意《<span>用户服务协议</span>》</label>
         </div>
         <button class="reg-confirm" disabled>确定</button>
-        <!-- <div class="third-part">
+        <div class="third-part">
             <h3 class="third-txt">第三方登录</h3>
             <a href="javascript:;" class="spr wechat"></a>
             <a href="javascript:;" class="spr QQ"></a>
-        </div> -->
+        </div>
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/plugin/base64.js"></script>
     <script src="__STATIC__/index/js/login.js"></script>
+    <script>
+        $('.wechat').click(function(){
+            Android.wxLogin();
+        })
+        $('.QQ').click(function(){
+            Android.qqLogin();
+        })
+        function loginCallback(openid, headurl){
+            if(openid != null){
+                (function(){
+                    return $.ajax({
+                        url: 'aaa',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'openid': openid,
+                            'headurl': headurl
+                        }
+                    })
+                })().then(function(res){
+                    console.log(res);
+                })
+            }
+        }
+    </script>
 </body>
 
 </html>
