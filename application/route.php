@@ -366,7 +366,7 @@ Route::group("",[
     "order_service_return_goods"=>"index/OrderService/order_service_return_goods",//退货页面
     "ios_api_order_service_return_goods"=>"index/OrderService/ios_api_order_service_return_goods",//退货页面接口（ajax）
     /*修改状态值*/
-//    "ios_api_order_service_no_pay_cancel"=>"index/OrderService/ios_api_order_service_no_pay_cancel",//买家未付款取消订单接口(ajax)
+    "ios_api_order_service_no_pay_cancel"=>"index/OrderService/ios_api_order_service_no_pay_cancel",//买家未付款取消订单接口(ajax)
 //    "ios_api_order_service_already_served"=>"index/OrderService/ios_api_order_service_already_served",//买家服务商订单买家确认服务（ajax）
     "service_del"=>"index/OrderService/service_del",//买家服务商订单删除（ajax）
 
