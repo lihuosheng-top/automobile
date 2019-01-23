@@ -61,18 +61,19 @@ class  Member extends Controller{
                 $is_address =Db::name("user_address")->where("user_id",$user_id)->where("id",$address_id)->find();
                 $is_address["user_phone_number"] = db("user")->where("id",$is_address["user_id"])->value("phone_num");
                 if(!empty($is_address)){
-                    Session::delete("address_id");
+//                    Session::delete("address_id");
                     return ajax_success('收货地址成功返回', $is_address);
                 }else{
-                    Session::delete("address_id");
+//                    Session::delete("address_id");
                     exit(json_encode(array("status"=>0,"info"=>"请先选择收货地址")));
                 }
             }
-
-
-            $is_address_status = Db::name('user_address')->where('user_id', $user_id)->order("id","desc")->find();
+            $is_address_status = Db::name('user_address')->where('user_id', $user_id)->find();
             if (!empty($is_address_status)) {
                 $is_address = Db::name('user_address')->where('user_id', $user_id)->where("status", 1)->find();
+                if(empty($is_address)){
+                    $is_address = Db::name('user_address')->where('user_id', $user_id)->find();
+                }
                 $is_address["user_phone_number"] = db("user")->where("id",$is_address["user_id"])->value("phone_num");
                 if(!empty($is_address)){
                     return ajax_success('收货地址成功返回', $is_address);
@@ -81,7 +82,6 @@ class  Member extends Controller{
                 }
             } else {
                 exit(json_encode(array("status"=>0,"info"=>"请先设置收货地址")));
-                //return ajax_error('请先设置收货地址', ["status" => 0]);
             }
         }
     }

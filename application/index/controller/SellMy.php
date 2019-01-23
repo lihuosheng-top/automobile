@@ -245,8 +245,38 @@ class  SellMy extends Controller{
         if($request->isPost()){
             $order_id =$_POST['order_id'];
             if(!empty($order_id)){
-                $res =Db::name('order_service')->where('id',$order_id)->update(['status'=>9]);
+                $res =Db::name('order_service')
+                    ->where('id',$order_id)
+                    ->update(['status'=>9]);
                 if($res){
+                    //取消订单退回积分到积余额
+                    $is_use_integral=Db::name("order_service")
+                        ->where('id',$order_id)
+                        ->field("integral_discount_setting_id,id,integral_deductible_num,service_order_number,user_id")
+                        ->find();
+                    if(!empty($is_use_integral)){
+//                            foreach ($is_use_integral as $keys=>$values){
+                        if(!empty($is_use_integral["integral_deductible_num"])){
+                            $user_info = Db::name("user")
+                                ->field("user_integral_wallet,user_integral_wallet_consumed")
+                                ->where("id",$is_use_integral["user_id"])->find();
+                            $update_data =[
+                                "user_integral_wallet"=>$user_info["user_integral_wallet"] + $is_use_integral["integral_deductible_num"],
+                                "user_integral_wallet_consumed"=>$user_info["user_integral_wallet_consumed"] - $is_use_integral["integral_deductible_num"]
+                            ];
+                            Db::name("user")->where("id",$is_use_integral["user_id"])->update($update_data); //积分增加
+                            $integral_data =[
+                                "user_id"=>$is_use_integral["user_id"],//用户ID
+                                "integral_operation"=>"+".$is_use_integral["integral_deductible_num"],//积分操作
+                                "integral_balance"=>$user_info["user_integral_wallet"] + $is_use_integral["integral_deductible_num"],//积分余额
+                                "integral_type"=> 1,//积分类型
+                                "operation_time"=>date("Y-m-d H:i:s") ,//操作时间
+                                "integral_remarks"=>"订单号:".$is_use_integral['service_order_number']."取消退回".$is_use_integral["integral_deductible_num"]."积分",//积分备注
+                            ];
+                            Db::name("integral")->insert($integral_data); //插入积分消费记录
+                        }
+//                            }
+                    }
                     return ajax_success('订单取消成功',['status'=>1]);
                 }else{
                     return ajax_error('订单取消失败',['status'=>0]);
