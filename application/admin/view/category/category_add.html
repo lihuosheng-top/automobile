@@ -40,7 +40,7 @@
 		<div class="layui-form-item ">
 			<label class="layui-form-label"><span>*</span>商品分类名称</label>
 			<div class="layui-input-block">
-				<input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+				<input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" required>
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -73,14 +73,14 @@
 		</div>
 
 		<div class="layui-form-item">
-			<label class="layui-form-label"><span>*</span>排序</label>
+			<label class="layui-form-label">排序</label>
 			<div class="layui-input-block">
 				<input type="number" name="sort_number" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 			</div>
 		</div>
 
 		<div class="layui-form-item">
-			<label class="layui-form-label">商品分类图标</label>
+			<label class="layui-form-label"><span>*</span>商品分类图标</label>
 			<div class="layui-input-block">
 				<div class="img-box full">
 					<section class=" img-section">
@@ -88,7 +88,7 @@
 							<section class="z_file fl">
 								<img src="__STATIC__/admin/common/upfile/img/a11.png" class="add-img">
 								<input type="file" name="type_images" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp"
-								 multiple data-id="1" />
+								 multiple data-id="1" required />
 							</section>
 						</div>
 					</section>
