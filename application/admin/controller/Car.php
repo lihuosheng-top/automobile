@@ -154,4 +154,37 @@ class Car extends Controller{
 
     }
 
+
+
+
+    /**
+     * 汽车品牌修改
+     * 陈绪
+     */
+    public function status(Request $request){
+        if($request->isPost()) {
+            $status = $request->only(["status"])["status"];
+            if($status == 0) {
+                $id = $request->only(["id"])["id"];
+                $bool = db("car_images")->where("id", $id)->update(["status" => 0]);
+                if ($bool) {
+                    $this->success("修改成功", url("admin/admin/index"));
+
+                } else {
+                    $this->error("修改失败", url("admin/admin/index"));
+                }
+            }
+            if($status == 1){
+                $id = $request->only(["id"])["id"];
+                $bool = db("car_images")->where("id", $id)->update(["status" => 1]);
+                if ($bool) {
+                    $this->error("成功", url("admin/admin/index"));
+                } else {
+                    $this->error("失败", url("admin/admin/index"));
+                }
+            }
+        }
+    }
+
+
 }
