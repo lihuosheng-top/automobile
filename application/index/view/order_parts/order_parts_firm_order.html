@@ -634,11 +634,11 @@
                     //用户选择微信支付，发送订单号给后台
                     (function(){
                         return $.ajax({
-                            url: 'app_wxpay',
+                            url: 'app_parts_wxpay',
                             type: 'POST',
                             dataType: 'JSON',
                             data: {
-                                'order_num': cancelPayOrderNum,
+                                'order_num': outTradeNo
                             }
                         })
                     })().then(function(res){
