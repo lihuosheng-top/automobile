@@ -70,8 +70,11 @@ class  PlatformAdvertisement extends  Controller{
         if ($pid == 0) {
             $goods_liste = selectList("position");
         }
-
         $plat = db("platform")->where("id",$id)->select();
+        foreach($plat as $key => $value)
+        {
+            $plat[$key]['store_name'] = db('store')->where("store_id",$plat[$key]['store_id'])->value('store_name');
+        }
         return view('platform_business_edit',['plat'=>$plat,"goods_liste" => $goods_liste]);
     }
 
@@ -92,8 +95,10 @@ class  PlatformAdvertisement extends  Controller{
                 $data["url"] = config('domain_url.address')."store_index?storeId=".$store_data['store_id'];
                 $data["longitude"] = $store_data['longitude']; //坐标经度
                 $data["latitude"] = $store_data['latitude'];   //坐标纬度
-            } else if(empty($store_id)){
+                $data["store_id"] = $store_data['store_id'];
+            } else if(empty($store_data['store_id'])){
                 $data["url"] = null;
+                $data['store_id'] = null;
             }
 
             if ($show_images) {
@@ -143,11 +148,13 @@ class  PlatformAdvertisement extends  Controller{
                 $store_data = db("store")->where("store_name",$data["url"])->find();
                 //http://127.0.0.1/automobile/public/store_index?storeId=58
                 if(!empty($store_data)){
+                    $data['store_id'] = $store_data['store_id']; //店铺id
                     $data["url"] = config('domain_url.address')."store_index?storeId=".$store_data['store_id'];
                     $data["longitude"] = $store_data['longitude']; //坐标经度
                     $data["latitude"] = $store_data['latitude'];   //坐标纬度
                 } else {
                     $data["url"] = null;
+                    $data['store_id'] = null;
                 } 
             }
 
