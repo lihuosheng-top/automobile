@@ -898,10 +898,11 @@ class Apppay extends Controller
     }
 
     /**
-     * TODO:（配件商）微信app支付
-     * 陈绪
+     **************李火生*******************
      * @param Request $request
-     * @return array|false|mixed|\PDOStatement|string|\think\Collection
+     * Notes:TODO:（配件商）微信app支付
+     **************************************
+     * @param Request $request
      */
     public function app_parts_wxpay(Request $request){
         if($request->isPost()){
@@ -918,9 +919,12 @@ class Apppay extends Controller
             return ajax_success("获取成功",$wxpayandroid);
         }
     }
+
     /**
-     * TODO:(配件商)微信支付回调
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:TODO:(配件商)微信支付回调
+     **************************************
      */
     public function wxpay_parts_notifyurl(){
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
@@ -982,11 +986,13 @@ class Apppay extends Controller
             }
         }
     }
+
     /**
-     * TODO:（服务商）微信app支付
-     * 陈绪
+     **************李火生*******************
      * @param Request $request
-     * @return array|false|mixed|\PDOStatement|string|\think\Collection
+     * Notes:TODO:（服务商）微信app支付
+     **************************************
+     * @param Request $request
      */
     public function app_service_wxpay(Request $request){
         if($request->isPost()){
@@ -1006,8 +1012,10 @@ class Apppay extends Controller
 
 
     /**
-     * TODO:(服务商)微信支付回调
-     * 陈绪
+     **************李火生*******************
+     * @param Request $request
+     * Notes:TODO:(服务商)微信支付回调
+     **************************************
      */
     public function wxpay_service_notifyurl(){
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
