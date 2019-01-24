@@ -900,7 +900,7 @@ class Apppay extends Controller
                     "wallet_img"=>"index/image/wechat.png",//图标
                     "title"=>$title,//标题（消费内容）
                     "order_nums"=>$out_trade_no,//订单编号
-                    "pay_type"=>"支付宝", //支付方式/
+                    "pay_type"=>"微信", //支付方式/
                     "wallet_balance"=>$new_wallet,//此刻钱包余额
                     "is_business"=>1,//判断是车主消费还是商家消费（充值只能是 1车主消费）
                 ];
@@ -947,7 +947,6 @@ class Apppay extends Controller
         $val = json_decode(json_encode($xml_data), true);
         if($val["result_code"] == "SUCCESS" ){
             $out_trade_no = $val["out_trade_no"];
-
 
             $data['status'] = 2;
             $data["trade_no"] =null; //流水号
