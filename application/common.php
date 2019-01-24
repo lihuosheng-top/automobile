@@ -926,3 +926,28 @@ function foreach_pid($arr){
 
 
 
+ function rest($we){
+    foreach($we as $e => $r){
+    preg_match_all("/http:[\/]{2}[0-9]*/",$r['advert_text'],$we[$e]['goods_id']);
+    $we[$e]['goods_id'] = $we[$e]['goods_id'][0];
+    if(count($we[$e]['goods_id']) == 0){
+        unset($we[$e]['goods_id']);
+        }
+    } 
+    foreach($we as $y => $s){
+        if(isset($s['goods_id'])){      
+        foreach($s['goods_id'] as $n => $m){
+            $we[$y]['interlinkage'][$n] = array(
+                'goods_id'=> intval(str_replace("http://","",$s['goods_id'][$n]))-1000000,
+                'store_id'=> db("goods")-> where("id",intval(str_replace("http://","",$s['goods_id'][$n]))-1000000) -> value("store_id"),
+                'goods_brand_id' => db("goods")-> where("id",intval(str_replace("http://","",$s['goods_id'][$n]))-1000000) -> value("goods_brand_id")
+
+            );
+          }
+        }
+    }
+
+    return $we;
+    
+    
+}
