@@ -37,7 +37,7 @@
                 <img src="__STATIC__/index/image/wechat.png">
             </div>
             <p>微信支付</p>
-            <a href="javascript:;" class="spr check-a icon-check"></a>
+            <a href="javascript:;" class="spr check-a"></a>
         </div>
         <div class="method-div">
             <div class="icon-div">
@@ -95,10 +95,10 @@
                                 })().then(function(res){
                                     console.log(res.responseData);
                                     if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
-                                        //接受支付宝签名 发送给android
+                                        //接受微信签名 发送给android
                                         Android.wxpay(JSON.stringify(res.responseData.app_response));
                                     }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
-                                        //接受支付宝签名 发送给ios
+                                        //接受微信签名 发送给ios
                                         alipay(JSON.stringify(res.responseData));
                                     }
                                 })
