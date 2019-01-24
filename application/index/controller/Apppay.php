@@ -13,7 +13,6 @@ use think\Request;
 use think\Session;
 class Apppay extends Controller
 {
-
     /**
      **************李火生*******************
      * @param Request $
@@ -339,7 +338,6 @@ class Apppay extends Controller
             }
         }
     }
-
 
     /**
      **************陈绪*******************
@@ -678,8 +676,15 @@ class Apppay extends Controller
                         ->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $lists]);
                 }else {
                     $recharge_data =[
+                        "user_id" =>$parts["user_id"],//用户id
+                        "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                        "operation_type"=>1,//充值为1，提现为负一
+                        "pay_type_content"=>$recharge_record_data["pay_type_name"],//支付方式
+                        "money_status"=>1 , //到款状态（1到账，2未到款）
+                        "img_url"=>"index/image/alipay.png", //对应的图片链接
                         "operation_amount" =>$recharge_record_data["recharge_money"], //操作金额
-                        "recharge_describe" =>"充值" . $recharge_record_data["recharge_money"] . "元",//描述
+                        "recharge_describe" =>"充值".$recharge_record_data["recharge_money"]."元",//描述
+                        "status"=>1,
                     ];
                     Db::name("recharge_reflect")->insert($recharge_data);//插到记录
                     $user_wallet = Db::name("user")->field("user_wallet")->where("id", $recharge_record_data["user_id"])->find();
@@ -775,28 +780,23 @@ class Apppay extends Controller
         }
     }
     /**
-     * 微信app支付
+     * TODO:（充值）微信app支付
      * 陈绪
      * @param Request $request
      * @return array|false|mixed|\PDOStatement|string|\think\Collection
      */
     public function app_wxpay(Request $request){
-
         if($request->isPost()){
             $order_num =$request->only(['order_num'])['order_num'];
             include EXTEND_PATH."WxpayAPI/lib/Wxpayandroid.php";
-
-            $data = Db::name('order_parts')->where('parts_order_number',$order_num)->select();
-            foreach ($data as $k=>$v){
-                $goods_name = $v['parts_goods_name'];    //商品名称
-                $order_number = $v['parts_order_number'];    //订单号
-                $goods_pay_money =$v['order_real_pay'];     //支付金额
-            }
-            $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name);  //实例化微信支付类
+            $data = Db::name('recharge_record')->where('recharge_order_number',$order_num)->find();
+                $goods_name = "充值";    //商品名称
+                $order_number = $data['recharge_order_number'];    //订单号
+                $goods_pay_money =$data['recharge_money'];     //支付金额
+            $notify_url = "automobile.siring.com.cn/wxpay_notifyurl";//异步通知URL(更改支付状态)
+            $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name,$notify_url);  //实例化微信支付类
             return ajax_success("获取成功",$wxpayandroid);
-
         }
-
     }
     /**
      * 生成终端IP
@@ -816,14 +816,280 @@ class Apppay extends Controller
         }
         return $cip;
     }
-
-
     /**
-     * 微信支付回调
+     * TODO:(充值)微信app支付回调
      * 陈绪
      */
     public function wxpay_notifyurl(){
-
+        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $val = json_decode(json_encode($xml_data), true);
+        if($val["result_code"] == "SUCCESS" ){
+            $out_trade_no = $val["out_trade_no"];//订单编号
+            $data['status'] = 1;
+            $data['pay_type_name'] = "微信";//支付类型
+            $data['pay_time'] = time();//支付时间
+            $condition['recharge_order_number'] = $out_trade_no;
+            $select_data = Db::name('recharge_record')->where($condition)->find();
+            $result = Db::name('recharge_record')
+                ->where("recharge_order_number", $select_data["recharge_order_number"])
+                ->update($data);//修改订单状态,支付宝单号到数据库
+            if ($result > 0) {
+                //进行钱包消费记录
+                $parts =Db::name("recharge_record")
+                    ->field("recharge_money,user_id")
+                    ->where($condition)
+                    ->find();
+                $title ="余额充值";
+                $money =$parts["recharge_money"];//金额
+                $recharge_record_data = Db::name("recharge_record")
+                    ->where("recharge_order_number",$out_trade_no)
+                    ->find();
+                $list =Db::name("recharge_setting")->field("recharge_full,send_money")->select();
+                $lists =null;
+                foreach($list as $k=>$v){
+                    if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
+                        $lists =$v["send_money"];
+                    }
+                }
+                //如果达到充值送积分条件
+                if(!empty($lists)){
+                    $recharge_data =[
+                        "user_id" =>$parts["user_id"],//用户id
+                        "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                        "operation_type"=>1,//充值为1，提现为负一
+                        "pay_type_content"=>$recharge_record_data["pay_type_name"],//支付方式
+                        "money_status"=>1 , //到款状态（1到账，2未到款）
+                        "img_url"=>"index/image/wechat.png", //对应的图片链接
+                        "operation_amount" =>$recharge_record_data["recharge_money"]+$lists, //操作金额
+                        "recharge_describe" =>"充值".$recharge_record_data["recharge_money"]."元,送了".$lists,//描述
+                        "status"=>1,
+                    ];
+                    Db::name("recharge_reflect")->insert($recharge_data);//插到记录
+                    $user_wallet =Db::name("user")
+                        ->field("user_wallet")
+                        ->where("id",$recharge_record_data["user_id"])
+                        ->find();
+                    Db::name("user")->where("id",$recharge_record_data["user_id"])
+                        ->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $lists]);
+                }else {
+                    $recharge_data =[
+                        "user_id" =>$parts["user_id"],//用户id
+                        "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                        "operation_type"=>1,//充值为1，提现为负一
+                        "pay_type_content"=>$recharge_record_data["pay_type_name"],//支付方式
+                        "money_status"=>1 , //到款状态（1到账，2未到款）
+                        "img_url"=>"index/image/wechat.png", //对应的图片链接
+                        "operation_amount" =>$recharge_record_data["recharge_money"], //操作金额
+                        "recharge_describe" =>"充值".$recharge_record_data["recharge_money"]."元",//描述
+                        "status"=>1,
+                    ];
+                    Db::name("recharge_reflect")->insert($recharge_data);//插到记录
+                    $user_wallet = Db::name("user")->field("user_wallet")->where("id", $recharge_record_data["user_id"])->find();
+                    Db::name("user")->where("id", $recharge_record_data["user_id"])->update(["user_wallet" => $user_wallet["user_wallet"] + $recharge_record_data["recharge_money"]]);
+                }
+                $new_wallet =Db::name("user")
+                    ->where("id",$recharge_record_data["user_id"])
+                    ->value("user_wallet");
+                $datas=[
+                    "user_id"=>$parts["user_id"],//用户ID
+                    "wallet_operation"=> $money,//消费金额
+                    "wallet_type"=>1,//消费操作(1入，-1出)
+                    "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                    "wallet_remarks"=>"订单号：".$out_trade_no."，充值，余额增加".$money."元",//消费备注
+                    "wallet_img"=>"index/image/wechat.png",//图标
+                    "title"=>$title,//标题（消费内容）
+                    "order_nums"=>$out_trade_no,//订单编号
+                    "pay_type"=>"微信", //支付方式/
+                    "wallet_balance"=>$new_wallet,//此刻钱包余额
+                    "is_business"=>1,//判断是车主消费还是商家消费（充值只能是 1车主消费）
+                ];
+                Db::name("wallet")->insert($datas); //存入消费记录表
+                return ajax_success('支付成功', ['status' => 1]);
+            } else {
+                return ajax_error('验证失败了', ['status' => 0]);
+            }
+        }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:TODO:（配件商）微信app支付
+     **************************************
+     * @param Request $request
+     */
+    public function app_parts_wxpay(Request $request){
+        if($request->isPost()){
+            $order_num =$request->only(['order_num'])['order_num'];
+            include EXTEND_PATH."WxpayAPI/lib/Wxpayandroid.php";
+            $data = Db::name('order_parts')->where('parts_order_number',$order_num)->select();
+            foreach ($data as $k=>$v){
+                $goods_name = $v['parts_goods_name'];    //商品名称
+                $order_number = $v['parts_order_number'];    //订单号
+                $goods_pay_money =$v['order_real_pay'];     //支付金额
+            }
+            $notify_url = config("domain_url.address")."wxpay_parts_notifyurl";//异步通知URL(更改支付状态)
+            $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name,$notify_url);  //实例化微信支付类
+            return ajax_success("获取成功",$wxpayandroid);
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:TODO:(配件商)微信支付回调
+     **************************************
+     */
+    public function wxpay_parts_notifyurl(){
+        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $val = json_decode(json_encode($xml_data), true);
+        if($val["result_code"] == "SUCCESS" ){
+            $out_trade_no = $val["out_trade_no"];
+
+            $data['status'] = 2;
+            $data["trade_no"] =null; //流水号
+            $data['pay_type_content'] = "微信";//支付方式
+            $condition['parts_order_number'] = $out_trade_no;
+            $select_data = Db::name('order_parts')->where($condition)->select();
+            foreach ($select_data as $key => $val) {
+                $result = Db::name('order_parts')
+                    ->where("parts_order_number", $val["parts_order_number"])
+                    ->update($data);//修改订单状态,支付宝单号到数据库
+            }
+            if ($result > 0) {
+                $parts =Db::name("order_parts")
+                    ->field("parts_goods_name,order_real_pay,user_id")
+                    ->where("parts_order_number",$out_trade_no)
+                    ->select();
+                foreach($parts as $ks=>$vs){
+                    $titles[] = $vs["parts_goods_name"];
+                }
+                $title =implode("",$titles);
+                $money =Db::name("order_parts")->where("parts_order_number",$out_trade_no)->sum("order_real_pay");
+                //进行钱包消费记录
+                $owner_wallet =Db::name("user")->where("id",$parts[0]["user_id"])->value("user_wallet");
+                $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " .$parts["user_id"];
+                $business_wallet = Db::name("business_wallet")
+                    ->where($arr_condition)
+                    ->sum("money");
+                if(!empty($business_wallet)){
+                    $new_wallet =$owner_wallet + $business_wallet;
+                }else{
+                    $new_wallet =$owner_wallet;
+                }
+
+                $datas=[
+                    "user_id"=>$parts[0]["user_id"],//用户ID
+                    "wallet_operation"=>-$money,//消费金额
+                    "wallet_type"=>-1,//消费操作(1入，-1出)
+                    "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                    "wallet_remarks"=>"订单号：".$out_trade_no."，微信消费，支出".$money."元",//消费备注
+                    "wallet_img"=>"index/image/wechat.png",//图标
+                    "title"=>$title,//标题（消费内容）
+                    "order_nums"=>$out_trade_no,//订单编号
+                    "pay_type"=>"微信", //支付方式
+                    "wallet_balance"=>$new_wallet,//此刻钱包余额
+                    "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
+                ];
+                Db::name("wallet")->insert($datas);
+                return ajax_success('支付成功', ['status' => 1]);
+            } else {
+                return ajax_error('验证失败了', ['status' => 0]);
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:TODO:（服务商）微信app支付
+     **************************************
+     * @param Request $request
+     */
+    public function app_service_wxpay(Request $request){
+        if($request->isPost()){
+            $order_num =$request->only(['order_num'])['order_num'];
+            include EXTEND_PATH."WxpayAPI/lib/Wxpayandroid.php";
+            $data = Db::name('order_parts')->where('parts_order_number',$order_num)->select();
+            foreach ($data as $k=>$v){
+                $goods_name = $v['parts_goods_name'];    //商品名称
+                $order_number = $v['parts_order_number'];    //订单号
+                $goods_pay_money =$v['order_real_pay'];     //支付金额
+            }
+            $notify_url = config("domain_url.address")."wxpay_service_notifyurl";//异步通知URL(更改支付状态)
+            $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name,$notify_url);  //实例化微信支付类
+            return ajax_success("获取成功",$wxpayandroid);
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:TODO:(服务商)微信支付回调
+     **************************************
+     */
+    public function wxpay_service_notifyurl(){
+        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $val = json_decode(json_encode($xml_data), true);
+        if($val["result_code"] == "SUCCESS" ){
+            $out_trade_no = $val["out_trade_no"];
+            $condition['service_order_number'] = $out_trade_no;
+            //如果是面议，则直接改为待评价
+            $is_face = Db::name('order_service')->where($condition)->value("is_face");
+            if($is_face ==1){
+                //如果不是面议，则直接改为已付款
+                $data['status'] = 2;//状态值
+                $data['trade_no'] = null;//交易号
+                $data['pay_type_content'] = "微信";//支付宝交易号
+            }else{
+                //如果不是面议，则直接改为已付款
+                $data['status'] =5 ;//状态值
+                $data['trade_no'] = null;//交易号
+                $data['pay_type_content'] = "微信";//支付宝交易号
+            }
+            $result = Db::name('order_service')
+                ->where($condition)
+                ->update($data);//修改订单状态,支付宝单号到数据库
+            if ($result > 0) {
+                //进行钱包消费记录
+                $parts =Db::name("order_service")
+                    ->field("service_goods_name,service_real_pay,user_id")
+                    ->where($condition)
+                    ->find();
+                $title =$parts["service_goods_name"];
+                $money =$parts["service_real_pay"];//金额
+                $owner_wallet =Db::name("user")->where("id",$parts["user_id"])->value("user_wallet");
+                $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " .$parts["user_id"];
+                $business_wallet = Db::name("business_wallet")
+                    ->where($arr_condition)
+                    ->sum("money");
+                if(!empty($business_wallet)){
+                    $new_wallet =$owner_wallet + $business_wallet;
+                }else{
+                    $new_wallet =$owner_wallet;
+                }
+                $datas=[
+                    "user_id"=>$parts["user_id"],//用户ID
+                    "wallet_operation"=>-$money,//消费金额
+                    "wallet_type"=>-1,//消费操作(1入，-1出)
+                    "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                    "wallet_remarks"=>"订单号：".$out_trade_no."，微信消费，支出".$money."元",//消费备注
+                    "wallet_img"=>"index/image/wechat.png",//图标
+                    "title"=>$title,//标题（消费内容）
+                    "order_nums"=>$out_trade_no,//订单编号
+                    "pay_type"=>"微信", //支付方式/
+                    "wallet_balance"=>$new_wallet,//此刻钱包余额
+                    "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
+                ];
+                Db::name("wallet")->insert($datas);
+                return ajax_success('支付成功', ['status' => 1]);
+            }else {
+                return ajax_error('验证失败了', ['status' => 0]);
+            }
+        }
+
+    }
 }
