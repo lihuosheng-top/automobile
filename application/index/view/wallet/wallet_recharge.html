@@ -26,41 +26,13 @@
     </div>
 
     <div class="mask" style="display: none;"></div>
-    <!-- 支付弹窗 -->
-    <!-- <form name=alipayment action="{:url('index/Apppay/recharge_aliPay')}" method="post">
-        <div class="alipay-pop">
-            <header>
-                <a href="javascript:;" class="close-alipay">×</a>
-                <h3 class="alipay-title">确认付款</h3>
-            </header>
-            <div class="middle_box">
-                <div class="price-box">
-                    <span>￥</span>
-                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="" readonly>
-                </div>
-                <ul class="content">
-                    <li>
-                        订单信息: <input id="WIDsubject" name="WIDsubject" value="充值" readonly>
-                    </li>
-                    <li>
-                        订单编号: <input id="WIDout_trade_no" name="WIDout_trade_no" value="" readonly>
-                    </li>
-                    <li>
-                        付款方式: <input id="WIDbody" name="WIDbody" value="支付宝" readonly><i class="spr icon-more"></i>
-                    </li>
-                </ul>
-            </div>
-            <button type="submit" class="alipay-submit">立即付款</button>
-        </div>
-    </form> -->
-
     <!-- 选择支付方式 -->
     <div class="chose-payment">
         <header>
             <a href="javascript:;" class="spr chose-payment-back"></a>
             <h3 class="chose-title">选择支付方式</h3>
         </header>
-        <div class="method-div" style="display: none;">
+        <div class="method-div">
             <div class="icon-div">
                 <img src="__STATIC__/index/image/wechat.png">
             </div>
@@ -102,6 +74,7 @@
                     $('.chose-payment').animate({ 'bottom': '0' });
                     //         选择支付方式
                     $('.method-div').click(function () {
+                        var u = navigator.userAgent;
                         $(this).siblings().find('.check-a').removeClass('icon-check');
                         $(this).find('.check-a').addClass('icon-check');
                         backMethod();
@@ -109,7 +82,26 @@
                         //发送给后台订单号，获取签名
                         switch ($index) {
                             case 1:
-
+                                //用户选择微信支付，发送订单号给后台
+                                (function(){
+                                    return $.ajax({
+                                        url: 'app_wxpay',
+                                        type: 'POST',
+                                        dataType: 'JSON',
+                                        data: {
+                                            'order_num': cancelOrderNum
+                                        }
+                                    })
+                                })().then(function(res){
+                                    console.log(res.responseData);
+                                    if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                                        //接受支付宝签名 发送给android
+                                        Android.wxpay(JSON.stringify(res.responseData.app_response));
+                                    }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
+                                        //接受支付宝签名 发送给ios
+                                        alipay(JSON.stringify(res.responseData));
+                                    }
+                                })
                                 break;
                             case 2:
                                 (function () {
@@ -119,13 +111,18 @@
                                         type: 'POST',
                                         dataType: 'JSON',
                                         data: {
-                                            'order_num': res.data
+                                            'order_num': cancelOrderNum
                                         }
                                     })
                                 })().then(function (res) {
                                     console.log(res);
-                                    //发送签名给 Android 唤起支付宝
-                                    Android.alipay(res.data);
+                                    if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                                        //接受支付宝签名 发送给android
+                                        Android.alipay(res.data);
+                                    }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
+                                        //接受支付宝签名 发送给ios
+                                        alipay(res.data);
+                                    }
                                 })
                                 break;
                         }
