@@ -96,6 +96,16 @@ class Login extends Controller{
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:第三方快捷登录绑定手机
+     **************************************
+     * @param Request $request
+     */
+    public function user_bind_phone(Request $request){
+        return view("user_bind_phone");
+    }
 
 
 }
