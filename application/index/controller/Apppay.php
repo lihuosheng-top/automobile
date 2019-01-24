@@ -948,9 +948,8 @@ class Apppay extends Controller
         $val = json_decode(json_encode($xml_data), true);
         if($val["result_code"] == "SUCCESS" ){
             $out_trade_no = $val["out_trade_no"];
-
             $data['status'] = 2;
-            $data["trade_no"] =null; //流水号
+//            $data["trade_no"] =null; //流水号
             $data['pay_type_content'] = "微信";//支付方式
             $condition['parts_order_number'] = $out_trade_no;
             $select_data = Db::name('order_parts')->where($condition)->select();
@@ -980,7 +979,6 @@ class Apppay extends Controller
                 }else{
                     $new_wallet =$owner_wallet;
                 }
-
                 $datas=[
                     "user_id"=>$parts[0]["user_id"],//用户ID
                     "wallet_operation"=>-$money,//消费金额
@@ -1013,12 +1011,10 @@ class Apppay extends Controller
         if($request->isPost()){
             $order_num =$request->only(['order_num'])['order_num'];
             include EXTEND_PATH."WxpayAPI/lib/Wxpayandroid.php";
-            $data = Db::name('order_parts')->where('parts_order_number',$order_num)->select();
-            foreach ($data as $k=>$v){
-                $goods_name = $v['parts_goods_name'];    //商品名称
-                $order_number = $v['parts_order_number'];    //订单号
-                $goods_pay_money =$v['order_real_pay'];     //支付金额
-            }
+            $data = Db::name('order_service')->where('service_order_number',$order_num)->find();
+            $goods_name =$data['service_goods_name'];    //商品名称
+            $order_number = $data['service_order_number'];    //订单号
+            $goods_pay_money =$data['order_real_pay'];     //支付金额
             $notify_url = config("domain_url.address")."wxpay_service_notifyurl";//异步通知URL(更改支付状态)
             $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name,$notify_url);  //实例化微信支付类
             return ajax_success("获取成功",$wxpayandroid);
