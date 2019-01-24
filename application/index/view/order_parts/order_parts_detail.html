@@ -511,10 +511,10 @@
                     })().then(function(res){
                         console.log(res.responseData);
                         if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
-                            //接受支付宝签名 发送给android
+                            //接受微信签名 发送给android
                             Android.wxpay(JSON.stringify(res.responseData.app_response));
                         }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
-                            //接受支付宝签名 发送给ios
+                            //接受微信签名 发送给ios
                             alipay(JSON.stringify(res.responseData));
                         }
                     })
