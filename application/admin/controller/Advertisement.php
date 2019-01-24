@@ -78,7 +78,7 @@ class  Advertisement extends  Controller{
             $goods_liste = selectList("position");
         }
         
-        $plat = db("accessories")->where("id",$id)->select();      
+        $plat = db("accessories")->where("id",$id)->select(); 
         return view('accessories_business_edit',['plat'=>$plat,"goods_liste" => $goods_liste]);
     }
 
@@ -130,6 +130,7 @@ class  Advertisement extends  Controller{
             $data["postid"] = $unset_id;
             $data["longitude"] = $longitude;
             $data["latitude"] = $latitude;
+            $data["store_id"] = $store_id;
             $userId = db('accessories')->insertGetId($data);
 
             //插入平台列表
