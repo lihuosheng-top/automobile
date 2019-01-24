@@ -1,6 +1,5 @@
 <?php
 
-
 class Wxpayandroid
 {
     //参数配置
@@ -20,12 +19,12 @@ class Wxpayandroid
     //自定义超时(选填，支持dhmc)
     public $time_expire;
     private $WxPayHelper;
-    public function __construct($total_fee,$tade_no,$goods_pay_money,$notify_url){
+    public function __construct($total_fee,$tade_no,$goods_pay_money){
         $this->total_fee = intval($total_fee * 100);//订单的金额 1元
         $this->out_trade_no = $tade_no;   //订单号
         $this->body = $goods_pay_money;  //支付描述信息
         $this->time_expire = date('YmdHis', time() + 7200);//订单支付的过期时间(eg:一天过期)
-        $this->notify_url = $notify_url;//异步通知URL(更改支付状态)
+        $this->notify_url = "automobile.siring.com.cn/wxpay_notifyurl";//异步通知URL(更改支付状态)
         //数据以JSON的形式返回给APP
         $app_response = $this->doPay();
             if (isset($app_response['return_code']) && $app_response['return_code'] == 'FAIL') {

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>绑定手机</title>
+    <style>
+        html, .wrapper{background-color: #fff;}
+        .reg-head .reg-back{position: absolute;top: 50%;left: .2rem;margin-top: -.22rem;width: .25rem;height: .43rem;background-position: -.5rem -.5rem;}
+        .logo-wrap{width: 1.2rem;height: 1.2rem;margin: 1rem auto 1.2rem;overflow: hidden;}
+        .logo-wrap img{width: 100%;height: 100%;}
+        .register-pop .reg-head{position: relative;height: .88rem;border-bottom: 1px solid #eee;background-color: #fff;}
+        .reg-inputbox .reg-send-code{position: absolute;right: 0;top: 50%;outline: 0;border: 0;background-color: transparent;color: #0099ff;font-size: .24rem;height: .5rem;margin-top: -.25rem;border-left: 1px solid #ddd;}
+        .register-pop{width: 100%;height: 100vh;background-color: #fff;}
+        .reg-inputbox{width: 90%;margin: 0 auto;}
+        .reg-inputbox input{width: 100%;height: 1rem;outline: none;border-bottom: 1px solid #ccc;font-size: .3rem;margin-bottom: .2rem;}
+        .reg-inputbox .identifying-code{position: relative;}
+        .register-pop .reg-confirm{display: block;width: 90%;height: .8rem;line-height: .8rem;color: #fff;text-align: center;font-size: .32rem;outline: 0;background-color: #3558fb;;border-radius: .1rem;border: 0;margin: 1.5rem auto 1rem;}
+        .tips-container{width: 90%; margin: 0 auto;}
+        .tips-container .tips-title{border-bottom: 1px solid #aaa; text-align: center; margin-bottom: .4rem; position: relative;}
+        .tips-container .tips-title span{color: #999; background-color: #fff; padding: .1rem .2rem; font-size: .26rem; position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);}
+        .tips-container .tips-parag{color: #999; font-size: .26rem;}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="register-pop">
+            <div class="reg-head">
+                <a href="login" class="spr reg-back"></a>
+            </div>
+            <div class="logo-wrap">
+                <img src="__STATIC__/index/image/icon8.png">
+            </div>
+            <div class="reg-inputbox">
+                <input type="text" placeholder="输入手机号码" class="reg-phone-num">
+                <div class="identifying-code">
+                    <input type="text" class="reg-message-code" placeholder="短信验证码">
+                    <button class="reg-send-code">发送验证码</button>
+                </div>
+            </div>
+            <button class="reg-confirm">绑定并登录</button>
+            <div class="tips-container">
+                <div class="tips-title">
+                    <span>温馨提示</span>
+                </div>
+                <p class="tips-parag">绑定手机号后，下次登录可直接使用微信或QQ登录，无需再次绑定; 用户可在“我的-个人信息”解除绑定</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script>
+        // 验证码倒计时
+        function buttonCountdown($el, msNum, timeFormat) {
+            var text = $el.data("text") || $el.text(),
+                    timer = 0;
+            $el.prop("disabled", true).addClass("disabled")
+                    .on("bc.clear", function () {
+                        clearTime();
+                    });
+            (function countdown() {
+                var time = showTime(msNum)[timeFormat];
+                $el.text(time + '后失效');
+                if (msNum <= 0) {
+                    msNum = 0;
+                    clearTime();
+                } else {
+                    msNum -= 1000;
+                    timer = setTimeout(arguments.callee, 1000);
+                }
+            })();
+            function clearTime() {
+                clearTimeout(timer);
+                $el.prop("disabled", false).removeClass("disabled").text(text);
+            }
+            function showTime(ms) {
+                var d = Math.floor(ms / 1000 / 60 / 60 / 24),
+                        h = Math.floor(ms / 1000 / 60 / 60 % 24),
+                        m = Math.floor(ms / 1000 / 60 % 60),
+                        s = Math.floor(ms / 1000 % 60),
+                        ss = Math.floor(ms / 1000);
+                return {
+                    d: d + "天",
+                    h: h + "小时",
+                    m: m + "分",
+                    ss: ss + "秒",
+                    "d:h:m:s": d + "天" + h + "小时" + m + "分" + s + "秒",
+                    "h:m:s": h + "小时" + m + "分" + s + "秒",
+                    "m:s": m + "分" + s + "秒"
+                };
+            }
+            return this;
+        }
+
+        $('.reg-send-code').click(function(){
+            var phone = $('.reg-phone-num').val();
+            var reg = /^1[34578]\d{9}$/;
+            var that = this;
+            if(phone!== '' && phone.match(reg)){
+                $.ajax({
+                    url: 'sendMobileCode',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'mobile': phone
+                    },
+                    success: function(data){
+                        console.log(data);
+                        if(data.status == 0){
+                            layer.open({
+                                skin: 'msg',
+                                content: data.info,
+                                time: 1
+                            })
+                        }else{
+                            layer.open({
+                                skin: 'msg',
+                                content: data.info,
+                                time: 1
+                            })
+                            buttonCountdown($(that), 1000 * 60 * 1, "ss");
+                        }
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '号码格式不正确',
+                    time: .8
+                })
+            }
+        })
+    </script>
+</body>
+</html>

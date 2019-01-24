@@ -27,9 +27,11 @@ class Advertisement extends Controller
             $time  = strtotime($t);
             $end_time =  "end_time < {$time}";
             $status = Db::name("platform")->where($end_time)->update(["status"=>3]);
-            $area_data = Db::name("platform")->where('area', $area)->where("status", 1)->order("start_time desc")->select();
-            $adress_data = Db::name("platform")->where('department', "platform_business")->where("status", 1)->order("start_time desc")->select();
-                     
+            $area = Db::name("platform")->where('area', $area)->where("status", 1)->order("start_time desc")->select();
+            $adress = Db::name("platform")->where('department', "platform_business")->where("status", 1)->order("start_time desc")->select();
+            $area_data = rest($area);
+            $adress_data = rest($adress);
+
             
             //平台
             foreach ($adress_data as $k => $v) {
@@ -341,9 +343,7 @@ class Advertisement extends Controller
     public function hot_index()
     {
         $hot_data = Db::name("platform")->where("status", 1)->where("pid",20)->order("start_time desc")->select();
-        foreach($hot_data as $key => $value){
 
-        }
         if(!empty($hot_data)){
             return ajax_success("获取广告成功",$hot_data);
         } else {
@@ -353,51 +353,25 @@ class Advertisement extends Controller
     }
 
 
-    // public function returnSquarePoint($lng, $lat,$distance=5)
-    // {
-    //         $earthdata = 6371;//地球半径,平均半径为6371km
-    //         $dlng =  2 * asin(sin($distance / (2 * $earthdata)) / cos(deg2rad($lat)));
-    //         $dlng = rad2deg($dlng);
-    //         $dlat = $distance/$earthdata;
-    //         $dlat = rad2deg($dlat);
-    //             'left_top'=>array('lat'=>$lat + $dlat,'lng'=>$lng-$dlng),
-    //             'right_top'=>array('lat'=>$lat + $dlat, 'lng'=>$lng + $dlng),
-    //             'left_bottom'=>array('lat'=>$lat - $dlat, 'lng'=>$lng - $dlng),
-    //             'right_bottom'=>array('lat'=>$lat - $dlat, 'lng'=>$lng + $dlng)
-    //         ]
-    //         
-    //     
-    //     //使用此函数计算得到结果后，带入sql查询。
-    //   //  $point = $this->returnSquarePoint($lng,$lat,5);        //计算经纬度的周围某段距离的正方形的四个点
-    //   //  $right_bottom_lat = $point['right_bottom']['lat'];   //右下纬度
-    //   //  $left_top_lat = $point['left_top']['lat'];           //左上纬度
-    //    // $left_top_lng = $point['left_top']['lng'];           //左上经度
-    //     //$right_bottom_lng = $point['right_bottom']['lng'];   //右下经度
-    //    // $sql = "SELECT * FROM `表名` WHERE LastGpsWei<>0 AND latitude>$right_bottom_lat AND latitude<$left_top_lat AND longitude>$left_top_lng AND longitude<$right_bottom_lng";
-    //     //return $arr;
-    // }
-    
-    public function returnSquarePoint($lng,$lat,$distance=5){
-        $earthdata = 6371; //地球半径，平均半径为6371km
-    }
+    public function returnSquarePoint()
+    {
 
-    public function rest(){
-        $str ='<p><a href="http://1000312" target="_blank"><img src="/ueditor/php/upload/image/20190123/1548212294670004.jpg" title="1548212294670004.jpg"/></a></p><p><a href="http://1000407" target="_self"><img src="/ueditor/php/upload/image/20190123/1548212294607049.jpg" title="1548212294607049.jpg"/></a></p><p><a href="http://1000413" target="_self"><img src="/ueditor/php/upload/image/20190123/1548212294111598.jpg" title="1548212294111598.jpg"/></a></p><p><br/></p>'; 
-        preg_match_all("/http:[\/]{2}[0-9]*/",$str,$array2); 
-        $wer = $array2[0];
-        foreach( $wer as $k => $value){
-            $values[] = str_replace("http://",'',$value)- 1000000; //获取商品id
-        }
-
-        foreach($values as $key => $vl){
-            $rest[$key] =  db("goods")-> where("id",$vl) -> value("store_id"); //找到自己的店铺id
-            $goods_brand_id[$key] = db("goods")-> where("id",$vl) -> value("goods_brand_id");//品牌id
-        }
-
-            halt($goods_brand_id);
-            halt($rest);
+        $myLat = 22.541355 ;//接收到的当前位置的纬度
+        $myLng = 114.047953;//接收到的当前位置的经度
         
+        $range = 180 / pi() * 5 / 6372.797;     //里面的 1 就代表搜索 1km 之内，单位km
+        $lngR = $range / cos($myLat * pi() / 180);
+        $maxLat = $myLat + $range;//最大纬度
+        $minLat = $myLat - $range;//最小纬度
+        $maxLng = $myLng + $lngR;//最大经度
+        $minLng = $myLng - $lngR;//最小经度
+        $sql = "SELECT * FROM `表名` WHERE LastGpsWei<>0 AND latitude>$right_bottom_lat AND latitude<$left_top_lat AND longitude>$left_top_lng AND longitude<$right_bottom_lng";
+        halt($maxLat);
     }
+    
+
+
+
 
 
 }
