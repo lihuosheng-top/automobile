@@ -57,7 +57,7 @@
             var rechargeMoney = $('.recharge-box input').val();
             if (rechargeMoney !== '' && rechargeMoney > 0) {
                 (function () {
-                    //                    下单获取订单号
+                    //下单获取订单号
                     return $.ajax({
                         url: 'wallet_recharge',
                         type: 'POST',
@@ -69,64 +69,9 @@
                 })().then(function (res) {
                     console.log(res);
                     cancelOrderNum = res.data;
-                    //                    显示选择支付方式弹窗
+                    //显示选择支付方式弹窗
                     $('.mask').show();
                     $('.chose-payment').animate({ 'bottom': '0' });
-                    //         选择支付方式
-                    $('.method-div').click(function () {
-                        var u = navigator.userAgent;
-                        $(this).siblings().find('.check-a').removeClass('icon-check');
-                        $(this).find('.check-a').addClass('icon-check');
-                        backMethod();
-                        var $index = $(this).index();
-                        //发送给后台订单号，获取签名
-                        switch ($index) {
-                            case 1:
-                                //用户选择微信支付，发送订单号给后台
-                                (function(){
-                                    return $.ajax({
-                                        url: 'app_wxpay',
-                                        type: 'POST',
-                                        dataType: 'JSON',
-                                        data: {
-                                            'order_num': cancelOrderNum
-                                        }
-                                    })
-                                })().then(function(res){
-                                    console.log(res.responseData);
-                                    if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
-                                        //接受微信签名 发送给android
-                                        Android.wxpay(JSON.stringify(res.responseData.app_response));
-                                    }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
-                                        //接受微信签名 发送给ios
-                                        alipay(JSON.stringify(res.responseData));
-                                    }
-                                })
-                                break;
-                            case 2:
-                                (function () {
-                                    //用户选择支付宝支付，发送订单号给后台，获取签名
-                                    return $.ajax({
-                                        url: 'ios_api_recharge_alipay',
-                                        type: 'POST',
-                                        dataType: 'JSON',
-                                        data: {
-                                            'order_num': cancelOrderNum
-                                        }
-                                    })
-                                })().then(function (res) {
-                                    console.log(res);
-                                    if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
-                                        //接受支付宝签名 发送给android
-                                        Android.alipay(res.data);
-                                    }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
-                                        //接受支付宝签名 发送给ios
-                                        alipay(res.data);
-                                    }
-                                })
-                                break;
-                        }
-                    })
                 })
             } else {
                 //用户未填写充值金额
@@ -137,6 +82,62 @@
                     content: '充值金额填写不正确',
                     time: 1.5
                 })
+            }
+        })
+
+        //选择支付方式
+        $('.method-div').click(function () {
+            var u = navigator.userAgent;
+            $(this).siblings().find('.check-a').removeClass('icon-check');
+            $(this).find('.check-a').addClass('icon-check');
+            backMethod();
+            var $index = $(this).index();
+            //发送给后台订单号，获取签名
+            switch ($index) {
+                case 1:
+                    //用户选择微信支付，发送订单号给后台
+                    (function(){
+                        return $.ajax({
+                            url: 'app_wxpay',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'order_num': cancelOrderNum
+                            }
+                        })
+                    })().then(function(res){
+                        console.log(res.responseData);
+                        if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                            //接受微信签名 发送给android
+                            Android.wxpay(JSON.stringify(res.responseData.app_response));
+                        }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
+                            //接受微信签名 发送给ios
+                            alipay(JSON.stringify(res.responseData));
+                        }
+                    })
+                    break;
+                case 2:
+                    (function () {
+                        //用户选择支付宝支付，发送订单号给后台，获取签名
+                        return $.ajax({
+                            url: 'ios_api_recharge_alipay',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'order_num': cancelOrderNum
+                            }
+                        })
+                    })().then(function (res) {
+                        console.log(res);
+                        if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                            //接受支付宝签名 发送给android
+                            Android.alipay(res.data);
+                        }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
+                            //接受支付宝签名 发送给ios
+                            alipay(res.data);
+                        }
+                    })
+                    break;
             }
         })
         function alipayCallback(res) {
