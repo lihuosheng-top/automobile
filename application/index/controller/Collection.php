@@ -29,7 +29,7 @@ class  Collection extends Controller{
                 ->where('tb_collection.user_id',$user_id)
                 ->select();
             foreach ($data as $k=>$v){
-                $data[$k]["goods_adjusted_price"] =Db::name("special")->where("goods_id",$v["goods_id"])->min("goods_adjusted_price");
+                $data[$k]["goods_adjusted_money"] =Db::name("special")->where("goods_id",$v["goods_id"])->min("goods_adjusted_price");
             }
             if(!empty($data)){
                 return ajax_success('返回成功',$data);
