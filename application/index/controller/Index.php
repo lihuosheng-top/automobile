@@ -246,7 +246,7 @@ class Index extends Controller
                 } else {
                     return ajax_error("获取失败");
                 }
-            } else {
+            }else {
                 $user_id = Session::get("user");
                 $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
                 $car_series = db("car_series")->where("brand", $user_car["brand"])->where("series", $user_car["series"])->field("vehicle_model")->find();
@@ -259,6 +259,10 @@ class Index extends Controller
                             if($v_1["goods_standard"] != "通用"){
                                 unset($goods[$k_1]);
                             }
+                        }
+                    }else{
+                        foreach ($goods as $k_1 => $v_1) {
+                            $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
                         }
                     }
                     $serve_vehicle_model = db("serve_goods")->where("store_id", $shop_id)->where("vehicle_model", $car_series["vehicle_model"])->find();
@@ -296,6 +300,10 @@ class Index extends Controller
                             if($v_1["goods_standard"] != "通用"){
                                 unset($goods[$k_1]);
                             }
+                        }
+                    }else{
+                        foreach ($goods as $k_1 => $v_1) {
+                            $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
                         }
                     }
                     $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
