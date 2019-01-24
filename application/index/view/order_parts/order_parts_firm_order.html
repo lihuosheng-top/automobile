@@ -546,6 +546,7 @@
                     $('.user-info-box').after(str);
                     // 折扣
                     $('.total-money').text(res.data[0].total_price);
+                    totalMoney = res.data[0].total_price;
                     finalMoney = parseFloat($('.total-money').text());
                     // 共计商品数量
                     var numberEle = $('.quantity-p span');
