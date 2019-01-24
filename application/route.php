@@ -75,8 +75,16 @@ Route::group("",[
     "notifyurls"=>"index/Apppay/notifyurl",//TODO：配件商异步处理(支付宝IOS对接)
     "service_notifyurl"=>"index/Apppay/service_notifyurl",//TODO：服务商异步处理(支付宝IOS对接)
     "recharge_notifyurl"=>"index/Apppay/recharge_notifyurl",//TODO：余额充值订单异步处理(支付宝IOS对接)
-    "app_wxpay"=>"index/Apppay/app_wxpay",//微信app支付
-    "wxpay_notifyurl"=>"index/Apppay/wxpay_notifyurl",//微信app支付回调
+    "app_wxpay"=>"index/Apppay/app_wxpay",//TODO：微信app支付(充值)
+    "wxpay_notifyurl"=>"index/Apppay/wxpay_notifyurl",//TODO：微信app支付回调（充值）
+
+    "app_parts_wxpay"=>"index/Apppay/app_parts_wxpay",//TODO:（配件商）微信app支付
+    "wxpay_parts_notifyurl"=>"index/Apppay/wxpay_parts_notifyurl",//TODO:(配件商)微信支付回调
+    "app_service_wxpay"=>"index/Apppay/app_service_wxpay",//TODO:（服务商）微信app支付
+    "wxpay_service_notifyurl"=>"index/Apppay/wxpay_service_notifyurl",//TODO:(服务商)微信支付回调
+
+
+
     "parts_balance_payment"=>"index/Balance/parts_balance_payment", //配件商余额支付
     "service_balance_payment"=>"index/Balance/service_balance_payment",//服务商余额支付
     /*TODO:pay结束*/
