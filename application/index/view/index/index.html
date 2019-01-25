@@ -170,9 +170,11 @@
                 </div> -->
             </div>
         </div>
-        <!-- 热门店铺 -->
+        <!-- 周边店铺 -->
         <div class="hot_shop">
-            <p class="subtitle">周边店铺</p>
+            <p class="subtitle">周边店铺
+                <span class="refresh-icon"></span>
+            </p>
             <ul class="hot-ul">
                 <!-- <li class="hot-item">
                     <div class="hot-headimg">
@@ -302,6 +304,11 @@
     <script src="__STATIC__/index/js/plugin/threecity/js/CNAddrArr.min.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
     <script>
+        $('.refresh-icon').click(function(){
+            $(this).toggleClass('refresh-rotate');
+            delCookie('threeAdress');
+            location.reload();
+        })
         // 调用安卓方法
         function callAndroid() {
             Android.getLocation();
@@ -599,6 +606,10 @@
             } else {
                 return '';
             }
+        };
+        // 删除cookie
+        function delCookie(name) {
+            setCookie(name, null, -1);
         };
         $('#search').on('focus', function(){
             location.href = 'goods_list';
