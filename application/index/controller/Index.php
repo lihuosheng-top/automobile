@@ -230,6 +230,9 @@ class Index extends Controller
                 }
                 $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
                 $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
+                foreach ($store as $k_2=>$v_2){
+                    $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                }
                 $service_setting = db("service_setting")->select();
                 $serve_data = [];
                 foreach ($service_setting as $key => $value) {
@@ -268,6 +271,9 @@ class Index extends Controller
                     $serve_vehicle_model = db("serve_goods")->where("store_id", $shop_id)->where("vehicle_model", $car_series["vehicle_model"])->find();
                     $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
                     $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
+                    foreach ($store as $k_2=>$v_2){
+                        $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                    }
                     $serve_data = [];
                     $serve = [];
                     foreach ($serve_goods as $k => $val) {
@@ -308,6 +314,9 @@ class Index extends Controller
                     }
                     $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
                     $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
+                    foreach ($store as $k_2=>$v_2){
+                        $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                    }
                     $service_setting = db("service_setting")->select();
                     $serve_data = [];
                     foreach ($service_setting as $key => $value) {
