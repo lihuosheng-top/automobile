@@ -139,6 +139,9 @@ class Reservation extends Controller{
                     }
                 }
                 $store = db("store")->where("store_id", $serve_goods_id)->select();
+                foreach ($store as $k_2=>$v_2){
+                    $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                }
                 $serve_data = [];
                 foreach ($store as $key => $value) {
                     $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id", $service_setting_id)->where("store_id", $value["store_id"])->where("vehicle_model", $car_series["vehicle_model"])->select();
@@ -163,6 +166,9 @@ class Reservation extends Controller{
                     }
                 }
                 $store = db("store")->where("store_id", $serve_goods_id)->select();
+                foreach ($store as $k_2=>$v_2){
+                    $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                }
                 $serve_data = [];
                 foreach ($store as $key => $value) {
                     $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id", $service_setting_id)->where("store_id", $value["store_id"])->select();
