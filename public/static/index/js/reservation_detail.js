@@ -92,7 +92,7 @@ if(urlLen > 1){
                 // 服务项目
                 var str2 = myService(data);
                 $('.service-content').append(str2);
-                $('.bespeak-money').text('￥'+ $('.sale span').text());
+                $('.bespeak-money').text('￥'+$('.service-colla-content').find('.icon-check').prev().find('.sale span').text());
                 selectEvent();
 
                 $('.comment_title').show();
@@ -357,7 +357,7 @@ function myService(data){
                             <div class="content-money-div">
                                 <p class="sale"><span>面议</span></p>
                             </div>
-                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(urlLen>1&&idx==0?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }else if(val.service_money !== null && val.ruling_money === null){
                 str2 += `<li>
@@ -365,7 +365,7 @@ function myService(data){
                             <div class="content-money-div">
                                 <p class="sale">￥<span>`+val.service_money+`</span></p>
                             </div>
-                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(urlLen>1&&idx==0?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }else if(val.service_money !== null && val.ruling_money !== null){
                 str2 += `<li>
@@ -374,7 +374,7 @@ function myService(data){
                                 <p class="sale">￥<span>`+val.service_money+`</span></p>
                                 <p class="thro">￥<span>`+val.ruling_money+`</span></p>
                             </div>
-                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(urlLen>1&&idx==0?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }
         })
