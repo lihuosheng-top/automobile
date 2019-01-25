@@ -307,7 +307,9 @@
         $('.refresh-icon').click(function(){
             $(this).toggleClass('refresh-rotate');
             delCookie('threeAdress');
-            location.reload();
+            setTimeout(function(){
+                location.reload();
+            }, 300)
         })
         // 调用安卓方法
         function callAndroid() {
