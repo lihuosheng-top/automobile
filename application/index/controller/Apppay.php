@@ -946,6 +946,7 @@ class Apppay extends Controller
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
         $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         $vals = json_decode(json_encode($xml_data), true);
+
         if($vals["result_code"] == "SUCCESS" ){
             $out_trade_no = $vals["out_trade_no"];
             $data =[
@@ -953,12 +954,15 @@ class Apppay extends Controller
                 "pay_type_content"=>"微信"//支付方式
             ];
             $condition['parts_order_number'] = $out_trade_no;
-            $select_data = Db::name('order_parts')->where($condition)->select();
-            foreach ($select_data as $key => $val) {
-                $result = Db::name('order_parts')
-                    ->where("id", $val["id"])
-                    ->update($data);//修改订单状态,支付宝单号到数据库
-            }
+//            $select_data = Db::name('order_parts')->where($condition)->select();
+            $result = Db::name('order_parts')
+                ->where($condition)
+                ->update($data);//修改订单状态,支付宝单号到数据库
+//            foreach ($select_data as $key => $val) {
+//                $result = Db::name('order_parts')
+//                    ->where("id", $val["id"])
+//                    ->update($data);//修改订单状态,支付宝单号到数据库
+//            }
             if ($result > 0) {
                 $parts =Db::name("order_parts")
                     ->field("parts_goods_name,order_real_pay,user_id")
