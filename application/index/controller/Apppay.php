@@ -945,9 +945,9 @@ class Apppay extends Controller
     public function wxpay_parts_notifyurl(){
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
         $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
-        $val = json_decode(json_encode($xml_data), true);
-        if($val["result_code"] == "SUCCESS" ){
-            $out_trade_no = $val["out_trade_no"];
+        $vals = json_decode(json_encode($xml_data), true);
+        if($vals["result_code"] == "SUCCESS" ){
+            $out_trade_no = $vals["out_trade_no"];
             $data['status'] = 2;
 //            $data["trade_no"] =null; //流水号
             $data['pay_type_content'] = "微信";//支付方式
