@@ -827,6 +827,7 @@ class Apppay extends Controller
         $val = json_decode(json_encode($xml_data), true);
         if($val["result_code"] == "SUCCESS" ){
             $out_trade_no = $val["out_trade_no"];//订单编号
+            file_put_contents(EXTEND_PATH."data.txt",$out_trade_no);
             $data['status'] = 1;
             $data['pay_type_name'] = "微信";//支付类型
             $data['pay_time'] = time();//支付时间
