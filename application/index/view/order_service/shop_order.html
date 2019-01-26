@@ -136,11 +136,14 @@
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/payment.js"></script>
     <script>
-        var orderNumber = 0;
+        var orderNumber = 0, lock = true;
         (function(){
             var df = $.Deferred();
             $('#goAlipay').click(function(){
-                df.resolve();
+                if(lock){
+                    lock = false;
+                    df.resolve();
+                }
             })
             return df.promise();
         })().then(function(){
@@ -226,6 +229,7 @@
         })
 
         function alipayCallback(res){
+            lock = true;
             if(res.resultStatus == '6001'){
                 location.href = 'order_service_wait_pay';
             }else if(res.resultStatus == '9000'){
@@ -234,6 +238,7 @@
         }
         
         function wxpayCallback(res){
+            lock = true;
             if(res !== undefined && res == '0'){
                 location.href = 'order_service_wait_deliver';
             }else if(res == '-2'){
@@ -257,6 +262,7 @@
                 })().then(function(res){
                     console.log(res);
                     if(res.status == 1){
+                        lock = true;
                         layer.open({
                             skin: 'msg',
                             content: '支付成功',

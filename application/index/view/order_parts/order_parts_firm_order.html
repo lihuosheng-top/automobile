@@ -316,6 +316,7 @@
                 })().then(function(res){
                     console.log(res);
                     if(res.status == 1){
+                        lock = true;
                         layer.open({
                             skin: 'msg',
                             content: '支付成功',
@@ -358,7 +359,7 @@
     <script>
         var cancelPayOrderNum = '', storeIdArr = [], stock;
         // 上架价格*数量
-        var totalMoney;
+        var totalMoney, lock = true;
         // 商品详情 传过来的数据
         $.ajax({
             url: 'return_order_buy_information',
@@ -483,37 +484,40 @@
                     var storeId = res.data.goods[0].store_id;
                     storeIdArr.push(res.data.goods[0].store_id);
                     $('#order-buy').click(function () {
-                        var orderAmount = $('.total-money').text();
-                        var quantity = $('.total-num').text();
-                        var goods_standard = $('.standard').text();
-                        var goods_standard_id = $('.standard').attr('id');
-                        var buy_message = $('.leave-msg').val();
-                        var address_id = $('.user-name').data('address_id');
-                        //生成订单号
-                        (function(){
-                            return $.ajax({
-                                url: 'ios_api_order_parts_button',
-                                type: 'POST',
-                                dataType: 'JSON',
-                                data: {
-                                    'goods_id': goodsId,
-                                    'store_id': storeId,
-                                    'order_amount': orderAmount,
-                                    'order_quantity': quantity,
-                                    'goods_standard': goods_standard,
-                                    'buy_message': buy_message,
-                                    'setting_id': deductionId,
-                                    'goods_standard_id': goods_standard_id,
-                                    'address_id': address_id
-                                }
+                        if(lock){
+                            lock = false;
+                            var orderAmount = $('.total-money').text();
+                            var quantity = $('.total-num').text();
+                            var goods_standard = $('.standard').text();
+                            var goods_standard_id = $('.standard').attr('id');
+                            var buy_message = $('.leave-msg').val();
+                            var address_id = $('.user-name').data('address_id');
+                            //生成订单号
+                            (function(){
+                                return $.ajax({
+                                    url: 'ios_api_order_parts_button',
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    data: {
+                                        'goods_id': goodsId,
+                                        'store_id': storeId,
+                                        'order_amount': orderAmount,
+                                        'order_quantity': quantity,
+                                        'goods_standard': goods_standard,
+                                        'buy_message': buy_message,
+                                        'setting_id': deductionId,
+                                        'goods_standard_id': goods_standard_id,
+                                        'address_id': address_id
+                                    }
+                                })
+                            })().then(function(res){
+                                //选择支付方式弹窗
+                                showSelectMethod();
+                                console.log(res);
+                                // 存储订单号
+                                cancelPayOrderNum = res.data.parts_order_number;
                             })
-                        })().then(function(res){
-                            //选择支付方式弹窗
-                            showSelectMethod();
-                            console.log(res);
-                            // 存储订单号
-                            cancelPayOrderNum = res.data.parts_order_number;
-                        })
+                        }
                     })
                 }else if(res.status === 3){
                     $('.sundry-ul li').first().hide();
@@ -569,29 +573,31 @@
                         }
                     })
                     $('#order-buy').click(function () {
-                        var buy_message = $('.leave-msg').val();
-                        var order_amount = $('.total-money').text();
-                        var address_id = $('.user-name').data('address_id');
-                        (function(){
-                            return $.ajax({
-                                url: 'ios_api_order_button_by_shop',
-                                type: 'POST',
-                                dataType: 'JSON',
-                                data: {
-                                    'buy_message': buy_message,
-                                    'order_amount': order_amount,
-                                    'shoppingId': shoppingId,
-                                    'setting_id': deductionId,
-                                    'address_id': address_id
-                                }
+                        if(lock){
+                            var buy_message = $('.leave-msg').val();
+                            var order_amount = $('.total-money').text();
+                            var address_id = $('.user-name').data('address_id');
+                            (function(){
+                                return $.ajax({
+                                    url: 'ios_api_order_button_by_shop',
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    data: {
+                                        'buy_message': buy_message,
+                                        'order_amount': order_amount,
+                                        'shoppingId': shoppingId,
+                                        'setting_id': deductionId,
+                                        'address_id': address_id
+                                    }
+                                })
+                            })().then(function(res){
+                                console.log(res);
+                                // 存储订单号
+                                cancelPayOrderNum = res.data.parts_order_number;
+                                //选择支付方式弹窗
+                                showSelectMethod();
                             })
-                        })().then(function(res){
-                            console.log(res);
-                            // 存储订单号
-                            cancelPayOrderNum = res.data.parts_order_number;
-                            //选择支付方式弹窗
-                            showSelectMethod();
-                        })
+                        }
                     })
                 }
             },
@@ -688,6 +694,7 @@
         })
         // 支付宝支付 回调
         function alipayCallback(res){
+            lock = true;
             if(res !== undefined && res.resultStatus == '9000'){
                 location.href = 'order_wait_deliver';
             }else{
@@ -695,6 +702,7 @@
             }
         }
         function wxpayCallback(res){
+            lock = true;
             if(res !== undefined && res == '0'){
                 location.href = 'order_wait_deliver';
             }else if(res == '-2'){

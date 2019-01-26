@@ -298,6 +298,7 @@ html{
     width: 100%;
 }
 .hot_shop .subtitle{
+    position: relative;
     padding: 0 .18rem;
     box-sizing: border-box;
     background-color: #fff;
@@ -757,4 +758,18 @@ html{
     margin-bottom: .2rem;
     border: 1px solid #eee;
     margin-right: .2rem;
+}
+
+.refresh-icon{
+    position: absolute;
+    right: .5rem; 
+    bottom: 0;
+    width: .46rem;
+    height: .36rem; 
+    background: url(../../image/refresh.png) no-repeat;
+    background-size: 100% 100%;
+    transition: all .6s linear;
+}
+.refresh-icon.refresh-rotate{
+    transform: rotateZ(720deg);
 }
