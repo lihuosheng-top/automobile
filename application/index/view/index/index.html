@@ -396,12 +396,11 @@
                                         $('.hot-ul').append(str);
                                     }
                                     renderPage(sortDistArr, res);
+                                    $('.hot-item').click(function(){
+                                        var id = $(this).attr('id');
+                                        intoHotShop(id);
+                                    })
                                 })(sortDistArr, res)
-
-                                $('.hot-item').click(function(){
-                                    var id = $(this).attr('id');
-                                    intoHotShop(id);
-                                })
                             }
                         })
                     })()
