@@ -143,9 +143,15 @@ if(urlLen > 1){
                 evaAjax(data);
                 // 电话 导航
                 var seatNum = data.data.store[0].store_owner_seat_num;
-                $('.activity-contact .phone').attr('href', 'javascript:Android.call("'+seatNum+'");');
+                var storeAjax = data.data.store[0];
+                $('.activity-contact .phone').attr('href', "javascript:Android.call("+seatNum+");");
                 $('.activity-contact .phone-number').text(seatNum);
-
+                $('.activity-contact .navigation').click(function(){
+                    Android.openGdMap(storeAjax.latitude, storeAjax.longitude, storeAjax.store_name)
+                })
+                $('.activity-section .start-time span').text(timetrans(storeAjax.start_time));
+                $('.activity-section .end-time span').text(timetrans(storeAjax.end_time));
+                $('.rich-text').html(storeAjax.advert_text);
             }
         }, function(res){
             console.log(res.status, res.statusText);

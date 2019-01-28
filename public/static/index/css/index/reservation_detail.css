@@ -842,9 +842,10 @@ html{
     justify-content: space-between;
     font-size: .28rem;
     color: #515151;
+    line-height: normal;
+    margin-bottom: .2rem;
 }
 .activity-section .activity-time div{
     flex-basis: 50%;
-    text-align: center;
 }
 
