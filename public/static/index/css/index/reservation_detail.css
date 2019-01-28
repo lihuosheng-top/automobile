@@ -848,4 +848,7 @@ html{
 .activity-section .activity-time div{
     flex-basis: 50%;
 }
+.activity-section .rich-text img{
+    width: 100%;
+}
 
