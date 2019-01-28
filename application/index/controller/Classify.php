@@ -337,10 +337,9 @@ class Classify extends Controller
                     }
                 }
                 if ($goods_data) {
-                    halt($goods_data);
                     $ords =array();
                     foreach ($goods_data as $vl){
-                        $ords[] =intval($vl["goods_adjusted_money"]);
+                        $ords[] =intval($vl["special"][0]["goods_adjusted_money"]);
                     }
                     array_multisort($ords,SORT_ASC,$goods_data);
                     return ajax_success("获取成功", $goods_data);
