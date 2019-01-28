@@ -332,7 +332,7 @@
                             type: 'POST',
                             dataType: 'JSON',
                         }).then(function(res){
-                            console.log('热门店铺',res);
+                            console.log('周边店铺',res);
                             var distArr = [];
                             var dist = 0;
                             var lngLat = getCookie('lngLat').split(',');
@@ -495,12 +495,11 @@
                                     $('.hot-ul').append(str);
                                 }
                                 renderPage(sortDistArr, res);
+                                $('.hot-item').click(function(){
+                                    var id = $(this).attr('id');
+                                    intoHotShop(id);
+                                })
                             })(sortDistArr, res)
-
-                            $('.hot-item').click(function(){
-                                var id = $(this).attr('id');
-                                intoHotShop(id);
-                            })
                         }
                     })
                 })()
@@ -551,7 +550,7 @@
                         // 活动商家
                         var data = res.data;
                         var hotStr = `<div class="recommend_top">
-                                        <a href="reservation_detail?store_id=`+data.hot_one[0].store_id+`&">
+                                        <a href="reservation_detail?store_id=`+data.hot_one[0].store_id+`&activity=1">
                                             <img src="uploads/`+data.hot_one[0].advert_picture+`">
                                         </a>
                                         <a href="`+(data.hot_two[0].url==null?'javascript:;':data.hot_two[0].url)+`">
