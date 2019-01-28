@@ -476,6 +476,7 @@ class Classify extends Controller
                     }
                 }
                 if ($goods_data) {
+                    halt($goods_data);
                     $ords =array();
                     foreach ($goods_data as $vl){
                         $ords[] =intval($vl["goods_adjusted_money"]);
