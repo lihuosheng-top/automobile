@@ -1030,7 +1030,7 @@ class Apppay extends Controller
             $data = Db::name('order_service')->where('service_order_number',$order_num)->find();
             $goods_name =$data['service_goods_name'];    //商品名称
             $order_number = $data['service_order_number'];    //订单号
-            $goods_pay_money =$data['order_real_pay'];     //支付金额
+            $goods_pay_money =$data['service_real_pay'];     //支付金额
             $notify_url = config("domain_url.address")."wxpay_service_notifyurl";//异步通知URL(更改支付状态)
             $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name,$notify_url);  //实例化微信支付类
             return ajax_success("获取成功",$wxpayandroid);
