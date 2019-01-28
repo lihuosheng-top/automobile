@@ -798,3 +798,53 @@ html{
     width: 100%;
 }
 /* 评价详情 end */
+.activity-contact{
+    margin-top: .2rem;
+    padding-top: .2rem;
+    display: flex;
+    justify-content: space-between;
+}
+.activity-contact a{
+    flex-basis: 50%;
+    text-align: center;
+    box-sizing: border-box;
+    color: #504cfb;
+}
+.activity-contact a.phone{
+    border-right: 1px solid #e5e5e5;
+}
+.activity-contact .phone-icon{
+    display: inline-block;
+    width: .38rem;
+    height: .38rem;
+    background-position: -1.45rem -1.15rem;
+    vertical-align: middle;
+    margin-right: .1rem;
+}
+.activity-contact .navigation-icon{
+    display: inline-block;
+    width: .38rem;
+    height: .38rem;
+    background-position: -1.45rem -.75rem;
+    vertical-align: middle;
+    margin-right: .1rem;
+}
+.activity-section{
+    width: 96%;
+    margin: 0 auto .3rem;
+    border-radius: .1rem;
+    padding: .42rem .32rem;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.activity-section .activity-time{
+    display: flex;
+    justify-content: space-between;
+    font-size: .28rem;
+    color: #515151;
+}
+.activity-section .activity-time div{
+    flex-basis: 50%;
+    text-align: center;
+}
+
