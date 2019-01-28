@@ -529,8 +529,8 @@
                     console.log(res);
                     location.href = 'reservation_detail?store_id='+id;
                 },
-                error: function(){
-                    alert('error')
+                error: function(res){
+                    alert(res.status, res.statusText);
                     console.log('error');
                 }
             })
