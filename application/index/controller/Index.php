@@ -232,6 +232,8 @@ class Index extends Controller
                 $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
                 foreach ($store as $k_2=>$v_2){
                     $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                    $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
+                    $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
                 }
                 $service_setting = db("service_setting")->select();
                 $serve_data = [];
@@ -273,6 +275,8 @@ class Index extends Controller
                     $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
                     foreach ($store as $k_2=>$v_2){
                         $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                        $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
+                        $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
                     }
                     $serve_data = [];
                     $serve = [];
@@ -316,6 +320,9 @@ class Index extends Controller
                     $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
                     foreach ($store as $k_2=>$v_2){
                         $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                        $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
+                        $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
+
                     }
                     $service_setting = db("service_setting")->select();
                     $serve_data = [];

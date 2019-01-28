@@ -141,6 +141,8 @@ class Reservation extends Controller{
                 $store = db("store")->where("store_id", $serve_goods_id)->select();
                 foreach ($store as $k_2=>$v_2){
                     $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                    $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
+                    $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
                 }
                 $serve_data = [];
                 foreach ($store as $key => $value) {
@@ -168,6 +170,8 @@ class Reservation extends Controller{
                 $store = db("store")->where("store_id", $serve_goods_id)->select();
                 foreach ($store as $k_2=>$v_2){
                     $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                    $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
+                    $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
                 }
                 $serve_data = [];
                 foreach ($store as $key => $value) {
