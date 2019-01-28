@@ -332,7 +332,7 @@
                             type: 'POST',
                             dataType: 'JSON',
                         }).then(function(res){
-                            console.log('热门店铺',res);
+                            console.log('周边店铺',res);
                             var distArr = [];
                             var dist = 0;
                             var lngLat = getCookie('lngLat').split(',');
@@ -394,12 +394,12 @@
                                             })
                                         }
                                         $('.hot-ul').append(str);
+                                        $('.hot-item').click(function(){
+                                            var id = $(this).attr('id');
+                                            intoHotShop(id);
+                                        })
                                     }
                                     renderPage(sortDistArr, res);
-                                    $('.hot-item').click(function(){
-                                        var id = $(this).attr('id');
-                                        intoHotShop(id);
-                                    })
                                 })(sortDistArr, res)
                             }
                         })
@@ -493,14 +493,13 @@
                                         })
                                     }
                                     $('.hot-ul').append(str);
+                                    $('.hot-item').click(function(){
+                                        var id = $(this).attr('id');
+                                        intoHotShop(id);
+                                    })
                                 }
                                 renderPage(sortDistArr, res);
                             })(sortDistArr, res)
-
-                            $('.hot-item').click(function(){
-                                var id = $(this).attr('id');
-                                intoHotShop(id);
-                            })
                         }
                     })
                 })()
@@ -515,6 +514,26 @@
         // 排位距离
         function sortNum(a, b){
             return a.dist - b.dist;
+        }
+        // 进入 热门店铺
+        function intoHotShop(id){
+            $.ajax({
+                url: 'index_shop_goods',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': id
+                },
+                success: function(res){
+                    alert('success')
+                    console.log(res);
+                    location.href = 'reservation_detail?store_id='+id;
+                },
+                error: function(){
+                    alert('error')
+                    console.log('error');
+                }
+            })
         }
 
         // 获取广告
@@ -551,7 +570,7 @@
                         // 活动商家
                         var data = res.data;
                         var hotStr = `<div class="recommend_top">
-                                        <a href="`+(data.hot_one[0].url==null?'javascript:;':data.hot_one[0].url)+`">
+                                        <a href="reservation_detail?store_id=`+data.hot_one[0].store_id+`&activity=1">
                                             <img src="uploads/`+data.hot_one[0].advert_picture+`">
                                         </a>
                                         <a href="`+(data.hot_two[0].url==null?'javascript:;':data.hot_two[0].url)+`">

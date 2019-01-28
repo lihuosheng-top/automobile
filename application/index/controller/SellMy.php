@@ -1173,7 +1173,7 @@ class  SellMy extends Controller{
                 //已完成
                 $condition =" `status` = '8' ";
                 $data =Db::name("order_parts")
-                    ->field('parts_order_number,order_create_time,group_concat(id) order_id')
+                    ->field('parts_order_number,pay_time,group_concat(id) order_id')
                     ->where($condition)
                     ->where("store_id",$role_name_store_id["store_id"])
                     ->group('parts_order_number')
@@ -1198,7 +1198,7 @@ class  SellMy extends Controller{
                                 ->where('parts_order_number', $da_v)
                                 ->where("store_id",$role_name_store_id["store_id"])
                                 ->where($condition)
-                                ->order('order_create_time', 'desc')
+                                ->order('pay_time', 'desc')
                                 ->select();
                             $names = Db::name("order_parts")
                                 ->where("store_id",$role_name_store_id["store_id"])
@@ -1208,7 +1208,7 @@ class  SellMy extends Controller{
                             $order_data['status'][$da_k] = $names['status'];
                             $order_data["parts_order_number"][$da_k] = $names["parts_order_number"];
                             $order_data["all_order_real_pay"][$da_k] = $names["order_real_pay"];
-                            $order_data["order_create_time"][$da_k] = $names["order_create_time"];
+                            $order_data["pay_time"][$da_k] = $names["pay_time"];
                             $order_data["store_name"][$da_k] = $names["store_name"];
                             $order_data["store_id"][$da_k] = $names["store_id"];
                             foreach ($order_data["info"] as $kk => $vv) {
@@ -1226,7 +1226,7 @@ class  SellMy extends Controller{
                         $data_information["all_numbers"][] = $return_data["order_quantity"];
                         $data_information['status'][] = $return_data['status'];
                         $data_information['parts_order_number'][] = $return_data['parts_order_number'];
-                        $data_information['order_create_time'][] = $value['order_create_time'];
+                        $data_information['pay_time'][] = $value['pay_time'];
                         $data_information['store_id'][] = $return_data['store_id'];
                         $data_information['store_name'][] =$return_data['store_name'];
                         $data_information['all'][] = Db::name('order_parts')
@@ -1284,13 +1284,13 @@ class  SellMy extends Controller{
                         $end_info[$i]['parts_order_number'] = $j;
                     }
                     //订单创建时间
-                    foreach ($order_data['order_create_time'] as $i => $j) {
+                    foreach ($order_data['pay_time'] as $i => $j) {
                         if(!empty($j)){
                             $new_arr_order_create_time[] =$j;
                         }
                     }
                     foreach ($new_arr_order_create_time as $i=>$j){
-                        $end_info[$i]['order_create_times'] = $j;
+                        $end_info[$i]['pay_time'] = $j;
                     }
                     //店铺id
                     foreach ($order_data['store_id'] as $i => $j) {
@@ -1339,8 +1339,8 @@ class  SellMy extends Controller{
                         $end_info[$a+$count]['info'][] = $b;
                     }
                     //创建订单时间
-                    foreach ($data_information['order_create_time'] as $a=>$b){
-                        $end_info[$a+$count]['order_create_times'] = $b;
+                    foreach ($data_information['pay_time'] as $a=>$b){
+                        $end_info[$a+$count]['pay_time'] = $b;
                     }
 
                     //店铺id
@@ -1558,9 +1558,9 @@ class  SellMy extends Controller{
                 //新订单
                 $timetoday = strtotime(date("Y-m-d H:i:s",time()));//今天0点的时间点
                 $time2 = strtotime(date("Y-m-d H:i:s",strtotime('-6 hour')));
-                $time_condition  = "order_create_time > $time2  and  order_create_time < $timetoday";
+                $time_condition  = "pay_time > $time2  and  pay_time < $timetoday";
                 $data =Db::name("order_parts")
-                    ->field('parts_order_number,order_create_time,group_concat(id) order_id')
+                    ->field('parts_order_number,pay_time,group_concat(id) order_id')
                     ->where($time_condition)
                     ->where("store_id",$role_name_store_id["store_id"])
                     ->group('parts_order_number')
@@ -1590,7 +1590,7 @@ class  SellMy extends Controller{
                             $order_data['status'][$da_k] = $names['status'];
                             $order_data["parts_order_number"][$da_k] = $names["parts_order_number"];
                             $order_data["all_order_real_pay"][$da_k] = $names["order_real_pay"];
-                            $order_data["order_create_time"][$da_k] = $names["order_create_time"];
+                            $order_data["pay_time"][$da_k] = $names["pay_time"];
                             $order_data["store_name"][$da_k] = $names["store_name"];
                             $order_data["store_id"][$da_k] = $names["store_id"];
                             foreach ($order_data["info"] as $kk => $vv) {
@@ -1607,7 +1607,7 @@ class  SellMy extends Controller{
                         $data_information["all_numbers"][] = $return_data["order_quantity"];
                         $data_information['status'][] = $return_data['status'];
                         $data_information['parts_order_number'][] = $return_data['parts_order_number'];
-                        $data_information['order_create_time'][] = $value['order_create_time'];
+                        $data_information['pay_time'][] = $value['pay_time'];
                         $data_information['store_id'][] = $return_data['store_id'];
                         $data_information['store_name'][] =$return_data['store_name'];
                         $data_information['all'][] = Db::name('order_parts')
@@ -1664,13 +1664,13 @@ class  SellMy extends Controller{
                         $end_info[$i]['parts_order_number'] = $j;
                     }
                     //订单创建时间
-                    foreach ($order_data['order_create_time'] as $i => $j) {
+                    foreach ($order_data['pay_time'] as $i => $j) {
                         if(!empty($j)){
                             $new_arr_order_create_time[] =$j;
                         }
                     }
                     foreach ($new_arr_order_create_time as $i=>$j){
-                        $end_info[$i]['order_create_times'] = $j;
+                        $end_info[$i]['pay_time'] = $j;
                     }
                     //店铺id
                     foreach ($order_data['store_id'] as $i => $j) {
@@ -1719,8 +1719,8 @@ class  SellMy extends Controller{
                         $end_info[$a+$count]['info'][] = $b;
                     }
                     //创建订单时间
-                    foreach ($data_information['order_create_time'] as $a=>$b){
-                        $end_info[$a+$count]['order_create_times'] = $b;
+                    foreach ($data_information['pay_time'] as $a=>$b){
+                        $end_info[$a+$count]['pay_time'] = $b;
                     }
 
                     //店铺id
