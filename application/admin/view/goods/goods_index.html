@@ -204,8 +204,6 @@
 						{volist name="year" id="val"}
 						{if $value.goods_year_id == $val.id}
 						<td><input type="checkbox" data-text="{$val.year}" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加" data-action="{$value.putaway_status}"></td>
-						{else}
-						<td><input type="checkbox" data-text="{$val.year}" sname="" data-id="{$value.id}" lay-skin="primary" lay-filter="choose" data-title="{$val.money}" data-value="店铺还没有添加" data-action="{$value.putaway_status}"></td>
 						{/if}
 						{/volist}
 						<td>{$value.id +1000000}</td>

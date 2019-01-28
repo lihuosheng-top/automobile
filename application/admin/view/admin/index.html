@@ -16,11 +16,31 @@
 
 {block name="content"}
 <div class="childrenBody">
+	
 	<blockquote class="layui-elem-quote news_search">
-<div class="layui-inline">
-		<a class="layui-btn layui-btn-danger bataadone" href="{:url('admin/admin/add')}">添加</a>
+		<form class="layui-form" action="{:url('admin/admin/search')}" method="post">
+		<div class="seach">
+			<div class="seach_list">
+				<div class="seach_laber">账号：</div>
+				<div class="seach_input">
+					<input type="text" name="account" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input">
+				</div>
+			</div>
+			<div class="seach_list">
+				<div class="seach_laber">姓名：</div>
+				<div class="seach_input">
+					<input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input">
+				</div>
+			</div>
+		<button class="layui-btn" type="submit" id="seach">立即搜索</button>
+		
 	</div>
-	</blockquote>
+	</form>
+
+</blockquote>
+<div class="layui-inline">
+	<a class="layui-btn layui-btn-danger bataadone" href="{:url('admin/admin/add')}">添加</a>
+</div>
 	
 	<div class="layui-form news_list">
 		<table class="layui-table">
@@ -46,31 +66,61 @@
 				</tr>
 			</thead>
 			<tbody class="news_content">
-			{volist name="account_list" id="value"}
-				<tr>
-					<td align="left">{$value.account}</td>
-					<td>{$value.id}</td>
-					<td>{$value.department}</td>
-					<td>{$value.name}</td>
-					<td>{$value.role_name}</td>
-					<td>{$value.stime}</td>
-					<td>
+			{if !empty($account_data)}
+			{volist name="$account_data" id="value"}
+			<tr>
+				<td align="left">{$value.account}</td>
+				<td>{$value.id}</td>
+				<td>{$value.department}</td>
+				<td>{$value.name}</td>
+				<td>{$value.role_name}</td>
+				<td>{$value.stime}</td>
+				<td>
 
-						{if $value.status == 0}
-						<input type="checkbox" class="Status" name="show" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}"/>
-						{else /}
-						<input type="checkbox" class="Status" name="show" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}"/>
-						{/if}
+					{if $value.status == 0}
+					<input type="checkbox" class="Status" name="show" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}"/>
+					{else /}
+					<input type="checkbox" class="Status" name="show" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}"/>
+					{/if}
 
-					<td>
-						<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Admin/edit',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 编辑</a>
-					</td>
-				</tr>
+				<td>
+					<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Admin/edit',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 编辑</a>
+				</td>
+			</tr>
 			{/volist}
+			{else}
+			{volist name="account_list" id="value"}
+			<tr>
+				<td align="left">{$value.account}</td>
+				<td>{$value.id}</td>
+				<td>{$value.department}</td>
+				<td>{$value.name}</td>
+				<td>{$value.role_name}</td>
+				<td>{$value.stime}</td>
+				<td>
+
+					{if $value.status == 0}
+					<input type="checkbox" class="Status" name="show" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" data-id="{$value.id}"/>
+					{else /}
+					<input type="checkbox" class="Status" name="show" value="{$value.status}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" checked="" data-id="{$value.id}"/>
+					{/if}
+
+				<td>
+					<a class="layui-btn layui-btn-mini edit" href="{:url('admin/Admin/edit',['id'=>$value.id])}"><i class="iconfont icon-edit"></i> 编辑</a>
+				</td>
+			</tr>
+			{/volist}
+			{/if}
 			</tbody>
 		</table>
 	</div>
-	<div id="page">{$account_list->render()}</div>
+	<div id="page">
+		{if !empty($account_data)}
+		{$account_data->render()}
+		{else}
+		{$account_list->render()}
+		{/if}
+	</div>
 </div>
 
 {/block}
