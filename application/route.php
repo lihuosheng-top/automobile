@@ -788,6 +788,7 @@ Route::group("admin",[
     "complaint_updata"=>"admin/operation/complaint_updata",
     "complaint_select"=>"admin/operation/complaint_select",
     "complaint_del"=>"admin/operation/complaint_del",
+    "complaint_search"=>"admin/operation/complaint_search",
 
 
 
