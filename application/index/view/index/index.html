@@ -396,6 +396,7 @@
                                         $('.hot-ul').append(str);
                                         $('.hot-item').click(function(){
                                             var id = $(this).attr('id');
+                                            alert('222',id)
                                             intoHotShop(id);
                                         })
                                     }
@@ -495,6 +496,7 @@
                                     $('.hot-ul').append(str);
                                     $('.hot-item').click(function(){
                                         var id = $(this).attr('id');
+                                        alert('111',id)
                                         intoHotShop(id);
                                     })
                                 }
@@ -517,6 +519,7 @@
         }
         // 进入 热门店铺
         function intoHotShop(id){
+            alert(id);
             $.ajax({
                 url: 'index_shop_goods',
                 type: 'POST',
@@ -526,7 +529,6 @@
                 },
                 success: function(res){
                     console.log(res);
-                    alert(111);
                     location.href = 'reservation_detail?store_id='+id;
                 },
                 error: function(){
