@@ -220,9 +220,14 @@ class Index extends Controller
         $user_id = Session::get("user");
         if (empty($user_id)) {
             $shop_id = $request->only(["id"])["id"];
-            $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+            $goods = db("goods")
+                ->where("store_id", $shop_id)
+                ->where("goods_status", 1)
+                ->select();
             foreach ($goods as $k_1=>$v_1){
-                $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
+                $goods[$k_1]['goods_adjusted_money'] = db("special")
+                    ->where("goods_id", $goods[$k_1]['id'])
+                    ->min('goods_adjusted_price');
                 if($v_1["goods_standard"] != "通用"){
                     unset($goods[$k_1]);
                 }
