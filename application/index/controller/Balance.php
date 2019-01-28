@@ -90,7 +90,7 @@ class Balance extends Controller
                                     "wallet_type" => -1,//消费操作(1入，-1出)
                                     "operation_time" => date("Y-m-d H:i:s"),//操作时间
                                     "wallet_remarks" => "订单号：" . $order_num . "，余额消费，支出" . $money . "元",//消费备注
-                                    "wallet_img" => "index/image/money2",//图标
+                                    "wallet_img" => "index/image/money2.png",//图标
                                     "title" => $title,//标题（消费内容）
                                     "order_nums" => $order_num,//订单编号
                                     "pay_type" => "余额支付", //支付方式
@@ -143,7 +143,7 @@ class Balance extends Controller
                                     "wallet_type" => -1,//消费操作(1入，-1出)
                                     "operation_time" => date("Y-m-d H:i:s"),//操作时间
                                     "wallet_remarks" => "订单号：" . $order_num . "，余额消费，支出" . $money . "元",//消费备注
-                                    "wallet_img" => "index/image/money2",//图标
+                                    "wallet_img" => "index/image/money2.png",//图标
                                     "title" => $title,//标题（消费内容）
                                     "order_nums" => $order_num,//订单编号
                                     "pay_type" => "余额支付", //支付方式
