@@ -134,40 +134,44 @@
         <div class="hot_recommend">
             <p class="subtitle">活动商家</p>
             <div class="recommend_goods">
-                <!-- <div class="recommend_top">
-                    <a href="javascript:;">
-                        <img src="__STATIC__/index/image/00.png">
-                    </a>
-                    <a href="javascript:;">
-                        <img src="__STATIC__/index/image/00.png">
-                    </a>
+                <div class="recommend_top">
+                    <div>
+                        <!-- <a href="reservation_detail?store_id=`+data.hot_one[0].store_id+`&activity=1">
+                            <img src="uploads/`+data.hot_one[0].advert_picture+`">
+                        </a>     -->
+                    </div>
+                    <div>
+                        <!-- <a href="`+(data.hot_two[0].url==null?'javascript:;':data.hot_two[0].url)+`">
+                            <img src="uploads/`+data.hot_two[0].advert_picture+`">
+                        </a> -->
+                    </div>
                 </div>
                 <div class="recommend_bottom">
                     <div class="recommend_bottom_left">
-                        <a href="javascript:;">
-                            <img src="__STATIC__/index/image/01.png">
-                        </a>
+                        <!-- <a href="`+(data.hot_three[0].url==null?'javascript:;':data.hot_three[0].url)+`">
+                            <img src="uploads/`+data.hot_three[0].advert_picture+`">
+                        </a> -->
                     </div>
                     <div class="recommend_bottom_right">
                         <div class="recommend_bottom_right_one">
-                            <a href="javascript:;">
-                                <img src="__STATIC__/index/image/00.png">
-                            </a>
+                            <!-- <a href="`+(data.hot_four[0].url==null?'javascript:;':data.hot_four[0].url)+`">
+                                <img src="uploads/`+data.hot_four[0].advert_picture+`">
+                            </a> -->
                         </div>
                         <div class="recommend_bottom_right_two">
                             <div class="recommend_bottom_right_three">
-                                <a href="javascript:;">
-                                    <img src="__STATIC__/index/image/00.png">
-                                </a>
+                                <!-- <a href="`+(data.hot_five[0].url==null?'javascript:;':data.hot_five[0].url)+`">
+                                    <img src="uploads/`+data.hot_five[0].advert_picture+`">
+                                </a> -->
                             </div>
                             <div class="recommend_bottom_right_four">
-                                <a href="javascript:;">
-                                    <img src="__STATIC__/index/image/00.png">
-                                </a>
+                                <!-- <a href="`+(data.hot_six[0].url==null?'javascript:;':data.hot_six[0].url)+`">
+                                    <img src="uploads/`+data.hot_six[0].advert_picture+`">
+                                </a> -->
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
         <!-- 周边店铺 -->
@@ -567,39 +571,23 @@
                         $('.banner').html('').html(indexFixStr);
                         // 活动商家
                         var data = res.data;
-                        // 1
-                        var distArr = [], hotStr, dist = 0;
-                        var lngLat = [114.048065,22.541387];
-                        // var lngLat = getCookie('lngLat').split(',');
-                        $.each(data.hot_one, function(idx, val){
-                            var markerLngLat = [parseFloat(val.longitude), parseFloat(val.latitude)];
-                            if(lngLat.length !== 0){
-                                dist = parseInt(AMap.GeometryUtil.distance(markerLngLat, lngLat));
-                            }
-                            if(dist <= 20000){
-                                distArr.push({
-                                    id: val.id,
-                                    dist: dist
-                                })
-                            }
-                        })
-                        // 距离排序
-                        var sortDistArr = distArr.sort(sortNum);
-                        $.each(data.hot_one, function(idx, val){
-                            if(sortDistArr[0].id == val.id){
-                                hotStr+=`<div class="recommend_top">
-                                            <a href="reservation_detail?store_id=`+data.hot_one[0].store_id+`&activity=1">
-                                                <img src="uploads/`+data.hot_one[0].advert_picture+`">
-                                            </a>`
-                            }
-                        })
+                        renderActivity(data.hot_one, '.recommend_top div:eq(0)');
+                        renderActivity(data.hot_two, '.recommend_top div:eq(1)');
+                        renderActivity(data.hot_three, '.recommend_bottom_left');
+                        renderActivity(data.hot_four, '.recommend_bottom_right_one');
+                        renderActivity(data.hot_five, '.recommend_bottom_right_three');
+                        renderActivity(data.hot_six, '.recommend_bottom_right_four');
                         // var hotStr = `<div class="recommend_top">
-                        //                 <a href="reservation_detail?store_id=`+data.hot_one[0].store_id+`&activity=1">
-                        //                     <img src="uploads/`+data.hot_one[0].advert_picture+`">
-                        //                 </a>
-                        //                 <a href="`+(data.hot_two[0].url==null?'javascript:;':data.hot_two[0].url)+`">
-                        //                     <img src="uploads/`+data.hot_two[0].advert_picture+`">
-                        //                 </a>
+                        //                 <div>
+                        //                     <a href="reservation_detail?store_id=`+data.hot_one[0].store_id+`&activity=1">
+                        //                         <img src="uploads/`+data.hot_one[0].advert_picture+`">
+                        //                     </a>    
+                        //                 </div>
+                        //                 <div>
+                        //                     <a href="`+(data.hot_two[0].url==null?'javascript:;':data.hot_two[0].url)+`">
+                        //                         <img src="uploads/`+data.hot_two[0].advert_picture+`">
+                        //                     </a>
+                        //                 </div>
                         //             </div>
                         //             <div class="recommend_bottom">
                         //                 <div class="recommend_bottom_left">
@@ -634,6 +622,34 @@
                     console.log('error');
                 }
             })
+        }
+        // 活动商家
+        function renderActivity(obj, cont){
+            var distArr = [], hotStr = '', dist = 0;
+            var lngLat = [114.048065,22.541387];
+            // var lngLat = getCookie('lngLat').split(',');
+            $.each(obj, function(idx, val){
+                var markerLngLat = [parseFloat(val.longitude), parseFloat(val.latitude)];
+                if(lngLat.length !== 0){
+                    dist = parseInt(AMap.GeometryUtil.distance(markerLngLat, lngLat));
+                }
+                if(dist <= 20000){
+                    distArr.push({
+                        id: val.id,
+                        dist: dist
+                    })
+                }
+            })
+            // 距离排序
+            var sortDistArr = distArr.sort(sortNum);
+            $.each(obj, function(idx, val){
+                if(sortDistArr[0].id == val.id){
+                    hotStr+=`<a href="reservation_detail?store_id=`+val.store_id+`&activity=1">
+                                <img src="uploads/`+val.advert_picture+`">
+                            </a>`
+                }
+            })
+            $(cont).html('').html(hotStr);
         }
         //设置cookie
         function setCookie(name, value, day) {
