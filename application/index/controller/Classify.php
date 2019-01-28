@@ -271,6 +271,7 @@ class Classify extends Controller
                         if ($value["goods_status"] == 1 && !empty($store)) {
                             $special_data[] = db("special")
                                 ->where("goods_id", $value["id"])
+                                ->order("goods_adjusted_price","asc")
                                 ->select();
                             $statistical_quantity[] = db("order_parts")
                                 ->where("goods_id", $value["id"])
@@ -283,6 +284,7 @@ class Classify extends Controller
                 if (!empty($special_data)) {
                     foreach ($special_data as $k => $v) {
                         $goods_data[$k]["special"] = $v;
+                        $goods_data[$k]["goods_adjusted_moneys"] =$goods_data[$k]["special"][0]["goods_adjusted_price"];
                     }
                 }
                 if (!empty($statistical_quantity)) {
@@ -293,7 +295,7 @@ class Classify extends Controller
                 if ($goods_data) {
                     $ords =array();
                     foreach ($goods_data as $vl){
-                        $ords[] =intval($vl["goods_adjusted_money"]);
+                        $ords[] =intval($vl["goods_adjusted_moneys"]);
                     }
                     array_multisort($ords,SORT_ASC,$goods_data);
                     return ajax_success("获取成功", $goods_data);
@@ -329,6 +331,7 @@ class Classify extends Controller
                 if (!empty($special_data)) {
                     foreach ($special_data as $k => $v) {
                         $goods_data[$k]["special"] = $v;
+                        $goods_data[$k]["goods_adjusted_moneys"] =$goods_data[$k]["special"][0]["goods_adjusted_price"];
                     }
                 }
                 if (!empty($statistical_quantity)) {
@@ -339,7 +342,7 @@ class Classify extends Controller
                 if ($goods_data) {
                     $ords =array();
                     foreach ($goods_data as $vl){
-                        $ords[] =intval($vl["special"][0]["goods_adjusted_money"]);
+                        $ords[] =intval($vl["goods_adjusted_moneys"]);
                     }
                     array_multisort($ords,SORT_ASC,$goods_data);
                     return ajax_success("获取成功", $goods_data);
