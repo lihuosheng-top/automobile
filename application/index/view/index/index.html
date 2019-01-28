@@ -394,12 +394,13 @@
                                             })
                                         }
                                         $('.hot-ul').append(str);
+                                        $('.hot-item').click(function(){
+                                            alert(222)
+                                            var id = $(this).attr('id');
+                                            intoHotShop(id);
+                                        })
                                     }
                                     renderPage(sortDistArr, res);
-                                    $('.hot-item').click(function(){
-                                        var id = $(this).attr('id');
-                                        intoHotShop(id);
-                                    })
                                 })(sortDistArr, res)
                             }
                         })
@@ -493,12 +494,13 @@
                                         })
                                     }
                                     $('.hot-ul').append(str);
+                                    $('.hot-item').click(function(){
+                                        alert(222)
+                                        var id = $(this).attr('id');
+                                        intoHotShop(id);
+                                    })
                                 }
                                 renderPage(sortDistArr, res);
-                                $('.hot-item').click(function(){
-                                    var id = $(this).attr('id');
-                                    intoHotShop(id);
-                                })
                             })(sortDistArr, res)
                         }
                     })
