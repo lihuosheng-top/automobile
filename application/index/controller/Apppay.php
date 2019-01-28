@@ -794,7 +794,7 @@ class Apppay extends Controller
                 $goods_name = "充值";    //商品名称
                 $order_number = $data['recharge_order_number'];    //订单号
                 $goods_pay_money =$data['recharge_money'];     //支付金额
-            $notify_url = "automobile.siring.com.cn/wxpay_notifyurl";//异步通知URL(更改支付状态)
+            $notify_url =  config("domain_url.address")."wxpay_notifyurl";//异步通知URL(更改支付状态)
             $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name,$notify_url);  //实例化微信支付类
             return ajax_success("获取成功",$wxpayandroid);
         }
@@ -926,8 +926,7 @@ class Apppay extends Controller
             $order_num =$request->only(['order_num'])['order_num'];
             include EXTEND_PATH."WxpayAPI/lib/Wxpayandroid.php";
             $data = Db::name('order_parts')->where('parts_order_number',$order_num)->find();
-            $goods_name = "测试";    //商品名称
-//            $goods_name = $data['parts_goods_name'];    //商品名称
+            $goods_name = $data['parts_goods_name'];    //商品名称
             $order_number = $data['parts_order_number'];    //订单号
             $goods_pay_money =$data['order_real_pay'];     //支付金额
             $notify_url = config("domain_url.address")."wxpay_parts_notifyurl";//异步通知URL(更改支付状态)
