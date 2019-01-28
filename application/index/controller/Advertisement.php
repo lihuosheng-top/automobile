@@ -164,26 +164,23 @@ class Advertisement extends Controller
            foreach($test as $m => $p)
            {
             if($test[$m]["postid"]==5){
-                $hot_ones[] = $p;
-                if(count($hot_ones) > 0){
-                $hot_one = array_slice($hot_ones,0,1);
-                }
+                $hot_one[] = $p;
             }
             if($test[$m]["postid"]==6){
-                $hot_twos[] = $p;
+                $hot_two[] = $p;
             }
             if($test[$m]["postid"]==7){
-                $hot_threes[] = $p;
+                $hot_three[] = $p;
             }
             if($test[$m]["postid"]==8){
-                $hot_fours[] = $p;
+                $hot_four[] = $p;
             }
             if($test[$m]["postid"]==9){
-                $hot_fives[] = $p;
+                $hot_five[] = $p;
 
             }
             if($test[$m]["postid"]==10){
-                $hot_sixs[] = $p;
+                $hot_six[] = $p;
             }
                
            }
