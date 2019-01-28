@@ -16,11 +16,31 @@
 
 {block name="content"}
 <div class="childrenBody">
+	
 	<blockquote class="layui-elem-quote news_search">
-<div class="layui-inline">
-		<a class="layui-btn layui-btn-danger bataadone" href="{:url('admin/admin/add')}">添加</a>
+		<form class="layui-form" action="">
+		<div class="seach">
+			<div class="seach_list">
+				<div class="seach_laber">账号：</div>
+				<div class="seach_input">
+					<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input">
+				</div>
+			</div>
+			<div class="seach_list">
+				<div class="seach_laber">姓名：</div>
+				<div class="seach_input">
+					<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input">
+				</div>
+			</div>
+		<button class="layui-btn" type="submit" id="seach">立即搜索</button>
+		
 	</div>
-	</blockquote>
+	</form>
+
+</blockquote>
+<div class="layui-inline">
+	<a class="layui-btn layui-btn-danger bataadone" href="{:url('admin/admin/add')}">添加</a>
+</div>
 	
 	<div class="layui-form news_list">
 		<table class="layui-table">
