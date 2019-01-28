@@ -153,6 +153,37 @@ class Evaluate extends  Controller{
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商评价点赞
+     **************************************
+     */
+    public function evaluate_parts_praise(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            if(empty($user_id)){
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+            $evaluate_id =$request->only("evaluate_id")["evaluate_id"];
+            $is_praise =Db::name("order_parts_praise")
+                ->where("parts_evaluate_id",$evaluate_id)
+                ->where("user_id",$user_id)
+                ->find();
+            if(!empty($is_praise)){
+                exit(json_encode(array("status" => 0, "info" => "同意用户只能点赞一次")));
+            }
+            $data =[
+                "parts_evaluate_id"=>$evaluate_id,
+                "create_time"=>time(),
+                "user_id"=>$user_id
+            ];
+            $res =Db::name("order_parts_praise")->insert($data);
+            if($res){
+                exit(json_encode(array("status" => 1, "info" => "点赞成功")));
+            }
+        }
+    }
 
 
     /**
@@ -288,7 +319,37 @@ class Evaluate extends  Controller{
         }
     }
 
-
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商评价点赞
+     **************************************
+     */
+    public function evaluate_service_praise(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            if(empty($user_id)){
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+            $evaluate_id =$request->only("evaluate_id")["evaluate_id"];
+            $is_praise =Db::name("order_service_praise")
+                ->where("service_evaluate_id",$evaluate_id)
+                ->where("user_id",$user_id)
+                ->find();
+            if(!empty($is_praise)){
+                exit(json_encode(array("status" => 0, "info" => "同意用户只能点赞一次")));
+            }
+            $data =[
+                "service_evaluate_id"=>$evaluate_id,
+                "create_time"=>time(),
+                "user_id"=>$user_id
+            ];
+            $res =Db::name("order_service_praise")->insert($data);
+            if($res){
+                exit(json_encode(array("status" => 1, "info" => "点赞成功")));
+            }
+        }
+    }
 
 
 }
