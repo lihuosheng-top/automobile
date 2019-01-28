@@ -525,10 +525,12 @@
                     'id': id
                 },
                 success: function(res){
+                    alert('success')
                     console.log(res);
                     location.href = 'reservation_detail?store_id='+id;
                 },
                 error: function(){
+                    alert('error')
                     console.log('error');
                 }
             })
