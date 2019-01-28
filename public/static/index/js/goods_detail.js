@@ -17,7 +17,6 @@ if(url.indexOf('?') != -1){
     }else if(urlLen == 5){
         settingid = url.substr(1).split('&')[4].split('=')[1];
     }
-    console.log(hotStatus);
 }
 $('.wrapper').find('a.back').click(function(){
     if(preStoreId != undefined){
