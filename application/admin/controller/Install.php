@@ -631,9 +631,9 @@ class Install extends Controller{
 
         if( (!empty($number)) || (!empty($name)) )
         {
-            $seach = db("delivery") -> where("number", "like", "%" . $number . "%") -> where("name", "like", "%" . $name . "%") -> paginate(4); 
+            $seach = db("delivery") -> where("number", "like", "%" . $number . "%") -> where("name", "like", "%" . $name . "%") -> paginate(20); 
         } else {
-            $seach = db("delivery")->paginate(4);     
+            $seach = db("delivery")->paginate(20);     
         }
 
         return view("express_index",['express' => $seach]);
