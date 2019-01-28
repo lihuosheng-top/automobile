@@ -855,7 +855,7 @@ class Apppay extends Controller
                 $list =Db::name("recharge_setting")
                     ->field("recharge_full,send_money")
                     ->select();
-                $lists =null;
+//                $lists =null;
                 foreach($list as $k=>$v){
                     if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
                         $lists =$v["send_money"];
