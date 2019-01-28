@@ -530,7 +530,7 @@
                     location.href = 'reservation_detail?store_id='+id;
                 },
                 error: function(res){
-                    alert(JSON.stringify(res));
+                    alert(res.status, res.statusText);
                     console.log('error');
                 }
             })
