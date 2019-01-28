@@ -322,6 +322,18 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
+                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->count();
+                        $res =db("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->where("user_id",$j["user_id"])
+                            ->find();
+                        if(!empty($res)){
+                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                        }else{
+                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                        }
                     }
                 }
                 $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
@@ -376,6 +388,18 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
+                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->count();
+                        $res =db("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->where("user_id",$j["user_id"])
+                            ->find();
+                        if(!empty($res)){
+                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                        }else{
+                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                        }
                     }
                 }
                 $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
@@ -428,6 +452,18 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
+                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->count();
+                        $res =db("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->where("user_id",$j["user_id"])
+                            ->find();
+                        if(!empty($res)){
+                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                        }else{
+                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                        }
                     }
                 }
                 $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
@@ -479,6 +515,18 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
+                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->count();
+                        $res =db("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->where("user_id",$j["user_id"])
+                            ->find();
+                        if(!empty($res)){
+                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                        }else{
+                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                        }
                     }
                 }
                 $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
@@ -531,6 +579,18 @@ class Reservation extends Controller{
                                 ->where("id", $j["user_id"])
                                 ->field("user_img,phone_num")
                                 ->find();
+                            $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                                ->where("service_evaluate_id",$j["id"])
+                                ->count();
+                            $res =db("order_service_praise")
+                                ->where("service_evaluate_id",$j["id"])
+                                ->where("user_id",$j["user_id"])
+                                ->find();
+                            if(!empty($res)){
+                                $evaluate_info[$kk][$i]["is_praise"] =1;
+                            }else{
+                                $evaluate_info[$kk][$i]["is_praise"] =0;
+                            }
                         }
 
                     }
