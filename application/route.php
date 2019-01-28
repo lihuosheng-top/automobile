@@ -270,6 +270,8 @@ Route::group("",[
     /*TODO：配件商评价开始*/
     "evaluate_index"=>"index/Evaluate/evaluate_index",//配件商评价页面(ajax)
     "service_evaluate_index"=>"index/Evaluate/service_evaluate_index",//服务商评价页面(ajax)
+    "evaluate_parts_praise"=>"index/Evaluate/evaluate_parts_praise",//配件商商评价点赞(ajax)
+    "evaluate_service_praise"=>"index/Evaluate/evaluate_service_praise",//服务商商评价点赞(ajax)
     "evaluate_parts_add"=>"index/Evaluate/evaluate_parts_add",//配件商评价添加页面(ajax)
     "evaluate_service_add"=>"index/Evaluate/evaluate_service_add",//服务商评价添加页面(ajax)
     /*TODO：配件商评价结束*/
@@ -444,6 +446,7 @@ Route::group("admin",[
     "admin_updata"=>"admin/admin/updata",
     "admin_status"=>"admin/admin/status",
     "admin_passwd"=>"admin/admin/passwd",
+    "admin_search"=>"admin/admin/search",
 
 
 
@@ -785,9 +788,11 @@ Route::group("admin",[
     "urgency_updata"=>"admin/operation/urgency_updata",
     "urgency_select"=>"admin/operation/urgency_select",
     "urgency_del"=>"admin/operation/urgency_del",
+    "urgency_search"=>"admin/operation/urgency_search",
     "complaint_updata"=>"admin/operation/complaint_updata",
     "complaint_select"=>"admin/operation/complaint_select",
     "complaint_del"=>"admin/operation/complaint_del",
+    "complaint_search"=>"admin/operation/complaint_search",
 
 
 

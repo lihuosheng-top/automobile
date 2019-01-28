@@ -1250,7 +1250,6 @@
                 $(".tanchuang").addClass("noshow");
             });
 			$("form").submit(function(e){
-				console.log($("#lv_table").find("tbody tr").length);
 				if($("#lv_table").find("tbody tr").length==0 && $("#lv_table1").find("tbody tr").length==0 ){
 					alert("请添加规格项, 并刷新规格表");
 					return false;

@@ -1570,6 +1570,11 @@ class OrderParts extends Controller{
             if(empty($user_id)){
                 return ajax_error("未登录",['status'=>0]);
             }
+            //限制自己的商品自己不能购买
+            $is_myself =Db::name("store")->where("store_id",$data["store_id"])->value("user_id");
+            if($is_myself ==$user_id){
+                return ajax_error('不能购买自己店铺的东西',['status'=>0]);
+            }
             $user_information =Db::name("user")->where("id",$user_id)->find();
             $store_name =Db::name("store")->where("store_id",$data["store_id"])->find();
             if (empty($data["address_id"]) ) {

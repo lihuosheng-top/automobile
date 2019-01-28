@@ -290,8 +290,8 @@ class Wxpayandroid
         if (empty($this->notify_url)) {
             die('notify_url error');
         }
-        if (!preg_match("#^http:\/\/#i", $this->notify_url)) {
-            $this->notify_url = "http://" . $this->notify_url;
+        if (!preg_match("#^https:\/\/#i", $this->notify_url)) {
+            $this->notify_url = "https://" . $this->notify_url;
         }
             return true;
     }

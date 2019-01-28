@@ -506,6 +506,7 @@ class OrderService extends Controller{
     {
         if ($request->isPost()) {
             $data = $_POST;
+            halt($data);
             $user_id = Session::get('user');
             //用户信息
             $member = Db::name('user')->where("id",$user_id)->find();

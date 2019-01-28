@@ -86,6 +86,16 @@ class Capital extends Controller{
                         /*充值*/
                         $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$val['id'])->sum("operation_amount");
                         $user_list[$key]['all_recharge'] =round($all_add,2);
+                        /*账户余额（商家+车主）*/
+                        $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
+                        $money =Db::name("business_wallet")
+                            ->where($arr_condition)
+                            ->sum("money");
+                        if(empty($money)){
+                            $user_list[$key]['all_balance'] =$val["user_wallet"];
+                        }else{
+                            $user_list[$key]['all_balance'] =round($val["user_wallet"] + $money,2);
+                        }
                     }
                     $all_idents =$user_list ;//这里是需要分页的数据
                     $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
@@ -108,6 +118,16 @@ class Capital extends Controller{
                         /*充值*/
                         $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$val['id'])->sum("operation_amount");
                         $user_list[$key]['all_recharge'] =round($all_add,2);
+                        /*账户余额（商家+车主）*/
+                        $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
+                        $money =Db::name("business_wallet")
+                            ->where($arr_condition)
+                            ->sum("money");
+                        if(empty($money)){
+                            $user_list[$key]['all_balance'] =$val["user_wallet"];
+                        }else{
+                            $user_list[$key]['all_balance'] =round($val["user_wallet"] + $money,2);
+                        }
                     }
                     $all_idents =$user_list ;//这里是需要分页的数据
                     $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
@@ -131,6 +151,16 @@ class Capital extends Controller{
                         /*充值*/
                         $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$val['id'])->sum("operation_amount");
                         $user_list[$key]['all_recharge'] =round($all_add,2);
+                        /*账户余额（商家+车主）*/
+                        $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
+                        $money =Db::name("business_wallet")
+                            ->where($arr_condition)
+                            ->sum("money");
+                        if(empty($money)){
+                            $user_list[$key]['all_balance'] =$val["user_wallet"];
+                        }else{
+                            $user_list[$key]['all_balance'] =round($val["user_wallet"] + $money,2);
+                        }
                     }
                     $all_idents =$user_list ;//这里是需要分页的数据
                     $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
@@ -153,6 +183,16 @@ class Capital extends Controller{
                         /*充值*/
                         $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$val['id'])->sum("operation_amount");
                         $user_list[$key]['all_recharge'] =round($all_add,2);
+                        /*账户余额（商家+车主）*/
+                        $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
+                        $money =Db::name("business_wallet")
+                            ->where($arr_condition)
+                            ->sum("money");
+                        if(empty($money)){
+                            $user_list[$key]['all_balance'] =$val["user_wallet"];
+                        }else{
+                            $user_list[$key]['all_balance'] =round($val["user_wallet"] + $money,2);
+                        }
                     }
                     $all_idents =$user_list ;//这里是需要分页的数据
                     $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
@@ -181,6 +221,16 @@ class Capital extends Controller{
                     /*充值*/
                     $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$val['id'])->sum("operation_amount");
                     $user_list[$key]['all_recharge'] =round($all_add,2);
+                    /*账户余额（商家+车主）*/
+                    $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
+                    $money =Db::name("business_wallet")
+                        ->where($arr_condition)
+                        ->sum("money");
+                    if(empty($money)){
+                        $user_list[$key]['all_balance'] =$val["user_wallet"];
+                    }else{
+                        $user_list[$key]['all_balance'] =round($val["user_wallet"] + $money,2);
+                    }
                 }
                 $all_idents =$user_list ;//这里是需要分页的数据
                 $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
@@ -202,6 +252,16 @@ class Capital extends Controller{
                     /*充值*/
                     $all_add=Db::name('recharge_reflect')->where('operation_type',"1")->where('user_id',$val['id'])->sum("operation_amount");
                     $user_list[$key]['all_recharge'] =round($all_add,2);
+                    /*账户余额（商家+车主）*/
+                    $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
+                    $money =Db::name("business_wallet")
+                        ->where($arr_condition)
+                        ->sum("money");
+                    if(empty($money)){
+                        $user_list[$key]['all_balance'] =$val["user_wallet"];
+                    }else{
+                        $user_list[$key]['all_balance'] =round($val["user_wallet"] + $money,2);
+                    }
                 }
                 $all_idents =$user_list ;//这里是需要分页的数据
                 $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
