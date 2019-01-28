@@ -881,6 +881,24 @@ class Apppay extends Controller
                         ->find();
                     Db::name("user")->where("id",$recharge_record_data["user_id"])
                         ->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $lists]);
+                    $new_wallet =Db::name("user")
+                        ->where("id",$recharge_record_data["user_id"])
+                        ->value("user_wallet");
+                    $datas=[
+                        "user_id"=>$parts["user_id"],//用户ID
+                        "wallet_operation"=> $money,//消费金额
+                        "wallet_type"=>1,//消费操作(1入，-1出)
+                        "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                        "wallet_remarks"=>"订单号：".$out_trade_no."，充值，余额增加".$money."元",//消费备注
+                        "wallet_img"=>"index/image/wechat.png",//图标
+                        "title"=>$title,//标题（消费内容）
+                        "order_nums"=>$out_trade_no,//订单编号
+                        "pay_type"=>"微信", //支付方式/
+                        "wallet_balance"=>$new_wallet,//此刻钱包余额
+                        "is_business"=>1,//判断是车主消费还是商家消费（充值只能是 1车主消费）
+                    ];
+                    Db::name("wallet")->insert($datas); //存入消费记录表
+                    return ajax_success('支付成功', ['status' => 1]);
                 }else {
                     $recharge_data =[
                         "user_id" =>$parts["user_id"],//用户id
@@ -902,25 +920,25 @@ class Apppay extends Controller
                     Db::name("user")
                         ->where("id", $recharge_record_data["user_id"])
                         ->update(["user_wallet" => $user_wallet["user_wallet"] + $recharge_record_data["recharge_money"]]);
+                    $new_wallet =Db::name("user")
+                        ->where("id",$recharge_record_data["user_id"])
+                        ->value("user_wallet");
+                    $datas=[
+                        "user_id"=>$parts["user_id"],//用户ID
+                        "wallet_operation"=> $money,//消费金额
+                        "wallet_type"=>1,//消费操作(1入，-1出)
+                        "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                        "wallet_remarks"=>"订单号：".$out_trade_no."，充值，余额增加".$money."元",//消费备注
+                        "wallet_img"=>"index/image/wechat.png",//图标
+                        "title"=>$title,//标题（消费内容）
+                        "order_nums"=>$out_trade_no,//订单编号
+                        "pay_type"=>"微信", //支付方式/
+                        "wallet_balance"=>$new_wallet,//此刻钱包余额
+                        "is_business"=>1,//判断是车主消费还是商家消费（充值只能是 1车主消费）
+                    ];
+                    Db::name("wallet")->insert($datas); //存入消费记录表
+                    return ajax_success('支付成功', ['status' => 1]);
                 }
-                $new_wallet =Db::name("user")
-                    ->where("id",$recharge_record_data["user_id"])
-                    ->value("user_wallet");
-                $datas=[
-                    "user_id"=>$parts["user_id"],//用户ID
-                    "wallet_operation"=> $money,//消费金额
-                    "wallet_type"=>1,//消费操作(1入，-1出)
-                    "operation_time"=>date("Y-m-d H:i:s"),//操作时间
-                    "wallet_remarks"=>"订单号：".$out_trade_no."，充值，余额增加".$money."元",//消费备注
-                    "wallet_img"=>"index/image/wechat.png",//图标
-                    "title"=>$title,//标题（消费内容）
-                    "order_nums"=>$out_trade_no,//订单编号
-                    "pay_type"=>"微信", //支付方式/
-                    "wallet_balance"=>$new_wallet,//此刻钱包余额
-                    "is_business"=>1,//判断是车主消费还是商家消费（充值只能是 1车主消费）
-                ];
-                Db::name("wallet")->insert($datas); //存入消费记录表
-                return ajax_success('支付成功', ['status' => 1]);
             } else {
                 return ajax_error('验证失败了', ['status' => 0]);
             }
