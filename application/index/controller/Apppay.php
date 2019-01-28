@@ -840,7 +840,6 @@ class Apppay extends Controller
             $result = Db::name('recharge_record')
                 ->where("recharge_order_number", $select_data["recharge_order_number"])
                 ->update($data);//修改订单状态,支付宝单号到数据库
-            file_put_contents(EXTEND_PATH."data.txt",$out_trade_no);
             if ($result > 0) {
                 //进行钱包消费记录
                 $parts =Db::name("recharge_record")
@@ -852,7 +851,10 @@ class Apppay extends Controller
                 $recharge_record_data = Db::name("recharge_record")
                     ->where("recharge_order_number",$out_trade_no)
                     ->find();
-                $list =Db::name("recharge_setting")->field("recharge_full,send_money")->select();
+                //消费满多少送多少
+                $list =Db::name("recharge_setting")
+                    ->field("recharge_full,send_money")
+                    ->select();
                 $lists =null;
                 foreach($list as $k=>$v){
                     if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
@@ -1028,7 +1030,7 @@ class Apppay extends Controller
             $data = Db::name('order_service')->where('service_order_number',$order_num)->find();
             $goods_name =$data['service_goods_name'];    //商品名称
             $order_number = $data['service_order_number'];    //订单号
-            $goods_pay_money =$data['order_real_pay'];     //支付金额
+            $goods_pay_money =$data['service_real_pay'];     //支付金额
             $notify_url = config("domain_url.address")."wxpay_service_notifyurl";//异步通知URL(更改支付状态)
             $wxpayandroid = new \Wxpayandroid($goods_pay_money,$order_number,$goods_name,$notify_url);  //实例化微信支付类
             return ajax_success("获取成功",$wxpayandroid);

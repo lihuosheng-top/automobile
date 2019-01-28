@@ -2200,7 +2200,7 @@ class  SellMy extends Controller{
                         ->where("create_time","<",time())
                         ->sum("money");
                     $tow_weeks_money =$moneys + $business_wallet_pay;
-                    if(!empty($tow_weeks_money)){
+                    if($tow_weeks_money>0){
                         $tow_weeks_money =round($tow_weeks_money,2);
                     }else{
                         $tow_weeks_money =0;
