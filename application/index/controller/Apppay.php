@@ -840,7 +840,6 @@ class Apppay extends Controller
             $result = Db::name('recharge_record')
                 ->where("recharge_order_number", $select_data["recharge_order_number"])
                 ->update($data);//修改订单状态,支付宝单号到数据库
-            file_put_contents(EXTEND_PATH."data.txt",$out_trade_no);
             if ($result > 0) {
                 //进行钱包消费记录
                 $parts =Db::name("recharge_record")
@@ -852,7 +851,10 @@ class Apppay extends Controller
                 $recharge_record_data = Db::name("recharge_record")
                     ->where("recharge_order_number",$out_trade_no)
                     ->find();
-                $list =Db::name("recharge_setting")->field("recharge_full,send_money")->select();
+                //消费满多少送多少
+                $list =Db::name("recharge_setting")
+                    ->field("recharge_full,send_money")
+                    ->select();
                 $lists =null;
                 foreach($list as $k=>$v){
                     if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
