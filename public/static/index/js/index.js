@@ -600,24 +600,6 @@ $.ajax({
     }
 })
 
-// 进入 热门店铺
-function intoHotShop(id){
-    $.ajax({
-        url: 'index_shop_goods',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'id': id
-        },
-        success: function(res){
-            console.log(res);
-            location.href = 'reservation_detail?store_id='+id;
-        },
-        error: function(){
-            console.log('error');
-        }
-    })
-}
 // swiper初始化 
 function mySwiper(){
     var mySwiper = new Swiper ('.swiper-container', {

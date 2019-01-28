@@ -141,6 +141,11 @@ if(urlLen > 1){
                 $('.comment-filter').show();
                 $('.filter-service').show();
                 evaAjax(data);
+                // 电话 导航
+                var seatNum = data.data.store[0].store_owner_seat_num;
+                $('.activity-contact .phone').attr('href', 'javascript:Android.call("'+seatNum+'");');
+                $('.activity-contact .phone-number').text(seatNum);
+
             }
         }, function(res){
             console.log(res.status, res.statusText);

@@ -515,6 +515,25 @@
         function sortNum(a, b){
             return a.dist - b.dist;
         }
+        // 进入 热门店铺
+        function intoHotShop(id){
+            $.ajax({
+                url: 'index_shop_goods',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': id
+                },
+                success: function(res){
+                    console.log(res);
+                    alert(111);
+                    location.href = 'reservation_detail?store_id='+id;
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        }
 
         // 获取广告
         function getAdvertisment(area){
