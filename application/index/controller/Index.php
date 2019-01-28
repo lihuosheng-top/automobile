@@ -215,9 +215,9 @@ class Index extends Controller
      * 陈绪
      */
     public function shop_goods(Request $request){
-        
         if($request->isPost()) {
             $data = Session::get("role_name_store_id");
+
             $user_id = Session::get("user");
             if (empty($user_id)) {
                 $shop_id = $request->only(["id"])["id"];
