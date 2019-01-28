@@ -119,33 +119,73 @@ class Reservation extends Controller{
     {
         if($request->isPost()){
             $user_id = Session::get("user");
-            $data = Session::get("role_name_store_id");
-            $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
-            $user_car = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
-            $car_series = db("car_series")->where("brand",$user_car["brand"])->where("series",$user_car["series"])->field("vehicle_model")->find();
-            $serve_goods_id = $request->only(["id"])["id"];
-            $goods = db("goods")->where("store_id",$serve_goods_id)->where("goods_status",1)->select();
-            if(empty($data)){
-                foreach ($goods as $k_1=>$v_1){
+            if(!empty($user_id)) {
+                $data = Session::get("role_name_store_id");
+                $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
+                $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
+                $car_series = db("car_series")->where("brand", $user_car["brand"])->where("series", $user_car["series"])->field("vehicle_model")->find();
+                $serve_goods_id = $request->only(["id"])["id"];
+                $goods = db("goods")->where("store_id", $serve_goods_id)->where("goods_status", 1)->select();
+                if (empty($data)) {
+                    foreach ($goods as $k_1 => $v_1) {
+                        $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
+                        if ($v_1["goods_standard"] != "通用") {
+                            unset($goods[$k_1]);
+                        }
+                    }
+                }else{
+                    foreach ($goods as $k_1 => $v_1) {
+                        $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
+                    }
+                }
+                $store = db("store")->where("store_id", $serve_goods_id)->select();
+                foreach ($store as $k_2=>$v_2){
+                    $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                    $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
+                    $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
+                }
+                $serve_data = [];
+                foreach ($store as $key => $value) {
+                    $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id", $service_setting_id)->where("store_id", $value["store_id"])->where("vehicle_model", $car_series["vehicle_model"])->select();
+                    foreach ($serve_data[$key]["serve_goods"] as $val) {
+                        $serve_data[$key]["serve_name"] = db("service_setting")->where("service_setting_id", $val["service_setting_id"])->value("service_setting_name");
+                        $serve_data[$key]["service_setting_id"] = $val["service_setting_id"];
+                    }
+                }
+                if ($goods || $store || $serve_data) {
+                    return ajax_success("获取成功", array("goods" => $goods, "store" => $store, "serve_data" => $serve_data));
+                } else {
+                    return ajax_error("获取成功");
+                }
+            }else{
+                $service_setting_id = $request->only(["service_setting_id"])["service_setting_id"];
+                $serve_goods_id = $request->only(["id"])["id"];
+                $goods = db("goods")->where("store_id", $serve_goods_id)->where("goods_status", 1)->select();
+                foreach ($goods as $k_1 => $v_1) {
                     $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
-                    if($v_1["goods_standard"] != "通用"){
+                    if ($v_1["goods_standard"] != "通用") {
                         unset($goods[$k_1]);
                     }
                 }
-            }
-            $store = db("store")->where("store_id",$serve_goods_id)->select();
-            $serve_data = [];
-            foreach ($store as $key=>$value){
-                $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id",$service_setting_id)->where("store_id",$value["store_id"])->where("vehicle_model",$car_series["vehicle_model"])->select();
-                foreach ($serve_data[$key]["serve_goods"] as $val){
-                    $serve_data[$key]["serve_name"] = db("service_setting")->where("service_setting_id",$val["service_setting_id"])->value("service_setting_name");
-                    $serve_data[$key]["service_setting_id"] = $val["service_setting_id"];
+                $store = db("store")->where("store_id", $serve_goods_id)->select();
+                foreach ($store as $k_2=>$v_2){
+                    $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                    $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
+                    $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
                 }
-            }
-            if($serve_data){
-                return ajax_success("获取成功",array("goods"=>$goods,"store"=>$store,"serve_data"=>$serve_data));
-            }else{
-                return ajax_error("获取成功");
+                $serve_data = [];
+                foreach ($store as $key => $value) {
+                    $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id", $service_setting_id)->where("store_id", $value["store_id"])->select();
+                    foreach ($serve_data[$key]["serve_goods"] as $val) {
+                        $serve_data[$key]["serve_name"] = db("service_setting")->where("service_setting_id", $val["service_setting_id"])->value("service_setting_name");
+                        $serve_data[$key]["service_setting_id"] = $val["service_setting_id"];
+                    }
+                }
+                if ($goods || $store || $serve_data) {
+                    return ajax_success("获取成功", array("goods" => $goods, "store" => $store, "serve_data" => $serve_data));
+                } else {
+                    return ajax_error("获取成功");
+                }
             }
         }
         return view("reservation_detail");
@@ -282,6 +322,18 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
+                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->count();
+                        $res =db("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->where("user_id",$j["user_id"])
+                            ->find();
+                        if(!empty($res)){
+                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                        }else{
+                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                        }
                     }
                 }
                 $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
@@ -336,6 +388,18 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
+                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->count();
+                        $res =db("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->where("user_id",$j["user_id"])
+                            ->find();
+                        if(!empty($res)){
+                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                        }else{
+                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                        }
                     }
                 }
                 $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
@@ -388,6 +452,18 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
+                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->count();
+                        $res =db("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->where("user_id",$j["user_id"])
+                            ->find();
+                        if(!empty($res)){
+                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                        }else{
+                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                        }
                     }
                 }
                 $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
@@ -439,6 +515,18 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
+                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->count();
+                        $res =db("order_service_praise")
+                            ->where("service_evaluate_id",$j["id"])
+                            ->where("user_id",$j["user_id"])
+                            ->find();
+                        if(!empty($res)){
+                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                        }else{
+                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                        }
                     }
                 }
                 $evaluate_info_arr = array_reduce($evaluate_info_arr, 'array_merge', array());
@@ -491,6 +579,18 @@ class Reservation extends Controller{
                                 ->where("id", $j["user_id"])
                                 ->field("user_img,phone_num")
                                 ->find();
+                            $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                                ->where("service_evaluate_id",$j["id"])
+                                ->count();
+                            $res =db("order_service_praise")
+                                ->where("service_evaluate_id",$j["id"])
+                                ->where("user_id",$j["user_id"])
+                                ->find();
+                            if(!empty($res)){
+                                $evaluate_info[$kk][$i]["is_praise"] =1;
+                            }else{
+                                $evaluate_info[$kk][$i]["is_praise"] =0;
+                            }
                         }
 
                     }

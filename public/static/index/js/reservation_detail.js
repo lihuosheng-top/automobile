@@ -59,76 +59,108 @@ $('.comment_classify_box li').on('click', function(){
 
 // 获取url地址id
 var url = location.search;
-var storeId, serviceSettingId;
+var storeId, serviceSettingId, avtivity,settingIdName;
 var urlLen = url.substr(1).split('&').length;
 
 if(url.indexOf('?') != -1){
     storeId = url.substr(1).split('&')[0].split('=')[1];
 }
 if(urlLen > 1){
-    // 选择服务类型进来
-    serviceSettingId = url.substr(1).split('&')[1].split('=')[1];
-    $.ajax({
-        url: 'reservation_detail',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {
-            'id': storeId,
-            'service_setting_id': serviceSettingId
-        },
-        success: function(data){
-            console.log(data);
-            if(data.status == 1){
+    if(url.substr(1).split('&')[1].split('=')[0] == 'service_setting_id'){
+        settingIdName = url.substr(1).split('&')[1].split('=')[0];
+        // 选择服务类型进来
+        serviceSettingId = url.substr(1).split('&')[1].split('=')[1];
+        $.ajax({
+            url: 'reservation_detail',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                'id': storeId,
+                'service_setting_id': serviceSettingId
+            },
+            success: function(data){
+                console.log(data);
+                if(data.status == 1){
+                    // 商品
+                    var str = myGoods(data);
+                    $('.goods-content').prepend(str);
+                    $('.goods-colla-item').click(function(){
+                        var id = $(this).attr('data-id');
+                        var standid = $(this).attr('data-standid');
+                        var storeid = $(this).attr('data-storeid');
+                        location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=1`+`&service_setting_id=`+serviceSettingId;
+                    })
+                    // 服务项目
+                    var str2 = myService(data);
+                    $('.service-content').append(str2);
+                    $('.bespeak-money').text('￥'+$('.service-colla-content').find('.icon-check').prev().find('.sale span').text());
+                    selectEvent();
+    
+                    $('.comment_title').show();
+                    evaAjax(data);
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+        // 从预约服务进来 返回上一页
+        $('.back').click(function(){
+            location.href = 'reservation?service_setting_id='+serviceSettingId;
+        })
+    }else{
+        // 从首页活动广告进来
+        $('.activity-contact').show();
+        $('.activity-section').show();
+        (function(){
+            return $.ajax({
+                url: 'index_shop_goods',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': storeId
+                }
+            })
+        })().then(function(data){
+            console.log('店铺商品',data);
+            if(data.status == 1 || data.status == 2){
                 // 商品
                 var str = myGoods(data);
                 $('.goods-content').prepend(str);
-
                 $('.goods-colla-item').click(function(){
                     var id = $(this).attr('data-id');
                     var standid = $(this).attr('data-standid');
                     var storeid = $(this).attr('data-storeid');
-                    location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=1`+`&service_setting_id=`+serviceSettingId;
+                    location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=1`;
                 })
                 // 服务项目
                 var str2 = myService(data);
                 $('.service-content').append(str2);
-                $('.bespeak-money').text('￥'+ $('.sale span').text());
                 selectEvent();
-
-                $('.comment_title').show();
-                var filterStr = '', allcomStr = '';
-                data.data.serve_data.forEach(function(ele, idx){
-                    if(idx === 0){
-                        filterStr += `<li class="filter-this" data-serverid="`+ele.service_setting_id+`">
-                                        <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
-                                    </li>`
-                        allcomStr += `<li class="filter-service-li" data-serverid="`+ele.service_setting_id+`">
-                                            <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
-                                        </li>`
-                                        myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
-                                        myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
-                        evaluateNum(ele.service_setting_id, storeId);
-                    }else{
-                        filterStr += `<li data-serverid="`+ele.service_setting_id+`">
-                                        <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
-                                    </li>`
-                        allcomStr += `<li data-serverid="`+ele.service_setting_id+`">
-                                    <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
-                                </li>`
-                    }
+                
+                $('.comment-filter').show();
+                $('.filter-service').show();
+                evaAjax(data);
+                // 电话 导航
+                var seatNum = data.data.store[0].store_owner_seat_num;
+                var storeAjax = data.data.store[0];
+                $('.activity-contact .phone').attr('href', "javascript:Android.call("+seatNum+");");
+                $('.activity-contact .phone-number').text(seatNum);
+                $('.activity-contact .navigation').click(function(){
+                    Android.openGdMap(storeAjax.latitude, storeAjax.longitude, storeAjax.store_name)
                 })
-                $('.filter-ul').html(filterStr);
-                $('.filter-service-ul').html(allcomStr);
+                $('.activity-section .start-time span').text(timetrans(storeAjax.start_time));
+                $('.activity-section .end-time span').text(timetrans(storeAjax.end_time));
+                $('.rich-text').html(storeAjax.advert_text);
             }
-        },
-        error: function(){
-            console.log('error');
-        }
-    })
-    // 从预约服务进来 返回上一页
-    $('.back').click(function(){
-        location.href = 'reservation?service_setting_id='+serviceSettingId;
-    })
+        }, function(res){
+            console.log(res.status, res.statusText);
+        })
+
+        $('.back').click(function(){
+            location.href = 'index';
+        })
+    }
 }else{
     // 首页热门店铺进来
     $('.bespeak-btn').prop('disabled', true);
@@ -145,14 +177,12 @@ if(urlLen > 1){
                 // 商品
                 var str = myGoods(data);
                 $('.goods-content').prepend(str);
-
                 $('.goods-colla-item').click(function(){
                     var id = $(this).attr('data-id');
                     var standid = $(this).attr('data-standid');
                     var storeid = $(this).attr('data-storeid');
                     location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=1`;
                 })
-
                 // 服务项目
                 var str2 = myService(data);
                 $('.service-content').append(str2);
@@ -160,29 +190,7 @@ if(urlLen > 1){
                 
                 $('.comment-filter').show();
                 $('.filter-service').show();
-                var filterStr = '', allcomStr = '';
-                data.data.serve_data.forEach(function(ele, idx){
-                    if(idx === 0){
-                        filterStr += `<li class="filter-this" data-serverid="`+ele.service_setting_id+`">
-                                        <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
-                                    </li>`
-                        allcomStr += `<li class="filter-service-li" data-serverid="`+ele.service_setting_id+`">
-                                            <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
-                                        </li>`
-                        myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
-                        myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
-                        evaluateNum(ele.service_setting_id, storeId);
-                    }else{
-                        filterStr += `<li data-serverid="`+ele.service_setting_id+`">
-                                        <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
-                                    </li>`
-                        allcomStr += `<li data-serverid="`+ele.service_setting_id+`">
-                                    <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
-                                </li>`
-                    }
-                })
-                $('.filter-ul').html(filterStr);
-                $('.filter-service-ul').html(allcomStr);
+                evaAjax(data);
             }
         },
         error: function(){
@@ -193,6 +201,32 @@ if(urlLen > 1){
     $('.back').click(function(){
         location.href = 'index';
     })
+}
+// 评论铺数据
+function evaAjax(data){
+    var filterStr = '', allcomStr = '';
+    data.data.serve_data.forEach(function(ele, idx){
+        if(idx === 0){
+            filterStr += `<li class="filter-this" data-serverid="`+ele.service_setting_id+`">
+                            <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
+                        </li>`
+            allcomStr += `<li class="filter-service-li" data-serverid="`+ele.service_setting_id+`">
+                                <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
+                            </li>`
+            myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
+            myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+            evaluateNum(ele.service_setting_id, storeId);
+        }else{
+            filterStr += `<li data-serverid="`+ele.service_setting_id+`">
+                            <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
+                        </li>`
+            allcomStr += `<li data-serverid="`+ele.service_setting_id+`">
+                            <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
+                        </li>`
+        }
+    })
+    $('.filter-ul').html(filterStr);
+    $('.filter-service-ul').html(allcomStr);
 }
 // 评论数量
 function evaluateNum(settingId, storeId){
@@ -223,7 +257,6 @@ function evaluateNum(settingId, storeId){
         }
     })
 }
-
 // 评论
 function myEvaluate(settingid, storeid, content, flag, url){
     $.ajax({
@@ -346,9 +379,9 @@ function myService(data){
                     <div class="service-colla-title">
                         <p class="service-subtitle">`+val.serve_name+`</p>
                         <p class="service-money"></p>
-                        <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="setting-`+val.serve_goods[0].service_setting_id+`"></i>
+                        <i class="spr icon-uncheck `+(settingIdName=='service_setting_id'?'icon-check':'')+`" id="setting-`+val.serve_goods[0].service_setting_id+`"></i>
                     </div>
-                    <div class="service-colla-content" style="display:`+(urlLen>1?'block':'none')+`;">
+                    <div class="service-colla-content" style="display:`+(settingIdName=='service_setting_id'?'block':'none')+`;">
                         <ul>`
         $.each(val.serve_goods, function(idx, val){
             if(val.service_money === null && val.ruling_money === null){
@@ -357,7 +390,7 @@ function myService(data){
                             <div class="content-money-div">
                                 <p class="sale"><span>面议</span></p>
                             </div>
-                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(settingIdName=='service_setting_id'&&idx==0?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }else if(val.service_money !== null && val.ruling_money === null){
                 str2 += `<li>
@@ -365,7 +398,7 @@ function myService(data){
                             <div class="content-money-div">
                                 <p class="sale">￥<span>`+val.service_money+`</span></p>
                             </div>
-                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(settingIdName=='service_setting_id'&&idx==0?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }else if(val.service_money !== null && val.ruling_money !== null){
                 str2 += `<li>
@@ -374,7 +407,7 @@ function myService(data){
                                 <p class="sale">￥<span>`+val.service_money+`</span></p>
                                 <p class="thro">￥<span>`+val.ruling_money+`</span></p>
                             </div>
-                            <i class="spr icon-uncheck `+(urlLen>1?'icon-check':'')+`" id="`+val.id+`"></i>
+                            <i class="spr icon-uncheck `+(settingIdName=='service_setting_id'&&idx==0?'icon-check':'')+`" id="`+val.id+`"></i>
                         </li>`
             }
         })
@@ -470,7 +503,7 @@ $('.bespeak-btn').click(function(){
             console.log(res);
             if(res.status == 1){
                 if(res.data.user_car_message.length !== 0){
-                    if(urlLen > 1){
+                    if(settingIdName=='service_setting_id'){
                         location.href = 'reservation_info?store_id='+storeId+'&serve_goods_id='+id+'&service_setting_id='+serviceSettingId;
                     }else{
                         location.href = 'reservation_info?store_id='+storeId+'&serve_goods_id='+id+'&service_setting_id='+settingId;

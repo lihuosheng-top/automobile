@@ -215,7 +215,6 @@ class Index extends Controller
      * 陈绪
      */
     public function shop_goods(Request $request){
-
         if($request->isPost()) {
             $data = Session::get("role_name_store_id");
             $user_id = Session::get("user");
@@ -230,6 +229,11 @@ class Index extends Controller
                 }
                 $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
                 $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
+                foreach ($store as $k_2=>$v_2){
+                    $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                    $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
+                    $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
+                }
                 $service_setting = db("service_setting")->select();
                 $serve_data = [];
                 foreach ($service_setting as $key => $value) {
@@ -246,7 +250,7 @@ class Index extends Controller
                 } else {
                     return ajax_error("获取失败");
                 }
-            } else {
+            }else {
                 $user_id = Session::get("user");
                 $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
                 $car_series = db("car_series")->where("brand", $user_car["brand"])->where("series", $user_car["series"])->field("vehicle_model")->find();
@@ -260,10 +264,19 @@ class Index extends Controller
                                 unset($goods[$k_1]);
                             }
                         }
+                    }else{
+                        foreach ($goods as $k_1 => $v_1) {
+                            $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
+                        }
                     }
                     $serve_vehicle_model = db("serve_goods")->where("store_id", $shop_id)->where("vehicle_model", $car_series["vehicle_model"])->find();
                     $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
                     $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
+                    foreach ($store as $k_2=>$v_2){
+                        $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                        $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
+                        $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
+                    }
                     $serve_data = [];
                     $serve = [];
                     foreach ($serve_goods as $k => $val) {
@@ -297,9 +310,19 @@ class Index extends Controller
                                 unset($goods[$k_1]);
                             }
                         }
+                    }else{
+                        foreach ($goods as $k_1 => $v_1) {
+                            $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
+                        }
                     }
                     $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
                     $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
+                    foreach ($store as $k_2=>$v_2){
+                        $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
+                        $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
+                        $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
+
+                    }
                     $service_setting = db("service_setting")->select();
                     $serve_data = [];
                     foreach ($service_setting as $key => $value) {

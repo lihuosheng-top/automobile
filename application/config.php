@@ -241,9 +241,13 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
-    //域名
+    //域名(注意别用错)
     'domain_url' =>[
-        'address'=>"https://automobile.siring.com.cn/"
+        'address'=>"https://app.zlh188.cn/"
+    ],
+    //用于微信回调（注意别用错了）
+    'url_domain'=>[
+        'address'=>"app.zlh188.cn/"
     ],
 
 

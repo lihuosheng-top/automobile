@@ -27,49 +27,56 @@
                 <li class="info-li">
                     <p class="list-title-p">真实姓名</p>
                     <div class="cot">
-                        <span>222</span>
+                        <span></span>
                         <i class="spr icon-more"></i>
                     </div>
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">手机号</p>
                     <div class="cot">
-                        <span>222</span>
+                        <span></span>
                         <i class="spr icon-more"></i>
                     </div>
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">昵称</p>
                     <div class="cot">
-                        <span>222</span>
+                        <span></span>
                         <i class="spr icon-more"></i>
                     </div>
                 </li>
                 <li class="info-li sex-li">
                     <p class="list-title-p">性别</p>
                     <div class="cot">
-                        <span>222</span>
+                        <span></span>
                         <i class="spr icon-more"></i>
                     </div>
                 </li>
-                <!-- <li class="info-li">
-                    <p class="list-title-p">会员等级</p>
+                <li class="info-li">
+                    <p class="list-title-p">微信绑定</p>
                     <div class="cot">
-                        <span>222</span>
+                        <span>去绑定</span>
                         <i class="spr icon-more"></i>
                     </div>
-                </li> -->
+                </li>
+                <li class="info-li">
+                    <p class="list-title-p">QQ绑定</p>
+                    <div class="cot">
+                        <span>去绑定</span>
+                        <i class="spr icon-more"></i>
+                    </div>
+                </li>
                 <li class="info-li">
                     <p class="list-title-p">我的积分</p>
                     <div class="cot">
-                        <span>222</span>
+                        <span></span>
                         <i class="spr icon-more"></i>
                     </div>
                 </li>
                 <li class="info-li">
                     <p class="list-title-p">钱包</p>
                     <div class="cot">
-                        <span>222</span>
+                        <span></span>
                         <i class="spr icon-more"></i>
                     </div>
                 </li>
@@ -101,8 +108,8 @@
                     $('.info-li:eq(2)').find('span').text(res.data.phone_num);
                     $('.info-li:eq(3)').find('span').text(res.data.user_name);
                     $('.info-li:eq(4)').find('span').text(res.data.sex);
-                    $('.info-li:eq(5)').find('span').text(res.data.user_integral_wallet);
-                    $('.info-li:eq(6)').find('span').text(res.data.user_wallet);
+                    $('.info-li:eq(7)').find('span').text(res.data.user_integral_wallet);
+                    $('.info-li:eq(8)').find('span').text(res.data.user_wallet);
                 }
             },
             error: function(){
@@ -164,9 +171,9 @@
                     location.href = 'phone_edit';break;
                 case 3:
                     location.href = 'my_nickname';break;
-                case 5:
+                case 7:
                     location.href = 'my_integral';break;
-                case 6:
+                case 8:
                     location.href = 'wallet_index';break;
             }
         })

@@ -23,11 +23,14 @@ class  Collection extends Controller{
         $user_id =Session::get("user");
         if(!empty($user_id)){
             $data=Db::table("tb_collection")
-                ->field("tb_collection.*,tb_goods.goods_adjusted_money goods_adjusted_money,tb_goods.goods_name goods_name,tb_goods.goods_show_images goods_show_images,tb_goods.goods_selling goods_selling,tb_goods.goods_brand_id goods_brand_id")
+                ->field("tb_collection.*,tb_goods.goods_adjusted_money goods_adjusted_money,tb_goods.id goods_id,tb_goods.goods_name goods_name,tb_goods.goods_show_images goods_show_images,tb_goods.goods_selling goods_selling")
                 ->join("tb_goods","tb_collection.goods_id=tb_goods.id and tb_collection.user_id=$user_id",'left')
                 ->order('id','desc')
                 ->where('tb_collection.user_id',$user_id)
                 ->select();
+            foreach ($data as $k=>$v){
+                $data[$k]["goods_adjusted_money"] =Db::name("special")->where("goods_id",$v["goods_id"])->min("goods_adjusted_price");
+            }
             if(!empty($data)){
                 return ajax_success('返回成功',$data);
             }else{

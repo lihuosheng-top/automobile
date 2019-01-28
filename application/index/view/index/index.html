@@ -170,9 +170,11 @@
                 </div> -->
             </div>
         </div>
-        <!-- 热门店铺 -->
+        <!-- 周边店铺 -->
         <div class="hot_shop">
-            <p class="subtitle">周边店铺</p>
+            <p class="subtitle">周边店铺
+                <span class="refresh-icon"></span>
+            </p>
             <ul class="hot-ul">
                 <!-- <li class="hot-item">
                     <div class="hot-headimg">
@@ -302,6 +304,13 @@
     <script src="__STATIC__/index/js/plugin/threecity/js/CNAddrArr.min.js"></script>
     <script src="__STATIC__/index/js/index.js"></script>
     <script>
+        $('.refresh-icon').click(function(){
+            $(this).toggleClass('refresh-rotate');
+            delCookie('threeAdress');
+            setTimeout(function(){
+                location.reload();
+            }, 300)
+        })
         // 调用安卓方法
         function callAndroid() {
             Android.getLocation();
@@ -323,7 +332,7 @@
                             type: 'POST',
                             dataType: 'JSON',
                         }).then(function(res){
-                            console.log('热门店铺',res);
+                            console.log('周边店铺',res);
                             var distArr = [];
                             var dist = 0;
                             var lngLat = getCookie('lngLat').split(',');
@@ -385,14 +394,13 @@
                                             })
                                         }
                                         $('.hot-ul').append(str);
+                                        $('.hot-item').click(function(){
+                                            var id = $(this).attr('id');
+                                            intoHotShop(id);
+                                        })
                                     }
                                     renderPage(sortDistArr, res);
                                 })(sortDistArr, res)
-
-                                $('.hot-item').click(function(){
-                                    var id = $(this).attr('id');
-                                    intoHotShop(id);
-                                })
                             }
                         })
                     })()
@@ -485,14 +493,13 @@
                                         })
                                     }
                                     $('.hot-ul').append(str);
+                                    $('.hot-item').click(function(){
+                                        var id = $(this).attr('id');
+                                        intoHotShop(id);
+                                    })
                                 }
                                 renderPage(sortDistArr, res);
                             })(sortDistArr, res)
-
-                            $('.hot-item').click(function(){
-                                var id = $(this).attr('id');
-                                intoHotShop(id);
-                            })
                         }
                     })
                 })()
@@ -507,6 +514,24 @@
         // 排位距离
         function sortNum(a, b){
             return a.dist - b.dist;
+        }
+        // 进入 热门店铺
+        function intoHotShop(id){
+            $.ajax({
+                url: 'index_shop_goods',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': id
+                },
+                success: function(res){
+                    console.log(res);
+                    location.href = 'reservation_detail?store_id='+id;
+                },
+                error: function(res){
+                    console.log('error');
+                }
+            })
         }
 
         // 获取广告
@@ -543,7 +568,7 @@
                         // 活动商家
                         var data = res.data;
                         var hotStr = `<div class="recommend_top">
-                                        <a href="`+(data.hot_one[0].url==null?'javascript:;':data.hot_one[0].url)+`">
+                                        <a href="reservation_detail?store_id=`+data.hot_one[0].store_id+`&activity=1">
                                             <img src="uploads/`+data.hot_one[0].advert_picture+`">
                                         </a>
                                         <a href="`+(data.hot_two[0].url==null?'javascript:;':data.hot_two[0].url)+`">
@@ -599,6 +624,10 @@
             } else {
                 return '';
             }
+        };
+        // 删除cookie
+        function delCookie(name) {
+            setCookie(name, null, -1);
         };
         $('#search').on('focus', function(){
             location.href = 'goods_list';

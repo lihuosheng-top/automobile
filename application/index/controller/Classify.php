@@ -844,6 +844,19 @@ class Classify extends Controller
                     ->where("id",$vs["user_id"])
                     ->field("user_img,phone_num")
                     ->find();
+                $evaluate_info[$ks]["praise"] =Db::name("order_parts_praise")
+                    ->where("parts_evaluate_id",$vs["id"])
+                    ->count();
+                $res =db("order_parts_praise")
+                    ->where("parts_evaluate_id",$vs["id"])
+                    ->where("user_id",$vs["user_id"])
+                    ->find();
+                if($res){
+                    $evaluate_info[$ks]["is_praise"] =1;
+                }else{
+                    $evaluate_info[$ks]["is_praise"] =0;
+                }
+
             }
            if(!empty($evaluate_info)){
                 return ajax_success("数据返回成功",$evaluate_info);
@@ -880,6 +893,18 @@ class Classify extends Controller
                     ->where("id",$vs["user_id"])
                     ->field("user_img,phone_num")
                     ->find();
+                $evaluate_info[$ks]["praise"] =Db::name("order_parts_praise")
+                    ->where("parts_evaluate_id",$vs["id"])
+                    ->count();
+                $res =db("order_parts_praise")
+                    ->where("parts_evaluate_id",$vs["id"])
+                    ->where("user_id",$vs["user_id"])
+                    ->find();
+                if($res){
+                    $evaluate_info[$ks]["is_praise"] =1;
+                }else{
+                    $evaluate_info[$ks]["is_praise"] =0;
+                }
             }
             if(!empty($evaluate_info)){
                 return ajax_success("数据返回成功",$evaluate_info);
@@ -916,6 +941,18 @@ class Classify extends Controller
                     ->where("id",$vs["user_id"])
                     ->field("user_img,phone_num")
                     ->find();
+                $evaluate_info[$ks]["praise"] =Db::name("order_parts_praise")
+                    ->where("parts_evaluate_id",$vs["id"])
+                    ->count();
+                $res =db("order_parts_praise")
+                    ->where("parts_evaluate_id",$vs["id"])
+                    ->where("user_id",$vs["user_id"])
+                    ->find();
+                if($res){
+                    $evaluate_info[$ks]["is_praise"] =1;
+                }else{
+                    $evaluate_info[$ks]["is_praise"] =0;
+                }
             }
             if(!empty($evaluate_info)){
                 return ajax_success("数据返回成功",$evaluate_info);
@@ -951,6 +988,18 @@ class Classify extends Controller
                     ->where("id",$vs["user_id"])
                     ->field("user_img,phone_num")
                     ->find();
+                $evaluate_info[$ks]["praise"] =Db::name("order_parts_praise")
+                    ->where("parts_evaluate_id",$vs["id"])
+                    ->count();
+                $res =db("order_parts_praise")
+                    ->where("parts_evaluate_id",$vs["id"])
+                    ->where("user_id",$vs["user_id"])
+                    ->find();
+                if($res){
+                    $evaluate_info[$ks]["is_praise"] =1;
+                }else{
+                    $evaluate_info[$ks]["is_praise"] =0;
+                }
             }
             if(!empty($evaluate_info)){
                 return ajax_success("数据返回成功",$evaluate_info);
@@ -991,6 +1040,18 @@ class Classify extends Controller
                     ->where("id",$vs["user_id"])
                     ->field("user_img,phone_num")
                     ->find();
+                $evaluate_info[$ks]["praise"] =Db::name("order_parts_praise")
+                    ->where("parts_evaluate_id",$vs["id"])
+                    ->count();
+                $res =db("order_parts_praise")
+                    ->where("parts_evaluate_id",$vs["id"])
+                    ->where("user_id",$vs["user_id"])
+                    ->find();
+                if($res){
+                    $evaluate_info[$ks]["is_praise"] =1;
+                }else{
+                    $evaluate_info[$ks]["is_praise"] =0;
+                }
             }
             if(!empty($evaluate_info)){
                 return ajax_success("数据返回成功",$evaluate_info);

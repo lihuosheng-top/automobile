@@ -75,8 +75,16 @@ Route::group("",[
     "notifyurls"=>"index/Apppay/notifyurl",//TODO：配件商异步处理(支付宝IOS对接)
     "service_notifyurl"=>"index/Apppay/service_notifyurl",//TODO：服务商异步处理(支付宝IOS对接)
     "recharge_notifyurl"=>"index/Apppay/recharge_notifyurl",//TODO：余额充值订单异步处理(支付宝IOS对接)
-    "app_wxpay"=>"index/Apppay/app_wxpay",//微信app支付
-    "wxpay_notifyurl"=>"index/Apppay/wxpay_notifyurl",//微信app支付回调
+    "app_wxpay"=>"index/Apppay/app_wxpay",//TODO：微信app支付(充值)
+    "wxpay_notifyurl"=>"index/Apppay/wxpay_notifyurl",//TODO：微信app支付回调（充值）
+
+    "app_parts_wxpay"=>"index/Apppay/app_parts_wxpay",//TODO:（配件商）微信app支付
+    "wxpay_parts_notifyurl"=>"index/Apppay/wxpay_parts_notifyurl",//TODO:(配件商)微信支付回调
+    "app_service_wxpay"=>"index/Apppay/app_service_wxpay",//TODO:（服务商）微信app支付
+    "wxpay_service_notifyurl"=>"index/Apppay/wxpay_service_notifyurl",//TODO:(服务商)微信支付回调
+
+
+
     "parts_balance_payment"=>"index/Balance/parts_balance_payment", //配件商余额支付
     "service_balance_payment"=>"index/Balance/service_balance_payment",//服务商余额支付
     /*TODO:pay结束*/
@@ -92,15 +100,17 @@ Route::group("",[
     'index_parts_pay_code'=>"index/Apppay/index_parts_pay_code",//配件商支付回调修改订单状态
     /*TODO:配件商订单结束*/
 
-
     /*TODO：登录开始*/
     'Dolog'=>"index/Login/Dolog", /*登录操作*/
     "logout"=>"index/Login/logout",/*退出登录*/
+    "user_bind_phone"=>"index/Login/user_bind_phone", //第三方快捷登录绑定手机
     "my_index"=>"index/My/my_index",  // 我的
     "my_information_details"=>"index/My/my_information_details",  // 订单消息提醒
     "my_message"=>"index/My/message", //我的个人信息
     "login"=>"index/My/login",//登录
     "isLogin"=>"index/My/isLogin", //是否登录判断
+
+
     "phone_edit"=>"index/My/phone_edit",        //手机号码修改
     "true_name"=>"index/My/true_name",          //真实姓名
     "member_information_update"=>"index/My/member_information_update",//个人信息用户个人信息更新（头像,真实姓名，昵称，性别）
@@ -260,6 +270,8 @@ Route::group("",[
     /*TODO：配件商评价开始*/
     "evaluate_index"=>"index/Evaluate/evaluate_index",//配件商评价页面(ajax)
     "service_evaluate_index"=>"index/Evaluate/service_evaluate_index",//服务商评价页面(ajax)
+    "evaluate_parts_praise"=>"index/Evaluate/evaluate_parts_praise",//配件商商评价点赞(ajax)
+    "evaluate_service_praise"=>"index/Evaluate/evaluate_service_praise",//服务商商评价点赞(ajax)
     "evaluate_parts_add"=>"index/Evaluate/evaluate_parts_add",//配件商评价添加页面(ajax)
     "evaluate_service_add"=>"index/Evaluate/evaluate_service_add",//服务商评价添加页面(ajax)
     /*TODO：配件商评价结束*/
@@ -380,7 +392,7 @@ Route::group("",[
     "advertisement_index"=>"index/Advertisement/advertisement_index", //汽车广告显示
     "machine_index"=>"index/Advertisement/machine_index",             //汽车配件商广告显示
     "hot_index"=>"index/Advertisement/hot_index",                     //汽车热门推荐店铺广告
-    "rest"=>"index/Advertisement/rest",                     //汽车热门推荐店铺广告
+    "returnSquarePoint"=>"index/Advertisement/returnSquarePoint",
 
 
 
@@ -778,6 +790,7 @@ Route::group("admin",[
     "complaint_updata"=>"admin/operation/complaint_updata",
     "complaint_select"=>"admin/operation/complaint_select",
     "complaint_del"=>"admin/operation/complaint_del",
+    "complaint_search"=>"admin/operation/complaint_search",
 
 
 

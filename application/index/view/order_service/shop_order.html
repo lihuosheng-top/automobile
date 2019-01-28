@@ -83,7 +83,7 @@
             <a href="javascript:;" class="spr chose-payment-back"></a>
             <h3 class="chose-title">选择支付方式</h3>
         </header>
-        <div class="method-div" style="display: none;">
+        <div class="method-div">
             <div class="icon-div">
                 <img src="__STATIC__/index/image/wechat.png">
             </div>
@@ -136,11 +136,14 @@
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/payment.js"></script>
     <script>
-        var orderNumber = 0;
+        var orderNumber = 0, lock = true;
         (function(){
             var df = $.Deferred();
             $('#goAlipay').click(function(){
-                df.resolve();
+                if(lock){
+                    lock = false;
+                    df.resolve();
+                }
             })
             return df.promise();
         })().then(function(){
@@ -188,10 +191,10 @@
                     })().then(function(res){
                         console.log(res.responseData);
                         if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
-                            //接受支付宝签名 发送给android
+                            //接受微信签名 发送给android
                             Android.wxpay(JSON.stringify(res.responseData.app_response));
                         }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
-                            //接受支付宝签名 发送给ios
+                            //接受微信签名 发送给ios
                             alipay(JSON.stringify(res.responseData));
                         }
                     })
@@ -226,6 +229,7 @@
         })
 
         function alipayCallback(res){
+            lock = true;
             if(res.resultStatus == '6001'){
                 location.href = 'order_service_wait_pay';
             }else if(res.resultStatus == '9000'){
@@ -234,6 +238,7 @@
         }
         
         function wxpayCallback(res){
+            lock = true;
             if(res !== undefined && res == '0'){
                 location.href = 'order_service_wait_deliver';
             }else if(res == '-2'){
@@ -257,6 +262,7 @@
                 })().then(function(res){
                     console.log(res);
                     if(res.status == 1){
+                        lock = true;
                         layer.open({
                             skin: 'msg',
                             content: '支付成功',
