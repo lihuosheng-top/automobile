@@ -324,7 +324,7 @@ class Reservation extends Controller{
                             ->find();
                         $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
-                            ->sum();
+                            ->count();
                         $res =db("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->where("user_id",$j["user_id"])
@@ -390,7 +390,7 @@ class Reservation extends Controller{
                             ->find();
                         $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
-                            ->sum();
+                            ->count();
                         $res =db("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->where("user_id",$j["user_id"])
@@ -454,7 +454,7 @@ class Reservation extends Controller{
                             ->find();
                         $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
-                            ->sum();
+                            ->count();
                         $res =db("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->where("user_id",$j["user_id"])
@@ -517,7 +517,7 @@ class Reservation extends Controller{
                             ->find();
                         $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
-                            ->sum();
+                            ->count();
                         $res =db("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->where("user_id",$j["user_id"])
@@ -581,7 +581,7 @@ class Reservation extends Controller{
                                 ->find();
                             $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
                                 ->where("service_evaluate_id",$j["id"])
-                                ->sum();
+                                ->count();
                             $res =db("order_service_praise")
                                 ->where("service_evaluate_id",$j["id"])
                                 ->where("user_id",$j["user_id"])
