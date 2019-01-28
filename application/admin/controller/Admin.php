@@ -174,4 +174,38 @@ class Admin extends Controller
         }
     }
 
+
+
+
+    /**
+     * 搜索
+     * 陈绪
+     */
+    public function search(Request $request){
+
+        $admin = $request->param();
+        if(!empty($admin["account"])){
+            $account_data = db("admin")->where("account","like","%".$admin["account"]."%")->order("id")->select();
+            foreach ($account_data as $key=>$value){
+                $account_data[$key]["role_name"] = db("role")->where("id",$value["role_id"])->value("name");
+            }
+            //halt($account_list);
+            $roleList = getSelectList("role");
+            //分页
+            $all_idents =$account_data ;//这里是需要分页的数据
+            $curPage = input('get.page') ? input('get.page') : 1;//接收前段分页传值
+            $listRow = 20;//每页3行记录
+            $showdata = array_slice($all_idents, ($curPage - 1)*$listRow, $listRow,true);// 数组中根据条件取出一段值，并返回
+            $account_list = Bootstrap::make($showdata, $listRow, $curPage, count($all_idents), false, [
+                'var_page' => 'page',
+                'path'     => url('admin/admin/index'),//这里根据需要修改url
+                'query'    =>  [],
+                'fragment' => '',
+            ]);
+            $account_list->appends($_GET);
+        }
+        return view("index",["account_data"=>$account_data,"roleList"=>$roleList]);
+
+    }
+
 }

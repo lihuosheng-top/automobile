@@ -130,18 +130,18 @@
 	</div>
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="{:url('admin/Category/search')}">
+			<form class="layui-form" action="{:url('admin/operation/complaint_search')}">
 				<div class="seach">
 					<div class="seach_list">
 						<div class="seach_laber">用户账号</div>
 						<div class="seach_input">
-							<input type="text" name="" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+							<input type="text" name="account" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
 						</div>
 					</div>
 					<div class="seach_list">
 						<div class="seach_laber">联系方式</div>
 						<div class="seach_input">
-						<input type="text" name="" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+						<input type="text" name="issue_relation" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
 						</div>
 					</div>
 					<button class="layui-btn" type="submit" id="seach">立即搜索</button>
@@ -167,51 +167,99 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
-				{volist name="issue" id="value"}
-					<tr>
-						<td>{$value.id}</td>
-						<td>{$value.user.phone_num}</td>
-						<td>{$value.user.user_name == null ? "无" : $value.user.user_name}</td>
-						<td>{$value.issue}</td>
-						<td>{$value.issue_details}</td>
-						<td class="" style="display: flex;">
-							{volist name="$value.images" id="val"}
-							<div class="tdimg"><img src="__UPLOADS__/{$val}" /></div>
-							{/volist}
-						</td>
-						<td>{$value.issue_relation}</td>
-						<td>
-						
-								{if $value.status == 0}
-								<div class="static static_pending" data-id="{$value.id}" style="background:  red">
-									
-									待处理
-								</div>
-									{/if}
-									{if $value.status == 1}
-									<div class="static static_pending" data-id="{$value.id}" style="background: #84D945">
-										
-											已处理
-									</div>
-									{/if}
-									{if $value.status == 2}
-									<div class="static static_pending" data-id="{$value.id}" style="background: #999">
-										
-											已拒绝
-									</div>
-									
-									{/if}
-						    
-						</td>
-						<td>
-							<a href="{:url('admin/Operation/complaint_del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
-						</td>
-					</tr>
+				{if !empty($complaint_data)}
+				{volist name="$complaint_data" id="value"}
+				<tr>
+					<td>{$value.id}</td>
+					<td>{$value.user.phone_num}</td>
+					<td>{$value.user.user_name == null ? "无" : $value.user.user_name}</td>
+					<td>{$value.issue}</td>
+					<td>{$value.issue_details}</td>
+					<td class="" style="display: flex;">
+						{volist name="$value.images" id="val"}
+						<div class="tdimg"><img src="__UPLOADS__/{$val}" /></div>
+						{/volist}
+					</td>
+					<td>{$value.issue_relation}</td>
+					<td>
+
+						{if $value.status == 0}
+						<div class="static static_pending" data-id="{$value.id}" style="background:  red">
+
+							待处理
+						</div>
+						{/if}
+						{if $value.status == 1}
+						<div class="static static_pending" data-id="{$value.id}" style="background: #84D945">
+
+							已处理
+						</div>
+						{/if}
+						{if $value.status == 2}
+						<div class="static static_pending" data-id="{$value.id}" style="background: #999">
+
+							已拒绝
+						</div>
+
+						{/if}
+
+					</td>
+					<td>
+						<a href="{:url('admin/Operation/complaint_del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+					</td>
+				</tr>
 				{/volist}
+				{else}
+				{volist name="issue" id="value"}
+				<tr>
+					<td>{$value.id}</td>
+					<td>{$value.user.phone_num}</td>
+					<td>{$value.user.user_name == null ? "无" : $value.user.user_name}</td>
+					<td>{$value.issue}</td>
+					<td>{$value.issue_details}</td>
+					<td class="" style="display: flex;">
+						{volist name="$value.images" id="val"}
+						<div class="tdimg"><img src="__UPLOADS__/{$val}" /></div>
+						{/volist}
+					</td>
+					<td>{$value.issue_relation}</td>
+					<td>
+
+						{if $value.status == 0}
+						<div class="static static_pending" data-id="{$value.id}" style="background:  red">
+
+							待处理
+						</div>
+						{/if}
+						{if $value.status == 1}
+						<div class="static static_pending" data-id="{$value.id}" style="background: #84D945">
+
+							已处理
+						</div>
+						{/if}
+						{if $value.status == 2}
+						<div class="static static_pending" data-id="{$value.id}" style="background: #999">
+
+							已拒绝
+						</div>
+
+						{/if}
+
+					</td>
+					<td>
+						<a href="{:url('admin/Operation/complaint_del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+					</td>
+				</tr>
+				{/volist}
+				{/if}
 				</tbody>
 			</table>
 			<div id="page">
+				{if !empty($complaint_data)}
 				{$platforme}
+				{else}
+				{$platforme}
+				{/if}
 			</div>
 
 		</div>
