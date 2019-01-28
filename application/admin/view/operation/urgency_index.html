@@ -131,18 +131,18 @@
 	</div>
 	<div class="childrenBody">
 		<blockquote class="layui-elem-quote news_search">
-			<form class="layui-form" action="{:url('admin/Category/search')}">
+			<form class="layui-form" action="{:url('admin/operation/urgency_search')}">
 				<div class="seach">
 					<div class="seach_list">
 						<div class="seach_laber">用户账号</div>
 						<div class="seach_input">
-							<input type="text" name="" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+							<input type="text" name="account" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
 						</div>
 					</div>
 					<div class="seach_list">
 						<div class="seach_laber">联系方式</div>
 						<div class="seach_input">
-						<input type="text" name="" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+						<input type="text" name="user_phone" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
 						</div>
 					</div>
 					<button class="layui-btn" type="submit" id="seach">立即搜索</button>
@@ -166,6 +166,43 @@
 					</tr>
 				</thead>
 				<tbody class="news_content">
+				{if !empty($rescue_data)}
+				{volist name="$rescue_data" id="value"}
+				<tr>
+					<td>{$value.id}</td>
+					<td>{$value.account}</td>
+					<td>{$value.user_name == null ? "无" : $value.user_name}</td>
+					<td>{$value.user_address}</td>
+					<td>{$value.user_phone}</td>
+					<td>
+						{if $value.status == 0}
+						<div class="static static_pending" data-id="{$value.id}" style="background:  red">
+
+							待处理
+						</div>
+						{/if}
+						{if $value.status == 1}
+						<div class="static static_pending" data-id="{$value.id}" style="background: #84D945">
+
+							已处理
+						</div>
+						{/if}
+						{if $value.status == 2}
+						<div class="static static_pending" data-id="{$value.id}" style="background: #999">
+
+							已拒绝
+						</div>
+
+						{/if}
+					</div>
+					</td>
+					<td>
+						<a href="{:url('admin/Operation/urgency_del',['id'=>$value.id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
+					</td>
+					</tr>
+				{/volist}
+
+				{else}
 				{volist name="rescue" id="value"}
 					<tr>
 						<td>{$value.id}</td>
@@ -176,22 +213,22 @@
 						<td>
 								{if $value.status == 0}
 							<div class="static static_pending" data-id="{$value.id}" style="background:  red">
-								
+
 								待处理
 							</div>
 								{/if}
 								{if $value.status == 1}
 								<div class="static static_pending" data-id="{$value.id}" style="background: #84D945">
-									
+
 										已处理
 								</div>
 								{/if}
 								{if $value.status == 2}
 								<div class="static static_pending" data-id="{$value.id}" style="background: #999">
-									
+
 										已拒绝
 								</div>
-								
+
 								{/if}
 						    </div>
 						</td>
@@ -200,10 +237,15 @@
 						</td>
 					</tr>
 				{/volist}
+				{/if}
 				</tbody>
 			</table>
 			<div id="page">
+				{if !empty($rescue_data)}
+				{$rescue_data->render()}
+				{else}
 				{$rescue->render()}
+				{/if}
 			</div>
 
 		</div>

@@ -444,6 +444,7 @@ Route::group("admin",[
     "admin_updata"=>"admin/admin/updata",
     "admin_status"=>"admin/admin/status",
     "admin_passwd"=>"admin/admin/passwd",
+    "admin_search"=>"admin/admin/search",
 
 
 
@@ -785,6 +786,7 @@ Route::group("admin",[
     "urgency_updata"=>"admin/operation/urgency_updata",
     "urgency_select"=>"admin/operation/urgency_select",
     "urgency_del"=>"admin/operation/urgency_del",
+    "urgency_search"=>"admin/operation/urgency_search",
     "complaint_updata"=>"admin/operation/complaint_updata",
     "complaint_select"=>"admin/operation/complaint_select",
     "complaint_del"=>"admin/operation/complaint_del",
