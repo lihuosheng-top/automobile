@@ -339,7 +339,7 @@ function myEvaluate(settingid, storeid, content, flag, url){
                 }else{
                     var evaluate_id = $(this).parents('.comment_li').attr('data-evalid');
                     $.ajax({
-                        url: 'evaluate_parts_praise',
+                        url: 'evaluate_service_praise',
                         type: 'POST',
                         dataType: 'JSON',
                         data: {
@@ -351,11 +351,7 @@ function myEvaluate(settingid, storeid, content, flag, url){
                                 location.href = 'login';
                             }else{
                                 var likeNum = $(this).find('.like_num').text();
-                                $(this)
-                                    .find('.icon_like')
-                                        .addClass('like-on')
-                                        .siblings()
-                                        .text(+likeNum+1);
+                                $(this).find('.icon_like').addClass('like-on').siblings().text(+likeNum+1);
                             }
                         },
                         error: function(){
