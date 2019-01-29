@@ -842,20 +842,15 @@ class Apppay extends Controller
                 ->update($data);//修改订单状态,支付宝单号到数据库
             if ($result > 0) {
                 //进行钱包消费记录
-                $parts =Db::name("recharge_record")
-                    ->field("recharge_money,user_id")
-                    ->where($condition)
-                    ->find();
-                $title ="余额充值";
-                $money =$parts["recharge_money"];//金额
                 $recharge_record_data = Db::name("recharge_record")
                     ->where("recharge_order_number",$out_trade_no)
                     ->find();
+                $title ="余额充值";
+                $money =$recharge_record_data["recharge_money"];//金额
                 //消费满多少送多少
                 $list =Db::name("recharge_setting")
                     ->field("recharge_full,send_money")
                     ->select();
-//                $lists =null;
                 if(!empty($list)){
                     foreach($list as $k=>$v){
                         if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
@@ -868,7 +863,7 @@ class Apppay extends Controller
                 //如果达到充值送积分条件
                 if(!empty($lists)){
                     $recharge_data =[
-                        "user_id" =>$parts["user_id"],//用户id
+                        "user_id" =>$recharge_record_data["user_id"],//用户id
                         "operation_time"=>date("Y-m-d H:i:s"),//操作时间
                         "operation_type"=>1,//充值为1，提现为负一
                         "pay_type_content"=>$recharge_record_data["pay_type_name"],//支付方式
@@ -889,7 +884,7 @@ class Apppay extends Controller
                         ->where("id",$recharge_record_data["user_id"])
                         ->value("user_wallet");
                     $datas=[
-                        "user_id"=>$parts["user_id"],//用户ID
+                        "user_id"=>$recharge_record_data["user_id"],//用户ID
                         "wallet_operation"=> $money,//消费金额
                         "wallet_type"=>1,//消费操作(1入，-1出)
                         "operation_time"=>date("Y-m-d H:i:s"),//操作时间
@@ -902,10 +897,10 @@ class Apppay extends Controller
                         "is_business"=>1,//判断是车主消费还是商家消费（充值只能是 1车主消费）
                     ];
                     Db::name("wallet")->insert($datas); //存入消费记录表
-                    return ajax_success('支付成功', ['status' => 1]);
+                    exit(json_encode(array("status" => 1, "info" => "支付成功","data"=>["status"=>1])));
                 }else{
                     $recharge_data =[
-                        "user_id" =>$parts["user_id"],//用户id
+                        "user_id" =>$recharge_record_data["user_id"],//用户id
                         "operation_time"=>date("Y-m-d H:i:s"),//操作时间
                         "operation_type"=>1,//充值为1，提现为负一
                         "pay_type_content"=>$recharge_record_data["pay_type_name"],//支付方式
@@ -928,7 +923,7 @@ class Apppay extends Controller
                         ->where("id",$recharge_record_data["user_id"])
                         ->value("user_wallet");
                     $datas=[
-                        "user_id"=>$parts["user_id"],//用户ID
+                        "user_id"=>$recharge_record_data["user_id"],//用户ID
                         "wallet_operation"=> $money,//消费金额
                         "wallet_type"=>1,//消费操作(1入，-1出)
                         "operation_time"=>date("Y-m-d H:i:s"),//操作时间
@@ -941,10 +936,10 @@ class Apppay extends Controller
                         "is_business"=>1,//判断是车主消费还是商家消费（充值只能是 1车主消费）
                     ];
                     Db::name("wallet")->insert($datas); //存入消费记录表
-                    return ajax_success('支付成功', ['status' => 1]);
+                    exit(json_encode(array("status" => 1, "info" => "支付成功","data"=>["status"=>1])));
                 }
             } else {
-                return ajax_error('验证失败了', ['status' => 0]);
+                exit(json_encode(array("status" => 0, "info" => "验证失败了","data"=>["status"=>0])));
             }
         }
     }
