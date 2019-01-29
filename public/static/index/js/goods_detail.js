@@ -611,7 +611,13 @@ function likeFun(_this){
                 if(res.status == 2){
                     location.href = 'login';
                 }else{
-                    $(_this).find('.icon_like').addClass('like-on');
+                    var likeNum = $(_this).find('.like_num').text();
+                    $(_this)
+                        .find('.icon_like')
+                            .addClass('like-on')
+                            .siblings()
+                            .text(+likeNum+1);
+
                 }
             },
             error: function(){
