@@ -830,7 +830,7 @@ class Apppay extends Controller
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
         $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         $val = json_decode(json_encode($xml_data), true);
-        file_put_contents(EXTEND_PATH."data.txt".$val);
+        file_put_contents(EXTEND_PATH."data.txt",$val);
         //这个地方走了好几遍需要特别注意
         if($val["result_code"]=="SUCCESS" ){
             $out_trade_no = $val["out_trade_no"];//订单编号
