@@ -654,7 +654,7 @@ class Apppay extends Controller
                     ->where("recharge_order_number",$out_trade_no)
                     ->find();
                 $list =Db::name("recharge_setting")->field("recharge_full,send_money")->select();
-                $lists =null;
+                $lists =0;
                 foreach($list as $k=>$v){
                     if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
                         $lists =$v["send_money"];
@@ -704,7 +704,7 @@ class Apppay extends Controller
                     "wallet_operation"=> $money,//消费金额
                     "wallet_type"=>1,//消费操作(1入，-1出)
                     "operation_time"=>date("Y-m-d H:i:s"),//操作时间
-                    "wallet_remarks"=>"订单号：".$out_trade_no."，充值，余额增加".$money."元",//消费备注
+                    "wallet_remarks"=>"订单号：".$out_trade_no."，充值，余额增加".$money."元,送".$lists."元",//消费备注
                     "wallet_img"=>"index/image/alipay.png",//图标
                     "title"=>$title,//标题（消费内容）
                     "order_nums"=>$out_trade_no,//订单编号

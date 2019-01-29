@@ -28,10 +28,10 @@ class Xgcontent extends Controller
         $mess = new \Message();
         $mess->setTitle($title);
         $mess->setContent($content);
-        $mess->setType(Message::TYPE_NOTIFICATION);
+        $mess->setType(\Message::TYPE_NOTIFICATION);
         $mess->setStyle(new \Style(0, 1, 1, 1, 0));
         $action = new \ClickAction();
-        $action->setActionType(ClickAction::TYPE_ACTIVITY);
+        $action->setActionType(\ClickAction::TYPE_ACTIVITY);
         $mess->setAction($action);
         $ret = $push->PushSingleAccount(0, $account, $mess);
         return $ret;
