@@ -98,11 +98,7 @@ class Order extends Controller{
                     "pay_type_content"=>$pay_type_content,
                     "refund_amount"=>$refund_amount
                 ];
-                if($data["status"] == 3){
-                    $rest = new Xgcontent;
-                  $re = $rest->push_Accountp($title, $content, $account);
 
-                }
                 $bool =Db::name("order_parts")->where("id",$id)->update($data);
                 if($bool){
                     return ajax_success("修改成功",["status"=>1]);
