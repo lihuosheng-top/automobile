@@ -55,6 +55,7 @@ html{
     height: .7rem;
     border-bottom: 1px solid #ddd;
     margin-bottom: .1rem;
+    background-color: #fff;
 }
 .filter_box button{
     flex: 1;
@@ -79,6 +80,14 @@ html{
     display: block;
     height: 2px;
     background: #504cfb;
+}
+.filter_box button .updown{
+    display: inline-block;
+    width: .32rem;
+    height: .32rem;
+    background: url(../../image/sort.png) no-repeat;
+    background-size: 100%;
+    vertical-align: bottom;
 }
 
 .list_cont{
