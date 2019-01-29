@@ -123,6 +123,9 @@ class Install extends Controller{
             if(empty($consumption_full) ||empty($integral_can_be_used) ||empty($integral_full)||empty($deductible_money) ){
                 $this->error('所添加的值不能为空');
             }
+            if($deductible_money >=  $consumption_full){
+                $this->error('消费满钱数必须大于等于抵扣金额');
+            }
             if($integral_can_be_used != $integral_full){
                 $this->error('可使用积分和积分抵扣数量需要一致');
             }
@@ -631,9 +634,9 @@ class Install extends Controller{
 
         if( (!empty($number)) || (!empty($name)) )
         {
-            $seach = db("delivery") -> where("number", "like", "%" . $number . "%") -> where("name", "like", "%" . $name . "%") -> paginate(4); 
+            $seach = db("delivery") -> where("number", "like", "%" . $number . "%") -> where("name", "like", "%" . $name . "%") -> paginate(20); 
         } else {
-            $seach = db("delivery")->paginate(4);     
+            $seach = db("delivery")->paginate(20);     
         }
 
         return view("express_index",['express' => $seach]);
