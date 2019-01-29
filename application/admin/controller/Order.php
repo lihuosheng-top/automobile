@@ -89,7 +89,7 @@ class Order extends Controller{
             $title = "哈哈";
             $content = "娃哈哈";
             // $account = Db::name("order_parts")->where("id",$id)->value("user_phone_number");
-            $account = 13006677982;
+            $account = "13006677982";
             if(!empty($id)){
                 $data =[
                     "sell_message"=>$sell_message,
