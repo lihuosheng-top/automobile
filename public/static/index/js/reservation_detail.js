@@ -2,12 +2,12 @@
 // 全部弹窗
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
-    $('html').css('overflow', 'hidden');
+    $('.wrapper').hide();
     myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
 }
 function hidePop(){
     $('.pop').css('transform', 'translateX(100%)');
-    $('html').css('overflow', 'auto');
+    $('.wrapper').show();
 }
 $('.filter-service-ul').on('click', 'li', function(){
     $(this).siblings().removeClass('filter-service-li');
@@ -106,7 +106,7 @@ if(urlLen > 1){
             }
         })
         // 从预约服务进来 返回上一页
-        $('.back').click(function(){
+        $('.wrapper .back').click(function(){
             location.href = 'reservation?service_setting_id='+serviceSettingId;
         })
     }else{
@@ -141,6 +141,7 @@ if(urlLen > 1){
                 
                 $('.comment-filter').show();
                 $('.filter-service').show();
+                $('..pop .comment_box .comment_ul').css('height', '69vh');
                 evaAjax(data);
                 // 电话 导航
                 var seatNum = data.data.store[0].store_owner_seat_num;
@@ -158,7 +159,7 @@ if(urlLen > 1){
             console.log(res.status, res.statusText);
         })
 
-        $('.back').click(function(){
+        $('.wrapper .back').click(function(){
             location.href = 'index';
         })
     }
@@ -191,6 +192,7 @@ if(urlLen > 1){
                 
                 $('.comment-filter').show();
                 $('.filter-service').show();
+                $('..pop .comment_box .comment_ul').css('height', '69vh');
                 evaAjax(data);
             }
         },
@@ -199,7 +201,7 @@ if(urlLen > 1){
         }
     })
     // 从热门店铺进来 返回上一页
-    $('.back').click(function(){
+    $('.wrapper .back').click(function(){
         location.href = 'index';
     })
 }
