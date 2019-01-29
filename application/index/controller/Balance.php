@@ -61,6 +61,7 @@ class Balance extends Controller
                         //如果修改成功则进行钱抵扣
                         if ($result > 0) {
                             foreach ($select_data as $ks => $vs) {
+
                                 $titles[] = $vs["parts_goods_name"];
                             }
                             $title = implode("", $titles);
@@ -248,6 +249,9 @@ class Balance extends Controller
 
                                     ];
                                     Db::name("wallet")->insert($datas);
+                                    $user_count =Db::name("user")->where("id",$business_id)->value("phone_num");
+                                    $X = new  Xgcontent;
+                                    $X->push_Accountp("来新订单","来新订单了",$user_count);
                                     return ajax_success('支付成功', ['status' => 1]);
                                 }
 
@@ -291,6 +295,9 @@ class Balance extends Controller
                                     "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                                 ];
                                 Db::name("wallet")->insert($datas);
+                                $user_count =Db::name("user")->where("id",$user_id)->value("phone_num");
+                                $X = new  Xgcontent;
+                                $X->push_Accountp("来新订单","来新订单了",$user_count);
                                 return ajax_success('支付成功', ['status' => 1]);
                             }
                     }
