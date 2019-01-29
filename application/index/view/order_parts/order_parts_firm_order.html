@@ -485,7 +485,6 @@
                     storeIdArr.push(res.data.goods[0].store_id);
                     $('#order-buy').click(function () {
                         if(lock){
-                            lock = false;
                             var orderAmount = $('.total-money').text();
                             var quantity = $('.total-num').text();
                             var goods_standard = $('.standard').text();
@@ -511,11 +510,20 @@
                                     }
                                 })
                             })().then(function(res){
-                                //选择支付方式弹窗
-                                showSelectMethod();
                                 console.log(res);
-                                // 存储订单号
-                                cancelPayOrderNum = res.data.parts_order_number;
+                                if(res.status == 0){
+                                    layer.open({
+                                        skin: 'msg',
+                                        content: res.info,
+                                        time: 1.5
+                                    })
+                                }else{
+                                    lock = false;
+                                    //选择支付方式弹窗
+                                    showSelectMethod();
+                                    // 存储订单号
+                                    cancelPayOrderNum = res.data.parts_order_number;
+                                }
                             })
                         }
                     })

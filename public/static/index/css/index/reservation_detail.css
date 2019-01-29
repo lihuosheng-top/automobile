@@ -377,10 +377,10 @@ html{
 }
 .wrapper .comment_box .bottom_time_box .icon_like{
     display: inline-block;
-    width: .25rem;
-    height: .25rem;
-    background-position: -1.35rem -4.5rem;
-    vertical-align: text-top;
+    width: .35rem;
+    height: .35rem;
+    background-position: -1.3rem -4.45rem;
+    vertical-align: sub;
     margin-right: .1rem
 }
 .wrapper .comment_box .icon_like.icon_like_on{
