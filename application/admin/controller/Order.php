@@ -88,7 +88,8 @@ class Order extends Controller{
             $refund_amount =$request->only("refund_amount")["refund_amount"];//退款金额
             $title = "哈哈";
             $content = "娃哈哈";
-            $account = Db::name("order_parts")->where("id",$id)->value("user_account_name");
+            // $account = Db::name("order_parts")->where("id",$id)->value("user_phone_number");
+            $account = "13006677982";
             if(!empty($id)){
                 $data =[
                     "sell_message"=>$sell_message,
@@ -100,7 +101,7 @@ class Order extends Controller{
                 if($data["status"] == 3){
                     $rest = new Xgcontent;
                   $re = $rest->push_Accountp($title, $content, $account);
-                  dump($re);
+
                 }
                 $bool =Db::name("order_parts")->where("id",$id)->update($data);
                 if($bool){
