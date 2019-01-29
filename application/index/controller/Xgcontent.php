@@ -22,7 +22,8 @@ class Xgcontent extends Controller
     {  
         $accessId = "2100324571";
         $secretKey = "531896c8300cebf831d2e447de5df791";
-        include('../extend/Xg/xinge-api-php/src/XingeApp.php');
+//        include('../extend/Xg/xinge-api-php/src/XingeApp.php');
+        include EXTEND_PATH."Xg/xinge-api-php/src/XingeApp.php";
         $push = new \XingeApp($accessId, $secretKey);
         $mess = new \Message();
         $mess->setTitle($title);
