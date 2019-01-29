@@ -853,12 +853,11 @@ class Apppay extends Controller
                     ->field("recharge_full,send_money")
                     ->select();
                 if(!empty($list)){
-                    $lists =$list[0]["send_money"];
-//                    foreach($list as $k=>$v){
-//                        if($v["recharge_full"]==$money){
-//                            $lists =$v["send_money"];
-//                        }
-//                    }
+                    foreach($list as $k=>$v){
+                        if($v["recharge_full"]==$money){
+                            $lists =$v["send_money"];
+                        }
+                    }
                     if(!empty($lists)){
                         $recharge_data =[
                             "user_id" =>$recharge_record_data["user_id"],//用户id
