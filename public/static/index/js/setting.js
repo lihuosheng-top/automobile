@@ -60,6 +60,7 @@ $('.exit').click(function(){
         success: function(data){
             console.log(data);
             location.href = 'login';
+            Android.login(data.data.phone_num);
         },
         error: function(){
             console.log('error');

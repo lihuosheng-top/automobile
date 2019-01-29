@@ -183,6 +183,7 @@ $('.login-btn').click(function(){
                 })
                 setTimeout(function(){
                     location.href = 'express_wait_for_order';
+                    Android.login(account);
                 },1000)
             }else{
                 layer.open({
@@ -192,9 +193,9 @@ $('.login-btn').click(function(){
                 })
                 setTimeout(function(){
                     location.href = 'my_index';
+                    Android.login(account);
                 },1000)
             }
-            
         },
         error: function(){
             console.log('error');
