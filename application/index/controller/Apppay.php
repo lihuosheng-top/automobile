@@ -623,7 +623,7 @@ class Apppay extends Controller
      */
     public function recharge_notifyurl()
     {
-        $a =$this->request->param();
+        $a =$this->request->param("trade_no");
         file_put_contents(EXTEND_PATH."a.txt", $a);
         //这里可以做一下你自己的订单逻辑处理
         $pay_time = time();
