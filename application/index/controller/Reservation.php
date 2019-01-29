@@ -332,7 +332,7 @@ class Reservation extends Controller{
                         }else{
                             $evaluate_info_arr[$kk][$i]["praise"] =0;
                         }
-                        $res =db("order_service_praise")
+                        $res =Db::name("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->where("user_id",$j["user_id"])
                             ->find();
