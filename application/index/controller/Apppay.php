@@ -477,7 +477,6 @@ class Apppay extends Controller
      */
     public function notifyurl()
     {
-
         //这里可以做一下你自己的订单逻辑处理
         $pay_time = time();
         $data['pay_time'] = $pay_time;
@@ -487,7 +486,7 @@ class Apppay extends Controller
         $trade_no = input('trade_no');
         //交易状态
         $trade_status = input('trade_status');
-        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="Success") {
+        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
             $data['status'] = 2;
             $data["trade_no"] =$trade_no;
             $data['pay_type_content'] = "支付宝";//支付宝交易号
@@ -534,12 +533,12 @@ class Apppay extends Controller
                     "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                 ];
                 Db::name("wallet")->insert($datas);
-                return ajax_success('支付成功', ['status' => 1]);
+                return "success";
             } else {
-                return ajax_error('验证失败了', ['status' => 0]);
+                return "fail";
             }
         }else {
-            return ajax_error('验证失败', ['status' => 0]);
+            return "fail";
         }
     }
     /**
@@ -607,12 +606,12 @@ class Apppay extends Controller
                     "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                 ];
                 Db::name("wallet")->insert($datas);
-                return ajax_success('支付成功', ['status' => 1]);
+                return "success";
             }else {
-                return ajax_error('验证失败了', ['status' => 0]);
+                return "fail";
             }
         } else {
-            return ajax_error('验证失败', ['status' => 0]);
+            return "fail";
         }
     }
     /**
@@ -1034,9 +1033,9 @@ class Apppay extends Controller
                     "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                 ];
                 Db::name("wallet")->insert($datas);
-                return ajax_success('支付成功', ['status' => 1]);
+                return "success";
             } else {
-                return ajax_error('验证失败了', ['status' => 0]);
+                return "fail";
             }
         }
     }
@@ -1123,9 +1122,9 @@ class Apppay extends Controller
                     "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                 ];
                 Db::name("wallet")->insert($datas);
-                return ajax_success('支付成功', ['status' => 1]);
+                return "success";
             }else {
-                return ajax_error('验证失败了', ['status' => 0]);
+                return "fail";
             }
         }
 
