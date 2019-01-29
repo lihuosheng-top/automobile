@@ -12,6 +12,7 @@ use think\Controller;
 use think\Db;
 use think\Request;
 use think\Session;
+use app\index\controller\Xgcontent;
 
 class Order extends Controller{
 
