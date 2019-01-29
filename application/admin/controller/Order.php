@@ -85,6 +85,9 @@ class Order extends Controller{
             $status =$request->only("status")["status"];//状态值
             $pay_type_content =$request->only("pay_type_content")["pay_type_content"];//支付方式（微信,支付宝）
             $refund_amount =$request->only("refund_amount")["refund_amount"];//退款金额
+            $title = "哈哈";
+            $content = "娃哈哈";
+            $account = Db::name("order_parts")->where("id",$id)->value("user_account_name");
             if(!empty($id)){
                 $data =[
                     "sell_message"=>$sell_message,
