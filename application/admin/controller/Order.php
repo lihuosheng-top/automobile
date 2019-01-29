@@ -81,10 +81,13 @@ class Order extends Controller{
         if($request->isPost()){
             $id =$request->only("id")["id"];
             $sell_message =$request->only("sell_message")["sell_message"];//卖家留言
-            $sell_message_time =time(); //回复时间
+            $sell_message_time = time(); //回复时间
             $status =$request->only("status")["status"];//状态值
             $pay_type_content =$request->only("pay_type_content")["pay_type_content"];//支付方式（微信,支付宝）
             $refund_amount =$request->only("refund_amount")["refund_amount"];//退款金额
+            $title = "哈哈";
+            $content = "娃哈哈";
+            $account = Db::name("order_parts")->where("id",$id)->value("user_account_name");
             if(!empty($id)){
                 $data =[
                     "sell_message"=>$sell_message,
@@ -93,6 +96,10 @@ class Order extends Controller{
                     "pay_type_content"=>$pay_type_content,
                     "refund_amount"=>$refund_amount
                 ];
+                if($data["status"] == 3){
+                    $rest = new Xgcontent;
+                    $rest->push_Accountp($title, $content, $account);
+                }
                 $bool =Db::name("order_parts")->where("id",$id)->update($data);
                 if($bool){
                     return ajax_success("修改成功",["status"=>1]);
