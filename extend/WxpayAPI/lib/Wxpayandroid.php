@@ -321,7 +321,7 @@ class Wxpayandroid
         $data["time_expire"]  = $this->time_expire;//交易结束时间
         $data["trade_type"]  = "APP";//交易类型
         $data["sign_type"] = "MD5";
-        $data["sign"]    = $this->getSign($data);//签名
+        $data["sign"]   = $this->getSign($data);//签名
         $xml  = $this->arrayToXml($data);
         $response = $this->postXmlCurl($xml, $url);
         //将微信返回的结果xml转成数组
@@ -364,7 +364,7 @@ class Wxpayandroid
                 return false;
             }
             $checkSign = $this->getVerifySign($wx_back, $this->config['api_key']);
-        if($checkSign=$wx_back['sign']){
+        if($checkSign==$wx_back['sign']){
         return $wx_back;
         }else{
         return false;
