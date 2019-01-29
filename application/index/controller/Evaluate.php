@@ -171,7 +171,7 @@ class Evaluate extends  Controller{
                 ->where("user_id",$user_id)
                 ->find();
             if(!empty($is_praise)){
-                exit(json_encode(array("status" => 0, "info" => "同意用户只能点赞一次")));
+                exit(json_encode(array("status" => 0, "info" => "同一用户只能点赞一次")));
             }
             $data =[
                 "parts_evaluate_id"=>$evaluate_id,
@@ -337,7 +337,7 @@ class Evaluate extends  Controller{
                 ->where("user_id",$user_id)
                 ->find();
             if(!empty($is_praise)){
-                exit(json_encode(array("status" => 0, "info" => "同意用户只能点赞一次")));
+                exit(json_encode(array("status" => 0, "info" => "同一用户只能点赞一次")));
             }
             $data =[
                 "service_evaluate_id"=>$evaluate_id,

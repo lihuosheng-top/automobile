@@ -22,15 +22,16 @@ class Xgcontent extends Controller
     {  
         $accessId = "2100324571";
         $secretKey = "531896c8300cebf831d2e447de5df791";
-        include('../extend/Xg/xinge-api-php/src/XingeApp.php');
-        $push = new XingeApp($accessId, $secretKey);
-        $mess = new Message();
+//        include('../extend/Xg/xinge-api-php/src/XingeApp.php');
+        include EXTEND_PATH."Xg/xinge-api-php/src/XingeApp.php";
+        $push = new \XingeApp($accessId, $secretKey);
+        $mess = new \Message();
         $mess->setTitle($title);
         $mess->setContent($content);
-        $mess->setType(Message::TYPE_NOTIFICATION);
-        $mess->setStyle(new Style(0, 1, 1, 1, 0));
-        $action = new ClickAction();
-        $action->setActionType(ClickAction::TYPE_ACTIVITY);
+        $mess->setType(\Message::TYPE_NOTIFICATION);
+        $mess->setStyle(new \Style(0, 1, 1, 1, 0));
+        $action = new \ClickAction();
+        $action->setActionType(\ClickAction::TYPE_ACTIVITY);
         $mess->setAction($action);
         $ret = $push->PushSingleAccount(0, $account, $mess);
         return $ret;

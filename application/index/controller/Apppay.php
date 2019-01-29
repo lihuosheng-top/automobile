@@ -623,7 +623,7 @@ class Apppay extends Controller
      */
     public function recharge_notifyurl()
     {
-        //这里可以做一下你自己的订单逻辑处理
+        //这里可以做一下你自己的订单逻辑处理(回调里需要返回给支付宝微信确认一下success)
         $pay_time = time();
         $data['pay_time'] = $pay_time;
         //原始订单号
@@ -632,7 +632,7 @@ class Apppay extends Controller
         $trade_no = input('trade_no');
         //交易状态
         $trade_status = input('trade_status');
-        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS' || $trade_status =="Success") {
+        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
             $data['status'] = 1;
             $data['pay_type_name'] = "支付宝";//支付宝交易号
             $condition['recharge_order_number'] = $out_trade_no;
@@ -654,7 +654,7 @@ class Apppay extends Controller
                     ->where("recharge_order_number",$out_trade_no)
                     ->find();
                 $list =Db::name("recharge_setting")->field("recharge_full,send_money")->select();
-                $lists =null;
+                $lists =0;
                 foreach($list as $k=>$v){
                     if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
                         $lists =$v["send_money"];
@@ -704,7 +704,7 @@ class Apppay extends Controller
                     "wallet_operation"=> $money,//消费金额
                     "wallet_type"=>1,//消费操作(1入，-1出)
                     "operation_time"=>date("Y-m-d H:i:s"),//操作时间
-                    "wallet_remarks"=>"订单号：".$out_trade_no."，充值，余额增加".$money."元",//消费备注
+                    "wallet_remarks"=>"订单号：".$out_trade_no."，充值，余额增加".$money."元,送".$lists."元",//消费备注
                     "wallet_img"=>"index/image/alipay.png",//图标
                     "title"=>$title,//标题（消费内容）
                     "order_nums"=>$out_trade_no,//订单编号
@@ -714,14 +714,11 @@ class Apppay extends Controller
                 ];
                 Db::name("wallet")->insert($datas); //存入消费记录表
                     return "success";
-//                return ajax_success('支付成功', ['status' => 1]);
             } else {
                 return "fail";
-//                return ajax_error('验证失败了', ['status' => 0]);
             }
         }else {
             return "fail";
-//            return ajax_error('验证失败', ['status' => 0]);
         }
     }
     /**
@@ -890,7 +887,7 @@ class Apppay extends Controller
                                     "wallet_operation"=> $money,//消费金额
                                     "wallet_type"=>1,//消费操作(1入，-1出)
                                     "operation_time"=>date("Y-m-d H:i:s"),//操作时间
-                                    "wallet_remarks"=>"订单号：".$out_trade_no."，充值，余额增加".$money."元",//消费备注
+                                    "wallet_remarks"=>"订单号：".$out_trade_no."，充值，余额增加".$money."元,送".$lists."元",//消费备注
                                     "wallet_img"=>"index/image/wechat.png",//图标
                                     "title"=>$title,//标题（消费内容）
                                     "order_nums"=>$out_trade_no,//订单编号
@@ -901,10 +898,8 @@ class Apppay extends Controller
                                 Db::name("wallet")->insert($datas); //存入消费记录表
                             }
                             return "success";
-//                            exit(json_encode(array("status" => 1, "info" => "支付成功","data"=>["status"=>1])));
                         }else{
                             return "fail";
-//                            exit(json_encode(array("status" => 0, "info" => "失败成功","data"=>["status"=>0])));
                         }
                     }
                 }else{
@@ -949,16 +944,13 @@ class Apppay extends Controller
                             Db::name("wallet")->insert($datas); //存入消费记录表
                         }
                         return "success";
-//                        exit(json_encode(array("status" => 1, "info" => "支付成功","data"=>["status"=>1])));
                     }else{
                         return "fail";
-//                        exit(json_encode(array("status" => 0, "info" => "支付失败","data"=>["status"=>0])));
                     }
                 }
                 //如果达到充值送积分条件
             }else {
                 return "fail";
-//                exit(json_encode(array("status" => 0, "info" => "验证失败了","data"=>["status"=>0])));
             }
         }
     }
@@ -1002,9 +994,6 @@ class Apppay extends Controller
             ];
             $condition['parts_order_number'] = $out_trade_no;
             $select_data = Db::name('order_parts')->where($condition)->select();
-//            $result = Db::name('order_parts')
-//                ->where($condition)
-//                ->update($data);//修改订单状态,支付宝单号到数据库
             foreach ($select_data as $key => $val) {
                 $result = Db::name('order_parts')
                     ->where("id", $val["id"])
