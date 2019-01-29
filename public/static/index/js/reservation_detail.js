@@ -3,6 +3,7 @@
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
     $('html').css('overflow', 'hidden');
+    myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
 }
 function hidePop(){
     $('.pop').css('transform', 'translateX(100%)');
@@ -214,7 +215,6 @@ function evaAjax(data){
                                 <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
                             </li>`
             myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
-            myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
             evaluateNum(ele.service_setting_id, storeId);
         }else{
             filterStr += `<li data-serverid="`+ele.service_setting_id+`">
@@ -316,18 +316,53 @@ function myEvaluate(settingid, storeid, content, flag, url){
                     <div class="bottom_time_box">
                     <p class="buy_time">购买时间: <span>`+timetrans(data[i].order_create_time)+`</span></p>
                     <div>
-                        <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">`+data[i].praise+`</span></a>
+                        <a href="javascript:;" class="like">
+                            <i class="spr icon_like `+
+                            (data[i].is_praise == 1 ? 'like-on':'')
+                            +`"></i><span class="like_num">`+data[i].praise+`</span>
+                        </a>
                     </div>
                 </div>
             </li>`
             }
             $(content).html('').html(str);
+            // 评论点赞
+            $('.like').click(function(){
+                if($(this).find('.icon_like').hasClass('like-on')){
+                    layer.open({
+                        skin: 'msg',
+                        content: '评论已点亮',
+                        time: 1
+                    })
+                }else{
+                    var evaluate_id = $(this).parents('.comment_li').attr('data-evalid');
+                    $.ajax({
+                        url: 'evaluate_parts_praise',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            evaluate_id: evaluate_id
+                        },
+                        success: function(res){
+                            if(res.status == 2){
+                                location.href = 'login';
+                            }else{
+                                $(this).find('.icon_like').addClass('like-on');
+                            }
+                        },
+                        error: function(){
+                            console.log('error');
+                        }
+                    })
+                }
+            })
         },
         error: function(){
             console.log('error');
         }
     })
 }
+
 // 商品
 function myGoods(data){
     var str = '';
