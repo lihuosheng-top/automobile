@@ -316,7 +316,7 @@ function myEvaluate(settingid, storeid, content, flag, url){
                     <div class="bottom_time_box">
                     <p class="buy_time">购买时间: <span>`+timetrans(data[i].order_create_time)+`</span></p>
                     <div>
-                        <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                        <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">`+data[i].praise+`</span></a>
                     </div>
                 </div>
             </li>`
