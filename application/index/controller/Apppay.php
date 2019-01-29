@@ -830,14 +830,14 @@ class Apppay extends Controller
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
         $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         $val = json_decode(json_encode($xml_data), true);
-        file_put_contents(EXTEND_PATH."data.txt",$val["time_end"]);
+//        file_put_contents(EXTEND_PATH."data.txt",$val["time_end"]);
         //这个地方走了好几遍需要特别注意
         if($val["result_code"]=="SUCCESS" ){
             $out_trade_no = $val["out_trade_no"];//订单编号
             $data['status'] = 1;
             $data['pay_type_name'] = "微信";//支付类型
             $condition['recharge_order_number'] = $out_trade_no;
-            $data['pay_time'] = time();//支付时间（不能写当前的，需要写微信端给我们的，不然会重复走单）
+            $data['pay_time'] = strtotime(date('Y-m-d H:i:s', strtotime($val["time_end"])));//支付时间（不能写当前的，需要写微信端给我们的，不然会重复走单）
             $result = Db::name('recharge_record')
                 ->where("recharge_order_number", $out_trade_no)
                 ->update($data);//修改订单状态,支付宝单号到数据库
