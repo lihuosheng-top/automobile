@@ -827,6 +827,7 @@ class Apppay extends Controller
      * 陈绪
      */
     public function wxpay_notifyurl(){
+        $data['pay_time'] = time();//支付时间
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
         $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         $val = json_decode(json_encode($xml_data), true);
@@ -834,7 +835,6 @@ class Apppay extends Controller
             $out_trade_no = $val["out_trade_no"];//订单编号
             $data['status'] = 1;
             $data['pay_type_name'] = "微信";//支付类型
-            $data['pay_time'] = time();//支付时间
             $condition['recharge_order_number'] = $out_trade_no;
             $select_data = Db::name('recharge_record')->where($condition)->find();
             $result = Db::name('recharge_record')
@@ -856,10 +856,14 @@ class Apppay extends Controller
                     ->field("recharge_full,send_money")
                     ->select();
 //                $lists =null;
-                foreach($list as $k=>$v){
-                    if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
-                        $lists =$v["send_money"];
+                if(!empty($list)){
+                    foreach($list as $k=>$v){
+                        if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
+                            $lists =$v["send_money"];
+                        }
                     }
+                }else{
+                    $lists =null;
                 }
                 //如果达到充值送积分条件
                 if(!empty($lists)){
@@ -899,7 +903,7 @@ class Apppay extends Controller
                     ];
                     Db::name("wallet")->insert($datas); //存入消费记录表
                     return ajax_success('支付成功', ['status' => 1]);
-                }else {
+                }else{
                     $recharge_data =[
                         "user_id" =>$parts["user_id"],//用户id
                         "operation_time"=>date("Y-m-d H:i:s"),//操作时间
