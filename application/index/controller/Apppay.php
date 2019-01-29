@@ -477,6 +477,7 @@ class Apppay extends Controller
      */
     public function notifyurl()
     {
+
         //这里可以做一下你自己的订单逻辑处理
         $pay_time = time();
         $data['pay_time'] = $pay_time;
@@ -622,6 +623,8 @@ class Apppay extends Controller
      */
     public function recharge_notifyurl()
     {
+        $a =$this->request->param();
+        file_put_contents(EXTEND_PATH."a.txt", $a);
         //这里可以做一下你自己的订单逻辑处理
         $pay_time = time();
         $data['pay_time'] = $pay_time;
@@ -832,7 +835,7 @@ class Apppay extends Controller
         $val = json_decode(json_encode($xml_data), true);
 //        file_put_contents(EXTEND_PATH."data.txt",$val["time_end"]);
         //这个地方走了好几遍需要特别注意
-        if($val["result_code"]=="SUCCESS" ){
+        if($val["result_code"]=="SUCCESS"){
             $out_trade_no = $val["out_trade_no"];//订单编号
             $data['status'] = 1;
             $data['pay_type_name'] = "微信";//支付类型
@@ -994,9 +997,9 @@ class Apppay extends Controller
             ];
             $condition['parts_order_number'] = $out_trade_no;
             $select_data = Db::name('order_parts')->where($condition)->select();
-            $result = Db::name('order_parts')
-                ->where($condition)
-                ->update($data);//修改订单状态,支付宝单号到数据库
+//            $result = Db::name('order_parts')
+//                ->where($condition)
+//                ->update($data);//修改订单状态,支付宝单号到数据库
             foreach ($select_data as $key => $val) {
                 $result = Db::name('order_parts')
                     ->where("id", $val["id"])
