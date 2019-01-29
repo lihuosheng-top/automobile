@@ -98,7 +98,8 @@ class Order extends Controller{
                 ];
                 if($data["status"] == 3){
                     $rest = new Xgcontent;
-                    $rest->push_Accountp($title, $content, $account);
+                  $re = $rest->push_Accountp($title, $content, $account);
+                  halt($re);
                 }
                 $bool =Db::name("order_parts")->where("id",$id)->update($data);
                 if($bool){
