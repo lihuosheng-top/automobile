@@ -346,6 +346,7 @@ function myEvaluate(settingid, storeid, content, flag, url){
                             evaluate_id: evaluate_id
                         },
                         success: function(res){
+                            console.log(res)
                             if(res.status == 2){
                                 location.href = 'login';
                             }else{
