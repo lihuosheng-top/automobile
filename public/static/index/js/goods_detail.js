@@ -549,12 +549,20 @@ $.ajax({
                     <div class="bottom_time_box">
                     <p class="buy_time">购买时间: <span>`+timetrans(data[i].order_create_time)+`</span></p>
                     <div>
-                        <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">`+data[i].praise+`</span></a>
+                        <a href="javascript:;" class="like">
+                            <i class="spr icon_like `+
+                            (data[i].is_praise == 1 ? 'like-on':'')
+                            +`"></i><span class="like_num">`+data[i].praise+`</span>
+                        </a>
                     </div>
                 </div>
             </li>`
             }
             $('.more_comment_box').before(str);
+            // 评论点赞
+            $('.like').click(function(){
+                likeFun(this);
+            })
             // 查看评价详情
             $('.content-container').click(function(){
                 $('html').css('overflow', 'hidden');
@@ -582,6 +590,36 @@ $('.more_comment_box').on('click','a', function(){
     showPop();
     allEvaluateDataAjax('goods_evaluate_return');
 })
+// 评论点赞
+function likeFun(_this){
+    if($(_this).find('.icon_like').hasClass('like-on')){
+        layer.open({
+            skin: 'msg',
+            content: '评论已点亮',
+            time: 1
+        })
+    }else{
+        var evaluate_id = $(_this).parents('.comment_li').attr('data-evalid');
+        $.ajax({
+            url: 'evaluate_parts_praise',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                evaluate_id: evaluate_id
+            },
+            success: function(res){
+                if(res.status == 2){
+                    location.href = 'login';
+                }else{
+                    $(_this).find('.icon_like').addClass('like-on');
+                }
+            },
+            error: function(){
+                console.log('error');
+            }
+        })
+    }
+}
 // 查看全部评论ajax
 function allEvaluateDataAjax(url){
     $.ajax({
@@ -639,12 +677,20 @@ function allEvaluateDataAjax(url){
                         <div class="bottom_time_box">
                             <p class="buy_time">购买时间: <span>2018-11-05</span></p>
                             <div>
-                                <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                                <a href="javascript:;" class="like">
+                                    <i class="spr icon_like `+
+                                    (ele.is_praise == 1 ? 'like-on':'')
+                                    +`"></i><span class="like_num">`+ele.praise+`</span>
+                                </a>
                             </div>
                         </div>
                     </li>`
                 })
                 $('.pop .comment_ul').html('').html(str);
+                // 评论点赞
+                $('.like').click(function(){
+                    likeFun(this);
+                })
                 // 查看评价详情
                 $('.all-content-container').click(function(){
                     $('html').css('overflow', 'hidden');

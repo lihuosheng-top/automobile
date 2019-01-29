@@ -94,8 +94,8 @@
             //发送给后台订单号，获取签名
             switch ($index) {
                 case 1:
-                    //用户选择微信支付，发送订单号给后台
                     (function(){
+                        //用户选择微信支付，发送订单号给后台
                         return $.ajax({
                             url: 'app_wxpay',
                             type: 'POST',
@@ -111,7 +111,7 @@
                             Android.wxpay(JSON.stringify(res.responseData.app_response));
                         }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
                             //接受微信签名 发送给ios
-                            alipay(JSON.stringify(res.responseData));
+                            // alipay(JSON.stringify(res.responseData));
                         }
                     })
                     break;
@@ -133,7 +133,7 @@
                             Android.alipay(res.data);
                         }else if(u.indexOf('iPhone') > -1 || u.indexOf('ios') > -1){
                             //接受支付宝签名 发送给ios
-                            alipay(res.data);
+                            // alipay(res.data);
                         }
                     })
                     break;
