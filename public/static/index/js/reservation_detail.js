@@ -350,7 +350,12 @@ function myEvaluate(settingid, storeid, content, flag, url){
                             if(res.status == 2){
                                 location.href = 'login';
                             }else{
-                                $(this).find('.icon_like').addClass('like-on');
+                                var likeNum = $(this).find('.like_num').text();
+                                $(this)
+                                    .find('.icon_like')
+                                        .addClass('like-on')
+                                        .siblings()
+                                        .text(+likeNum+1);
                             }
                         },
                         error: function(){
