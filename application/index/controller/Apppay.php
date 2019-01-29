@@ -827,7 +827,6 @@ class Apppay extends Controller
      * 陈绪
      */
     public function wxpay_notifyurl(){
-        $data['pay_time'] = time();//支付时间
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
         $xml_data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         $val = json_decode(json_encode($xml_data), true);
@@ -836,9 +835,9 @@ class Apppay extends Controller
             $data['status'] = 1;
             $data['pay_type_name'] = "微信";//支付类型
             $condition['recharge_order_number'] = $out_trade_no;
-            $select_data = Db::name('recharge_record')->where($condition)->find();
+            $data['pay_time'] = time();//支付时间
             $result = Db::name('recharge_record')
-                ->where("recharge_order_number", $select_data["recharge_order_number"])
+                ->where("recharge_order_number", $out_trade_no)
                 ->update($data);//修改订单状态,支付宝单号到数据库
             if ($result ==1) {
                 //进行钱包消费记录
