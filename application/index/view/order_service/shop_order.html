@@ -141,7 +141,6 @@
             var df = $.Deferred();
             $('#goAlipay').click(function(){
                 if(lock){
-                    lock = false;
                     df.resolve();
                 }
             })
@@ -166,8 +165,17 @@
                 })
         }).then(function(res){
             console.log(res);
-            orderNumber = res.data.service_order_number;
-            showSelectMethod();
+            if(res.status == 0){
+                layer.open({
+                    skin: 'msg',
+                    content: res.info,
+                    time: 1.5
+                })
+            }else{
+                lock = false;
+                orderNumber = res.data.service_order_number;
+                showSelectMethod();
+            }
         })
         // 选择支付方式
         $('.method-div').click(function(){
