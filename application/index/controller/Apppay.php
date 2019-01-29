@@ -840,7 +840,7 @@ class Apppay extends Controller
             $result = Db::name('recharge_record')
                 ->where("recharge_order_number", $select_data["recharge_order_number"])
                 ->update($data);//修改订单状态,支付宝单号到数据库
-            if ($result > 0) {
+            if ($result ==1) {
                 //进行钱包消费记录
                 $recharge_record_data = Db::name("recharge_record")
                     ->where("recharge_order_number",$out_trade_no)
@@ -852,11 +852,12 @@ class Apppay extends Controller
                     ->field("recharge_full,send_money")
                     ->select();
                 if(!empty($list)){
-                    foreach($list as $k=>$v){
-                        if($v["recharge_full"] ==$recharge_record_data["recharge_money"]){
-                            $lists =$v["send_money"];
-                        }
-                    }
+                    $lists =$list[0]["send_money"];
+//                    foreach($list as $k=>$v){
+//                        if($v["recharge_full"]==$money){
+//                            $lists =$v["send_money"];
+//                        }
+//                    }
                 }else{
                     $lists =null;
                 }
@@ -873,13 +874,13 @@ class Apppay extends Controller
                         "recharge_describe" =>"充值".$recharge_record_data["recharge_money"]."元,赠送了".$lists,//描述
                         "status"=>1,
                     ];
-                  $bools =  Db::name("recharge_reflect")->insert($recharge_data);//插到记录
+                    $bools =  Db::name("recharge_reflect")->insert($recharge_data);//插到记录
                     if($bools){
                         $user_wallet =Db::name("user")
                             ->field("user_wallet")
                             ->where("id",$recharge_record_data["user_id"])
                             ->find();
-                     $wallet_bool =  Db::name("user")->where("id",$recharge_record_data["user_id"])
+                        $wallet_bool = Db::name("user")->where("id",$recharge_record_data["user_id"])
                             ->update(["user_wallet"=>$user_wallet["user_wallet"]+$recharge_record_data["recharge_money"]+ $lists]);
                         if($wallet_bool){
                             $new_wallet =Db::name("user")
@@ -950,7 +951,7 @@ class Apppay extends Controller
                         exit(json_encode(array("status" => 0, "info" => "支付失败","data"=>["status"=>0])));
                     }
                 }
-            } else {
+            }else {
                 exit(json_encode(array("status" => 0, "info" => "验证失败了","data"=>["status"=>0])));
             }
         }
