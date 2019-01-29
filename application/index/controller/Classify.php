@@ -831,6 +831,7 @@ class Classify extends Controller
      */
     public function goods_evaluate_return(Request $request){
         if($request->isPost()){
+            $user_id =Session::get("user");
             $goods_id = $request->only(["goods_id"])["goods_id"];
             $evaluate_info =db("order_parts_evaluate")
                 ->where("goods_id",$goods_id)
@@ -852,7 +853,7 @@ class Classify extends Controller
                     ->count();
                 $res =db("order_parts_praise")
                     ->where("parts_evaluate_id",$vs["id"])
-                    ->where("user_id",$vs["user_id"])
+                    ->where("user_id",$user_id)
                     ->find();
                 if($res){
                     $evaluate_info[$ks]["is_praise"] =1;

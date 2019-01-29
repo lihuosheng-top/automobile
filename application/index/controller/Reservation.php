@@ -296,6 +296,7 @@ class Reservation extends Controller{
      */
     public function reservation_evaluate_return(Request $request){
         if($request->isPost()) {
+            $user_id =Session::get("user");
             $service_setting_id = $request->only(["goods_id"])["goods_id"];//服务setting_id
             $store_id = $request->only(["store_id"])["store_id"];
             $goods_id_arr = Db::name("serve_goods")
@@ -332,9 +333,9 @@ class Reservation extends Controller{
                         }else{
                             $evaluate_info_arr[$kk][$i]["praise"] =0;
                         }
-                        $res =db("order_service_praise")
+                        $res =Db::name("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
-                            ->where("user_id",$j["user_id"])
+                            ->where("user_id",$user_id)
                             ->find();
                         if(!empty($res)){
                             $evaluate_info_arr[$kk][$i]["is_praise"] =1;
