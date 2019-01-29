@@ -632,7 +632,7 @@ class Apppay extends Controller
         $trade_no = input('trade_no');
         //交易状态
         $trade_status = input('trade_status');
-        if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
+        if ($trade_status == 'TRADE_FINISHED' && $trade_status == 'TRADE_SUCCESS') {
             $data['status'] = 1;
             $data['pay_type_name'] = "支付宝";//支付宝交易号
             $condition['recharge_order_number'] = $out_trade_no;
