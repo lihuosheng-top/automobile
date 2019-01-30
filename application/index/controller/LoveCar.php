@@ -240,7 +240,6 @@ class LoveCar extends Controller{
      * @param Request $request
      */
     public function love_list_edit(Request $request){
-
         if($request->isPost()){
             $id = $request->only(["id"])["id"];
             $user_car_message = db("user_car_message")->where("user_car_id",$id)->select();
