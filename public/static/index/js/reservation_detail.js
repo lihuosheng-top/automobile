@@ -141,7 +141,7 @@ if(urlLen > 1){
                 
                 $('.comment-filter').show();
                 $('.filter-service').show();
-                $('..pop .comment_box .comment_ul').css('height', '69vh');
+                $('.pop .comment_box .comment_ul').css('height', '69vh');
                 evaAjax(data);
                 // 电话 导航
                 var seatNum = data.data.store[0].store_owner_seat_num;

@@ -774,7 +774,7 @@ html{
     background: url(../../image/refresh.png) no-repeat;
     background-size: 100% 100%;
     transition: all .6s linear;
-    z-index: 99999;
+    z-index: 9999;
 }
 .refresh-icon.refresh-rotate{
     transform: rotateZ(720deg);
