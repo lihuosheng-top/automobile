@@ -52,15 +52,24 @@ class LoveCar extends Controller{
         if(!empty($user_id)){
             if($request->isPost()){
                 $love = $request->param();
-                $love["user_id"] = $user_id;
-                $love["status"] = 1;
-                $bool = db("user_car")->where("user_id",$user_id)->count();
-                if($bool>1){
+                $bool_one = db("user_car")->where("user_id",$user_id)->count();
+                if($bool_one>1){
                     return ajax_error("爱车最多只能两辆");
+                }else{
+                    $bools = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
+                    if(!empty($bools)){
+                        $love["user_id"] = $user_id;
+                        $love["status"] = 0;
+                    }else{
+                        $love["user_id"] = $user_id;
+                        $love["status"] = 1;
+                    }
                 }
                 $bool = db("user_car")->insertGetId($love);
                 if($bool){
-                    Db::name('user_car')->where("user_id",$user_id)->where("id","NEQ",$bool)->update(['status'=>0]);
+                    if($love["status"] ==1){
+                        Db::name('user_car')->where("user_id",$user_id)->where("id","NEQ",$bool)->update(['status'=>0]);
+                 }
                     return ajax_success("添加成功");
                 }else{
                     return ajax_error("添加失败");
