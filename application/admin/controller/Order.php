@@ -98,15 +98,15 @@ class Order extends Controller{
                     if($status ==3){
                         //对附近的快递员进行铃声提醒
                         $store_id =Db::name("order_parts")->where("id",$id)->value("store_id");
-                        $store_city_address = db("store")->where("store_id",$store_id)->value("store_city_address");
-                        $delivery_data = db("delivery")
+                        $store_city_address = Db::name("store")->where("store_id",$store_id)->value("store_city_address");
+                        $delivery_data = Db::name("delivery")
                             ->field("account")
                             ->where("area", $store_city_address)
                             ->select(); //所有的快递员信息
                         foreach ($delivery_data as $key=>$vals){
                             //铃声
                             $X = new  Xgcontent;
-                            $X->push_Accountp("来新订单","来新订单了",$vals["account"]);
+                            $X->push_Accountp("新订单","新订单",$vals["account"]);
                         }
                     }
                     return ajax_success("修改成功",["status"=>1]);
