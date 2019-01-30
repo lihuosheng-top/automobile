@@ -71,7 +71,7 @@ function showShops(addr){
                             // 存储距离
                             disArr.push({
                                 id: val.id,
-                                dis: (dist / 1000).toFixed(2)
+                                dis: (dis / 1000).toFixed(2)
                             })
                             // 存储标记点
                             markerList.push(new AMap.Marker({
