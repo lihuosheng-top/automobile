@@ -32,6 +32,7 @@ AMap.plugin([
     function onComplete(e){
         console.log(e);
         userLngLat = [e.position.lng, e.position.lat];
+        alert(userLngLat)
         if(e.status === 1){
             $('.shop_list').empty();
             showShops(e.formattedAddress);
