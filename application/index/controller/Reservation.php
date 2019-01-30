@@ -296,9 +296,12 @@ class Reservation extends Controller{
      */
     public function reservation_evaluate_return(Request $request){
         if($request->isPost()) {
+            $user_id =Session::get("user");
             $service_setting_id = $request->only(["goods_id"])["goods_id"];//服务setting_id
             $store_id = $request->only(["store_id"])["store_id"];
-            $goods_id_arr = Db::name("serve_goods")->where("service_setting_id", $service_setting_id)->select();
+            $goods_id_arr = Db::name("serve_goods")
+                ->where("service_setting_id", $service_setting_id)
+                ->select();
             foreach ($goods_id_arr as $key => $value) {
                 $evaluate_info = db("order_service_evaluate")
                     ->where("goods_id", $value["id"])
@@ -322,17 +325,22 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
-                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                        $numbers =Db::name("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->count();
-                        $res =db("order_service_praise")
+                        if(!empty($numbers)){
+                            $evaluate_info_arr[$kk][$i]["praise"] =$numbers;
+                        }else{
+                            $evaluate_info_arr[$kk][$i]["praise"] =0;
+                        }
+                        $res =Db::name("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
-                            ->where("user_id",$j["user_id"])
+                            ->where("user_id",$user_id)
                             ->find();
                         if(!empty($res)){
-                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                            $evaluate_info_arr[$kk][$i]["is_praise"] =1;
                         }else{
-                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                            $evaluate_info_arr[$kk][$i]["is_praise"] =0;
                         }
                     }
                 }
@@ -388,17 +396,22 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
-                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                        $numbers =Db::name("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->count();
+                        if(!empty($numbers)){
+                            $evaluate_info_arr[$kk][$i]["praise"] =$numbers;
+                        }else{
+                            $evaluate_info_arr[$kk][$i]["praise"] =0;
+                        }
                         $res =db("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->where("user_id",$j["user_id"])
                             ->find();
                         if(!empty($res)){
-                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                            $evaluate_info_arr[$kk][$i]["is_praise"] =1;
                         }else{
-                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                            $evaluate_info_arr[$kk][$i]["is_praise"] =0;
                         }
                     }
                 }
@@ -452,17 +465,22 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
-                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                        $numbers =Db::name("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->count();
+                        if(!empty($numbers)){
+                            $evaluate_info_arr[$kk][$i]["praise"] =$numbers;
+                        }else{
+                            $evaluate_info_arr[$kk][$i]["praise"] =0;
+                        }
                         $res =db("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->where("user_id",$j["user_id"])
                             ->find();
                         if(!empty($res)){
-                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                            $evaluate_info_arr[$kk][$i]["is_praise"] =1;
                         }else{
-                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                            $evaluate_info_arr[$kk][$i]["is_praise"] =0;
                         }
                     }
                 }
@@ -515,17 +533,22 @@ class Reservation extends Controller{
                             ->where("id", $j["user_id"])
                             ->field("user_img,phone_num")
                             ->find();
-                        $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                        $numbers =Db::name("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->count();
+                        if(!empty($numbers)){
+                            $evaluate_info_arr[$kk][$i]["praise"] =$numbers;
+                        }else{
+                            $evaluate_info_arr[$kk][$i]["praise"] =0;
+                        }
                         $res =db("order_service_praise")
                             ->where("service_evaluate_id",$j["id"])
                             ->where("user_id",$j["user_id"])
                             ->find();
                         if(!empty($res)){
-                            $evaluate_info[$kk][$i]["is_praise"] =1;
+                            $evaluate_info_arr[$kk][$i]["is_praise"] =1;
                         }else{
-                            $evaluate_info[$kk][$i]["is_praise"] =0;
+                            $evaluate_info_arr[$kk][$i]["is_praise"] =0;
                         }
                     }
                 }
@@ -579,17 +602,22 @@ class Reservation extends Controller{
                                 ->where("id", $j["user_id"])
                                 ->field("user_img,phone_num")
                                 ->find();
-                            $evaluate_info[$kk][$i]["praise"] =Db::name("order_service_praise")
+                            $numbers =Db::name("order_service_praise")
                                 ->where("service_evaluate_id",$j["id"])
                                 ->count();
+                            if(!empty($numbers)){
+                                $evaluate_info_arr[$kk][$i]["praise"] =$numbers;
+                            }else{
+                                $evaluate_info_arr[$kk][$i]["praise"] =0;
+                            }
                             $res =db("order_service_praise")
                                 ->where("service_evaluate_id",$j["id"])
                                 ->where("user_id",$j["user_id"])
                                 ->find();
                             if(!empty($res)){
-                                $evaluate_info[$kk][$i]["is_praise"] =1;
+                                $evaluate_info_arr[$kk][$i]["is_praise"] =1;
                             }else{
-                                $evaluate_info[$kk][$i]["is_praise"] =0;
+                                $evaluate_info_arr[$kk][$i]["is_praise"] =0;
                             }
                         }
 

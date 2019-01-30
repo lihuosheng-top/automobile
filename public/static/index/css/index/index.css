@@ -244,10 +244,15 @@ html{
     justify-content: space-between;
     margin-bottom: .1rem;
 }
-.recommend_goods .recommend_top a{
+.recommend_goods .recommend_top div{
     display: inline-block;
     width: 3.5rem;
     height: 2.5rem;
+}
+.recommend_goods .recommend_top div a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
 }
 .recommend_goods .recommend_top a img{
     width: 100%;
@@ -761,14 +766,15 @@ html{
 }
 
 .refresh-icon{
-    position: absolute;
-    right: .5rem; 
-    bottom: 0;
-    width: .46rem;
-    height: .36rem; 
+    position: fixed;
+    right: .4rem; 
+    bottom: 1.2rem;
+    width: .6rem;
+    height: .6rem; 
     background: url(../../image/refresh.png) no-repeat;
     background-size: 100% 100%;
     transition: all .6s linear;
+    z-index: 99999;
 }
 .refresh-icon.refresh-rotate{
     transform: rotateZ(720deg);

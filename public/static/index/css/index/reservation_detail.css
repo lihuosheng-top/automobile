@@ -377,10 +377,10 @@ html{
 }
 .wrapper .comment_box .bottom_time_box .icon_like{
     display: inline-block;
-    width: .25rem;
-    height: .25rem;
-    background-position: -1.35rem -4.5rem;
-    vertical-align: text-top;
+    width: .35rem;
+    height: .35rem;
+    background-position: -1.3rem -4.45rem;
+    vertical-align: sub;
     margin-right: .1rem
 }
 .wrapper .comment_box .icon_like.icon_like_on{
@@ -469,7 +469,6 @@ html{
 
 /* 全部评论弹窗 start */
 .pop{
-    /* display: none; */
     position: fixed;
     top: 0;
     left: 0;
@@ -478,8 +477,7 @@ html{
     height: 100vh;
     background-color: #f4f5f6;
     z-index: 998;
-    /* overflow-y: auto; */
-    transition: all .5s;
+    transition: all .3s;
     padding-top: .88rem;
 }
 .pop .back{
@@ -569,7 +567,7 @@ html{
 }
 .pop .comment_box .comment_ul{
     width: 100%;
-    height: 69vh;
+    height: 77vh;
     overflow-y: auto;
 }
 .pop .comment_box .comment_ul::-webkit-scrollbar{

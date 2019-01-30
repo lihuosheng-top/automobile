@@ -33,7 +33,7 @@
         .get-goods div{display: flex; flex-direction: column; line-height: normal; flex: 1;}
         .get-goods .shop-address{font-size: .28rem; color: #999;}
         .get-goods .shop-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -4.15rem}
-        .send-goods{display: flex; justify-content: space-around; align-items: center;}
+        .send-goods{display: flex; justify-content: space-around; align-items: center; line-height: normal;}
         .send-goods span:first-of-type{font-size: .32rem; color: #09b10d; margin-right: .2rem;}
         .send-goods .send-address{flex: 1; font-size: .32rem; color: #333;}
         .send-goods .customer-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -5.05rem}
@@ -117,11 +117,13 @@
                                                 <span class="shop-name" data-orderId="`+val.order_id+`">`+val.store_name+`</span>
                                                 <span class="shop-address">`+val.store_address+`</span>
                                             </div>
+                                            <i class="navigation"></i>
                                             <a href="javascript:Android.call('`+parseInt(val.store_phone)+`');" class="spr shop-phone"></a>
                                         </div>
                                         <div class="send-goods">
                                             <span>送：</span>
                                             <span class="send-address" data-orderId="`+val.order_id+`">`+val.user_order_address+`</span>
+                                            <i class="navigation"></i>
                                             <a href="javascript:Android.call('`+val.user_order_phone+`');" class="spr customer-phone"></a>
                                         </div>
                                     </div>

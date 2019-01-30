@@ -139,10 +139,13 @@ class  PlatformAdvertisement extends  Controller{
         if ($request->isPost()) {
             $data = $request->param();
             $find = db("platform")->where('id', $request->only(["id"])["id"])->find();
-            
+
 
             if($find["department"] == "platform_business")
             {
+                $data["postid"] = $data["pid"];
+                $test_id = db("position") -> where("id",$data["pid"])->value("pid");
+                $data["pid"] = $test_id; 
                 $data["start_time"] = strtotime($data["start_time"]);
                 $data["end_time"]  = strtotime($data["end_time"]); 
                 $store_data = db("store")->where("store_name",$data["url"])->find();
@@ -159,7 +162,7 @@ class  PlatformAdvertisement extends  Controller{
             }
 
             if(!empty($find['pgd']))
-            {
+            {   
                $bools = db("accessories")->where('id', $find['pgd'])->update(['status'=>$data["status"],'remarks'=>$data["remarks"]]);
             }
 
@@ -167,13 +170,11 @@ class  PlatformAdvertisement extends  Controller{
             if ($show_images) {
                 $show_images = $request->file("advert_picture")->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $data["advert_picture"] = str_replace("\\", "/", $show_images->getSaveName());
-            } 
-            $data["postid"] = $data["pid"];
-            $test_id = db("position") -> where("id",$data["pid"])->value("pid");
-            $data["pid"] = $test_id; 
+            }
+
             $bool = db("platform")->where('id', $request->only(["id"])["id"])->update($data);
            
-            if ($bool) {
+            if ($bool || $bools ) {
                 $this->success("编辑成功", url("admin/platform_advertisement/platform_business_index"));
             } else {
                 $this->error("编辑失败", url("admin/platform_advertisement/platform_business_index"));

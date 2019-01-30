@@ -536,6 +536,12 @@ class OrderService extends Controller{
                     ->join("tb_service_setting","tb_serve_goods.service_setting_id =tb_service_setting.service_setting_id","left")
                     ->where('tb_serve_goods.id', $commodity_id)
                     ->find();
+
+                //限制自己的商品自己不能购买
+                $is_myself =Db::name("store")->where("store_id",$goods_data["store_id"])->value("user_id");
+                if($is_myself ==$user_id){
+                    return ajax_error('不能购买自己店铺的东西',['status'=>0]);
+                }
                 $store_name =Db::name("store")
                     ->where("store_id",$goods_data["store_id"])
                     ->value("store_name");

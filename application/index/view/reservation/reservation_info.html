@@ -375,13 +375,21 @@
                 },
                 success: function(res){
                     console.log(res);
-                    location.href = 'order_service_all';
+                    if(res.status == 0){
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1.5
+                        })
+                    }else{
+                        location.href = 'order_service_all';
+                    }
                 },
                 error: function(){
                     console.log('error');
                 }
-            })
-            }else{
+            }
+            )}else{
                 var time = $('.time_span').text();
                 $.ajax({
                     url: 'ios_api_order_service_save_information',

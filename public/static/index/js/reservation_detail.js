@@ -2,11 +2,12 @@
 // 全部弹窗
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
-    $('html').css('overflow', 'hidden');
+    $('.wrapper').hide();
+    myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
 }
 function hidePop(){
     $('.pop').css('transform', 'translateX(100%)');
-    $('html').css('overflow', 'auto');
+    $('.wrapper').show();
 }
 $('.filter-service-ul').on('click', 'li', function(){
     $(this).siblings().removeClass('filter-service-li');
@@ -105,7 +106,7 @@ if(urlLen > 1){
             }
         })
         // 从预约服务进来 返回上一页
-        $('.back').click(function(){
+        $('.wrapper .back').click(function(){
             location.href = 'reservation?service_setting_id='+serviceSettingId;
         })
     }else{
@@ -140,6 +141,7 @@ if(urlLen > 1){
                 
                 $('.comment-filter').show();
                 $('.filter-service').show();
+                $('..pop .comment_box .comment_ul').css('height', '69vh');
                 evaAjax(data);
                 // 电话 导航
                 var seatNum = data.data.store[0].store_owner_seat_num;
@@ -157,7 +159,7 @@ if(urlLen > 1){
             console.log(res.status, res.statusText);
         })
 
-        $('.back').click(function(){
+        $('.wrapper .back').click(function(){
             location.href = 'index';
         })
     }
@@ -190,6 +192,7 @@ if(urlLen > 1){
                 
                 $('.comment-filter').show();
                 $('.filter-service').show();
+                $('..pop .comment_box .comment_ul').css('height', '69vh');
                 evaAjax(data);
             }
         },
@@ -198,7 +201,7 @@ if(urlLen > 1){
         }
     })
     // 从热门店铺进来 返回上一页
-    $('.back').click(function(){
+    $('.wrapper .back').click(function(){
         location.href = 'index';
     })
 }
@@ -214,7 +217,6 @@ function evaAjax(data){
                                 <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
                             </li>`
             myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
-            myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
             evaluateNum(ele.service_setting_id, storeId);
         }else{
             filterStr += `<li data-serverid="`+ele.service_setting_id+`">
@@ -316,18 +318,55 @@ function myEvaluate(settingid, storeid, content, flag, url){
                     <div class="bottom_time_box">
                     <p class="buy_time">购买时间: <span>`+timetrans(data[i].order_create_time)+`</span></p>
                     <div>
-                        <a href="javascript:;" class="like"><i class="spr icon_like"></i><span class="like_num">11</span></a>
+                        <a href="javascript:;" class="like">
+                            <i class="spr icon_like `+
+                            (data[i].is_praise == 1 ? 'like-on':'')
+                            +`"></i><span class="like_num">`+data[i].praise+`</span>
+                        </a>
                     </div>
                 </div>
             </li>`
             }
             $(content).html('').html(str);
+            // 评论点赞
+            $('.like').click(function(){
+                if($(this).find('.icon_like').hasClass('like-on')){
+                    layer.open({
+                        skin: 'msg',
+                        content: '评论已点亮',
+                        time: 1
+                    })
+                }else{
+                    var evaluate_id = $(this).parents('.comment_li').attr('data-evalid');
+                    $.ajax({
+                        url: 'evaluate_service_praise',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            evaluate_id: evaluate_id
+                        },
+                        success: function(res){
+                            console.log(res)
+                            if(res.status == 2){
+                                location.href = 'login';
+                            }else{
+                                var likeNum = $(this).find('.like_num').text();
+                                $(this).find('.icon_like').addClass('like-on').siblings().text(+likeNum+1);
+                            }
+                        },
+                        error: function(){
+                            console.log('error');
+                        }
+                    })
+                }
+            })
         },
         error: function(){
             console.log('error');
         }
     })
 }
+
 // 商品
 function myGoods(data){
     var str = '';

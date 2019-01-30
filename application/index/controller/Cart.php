@@ -152,6 +152,11 @@ class Cart extends Controller
                 //存入购物车
                 $goods_id = $request->only(['goods_id'])['goods_id'];//商品id
                 $store_id = $request->only(['store_id'])['store_id'];//店铺id
+                //限制自己的商品自己不能购买
+                $is_myself =Db::name("store")->where("store_id",$store_id)->value("user_id");
+                if($is_myself ==$user_id){
+                    return ajax_error('商家自己不允许购买自己商品',['status'=>0]);
+                }
                 $goods_unit = $request->only(['goods_unit'])['goods_unit'];//商品数量
                 $goods_standard_id = $request->only(['goods_standard_id'])['goods_standard_id'];//商品通用专用规格id
                 $goods_delivery = $request->only(['goods_delivery'])['goods_delivery'];//配送与安装服务

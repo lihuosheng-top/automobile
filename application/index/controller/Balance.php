@@ -12,6 +12,7 @@ use think\Controller;
 use think\Request;
 use think\Db;
 use think\Session;
+use app\index\controller\Xgcontent;
 
 class Balance extends Controller
 {
@@ -47,7 +48,6 @@ class Balance extends Controller
                         $select_data = Db::name("order_parts")
                             ->where("parts_order_number", $order_num)
                             ->select();
-
                         //对订单状态进行修改
                         $data['status'] = 2;
                         $data["trade_no"] = time();
@@ -76,7 +76,6 @@ class Balance extends Controller
                                 "is_deduction" => 1,//正常的流程
                             ];
                             $arr = Db::name("business_wallet")->insertGetId($business_data);
-
                             if (!empty($arr)) {
                                 $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $business_id;
                                 $business_wallet = Db::name("business_wallet")
@@ -98,6 +97,14 @@ class Balance extends Controller
                                     "is_business"=>2,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                                 ];
                                 Db::name("wallet")->insert($datas);
+                                foreach ($select_data as $keys => $vals) {
+                                    //铃声
+                                    $store_id =$vals["store_id"];
+                                    $store_user_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
+                                    $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
+                                    $X = new  Xgcontent;
+                                    $X->push_Accountp("来新订单","来新订单了",$user_count);
+                                }
                                 return ajax_success('支付成功', ['status' => 1]);
                             }
 
@@ -151,6 +158,14 @@ class Balance extends Controller
                                     "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                                 ];
                                 Db::name("wallet")->insert($datas);
+                                foreach ($select_data as $keys => $vals) {
+                                    //铃声
+                                    $store_id =$vals["store_id"];
+                                    $store_user_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
+                                    $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
+                                    $X = new  Xgcontent;
+                                    $X->push_Accountp("来新订单","来新订单了",$user_count);
+                                }
                                 return ajax_success('支付成功', ['status' => 1]);
                             } else {
                                 return ajax_error('验证失败了', ['status' => 0]);
@@ -202,7 +217,7 @@ class Balance extends Controller
                             if ($result > 0) {
                                 //进行钱包消费记录
                                 $parts = Db::name("order_service")
-                                    ->field("service_goods_name,service_real_pay,user_id")
+                                    ->field("service_goods_name,service_real_pay,user_id,store_id")
                                     ->where($condition)
                                     ->find();
                                 $title = $parts["service_goods_name"];
@@ -241,6 +256,12 @@ class Balance extends Controller
 
                                     ];
                                     Db::name("wallet")->insert($datas);
+                                    //铃声
+                                    $store_id =$parts["store_id"];
+                                    $store_user_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
+                                    $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
+                                    $X = new  Xgcontent;
+                                    $X->push_Accountp("来新订单","来新订单了",$user_count);
                                     return ajax_success('支付成功', ['status' => 1]);
                                 }
 
@@ -257,7 +278,7 @@ class Balance extends Controller
                             if ($result > 0) {
                                 //进行钱包消费记录
                                 $parts = Db::name("order_service")
-                                    ->field("service_goods_name,service_real_pay,user_id")
+                                    ->field("service_goods_name,service_real_pay,user_id,store_id")
                                     ->where($condition)
                                     ->find();
                                 $title = $parts["service_goods_name"];
@@ -284,6 +305,12 @@ class Balance extends Controller
                                     "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                                 ];
                                 Db::name("wallet")->insert($datas);
+                                //铃声
+                                $store_id =$parts["store_id"];
+                                $store_user_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
+                                $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
+                                $X = new  Xgcontent;
+                                $X->push_Accountp("来新订单","来新订单了",$user_count);
                                 return ajax_success('支付成功', ['status' => 1]);
                             }
                     }
