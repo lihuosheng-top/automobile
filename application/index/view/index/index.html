@@ -348,7 +348,7 @@
                                     if(dist <= 100000){
                                         distArr.push({
                                             id: val.id,
-                                            dist: dist
+                                            dist: (dist / 1000).toFixed(2)
                                         })
                                     }
                                 })
@@ -390,7 +390,7 @@
                                                                         (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+`"></i>
                                                                         <span>营业时间：`+ele.shop_time+`</span>
                                                                     </div>
-                                                                    <p class="txt-hid-two hotshop-detail">约`+sortDistArr[i + curPage * 10].dist+`米  `+ele.shop_address.split(',').join('')+`</p>
+                                                                    <p class="txt-hid-two hotshop-detail">约`+sortDistArr[i + curPage * 10].dist+`千米  `+ele.shop_address.split(',').join('')+`</p>
                                                                 </div>
                                                             </li>`
                                                 }
