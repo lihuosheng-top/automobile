@@ -185,6 +185,7 @@
         })
         // 第三方 回调
         function loginCallback(openid, headurl, flag){
+            var fl = flag == 'wx' ?  1 : 2;
             if(openid != null){
                 var flag = 
                 (function(){
@@ -195,7 +196,7 @@
                         data: {
                             'open_id': openid,
                             'headurl': headurl,
-                            'is_wechat': 1
+                            'is_wechat': fl
                         }
                     })
                 })().then(function(res){
