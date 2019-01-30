@@ -531,10 +531,18 @@ class Install extends Controller{
      */
     public function express_save(Request $request)
     {
-
         if($request -> isPost())
         {
             $express_data = $request -> param();
+            if(empty($express_data["name"]) ||empty($express_data["account"]) ||empty($express_data["number"]) ||empty($express_data["password"])){
+                $this->error("不能留空", url("admin/Install/express_add"));
+            }
+            $is_repeat =Db::name("delivery")
+                ->where("account",$express_data["account"])
+                ->find();
+            if(!empty($is_repeat)){
+                $this->error("账号重复,请换其他账号", url("admin/Install/express_add"));
+            }
             $express_data['creatime'] = time();
             $addressed = [$express_data["economize"], $express_data["market"], $express_data["distinguish"]];
             $express_data["areas"] = implode("", $addressed);
