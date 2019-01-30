@@ -48,15 +48,28 @@ class LoveCar extends Controller{
      * 陈绪
      */
     public function love_save(Request $request){
-
         $user_id = Session::get("user");
         if(!empty($user_id)){
             if($request->isPost()){
                 $love = $request->param();
-                $love["user_id"] = $user_id;
-                $love["status"] = 0;
-                $bool = db("user_car")->insert($love);
+                $bool_one = db("user_car")->where("user_id",$user_id)->count();
+                if($bool_one>1){
+                    return ajax_error("爱车最多只能两辆");
+                }else{
+                    $bools = db("user_car")->where("user_id",$user_id)->where("status",1)->find();
+                    if(!empty($bools)){
+                        $love["user_id"] = $user_id;
+                        $love["status"] = 0;
+                    }else{
+                        $love["user_id"] = $user_id;
+                        $love["status"] = 1;
+                    }
+                }
+                $bool = db("user_car")->insertGetId($love);
                 if($bool){
+                    if($love["status"] ==1){
+                        Db::name('user_car')->where("user_id",$user_id)->where("id","NEQ",$bool)->update(['status'=>0]);
+                 }
                     return ajax_success("添加成功");
                 }else{
                     return ajax_error("添加失败");
@@ -98,7 +111,6 @@ class LoveCar extends Controller{
      * 陈绪
      */
     public function love_status(Request $request){
-
         if($request->isPost()){
             $user_id = Session::get("user");
             $love = db("user_car")->where("user_id",$user_id)->where("status",1)->field("status")->find();
@@ -127,12 +139,25 @@ class LoveCar extends Controller{
     public function love_del(Request $request){
 
         if($request->isPost()){
+            $user_id =Session::get("user");
             $id = $request->only(["id"])["id"];
-            $bool = db("user_car")->where("id",$id)->delete();
-            if($bool){
-                return ajax_success("删除成功");
+            $status =db("user_car")->where("id",$id)->value("status");
+            if($status ==1){
+                $bool = db("user_car")->where("id",$id)->delete();
+                if($bool){
+                    //把剩下的那一个爱车变为默认
+                    db("user_car")->where("id","NEQ",$id)->where("user_id",$user_id)->update(["status"=>1]);
+                    return ajax_success("删除成功");
+                }else{
+                    return ajax_error("删除失败");
+                }
             }else{
-                return ajax_error("删除失败");
+                $bool = db("user_car")->where("id",$id)->delete();
+                if($bool){
+                    return ajax_success("删除成功");
+                }else{
+                    return ajax_error("删除失败");
+                }
             }
         }
 
@@ -224,7 +249,6 @@ class LoveCar extends Controller{
      * @param Request $request
      */
     public function love_list_edit(Request $request){
-
         if($request->isPost()){
             $id = $request->only(["id"])["id"];
             $user_car_message = db("user_car_message")->where("user_car_id",$id)->select();
