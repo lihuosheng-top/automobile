@@ -33,7 +33,7 @@
         .get-goods div{display: flex; flex-direction: column; line-height: normal; flex: 1;}
         .get-goods .shop-address{font-size: .28rem; color: #999;}
         .get-goods .shop-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -4.15rem}
-        .send-goods{display: flex; justify-content: space-around; align-items: center;}
+        .send-goods{display: flex; justify-content: space-around; align-items: center; line-height: normal;}
         .send-goods span:first-of-type{font-size: .32rem; color: #09b10d; margin-right: .2rem;}
         .send-goods .send-address{flex: 1; font-size: .32rem; color: #333;}
         .send-goods .customer-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -5.05rem}
@@ -117,6 +117,7 @@
                                                 <span class="shop-name" data-orderId="`+val.order_id+`">`+val.store_name+`</span>
                                                 <span class="shop-address">`+val.store_address+`</span>
                                             </div>
+                                            <i class="navigation" data-lat="`+val.latitude+`" data-log="`+val.longitude+`"></i>
                                             <a href="javascript:Android.call('`+parseInt(val.store_phone)+`');" class="spr shop-phone"></a>
                                         </div>
                                         <div class="send-goods">
@@ -135,6 +136,13 @@
                                 </div>`
                     })
                     $('.order-container').append(str);
+                    // 去高德地图
+                    $('.navigation').click(function(){
+                        var lat = $(this).attr('data-lat'),
+                            log = $(this).attr('data-log'),
+                            name = $(this).parents('.get-goods').find('.shop-name').text();
+                        Android.openGdMap(lat, log, name);
+                    })
                     $('.order-item').on('click', '.my-btn', function(){
                         var deliveryId = data.delivery_data[0].id;
                         var $index = $('.my-btn').index($(this));

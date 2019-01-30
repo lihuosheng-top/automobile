@@ -54,7 +54,6 @@ class  Express extends  Controller{
      * @return \think\response\View
      */
     public function express_wait_for_order(Request $request){
-
         if($request->isPost()) {
             $delivery_id = Session::get("delivery_id");
             $delivery_data = db("delivery")->where("id", $delivery_id)->select();
@@ -64,7 +63,8 @@ class  Express extends  Controller{
             foreach ($store as $key => $value) {
                 $order = db("order_parts")->where("store_id", $value["store_id"])->where("status",3)->select();
                 foreach ($order as $val) {
-                    $delivery[] = array("store_name" => $value["store_name"],
+                    $delivery[] = array(
+                        "store_name" => $value["store_name"],
                         "store_address" => $value["store_detailed_address"],
                         "order_id" => $val["id"],
                         "order_address" => $val["harvester_address"],
@@ -74,6 +74,7 @@ class  Express extends  Controller{
                         "parts_order_number"=>$val["parts_order_number"],
                         "store_id"=>$value["store_id"],
                         "order_status"=>$val["status"]
+
                     );
                 }
             }
@@ -102,6 +103,11 @@ class  Express extends  Controller{
                 }
             }
             if($delivery) {
+                foreach ($delivery as $k=>$v){
+                    $store_info=Db::name("store")->field("longitude,latitude")->where("store_id",$v["store_id"])->find();
+                    $delivery[$k]["longitude"] =$store_info["longitude"];
+                    $delivery[$k]["latitude"] =$store_info["latitude"];
+                }
                 return ajax_success("获取成功",array("delivery"=>$delivery,"delivery_data"=>$delivery_data));
             }else{
                 return ajax_error("你服务的区域没有匹配到相应的订单",array("delivery"=>$delivery,"delivery_data"=>$delivery_data));
@@ -155,6 +161,11 @@ class  Express extends  Controller{
             $delivery_data = db("delivery")->where("id", $delivery_id)->select();
             $express = db("delivery_order")->where("delivery_id", $delivery_id)->where("status", 1)->select();
             if ($express) {
+                foreach ($express as $k=>$v){
+                    $store_info=Db::name("store")->field("longitude,latitude")->where("store_id",$v["store_id"])->find();
+                    $express[$k]["longitude"] =$store_info["longitude"];
+                    $express[$k]["latitude"] =$store_info["latitude"];
+                }
                 return ajax_success("获取成功",array("express"=>$express,"delivery_data"=>$delivery_data));
             } else {
                 return ajax_error("获取失败",$delivery_data);
@@ -206,6 +217,11 @@ class  Express extends  Controller{
             $delivery_data = db("delivery")->where("id", $delivery_id)->select();
             $express = db("delivery_order")->where("delivery_id", $delivery_id)->where("status", 2)->select();
             if ($express) {
+                foreach ($express as $k=>$v){
+                    $store_info=Db::name("store")->field("longitude,latitude")->where("store_id",$v["store_id"])->find();
+                    $express[$k]["longitude"] =$store_info["longitude"];
+                    $express[$k]["latitude"] =$store_info["latitude"];
+                }
                 return ajax_success("获取成功", array("express"=>$express,"delivery_data"=>$delivery_data));
             } else {
                 return ajax_error("获取失败",$delivery_data);
@@ -251,12 +267,16 @@ class  Express extends  Controller{
      * @return \think\response\View
      */
     public function express_completed(Request $request){
-
         if($request->isPost()) {
             $delivery_id = Session::get("delivery_id");
             $delivery_data = db("delivery")->where("id", $delivery_id)->select();
             $express = db("delivery_order")->where("delivery_id", $delivery_id)->where("status",3)->select();
             if ($express) {
+                foreach ($express as $k=>$v){
+                    $store_info=Db::name("store")->field("longitude,latitude")->where("store_id",$v["store_id"])->find();
+                    $express[$k]["longitude"] =$store_info["longitude"];
+                    $express[$k]["latitude"] =$store_info["latitude"];
+                }
                 return ajax_success("获取成功",array("express"=>$express,"delivery_data"=>$delivery_data));
             } else {
                 return ajax_error("获取失败",$delivery_data);

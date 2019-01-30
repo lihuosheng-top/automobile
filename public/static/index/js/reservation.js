@@ -41,7 +41,6 @@ AMap.plugin([
         console.log(e);
     };
 })
-
 function showShops(addr){
     var markerList = [];//店铺经纬度
     // console.log(addr); 

@@ -59,7 +59,6 @@ class Order extends Controller{
                     $data[$key]["delivery_status"] = db("delivery_order")->where("order_id",$value["id"])->field("status,delivery_id")->find();
                     $data[$key]["delivery_name_phone"] = db("delivery")->where("id",$data[$key]["delivery_status"]["delivery_id"])->find();
                 }
-
                 if(!empty($data)){
                     return ajax_success('订单信息成功返回',$data);
                 }else{
@@ -80,16 +79,12 @@ class Order extends Controller{
      */
     public function order_update_status(Request $request){
         if($request->isPost()){
-            $id =$request->only("id")["id"];
+            $id =$request->only("id")["id"]; //订单号（短的）
             $sell_message =$request->only("sell_message")["sell_message"];//卖家留言
             $sell_message_time = time(); //回复时间
             $status =$request->only("status")["status"];//状态值
             $pay_type_content =$request->only("pay_type_content")["pay_type_content"];//支付方式（微信,支付宝）
             $refund_amount =$request->only("refund_amount")["refund_amount"];//退款金额
-            $title = "哈哈";
-            $content = "娃哈哈";
-            // $account = Db::name("order_parts")->where("id",$id)->value("user_phone_number");
-            $account = "13006677982";
             if(!empty($id)){
                 $data =[
                     "sell_message"=>$sell_message,
@@ -98,9 +93,22 @@ class Order extends Controller{
                     "pay_type_content"=>$pay_type_content,
                     "refund_amount"=>$refund_amount
                 ];
-
                 $bool =Db::name("order_parts")->where("id",$id)->update($data);
                 if($bool){
+                    if($status ==3){
+                        //对附近的快递员进行铃声提醒
+                        $store_id =Db::name("order_parts")->where("id",$id)->value("store_id");
+                        $store_city_address = db("store")->where("store_id",$store_id)->value("store_city_address");
+                        $delivery_data = db("delivery")
+                            ->field("account")
+                            ->where("area", $store_city_address)
+                            ->select(); //所有的快递员信息
+                        foreach ($delivery_data as $key=>$vals){
+                            //铃声
+                            $X = new  Xgcontent;
+                            $X->push_Accountp("来新订单","来新订单了",$vals);
+                        }
+                    }
                     return ajax_success("修改成功",["status"=>1]);
                 }else{
                     return ajax_error("修改失败",["status"=>0]);
