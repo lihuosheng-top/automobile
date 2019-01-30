@@ -54,7 +54,6 @@ class  Express extends  Controller{
      * @return \think\response\View
      */
     public function express_wait_for_order(Request $request){
-
         if($request->isPost()) {
             $delivery_id = Session::get("delivery_id");
             $delivery_data = db("delivery")->where("id", $delivery_id)->select();
@@ -268,7 +267,6 @@ class  Express extends  Controller{
      * @return \think\response\View
      */
     public function express_completed(Request $request){
-
         if($request->isPost()) {
             $delivery_id = Session::get("delivery_id");
             $delivery_data = db("delivery")->where("id", $delivery_id)->select();

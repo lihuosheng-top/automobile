@@ -79,7 +79,7 @@ class Order extends Controller{
      */
     public function order_update_status(Request $request){
         if($request->isPost()){
-            $id =$request->only("id")["id"];
+            $id =$request->only("id")["id"]; //订单号（短的）
             $sell_message =$request->only("sell_message")["sell_message"];//卖家留言
             $sell_message_time = time(); //回复时间
             $status =$request->only("status")["status"];//状态值
@@ -96,13 +96,18 @@ class Order extends Controller{
                 $bool =Db::name("order_parts")->where("id",$id)->update($data);
                 if($bool){
                     if($status ==3){
-                        $store = db("store")->where("store_city_address", $delivery_data[0]["area"])->where($where)->select();
-                        //铃声
-                        $store_id =$vals["store_id"];
-                        $store_user_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
-                        $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
-                        $X = new  Xgcontent;
-                        $X->push_Accountp("来新订单","来新订单了",$user_count);
+                        //对附近的快递员进行铃声提醒
+                        $store_id =Db::name("order_parts")->where("id",$id)->value("store_id");
+                        $store_city_address = db("store")->where("store_id",$store_id)->value("store_city_address");
+                        $delivery_data = db("delivery")
+                            ->field("account")
+                            ->where("area", $store_city_address)
+                            ->select(); //所有的快递员信息
+                        foreach ($delivery_data as $key=>$vals){
+                            //铃声
+                            $X = new  Xgcontent;
+                            $X->push_Accountp("来新订单","来新订单了",$vals);
+                        }
                     }
                     return ajax_success("修改成功",["status"=>1]);
                 }else{
