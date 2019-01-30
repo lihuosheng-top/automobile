@@ -185,29 +185,26 @@
         })
         // 第三方 回调
         function loginCallback(openid, headurl, flag){
-            alert(openid);
-            alert(headurl);
-            alert(flag);
-            // if(openid != null){
-            //     var flag = 
-            //     (function(){
-            //         return $.ajax({
-            //             url: 'member_binding',
-            //             type: 'POST',
-            //             dataType: 'JSON',
-            //             data: {
-            //                 'open_id': openid,
-            //                 'headurl': headurl,
-            //                 'is_wechat': 1
-            //             }
-            //         })
-            //     })().then(function(res){
-            //         console.log(res);
-            //         if(res.status == 1){
-            //             location.href = 'user_bind_phone';
-            //         }
-            //     })
-            // }
+            if(openid != null){
+                var flag = 
+                (function(){
+                    return $.ajax({
+                        url: 'member_binding',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'open_id': openid,
+                            'headurl': headurl,
+                            'is_wechat': 1
+                        }
+                    })
+                })().then(function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        location.href = 'user_bind_phone';
+                    }
+                })
+            }
         }
 
         // 性别弹窗
