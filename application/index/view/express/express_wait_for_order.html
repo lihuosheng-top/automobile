@@ -189,10 +189,14 @@
                     })
                     // 去高德地图
                     $('.navigation').click(function(){
-                        var lat = $(this).attr('data-lat'),
-                            log = $(this).attr('data-log'),
-                            name = $(this).parents('.get-goods').find('.shop-name').text();
-                        Android.openGdMap(lat, log, name);
+                        if($(this).attr('data-lat')){
+                            var lat = $(this).attr('data-lat'),
+                                log = $(this).attr('data-log'),
+                                name = $(this).parents('.get-goods').find('.shop-name').text();
+                            Android.openGdMap(lat, log, name);
+                        }else{
+
+                        }
                     })
                 }
                 if(res.status == 0){
