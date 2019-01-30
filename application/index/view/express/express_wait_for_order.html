@@ -33,7 +33,7 @@
         .get-goods div{display: flex; flex-direction: column; line-height: normal; flex: 1;}
         .get-goods .shop-address{font-size: .28rem; color: #999;}
         .get-goods .shop-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -4.15rem}
-        .send-goods{display: flex; justify-content: space-around; align-items: center;}
+        .send-goods{display: flex; justify-content: space-around; align-items: center; line-height: normal;}
         .send-goods span:first-of-type{font-size: .32rem; color: #09b10d;}
         .send-goods .send-address{flex: 1; font-size: .32rem; color: #333;}
         .send-goods .customer-phone{display: block; width: .94rem; height: .94rem; background-position: .05rem -5.05rem}
@@ -100,12 +100,12 @@
                 </div>
             </div> -->
 
-            <!-- <i class="navigation"></i> -->
         </div>
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script>
+        // Android.openGdMap(val.latitude, val.longitude, val.store_name)
         $.ajax({
             url: 'express_wait_for_order',
             type: 'POST',
@@ -126,11 +126,13 @@
                                                 <span class="shop-name">`+val.store_name+`</span>
                                                 <span class="shop-address">`+val.store_address+`</span>
                                             </div>
+                                            <i class="navigation"></i>
                                             <a href="javascript:Android.call('`+parseInt(val.store_number)+`');" class="spr shop-phone"></a>
                                         </div>
                                         <div class="send-goods" id="send-`+val.order_id+`">
                                             <span>送：</span>
                                             <span class="send-address">`+val.order_address+`</span>
+                                            <i class="navigation"></i>
                                             <a href="javascript:Android.call('`+parseInt(val.order_user_number)+`');" class="spr customer-phone"></a>
                                         </div>
                                     </div>
