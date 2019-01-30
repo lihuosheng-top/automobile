@@ -103,11 +103,13 @@ class Order extends Controller{
                             ->field("account")
                             ->where("area", $store_city_address)
                             ->select(); //所有的快递员信息
-                        foreach ($delivery_data as $key=>$vals){
-                            //铃声
-                            $X = new Xgcontent;
-                            $X->push_Accountp("新订单","新订单",$vals[1]["account"]);
-                        }
+                        $X = new Xgcontent;
+                            $X->push_Accountp("新订单","新订单","2222");
+//                        foreach ($delivery_data as $key=>$vals){
+//                            //铃声
+//                            $X = new Xgcontent;
+//                            $X->push_Accountp("新订单","新订单",$vals[1]["account"]);
+//                        }
                     }
                     return ajax_success("修改成功",["status"=>1]);
                 }else{
