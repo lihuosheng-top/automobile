@@ -518,7 +518,6 @@ class Apppay extends Controller
                 }else{
                     $new_wallet =$owner_wallet;
                 }
-
                 $datas=[
                     "user_id"=>$parts[0]["user_id"],//用户ID
                     "wallet_operation"=>-$money,//消费金额
@@ -533,6 +532,14 @@ class Apppay extends Controller
                     "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                 ];
                 Db::name("wallet")->insert($datas);
+                foreach ($select_data as $keys => $vals) {
+                    //铃声
+                    $store_id =$vals["store_id"];
+                    $store_user_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
+                    $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
+                    $X = new  Xgcontent;
+                    $X->push_Accountp("来新订单","来新订单了",$user_count);
+                }
                 return "success";
             } else {
                 return "fail";
@@ -577,7 +584,7 @@ class Apppay extends Controller
             if ($result > 0) {
                 //进行钱包消费记录
                 $parts =Db::name("order_service")
-                    ->field("service_goods_name,service_real_pay,user_id")
+                    ->field("service_goods_name,service_real_pay,user_id,store_id")
                     ->where($condition)
                     ->find();
                 $title =$parts["service_goods_name"];
@@ -606,6 +613,12 @@ class Apppay extends Controller
                     "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                 ];
                 Db::name("wallet")->insert($datas);
+                //铃声
+                $store_id =$parts["store_id"];
+                $store_user_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
+                $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
+                $X = new  Xgcontent;
+                $X->push_Accountp("来新订单","来新订单了",$user_count);
                 return "success";
             }else {
                 return "fail";
@@ -1033,6 +1046,14 @@ class Apppay extends Controller
                     "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                 ];
                 Db::name("wallet")->insert($datas);
+                foreach ($select_data as $keys => $vals) {
+                    //铃声
+                    $store_id =$vals["store_id"];
+                    $store_user_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
+                    $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
+                    $X = new  Xgcontent;
+                    $X->push_Accountp("来新订单","来新订单了",$user_count);
+                }
                 return "success";
             } else {
                 return "fail";
@@ -1093,7 +1114,7 @@ class Apppay extends Controller
             if ($result > 0) {
                 //进行钱包消费记录
                 $parts =Db::name("order_service")
-                    ->field("service_goods_name,service_real_pay,user_id")
+                    ->field("service_goods_name,service_real_pay,user_id,store_id")
                     ->where($condition)
                     ->find();
                 $title =$parts["service_goods_name"];
@@ -1122,6 +1143,13 @@ class Apppay extends Controller
                     "is_business"=>1,//判断是车主消费还是商家消费（1车主消费，2商家消费）
                 ];
                 Db::name("wallet")->insert($datas);
+                //铃声
+                $store_id =$parts["store_id"];
+                $store_user_id =Db::name("store")->where("store_id",$store_id)->value("user_id");
+                $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
+                $X = new  Xgcontent;
+                $X->push_Accountp("来新订单","来新订单了",$user_count);
+
                 return "success";
             }else {
                 return "fail";
