@@ -32,7 +32,6 @@ AMap.plugin([
     function onComplete(e){
         console.log(e);
         userLngLat = [e.position.lng, e.position.lat];
-        // alert(userLngLat)
         if(e.status === 1){
             $('.shop_list').empty();
             showShops(e.formattedAddress);
@@ -42,9 +41,6 @@ AMap.plugin([
         console.log(e);
     };
 })
-var aaa = [113.535194, 23.40043];
-var ttm = [114.060053, 22.530751];
-alert(AMap.GeometryUtil.distance(ttm, aaa));
 function showShops(addr){
     var markerList = [];//店铺经纬度
     // console.log(addr); 
