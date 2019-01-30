@@ -86,10 +86,10 @@ class Register extends Controller{
         if($request->isPost())
         {
             $mobile = trim($_POST['mobile']);
-           $is_reg =Db::name("user")->where("phone_num",$mobile)->find();
-           if(!empty($is_reg)){
-               return ajax_error("此手机已注册，可以直接登录");
-           }
+            $is_reg =Db::name("user")->where("phone_num",$mobile)->find();
+            if(!empty($is_reg)){
+                return ajax_error("此手机已注册，可以直接登录");
+            }
             $code = trim($_POST['mobile_code']);
             $password =trim($_POST['password']);
             $confirm_password =trim($_POST['confirm_password']);

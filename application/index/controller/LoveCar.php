@@ -48,15 +48,19 @@ class LoveCar extends Controller{
      * 陈绪
      */
     public function love_save(Request $request){
-
         $user_id = Session::get("user");
         if(!empty($user_id)){
             if($request->isPost()){
                 $love = $request->param();
                 $love["user_id"] = $user_id;
-                $love["status"] = 0;
-                $bool = db("user_car")->insert($love);
+                $love["status"] = 1;
+                $bool = db("user_car")->where("user_id",$user_id)->count();
+                if($bool>1){
+                    return ajax_error("爱车最多只能两辆");
+                }
+                $bool = db("user_car")->insertGetId($love);
                 if($bool){
+                    Db::name('user_car')->where("user_id",$user_id)->where("id","NEQ",$bool)->update(['status'=>0]);
                     return ajax_success("添加成功");
                 }else{
                     return ajax_error("添加失败");
