@@ -118,13 +118,13 @@
                                                 <span class="shop-name" data-orderId="`+val.order_id+`">`+val.store_name+`</span>
                                                 <span class="shop-address">`+val.store_address+`</span>
                                             </div>
-                                            <i class="navigation" data-lat="`+val.latitude+`" data-log="`+val.longitude+`"></i>
+                                            <i class="navigation-ex" data-lat="`+val.latitude+`" data-log="`+val.longitude+`"></i>
                                             <a href="javascript:Android.call('`+val.store_phone+`');" class="spr shop-phone"></a>
                                         </div>
                                         <div class="send-goods">
                                             <span>送：</span>
                                             <span class="send-address" data-orderId="`+val.order_id+`">`+val.user_order_address+`</span>
-                                            <i class="navigation"></i>
+                                            <i class="navigation-ex"></i>
                                             <a href="javascript:Android.call('`+val.user_order_phone+`');" class="spr customer-phone"></a>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
                     })
                     $('.order-container').append(str);
                     // 去高德地图
-                    $('.navigation').click(function(){
+                    $('.navigation-ex').click(function(){
                         var lat = $(this).attr('data-lat'),
                             log = $(this).attr('data-log'),
                             name = $(this).parents('.get-goods').find('.shop-name').text();

@@ -21,7 +21,7 @@ html, body {
 .txt-hid-two{overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;}
 [v-cloak]{display: none;}
 .like-on{background-position: -1.65rem -4.45rem !important;}
-.navigation{background: url(../image/navigation.png) no-repeat; display: inline-block; width: .6rem; height: .6rem; background-size: 100%; margin-top: .2rem;}
+.navigation-ex{background: url(../image/navigation.png) no-repeat; display: inline-block; width: .6rem; height: .6rem; background-size: 100%; margin-top: .2rem;}
 .footer{
     position: fixed;
     left: 0;
