@@ -414,6 +414,9 @@ function myService(data){
         mySwiper();
     }
     $.each(data.data.serve_data, function(idx, val){
+        if(val.serve_name === null){
+            return false;
+        }
         str2 += `<div class="service-colla-item" data-goodsid="`+val.service_setting_id+`">
                     <div class="service-colla-title">
                         <p class="service-subtitle">`+val.serve_name+`</p>
