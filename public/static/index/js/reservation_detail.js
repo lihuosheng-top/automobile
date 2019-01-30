@@ -3,7 +3,14 @@
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
     $('.wrapper').hide();
-    myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+    var displayFlag = $('.comment_title').css('display');
+    if(displayFlag == 'none'){
+        var settingId = $('.filter-ul li:eq(0)').attr('data-serverid');
+        myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+    }else{
+        var settingId = $('.service-colla-item').attr('data-goodsid');
+        myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+    }
 }
 function hidePop(){
     $('.pop').css('transform', 'translateX(100%)');
@@ -209,6 +216,9 @@ if(urlLen > 1){
 function evaAjax(data){
     var filterStr = '', allcomStr = '';
     data.data.serve_data.forEach(function(ele, idx){
+        if(ele.server_name === null){
+            return false;
+        }
         if(idx === 0){
             filterStr += `<li class="filter-this" data-serverid="`+ele.service_setting_id+`">
                             <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
