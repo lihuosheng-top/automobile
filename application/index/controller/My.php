@@ -337,6 +337,63 @@ class My extends Controller
     /**
      **************李火生*******************
      * @param Request $request
+     * Notes:微信QQ绑定(1为微信，2为qq)
+     **************************************
+     */
+    public function member_binding(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            if(empty($user_id)){
+                exit(json_encode(array("status" => 2, "info" => "请登录",)));
+            }
+            $is_wechat = $request->only("is_wechat")["is_wechat"]; //1为微信，2为qq
+            $open_id = $request->only("open_id")["open_id"]; //open_id
+            if($is_wechat ==1){
+                //微信绑定
+               $is_binding = Db::name("wechat")->where("user_id",$user_id)->find();
+               if(!empty($is_binding)){
+                   exit(json_encode(array("status" => 0, "info" => "已绑定有微信，请勿重新绑定",)));
+               }
+               $data =[
+                   "open_id"=>$open_id,
+                   "user_id"=>$user_id
+               ];
+             $bool =  Db::name("wechat")->insert($data);
+             if($bool){
+                 exit(json_encode(array("status" => 1, "info" => "绑定成功",)));
+                }else{
+                 exit(json_encode(array("status" => 0, "info" => "请重新尝试绑定",)));
+             }
+            }else if($is_wechat ==2){
+                //QQ绑定
+                $is_binding = Db::name("qq")->where("user_id",$user_id)->find();
+                if(!empty($is_binding)){
+                    exit(json_encode(array("status" => 0, "info" => "已绑定有QQ，请勿重新绑定",)));
+                }
+                $data =[
+                    "open_id"=>$open_id,
+                    "user_id"=>$user_id
+                ];
+                $bool =  Db::name("qq")->insert($data);
+                if($bool){
+                    exit(json_encode(array("status" => 1, "info" => "绑定成功",)));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "请重新尝试绑定",)));
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
      * Notes:用户个人信息数据返回
      **************************************
      */
