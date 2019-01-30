@@ -131,6 +131,7 @@ class  Advertisement extends  Controller{
             $data["longitude"] = $longitude;
             $data["latitude"] = $latitude;
             $data["store_id"] = $store_id;
+
             $userId = db('accessories')->insertGetId($data);
 
             //插入平台列表
