@@ -106,7 +106,7 @@ class Order extends Controller{
                         foreach ($delivery_data as $key=>$vals){
                             //铃声
                             $X = new  Xgcontent;
-                            $X->push_Accountp("来新订单","来新订单了",$vals);
+                            $X->push_Accountp("来新订单","来新订单了",$vals["account"]);
                         }
                     }
                     return ajax_success("修改成功",["status"=>1]);
