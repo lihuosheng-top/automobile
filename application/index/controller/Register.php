@@ -73,9 +73,7 @@ class Register extends Controller{
             }else{
                 return ajax_error("请填写正确的手机号",['status'=>0]);
             }
-
             }
-
     }
     /**
      **************李火生*******************

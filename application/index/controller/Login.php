@@ -55,7 +55,6 @@ class Login extends Controller{
                    }else{
                        return ajax_error('密码错误',['status'=>0]);
                    }
-
                }
             }
             $datas =[
@@ -104,6 +103,10 @@ class Login extends Controller{
      * @param Request $request
      */
     public function user_bind_phone(Request $request){
+        if($request->isPost()){
+            $phone_number =$request->only("phone_number")["phone_number"];//手机号码
+
+        }
         return view("user_bind_phone");
     }
 

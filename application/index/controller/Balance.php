@@ -50,7 +50,7 @@ class Balance extends Controller
                             ->select();
                         //对订单状态进行修改
                         $data['status'] = 2;
-                        $data["trade_no"] = time();
+                        $data["pay_time"] = time();
                         $data['pay_type_content'] = "余额支付";
                         foreach ($select_data as $key => $val) {
                             $result = Db::name('order_parts')
@@ -123,7 +123,7 @@ class Balance extends Controller
                                 ->select();
                             //对订单状态进行修改
                             $data['status'] = 2;
-                            $data["trade_no"] = time();
+                            $data["pay_time"] = time();
                             $data['pay_type_content'] = "余额支付";
                             foreach ($select_data as $key => $val) {
                                 $result = Db::name('order_parts')
@@ -194,12 +194,12 @@ class Balance extends Controller
                         if($is_face ==1){
                             //如果不是面议，则直接改为已付款
                             $data['status'] = 2;//状态值
-                            $data['trade_no'] = time();//交易号
+                            $data['pay_time'] = time();//交易号
                             $data['pay_type_content'] = "余额支付";
                         }else{
                             //如果不是面议，则直接改为已付款
                             $data['status'] = 5;//状态值
-                            $data['trade_no'] = time();//交易号
+                            $data['pay_time'] = time();//交易号
                             $data['pay_type_content'] = "余额支付";
                         }
                     if (!empty($business_store_id["store_id"])) {
