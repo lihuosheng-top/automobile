@@ -471,6 +471,8 @@ Route::group("admin",[
     "role_edit"=>"admin/role/edit",
     "role_updata"=>"admin/role/updata",
     "role_status"=>"admin/role/status",
+    "search_index"=>"admin/role/search_index",
+
 
 
 
