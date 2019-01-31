@@ -363,7 +363,7 @@ class Order extends Controller{
     public function evaluate(){
         $evaluate_data =Db::name('order_parts_evaluate')
             ->order('create_time','desc')
-            ->paginate(3);
+            ->paginate(20);
         return view('evaluate',['evaluate_data'=>$evaluate_data]);
     }
 
@@ -904,11 +904,19 @@ class Order extends Controller{
         }
 
         if(!empty($serve_num) && (!empty($harvester)) && (!empty($start_time)) && (!empty($end_time))){
-            $time_condition  = "create_time > {$start_time} and create_time < {$end_time}";
+            $time_condition  = "dispose_time > {$start_time} and dispose_time < {$end_time}";
             $service = db('service')
                     ->where("serve_num", "like", "%" . $serve_num . "%")
                     ->where("harvester", "like", "%" . $harvester . "%")
                     ->where($time_condition)
+                    ->order('create_time','desc')
+                    ->paginate(20 ,false, [
+                        'query' => request()->param(),
+                    ]);
+            return view('platform_after_sale',["service"=>$service]);
+        } else if(!empty($serve_num) && (empty($harvester)) && (empty($start_time)) && (empty($end_time))){
+            $service = db('service')
+                    ->where("serve_num", "like", "%" . $serve_num . "%")
                     ->order('create_time','desc')
                     ->paginate(20 ,false, [
                         'query' => request()->param(),
@@ -1020,7 +1028,7 @@ class Order extends Controller{
         $phone = Db::name("admin")->field("phone")->where('id',$session_user_id)->find();
         $user_id =Db::name("user")->field("id")->where('phone_num',$phone['phone'])->find();
         $store_id =Db::name("store")->field('store_id')->where('user_id',$user_id['id'])->find();
-        $service_order_data =Db::name('order_service')->where("store_id",$store_id["store_id"])->order('create_time','desc')->paginate(5);
+        $service_order_data =Db::name('order_service')->where("store_id",$store_id["store_id"])->order('create_time','desc')->paginate(20);
         return view('service_order_index',['service_order_data'=>$service_order_data]);
     }
 
