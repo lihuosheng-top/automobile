@@ -210,9 +210,8 @@
         })
         // 第三方 回调
         function loginCallback(openid, headurl, flag){
-            var fl = flag == 'wx' ?  1 : 2;
+            var fl = (flag == 'wx' ?  1 : 2);
             if(openid != null){
-                var flag = 
                 (function(){
                     return $.ajax({
                         url: 'member_binding',
@@ -225,6 +224,7 @@
                         }
                     })
                 })().then(function(res){
+                    alert(JSON.stringify(res))
                     console.log(res);
                     if(res.status == 1){
                         location.reload();
