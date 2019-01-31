@@ -117,6 +117,7 @@ Route::group("",[
     "member_information_data"=>"index/My/member_information_data",//个人信息用户个人信息返回（头像,真实姓名，昵称，性别）
     "member_update_mobiles"=>"index/My/member_update_mobiles",//个人信息修改手机
     "member_binding"=>"index/My/member_binding",//个人信息绑定微信QQ
+    "un_binding"=>"index/My/un_binding",//个人信息解除绑定微信QQ
 
     "my_integral"=>"index/My/integral",            //我的积分页面(积分记录ajax)
     "setting"=>"index/My/setting",              //设置(所有页面)

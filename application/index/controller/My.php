@@ -644,5 +644,37 @@ class My extends Controller
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:解除微信qq绑定
+     **************************************
+     */
+    public function  un_binding(Request $request){
+        $user_id =Session::get("user");
+        $is_wechat = $request->only("is_wechat")["is_wechat"]; //1为微信，2为qq
+        $id = $request->only("id")["id"]; //open_id
+        if($is_wechat==1){
+            $res =Db::name("user")->where("id",$user_id)->update(["wechat_id"=>NULL]);
+            if($res){
+                $bool =Db::name("wechat")->where("user_id",$user_id)->where("id",$id)->delete();
+                if($bool){
+                    exit(json_encode(array("status" => 1, "info" => "解绑成功")));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "请再次尝试解绑")));
+                }
+            }
+        }else if($is_wechat==2){
+            $res =Db::name("user")->where("id",$user_id)->update(["qq_id"=>NULL]);
+            if($res){
+                $bool =Db::name("qq")->where("user_id",$user_id)->where("id",$id)->delete();
+                if($bool){
+                    exit(json_encode(array("status" => 1, "info" => "解绑成功")));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "请再次尝试解绑")));
+                }
+            }
+        }
+    }
 
 }
