@@ -235,9 +235,7 @@
         // 第三方 回调
         function loginCallback(openid, headurl, flag){
             var fl = (flag == 'wx' ?  1 : 2);
-            alert(openid);
-            alert(openid != null);
-            if(openid != null){
+            if(openid != 'null'){
                 (function(){
                     return $.ajax({
                         url: 'member_binding',
@@ -267,6 +265,12 @@
                             time: 1
                         })
                     }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '绑定已取消',
+                    time: 1
                 })
             }
         }
