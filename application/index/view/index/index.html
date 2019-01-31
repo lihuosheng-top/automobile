@@ -328,7 +328,7 @@
                 }else{
                     getAdvertisment(getCookie('threeAdress'));
                     document.getElementById('space-input').innerHTML = getCookie('district');
-                    // 热门店铺
+                    // 周边店铺
                     (function(){
                         return $.ajax({
                             url: 'index_shop',
@@ -348,7 +348,7 @@
                                     if(dist <= 100000){
                                         distArr.push({
                                             id: val.id,
-                                            dist: dist
+                                            dist: (dist / 1000).toFixed(2)
                                         })
                                     }
                                 })
@@ -390,7 +390,7 @@
                                                                         (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+`"></i>
                                                                         <span>营业时间：`+ele.shop_time+`</span>
                                                                     </div>
-                                                                    <p class="txt-hid-two hotshop-detail">约`+sortDistArr[i + curPage * 10].dist+`米  `+ele.shop_address.split(',').join('')+`</p>
+                                                                    <p class="txt-hid-two hotshop-detail">约`+sortDistArr[i + curPage * 10].dist+`千米  `+ele.shop_address.split(',').join('')+`</p>
                                                                 </div>
                                                             </li>`
                                                 }
@@ -413,10 +413,10 @@
                 getAdvertisment('广东,深圳,福田区');
             }
         })()
-
         // 接收安卓回调内容
         function getAndroid(e) {
             // 定位成功
+            var e = JSON.parse(e);
             if(e.errorCode === 0){
                 var province = e.province;
                 var city = e.city;
@@ -429,14 +429,14 @@
                 setCookie('lngLat', userLngLat, 1000);
                 setCookie('district', district, 1000);
                 getAdvertisment(threeAdress);
-                // 热门店铺
+                // 周边店铺
                 (function(){
                     return $.ajax({
                         url: 'index_shop',
                         type: 'POST',
                         dataType: 'JSON',
                     }).then(function(res){
-                        console.log('热门店铺',res);
+                        console.log('周边店铺',res);
                         var distArr = [];
                         var dist = 0;
                         if(res.status == 1){
@@ -448,7 +448,7 @@
                                 if(dist <= 100000){
                                     distArr.push({
                                         id: val.id,
-                                        dist: dist
+                                        dist: (dist / 1000).toFixed(2)
                                     })
                                 }
                             })
@@ -490,7 +490,7 @@
                                                                     (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+`"></i>
                                                                     <span>营业时间：`+ele.shop_time+`</span>
                                                                 </div>
-                                                                <p class="txt-hid-two hotshop-detail">约`+sortDistArr[i + curPage * 10].dist+`米  `+ele.shop_address.split(',').join('')+`</p>
+                                                                <p class="txt-hid-two hotshop-detail">约`+sortDistArr[i + curPage * 10].dist+`千米  `+ele.shop_address.split(',').join('')+`</p>
                                                             </div>
                                                         </li>`
                                             }
@@ -519,7 +519,7 @@
         function sortNum(a, b){
             return a.dist - b.dist;
         }
-        // 进入 热门店铺
+        // 进入 周边店铺
         function intoHotShop(id){
             $.ajax({
                 url: 'index_shop_goods',

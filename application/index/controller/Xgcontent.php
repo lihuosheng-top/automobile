@@ -36,4 +36,19 @@ class Xgcontent extends Controller
         return $ret;
     }
 
+    public function push_account_list($title, $content, $account)
+    { $accessId = "2100324571";
+        $secretKey = "531896c8300cebf831d2e447de5df791";
+        include EXTEND_PATH."Xg/xinge-api-php/src/XingeApp.php";
+        $push = new \XingeApp($accessId, $secretKey);
+        $mess = new \Message();
+        $mess->setExpireTime(86400);
+        $mess->setTitle($title);
+        $mess->setContent($content);
+        $mess->setType(\Message::TYPE_MESSAGE);
+        $accountList = $account;
+        $ret = $push->PushAccountList(0, $accountList, $mess);
+        return ($ret);
+    }
+
 }

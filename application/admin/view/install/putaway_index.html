@@ -58,7 +58,8 @@
 	<h4>（单个商品）</h4> {volist name="year" id="value"}
 	<div class="show">
 		<div style=" " class="text">年限<input type="text" name="year" id="" value="{$value.year}" style="width: 100px;" disabled="disabled" />费用<input type="text" name="money" id="" value="{$value.money}" style="width: 100px;" disabled="disabled" />元 
-			<i class="layui-icon remove_img " data-id="{$value.id}">&#x1007;</i></div>
+			<!-- <i class="layui-icon remove_img " data-id="{$value.id}">&#x1007;</i> -->
+		</div>
 	</div>
 	{/volist}
 	<form action="{:url('admin/Install/putaway')}" method="post">
@@ -89,31 +90,31 @@
 				laypage = layui.laypage,
 				$ = layui.jquery;
 			//				点击删除图标事件
-			$(".remove_img").click(function() {
-				var id = $(this).data("id");
-				var remove = $(this).parent();
-				layer.confirm('你确认要删除吗？', {
-					btn: ['确认', '取消'] //按钮
-				}, function(index) {
-					layer.close(index);
-					remove.remove();
-					$.ajax({
-						type: "POST",
-						url: "{:url('admin/Install/putaway_del')}",
-						data: {
-							"id": id
-						},
-						async: false,
-						success: function(data) {
-							//删除公共之后需要隐藏
-							console.log(data)
-						},
-						error: function(data) {
-							console.log("失败")
-						}
-					});
-				});
-			});
+			// $(".remove_img").click(function() {
+			// 	var id = $(this).data("id");
+			// 	var remove = $(this).parent();
+			// 	layer.confirm('你确认要删除吗？', {
+			// 		btn: ['确认', '取消'] //按钮
+			// 	}, function(index) {
+			// 		layer.close(index);
+			// 		remove.remove();
+			// 		$.ajax({
+			// 			type: "POST",
+			// 			url: "{:url('admin/Install/putaway_del')}",
+			// 			data: {
+			// 				"id": id
+			// 			},
+			// 			async: false,
+			// 			success: function(data) {
+			// 				//删除公共之后需要隐藏
+			// 				console.log(data)
+			// 			},
+			// 			error: function(data) {
+			// 				console.log("失败")
+			// 			}
+			// 		});
+			// 	});
+			// });
 			$(".add-bts").click(function() {
 				var dhtml = "";
 				dhtml += '<div style=" " class="text">年限<input type="text" name="year[]" id="" value="" style="width: 100px;"/>费用<input type="text" name="money[]" id="" value="" style="width: 100px;"/>元 <i class="layui-icon remove-img">&#x1007;</i></div></div>';

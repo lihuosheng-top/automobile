@@ -770,6 +770,9 @@ $(function(){
             if(res.status == 1){
                 var str = '';
                 res.data.forEach(function(val, idx){
+                    if(val.special_info.length === 0){
+                        return false;
+                    }
                     str += `<li class="`+(idx % 2 !== 0?'mgr0':'')+`" data-storeId="`+val.store_id+`">
                                 <div class="img_div">
                                     <img src="uploads/`+val.special_info[0].images+`">

@@ -209,6 +209,7 @@ class Reservation extends Controller{
                 $serve_goods_id = $request->only(["id"])["id"];
                 $user = db("user")->where("id", $user_id)->select();
                 $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
+                $user_car["brand_images"] =Db::name("car_images")->where("brand",$user_car["brand"])->value("brand_images");
                 $user_car_message = db("user_car_message")->where("user_car_id",$user_car["id"])->select();
                 $serve_goods = db("serve_goods")->where("id", $serve_goods_id)->select();
                 $store = db("store")->where("store_id",$serve_goods[0]["store_id"])->select();

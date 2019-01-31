@@ -55,7 +55,6 @@ class Login extends Controller{
                    }else{
                        return ajax_error('密码错误',['status'=>0]);
                    }
-
                }
             }
             $datas =[
@@ -103,7 +102,65 @@ class Login extends Controller{
      **************************************
      * @param Request $request
      */
-    public function user_bind_phone(Request $request){
+    public function user_bind_phone(Request $request)
+    {
+        if ($request->isPost()) {
+            $id =trim($_POST['id']);//用户第一次进入绑定的微信表id或者qq表id
+            $is_wechat =trim($_POST['is_wechat']); // (1为微信，2为qq)
+            $mobile = trim($_POST['mobile']);//手机号码
+            $is_reg = Db::name("user")->where("phone_num", $mobile)->find();
+            if (!empty($is_reg)) {
+                return ajax_error("此手机已注册，可以直接登录");
+            }
+            $code = trim($_POST['mobile_code']);
+            $password = trim($_POST['password']);
+            $create_time = date('Y-m-d H:i:s');
+            if (strlen($mobile) != 11 || substr($mobile, 0, 1) != '1' || $code == '') {
+                return ajax_error("手机号格式错误，请重填");
+            }
+            if (session('mobileCode') != $code || $mobile != $_SESSION['mobile']) {
+                return ajax_error("验证码不正确");
+            } else {
+                $passwords = password_hash($password, PASSWORD_DEFAULT);
+                $datas = [
+                    'phone_num' => $mobile,
+                    'password' => $passwords,
+                    'create_time' => strtotime($create_time),
+                    "status" => 1,
+                ];
+                $res = Db::name('user')->insertGetId($datas);
+                if ($res){
+                    //无邀请码
+                    $res = Db::name('user')->insertGetId($datas);
+                    if ($res) {
+                        //如果注册成功（自己获取积分）
+                        $send_integral = Db::name("recommend_integral")->where("id", 1)->value("register_integral");
+                        $inv_num = createCode($res);
+                        $inv = [
+                            "invitation" => $inv_num,//生成邀请码
+                            "user_name" => "QC" . $inv_num, //默认用户名
+                            "user_integral_wallet" => $send_integral,//注册的积分
+                        ];
+                        Db::name("user")->where("id", $res)->update($inv);
+                        if ($send_integral > 0) {
+                            //插入积分记录
+                            $integral_data = [
+                                "user_id" => $res,
+                                "integral_operation" => $send_integral,//获得积分
+                                "integral_balance" => $send_integral,//积分余额
+                                "integral_type" => 1, //积分类型（1获得，-1消费）
+                                "operation_time" => date("Y-m-d H:i:s"), //操作时间
+                                "integral_remarks" => "成功注册送" . $send_integral . "积分",
+                            ];
+                            Db::name("integral")->insert($integral_data);
+                        }
+                        return ajax_success('绑定成功', $datas);
+                    } else {
+                        return ajax_error('请重新绑定手机', ['status' => 0]);
+                    }
+                }
+            }
+        }
         return view("user_bind_phone");
     }
 
