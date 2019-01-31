@@ -22,6 +22,7 @@ class Serve extends Controller{
     public function index(){
         $admin_id = Session::get("user_id");
         $admin_role = db("admin")->where("id",$admin_id)->field("role_id")->find();
+        $role_id = $admin_role["role_id"];
         if($admin_role["role_id"] == 2){
 
             $serve_goods = db("serve_goods")->order("id desc")->select();
@@ -29,7 +30,7 @@ class Serve extends Controller{
                 $serve_goods[$key]["serve_goods_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
             }
             $store = db("store")->select();
-            return view("serve_index",["store"=>$store,"serve_goods"=>$serve_goods]);
+            return view("serve_index",["store"=>$store,"serve_goods"=>$serve_goods,"role_id"=>$role_id]);
 
         }else {
             $admin_phone = db("admin")->where("id", $admin_id)->value("phone");
@@ -40,7 +41,7 @@ class Serve extends Controller{
                 $serve_goods[$key]["serve_goods_name"] = db("service_setting")->where("service_setting_id", $value["service_setting_id"])->value("service_setting_name");
             }
             $store = db("store")->select();
-            return view("serve_index", ["store" => $store, "serve_goods" => $serve_goods]);
+            return view("serve_index", ["store" => $store, "serve_goods" => $serve_goods,"role_id"=>$role_id]);
         }
 
     }
@@ -231,4 +232,74 @@ class Serve extends Controller{
 
     }
 
+
+    /**
+     * [服务商品搜索]
+     * 陈绪
+     */
+    public function serve_search()
+    {
+        $name = input('name');         //店铺名称
+        $server = input('server');     //服务类型
+        $admin_id = Session::get("user_id");
+        $admin_role = db("admin")->where("id",$admin_id)->field("role_id")->find();
+        $role_id = $admin_role["role_id"];
+        if($admin_role["role_id"] == 2){  //admin
+            if((!empty($name)) && (!empty($server))){
+            $store_id = db("store")->where("store_name",$name)->value("store_id");
+            $server_setting_id = db("service_setting")->where("service_setting_name",$server)->value("service_setting_id");
+            $serve_goods = db("serve_goods")->where("service_setting_id",$server_setting_id)->where("store_id",$store_id)->order("id desc")->select();
+            foreach ($serve_goods as $key=>$value){
+                $serve_goods[$key]["serve_goods_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
+            }
+            $store = db("store")->select();
+            return view("serve_index",["store"=>$store,"serve_goods"=>$serve_goods,"role_id"=>$role_id]);
+        } else if ((empty($name)) && (!empty($server))){
+                $server_setting_id = db("service_setting")->where("service_setting_name",$server)->value("service_setting_id");
+                $serve_goods = db("serve_goods")->where("service_setting_id",$server_setting_id)->order("id desc")->select();
+                foreach ($serve_goods as $key=>$value){
+                    $serve_goods[$key]["serve_goods_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
+                }
+                $store = db("store")->select();
+                return view("serve_index",["store"=>$store,"serve_goods"=>$serve_goods,"role_id"=>$role_id]);
+        } else if  ((!empty($name)) && (empty($server))){
+                $store_id = db("store")->where("store_name",$name)->value("store_id");
+                $serve_goods = db("serve_goods")->where("store_id",$store_id)->order("id desc")->select();
+                foreach ($serve_goods as $key=>$value){
+                    $serve_goods[$key]["serve_goods_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
+                }
+                $store = db("store")->where("store_name",$name)->select();
+                return view("serve_index",["store"=>$store,"serve_goods"=>$serve_goods,"role_id"=>$role_id]);
+        } else if ((empty($name)) && (empty($server))){
+                $serve_goods = db("serve_goods")->order("id desc")->select();
+                foreach ($serve_goods as $key=>$value){
+                    $serve_goods[$key]["serve_goods_name"] = db("service_setting")->where("service_setting_id",$value["service_setting_id"])->value("service_setting_name");
+                }
+                $store = db("store")->select();
+                return view("serve_index",["store"=>$store,"serve_goods"=>$serve_goods,"role_id"=>$role_id]);
+            }
+        
+
+        } else {  //配件商and服务商
+            $admin_phone = db("admin")->where("id", $admin_id)->value("phone");
+            $user_id = db("user")->where("phone_num", $admin_phone)->value("id");
+            $store_id = db("store")->where("user_id", $user_id)->value("store_id");
+            if(!empty($server)){
+            $server_setting_id = db("service_setting")->where("service_setting_name",$server)->value("service_setting_id");
+            $serve_goods = db("serve_goods")->where("service_setting_id",$server_setting_id)->where("store_id", $store_id)->order("id desc")->select();
+            foreach ($serve_goods as $key => $value) {
+                $serve_goods[$key]["serve_goods_name"] = db("service_setting")->where("service_setting_id", $value["service_setting_id"])->value("service_setting_name");
+            }
+            $store = db("store")->select();
+            return view("serve_index", ["store" => $store, "serve_goods" => $serve_goods,"role_id"=>$role_id]);
+          } else {
+            $serve_goods = db("serve_goods")->where("store_id", $store_id)->order("id desc")->select();
+            foreach ($serve_goods as $key => $value) {
+                $serve_goods[$key]["serve_goods_name"] = db("service_setting")->where("service_setting_id", $value["service_setting_id"])->value("service_setting_name");
+            }
+            $store = db("store")->select();
+            return view("serve_index", ["store" => $store, "serve_goods" => $serve_goods,"role_id"=>$role_id]);
+          }
+        }   
+     }
 }

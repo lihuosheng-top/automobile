@@ -32,20 +32,22 @@
 
 <div class="childrenBody">
 	<blockquote class="layui-elem-quote news_search">
-		<form class="layui-form" action="">
+		<form class="layui-form" action="{:url('admin/Serve/serve_search')}">			    
 				<div class="seach">
+					{if $role_id == 2}
 					<div class="seach_list">
 						<div class="seach_laber">输入搜索：</div>
 						<div class="seach_input">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="店铺名称" class="layui-input">
+							<input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="店铺名称" class="layui-input">
 						
 						</div>
 					</div>
+					{/if}
 					
 					<div class="seach_list">
 						<div class="seach_laber">服务项目</div>
 						<div class="seach_input">
-							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="服务类型" class="layui-input">
+							<input type="text" name="server" lay-verify="title" autocomplete="off" placeholder="服务类型" class="layui-input">
 					</div>
 					
 					<button class="layui-btn" type="submit" id="seach">立即搜索</button>
@@ -67,7 +69,7 @@
 		    <thead>
 				<tr>
 					<th><input type="checkbox" sname="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-					<th >店铺名称</th>
+					<th>店铺名称</th>
 					<th>服务类型</th>
 					<th>适用车型</th>
 					<th>价格</th>
