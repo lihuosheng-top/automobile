@@ -101,7 +101,7 @@
 
         var url = location.search, openid, flag;
         if(url.indexOf('?') != -1){
-            openid = url.substr(1).split('=')[1];
+            openid = url.substr(1).split('&')[0].split('=')[1];
             flag = url.substr(1).split('&')[1].split('=')[1];
         }
         $('.reg-send-code').click(function(){
