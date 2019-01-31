@@ -352,30 +352,52 @@ class My extends Controller
                 //微信绑定
                $is_binding = Db::name("wechat")->where("user_id",$user_id)->find();
                if(!empty($is_binding)){
-                   exit(json_encode(array("status" => 0, "info" => "已绑定有微信，请勿重新绑定",)));
+                   exit(json_encode(array("status" => 0, "info" => "已绑定有微信，请勿重新绑定")));
                }
+                $is_binding_wechat = Db::name("wechat")->where("open_id",$open_id)->find();
+                if(!empty($is_binding_wechat)){
+                    if($user_id ==$is_binding_wechat["user_id"]){
+                        exit(json_encode(array("status" => 0, "info" => "请勿重复绑定")));
+                    }else{
+                        exit(json_encode(array("status" => 0, "info" => "此微信号已绑定其他用户")));
+                    }
+                }
+
                $data =[
                    "open_id"=>$open_id,
                    "user_id"=>$user_id
                ];
-             $bool =  Db::name("wechat")->insert($data);
-             if($bool){
+             $bool =  Db::name("wechat")->insertGetId($data);
+             if($bool>0){
+                 Db::name("user")->where("id",$user_id)->update(["wechat_id"=>$bool]);
                  exit(json_encode(array("status" => 1, "info" => "绑定成功",)));
                 }else{
-                 exit(json_encode(array("status" => 0, "info" => "请重新尝试绑定",)));
+                 exit(json_encode(array("status" => 0, "info" => "请重新尝试绑定")));
              }
             }else if($is_wechat ==2){
                 //QQ绑定
                 $is_binding = Db::name("qq")->where("user_id",$user_id)->find();
                 if(!empty($is_binding)){
-                    exit(json_encode(array("status" => 0, "info" => "已绑定有QQ，请勿重新绑定",)));
+                    exit(json_encode(array("status" => 0, "info" => "已绑定有QQ，请勿重新绑定")));
+                }
+                $is_binding_wechat = Db::name("wechat")->where("open_id",$open_id)->find();
+                if(!empty($is_binding_wechat)){
+                    if($user_id ==$is_binding_wechat["user_id"]){
+                        exit(json_encode(array("status" => 0, "info" => "请勿重复绑定")));
+                    }else{
+                        exit(json_encode(array("status" => 0, "info" => "此QQ已绑定其他用户")));
+                    }
                 }
                 $data =[
                     "open_id"=>$open_id,
                     "user_id"=>$user_id
                 ];
-                $bool =  Db::name("qq")->insert($data);
-                if($bool){
+                $bool =  Db::name("qq")->insertGetId($data);
+                if($bool>0){
+                    $das =[
+                        "qq_id"=>$bool
+                    ];
+                    Db::name("user")->where("id",$user_id)->update($das);
                     exit(json_encode(array("status" => 1, "info" => "绑定成功",)));
                 }else{
                     exit(json_encode(array("status" => 0, "info" => "请重新尝试绑定",)));
