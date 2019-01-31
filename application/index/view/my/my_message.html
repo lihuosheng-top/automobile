@@ -108,11 +108,31 @@
                     $('.info-li:eq(2)').find('span').text(res.data.phone_num);
                     $('.info-li:eq(3)').find('span').text(res.data.user_name);
                     $('.info-li:eq(4)').find('span').text(res.data.sex);
-                    $('.info-li:eq(5)').find('span').text(res.data.wechat_id == null ? '去绑定' : '已绑定');
-                    $('.info-li:eq(6)').find('span').text(res.data.qq_id == null ? '去绑定' : '已绑定');
+                    if(res.data.wechat_id != null){
+                        $('.info-li:eq(5)')
+                            .find('span')
+                                .text('已绑定')
+                                .data({
+                                    id: res.data.wechat_id
+                                });
+
+                    }else{
+                        $('.info-li:eq(5)').find('span').text('去绑定');
+                    }
+                    if(res.data.qq_id != null){
+                        $('.info-li:eq(6)')
+                            .find('span')
+                                .text('已绑定')
+                                .data({
+                                    id: res.data.qq_id
+                                });
+                    }else{
+                        $('.info-li:eq(6)').find('span').text('去绑定');
+                    }
+                    
+
                     $('.info-li:eq(7)').find('span').text(res.data.user_integral_wallet);
                     $('.info-li:eq(8)').find('span').text(res.data.user_wallet);
-
                 }
             },
             error: function(){
@@ -176,12 +196,14 @@
                     location.href = 'my_nickname';break;
                 case 5: 
                     if ($(this).find('span').text() == '已绑定') {
+                        var _this = this;
                         layer.open({
                             content: '是否解除绑定？',
                             btn: ['确定', '取消'],
                             yes: function (index) {
                                 layer.close(index);
-
+                                var id = $(_this).find('span').data('id');
+                                unbind(id, 1);
                             }
                         });
                     } else {
@@ -190,12 +212,14 @@
                     break;
                 case 6: 
                     if ($(this).find('span').text() == '已绑定') {
+                        var _this = this;
                         layer.open({
                             content: '是否解除绑定？',
                             btn: ['确定', '取消'],
                             yes: function (index) {
                                 layer.close(index);
-
+                                var id = $(_this).find('span').data('id');
+                                unbind(id, 2);
                             }
                         });
                     } else {
@@ -210,9 +234,10 @@
         })
         // 第三方 回调
         function loginCallback(openid, headurl, flag){
-            var fl = flag == 'wx' ?  1 : 2;
+            var fl = (flag == 'wx' ?  1 : 2);
+            alert(openid);
+            alert(openid != null);
             if(openid != null){
-                var flag = 
                 (function(){
                     return $.ajax({
                         url: 'member_binding',
@@ -227,10 +252,57 @@
                 })().then(function(res){
                     console.log(res);
                     if(res.status == 1){
-                        location.reload();
+                        layer.open({
+                            skin: 'msg',
+                            content: '绑定成功',
+                            time: 1
+                        })
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1100);
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1
+                        })
                     }
                 })
             }
+        }
+        // 解除绑定
+        function unbind(id, flag){
+            $.ajax({
+                url: 'un_binding',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    'id': id,
+                    'is_wechat': flag
+                },
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        layer.open({
+                            skin: 'msg',
+                            content: '解绑成功',
+                            time: 1
+                        })
+                        setTimeout(function(){
+                            location.reload()
+                        }, 1100);
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: '解绑失败',
+                            time: 1
+                        })
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
         }
 
         // 性别弹窗

@@ -99,6 +99,10 @@
             return this;
         }
 
+        var url = location.search;
+        if(url.indexOf('?') != -1){
+            openid = url.substr(1).split('=')[1];
+        }
         $('.reg-send-code').click(function(){
             var phone = $('.reg-phone-num').val();
             var reg = /^1[34578]\d{9}$/;

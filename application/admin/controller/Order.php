@@ -1223,4 +1223,26 @@ class Order extends Controller{
     
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:服务商订单评价商家回复
+     **************************************
+     */
+    public  function service_evaluate_repay(Request $request){
+        if($request->isPost()){
+            $evaluate_id =trim(input('evaluate_id'));
+            $business_repay =trim(input('business_repay'));
+            if(!empty($business_repay)){
+                $data =Db::name('order_service_evaluate')->update(['business_repay'=>$business_repay,'id'=>$evaluate_id]);
+                if($data){
+                    $this->success('回复成功');
+                }else{
+                    $this->error('回复失败');
+                }
+
+            }
+
+        }
+    }
 }
