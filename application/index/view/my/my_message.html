@@ -213,6 +213,7 @@
                     break;
                 case 6: 
                     if ($(this).find('span').text() == '已绑定') {
+                        var _this = this;
                         layer.open({
                             content: '是否解除绑定？',
                             btn: ['确定', '取消'],
