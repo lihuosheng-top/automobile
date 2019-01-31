@@ -179,6 +179,15 @@
                                         console.log(res);
                                         if(res.status == 1){
                                             location.reload();
+                                        }else if(res.status == 0){
+                                            layer.open({
+                                                skin: 'msg',
+                                                content: res.info,
+                                                time: 1
+                                            })
+                                            setTimeout(function(){
+                                                location.reload();
+                                            }, 1100)
                                         }
                                     },
                                     error: function(){

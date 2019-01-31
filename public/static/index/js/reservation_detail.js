@@ -199,7 +199,7 @@ if(urlLen > 1){
                 
                 $('.comment-filter').show();
                 $('.filter-service').show();
-                $('..pop .comment_box .comment_ul').css('height', '69vh');
+                $('.pop .comment_box .comment_ul').css('height', '69vh');
                 evaAjax(data);
             }
         },
@@ -215,7 +215,7 @@ if(urlLen > 1){
 // 评论铺数据
 function evaAjax(data){
     var filterStr = '', allcomStr = '';
-    data.data.serve_data.forEach(function(ele, idx){
+    $.each(data.data.serve_data, function(idx, ele){
         if(ele.server_name === null){
             return false;
         }

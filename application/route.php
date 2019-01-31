@@ -117,6 +117,7 @@ Route::group("",[
     "member_information_data"=>"index/My/member_information_data",//个人信息用户个人信息返回（头像,真实姓名，昵称，性别）
     "member_update_mobiles"=>"index/My/member_update_mobiles",//个人信息修改手机
     "member_binding"=>"index/My/member_binding",//个人信息绑定微信QQ
+    "un_binding"=>"index/My/un_binding",//个人信息解除绑定微信QQ
 
     "my_integral"=>"index/My/integral",            //我的积分页面(积分记录ajax)
     "setting"=>"index/My/setting",              //设置(所有页面)
@@ -677,7 +678,8 @@ Route::group("admin",[
     'service_order_parts_dels'=>"admin/Order/service_order_parts_dels", //服务商界面服务商订单列表批量删除
     "service_order_evaluate"=>"admin/Order/service_order_evaluate", //服务商界面订单评价
     "service_order_evaluate_edit"=>"admin/Order/service_order_evaluate_edit", //服务商界面订单评价
-    "service_order_evaluate_search"=>"admin/Order/service_order_evaluate_search", //服务商界面订单评价
+    "service_evaluate_repay"=>"admin/Order/service_evaluate_repay", //服务商界面订单评价回复
+    "service_order_evaluate_search"=>"admin/Order/service_order_evaluate_search", //服务商界面订单评价搜索
     /*订单管理：TODO:服务商订单结束*/
 
 
