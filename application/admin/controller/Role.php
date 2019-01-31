@@ -120,5 +120,33 @@ class Role extends Controller
     }
 
 
+    /**
+     * [角色搜索]
+     * GY
+     */
+    public function search_index(){
+        $name = input("name");
+        if(!empty($name)){
+        $role_lists = db("role")->where("name",$name)->select();
+        foreach($role_lists as $key=>$value){
+            if($value["pid"]){
+                $rs = db("role")->where("id",$value['pid'])->field("name")->find();
+                $role_lists[$key]["parent_depart_name"] = $rs["name"];
+            }
+        }
+    } else {
+        $role_lists = db("role")->select();
+        foreach($role_lists as $key=>$value){
+            if($value["pid"]){
+                $rs = db("role")->where("id",$value['pid'])->field("name")->find();
+                $role_lists[$key]["parent_depart_name"] = $rs["name"];
+            }
+        }
+    }
+        //halt($role_lists);
+        return view("index",["role_lists"=>$role_lists]);
+    }
+
+
 
 }

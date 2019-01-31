@@ -35,16 +35,16 @@
 
     <div class="childrenBody">
         <blockquote class="layui-elem-quote news_search">
-            <form class="layui-form" action="">
+            <form class="layui-form" action="{:url('admin/role/search_index')}">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">账号：</label>
+                        <label class="layui-form-label">角色名称：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+                            <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
 
                         </div>
                     </div>
-                    <div class="layui-inline">
+                    <!-- <div class="layui-inline">
                         <label class="layui-form-label">用户名:</label>
                         <div class="layui-input-inline">
                             <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
@@ -58,7 +58,7 @@
 								<option value="2">禁用</option>
 							</select>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="layui-inline">
                         <a class="layui-btn search_btn">搜索</a>
                     </div>
