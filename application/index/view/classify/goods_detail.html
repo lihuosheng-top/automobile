@@ -428,5 +428,15 @@
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/plugin/swiper-4.3.5.min.js"></script>
     <script src="__STATIC__/index/js/goods_detail.js"></script>
+    <script>
+        $('.icon_share').click(function(){
+            var url = location.href,
+                goodsName = $('.goods_name .name').text(),
+                goodsDescribe = $('.selling-point').text(),
+                goodsImg = $('.select-goods-img img').attr('src');
+            Android.share(url, goodsName, goodsDescribe, goodsImg);
+        })
+    </script>
+
 </body>
 </html>
