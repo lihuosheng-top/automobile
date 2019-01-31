@@ -105,7 +105,7 @@ class Login extends Controller{
     public function user_bind_phone(Request $request)
     {
         if ($request->isPost()) {
-            $id =trim($_POST['id']);//用户第一次进入绑定的微信表id或者qq表id
+            $open_id =trim($_POST['id']);
             $is_wechat =trim($_POST['is_wechat']); // (1为微信，2为qq)
             $mobile = trim($_POST['mobile']);//手机号码
             $is_reg = Db::name("user")->where("phone_num", $mobile)->find();
@@ -129,10 +129,16 @@ class Login extends Controller{
                     "status" => 1,
                 ];
                 $res = Db::name('user')->insertGetId($datas);
-                if ($res){
                     //无邀请码
-                    $res = Db::name('user')->insertGetId($datas);
                     if ($res) {
+                        //插入到微信或者qq快捷登录（1为微信，2为Qq）
+                        if($is_wechat==1){
+                            $bools =Db::name("wechat")->insertGetId(["open_id"=>$open_id,"user_id"=>$res]);
+                            $res = Db::name('user')->where("id",$res)->update(["wechat_id"=>$bools]);
+                        }else if($is_wechat==2){
+                            $bools =Db::name("qq")->insertGetId(["open_id"=>$open_id,"user_id"=>$res]);
+                            $res = Db::name('user')->where("id",$res)->update(["qq_id"=>$bools]);
+                        }
                         //如果注册成功（自己获取积分）
                         $send_integral = Db::name("recommend_integral")->where("id", 1)->value("register_integral");
                         $inv_num = createCode($res);
@@ -157,7 +163,6 @@ class Login extends Controller{
                         return ajax_success('绑定成功', $datas);
                     } else {
                         return ajax_error('请重新绑定手机', ['status' => 0]);
-                    }
                 }
             }
         }
