@@ -704,8 +704,8 @@
         // 活动商家
         function renderActivity(obj, cont){
             var distArr = [], hotStr = '', dist = 0;
-            // var lngLat = [114.048065,22.541387];
-            var lngLat = getCookie('lngLat').split(',');
+            var lngLat = [114.048065,22.541387];
+            // var lngLat = getCookie('lngLat').split(',');
             $.each(obj, function(idx, val){
                 var markerLngLat = [parseFloat(val.longitude), parseFloat(val.latitude)];
                 if(lngLat.length !== 0){
