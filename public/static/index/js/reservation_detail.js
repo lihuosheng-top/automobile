@@ -3,7 +3,14 @@
 function showPop(){
     $('.pop').css('transform', 'translateX(0)');
     $('.wrapper').hide();
-    myEvaluate(ele.service_setting_id,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+    var displayFlag = $('.comment_title').css('display');
+    if(displayFlag == 'none'){
+        var settingId = $('.filter-ul li:eq(0)').attr('data-serverid');
+        myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+    }else{
+        var settingId = $('.service-colla-item').attr('data-goodsid');
+        myEvaluate(settingId,storeId, '.pop .comment_ul', true, 'reservation_evaluate_return');
+    }
 }
 function hidePop(){
     $('.pop').css('transform', 'translateX(100%)');
@@ -141,7 +148,7 @@ if(urlLen > 1){
                 
                 $('.comment-filter').show();
                 $('.filter-service').show();
-                $('..pop .comment_box .comment_ul').css('height', '69vh');
+                $('.pop .comment_box .comment_ul').css('height', '69vh');
                 evaAjax(data);
                 // 电话 导航
                 var seatNum = data.data.store[0].store_owner_seat_num;
@@ -209,6 +216,9 @@ if(urlLen > 1){
 function evaAjax(data){
     var filterStr = '', allcomStr = '';
     data.data.serve_data.forEach(function(ele, idx){
+        if(ele.server_name === null){
+            return false;
+        }
         if(idx === 0){
             filterStr += `<li class="filter-this" data-serverid="`+ele.service_setting_id+`">
                             <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
@@ -414,6 +424,9 @@ function myService(data){
         mySwiper();
     }
     $.each(data.data.serve_data, function(idx, val){
+        if(val.serve_name === null){
+            return false;
+        }
         str2 += `<div class="service-colla-item" data-goodsid="`+val.service_setting_id+`">
                     <div class="service-colla-title">
                         <p class="service-subtitle">`+val.serve_name+`</p>

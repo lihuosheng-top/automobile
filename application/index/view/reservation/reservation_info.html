@@ -327,6 +327,7 @@
                 // 汽车信息
                 $('.car_num').text(data.user_car_message[0].plate_number.split(' ').join(''));
                 $('.car_info').text(data.user_car.brand+' '+data.user_car.series+' '+data.user_car.production_time+' '+data.user_car.displacement);
+                $('.car_info_box img').attr('src', 'uploads/' + data.user_car.brand_images);
                 // 用户信息
                 if(data.user[0].real_name !== null){
                     $('.client_name span').text(data.user[0].real_name);

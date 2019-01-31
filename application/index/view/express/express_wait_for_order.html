@@ -104,8 +104,8 @@
     </div>
     <script src="__STATIC__/index/js/plugin/jquery.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.10&key=210ef80cb0b8bcda1cb68f180bd5dab3"></script> 
     <script>
-        // Android.openGdMap(val.latitude, val.longitude, val.store_name)
         $.ajax({
             url: 'express_wait_for_order',
             type: 'POST',
@@ -126,13 +126,13 @@
                                                 <span class="shop-name">`+val.store_name+`</span>
                                                 <span class="shop-address">`+val.store_address+`</span>
                                             </div>
-                                            <i class="navigation"></i>
+                                            <i class="navigation-ex" data-lat="`+val.latitude+`" data-lng="`+val.longitude+`"></i>
                                             <a href="javascript:Android.call('`+parseInt(val.store_number)+`');" class="spr shop-phone"></a>
                                         </div>
                                         <div class="send-goods" id="send-`+val.order_id+`">
                                             <span>送：</span>
                                             <span class="send-address">`+val.order_address+`</span>
-                                            <i class="navigation"></i>
+                                            <i class="navigation-ex"></i>
                                             <a href="javascript:Android.call('`+parseInt(val.order_user_number)+`');" class="spr customer-phone"></a>
                                         </div>
                                     </div>
@@ -187,6 +187,37 @@
                                 })
                             }
                         });
+                    })
+                    // 去高德地图
+                    $('.navigation-ex').click(function(){
+                        if($(this).attr('data-lat')){
+                            var lat = $(this).attr('data-lat'),
+                                lng = $(this).attr('data-lng'),
+                                name = $(this).parents('.get-goods').find('.shop-name').text();
+                            Android.openGdMap(lat, lng, name);
+                        }else{
+                            var destination = $(this).siblings('.send-address').text();
+                            AMap.plugin('AMap.Geocoder', function () {
+                                var geocoder = new AMap.Geocoder({
+                                    // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
+                                    // city: '010'
+                                })
+                                geocoder.getLocation(destination, function (status, result) {
+                                    if (status === 'complete' && result.info === 'OK') {
+                                        // result中对应详细地理坐标信息
+                                        var lat = result.geocodes[0].location.lat,
+                                            lng = result.geocodes[0].location.lng;
+                                        Android.openGdMap(lat, lng, destination);
+                                    }else{
+                                        layer.open({
+                                            skin: 'msg',
+                                            content: '导航失败，请电话联系用户',
+                                            time: 1.5
+                                        })
+                                    }
+                                })
+                            })
+                        }
                     })
                 }
                 if(res.status == 0){

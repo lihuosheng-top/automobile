@@ -71,7 +71,7 @@ function showShops(addr){
                             // 存储距离
                             disArr.push({
                                 id: val.id,
-                                dis: dis
+                                dis: (dis / 1000).toFixed(2)
                             })
                             // 存储标记点
                             markerList.push(new AMap.Marker({
@@ -118,7 +118,7 @@ function showShops(addr){
                                                                 <p class="statistic_member">'+ele.service_setting_name+'<span class="member_num">2000</span>人去过</p>\
                                                             </div>\
                                                             <p class="distance_addr_box">\
-                                                                <span class="distance_span">约'+sortDisArr[i + curPage * 10].dis+'米</span>\
+                                                                <span class="distance_span">约'+sortDisArr[i + curPage * 10].dis+'千米</span>\
                                                                 <span class="addr_span">'+ele.serve_name.store_detailed_address+'</span>\
                                                             </p>\
                                                         </div>\
