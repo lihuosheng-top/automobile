@@ -211,6 +211,8 @@
         // 第三方 回调
         function loginCallback(openid, headurl, flag){
             var fl = (flag == 'wx' ?  1 : 2);
+            alert(fl)
+            alert(openid)
             if(openid != null){
                 (function(){
                     return $.ajax({
@@ -224,6 +226,7 @@
                         }
                     })
                 })().then(function(res){
+                    alert('成功')
                     console.log(res);
                     if(res.status == 1){
                         location.reload();
