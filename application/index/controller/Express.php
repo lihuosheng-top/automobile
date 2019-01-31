@@ -128,12 +128,12 @@ class  Express extends  Controller{
             $express_data = $request->param();
             $express_data["status"] = 1;
             unset($express_data["order_status"]);
-//            $is_express =Db::name("delivery_order")
-//                ->where("order_id",$express_data["order_id"])
-//                ->find();
-//            if(!empty($is_express)){
-//                return ajax_error("此单已被抢");
-//            }
+            $is_express =Db::name("delivery_order")
+                ->where("order_id",$express_data["order_id"])
+                ->find();
+            if(!empty($is_express)){
+                return ajax_error("此单已被抢");
+            }
             $bool = db("delivery_order")->insert($express_data);
             $order_status = $request->only(["order_status"])["order_status"];
             if ($bool) {
