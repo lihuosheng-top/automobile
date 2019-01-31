@@ -362,7 +362,6 @@ class My extends Controller
                         exit(json_encode(array("status" => 0, "info" => "此微信号已绑定其他用户")));
                     }
                 }
-
                $data =[
                    "open_id"=>$open_id,
                    "user_id"=>$user_id
