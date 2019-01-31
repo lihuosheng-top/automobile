@@ -379,7 +379,7 @@ class My extends Controller
                 if(!empty($is_binding)){
                     exit(json_encode(array("status" => 0, "info" => "已绑定有QQ，请勿重新绑定")));
                 }
-                $is_binding_wechat = Db::name("wechat")->where("open_id",$open_id)->find();
+                $is_binding_wechat = Db::name("qq")->where("open_id",$open_id)->find();
                 if(!empty($is_binding_wechat)){
                     if($user_id ==$is_binding_wechat["user_id"]){
                         exit(json_encode(array("status" => 0, "info" => "请勿重复绑定")));
