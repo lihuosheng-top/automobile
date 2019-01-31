@@ -517,7 +517,8 @@ Route::group("admin",[
     "serve_updata"=>"admin/Serve/updata",
     "serve_del"=>"admin/Serve/del",
     "serve_batches"=>"admin/Serve/batches",                                     //服务商品批量删除
-    "serve_serve_show"=>"admin/Serve/serve_show",                                     //服务添加商品检测
+    "serve_serve_show"=>"admin/Serve/serve_show",                               //服务添加商品检测
+    "serve_search"=>"admin/Serve/serve_search",                               //服务添加商品检测
 
 
 
@@ -601,7 +602,7 @@ Route::group("admin",[
     "service_business_save"=>"admin/service_advertisement/service_business_save",               //汽车服务商广告保存
     "service_business_edit"=>"admin/service_advertisement/service_business_edit",               //汽车服务商广告编辑
     "service_business_updata"=>"admin/service_advertisement/service_business_updata",           //汽车服务商广告更新
-    "service_business_del"=>"admin/service_advertisement/service_business_del",                                  //汽车服务商广告删除
+    "service_business_del"=>"admin/service_advertisement/service_business_del",                  //汽车服务商广告删除
     "service_business_search"=>"admin/service_advertisement/service_business_search",           //汽车服务商广告搜索
 
 
@@ -672,6 +673,7 @@ Route::group("admin",[
     'service_order_parts_dels'=>"admin/Order/service_order_parts_dels", //服务商界面服务商订单列表批量删除
     "service_order_evaluate"=>"admin/Order/service_order_evaluate", //服务商界面订单评价
     "service_order_evaluate_edit"=>"admin/Order/service_order_evaluate_edit", //服务商界面订单评价
+    "service_order_evaluate_search"=>"admin/Order/service_order_evaluate_search", //服务商界面订单评价
     /*订单管理：TODO:服务商订单结束*/
 
 
