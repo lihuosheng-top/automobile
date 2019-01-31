@@ -1619,6 +1619,7 @@ class OrderParts extends Controller{
                         $datas = [
                             "goods_business_price" =>$special_data["price"],//商家自己发布商品时的价格
                             'goods_image' =>  $special_data['images'],//图片
+                            "special_id"=>$data["goods_standard_id"],//规格表id（用来查库存）
                             "goods_describe"=>$goods_data["goods_describe"],//卖点
                             'parts_goods_name' => $goods_data['goods_name'],//名字
                             "goods_money"=> $special_data['goods_adjusted_price'],//商品价钱
@@ -1828,6 +1829,7 @@ class OrderParts extends Controller{
                                 'store_id' => $val['store_id'],//店铺id
                                 'store_name' => $val['store_name'],//店铺名称
                                 'goods_standard'=>$val["special_name"]." ".$val["goods_delivery"], //商品规格
+                                "special_id"=>$val["goods_standard_id"],//规格表id（用来查库存）
                                 'parts_order_number' => $parts_order_number,//时间+4位随机数+用户id构成订单号
                                 "buy_message"=>$buy_message,//买家留言
                                 "normal_future_time"=>$normal_future_time,//未来时间
