@@ -361,7 +361,7 @@ class My extends Controller
              $bool =  Db::name("wechat")->insertGetId($data);
              if($bool){
                  if($is_wechat ==1){
-                     Db::name("user")->insert(["wechat_id"=>$bool]);
+                     Db::name("user")->where("id",$user_id)->insert(["wechat_id"=>$bool]);
                  }
                  exit(json_encode(array("status" => 1, "info" => "绑定成功",)));
                 }else{
@@ -380,9 +380,8 @@ class My extends Controller
                 $bool =  Db::name("qq")->insertGetId($data);
                 if($bool){
                     if($is_wechat ==2){
-                        Db::name("user")->insert(["qq_id"=>$bool]);
+                        Db::name("user")->where("id",$user_id)->insert(["qq_id"=>$bool]);
                     }
-
                     exit(json_encode(array("status" => 1, "info" => "绑定成功",)));
                 }else{
                     exit(json_encode(array("status" => 0, "info" => "请重新尝试绑定",)));
