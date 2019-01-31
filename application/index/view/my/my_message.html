@@ -202,8 +202,8 @@
                             btn: ['确定', '取消'],
                             yes: function (index) {
                                 layer.close(index);
-                                var id = $(_this).data('id');
-                                alert(id);
+                                var id = $(_this).find('span').data('id');
+                                console.log(data)
                                 unbind(id, 1);
                             }
                         });
@@ -218,7 +218,7 @@
                             btn: ['确定', '取消'],
                             yes: function (index) {
                                 layer.close(index);
-                                var id = $(_this).data('id');
+                                var id = $(_this).find('span').data('id');
                                 alert(id);
                                 unbind(id, 2);
                             }
