@@ -327,7 +327,7 @@ class Install extends Controller{
         }
         if($this->request->isPost()){
             $data =$this->request->post();
-            $data['service_setting_time'] =time();
+            $data['service_setting_time'] = time(); 
             $file =$this->request->file("service_setting_calss_img");
             if($file){
                 $datas = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
