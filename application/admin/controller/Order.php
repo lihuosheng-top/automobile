@@ -608,7 +608,7 @@ class Order extends Controller{
      **************************************
      */
     public function platform_order_service_index(){
-        $service_order_data =Db::name('order_service')->order('create_time','desc')->paginate(5);
+        $service_order_data =Db::name('order_service')->order('create_time','desc')->paginate(20);
         return view('platform_order_service_index',['service_order_data'=>$service_order_data]);
     }
 
@@ -878,6 +878,48 @@ class Order extends Controller{
         }
     }
 
+
+    /**
+     * 平台售后维修显示搜索
+     * GY
+     */
+    public function platform_after_sale_search(){
+
+        $serve_num = input('number');
+        $harvester = input('name');
+        $s_time = input('start_time');
+        if($s_time){
+            $start_time = strtotime($s_time);           //开始时间
+        } else {
+            $start_time = null;           //开始时间
+        }
+        /*添加一天（23：59：59）*/
+        $time_max_data = input('end_time');
+        if($time_max_data){
+            $time_max = strtotime($time_max_data);
+            $t = date('Y-m-d H:i:s', $time_max + 1 * 24 * 60 * 60);
+            $end_time = strtotime($t);                       //结束时间 
+        } else {
+            $end_time = null;
+        }
+
+        if(!empty($serve_num) && (!empty($harvester)) && (!empty($start_time)) && (!empty($end_time))){
+            $time_condition  = "create_time > {$start_time} and create_time < {$end_time}";
+            $service = db('service')
+                    ->where("serve_num", "like", "%" . $serve_num . "%")
+                    ->where("harvester", "like", "%" . $harvester . "%")
+                    ->where($time_condition)
+                    ->order('create_time','desc')
+                    ->paginate(20 ,false, [
+                        'query' => request()->param(),
+                    ]);
+            return view('platform_after_sale',["service"=>$service]);
+        }
+
+        
+    }
+    
+
     /**
      **************李火生*******************
      * @return \think\response\View
@@ -1058,9 +1100,127 @@ class Order extends Controller{
             $evaluate_images =Db::name('order_service_evaluate_images')->where('evaluate_order_id',$id)->select();
         return view('service_order_evaluate_edit',['evaluate_details'=>$evaluate_details,'evaluate_images'=>$evaluate_images]);
     }
+
+
     /**
-     * TODO:服务商订结束
+     * TODO:服务商订搜索
      */
+    public function service_order_evaluate_search(){
+        $order_information_number = input('number');
+        $user_name = input('user_name');
+        $s_time = input('start_time');
+        if($s_time){
+            $start_time = strtotime($s_time);           //开始时间
+        } else {
+            $start_time = null;           //开始时间
+        }
+        /*添加一天（23：59：59）*/
+        $time_max_data = input('end_time');
+        if($time_max_data){
+            $time_max = strtotime($time_max_data);
+            $t = date('Y-m-d H:i:s', $time_max + 1 * 24 * 60 * 60);
+            $end_time = strtotime($t);                       //结束时间 
+        } else {
+            $end_time = null;
+        }
+   
+        if(!empty($order_information_number) && (!empty($user_name)) && (!empty($start_time)) && (!empty($end_time))){
+            $time_condition  = "create_time > {$start_time} and create_time < {$end_time}";
+            $service_order_evaluate = db('order_service_evaluate')
+                                        ->where("order_information_number", "like", "%" . $order_information_number . "%")
+                                        ->where("user_name", "like", "%" . $user_name . "%")
+                                        ->where($time_condition)
+                                        ->order('create_time','desc')
+                                        ->paginate(20 ,false, [
+                                            'query' => request()->param(),
+                                        ]);
+            return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+        } else if((!empty($order_information_number)) && (empty($user_name)) && (empty($start_time)) && (empty($end_time))){
+            $service_order_evaluate = db('order_service_evaluate')
+                                        ->where("order_information_number", "like", "%" . $order_information_number . "%")
+                                        ->order('create_time','desc')
+                                        ->paginate(20 ,false, [
+                                            'query' => request()->param(),
+                                        ]);
+                                      
+            return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+        } else if(empty($order_information_number) && (!empty($user_name)) && (empty($start_time)) && (empty($end_time))){
+            $service_order_evaluate = db('order_service_evaluate')
+                                        ->where("user_name", "like", "%" . $user_name . "%")
+                                        ->order('create_time','desc')
+                                        ->paginate(20 ,false, [
+                                            'query' => request()->param(),
+                                        ]);
+                                        return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+        } else if(!empty($order_information_number) && (empty($user_name)) && (!empty($start_time)) && (empty($end_time))){
+            $time_condition  = "create_time > {$start_time} ";
+            $service_order_evaluate = db('order_service_evaluate')
+                                        ->whereOr($time_condition)
+                                        ->order('create_time','desc')
+                                        ->paginate(20 ,false, [
+                                            'query' => request()->param(),
+                                        ]);
+                                        return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+        } else if(empty($order_information_number) && (empty($user_name)) && (empty($start_time)) && (!empty($end_time))){
+            $time_condition  = "create_time < {$end_time}";
+            $service_order_evaluate = db('order_service_evaluate')
+                                        ->where("order_information_number", "like", "%" . $order_information_number . "%")
+                                        ->whereOr("user_name", "like", "%" . $user_name . "%")
+                                        ->whereOr($time_condition)
+                                        ->order('create_time','desc')
+                                        ->paginate(20 ,false, [
+                                            'query' => request()->param(),
+                                        ]);
+                                        return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+        } else if(!empty($order_information_number) && (!empty($user_name)) && (empty($start_time)) && (empty($end_time))){
+            $service_order_evaluate = db('order_service_evaluate')
+                                        ->where("order_information_number", "like", "%" . $order_information_number . "%")
+                                        ->whereOr("user_name", "like", "%" . $user_name . "%")
+                                        ->order('create_time','desc')
+                                        ->paginate(20 ,false, [
+                                            'query' => request()->param(),
+                                        ]);
+                                        return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+        } else  if(!empty($order_information_number) && (empty($user_name)) && (!empty($start_time)) && (empty($end_time))){
+            $time_condition  = "create_time > {$start_time} ";
+            $service_order_evaluate = db('order_service_evaluate')
+                                        ->where("order_information_number", "like", "%" . $order_information_number . "%")
+                                        ->whereOr($time_condition)
+                                        ->order('create_time','desc')
+                                        ->paginate(20 ,false, [
+                                            'query' => request()->param(),
+                                        ]);
+                                        return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+        } else if(!empty($order_information_number) && (empty($user_name)) && (empty($start_time)) && (!empty($end_time))){
+            $time_condition  = "create_time < {$end_time}";
+            $service_order_evaluate = db('order_service_evaluate')
+                                        ->where("order_information_number", "like", "%" . $order_information_number . "%")
+                                        ->whereOr($time_condition)
+                                        ->order('create_time','desc')
+                                        ->paginate(20 ,false, [
+                                            'query' => request()->param(),
+                                        ]);
+                                        return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+        } else if(empty($order_information_number) && (empty($user_name)) && (!empty($start_time)) && (!empty($end_time))){
+            $time_condition  = "create_time > {$start_time} and create_time < {$end_time}";
+            $service_order_evaluate = db('order_service_evaluate')
+                                        ->where($time_condition)
+                                        ->order('create_time','desc')
+                                        ->paginate(20 ,false, [
+                                            'query' => request()->param(),
+                                        ]);
+            return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+        } else if(empty($order_information_number) && (empty($user_name)) && (empty($start_time)) && (empty($end_time))){
+            $service_order_evaluate = db('order_service_evaluate')
+                                        ->paginate(20 ,false, [
+                                            'query' => request()->param(),
+                                        ]);
+            return view('service_order_evaluate',['service_order_evaluate'=>$service_order_evaluate]);
+        }
+
+        
+    } 
+    
 
 
     /**
