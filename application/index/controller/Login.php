@@ -160,8 +160,8 @@ class Login extends Controller{
                     }
                 }
             }
-            return view("user_bind_phone");
         }
+        return view("user_bind_phone");
     }
 
 

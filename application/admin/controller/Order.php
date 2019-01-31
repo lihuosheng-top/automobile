@@ -97,7 +97,9 @@ class Order extends Controller{
                 if ($bool) {
                     if ($status == 3) {
                         //对附近的快递员进行铃声提醒
-                        $store_id = Db::name("order_parts")->where("id", $id)->value("store_id");
+                        $store_id = Db::name("order_parts")
+                            ->where("id", $id)
+                            ->value("store_id");
                         $store_city_address = Db::name("store")
                             ->where("store_id", $store_id)
                             ->value("store_city_address");
@@ -112,7 +114,6 @@ class Order extends Controller{
                         if(!empty($account)){
                             $X->push_account_list("来新订单", "来新订单",$account);
                         }
-
                     }
                     return ajax_success("修改成功", ["status" => 1]);
                 } else {
