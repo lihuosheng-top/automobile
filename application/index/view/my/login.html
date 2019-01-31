@@ -111,7 +111,7 @@
                 })().then(function(res){
                     console.log(res);
                     if(res.status == 1){
-                        location.href = 'user_bind_phone';
+                        location.href = 'user_bind_phone?openid='+openid;
                     }
                 })
             }
