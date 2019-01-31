@@ -115,6 +115,17 @@ class Login extends Controller{
             $code = trim($_POST['mobile_code']);
             $password = trim($_POST['password']);
             $create_time = date('Y-m-d H:i:s');
+            if($is_wechat==1){
+                $boolss =Db::name("wechat")->where("open_id",$open_id)->find();
+                if($boolss){
+                    return ajax_error('微信号也绑定过', ['status' => 0]);
+                }
+            }else if($is_wechat==2){
+                $boolss =Db::name("qq")->where("open_id",$open_id)->find();
+                if($boolss){
+                    return ajax_error('qq号也绑定过', ['status' => 0]);
+                }
+            }
             if (strlen($mobile) != 11 || substr($mobile, 0, 1) != '1' || $code == '') {
                 return ajax_error("手机号格式错误，请重填");
             }
