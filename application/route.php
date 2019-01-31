@@ -666,6 +666,8 @@ Route::group("admin",[
 
     "platform_order_service_evaluate"=>"admin/Order/platform_order_service_evaluate", //平台服务商订单评价
     "platform_order_service_evaluate_edit"=>"admin/Order/platform_order_service_evaluate_edit", //平台服务商订单评价编辑
+    "platform_after_sale_search"=>"admin/Order/platform_after_sale_search", //平台售后维修搜索
+
 
     "platform_order_set_up"=>"admin/Order/platform_order_set_up", //平台商配件商订单设置
     /*订单管理：TODO:平台订单结束*/
