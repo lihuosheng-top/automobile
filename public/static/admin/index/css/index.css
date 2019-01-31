@@ -32,6 +32,7 @@ button{
 	width : 50px !important;
 	height: 50px !important;
 	margin: 0 auto !important;
+	overflow: hidden;
 }
 .clear {
 	clear   : both;
