@@ -235,9 +235,7 @@
         // 第三方 回调
         function loginCallback(openid, headurl, flag){
             var fl = (flag == 'wx' ?  1 : 2);
-            alert(openid)
             if(openid != null){
-                alert('是否进来')
                 (function(){
                     return $.ajax({
                         url: 'member_binding',
