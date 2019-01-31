@@ -980,9 +980,7 @@ class Apppay extends Controller
             $order_num =$request->only(['order_num'])['order_num'];
             include EXTEND_PATH."WxpayAPI/lib/Wxpayandroid.php";
             $data = Db::name('order_parts')->where('parts_order_number',$order_num)->find();
-
-//            $goods_name = "同城E车";    //商品名称
-            $goods_name =mb_substr($data['parts_goods_name'],0,30,"utf-8");
+            $goods_name =mb_substr($data['parts_goods_name'],0,60,"utf-8");
             $order_number = $data['parts_order_number'];    //订单号
             $goods_pay_money =$data['order_real_pay'];     //支付金额
             $notify_url = config("url_domain.address")."wxpay_parts_notifyurl";//异步通知URL(更改支付状态)
@@ -1079,9 +1077,7 @@ class Apppay extends Controller
                 ->where('service_order_number',$order_num)
                 ->find();
             //商品名称（不能太长，太长会出现微信参数报错）
-
-            $goods_name =$data['service_goods_name'];
-            $goods_name = iconv("gb2312", "utf-8", $goods_name);
+            $goods_name =mb_substr($data['service_goods_name'],0,60,"utf-8");
             $order_number = $data['service_order_number'];    //订单号
             $goods_pay_money =$data['service_real_pay'];     //支付金额
             $notify_url = config("url_domain.address")."wxpay_service_notifyurl";//异步通知URL(更改支付状态)
