@@ -219,19 +219,32 @@ class Index extends Controller
             $user_id = Session::get("user");
             if (empty($user_id)) {
                 $shop_id = $request->only(["id"])["id"];
-                $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
+                $goods = db("goods")->where("store_id", $shop_id)
+                    ->where("goods_status", 1)
+                    ->select();
                 foreach ($goods as $k_1=>$v_1){
-                    $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
+                    $goods[$k_1]['goods_adjusted_money'] = db("special")
+                        ->where("goods_id", $goods[$k_1]['id'])
+                        ->min('goods_adjusted_price');
                     if($v_1["goods_standard"] != "通用"){
                         unset($goods[$k_1]);
                     }
                 }
-                $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
-                $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
+                $serve_goods = db("serve_goods")
+                    ->where("store_id", $shop_id)
+                    ->where("status", 1)
+                    ->select();
+                $store = db("store")
+                    ->where("store_id", $shop_id)
+                    ->order("store_order_num")
+                    ->select();
                 foreach ($store as $k_2=>$v_2){
                     $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
                     $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
                     $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
+                    $store[$k_2]["phone_num"] =db("user")
+                        ->where("id",$v_2["user_id"])
+                        ->value("phone_num");
                 }
                 $service_setting = db("service_setting")->select();
                 $serve_data = [];
@@ -239,7 +252,10 @@ class Index extends Controller
                     foreach ($serve_goods as $val) {
                         if ($value["service_setting_id"] == $val["service_setting_id"]) {
                             $serve_data[$key]["serve_name"] = $value["service_setting_name"];
-                            $serve_data[$key]["serve_goods"] = db("serve_goods")->where("service_setting_id", $val["service_setting_id"])->where("store_id", $shop_id)->select();
+                            $serve_data[$key]["serve_goods"] = db("serve_goods")
+                                ->where("service_setting_id", $val["service_setting_id"])
+                                ->where("store_id", $shop_id)
+                                ->select();
                             $serve_data[$key]["service_setting_id"] = $val["service_setting_id"];
                         }
                     }
@@ -252,29 +268,52 @@ class Index extends Controller
             }else {
                 $user_id = Session::get("user");
                 $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->find();
-                $car_series = db("car_series")->where("brand", $user_car["brand"])->where("series", $user_car["series"])->field("vehicle_model")->find();
+                $car_series = db("car_series")
+                    ->where("brand", $user_car["brand"])
+                    ->where("series", $user_car["series"])
+                    ->field("vehicle_model")
+                    ->find();
                 if (!empty($car_series)) {
                     $shop_id = $request->only(["id"])["id"];
                     $goods = db("goods")->where("store_id", $shop_id)->where("goods_status", 1)->select();
                     if(empty($data)){
                         foreach ($goods as $k_1=>$v_1){
-                            $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
+                            $goods[$k_1]['goods_adjusted_money'] = db("special")
+                                ->where("goods_id", $goods[$k_1]['id'])
+                                ->min('goods_adjusted_price');
                             if($v_1["goods_standard"] != "通用"){
                                 unset($goods[$k_1]);
                             }
                         }
                     }else{
                         foreach ($goods as $k_1 => $v_1) {
-                            $goods[$k_1]['goods_adjusted_money'] = db("special")->where("goods_id", $goods[$k_1]['id'])->min('goods_adjusted_price');
+                            $goods[$k_1]['goods_adjusted_money'] = db("special")
+                                ->where("goods_id", $goods[$k_1]['id'])
+                                ->min('goods_adjusted_price');
                         }
                     }
-                    $serve_vehicle_model = db("serve_goods")->where("store_id", $shop_id)->where("vehicle_model", $car_series["vehicle_model"])->find();
-                    $serve_goods = db("serve_goods")->where("store_id", $shop_id)->where("status", 1)->select();
+                    $serve_vehicle_model = db("serve_goods")
+                        ->where("store_id", $shop_id)
+                        ->where("vehicle_model", $car_series["vehicle_model"])
+                        ->find();
+                    $serve_goods = db("serve_goods")
+                        ->where("store_id", $shop_id)
+                        ->where("status", 1)
+                        ->select();
                     $store = db("store")->where("store_id", $shop_id)->order("store_order_num")->select();
                     foreach ($store as $k_2=>$v_2){
-                        $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
-                        $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
-                        $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
+                        $store[$k_2]["advert_text"] = db("platform")
+                            ->where("store_id",$v_2["store_id"])
+                            ->value("advert_text");
+                        $store[$k_2]["start_time"] = db("platform")
+                            ->where("store_id",$v_2["store_id"])
+                            ->value("start_time");
+                        $store[$k_2]["end_time"] = db("platform")
+                            ->where("store_id",$v_2["store_id"])
+                            ->value("end_time");
+                        $store[$k_2]["phone_num"] =db("user")
+                            ->where("id",$v_2["user_id"])
+                            ->value("phone_num");
                     }
                     $serve_data = [];
                     $serve = [];

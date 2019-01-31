@@ -433,7 +433,7 @@
             var url = location.href,
                 goodsName = $('.goods_name .name').text(),
                 goodsDescribe = $('.selling-point').text(),
-                goodsImg = $('.select-goods-img img').attr('src');
+                goodsImg = document.domain + '/' + $('.select-goods-img img').attr('src');
             Android.share(url, goodsName, goodsDescribe, goodsImg);
         })
     </script>

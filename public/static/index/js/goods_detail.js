@@ -1,4 +1,4 @@
-// 获取url地址id
+ // 获取url地址id
 var url = location.search;
 // preStoreId 从店铺商品进来的详情
 var id, preId, specId, store_id, preStoreId, hotStatus, activityStatus,settingid;

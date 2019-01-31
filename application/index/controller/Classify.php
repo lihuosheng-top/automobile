@@ -501,6 +501,7 @@ class Classify extends Controller
             $goods_id = $request->only(["id"])["id"];
             $goods = db("goods")->where("id",$goods_id)->select();
             $goods_standard = db("special")->where("goods_id", $goods_id)->select();
+            $condition ="`status` != '9' and `status` != '10' and `status` != '0'";
             foreach ($goods as $key=>$value){
                 $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
                 $goods_standard_value = explode(",",$value["goods_standard_value"]);
@@ -510,6 +511,16 @@ class Classify extends Controller
                 $goods[$key]["goods_standard"] = $goods_standard;
             }
             if($goods){
+                foreach ($goods[0]["goods_standard"] as $k=>$v){
+                    $rm_number =Db::name("order_parts")
+                        ->where("special_id",$v["id"])
+                        ->where($condition)
+                        ->sum("order_quantity");//已买订单数量总和
+                    if(empty($rm_number)){
+                        $rm_number =0;
+                    }
+                    $goods[0]["goods_standard"][$k]["stock"] =$v["stock"]- $rm_number;
+                }
                 return ajax_success("获取成功",$goods);
             }else{
                 return ajax_error("获取失败");

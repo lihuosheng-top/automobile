@@ -92,7 +92,7 @@
                 // 立即邀请
                 $('.invite-btn').click(function(){
                     var inviteUrl = res.data.register_url;
-                    Android.share(inviteUrl);
+                    Android.share(inviteUrl, null, null, null);
                 })
             }
         })
