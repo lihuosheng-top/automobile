@@ -212,7 +212,6 @@
         function loginCallback(openid, headurl, flag){
             var fl = flag == 'wx' ?  1 : 2;
             if(openid != null){
-                var flag = 
                 (function(){
                     return $.ajax({
                         url: 'member_binding',
