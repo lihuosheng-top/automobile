@@ -96,23 +96,15 @@
         $('.QQ').click(function(){
             Android.qqLogin();
         })
-        function loginCallback(openid, headurl){
-            if(openid != null){
-                (function(){
-                    return $.ajax({
-                        url: 'aaa',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: {
-                            'openid': openid,
-                            'headurl': headurl
-                        }
-                    })
-                })().then(function(res){
-                    console.log(res);
-                    if(res.status == 1){
-                        location.href = 'user_bind_phone';
-                    }
+        function loginCallback(openid, headurl, flag){
+            var fl = (flag == 'wx' ?  1 : 2);
+            if(openid != 'null'){
+                location.href = 'user_bind_phone?openid=' + openid + '&flag=' + fl;
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '绑定已取消',
+                    time: 1
                 })
             }
         }

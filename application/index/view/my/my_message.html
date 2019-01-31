@@ -203,7 +203,6 @@
                             yes: function (index) {
                                 layer.close(index);
                                 var id = $(_this).find('span').data('id');
-                                console.log(id)
                                 unbind(id, 1);
                             }
                         });
@@ -220,7 +219,6 @@
                             yes: function (index) {
                                 layer.close(index);
                                 var id = $(_this).find('span').data('id');
-                                console.log(id)
                                 unbind(id, 2);
                             }
                         });
@@ -237,7 +235,7 @@
         // 第三方 回调
         function loginCallback(openid, headurl, flag){
             var fl = (flag == 'wx' ?  1 : 2);
-            if(openid != null){
+            if(openid != 'null'){
                 (function(){
                     return $.ajax({
                         url: 'member_binding',
@@ -250,11 +248,29 @@
                         }
                     })
                 })().then(function(res){
-                    alert(JSON.stringify(res))
                     console.log(res);
                     if(res.status == 1){
-                        location.reload();
+                        layer.open({
+                            skin: 'msg',
+                            content: '绑定成功',
+                            time: 1
+                        })
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1100);
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1
+                        })
                     }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '绑定已取消',
+                    time: 1
                 })
             }
         }
