@@ -981,6 +981,7 @@ class Apppay extends Controller
             include EXTEND_PATH."WxpayAPI/lib/Wxpayandroid.php";
             $data = Db::name('order_parts')->where('parts_order_number',$order_num)->find();
 //            $goods_name = $data['parts_goods_name'];    //商品名称
+            header("Content-Type: text/html;charset=utf-8");
             $goods_name =substr($data['parts_goods_name'],0,20);
             $order_number = $data['parts_order_number'];    //订单号
             $goods_pay_money =$data['order_real_pay'];     //支付金额
