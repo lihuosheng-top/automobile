@@ -175,10 +175,12 @@
 					<td>{$value.user.user_name == null ? "无" : $value.user.user_name}</td>
 					<td>{$value.issue}</td>
 					<td>{$value.issue_details}</td>
-					<td class="" style="display: flex;">
-						{volist name="$value.images" id="val"}
-						<div class="tdimg"><img src="__UPLOADS__/{$val}" /></div>
-						{/volist}
+					<td  >
+						<div style="display: flex;">
+							{volist name="$value.images" id="val"}
+							<div class="tdimg"><img src="__UPLOADS__/{$val}" /></div>
+							{/volist}
+					    </div>
 					</td>
 					<td>{$value.issue_relation}</td>
 					<td>

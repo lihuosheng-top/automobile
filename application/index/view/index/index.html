@@ -413,10 +413,10 @@
                 getAdvertisment('广东,深圳,福田区');
             }
         })()
-
         // 接收安卓回调内容
         function getAndroid(e) {
             // 定位成功
+            var e = JSON.parse(e);
             if(e.errorCode === 0){
                 var province = e.province;
                 var city = e.city;
