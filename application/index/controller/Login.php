@@ -45,6 +45,7 @@ class Login extends Controller{
             $res = Db::name('user')->field('password')->where('phone_num',$user_mobile)->find();
             if(!$res)
             {
+                //快递员
                 $is_express =Db::name("delivery")->where("account",$user_mobile)->find();
                if(!$is_express){
                    return ajax_error('手机号不存在',['status'=>0]);
@@ -118,12 +119,27 @@ class Login extends Controller{
             if($is_wechat==1){
                 $boolss =Db::name("wechat")->where("open_id",$open_id)->find();
                 if($boolss){
-                    return ajax_error('微信号也绑定过', ['status' => 0]);
+                    //如果qq存在则进行直接授权登录
+                    $user_id = Db::name("wechat")->where("open_id",$open_id)->value("user_id");
+                    $user_res =Db::name('user')->where('id',$user_id)->where('status',1)->field("id,phone_num")->find();
+                    if($user_res)
+                    {
+                        $user_data =[
+                            'phone_num'=> $user_res,
+                        ];
+                        Session::set("user",$user_res["id"]);
+                        Session::set('member',$user_data);
+                        return ajax_success('登录成功',$user_data);
+                    }else{
+                         ajax_error('此用户已被管理员设置停用');
+                    }
+//                    return ajax_error('此微信号已绑定过', ['status' => 0]);
                 }
             }else if($is_wechat==2){
                 $boolss =Db::name("qq")->where("open_id",$open_id)->find();
                 if($boolss){
-                    return ajax_error('qq号也绑定过', ['status' => 0]);
+                    //如果qq存在则进行直接授权登录
+//                    return ajax_error('此qq号已绑定过', ['status' => 0]);
                 }
             }
             if (strlen($mobile) != 11 || substr($mobile, 0, 1) != '1' || $code == '') {
