@@ -149,14 +149,14 @@ class Login extends Controller{
                                 return ajax_error('微信号也绑定过', ['status' => 0]);
                             }
                             $bools =Db::name("wechat")->insertGetId(["open_id"=>$open_id,"user_id"=>$res]);
-                            $res = Db::name('user')->where("id",$res)->update(["wechat_id"=>$bools]);
+                            $result = Db::name('user')->where("id",$res)->update(["wechat_id"=>$bools]);
                         }else if($is_wechat==2){
                             $boolss =Db::name("qq")->where("open_id",$open_id)->find();
                             if($boolss){
                                 return ajax_error('qq号也绑定过', ['status' => 0]);
                             }
                             $bools =Db::name("qq")->insertGetId(["open_id"=>$open_id,"user_id"=>$res]);
-                            $res = Db::name('user')->where("id",$res)->update(["qq_id"=>$bools]);
+                            $result = Db::name('user')->where("id",$res)->update(["qq_id"=>$bools]);
                         }
                         //如果注册成功（自己获取积分）
                         $send_integral = Db::name("recommend_integral")->where("id", 1)->value("register_integral");
