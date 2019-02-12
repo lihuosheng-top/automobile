@@ -129,6 +129,7 @@ class Login extends Controller{
                         ];
                         Session::set("user",$user_res["id"]);
                         Session::set('member',$user_data);
+                        $this->redirect("my_index");
                         return ajax_success('登录成功',$user_data);
                     }else{
                          ajax_error('此用户已被管理员设置停用');
