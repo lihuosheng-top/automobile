@@ -104,6 +104,7 @@ Route::group("",[
     'Dolog'=>"index/Login/Dolog", /*登录操作*/
     "logout"=>"index/Login/logout",/*退出登录*/
     "user_bind_phone"=>"index/Login/user_bind_phone", //第三方快捷登录绑定手机
+    "user_qq_wechat_log"=>"index/Login/user_qq_wechat_log", //qq或者微信快捷登录，如果没有则进行绑定操作
     "my_index"=>"index/My/my_index",  // 我的
     "my_information_details"=>"index/My/my_information_details",  // 订单消息提醒
     "my_message"=>"index/My/message", //我的个人信息

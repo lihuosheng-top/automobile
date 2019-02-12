@@ -119,17 +119,16 @@ class Login extends Controller{
             if($is_wechat==1){
                 $boolss =Db::name("wechat")->where("open_id",$open_id)->find();
                 if($boolss){
-                    //如果qq存在则进行直接授权登录
+                    //如果微信存在则进行直接授权登录
                     $user_id = Db::name("wechat")->where("open_id",$open_id)->value("user_id");
                     $user_res =Db::name('user')->where('id',$user_id)->where('status',1)->field("id,phone_num")->find();
                     if($user_res)
                     {
                         $user_data =[
-                            'phone_num'=> $user_res,
+                            'phone_num'=> $user_res["phone_num"],
                         ];
                         Session::set("user",$user_res["id"]);
                         Session::set('member',$user_data);
-                        $this->redirect("my_index");
                         return ajax_success('登录成功',$user_data);
                     }else{
                          ajax_error('此用户已被管理员设置停用');
@@ -140,6 +139,20 @@ class Login extends Controller{
                 $boolss =Db::name("qq")->where("open_id",$open_id)->find();
                 if($boolss){
                     //如果qq存在则进行直接授权登录
+                    //如果qq存在则进行直接授权登录
+                    $user_id = Db::name("qq")->where("open_id",$open_id)->value("user_id");
+                    $user_res =Db::name('user')->where('id',$user_id)->where('status',1)->field("id,phone_num")->find();
+                    if($user_res)
+                    {
+                        $user_data =[
+                            'phone_num'=> $user_res["phone_num"],
+                        ];
+                        Session::set("user",$user_res["id"]);
+                        Session::set('member',$user_data);
+                        return ajax_success('登录成功',$user_data);
+                    }else{
+                        ajax_error('此用户已被管理员设置停用');
+                    }
 //                    return ajax_error('此qq号已绑定过', ['status' => 0]);
                 }
             }
@@ -203,6 +216,63 @@ class Login extends Controller{
             }
         }
         return view("user_bind_phone");
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:qq或者微信快捷登录，如果没有则进行绑定操作
+     * 在成功回调里面进行跳转页面，不成功则执行另外一个绑定路由
+     **************************************
+     */
+    public function user_qq_wechat_log(Request $request){
+        if($request->isPost()){
+            $open_id =trim($_POST['id']);
+            $is_wechat =trim($_POST['is_wechat']); // (1为微信，2为qq)
+            if($is_wechat==1){
+                $boolss =Db::name("wechat")->where("open_id",$open_id)->find();
+                if($boolss){
+                    //如果qq存在则进行直接授权登录
+                    $user_id = Db::name("wechat")->where("open_id",$open_id)->value("user_id");
+                    $user_res =Db::name('user')->where('id',$user_id)->where('status',1)->field("id,phone_num")->find();
+                    if($user_res)
+                    {
+                        $user_data =[
+                            'phone_num'=> $user_res["phone_num"],
+                        ];
+                        Session::set("user",$user_res["id"]);
+                        Session::set('member',$user_data);
+                        return ajax_success('登录成功',$user_data);
+                    }else{
+                        ajax_error('此用户已被管理员设置停用');
+                    }
+//                    return ajax_error('此微信号已绑定过', ['status' => 0]);
+                }else{
+                    exit(json_encode(array("status" => 2, "info" => "前往绑定")));
+                }
+            }else if($is_wechat==2){
+                $boolss =Db::name("qq")->where("open_id",$open_id)->find();
+                if($boolss){
+                    //如果qq存在则进行直接授权登录
+                    $user_id = Db::name("qq")->where("open_id",$open_id)->value("user_id");
+                    $user_res =Db::name('user')->where('id',$user_id)->where('status',1)->field("id,phone_num")->find();
+                    if($user_res)
+                    {
+                        $user_data =[
+                            'phone_num'=> $user_res["phone_num"],
+                        ];
+                        Session::set("user",$user_res["id"]);
+                        Session::set('member',$user_data);
+                        return ajax_success('登录成功',$user_data);
+                    }else{
+                        ajax_error('此用户已被管理员设置停用');
+                    }
+//                    return ajax_error('此qq号已绑定过', ['status' => 0]);
+                }else{
+                    exit(json_encode(array("status" => 2, "info" => "前往绑定")));
+                }
+            }
+        }
     }
 
 
