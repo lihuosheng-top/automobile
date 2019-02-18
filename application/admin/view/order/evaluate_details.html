@@ -36,7 +36,7 @@
 		<div class="layui-form-item" style="display: none">
 			<label class="layui-form-label"> 用户ID：</label>
 			<div class="layui-input-block">
-				<input name="evaluate_id" value="{$evaluate_details.id}"></input>
+				<input name="evaluate_id" value="{$evaluate_details.id}">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -70,7 +70,7 @@
 				{if !empty($evaluate_images)}
 				{volist name="evaluate_images" id="vo"}
 				<span style="display: inline-block; width: 40px;">
-							<img src="__USERIMG__/{$vo.images}" width="100%" >
+							<img src="__UPLOADS__/{$vo.images}" width="100%" >
 						</span>
 				{/volist}
 				{/if}

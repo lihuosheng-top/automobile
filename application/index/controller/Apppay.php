@@ -1153,7 +1153,6 @@ class Apppay extends Controller
                 $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
                 $X = new  Xgcontent;
                 $X->push_Accountp("来新订单","来新订单了",$user_count);
-
                 return "success";
             }else {
                 return "fail";
