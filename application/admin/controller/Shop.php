@@ -120,6 +120,20 @@ class Shop extends Controller{
     public function img_store_img_del(Request $request){
         if($request->isPost()){
             $form_data =$_POST;
+            $res = Db::name('store')
+                ->where('store_id',$form_data["id"])
+                ->update(['verifying_physical_storefront_two'=>NULL]);
+            if($res){
+                $a = Db::name('store')
+                    ->where('store_id',$form_data["id"])
+                    ->value("verifying_physical_storefront_two");
+                return ajax_success("1",$a);
+            }else{
+                $a = Db::name('store')
+                    ->where('store_id',$form_data["id"])
+                    ->value("verifying_physical_storefront_two");
+                return ajax_error("2", $a);
+            }
                 $img_url =$request->only('title')['title'];
                 if(!empty($img_url)){
                     $data =Db::name('store')
@@ -129,16 +143,22 @@ class Shop extends Controller{
                     $datas =explode(',',$data['verifying_physical_storefront_two']);
                     foreach ($datas as $k=>$v) {
                         if ($v == $img_url) {
+                            //删除了图片
                             unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $v);
-                        } else {
+                        }else{
+                            //留下一些没有删除的链接
                             $new_data[] = $v;
                         }
                     }
                     if(!empty($new_data)){
                         $new_imgs_url =implode(',',$new_data);
-                        $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>$new_imgs_url]);
+                        $res = Db::name('store')
+                            ->where('store_id',$form_data["id"])
+                            ->update(['verifying_physical_storefront_two'=>$new_imgs_url]);
                     }else{
-                        $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>NULL]);
+                        $res = Db::name('store')
+                            ->where('store_id',$form_data["id"])
+                            ->update(['verifying_physical_storefront_two'=>NULL]);
                     }
                     if($res){
                         return ajax_success('删除成功',['status'=>1]);
