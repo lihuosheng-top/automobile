@@ -129,17 +129,17 @@ class Shop extends Controller{
                         ->find();
                     $datas =explode(',',$data['verifying_physical_storefront_two']);
                     foreach ($datas as $k=>$v){
-                        if($v==$img_url){
-                            unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$v);
-                        }else{
+//                        if($v==$img_url){
+//                            unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$v);
+//                        }else{
                             $new_data[] =$v;
-                        }
+//                        }
                     }
                     if(!empty($new_data)){
                         $new_imgs_url =implode(',',$new_data);
-                        $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>$new_imgs_url]);
+                        $res = Db::name('store')->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>$new_imgs_url]);
                     }else{
-                        $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>NULL]);
+                        $res = Db::name('store')->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>NULL]);
                     }
                     if($res){
                         return ajax_success('删除成功',['status'=>1]);
