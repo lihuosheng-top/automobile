@@ -120,7 +120,7 @@ class Shop extends Controller{
     public function img_store_img_del(Request $request){
         if($request->isPost()){
             $form_data =$_POST;
-            $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>NULL]);
+            $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>null]);
 //                $img_url =$request->only('title')['title'];
 //                if(!empty($img_url)){
 //                    $data =Db::name('store')
@@ -141,11 +141,11 @@ class Shop extends Controller{
 //                    }else{
 //                        $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>NULL]);
 //                    }
-//                    if($res){
-//                        return ajax_success('删除成功',['status'=>1]);
-//                    }else{
-//                        return ajax_success('删除失败',['status'=>0]);
-//                    }
+                    if($res){
+                        return ajax_success('删除成功',['status'=>1]);
+                    }else{
+                        return ajax_success('删除失败',['status'=>0]);
+                    }
 //
 //                }
         }
