@@ -189,9 +189,14 @@ class Shop extends Controller{
             }else{
                 $new =$verifying_physical_storefront_two[0];
             }
-            $old =Db::name('store')->where('store_id',$id)->value("verifying_physical_storefront_two");
             if($new){
-                $form_data['verifying_physical_storefront_two'] =$old.",".$new;
+                $old =Db::name('store')->where('store_id',$id)->value("verifying_physical_storefront_two");
+                if(!empty($old)){
+                    $form_data['verifying_physical_storefront_two'] =$old.",".$new;
+                }else{
+                    $form_data['verifying_physical_storefront_two'] =$new;
+                }
+
             }
         }
         $bool =Db::name('store')->where('store_id',$id)->update($form_data);
