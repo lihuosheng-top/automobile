@@ -132,7 +132,8 @@ class Shop extends Controller{
 //                        if($v==$img_url){
 //                            unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$v);
 //                        }else{
-                            $new_data[] =$v;
+//                            $new_data[] =$v;
+                            $new_data[] =null;
 //                        }
                     }
                     if(!empty($new_data)){
