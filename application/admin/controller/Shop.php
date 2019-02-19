@@ -120,35 +120,34 @@ class Shop extends Controller{
     public function img_store_img_del(Request $request){
         if($request->isPost()){
             $form_data =$_POST;
-            if($request->isPost()){
-                $img_url =$request->only('title')['title'];
-                if(!empty($img_url)){
-                    $data =Db::name('store')
-                        ->field('verifying_physical_storefront_two')
-                        ->where('store_id',$form_data["id"])
-                        ->find();
-                    $datas =explode(',',$data['verifying_physical_storefront_two']);
-                    foreach ($datas as $k=>$v) {
-                        if ($v == $img_url) {
-                            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $v);
-                        } else {
-                            $new_data[] = $v;
-                        }
-                    }
-                    if(!empty($new_data)){
-                        $new_imgs_url =implode(',',$new_data);
-                        $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>$new_imgs_url]);
-                    }else{
-                        $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>NULL]);
-                    }
-                    if($res){
-                        return ajax_success('删除成功',['status'=>1]);
-                    }else{
-                        return ajax_success('删除失败',['status'=>0]);
-                    }
-
-                }
-            }
+            $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>NULL]);
+//                $img_url =$request->only('title')['title'];
+//                if(!empty($img_url)){
+//                    $data =Db::name('store')
+//                        ->field('verifying_physical_storefront_two')
+//                        ->where('store_id',$form_data["id"])
+//                        ->find();
+//                    $datas =explode(',',$data['verifying_physical_storefront_two']);
+//                    foreach ($datas as $k=>$v) {
+//                        if ($v == $img_url) {
+//                            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $v);
+//                        } else {
+//                            $new_data[] = $v;
+//                        }
+//                    }
+//                    if(!empty($new_data)){
+//                        $new_imgs_url =implode(',',$new_data);
+//                        $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>$new_imgs_url]);
+//                    }else{
+//                        $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>NULL]);
+//                    }
+//                    if($res){
+//                        return ajax_success('删除成功',['status'=>1]);
+//                    }else{
+//                        return ajax_success('删除失败',['status'=>0]);
+//                    }
+//
+//                }
         }
     }
 
