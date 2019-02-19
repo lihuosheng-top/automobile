@@ -129,12 +129,12 @@ class Shop extends Controller{
                         ->find();
                     $datas =explode(',',$data['verifying_physical_storefront_two']);
                     foreach ($datas as $k=>$v){
-//                        if($v==$img_url){
-//                            unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$v);
-//                        }else{
-//                            $new_data[] =$v;
-                            $new_data[] =null;
-//                        }
+                        if($v==$img_url){
+                            unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$v);
+                        }else{
+                            $new_data[] =$v;
+
+                        }
                     }
                     if(!empty($new_data)){
                         $new_imgs_url =implode(',',$new_data);
