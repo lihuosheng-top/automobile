@@ -8,7 +8,6 @@
 namespace app\admin\controller;
 use think\Controller;
 use think\Db;
-use think\File;
 use think\Request;
 use think\paginator\driver\Bootstrap;
 
@@ -130,9 +129,8 @@ class Shop extends Controller{
                     $datas =explode(',',$data['verifying_physical_storefront_two']);
                     foreach ($datas as $k=>$v) {
                         if ($v == $img_url) {
-                            $a =1;
                             //删除了图片
-//                            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $v);
+                            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $v);
                         }else{
                             //留下一些没有删除的链接
                             $new_data[] = $v;
