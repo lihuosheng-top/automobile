@@ -8,6 +8,7 @@
 namespace app\admin\controller;
 use think\Controller;
 use think\Db;
+use think\File;
 use think\Request;
 use think\paginator\driver\Bootstrap;
 
@@ -120,20 +121,6 @@ class Shop extends Controller{
     public function img_store_img_del(Request $request){
         if($request->isPost()){
             $form_data =$_POST;
-            $res = Db::name('store')
-                ->where('store_id',$form_data["id"])
-                ->update(['verifying_physical_storefront_two'=>NULL]);
-            if($res){
-                $a = Db::name('store')
-                    ->where('store_id',$form_data["id"])
-                    ->value("verifying_physical_storefront_two");
-                return ajax_success("1",$a);
-            }else{
-                $a = Db::name('store')
-                    ->where('store_id',$form_data["id"])
-                    ->value("verifying_physical_storefront_two");
-                return ajax_error("2", $a);
-            }
                 $img_url =$request->only('title')['title'];
                 if(!empty($img_url)){
                     $data =Db::name('store')
