@@ -120,7 +120,6 @@ class Shop extends Controller{
     public function img_store_img_del(Request $request){
         if($request->isPost()){
             $form_data =$_POST;
-            $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>NULL]);
                 $img_url =$request->only('title')['title'];
                 if(!empty($img_url)){
                     $data =Db::name('store')
