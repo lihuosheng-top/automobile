@@ -184,7 +184,11 @@ class Shop extends Controller{
                 $info = $v->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $verifying_physical_storefront_two[] = str_replace("\\", "/", $info->getSaveName());
             }
-            $new =implode(',',$verifying_physical_storefront_two);
+            if(count($verifying_physical_storefront_two) > 1){
+                $new =implode(',',$verifying_physical_storefront_two);
+            }else{
+                $new =$verifying_physical_storefront_two[0];
+            }
             $old =Db::name('store')->where('store_id',$id)->value("verifying_physical_storefront_two");
             if($new){
                 $form_data['verifying_physical_storefront_two'] =$old.",".$new;
