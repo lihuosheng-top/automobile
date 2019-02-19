@@ -33,7 +33,8 @@ class Extension extends  Controller{
                 $reg = 'register';  //注册地址
                 $share_url = $domain_name.$reg."?a=".$user_invitation["invitation"];
                 /*二维码*/
-                $share_code ='http://b.bshare.cn/barCode?site=weixin&url='.$share_url;
+//                $share_code ='http://b.bshare.cn/barCode?site=weixin&url='.$share_url;
+                $share_code ='http://qr.topscan.com/api.php?text='.$share_url;
                     $data =[
                         "invitation"=>$user_invitation["invitation"],//邀请码
                         "invitation_images_url"=> $share_code, //邀请码二维码
