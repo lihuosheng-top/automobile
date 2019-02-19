@@ -520,6 +520,7 @@
 					dataType: "json",
 					success: function(data) {
 						remove.remove();
+                        location.reload()
 					},
 					error: function(data) {
 						console.log("错误");
@@ -538,7 +539,8 @@
 					dataType: "json",
 					success: function(data) {
 						remove.remove();
-					},
+                        location.reload();
+                    },
 					error: function(data) {
 						console.log("错误");
 					}

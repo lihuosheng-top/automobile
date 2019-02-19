@@ -184,10 +184,12 @@ class Shop extends Controller{
             }
             if(count($verifying_physical_storefront_two) > 1){
                 $new =implode(',',$verifying_physical_storefront_two);
-            }else{
+            }else if(count($verifying_physical_storefront_two) == 1){
                 $new =$verifying_physical_storefront_two[0];
+            }else{
+                $new =NULL;
             }
-            if($new){
+            if(!empty($new)){
                 $old =Db::name('store')->where('store_id',$id)->value("verifying_physical_storefront_two");
                 if(!empty($old)){
                     $form_data['verifying_physical_storefront_two'] =$old.",".$new;
