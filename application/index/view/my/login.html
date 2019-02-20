@@ -98,6 +98,7 @@
         })
         function loginCallback(openid, headurl, flag){
             var fl = (flag == 'wx' ?  1 : 2);
+            alert(openid)
             if(openid != 'null'){
                 $.ajax({
                     url: 'user_qq_wechat_log',
