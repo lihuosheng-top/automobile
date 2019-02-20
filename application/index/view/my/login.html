@@ -98,8 +98,8 @@
         })
         function loginCallback(openid, headurl, flag){
             var fl = (flag == 'wx' ?  1 : 2);
-            alert(openid)
             if(openid != 'null'){
+                alert(openid != 'null')
                 $.ajax({
                     url: 'user_qq_wechat_log',
                     type: 'POST',
@@ -123,7 +123,8 @@
                             })
                         }
                     },
-                    error: function(){
+                    error: function(res){
+                        alert(res.status, res.statusText);
                         console.log('error');
                     }
                 })
