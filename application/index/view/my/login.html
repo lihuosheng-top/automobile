@@ -104,12 +104,11 @@
                     type: 'POST',
                     dataType: 'JSON',
                     data: {
-                        'open_id': openid,
+                        'id': openid,
                         'is_wechat':fl
                     },
                     success: function(data){
                         console.log(data);
-                        alert(data);
                         if(data.status == 1){
                             location.href ='my_index';
                         }else if(data.status == 2){
@@ -122,7 +121,7 @@
                             })
                         }
                     },
-                    error: function(){
+                    error: function(res){
                         console.log('error');
                     }
                 })
