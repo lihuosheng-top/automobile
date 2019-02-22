@@ -350,6 +350,7 @@ $.ajax({
         console.log('爱车', res);
         if(res.status == 1){
             var res = res.data[0];
+            $('.icon_add').hide();
             $('.txt-div p').html(res.brand);
             $('.txt-div span').html(res.series + ' ' + res.displacement + ' ' + res.production_time);
         }else{
