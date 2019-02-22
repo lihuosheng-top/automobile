@@ -234,7 +234,11 @@ class Login extends Controller{
                 if($boolss){
                     //如果qq存在则进行直接授权登录
                     $user_id = Db::name("wechat")->where("open_id",$open_id)->value("user_id");
-                    $user_res =Db::name('user')->where('id',$user_id)->where('status',1)->field("id,phone_num")->find();
+                    $user_res =Db::name('user')
+                        ->where('id',$user_id)
+                        ->where('status',1)
+                        ->field("id,phone_num")
+                        ->find();
                     if($user_res)
                     {
                         $user_data =[
