@@ -2219,7 +2219,7 @@ class  SellMy extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:卖家提现申请
+     * Notes:卖家提现申请（此接口已不用）
      **************************************
      * @return \think\response\View
      */
@@ -2332,6 +2332,18 @@ class  SellMy extends Controller{
 
         }
         return view("sell_application");
+    }
+
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:卖家申请提现
+     **************************************
+     * @param Request $request
+     */
+    public function sell_cash_withdrawal(Request $request){
+        return view("sell_cash_withdrawal");
     }
 
 

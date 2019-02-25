@@ -157,7 +157,8 @@ Route::group("",[
     "sell_parts_record"=>"index/SellMy/sell_parts_record",//卖家商品记录
     "sell_order_bill"=>"index/SellMy/sell_order_bill",//卖家账单
     "sell_wallet"=>"index/SellMy/sell_wallet",//卖家钱包
-    "sell_application"=>"index/SellMy/sell_application",//卖家提现申请
+    "sell_application"=>"index/SellMy/sell_application",//卖家提现申请（此接口已不用）
+    "sell_cash_withdrawal"=>"index/SellMy/sell_cash_withdrawal",//卖家提现申请（此接口第二次改动）
     /*TODO:卖家我的页面结束*/
 
 
