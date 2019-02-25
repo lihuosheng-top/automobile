@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -132,11 +132,11 @@
             location.href = 'sell_service_record';
         })
         $('.last-bill').click(function(){
-            location.href = 'sell_service_record';
+            location.href = 'sell_cash_withdrawal';
         })
-        $('.wallet-btn').click(function(){
-            location.href = 'sell_wallet';
-        })
+        // $('.wallet-btn').click(function(){
+        //     location.href = 'sell_wallet';
+        // })
         $('.function-item').click(function(e){
             e.preventDefault();
             var index  = $(this).index() + 1;

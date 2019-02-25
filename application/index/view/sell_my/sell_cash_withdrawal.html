@@ -1,10 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <title>提现</title>
+    <style>
+        html, body, .wrapper{background-color: #f2f2f2;}
+        .header{position: relative;width: 100%;height: .88rem;background-color: #fff; border-bottom: 1px solid #eee;}
+        .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
+        .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .content{background-color: #fff; width: 95%; margin: .2rem auto 0; padding: .4rem; box-sizing: border-box;}
+        .content>div{padding: .2rem 0; font-size: .32rem; display: flex; align-items: center; border-bottom: 1px solid #eee;}
+        .content .canget span{color: #f00;}
+        .content .method{position: relative; font-weight: bold;}
+        .content .method::after{content: ''; background: url(__STATIC__/index/image/spr.png) no-repeat; background-size: 8rem 6rem; background-position: -7.25rem -1.75rem; display: block; width: .21rem; height: .33rem; position: absolute; top: .3rem; right: 0;}
+        .content .method span{margin-left: .5rem;}
+        .content .money{display: block;}
+        .content .money input{height: 100%; outline: none; padding-left: .2rem; font-size: .32rem;}
+        .content .money .currency-symbol{font-size: .48rem;}
+        .confirm{display: block; margin: .8rem auto 0; width: 90%; height: .8rem; border: 0; background-color: #38f; outline: none; color: #fff; border-radius: 3px;}
+    </style>
 </head>
 <body>
+    <div class="wrapper">
+        <header class="header">
+            <a href="sell_my_index" class="spr icon-back"></a>
+            <h3>提现</h3>
+        </header>
+        <div class="content">
+            <div class="canget">
+                当前可提现金额：￥<span>999</span>
+            </div>
+            <div class="method">
+                选择提现方式 <span>银行卡</span>
+            </div>
+            <div class="account">
+                提现账户：<span>136****3045</span>
+            </div>
+            <div class="money">
+                <p class="money-title">提现金额：</p>
+                <div>
+                    <span class="currency-symbol">￥</span>
+                    <input type="number" placeholder="请输入提现金额">
+                </div>
+            </div>
+        </div>
+        <button class="confirm">下一步</button>
+    </div>
 
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
 </body>
 </html>
