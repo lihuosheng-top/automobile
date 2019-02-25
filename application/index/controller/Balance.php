@@ -41,7 +41,7 @@ class Balance extends Controller
                     $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $business_id;
                     $user_wallet = Db::name("business_wallet")
                         ->where($arr_condition)
-                        ->sum("money");
+                        ->sum("able_money");
                     if ($money > $user_wallet) {
                         exit(json_encode(array("status" => 3, "info" => "商家余额不足，请换其他方式支付")));
                     } else {
@@ -80,7 +80,7 @@ class Balance extends Controller
                                 $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $business_id;
                                 $business_wallet = Db::name("business_wallet")
                                     ->where($arr_condition)
-                                    ->sum("money");
+                                    ->sum("able_money");
                                 $owner_wallet = Db::name("user")->where("id", $select_data[0]["user_id"])->value("user_wallet");
                                 $new_wallet = $business_wallet+$owner_wallet;
                                 $datas = [
@@ -142,7 +142,7 @@ class Balance extends Controller
                                 $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $select_data[0]["user_id"];
                                 $business_wallet = Db::name("business_wallet")
                                     ->where($arr_condition)
-                                    ->sum("money");
+                                    ->sum("able_money");
                                 $new_wallet = $business_wallet+$owner_wallet;
                                 $datas = [
                                     "user_id" => $select_data[0]["user_id"],//用户ID
@@ -208,7 +208,7 @@ class Balance extends Controller
                         $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $business_id;
                         $user_wallet = Db::name("business_wallet")
                             ->where($arr_condition)
-                            ->sum("money");
+                            ->sum("able_money");
                         if($money > $user_wallet){
                             exit(json_encode(array("status" => 3, "info" => "商家余额不足，请换其他方式支付")));
                         }else{
@@ -238,7 +238,7 @@ class Balance extends Controller
                                     $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $parts["user_id"];
                                     $business_wallet = Db::name("business_wallet")
                                         ->where($arr_condition)
-                                        ->sum("money");
+                                        ->sum("able_money");
                                     $owner_wallet = Db::name("user")->where("id", $parts["user_id"])->value("user_wallet");
                                     $new_wallet = $business_wallet+$owner_wallet;
                                     $datas = [
@@ -288,7 +288,7 @@ class Balance extends Controller
                                 $arr_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $parts["user_id"];
                                 $business_wallet = Db::name("business_wallet")
                                     ->where($arr_condition)
-                                    ->sum("money");
+                                    ->sum("able_money");
                                 $owner_wallet = Db::name("user")->where("id", $parts["user_id"])->value("user_wallet");
                                 $new_wallet = $business_wallet+$owner_wallet;
                                 $datas = [

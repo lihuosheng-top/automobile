@@ -162,6 +162,8 @@ Route::group("",[
     "sell_withdrawal_by_wechat"=>"index/SellMy/sell_withdrawal_by_wechat",//卖家微信提现申请
     "sell_withdrawal_by_alipay"=>"index/SellMy/sell_withdrawal_by_alipay",//卖家支付宝提现申请
     "sell_withdrawal_by_bank"=>"index/SellMy/sell_withdrawal_by_bank",//卖家银行卡提现申请
+    "check_password"=>"index/SellMy/check_password",//支付密码校验
+    "withdrawal_history"=>"index/SellMy/withdrawal_history",//提现历史记录（保存上一次提现的数据如银行卡信息）
     /*TODO:卖家我的页面结束*/
 
 

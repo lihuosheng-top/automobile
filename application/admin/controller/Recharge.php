@@ -240,24 +240,26 @@ class Recharge extends Controller{
                             //修改回状态
                             if(!empty( $money["wallet_income_ids"])){
                                 $id_arr =explode(",", $money["wallet_income_ids"]);
-                                foreach ($id_arr as $k =>$v){
-                                    Db::name("business_wallet")->where("id",$v)->update(["status"=>1]);
-                                }
+                             $able_money =  Db::name("business_wallet")->where("id",$id_arr[0])->value("able_money");
+                             Db::name("business_wallet")->where("id",$id_arr[0])->update(["status"=>1,"able_money"=>$able_money+$money["operation_amount"]]);
+//                                foreach ($id_arr as $k =>$v){
+//                                    Db::name("business_wallet")->where("id",$v)->update(["status"=>1]);
+//                                }
                             }
                             //用户修改状态
-                            if(!empty($money["wallet_expenditure_ids"])){
-                                $id_arr =explode(",", $money["wallet_expenditure_ids"]);
-                                foreach ($id_arr as $k =>$v){
-                                    Db::name("business_wallet")->where("id",$v)->update(["is_deduction"=>1]);
-                                }
-                            }
+//                            if(!empty($money["wallet_expenditure_ids"])){
+//                                $id_arr =explode(",", $money["wallet_expenditure_ids"]);
+//                                foreach ($id_arr as $k =>$v){
+//                                    Db::name("business_wallet")->where("id",$v)->update(["is_deduction"=>1]);
+//                                }
+//                            }
                             //车主用户钱包
                             $old_wallet =Db::name("user")->where("id",$money["user_id"])->value("user_wallet");
                             //商家钱包
                             $new_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " .  $money["user_id"];
                             $business_wallets = Db::name("business_wallet")
                                 ->where($new_condition)
-                                ->sum("money");
+                                ->sum("able_money");
                             $user_wallet=$old_wallet + $business_wallets;
                             //进行消费记录
                             $wallet_data =[
