@@ -465,23 +465,23 @@
                                         for(var i = 0; i < len; i++){
                                             $.each(res.data, function(idx, ele){
                                                 if(sortDistArr[i + curPage * 10].id == ele.id){
-                                                    str += `<li class="hot-item" id="`+ele.id+`">
-                                                                <div class="hot-headimg">
-                                                                    <img src="uploads/`+ele.shop_images+`">
-                                                                </div>
-                                                                <div class="hotshop-info">
-                                                                    <p class="hot-name">`+ele.shop_name+`</p>
-                                                                    <div class="star-time">
-                                                                        <i class="spr star1 `+
+                                                    str += '<li class="hot-item" id="'+ele.id+'">\
+                                                                <div class="hot-headimg">\
+                                                                    <img src="uploads/'+ele.shop_images+'">\
+                                                                </div>\
+                                                                <div class="hotshop-info">\
+                                                                    <p class="hot-name">'+ele.shop_name+'</p>\
+                                                                    <div class="star-time">\
+                                                                        <i class="spr star1 '+
                                                                         (ele.shop_star > 0 && ele.shop_star < 1 ? '' : 
                                                                         (ele.shop_star >= 1 && ele.shop_star < 2 ? 'star2' :
                                                                         (ele.shop_star >= 2 && ele.shop_star < 3 ? 'star3' : 
-                                                                        (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+`"></i>
-                                                                        <span>营业时间：`+ele.shop_time+`</span>
-                                                                    </div>
-                                                                    <p class="txt-hid-two hotshop-detail">约`+sortDistArr[i + curPage * 10].dist+`千米  `+ele.shop_address.split(',').join('')+`</p>
-                                                                </div>
-                                                            </li>`
+                                                                        (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+'"></i>\
+                                                                        <span>营业时间：'+ele.shop_time+'</span>\
+                                                                    </div>\
+                                                                    <p class="txt-hid-two hotshop-detail">约'+sortDistArr[i + curPage * 10].dist+'千米  '+ele.shop_address.split(',').join('')+'</p>\
+                                                                </div>\
+                                                            </li>'
                                                 }
                                             })
                                         }
