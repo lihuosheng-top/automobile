@@ -9,19 +9,19 @@ $.ajax({
         var carBrandStr = '';
         // 爱车热门品牌
         $.each(hotBrand, function(idx, val){
-            hotBrandStr += `<li class="hot-brand-li">\
-                                <img src="uploads/`+val.images+`">\
-                                <span class="txt-hid-one">`+val.brand+`</span>\
+            hotBrandStr += `<li class="hot-brand-li">
+                                <img src="uploads/`+val.images+`">
+                                <span class="txt-hid-one">`+val.brand+`</span>
                             </li>`;
         })
         $('.hot-brand-ul').append(hotBrandStr);
         // 爱车品牌
         $.each(res.data.brand, function(idx, val){
-            carBrandStr += `<div class="sort_list">\
-                                <div class="num_logo">\
-                                    <img src="uploads/`+val.images+`">\
-                                </div>\
-                                <div class="num_name">`+val.brand+`</div>\
+            carBrandStr += `<div class="sort_list">
+                                <div class="num_logo">
+                                    <img src="uploads/`+val.images+`">
+                                </div>
+                                <div class="num_name">`+val.brand+`</div>
                             </div>`;
         })
         $('.sort_box').append(carBrandStr);
@@ -350,6 +350,7 @@ $.ajax({
         console.log('爱车', res);
         if(res.status == 1){
             var res = res.data[0];
+            $('.icon_add').hide();
             $('.txt-div p').html(res.brand);
             $('.txt-div span').html(res.series + ' ' + res.displacement + ' ' + res.production_time);
         }else{

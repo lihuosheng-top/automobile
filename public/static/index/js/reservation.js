@@ -109,25 +109,26 @@ function showShops(addr){
                             if(ele.serve_name !== undefined){
                                 if(ele.serve_name.longitude !== null && ele.serve_name.latitude !== null){
                                     if(sortDisArr[i + curPage * 10].id == ele.id){
-                                        str += '<div>\
-                                                    <a href="reservation_detail?store_id='+ele.store_id+'&service_setting_id='+service_setting_id+'" class="shop_box">\
-                                                        <div class="addr_info_box">\
-                                                            <p class="shop_name_p">'+ele.serve_name.store_name+'</p>\
-                                                            <div class="comment_box">\
-                                                                <i class="spr icon_star"></i>\
-                                                                <p class="statistic_member">'+ele.service_setting_name+'<span class="member_num">2000</span>人去过</p>\
-                                                            </div>\
-                                                            <p class="distance_addr_box">\
-                                                                <span class="distance_span">约'+sortDisArr[i + curPage * 10].dis+'千米</span>\
-                                                                <span class="addr_span">'+ele.serve_name.store_detailed_address+'</span>\
-                                                            </p>\
-                                                        </div>\
-                                                        <div class="service_type">\
-                                                            <p class="service_price">￥'+(ele.service_money !== null ? ele.service_money:'面议')+'</p>\
-                                                            <p class="service_text">'+ele.service_setting_name+'</p>\
-                                                        </div>\
-                                                    </a>\
-                                                </div>'
+                                        str += `<div>
+                                                    <a href="reservation_detail?store_id=`+ele.store_id+`&service_setting_id=`+service_setting_id+`" class="shop_box">
+                                                        <div class="shop-headimg"><img src="111"></div>
+                                                        <div class="addr_info_box">
+                                                            <p class="shop_name_p">`+ele.serve_name.store_name+`</p>
+                                                            <div class="comment_box">
+                                                                <i class="spr icon_star"></i>
+                                                                <p class="statistic_member">`+ele.service_setting_name+`<span class="member_num">2000</span>人去过</p>
+                                                            </div>
+                                                            <p class="distance_addr_box">
+                                                                <span class="distance_span">约`+sortDisArr[i + curPage * 10].dis+`千米</span>
+                                                                <span class="addr_span">`+ele.serve_name.store_detailed_address+`</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="service_type">
+                                                            <p class="service_price">￥`+(ele.service_money !== null ? ele.service_money:'面议')+`</p>
+                                                            <p class="service_text">`+ele.service_setting_name+`</p>
+                                                        </div>
+                                                    </a>
+                                                </div>`
                                     }
                                 }
                             }

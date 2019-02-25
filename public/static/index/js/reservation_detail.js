@@ -106,6 +106,12 @@ if(urlLen > 1){
     
                     $('.comment_title').show();
                     evaAjax(data);
+
+                    // 电话 导航
+                    var storeAjax = data.data.store[0];
+                    $('.activity-contact .navigation').click(function(){
+                        Android.openGdMap(storeAjax.latitude, storeAjax.longitude, storeAjax.store_name)
+                    })
                 }
             },
             error: function(){
@@ -118,7 +124,6 @@ if(urlLen > 1){
         })
     }else{
         // 从首页活动广告进来
-        $('.activity-contact').show();
         $('.activity-section').show();
         (function(){
             return $.ajax({
