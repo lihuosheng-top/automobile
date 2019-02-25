@@ -159,6 +159,9 @@ Route::group("",[
     "sell_wallet"=>"index/SellMy/sell_wallet",//卖家钱包
     "sell_application"=>"index/SellMy/sell_application",//卖家提现申请（此接口已不用）
     "sell_cash_withdrawal"=>"index/SellMy/sell_cash_withdrawal",//卖家提现申请（此接口第二次改动）
+    "sell_withdrawal_by_wechat"=>"index/SellMy/sell_withdrawal_by_wechat",//卖家微信提现申请
+    "sell_withdrawal_by_alipay"=>"index/SellMy/sell_withdrawal_by_alipay",//卖家支付宝提现申请
+    "sell_withdrawal_by_bank"=>"index/SellMy/sell_withdrawal_by_bank",//卖家银行卡提现申请
     /*TODO:卖家我的页面结束*/
 
 
