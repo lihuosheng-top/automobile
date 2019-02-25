@@ -49,6 +49,10 @@ class Findpwd extends Controller{
                         $passwords =password_hash($password,PASSWORD_DEFAULT);
                         $password_bool =Db::name('user')->where('phone_num',$mobile)->update(['password'=>$passwords]);
                         if($password_bool){
+                            $is_admin =Db::name('admin')->where('phone',$mobile)->find();
+                            if(!empty($is_admin)){
+                                Db::name('admin')->where('phone',$mobile)->update(['passwd'=>$passwords]);
+                            }
                             $user_data =Db::name('user')->where('phone_num',$mobile)->find();
                             return ajax_success('密码修改成功',$user_data);
                         }else{
