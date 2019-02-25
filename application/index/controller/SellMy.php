@@ -2415,7 +2415,9 @@ class  SellMy extends Controller{
                     Db::name("recharge_reflect")->where("id",$res)->update(["wallet_income_ids"=>$wallet_income_ids]);
                     if($apply_money < $money){
                        $result_money =$money - $apply_money; //剩下的那部分钱，需要保存到之前数据里面
-                        Db::name("business_wallet")->where("id",$business_wallet_ids_arr[0])->update(["is_deduction"=>1,"able_money"=>$result_money]);
+                        Db::name("business_wallet")
+                            ->where("id",$business_wallet_ids_arr[0])
+                            ->update(["is_deduction"=>1,"able_money"=>$result_money,"status"=>1]);
                     }
                 }
                 //商家余额消费进行状态修改（支出部分，即用商家角色进行购买商品(当前时间之前的都进行修改))
@@ -2532,7 +2534,9 @@ class  SellMy extends Controller{
                     Db::name("recharge_reflect")->where("id",$res)->update(["wallet_income_ids"=>$wallet_income_ids]);
                     if($apply_money < $money){
                         $result_money =$money - $apply_money; //剩下的那部分钱，需要保存到之前数据里面
-                        Db::name("business_wallet")->where("id",$business_wallet_ids_arr[0])->update(["is_deduction"=>1,"able_money"=>$result_money]);
+                        Db::name("business_wallet")
+                            ->where("id",$business_wallet_ids_arr[0])
+                            ->update(["is_deduction"=>1,"able_money"=>$result_money,"status"=>1]);
                     }
                 }
                 //商家余额消费进行状态修改（支出部分，即用商家角色进行购买商品(当前时间之前的都进行修改))
@@ -2653,7 +2657,9 @@ class  SellMy extends Controller{
                     Db::name("recharge_reflect")->where("id",$res)->update(["wallet_income_ids"=>$wallet_income_ids]);
                     if($apply_money < $money){
                         $result_money =$money - $apply_money; //剩下的那部分钱，需要保存到之前数据里面
-                        Db::name("business_wallet")->where("id",$business_wallet_ids_arr[0])->update(["is_deduction"=>1,"able_money"=>$result_money]);
+                        Db::name("business_wallet")
+                            ->where("id",$business_wallet_ids_arr[0])
+                            ->update(["is_deduction"=>1,"able_money"=>$result_money,"status"=>1]);
                     }
                 }
                 //商家余额消费进行状态修改（支出部分，即用商家角色进行购买商品(当前时间之前的都进行修改))
@@ -2703,9 +2709,48 @@ class  SellMy extends Controller{
         }
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:校验支付密码
+     **************************************
+     */
+    public function check_password(Request $request){
+        //验证支付密码
+        $user_id = Session::get("user");
+        $user_info = Db::name("user")->field("pay_passwd")->where("id", $user_id)->find();//用户信息
+        $password = $request->only("passwords")["passwords"]; //输入的密码
+        if (password_verify($password,$user_info["pay_passwd"])){
+            return ajax_success("支付密码正确",["status"=>1]);
+        }else{
+            return ajax_error("支付密码错误",["status"=>0]);
+        }
+    }
 
-
-
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:提现历史记录（保存上一次提现的数据）
+     **************************************
+     */
+    public function withdrawal_history(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $is_type =$request->only(["is_type"])["is_type"];//提现方式：1为微信，2为支付宝，3为银行卡
+            $data =Db::name("recharge_reflect")
+                ->field("back_member,bank_card,back_name,wechat_count,alipay_count")
+                ->where("user_id",$user_id)
+                ->where("is_type",$is_type)
+                ->order("id","desc")
+                ->limit(1)
+                ->select();
+            if(!empty($data)){
+                return ajax_success("信息数据返回成功",$data);
+            }else{
+                return ajax_error("没有数据返回",["status"=>0]);
+            }
+        }
+    }
 
 
 }
