@@ -161,27 +161,27 @@
         function mySplicing(data, month){
             console.log(data)
             var str = '';
-            str += `<div class="cost-item">
-                        <h3 class="month-tit">`+month+`月</h3>
-                        <div class="bill-container">
-                            <div class="income-container">收入：￥<span>`+data.income+`</span></div>
-                            <div class="expenditure">支出：￥<span>`+data.expenditure+`</span></div>
-                        </div>
-                        <ul class="cost-ul">`;
+            str += '<div class="cost-item">\
+                        <h3 class="month-tit">'+month+'月</h3>\
+                        <div class="bill-container">\
+                            <div class="income-container">收入：￥<span>'+data.income+'</span></div>\
+                            <div class="expenditure">支出：￥<span>'+data.expenditure+'</span></div>\
+                        </div>\
+                        <ul class="cost-ul">';
             data.name.forEach(function(val, idx){
-                str += `<li class="cost-li" data-id="`+val.wallet_id+`">
-                            <div class="cost-method">
-                                <img src="__STATIC__/`+val.wallet_img+`">
-                            </div>
-                            <div class="cost-info">
-                                <p class="txt-hid-one">`+val.title+`</p>
-                                <span>`+val.operation_time+`</span>
-                            </div>
-                            <div class="cost-money">`+(val.wallet_operation > 0 ? '+'+val.wallet_operation : val.wallet_operation)+`</div>
-                        </li>`
+                str += '<li class="cost-li" data-id="'+val.wallet_id+'">\
+                            <div class="cost-method">\
+                                <img src="__STATIC__/'+val.wallet_img+'">\
+                            </div>\
+                            <div class="cost-info">\
+                                <p class="txt-hid-one">'+val.title+'</p>\
+                                <span>'+val.operation_time+'</span>\
+                            </div>\
+                            <div class="cost-money">'+(val.wallet_operation > 0 ? '+'+val.wallet_operation : val.wallet_operation)+'</div>\
+                        </li>'
             })
-            str += `</ul>
-                </div>`;
+            str += '</ul>\
+                </div>';
             return str;
         }
         function checkDetail(_this){

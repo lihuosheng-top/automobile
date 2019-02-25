@@ -83,9 +83,9 @@ $.ajax({
                     $('.select-goods-price span').text(val.goods_adjusted_price);
                     $('.select-goods-stock span').text(val.stock);
                     specId = val.id;
-                    specStr += `<span class="select-item select-on" id="`+val.id+`">`+val.name.split(',').join('')+`</span>`;
+                    specStr += '<span class="select-item select-on" id="'+val.id+'">'+val.name.split(',').join('')+'</span>';
                 }else{
-                    specStr += `<span class="select-item" id="`+val.id+`">`+val.name.split(',').join('')+`</span>`;
+                    specStr += '<span class="select-item" id="'+val.id+'">'+val.name.split(',').join('')+'</span>';
                 }
             })
             $('.select-container').append(specStr);
@@ -107,9 +107,9 @@ $.ajax({
                 var installationStr = '';
                 for(var j = 0; j < installationArr.length; j++){
                     if(j === 0){
-                        installationStr += `<button class="select-on select-item btn-item">`+installationArr[j]+`</button>`;
+                        installationStr += '<button class="select-on select-item btn-item">'+installationArr[j]+'</button>';
                     }else{
-                        installationStr += `<button class="select-item btn-item">`+installationArr[j]+`</button>`;
+                        installationStr += '<button class="select-item btn-item">'+installationArr[j]+'</button>';
                     }
                 }
                 $('.installation').show();
@@ -469,18 +469,18 @@ $(function(){
             if(res.status == 1){
                 var storeData = res.data.store_data;
                 $('.card-title')
-                    .html(`<img src="uploads/`+storeData.store_logo_images+`">
-                            <span class="txt-hid-one">`+storeData.store_name+`</span>
-                            <a href="store_index?storeId=`+res.data.store_id+`">进店</a>`)
+                    .html('<img src="uploads/'+storeData.store_logo_images+'">\
+                            <span class="txt-hid-one">'+storeData.store_name+'</span>\
+                            <a href="store_index?storeId='+res.data.store_id+'">进店</a>')
                 var str = '';
                 res.data.goods_info.forEach(function(val, idx){
-                    str += `<div>
-                                <img src="uploads/`+val.goods_show_images+`">
-                                <p>￥`+val.special_info[0].goods_adjusted_price+`</p>
-                            </div>`
+                    str += '<div>\
+                                <img src="uploads/'+val.goods_show_images+'">\
+                                <p>￥'+val.special_info[0].goods_adjusted_price+'</p>\
+                            </div>'
                 })
                 $('.card-show').html(str).click(function(){
-                    location.href = `store_index?storeId=`+res.data.store_id;
+                    location.href = 'store_index?storeId='+res.data.store_id;
                 });
 
             }
@@ -506,57 +506,57 @@ $.ajax({
             var data = res.data;
             var length = data.length > 3 ? 3: data.length;
             for(var i = 0; i < length; i++){
-                str += `<li class="comment_li" data-evalid="`+data[i].id+`">
-                            <div class="content-container">
-                                <div class="comment_user_info">
-                                    <div class="comment_user_headimg">
-                                        <img src="userimg/`+data[i].user_info.user_img+`">
-                                    </div>
-                                    <div class="comment_phone_time">
-                                        <div class="phone_time clearfix">
-                                            <span class="phone_box">`+data[i].user_info.phone_num+`</span>
-                                            <span class="time_box">`+timetrans(data[i].create_time)+`</span>
-                                        </div>
-                                        <span class="spr star `+(data[i].evaluate_stars === 5?'':
+                str += '<li class="comment_li" data-evalid="'+data[i].id+'">\
+                            <div class="content-container">\
+                                <div class="comment_user_info">\
+                                    <div class="comment_user_headimg">\
+                                        <img src="userimg/'+data[i].user_info.user_img+'">\
+                                    </div>\
+                                    <div class="comment_phone_time">\
+                                        <div class="phone_time clearfix">\
+                                            <span class="phone_box">'+data[i].user_info.phone_num+'</span>\
+                                            <span class="time_box">'+timetrans(data[i].create_time)+'</span>\
+                                        </div>\
+                                        <span class="spr star '+(data[i].evaluate_stars === 5?'':
                                                                 (data[i].evaluate_stars === 4?'four-star':
                                                                 (data[i].evaluate_stars === 3?'three-star':
-                                                                (data[i].evaluate_stars === 2?'two-star':'one-star'))))+`"></span>
-                                    </div>
-                                </div>
-                                <div class="comment_text_box">
-                                    <a href="javascript:;" class="comment_text_a">
-                                        <p class="comment_text_p">`+data[i].evaluate_content+`</p>
-                                    </a>`
+                                                                (data[i].evaluate_stars === 2?'two-star':'one-star'))))+'"></span>\
+                                    </div>\
+                                </div>\
+                                <div class="comment_text_box">\
+                                    <a href="javascript:;" class="comment_text_a">\
+                                        <p class="comment_text_p">'+data[i].evaluate_content+'</p>\
+                                    </a>'
                 // 有评论图片
                 if(data[i].images.length !== 0){
-                    str += `<ul class="comment_img_ul">`;
+                    str += '<ul class="comment_img_ul">';
                     data[i].images.forEach(function(ele, idx){
-                        str += `<li class="comment_img_li">
-                                    <img src="uploads/`+ele.images+`">
-                                </li>`
+                        str += '<li class="comment_img_li">\
+                                    <img src="uploads/'+ele.images+'">\
+                                </li>'
                     })
                     str += '</ul>';
                 }
                 // 有商家回复
                 if(data[i].business_repay !== null){
-                    str += `<div class="reply_box">
-                                <i class="triangle"></i>
-                                <p class="reply_text">`+data[i].business_repay+`</p>
-                            </div>`
+                    str += '<div class="reply_box">\
+                                <i class="triangle"></i>\
+                                <p class="reply_text">'+data[i].business_repay+'</p>\
+                            </div>'
                 }
-                str += `</div>
-                    </div>
-                    <div class="bottom_time_box">
-                    <p class="buy_time">购买时间: <span>`+timetrans(data[i].order_create_time)+`</span></p>
-                    <div>
-                        <a href="javascript:;" class="like">
-                            <i class="spr icon_like `+
+                str += '</div>\
+                    </div>\
+                    <div class="bottom_time_box">\
+                    <p class="buy_time">购买时间: <span>'+timetrans(data[i].order_create_time)+'</span></p>\
+                    <div>\
+                        <a href="javascript:;" class="like">\
+                            <i class="spr icon_like '+
                             (data[i].is_praise == 1 ? 'like-on':'')
-                            +`"></i><span class="like_num">`+data[i].praise+`</span>
-                        </a>
-                    </div>
-                </div>
-            </li>`
+                            +'"></i><span class="like_num">'+data[i].praise+'</span>\
+                        </a>\
+                    </div>\
+                </div>\
+            </li>'
             }
             $('.more_comment_box').before(str);
             // 评论点赞
@@ -640,57 +640,57 @@ function allEvaluateDataAjax(url){
             if(res.status == 1){
                 var str = '';
                 res.data.forEach(function(ele, idx){
-                    str += `<li class="comment_li" data-evalid="`+ele.id+`">
-                                <div class="all-content-container">
-                                    <div class="comment_user_info">
-                                        <div class="comment_user_headimg">
-                                            <img src="`+(ele.user_info.user_img===null?`static/index/image/avatar.png`:`userimg/`+ele.user_info.user_img)+`">
-                                        </div>
-                                        <div class="comment_phone_time">
-                                            <div class="phone_time clearfix">
-                                                <span class="phone_box">`+ele.user_info.phone_num+`</span>
-                                                <span class="time_box">`+timetrans(ele.create_time)+`</span>
-                                            </div>
-                                            <span class="spr star `+(ele.evaluate_stars === 5?'':
+                    str += '<li class="comment_li" data-evalid="'+ele.id+'">\
+                                <div class="all-content-container">\
+                                    <div class="comment_user_info">\
+                                        <div class="comment_user_headimg">\
+                                            <img src="'+(ele.user_info.user_img===null?'static/index/image/avatar.png':'userimg/'+ele.user_info.user_img)+'">\
+                                        </div>\
+                                        <div class="comment_phone_time">\
+                                            <div class="phone_time clearfix">\
+                                                <span class="phone_box">'+ele.user_info.phone_num+'</span>\
+                                                <span class="time_box">'+timetrans(ele.create_time)+'</span>\
+                                            </div>\
+                                            <span class="spr star '+(ele.evaluate_stars === 5?'':
                                                                     (ele.evaluate_stars === 4?'four-star':
                                                                     (ele.evaluate_stars === 3?'three-star':
-                                                                    (ele.evaluate_stars === 2?'two-star': 'one-star'))))+`"></span>
-                                        </div>
-                                    </div>
-                                    <div class="comment_text_box">
-                                        <a href="javascript:;" class="comment_text_a">
-                                            <p class="comment_text_p">`+ele.evaluate_content+`</p>
-                                        </a>`
+                                                                    (ele.evaluate_stars === 2?'two-star': 'one-star'))))+'"></span>\
+                                        </div>\
+                                    </div>\
+                                    <div class="comment_text_box">\
+                                        <a href="javascript:;" class="comment_text_a">\
+                                            <p class="comment_text_p">'+ele.evaluate_content+'</p>\
+                                        </a>'
                     // 有评论图片
                     if(ele.images.length !== 0){
-                        str += `<ul class="comment_img_ul">`;
+                        str += '<ul class="comment_img_ul">';
                         ele.images.forEach(function(val, idx){
-                            str += `<li class="comment_img_li">
-                                        <img src="uploads/`+val.images+`">
-                                    </li>`
+                            str += '<li class="comment_img_li">\
+                                        <img src="uploads/'+val.images+'">\
+                                    </li>'
                         })
                         str += '</ul>';
                     }
                     // 有商家回复
                     if(ele.business_repay !== null){
-                        str += `<div class="reply_box">
-                                    <i class="triangle"></i>
-                                    <p class="reply_text">`+ele.business_repay+`</p>
-                                </div>`
+                        str += '<div class="reply_box">\
+                                    <i class="triangle"></i>\
+                                    <p class="reply_text">'+ele.business_repay+'</p>\
+                                </div>'
                     }
-                    str += `</div>
-                        </div>
-                        <div class="bottom_time_box">
-                            <p class="buy_time">购买时间: <span>2018-11-05</span></p>
-                            <div>
-                                <a href="javascript:;" class="like">
-                                    <i class="spr icon_like `+
+                    str += '</div>\
+                        </div>\
+                        <div class="bottom_time_box">\
+                            <p class="buy_time">购买时间: <span>2018-11-05</span></p>\
+                            <div>\
+                                <a href="javascript:;" class="like">\
+                                    <i class="spr icon_like '+
                                     (ele.is_praise == 1 ? 'like-on':'')
-                                    +`"></i><span class="like_num">`+ele.praise+`</span>
-                                </a>
-                            </div>
-                        </div>
-                    </li>`
+                                    +'"></i><span class="like_num">'+ele.praise+'</span>\
+                                </a>\
+                            </div>\
+                        </div>\
+                    </li>'
                 })
                 $('.pop .comment_ul').html('').html(str);
                 // 评论点赞
@@ -726,24 +726,24 @@ function evaluateDetailAjax(id){
             console.log(res);
             if(res.status == 1){
                 var data = res.data;
-                $('.detail_user_info').html(`<div class="detail_user_headimg">
-                                            <img src="userimg/`+data.user_info.user_img+`">
-                                        </div>
-                                        <div class="detail_phone_time">
-                                            <div class="phone_time clearfix">
-                                                <span class="phone_box">`+data.user_info.phone_num+`</span>
-                                                <span class="time_box">`+timetrans(data.evaluate_info.create_time)+`</span>
-                                            </div>
-                                            <span class="spr star `+(data.evaluate_info.evaluate_stars === 5?'':
+                $('.detail_user_info').html('<div class="detail_user_headimg">\
+                                            <img src="userimg/'+data.user_info.user_img+'">\
+                                        </div>\
+                                        <div class="detail_phone_time">\
+                                            <div class="phone_time clearfix">\
+                                                <span class="phone_box">'+data.user_info.phone_num+'</span>\
+                                                <span class="time_box">'+timetrans(data.evaluate_info.create_time)+'</span>\
+                                            </div>\
+                                            <span class="spr star '+(data.evaluate_info.evaluate_stars === 5?'':
                                                                     (data.evaluate_info.evaluate_stars === 4?'four-star':
                                                                     (data.evaluate_info.evaluate_stars === 3?'three-star':
-                                                                    (data.evaluate_info.evaluate_stars === 2?'two-star': 'one-star'))))+`"></span>
-                                        </div>`)
+                                                                    (data.evaluate_info.evaluate_stars === 2?'two-star': 'one-star'))))+'"></span>\
+                                        </div>')
                 $('.detail_text_p').text(data.evaluate_info.evaluate_content);
                 if(data.images.length !== 0){
                     var str = '';
                     data.images.forEach(function(ele, idx){
-                        str += `<img src="uploads/`+ele.images+`">`
+                        str += '<img src="uploads/'+ele.images+'">'
                     })
                     $('.detail-com-img').html(str);
                 }
@@ -773,18 +773,18 @@ $(function(){
                     if(val.special_info.length === 0){
                         return false;
                     }
-                    str += `<li class="`+(idx % 2 !== 0?'mgr0':'')+`" data-storeId="`+val.store_id+`">
-                                <div class="img_div">
-                                    <img src="uploads/`+val.special_info[0].images+`">
-                                </div>
-                                <div class="goods_name">
-                                    <p class="txt-hid-two">`+val.goods_name+`</p>
-                                </div>
-                                <div class="goods_price">
-                                    <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
-                                    <span class="pay_num">`+val.statistical_quantity+`人购买</span>
-                                </div>
-                            </li>`
+                    str += '<li class="'+(idx % 2 !== 0?'mgr0':'')+'" data-storeId="'+val.store_id+'">\
+                                <div class="img_div">\
+                                    <img src="uploads/'+val.special_info[0].images+'">\
+                                </div>\
+                                <div class="goods_name">\
+                                    <p class="txt-hid-two">'+val.goods_name+'</p>\
+                                </div>\
+                                <div class="goods_price">\
+                                    <span class="price">￥'+val.special_info[0].goods_adjusted_price+'</span>\
+                                    <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
+                                </div>\
+                            </li>'
                 })
                 $('.like_cont_ul').html(str).on('click', 'li', function(){
                     location.href = 'store_index?storeId='+$(this).attr('data-storeId');

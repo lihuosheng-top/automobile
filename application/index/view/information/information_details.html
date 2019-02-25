@@ -71,38 +71,38 @@
                 var data = res.data;
                 var str = '';
                 $.each(data, function(idx, val){
-                    str += `<div class="daily-box">
-                                <div class="time-box"><span>`+DataTime(val.order_create_time)+`</span></div>
-                                <div class="news">
-                                    <div class="top">
-                                        <span class="order-number">订单编号：`+val.parts_order_number+`</span>
-                                        <span class="status">
-                                            `+(val.status==1 ? '待支付'  : "")+`
-                                            `+(val.status==2 ? '已支付'  : "")+`
-                                            `+(val.status==3 ? '待发货'  : "")+`
-                                            `+(val.status==4 ? '已发货'  : "")+`
-                                            `+(val.status==10 ? '已付款取消订单'  : "")+`
-                                            `+(val.status==7 ? '待评价'  : "")+`
-                                            `+(val.status==11 ? '退货'  : "")+`
-                                            `+(val.status==12 ? '已退货'  : "")+`
-                                            `+(val.status==13 ? '退货中'  : "")+`
-                                            `+(val.status==15 ? '退货已接单'  : "")+`
-                                            `+(val.status==14 ? '拒绝退货'  : "")+`
-                                        </span>
-                                    </div>
-                                    <div class="mid">
-                                        <div class="img-box">
-                                            <img src="__UPLOADS__/`+val.goods_image+`">
-                                        </div>
-                                        <div class="info-box">
-                                            <p class="goods-name txt-hid-two">`+val.parts_goods_name+`</p>
-                                        </div>
-                                    </div>
-                                    <div class="bot">
-                                        <span><a href="order_information_details?order_id=`+val.id+`">查看详情</a></span>
-                                    </div>
-                                </div>
-                            </div>`
+                    str += '<div class="daily-box">\
+                                <div class="time-box"><span>'+DataTime(val.order_create_time)+'</span></div>\
+                                <div class="news">\
+                                    <div class="top">\
+                                        <span class="order-number">订单编号：'+val.parts_order_number+'</span>\
+                                        <span class="status">\
+                                            '+(val.status==1 ? '待支付'  : "")+'\
+                                            '+(val.status==2 ? '已支付'  : "")+'\
+                                            '+(val.status==3 ? '待发货'  : "")+'\
+                                            '+(val.status==4 ? '已发货'  : "")+'\
+                                            '+(val.status==10 ? '已付款取消订单'  : "")+'\
+                                            '+(val.status==7 ? '待评价'  : "")+'\
+                                            '+(val.status==11 ? '退货'  : "")+'\
+                                            '+(val.status==12 ? '已退货'  : "")+'\
+                                            '+(val.status==13 ? '退货中'  : "")+'\
+                                            '+(val.status==15 ? '退货已接单'  : "")+'\
+                                            '+(val.status==14 ? '拒绝退货'  : "")+'\
+                                        </span>\
+                                    </div>\
+                                    <div class="mid">\
+                                        <div class="img-box">\
+                                            <img src="__UPLOADS__/'+val.goods_image+'">\
+                                        </div>\
+                                        <div class="info-box">\
+                                            <p class="goods-name txt-hid-two">'+val.parts_goods_name+'</p>\
+                                        </div>\
+                                    </div>\
+                                    <div class="bot">\
+                                        <span><a href="order_information_details?order_id='+val.id+'">查看详情</a></span>\
+                                    </div>\
+                                </div>\
+                            </div>'
                 })
                 $('.MessageList').append(str);
             }

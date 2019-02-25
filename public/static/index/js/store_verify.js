@@ -77,10 +77,10 @@ $(function(){
             console.log(imagesFileArr);
 
             $.each(urlArr, function(idx, val){
-                str += `<div class="store-inner-imgbox">
-                            <button class="close">×</button>
-                            <img src="`+val+`">
-                        </div>`
+                str += '<div class="store-inner-imgbox">\
+                            <button class="close">×</button>\
+                            <img src="'+val+'">\
+                        </div>'
             })
             $('.mul-img').append(str);
         }else{
@@ -257,10 +257,10 @@ $.ajax({
             $('#license-img')[0].src = 'uploads/' + data.store_do_bussiness_side_img;
             $('#face-img')[0].src = 'uploads/' + data.verifying_physical_storefront_one;
             $.each(data.imgs, function(idx, val){
-                str += `<div class="store-inner-imgbox">
-                            <button class="close">×</button>
-                            <img src="uploads/`+val+`">
-                        </div>`
+                str += '<div class="store-inner-imgbox">\
+                            <button class="close">×</button>\
+                            <img src="uploads/'+val+'">\
+                        </div>'
             })
             $('.mul-img').append(str);
             $('.submit-button').text('提交修改');

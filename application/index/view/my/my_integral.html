@@ -111,17 +111,17 @@
         })
         function mySplicing(data, month){
             var str = '';
-            str += `<div class="integral-div">
-                        <ul>
-                            <li class="detail-li detail-li-first">`+month+`月</li>`
+            str += '<div class="integral-div">\
+                        <ul>\
+                            <li class="detail-li detail-li-first">'+month+'月</li>'
             data.forEach(function(val, idx){
-                str += `<li class="detail-li">
-                            <p class="cost-name txt-hid-one">`+val.integral_remarks+`</p>
-                            <p class="budget-integral">`+(val.integral_operation > 0 ? '+'+val.integral_operation : val.integral_operation)+`</p>
-                        </li>`
+                str += '<li class="detail-li">\
+                            <p class="cost-name txt-hid-one">'+val.integral_remarks+'</p>\
+                            <p class="budget-integral">'+(val.integral_operation > 0 ? '+'+val.integral_operation : val.integral_operation)+'</p>\
+                        </li>'
             })
-            str += `</ul>
-                </div>`
+            str += '</ul>\
+                </div>'
             return str;
         }
 

@@ -99,17 +99,17 @@
                     var val = res.data;
                     var statusTxt = '';
                     if(val.status === 1){
-                        statusTxt = `待付款`;
+                        statusTxt = '待付款';
                     }else if(val.status === 2 || val.status === 3 || val.status === 4 || val.status === 5){
-                        statusTxt = `待收货`;
+                        statusTxt = '待收货';
                     }else if(val.status === 6 || val.status === 7){
-                        statusTxt = `待评价`;
+                        statusTxt = '待评价';
                     }else if(val.status === 8){
-                        statusTxt = `已完成`;
+                        statusTxt = '已完成';
                     }else if(val.status === 9 || val.status === 10){
-                        statusTxt = `已取消`;
+                        statusTxt = '已取消';
                     }else if(val.status === 11){
-                        statusTxt = `退货`;
+                        statusTxt = '退货';
                     }else if(val.status === 12){
                         statusTxt = '已退货';
                     }
@@ -125,19 +125,19 @@
                     $('.order-shop-name').text(val.store_name);
                     var str = '';
                     $.each(val.info, function(idx, val){
-                        str += `<div class="order-goods-detail">
-                                    <div class="order-goods-img">
-                                        <img src="uploads/`+val.goods_image+`">
-                                    </div>
-                                    <div class="order-info-box">
-                                        <p class="order-goods-p txt-hid-two">`+val.parts_goods_name+`</p>
-                                        <p class="order-selling-point txt-hid-two">`+val.goods_describe+`</p>
-                                        <div class="unit-price-quantity">
-                                            <p class="unit-price-p">￥`+val.goods_money+`</p>
-                                            <p class="quantity-p">×`+val.order_quantity+`</p>
-                                        </div>
-                                    </div>
-                                </div>`
+                        str += '<div class="order-goods-detail">\
+                                    <div class="order-goods-img">\
+                                        <img src="uploads/'+val.goods_image+'">\
+                                    </div>\
+                                    <div class="order-info-box">\
+                                        <p class="order-goods-p txt-hid-two">'+val.parts_goods_name+'</p>\
+                                        <p class="order-selling-point txt-hid-two">'+val.goods_describe+'</p>\
+                                        <div class="unit-price-quantity">\
+                                            <p class="unit-price-p">￥'+val.goods_money+'</p>\
+                                            <p class="quantity-p">×'+val.order_quantity+'</p>\
+                                        </div>\
+                                    </div>\
+                                </div>'
                     })
                     $('.order-shop-box').after(str);
                     // 总额

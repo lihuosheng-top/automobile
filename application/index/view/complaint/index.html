@@ -157,10 +157,10 @@
                     imgFiles.push(inputElem.files[i]);
                 }
                 imgArrDom.forEach(function(el){
-                    str += `<div class="upload-item">
-                                <img src="`+el+`">
-                                <button class="del-img">×</button>
-                            </div>`
+                    str += '<div class="upload-item">\
+                                <img src="'+el+'">\
+                                <button class="del-img">×</button>\
+                            </div>'
                 })
                 $('.vi-camera').append(str);
             }else{
