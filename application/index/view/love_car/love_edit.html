@@ -120,7 +120,55 @@
             console.log(res);
             if(res.status == 1){
                 $('.info-bg img').attr('src', 'uploads/'+res.data.images);
-                $('.info-p').text(res.data.brand + ' ' + res.data.series + ' ' + res.data.displacement + ' ' + res.data.production_time)
+                $('.info-p').text(res.data.brand + ' ' + res.data.series + ' ' + res.data.displacement + ' ' + res.data.production_time);
+                // 保存车辆信息
+                var id = res.data.id;
+                $('.save-btn').click(function(){
+                    var seat = $('.seat-input').val();
+                    var colour = $('.color-input').val();
+                    var plate_number = $('#word-select option:selected').val()+$('.plant-input').val();
+                    if($('.plant-input').val() !== ''){
+                        $.ajax({
+                            url: 'love_list_save',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                'id': id,
+                                'seat': seat,
+                                'colour': colour,
+                                'plate_number': plate_number
+                            },
+                            success: function(res){
+                                console.log(res);
+                                if(res.status == 1){
+                                    layer.open({
+                                        skin: 'msg',
+                                        content: res.info,
+                                        time: .8
+                                    })
+                                    setTimeout(function(){
+                                        location.href = 'love_list';
+                                    }, 1000)
+                                }else if(res.status == 0){
+                                    layer.open({
+                                        skin: 'msg',
+                                        content: res.info,
+                                        time: .8
+                                    })
+                                }
+                            },
+                            error: function(){
+                                console.log('error');
+                            }
+                        })
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: '请填写车牌号',
+                            time: 1
+                        })
+                    }
+                })
             }
         })
 
@@ -141,65 +189,7 @@
             words.style.display = 'none';
         }
 
-        // 保存车辆信息
-        $('.save-btn').click(function(){
-            var seat = $('.seat-input').val();
-            var colour = $('.color-input').val();
-            var plate_number = $('#word-select option:selected').val()+' '+$('.plant-input').val();
-            // var driving_number = $('.mileage-input').val();
-            // var carriage_number = $('.vin-num-input').val();
-            // var engine_number = $('.engine-no-input').val();
-            // var car_insurance = $('.insurer-input').val();
-            // var insurance_time = $('.expiration-date-input').val();
-            if($('.plant-input').val() !== ''){
-                $.ajax({
-                    url: 'love_list_save',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {
-                        'id': id,
-                        'seat': seat,
-                        'colour': colour,
-                        'plate_number': plate_number,
-                        // 'driving_number': driving_number,
-                        // 'carriage_number': carriage_number,
-                        // 'engine_number': engine_number,
-                        // 'car_insurance': car_insurance,
-                        // 'insurance_time': insurance_time
-                    },
-                    success: function(res){
-                        console.log(res);
-                        if(res.status == 1){
-                            layer.open({
-                                skin: 'msg',
-                                content: res.info,
-                                time: .8
-                            })
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1000)
-                            $('.wrapper').show();
-                            $('.car-detail-pop').hide();
-                        }else if(res.status == 0){
-                            layer.open({
-                                skin: 'msg',
-                                content: res.info,
-                                time: .8
-                            })
-                        }
-                    },
-                    error: function(){
-                        console.log('error');
-                    }
-                })
-            }else{
-                layer.open({
-                    skin: 'msg',
-                    content: '请填写车牌号',
-                    time: 1
-                })
-            }
-        })
+        
     </script>
 </body>
 </html>
