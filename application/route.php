@@ -33,6 +33,7 @@ Route::group("",[
     "love_car"=>"index/LoveCar/love_car",
     "love_list"=>"index/LoveCar/love_list",                         //我的爱车列表
     "love_edit"=>"index/LoveCar/love_edit",                         //我的爱车编辑
+    "love_car_go"=>"index/LoveCar/love_car_go",                         //跳到编辑页面
     "love_save"=>"index/LoveCar/love_save",                         //我的爱车入库
     "love_status"=>"index/LoveCar/love_status",                         //我的爱车状态修改
     "love_del"=>"index/LoveCar/love_del",                         //我的爱车列表删除
