@@ -108,7 +108,7 @@ if(urlLen > 1){
                     evaAjax(data);
 
                     // 电话 导航
-                    var seatNum = data.data.store[0].phone_num;
+                    var seatNum = data.data.store[0].phone_number;
                     var storeAjax = data.data.store[0];
                     $('.activity-contact .phone').attr('href', "javascript:Android.call("+seatNum+");");
                     $('.activity-contact .phone-number').text(seatNum);
