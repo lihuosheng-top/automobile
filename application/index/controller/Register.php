@@ -86,6 +86,7 @@ class Register extends Controller{
     public function  doRegByPhone(Request $request){
         if($request->isPost())
         {
+            return ajax_success("233333",session('mobileCode'));
             $mobile = $request->only(['mobile'])['mobile'];
             $is_reg =Db::name("user")->where("phone_num",$mobile)->find();
             if(!empty($is_reg)){
