@@ -85,17 +85,15 @@ class Register extends Controller{
     public function  doRegByPhone(Request $request){
         if($request->isPost())
         {
-            $mobile = trim($_POST['mobile']);
-            return ajax_success("1121",$mobile);
+            $mobile = $request->only(['mobile'])['mobile'];
             $is_reg =Db::name("user")->where("phone_num",$mobile)->find();
             if(!empty($is_reg)){
                 return ajax_error("此手机已注册，可以直接登录");
             }
-            $code = trim($_POST['mobile_code']);
-            $password =trim($_POST['password']);
-            $confirm_password =trim($_POST['confirm_password']);
+            $code = $request->only(['mobile_code'])['mobile_code'];
+            $password = $request->only(['password'])['password'];
+            $confirm_password = $request->only(['confirm_password'])['confirm_password'];
             $create_time =date('Y-m-d H:i:s');
-
             if($password !==$confirm_password ){
                 return ajax_error('两次密码不相同');
             }
