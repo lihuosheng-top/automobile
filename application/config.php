@@ -189,14 +189,19 @@ return [
     // +----------------------------------------------------------------------
 
     'cache'                  => [
-        // 驱动方式
-        'type'   => 'File',
-        // 缓存保存目录
-        'path'   => CACHE_PATH,
-        // 缓存前缀
-        'prefix' => '',
-        // 缓存有效期 0表示永久缓存
-        'expire' => 0,
+//        // 驱动方式
+//        'type'   => 'File',
+//        // 缓存保存目录
+//        'path'   => CACHE_PATH,
+//        // 缓存前缀
+//        'prefix' => '',
+//        // 缓存有效期 0表示永久缓存
+//        'expire' => 0,
+        'type'      => 'redis',
+        'host'      => '127.0.0.1',
+        'port'      => '6379',//你redis的端口号，可以在配置文件设置其他的
+        'password'  => 'test', //这里是你redis配置的密码，如果没有则留空
+        'timeout'   => 3600 //缓存时间
     ],
 
     // +----------------------------------------------------------------------
@@ -254,7 +259,8 @@ return [
     'ACCESSKEY' => 'soGfh5lHiFhkhfziSHOHZ5F1sJls4Yjf6fHDnHUB',//你的accessKey
     'SECRETKEY' => 'nk5Zhdc6OcjQGdgWLtHzlIgDWAna2e3r1yYoInSm',//你的secretKey
     'BUCKET' => 'tongchenweilaiecar',//上传的空间
-    'DOMAIN'=>'https://zlh188.cn/'//空间绑定的域名
+    'DOMAIN'=>'https://zlh188.cn/',//空间绑定的域名
+
 
 
 

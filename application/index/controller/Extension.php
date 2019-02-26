@@ -13,6 +13,7 @@ use think\Controller;
 use think\Request;
 use think\Db;
 use think\Session;
+use think\Cache;
 class Extension extends  Controller{
     /**
      **************李火生*******************

@@ -8,6 +8,7 @@
 namespace app\index\controller;
 
 
+use think\Cache;
 use think\Controller;
 use think\Request;
 use think\Session;
