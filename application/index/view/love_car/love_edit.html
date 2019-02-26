@@ -127,6 +127,18 @@
             words.style.display = 'none';
         }
 
+        $.ajax({
+            url: 'love_edit',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(res){
+                console.log(res.status, res.statusText);
+            }
+        })
+
         // 保存车辆信息
         var id;
         $('.save-btn').click(function(){
