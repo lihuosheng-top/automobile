@@ -110,6 +110,20 @@
     <!-- <script src="__STATIC__/index/js/plugin/LCalendar.min.js"></script> -->
     <!-- 日期插件 end-->
     <script>
+        (function(){
+            return $.ajax({
+                url: 'love_edit',
+                type: 'POST',
+                dataType: 'JSON',
+            })
+        })().then(function(res){
+            console.log(res);
+            if(res.status == 1){
+                $('.info-bg img').attr('src', 'uploads/'+res.data.images);
+                $('.info-p').text(res.data.brand + ' ' + res.data.series + ' ' + res.data.displacement + ' ' + res.data.production_time)
+            }
+        })
+
         // 车辆信息 下拉框
         var show = document.getElementById('show-input');
         var words = document.getElementById('word-select');
@@ -127,29 +141,16 @@
             words.style.display = 'none';
         }
 
-        $.ajax({
-            url: 'love_edit',
-            type: 'POST',
-            dataType: 'JSON',
-            success: function(res){
-                console.log(res);
-            },
-            error: function(res){
-                console.log(res.status, res.statusText);
-            }
-        })
-
         // 保存车辆信息
-        var id;
         $('.save-btn').click(function(){
             var seat = $('.seat-input').val();
             var colour = $('.color-input').val();
             var plate_number = $('#word-select option:selected').val()+' '+$('.plant-input').val();
-            var driving_number = $('.mileage-input').val();
-            var carriage_number = $('.vin-num-input').val();
-            var engine_number = $('.engine-no-input').val();
-            var car_insurance = $('.insurer-input').val();
-            var insurance_time = $('.expiration-date-input').val();
+            // var driving_number = $('.mileage-input').val();
+            // var carriage_number = $('.vin-num-input').val();
+            // var engine_number = $('.engine-no-input').val();
+            // var car_insurance = $('.insurer-input').val();
+            // var insurance_time = $('.expiration-date-input').val();
             if($('.plant-input').val() !== ''){
                 $.ajax({
                     url: 'love_list_save',
@@ -160,11 +161,11 @@
                         'seat': seat,
                         'colour': colour,
                         'plate_number': plate_number,
-                        'driving_number': driving_number,
-                        'carriage_number': carriage_number,
-                        'engine_number': engine_number,
-                        'car_insurance': car_insurance,
-                        'insurance_time': insurance_time
+                        // 'driving_number': driving_number,
+                        // 'carriage_number': carriage_number,
+                        // 'engine_number': engine_number,
+                        // 'car_insurance': car_insurance,
+                        // 'insurance_time': insurance_time
                     },
                     success: function(res){
                         console.log(res);
