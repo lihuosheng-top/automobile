@@ -79,13 +79,13 @@ class Findpwd extends Controller{
             $mobile = $_POST["mobile"];
             $is_set_mobile =Db::name('user')->where('phone_num',$mobile)->find();
             if(empty($is_set_mobile)){
-                return ajax_error("此手机未注册");
+                return ajax_error("此手机未注册",0);
             }
             $mobileCode = rand(100000, 999999);
             $arr = json_decode($mobile, true);
             $mobiles = strlen($arr);
             if (isset($mobiles) != 11) {
-                return ajax_error("手机号码不正确");
+                return ajax_error("手机号码不正确",0);
             }
             //存入session中
             if (strlen($mobileCode)> 0){
