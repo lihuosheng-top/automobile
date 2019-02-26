@@ -119,7 +119,6 @@ $.ajax({
         })
         // 查看详细信息
         $('.car-info-top').click(function(){
-            id = $(this).attr('id');
             location.href = 'love_edit';
         })
         $('.add-car-btn').click(function(){
