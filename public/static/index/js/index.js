@@ -244,7 +244,7 @@ $.ajax({
                     var yearArr = [];
                     $.each(res.data.series, function(idx, val){
                         if(userChoseMoto == val.displacement){
-                            yearArr.push(val.year);
+                            yearArr.push(val.year.trim());
                         }
                     })
                     // 去重 年产

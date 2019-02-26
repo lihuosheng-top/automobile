@@ -363,7 +363,7 @@ $.ajax({
     success: function(res){
         console.log(res);
         if(res.status == 0){
-            $('.change-role-li').hide();
+            $('.change-role-li').add('.bussinessOrNot').hide();
         }
     },
     error: function(){
