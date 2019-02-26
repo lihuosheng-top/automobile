@@ -52,8 +52,10 @@ class Register extends Controller{
                 }
                 //存入session中
                 if (strlen($mobileCode)> 0) {
-                    session('mobileCode',$mobileCode);
-                    session('mobile',$mobile);
+//                    session('mobileCode',$mobileCode);
+//                    session('mobile',$mobile);
+                    Session::set("mobileCode",$mobileCode);
+                    Session::set("mobile",$mobile);
 //                    $_SESSION['mobile'] = $mobile;
                 }
                 $content = "尊敬的用户，您本次验证码为{$mobileCode}，十分钟内有效";
@@ -86,7 +88,8 @@ class Register extends Controller{
     public function  doRegByPhone(Request $request){
         if($request->isPost())
         {
-            return ajax_success("233333",session('mobileCode'));
+            $a =Session::get("mobileCode");
+            return ajax_success("233333", $a);
             $mobile = $request->only(['mobile'])['mobile'];
             $is_reg =Db::name("user")->where("phone_num",$mobile)->find();
             if(!empty($is_reg)){
