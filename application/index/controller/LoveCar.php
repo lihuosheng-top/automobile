@@ -8,6 +8,7 @@
 namespace app\index\controller;
 use think\Controller;
 use think\Paginator;
+use think\queue\job\Redis;
 use think\Request;
 use think\Session;
 use think\Db;
@@ -85,6 +86,23 @@ class LoveCar extends Controller{
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:跳到编辑页面
+     **************************************
+     */
+    public function love_car_go(Request $request){
+        if($request->isPost()){
+            $id =$request->only(["id"])["id"];
+            Session::set("user_car_id",$id);
+            if($id>0){
+                return ajax_success("可以跳",$id);
+            }else{
+                return ajax_error("id不正确");
+            }
+        }
+    }
 
 
     /**
