@@ -252,10 +252,6 @@ html{
     color: #c5c6c7;
 }
 .save-btn{
-    /* position: fixed; */
-    /* bottom: 1rem; */
-    /* left: 50%; */
-    /* transform: translateX(-50%); */
     display: block;
     margin: 0 auto;
     width: 6rem;

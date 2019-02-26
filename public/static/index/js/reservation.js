@@ -111,7 +111,7 @@ function showShops(addr){
                                     if(sortDisArr[i + curPage * 10].id == ele.id){
                                         str += '<div>\
                                                     <a href="reservation_detail?store_id='+ele.store_id+'&service_setting_id='+service_setting_id+'" class="shop_box">\
-                                                        <div class="shop-headimg"><img src=""></div>\
+                                                        <div class="shop-headimg"><img src="uploads/'+ele.serve_name.verifying_physical_storefront_one+'"></div>\
                                                         <div class="addr_info_box">\
                                                             <p class="shop_name_p">'+ele.serve_name.store_name+'</p>\
                                                             <div class="comment_box">\

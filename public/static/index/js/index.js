@@ -351,8 +351,8 @@ $.ajax({
         if(res.status == 1){
             var res = res.data[0];
             $('.icon_add').hide();
-            $('.txt-div p').html(res.brand);
-            $('.txt-div span').html(res.series + ' ' + res.displacement + ' ' + res.production_time);
+            $('.txt-div p').html(res.brand + ' ' + res.series + ' ' + res.production_time);
+            $('.txt-div span').html(res.displacement + ' ' + res.car_information.plate_number);
         }else{
             $('.service-container').on('click', 'li:eq(2)', function(e){
                 e.preventDefault();

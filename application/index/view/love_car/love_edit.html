@@ -1,10 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/my/my_car.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/plugin/LCalendar.min.css">
+    <title>车辆信息</title>
 </head>
 <body>
-111
+    <!-- 车辆信息 -->
+    <div class="car-detail-pop">
+        <div class="head-bg">
+            <header class="header">
+                <a href="love_list" class="spr detail-back"></a>
+                <h3 class="title-txt">车辆信息</h3>
+            </header>
+            <div class="info-bg">
+                <img src="__STATIC__/index/image/aodi2.png">
+                <p class="info-p">宝马1L 2018系</p>
+                <p class="plate-num"></p>
+                <!-- <span>已设为默认</span> -->
+            </div>
+            <div class="fill-detail-info">
+                <ul>
+                    <li class="seat-color-li">
+                        <span>座位</span>
+                        <input type="text" class="seat-input" placeholder="请输入座位数">
+                        <span>颜色</span>
+                        <input type="text" class="color-input" placeholder="请输入颜色">
+                    </li>
+                    <li class="plant-num-li">
+                        <span>车牌</span>
+                        <div class="select-wrap">
+                            <input type="text" class="show-input" readonly id="show-input" value="京">
+                            <div class="triangle"></div>
+                            <select id="word-select" size="5" style="display:none;">
+                                <option value="京" selected>京</option>
+                                <option value="津">津</option>
+                                <option value="冀">冀</option>
+                                <option value="晋">晋</option>
+                                <option value="蒙（内蒙古）">蒙（内蒙古）</option>
+                                <option value="辽">辽</option>
+                                <option value="吉">吉</option>
+                                <option value="黑">黑</option>
+                                <option value="沪">沪</option>
+                                <option value="苏">苏</option>
+                                <option value="浙">浙</option>
+                                <option value="皖">皖</option>
+                                <option value="闽">闽</option>
+                                <option value="赣">赣</option>
+                                <option value="鲁">鲁</option>
+                                <option value="豫">豫</option>
+                                <option value="鄂">鄂</option>
+                                <option value="湘">湘</option>
+                                <option value="粤">粤</option>
+                                <option value="桂">桂</option>
+                                <option value="琼">琼</option>
+                                <option value="渝">渝</option>
+                                <option value="川">川</option>
+                                <option value="贵">贵</option>
+                                <option value="云">滇</option>
+                                <option value="藏">藏</option>
+                                <option value="陕">陕</option>
+                                <option value="甘">甘</option>
+                                <option value="青">青</option>
+                                <option value="宁">宁</option>
+                                <option value="新">新</option>
+                                <option value="台">台</option>
+                                <option value="港">港</option>
+                                <option value="澳">澳</option>
+                            </select>
+                        </div>
+                        <input type="text" class="plant-input" placeholder="请输入车牌号">
+                    </li>
+                    <!-- <li class="mileage-li">
+                        <span>行驶里程</span>
+                        <input type="text" class="mileage-input" placeholder="请输入行驶里程">
+                        <span>公里</span>
+                    </li>
+                    <li class="vin-num-li">
+                        <span>车架号</span>
+                        <input type="text" class="vin-num-input" placeholder="请输入车架号">
+                    </li>
+                    <li class="engine-no">
+                        <span>发动机号</span>
+                        <input type="text" class="engine-no-input" placeholder="请输入发动机号">
+                    </li>
+                    <li class="insurer-li">
+                        <span>商业车险公司</span>
+                        <input type="text" class="insurer-input" placeholder="请输入保险公司名称">
+                    </li>
+                    <li class="expiration-date-li">
+                        <span>保险到期日期</span>
+                        <input type="text" id="date" class="expiration-date-input" placeholder="请输入保险到期日期" readonly>
+                    </li> -->
+                </ul>
+            </div>
+            <button class="save-btn">保存</button>
+        </div>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <!-- 日期插件 start-->
+    <!-- <script src="__STATIC__/index/js/plugin/LCalendar.min.js"></script> -->
+    <!-- 日期插件 end-->
+    <script>
+        // 车辆信息 下拉框
+        var show = document.getElementById('show-input');
+        var words = document.getElementById('word-select');
+        show.onclick = function(e){
+            if(words.style.display == 'none'){
+                words.style.display = 'block';
+            }else{
+                words.style.display = 'none';
+            }
+        }
+        words.size = 5;
+        words.onchange = function(e){
+            var option = this.options[this.selectedIndex];
+            show.value = option.innerHTML;
+            words.style.display = 'none';
+        }
+
+        // 保存车辆信息
+        var id;
+        $('.save-btn').click(function(){
+            var seat = $('.seat-input').val();
+            var colour = $('.color-input').val();
+            var plate_number = $('#word-select option:selected').val()+' '+$('.plant-input').val();
+            var driving_number = $('.mileage-input').val();
+            var carriage_number = $('.vin-num-input').val();
+            var engine_number = $('.engine-no-input').val();
+            var car_insurance = $('.insurer-input').val();
+            var insurance_time = $('.expiration-date-input').val();
+            if($('.plant-input').val() !== ''){
+                $.ajax({
+                    url: 'love_list_save',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'id': id,
+                        'seat': seat,
+                        'colour': colour,
+                        'plate_number': plate_number,
+                        'driving_number': driving_number,
+                        'carriage_number': carriage_number,
+                        'engine_number': engine_number,
+                        'car_insurance': car_insurance,
+                        'insurance_time': insurance_time
+                    },
+                    success: function(res){
+                        console.log(res);
+                        if(res.status == 1){
+                            layer.open({
+                                skin: 'msg',
+                                content: res.info,
+                                time: .8
+                            })
+                            setTimeout(function(){
+                                location.reload();
+                            }, 1000)
+                            $('.wrapper').show();
+                            $('.car-detail-pop').hide();
+                        }else if(res.status == 0){
+                            layer.open({
+                                skin: 'msg',
+                                content: res.info,
+                                time: .8
+                            })
+                        }
+                    },
+                    error: function(){
+                        console.log('error');
+                    }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请填写车牌号',
+                    time: 1
+                })
+            }
+        })
+    </script>
 </body>
 </html>
