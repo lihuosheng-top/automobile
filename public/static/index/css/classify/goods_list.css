@@ -94,10 +94,14 @@ html{
     width: 100%;
     padding: 0 .1rem;
     box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 .list_cont li{
-    float: left;
-    width: 3.55rem;
+    /* float: left; */
+    /* width: 3.55rem; */
+    flex-basis: 48%;
     height: 5.3rem;
     margin-right: .2rem;
     background-color: #fff;
