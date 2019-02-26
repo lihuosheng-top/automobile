@@ -279,7 +279,7 @@ $.ajax({
                                         time: .8
                                     })
                                     setTimeout(function(){
-                                        location.href = 'love_list';
+                                        location.href = 'love_edit';
                                     }, 1000);
                                 }else if(data.status == 2){
                                     layer.open({
