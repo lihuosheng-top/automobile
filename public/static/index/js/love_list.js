@@ -119,7 +119,25 @@ $.ajax({
         })
         // 查看详细信息
         $('.car-info-top').click(function(){
-            location.href = 'love_edit';
+            var id = $(this).attr('id');
+            $.ajax({
+                url: 'love_car_go',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    id: id
+                },
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        location.href = 'love_edit';
+                    }
+                },
+                error: function(res){
+                    console.log(res.status, res.statusText);
+                }
+            })
+
         })
         $('.add-car-btn').click(function(){
             location.href = 'index';
