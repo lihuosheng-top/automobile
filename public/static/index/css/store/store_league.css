@@ -225,3 +225,14 @@ html,body{
     color: #999;
     margin-right: .3rem;
 }
+.bussi-time{
+    width: 1.8rem;
+    height: .83rem;
+    box-sizing: border-box;
+    outline: none;
+    font-size: .3rem;
+    text-align: center;
+}
+.bussinessHour{
+    justify-content: end !important;
+}

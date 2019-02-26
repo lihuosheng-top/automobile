@@ -139,7 +139,7 @@
         // })
         $('.function-item').click(function(e){
             e.preventDefault();
-            var index  = $(this).index() + 1;
+            var index  = $(this).index();
             $.ajax({
                 url: 'store_order_save',
                 dataType: 'JSON',
@@ -151,6 +151,8 @@
                     console.log(res);
                     if(res.status === 1){
                         switch(index){
+                            case 0:
+                                location.href = 'classify_index';break;
                             case 2:
                                 location.href = 'sell_parts_order';break;
                             case 3: 

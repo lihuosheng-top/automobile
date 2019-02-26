@@ -95,6 +95,9 @@ $.ajax({
                     // $('.name').val()
                     $('.seat-phone').val(data.store_owner_seat_num);
                     $('#logo-img')[0].src = 'uploads/'+data.store_logo_images;
+                    // 营业时间
+                    $('#timefrom').val(data.store_do_bussiness_time.split('--')[0]);
+                    $('#timetill').val(data.store_do_bussiness_time.split('--')[1]);
                     // 经营范围
                     if(data.service_setting_id !== null){
                         // 当服务商更新信息，将数组清空，再插入id
@@ -143,7 +146,7 @@ $.ajax({
                 store_owner_seat_num = $('.seat-phone').val(),
                 sex,
                 store_logo_images,
-                store_do_bussiness_time = $('.bussi-time').val(),  //营业时间
+                store_do_bussiness_time = $('#timefrom').val() + '--' + $('#timetill').val(),  //营业时间
                 store_city_address,
                 store_street_address,
                 store_information = $('.shop-info').val(),
