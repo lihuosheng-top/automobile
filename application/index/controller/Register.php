@@ -53,7 +53,8 @@ class Register extends Controller{
                 //存入session中
                 if (strlen($mobileCode)> 0) {
                     session('mobileCode',$mobileCode);
-                    $_SESSION['mobile'] = $mobile;
+                    session('mobile',$mobile);
+//                    $_SESSION['mobile'] = $mobile;
                 }
                 $content = "尊敬的用户，您本次验证码为{$mobileCode}，十分钟内有效";
                 $url = "http://120.26.38.54:8000/interface/smssend.aspx";
