@@ -67,7 +67,7 @@ class LoveCar extends Controller{
                 }
                 $bool = db("user_car")->insertGetId($love);
                 if($bool){
-                    Session::get("user_car_id",$bool);
+                    Session::set("user_car_id",$bool);
                     if($love["status"] ==1){
                         Db::name('user_car')
                             ->where("user_id",$user_id)
