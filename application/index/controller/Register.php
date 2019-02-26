@@ -100,7 +100,7 @@ class Register extends Controller{
             if (strlen($mobile) != 11 || substr($mobile, 0, 1) != '1' || $code == '') {
                 return ajax_error("参数不正确",0);
             }
-            if (session('mobileCode') != $code || $mobile != $_SESSION['mobile']) {
+            if (session('mobileCode') != $code) {
                 return ajax_error("验证码不正确",0);
             } else {
                 $passwords =password_hash($password,PASSWORD_DEFAULT);
