@@ -42,7 +42,7 @@ Route::group("",[
 
     /*服务商品*/
     "service_type"=>"index/reservation/service_type",//选择服务类型
-    "reservation"=>"index/reservation/reservation",//预约服务 首页
+    "reservation"=>"index/reservation/reservation",//预约服务首页
     "reservation_detail"=>"index/reservation/reservation_detail",//预约服务 详情
     "reservation_info"=>"index/reservation/reservation_info",//预约服务 详情
 
