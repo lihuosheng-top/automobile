@@ -369,16 +369,16 @@
                             if(res.status == 1){
                                 var str = '';
                                 $.each(res.data, function(idx, val){
-                                    str += `<div class="dis">
-                                                <div class="denomination">
-                                                    <p>￥`+val.deductible_money+`</p>
-                                                    <span class="need-inte">需`+val.integral_full+`积分</span>
-                                                </div>
-                                                <label class="twent" for="twent-`+val.setting_id+`">
-                                                    <p class="dis-introduce">消费满<span>`+val.consumption_full+`</span>元可用</p>
-                                                </label>
-                                                <input type="radio" id="twent-`+val.setting_id+`" name="disc">
-                                            </div>`
+                                    str += '<div class="dis">\
+                                                <div class="denomination">\
+                                                    <p>￥'+val.deductible_money+'</p>\
+                                                    <span class="need-inte">需'+val.integral_full+'积分</span>\
+                                                </div>\
+                                                <label class="twent" for="twent-'+val.setting_id+'">\
+                                                    <p class="dis-introduce">消费满<span>'+val.consumption_full+'</span>元可用</p>\
+                                                </label>\
+                                                <input type="radio" id="twent-'+val.setting_id+'" name="disc">\
+                                            </div>'
                                 })
                                 $('.default').after(str);
                                 $('.dis').click(function (e) {

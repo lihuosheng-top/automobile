@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="__STATIC__/index/css/store/store_league.css">
     <!-- 三级城市 -->
     <link rel="stylesheet" href="__STATIC__/index/js/plugin/threecity/css/scs.min.css">
+    <!-- 选择营业时间 -->
+    <link rel="stylesheet" href="__STATIC__/index/js/plugin/businesshours/mobileSelect.css">
     <title>我要加盟</title>
 </head>
 <body>
@@ -51,9 +53,10 @@
                     <img src="__STATIC__/index/image/avatar.png" class="logo-img" id="logo-img">
                     <input type="file" class="file-input upload-input" id="upload-input">
                 </li>
-                <li class="list-li">
+                <li class="list-li bussinessHour">
                     <p class="list-title-p"><i class="must">*</i>营业时间</p>
-                    <input type="text" value="00:00 -- 24:00" readonly class="text-input bussi-time">
+                    <input type="text" value="00:00" readonly class="bussi-time" id="timefrom">--
+                    <input type="text" value="23:59" readonly class="bussi-time" id="timetill">
                 </li>
                 <li class="list-li business-li" style="display:none;">
                     <p class="list-title-p">经营范围</p>
@@ -117,6 +120,9 @@
     <script src="__STATIC__/index/js/plugin/threecity/js/jquery.scs.min.js"></script>
     <script src="__STATIC__/index/js/plugin/threecity/js/CNAddrArr.min.js"></script>
     <!-- 三级城市脚本 end -->
+    <!-- 选择营业时间 -->
+    <script src="__STATIC__/index/js/plugin/businesshours/mobileSelect.js"></script>
+    <script src="__STATIC__/index/js/plugin/businesshours/selectDate.js"></script>
     <script src="__STATIC__/index/js/plugin/layer.js"></script>
     <script src="__STATIC__/index/js/store_league.js"></script>
     <script>
@@ -225,6 +231,10 @@
                 });
             });
         });
+
+        // 选择营业时间
+        $.select_HH_MM("#timefrom");
+        $.select_HH_MM("#timetill");
     </script>
 </body>
 </html>

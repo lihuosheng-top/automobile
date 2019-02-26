@@ -47,16 +47,16 @@ $.ajax({
         console.log(res);
         var str = '';
         $.each(res.data, function (idx, val) {
-            str += `<div class="dis">
-                        <div class="denomination">
-                            <p class="deduction-money">￥`+ val.deductible_money + `</p>
-                            <span class="need-integ">需`+ val.integral_full + `积分</span>
-                        </div>
-                        <label class="twent" for="twent-`+ val.setting_id + `">
-                            <p class="dis-introduce">消费满<span>`+ val.consumption_full + `</span>元可用</p>
-                        </label>
-                        <input type="radio" id="twent-`+ val.setting_id + `" name="disc">
-                    </div>`
+            str += '<div class="dis">\
+                        <div class="denomination">\
+                            <p class="deduction-money">￥'+ val.deductible_money + '</p>\
+                            <span class="need-integ">需'+ val.integral_full + '积分</span>\
+                        </div>\
+                        <label class="twent" for="twent-'+ val.setting_id + '">\
+                            <p class="dis-introduce">消费满<span>'+ val.consumption_full + '</span>元可用</p>\
+                        </label>\
+                        <input type="radio" id="twent-'+ val.setting_id + '" name="disc">\
+                    </div>'
         })
         $('.discount_wrap').append(str);
 

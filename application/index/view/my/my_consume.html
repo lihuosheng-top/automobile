@@ -148,21 +148,21 @@
         })
         function mySplicing(data, month){
             var str = '';
-            str += `<h3 class="month-tit">`+month+`月</h3>
-                    <ul class="cost-ul">`;
+            str += '<h3 class="month-tit">'+month+'月</h3>\
+                    <ul class="cost-ul">';
             data.forEach(function(val, idx){
-                str += `<li class="cost-li" id="`+val.wallet_id+`">
-                            <div class="cost-method">
-                                <img src="__STATIC__/`+val.wallet_img+`">
-                            </div>
-                            <div class="cost-info">
-                                <p class="txt-hid-one">`+val.title+`</p>
-                                <span>`+val.operation_time+`</span>
-                            </div>
-                            <div class="cost-money">`+(val.wallet_operation > 0 ? '+'+val.wallet_operation : val.wallet_operation)+`</div>
-                        </li>`
+                str += '<li class="cost-li" id="'+val.wallet_id+'">\
+                            <div class="cost-method">\
+                                <img src="__STATIC__/'+val.wallet_img+'">\
+                            </div>\
+                            <div class="cost-info">\
+                                <p class="txt-hid-one">'+val.title+'</p>\
+                                <span>'+val.operation_time+'</span>\
+                            </div>\
+                            <div class="cost-money">'+(val.wallet_operation > 0 ? '+'+val.wallet_operation : val.wallet_operation)+'</div>\
+                        </li>'
             })
-            str += `</ul>`;
+            str += '</ul>';
             return str;
         }
         function checkDetail(_this){

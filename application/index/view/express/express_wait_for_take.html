@@ -110,32 +110,32 @@
                     $('.info .phone').text(data.delivery_data[0].number);
                     var str = '';
                     $.each(data.express, function(idx, val){
-                        str += `<div class="order-item">
-                                    <div class="address-container">
-                                        <div class="get-goods">
-                                            <span>取：</span>
-                                            <div>
-                                                <span class="shop-name" data-orderId="`+val.order_id+`">`+val.store_name+`</span>
-                                                <span class="shop-address">`+val.store_address+`</span>
-                                            </div>
-                                            <i class="navigation-ex" data-lat="`+val.latitude+`" data-lng="`+val.longitude+`"></i>
-                                            <a href="javascript:Android.call('`+val.store_phone+`');" class="spr shop-phone"></a>
-                                        </div>
-                                        <div class="send-goods">
-                                            <span>送：</span>
-                                            <span class="send-address" data-orderId="`+val.order_id+`">`+val.user_order_address+`</span>
-                                            <i class="navigation-ex"></i>
-                                            <a href="javascript:Android.call('`+val.user_order_phone+`');" class="spr customer-phone"></a>
-                                        </div>
-                                    </div>
-                                    <div class="time-container">
-                                        <span class="order-time">下单时间：<span>`+timetrans(val.order_create_time)+`</span></span>
-                                        <span class="accept-time">预计送达时间：<span>宝贝正在路上，请您耐心等候</span></span>
-                                    </div>
-                                    <div class="button-container">
-                                        <button class="my-btn">我已取货</button>
-                                    </div>
-                                </div>`
+                        str += '<div class="order-item">\
+                                    <div class="address-container">\
+                                        <div class="get-goods">\
+                                            <span>取：</span>\
+                                            <div>\
+                                                <span class="shop-name" data-orderId="'+val.order_id+'">'+val.store_name+'</span>\
+                                                <span class="shop-address">'+val.store_address+'</span>\
+                                            </div>\
+                                            <i class="navigation-ex" data-lat="'+val.latitude+'" data-lng="'+val.longitude+'"></i>\
+                                            <a href="javascript:Android.call('+val.store_phone+');" class="spr shop-phone"></a>\
+                                        </div>\
+                                        <div class="send-goods">\
+                                            <span>送：</span>\
+                                            <span class="send-address" data-orderId="'+val.order_id+'">'+val.user_order_address+'</span>\
+                                            <i class="navigation-ex"></i>\
+                                            <a href="javascript:Android.call('+val.user_order_phone+');" class="spr customer-phone"></a>\
+                                        </div>\
+                                    </div>\
+                                    <div class="time-container">\
+                                        <span class="order-time">下单时间：<span>'+timetrans(val.order_create_time)+'</span></span>\
+                                        <span class="accept-time">预计送达时间：<span>宝贝正在路上，请您耐心等候</span></span>\
+                                    </div>\
+                                    <div class="button-container">\
+                                        <button class="my-btn">我已取货</button>\
+                                    </div>\
+                                </div>'
                     })
                     $('.order-container').append(str);
                     // 去高德地图

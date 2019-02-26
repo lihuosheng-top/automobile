@@ -257,41 +257,41 @@ $.ajax({
         var str = '';
         if(res.status === 1){
             $.each(res.data, function(idx, val){
-                str += `<div class="goods_wrap">
-                            <div class="shop_name_wrap">
-                                <i class="spr circle shop-circle"></i>
-                                <a href="javascript:;">
-                                    <i class="spr icon_shop"></i>
-                                    <span class="shop_name">`+val.store_name+`</span>
-                                    <i class="spr icon_more"></i>
-                                </a>
-                            </div>`
+                str += '<div class="goods_wrap">\
+                            <div class="shop_name_wrap">\
+                                <i class="spr circle shop-circle"></i>\
+                                <a href="javascript:;">\
+                                    <i class="spr icon_shop"></i>\
+                                    <span class="shop_name">'+val.store_name+'</span>\
+                                    <i class="spr icon_more"></i>\
+                                </a>\
+                            </div>'
                 $.each(val.info, function(idx, val){
-                    str += `<div class="goods_info_wrap">
-                                <i class="spr circle goods-circle" id="`+val.id+`"></i>
-                                <div class="goods_detail_info">
-                                    <div class="goods_img_wrap">
-                                        <a href="javascript:;">
-                                            <img src="uploads/`+val.goods_images+`">
-                                        </a>
-                                    </div>
-                                    <div class="goods_desc_right">
-                                        <p class="cart_goods_name">`+val.goods_name+`</p>
-                                        <p class="cart_sub1">`+val.special_name.split(',').join('')+`</p>
-                                        <p class="cart_sub2">`+val.goods_delivery+`</p>
-                                        <div class="price_num_wrap">
-                                            <span class="cart_price">￥<span>`+val.goods_prices+`</span></span>
-                                            <div class="calculator_num">
-                                                <a href="javascript:;" class="minus">-</a>
-                                                <input type="text" value="`+val.goods_unit+`" class="calculator_val" readonly>
-                                                <a href="javascript:;" class="increase">+</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`
+                    str += '<div class="goods_info_wrap">\
+                                <i class="spr circle goods-circle" id="'+val.id+'"></i>\
+                                <div class="goods_detail_info">\
+                                    <div class="goods_img_wrap">\
+                                        <a href="javascript:;">\
+                                            <img src="uploads/'+val.goods_images+'">\
+                                        </a>\
+                                    </div>\
+                                    <div class="goods_desc_right">\
+                                        <p class="cart_goods_name">'+val.goods_name+'</p>\
+                                        <p class="cart_sub1">'+val.special_name.split(',').join('')+'</p>\
+                                        <p class="cart_sub2">'+val.goods_delivery+'</p>\
+                                        <div class="price_num_wrap">\
+                                            <span class="cart_price">￥<span>'+val.goods_prices+'</span></span>\
+                                            <div class="calculator_num">\
+                                                <a href="javascript:;" class="minus">-</a>\
+                                                <input type="text" value="'+val.goods_unit+'" class="calculator_val" readonly>\
+                                                <a href="javascript:;" class="increase">+</a>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>'
                 })
-                str += `</div>`;
+                str += '</div>';
             })
             $('.exist').prepend(str);
             calculator();

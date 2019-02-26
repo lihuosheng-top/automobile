@@ -157,20 +157,20 @@
                 if(res.status ==1){
                     var topSwiper = '',botSwiper = '';
                     $.each(res.data.machine, function(idx, val){
-                        topSwiper += `<div class="swiper-slide">
-                                        <a href="`+val.url+`">
-                                            <img src="uploads/`+val.advert_picture+`">
-                                        </a>
-                                    </div>`
+                        topSwiper += '<div class="swiper-slide">\
+                                        <a href="'+val.url+'">\
+                                            <img src="uploads/'+val.advert_picture+'">\
+                                        </a>\
+                                    </div>'
                     })
                     $('.swiper-container .swiper-wrapper').html(topSwiper);
                     swiper1();
                     $.each(res.data.discount, function(idx, val){
-                        botSwiper += `<div class="swiper-slide">
-                                        <a href="`+val.url+`">
-                                            <img src="uploads/`+val.advert_picture+`">
-                                        </a>
-                                    </div>`
+                        botSwiper += '<div class="swiper-slide">\
+                                        <a href="'+val.url+'">\
+                                            <img src="uploads/'+val.advert_picture+'">\
+                                        </a>\
+                                    </div>'
                     })
                     $('.swiper-container2 .swiper-wrapper').html(botSwiper);
                     swiper2();
@@ -221,12 +221,12 @@
                 if(res.status == 1){
                     var _html = '';
                     $.each(res.data, function(key,value){
-                        _html += `<li>
-                                    <a href="classify_index?parets_id=`+value.id+`">
-                                        <i><img src="uploads/`+value.type_images+`"></i>
-                                        <span class="server-txt">`+value.name+`</span>
-                                    </a>
-                                  </li>`
+                        _html += '<li>\
+                                    <a href="classify_index?parets_id='+value.id+'">\
+                                        <i><img src="uploads/'+value.type_images+'"></i>\
+                                        <span class="server-txt">'+value.name+'</span>\
+                                    </a>\
+                                  </li>'
                     })
                     $('.Html').append(_html);
                 }
@@ -246,18 +246,18 @@
                     if(res.status == 1){
                         var str = '';
                         res.data.forEach(function(val, idx){
-                            str += `<li class="`+(idx % 2 !== 0?'mgr0':'')+`" data-storeId="`+val.store_id+`">
-                                        <div class="img_div">
-                                            <img src="uploads/`+val.goods_show_images+`">
-                                        </div>
-                                        <div class="goods_name">
-                                            <p class="txt-hid-two">`+val.goods_name+`</p>
-                                        </div>
-                                        <div class="goods_price">
-                                            <span class="price">￥`+val.special_info[0].goods_adjusted_price+`</span>
-                                            <span class="pay_num">`+val.statistical_quantity+`人购买</span>
-                                        </div>
-                                    </li>`
+                            str += '<li class="'+(idx % 2 !== 0?'mgr0':'')+'" data-storeId="'+val.store_id+'">\
+                                        <div class="img_div">\
+                                            <img src="uploads/'+val.goods_show_images+'">\
+                                        </div>\
+                                        <div class="goods_name">\
+                                            <p class="txt-hid-two">'+val.goods_name+'</p>\
+                                        </div>\
+                                        <div class="goods_price">\
+                                            <span class="price">￥'+val.special_info[0].goods_adjusted_price+'</span>\
+                                            <span class="pay_num">'+val.statistical_quantity+'人购买</span>\
+                                        </div>\
+                                    </li>'
                         })
                         $('.like_cont_ul').html(str).on('click', 'li', function(){
                             location.href = 'store_index?storeId='+$(this).attr('data-storeId');

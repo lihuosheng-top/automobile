@@ -37,23 +37,23 @@ $.ajax({
         if(res.status == 1){
             var str = '';
             $.each(res.data, function(idx, val){
-                str += `<div class="evaluation-subject" id="`+val.id+`">
-                            <div class="goods-evaluate">
-                                <div class="goods-img">
-                                    <img src="uploads/`+val.goods_image+`">
-                                </div>
-                                <p class="ms">描述相符</p>
-                                <div class="star"></div>
-                            </div>
-                            <div class="evaluate-txt">
-                                <textarea placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧"></textarea>
-                            </div>
-                            <div class="vi-camera">
-                                <span class="switch-span">添加图片
-                                    <input type="file" multiple id="upload-`+idx+`">
-                                </span>
-                            </div>
-                        </div>`
+                str += '<div class="evaluation-subject" id="'+val.id+'">\
+                            <div class="goods-evaluate">\
+                                <div class="goods-img">\
+                                    <img src="uploads/'+val.goods_image+'">\
+                                </div>\
+                                <p class="ms">描述相符</p>\
+                                <div class="star"></div>\
+                            </div>\
+                            <div class="evaluate-txt">\
+                                <textarea placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧"></textarea>\
+                            </div>\
+                            <div class="vi-camera">\
+                                <span class="switch-span">添加图片\
+                                    <input type="file" multiple id="upload-'+idx+'">\
+                                </span>\
+                            </div>\
+                        </div>'
             })
             $('.header').after(str);
             // 初始化star
@@ -92,10 +92,10 @@ function changeEvent(inputElem, clickObj, id){
             filesObj[id].push(inputElem.files[i]);
         }
         $.each(imgArrDom, function(idx, val){
-            str += `<div class="upload-item">
-                        <img src="`+val+`">
-                        <button class="del-img">×</button>
-                    </div>`
+            str += '<div class="upload-item">\
+                        <img src="'+val+'">\
+                        <button class="del-img">×</button>\
+                    </div>'
         })
         $(clickObj).before(str);
     }else{

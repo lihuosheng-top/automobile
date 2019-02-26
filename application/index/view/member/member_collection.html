@@ -59,19 +59,19 @@
                 var str = '';
                 if(res.status == 1){
                     $.each(res.data, function(idx, val){
-                        str += `<div class="col">
-                                    <div class="img-box">
-                                        <a href="goods_detail?id=`+val.goods_id+`&preid=`+val.goods_brand_id+`"><img src="uploads/`+val.goods_show_images+`"></a>
-                                    </div>
-                                    <div class="info-box">
-                                        <p class="goods-name txt-hid-two">`+val.goods_name+`</p>
-                                        <p class="goods-selling txt-hid-two">`+val.goods_selling+`</p>
-                                        <div class="price-del">
-                                            <span class="price">￥`+val.goods_adjusted_money+`</span>
-                                            <button class="del-btn" id="`+val.goods_id+`">删除</button>
-                                        </div>
-                                    </div>
-                                </div>`
+                        str += '<div class="col">\
+                                    <div class="img-box">\
+                                        <a href="goods_detail?id='+val.goods_id+'&preid='+val.goods_brand_id+'"><img src="uploads/'+val.goods_show_images+'"></a>\
+                                    </div>\
+                                    <div class="info-box">\
+                                        <p class="goods-name txt-hid-two">'+val.goods_name+'</p>\
+                                        <p class="goods-selling txt-hid-two">'+val.goods_selling+'</p>\
+                                        <div class="price-del">\
+                                            <span class="price">￥'+val.goods_adjusted_money+'</span>\
+                                            <button class="del-btn" id="'+val.goods_id+'">删除</button>\
+                                        </div>\
+                                    </div>\
+                                </div>'
                     })
                     $('.collect-box').append(str);
                 

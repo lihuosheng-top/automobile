@@ -133,29 +133,29 @@
                         }else if(val.status === 7){
                             statusTxt = '待确认';
                         }
-                        str += `<div class="reservation-tab">
-                                    <div class="reservation-info-container">
-                                        <div class="order-num-status">
-                                            <div class="order-num">
-                                                <i class="spr icon-order-num"></i>订单编号：<span>`+val.service_order_number+`</span>
-                                            </div>
-                                            <span class="status">`+statusTxt+`</span>
-                                        </div>
-                                        <p class="order-time">
-                                            <i class="spr icon-time"></i><span>`+val.got_to_time+`</span>
-                                        </p>
-                                        <p class="order-shop-name">
-                                            <i class="spr icon-shop"></i><span>`+val.store_name+`</span>
-                                        </p>
-                                        <div class="order-item">
-                                            <span></span>`+val.service_goods_name+`
-                                        </div>
-                                    </div>
-                                    <div class="button-box">
-                                        <button class="calcel-order" data-id="`+val.id+`" style="display: `+(val.status == 1 ? '' : 'none')+`">取消订单</button>
-                                        <button class="serviced" data-id="`+val.id+`" style="display: `+(val.status == 2 ? '' : 'none')+`">已服务</button>
-                                    </div>
-                                </div>`;
+                        str += '<div class="reservation-tab">\
+                                    <div class="reservation-info-container">\
+                                        <div class="order-num-status">\
+                                            <div class="order-num">\
+                                                <i class="spr icon-order-num"></i>订单编号：<span>'+val.service_order_number+'</span>\
+                                            </div>\
+                                            <span class="status">'+statusTxt+'</span>\
+                                        </div>\
+                                        <p class="order-time">\
+                                            <i class="spr icon-time"></i><span>'+val.got_to_time+'</span>\
+                                        </p>\
+                                        <p class="order-shop-name">\
+                                            <i class="spr icon-shop"></i><span>'+val.store_name+'</span>\
+                                        </p>\
+                                        <div class="order-item">\
+                                            <span></span>'+val.service_goods_name+'\
+                                        </div>\
+                                    </div>\
+                                    <div class="button-box">\
+                                        <button class="calcel-order" data-id="'+val.id+'" style="display: '+(val.status == 1 ? '' : 'none')+'">取消订单</button>\
+                                        <button class="serviced" data-id="'+val.id+'" style="display: '+(val.status == 2 ? '' : 'none')+'">已服务</button>\
+                                    </div>\
+                                </div>';
                     })
                     $('.reservation-container').append(str);
                     // 查看详情
