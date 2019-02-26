@@ -41,7 +41,7 @@ class Login extends Controller{
                 return  ajax_error('手机号不能为空',$user_mobile);
             }
             if(empty($password)){
-                return ajax_error('密码不能为空',['status'=>0]);
+                return ajax_error('密码不能为空',0);
             }
             $res = Db::name('user')->field('password')->where('phone_num',$user_mobile)->find();
             if(!$res)
@@ -49,13 +49,13 @@ class Login extends Controller{
                 //快递员
                 $is_express =Db::name("delivery")->where("account",$user_mobile)->find();
                if(!$is_express){
-                   return ajax_error('手机号不存在',['status'=>0]);
+                   return ajax_error('手机号不存在',0);
                }else{
                    if(password_verify($password , $is_express["passwords"])){
                         Session::set("delivery_id",$is_express["id"]);
                        exit(json_encode(array("status" => 2, "info" => "登录成功")));
                    }else{
-                       return ajax_error('密码错误',['status'=>0]);
+                       return ajax_error('密码错误',0);
                    }
                }
             }
@@ -64,7 +64,11 @@ class Login extends Controller{
             ];
             if(password_verify($password , $res["password"])){
                 if($res){
-                    $ress =Db::name('user')->where('phone_num',$user_mobile)->where('status',1)->field("id")->find();
+                    $ress =Db::name('user')
+                        ->where('phone_num',$user_mobile)
+                        ->where('status',1)
+                        ->field("id")
+                        ->find();
                     if($ress)
                     {
                         Session::set("user",$ress["id"]);
@@ -77,11 +81,11 @@ class Login extends Controller{
 //                        cache("a");
                         return ajax_success('登录成功',$datas);
                     }else{
-                        ajax_error('此用户已被管理员设置停用',$datas);
+                       return  ajax_error('此用户已被管理员设置停用',$datas);
                     }
                 }
             }else{
-                return ajax_error('密码错误',['status'=>0]);
+                return ajax_error('密码错误',0);
             }
 
         }

@@ -105,7 +105,7 @@ class Findpwd extends Controller{
             if ($output) {
                 return ajax_success("发送成功", $output);
             } else {
-                return ajax_error("发送失败");
+                return ajax_error("发送失败",0);
             }
         }
     }
@@ -126,18 +126,18 @@ class Findpwd extends Controller{
             $user_id = Session::get("user");
             $is_set_mobile =Db::name('user')->where("id",$user_id)->where('phone_num',$mobile)->find();
             if(!empty($is_set_mobile)){
-                return ajax_error("请输入不一样的号码",['status'=>0]);
+                return ajax_error("请输入不一样的号码",0);
             }
             $is_set_mobiles =Db::name('user')->where('phone_num',$mobile)->find();
             if(!empty($is_set_mobiles)){
-                return ajax_error("此手机号已注册",['status'=>0]);
+                return ajax_error("此手机号已注册",0);
             }
 
             $mobileCode = rand(100000, 999999);
             $arr = json_decode($mobile, true);
             $mobiles = strlen($arr);
             if (isset($mobiles) != 11) {
-                return ajax_error("手机号码不正确");
+                return ajax_error("手机号码不正确",0);
             }
             //存入session中
             if (strlen($mobileCode)> 0){
@@ -157,7 +157,7 @@ class Findpwd extends Controller{
             if ($output) {
                 return ajax_success("发送成功", $output);
             } else {
-                return ajax_error("发送失败",['status'=>0]);
+                return ajax_error("发送失败",0);
             }
         }
     }
@@ -180,9 +180,9 @@ class Findpwd extends Controller{
                     if(!empty($is_admin)){
                         Db::name('admin')->where('phone',$member['phone_num'])->update(['passwd'=>$passwords]);
                     }
-                    return ajax_success('修改成功',['status'=>1]);
+                    return ajax_success('修改成功',0);
                 }else{
-                    return ajax_error('修改失败',['status'=>0]);
+                    return ajax_error('修改失败',0);
                 }
             }
         }
