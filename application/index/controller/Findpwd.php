@@ -180,9 +180,9 @@ class Findpwd extends Controller{
                     if(!empty($is_admin)){
                         Db::name('admin')->where('phone',$member['phone_num'])->update(['passwd'=>$passwords]);
                     }
-                    return ajax_success('修改成功',0);
+                    return ajax_success('修改成功',['status'=>1]);
                 }else{
-                    return ajax_error('修改失败',0);
+                    return ajax_error('修改失败',['status'=>0]);
                 }
             }
         }

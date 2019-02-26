@@ -88,7 +88,7 @@ class Register extends Controller{
             $mobile = trim($_POST['mobile']);
             $is_reg =Db::name("user")->where("phone_num",$mobile)->find();
             if(!empty($is_reg)){
-                return ajax_error("此手机已注册，可以直接登录",0);
+                return ajax_error("此手机已注册，可以直接登录");
             }
             $code = trim($_POST['mobile_code']);
             $password =trim($_POST['password']);
@@ -96,13 +96,13 @@ class Register extends Controller{
             $create_time =date('Y-m-d H:i:s');
 
             if($password !==$confirm_password ){
-                return ajax_error('两次密码不相同',0);
+                return ajax_error('两次密码不相同');
             }
             if (strlen($mobile) != 11 || substr($mobile, 0, 1) != '1' || $code == '') {
-                return ajax_error("参数不正确",0);
+                return ajax_error("参数不正确");
             }
             if (session('mobileCode') != $code || $mobile != $_SESSION['mobile']) {
-                return ajax_error("验证码不正确",0);
+                return ajax_error("验证码不正确");
             } else {
                 $passwords =password_hash($password,PASSWORD_DEFAULT);
                 $invitation = $request->only(['invitation'])['invitation']; //邀请码
@@ -170,10 +170,10 @@ class Register extends Controller{
                             }
                             return ajax_success('注册成功',$datas);
                         }else{
-                            return ajax_error('请重新注册',0);
+                            return ajax_error('请重新注册',['status'=>0]);
                         }
                     }else{
-                        return ajax_error('邀请码不正确',0);
+                        return ajax_error('邀请码不正确',['status'=>0]);
                     }
                 }else{
                     //无邀请码
@@ -202,7 +202,7 @@ class Register extends Controller{
                         }
                         return ajax_success('注册成功',$datas);
                     }else{
-                        return ajax_error('请重新注册',0);
+                        return ajax_error('请重新注册',['status'=>0]);
                     }
                 }
 
