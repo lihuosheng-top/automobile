@@ -104,6 +104,19 @@ class LoveCar extends Controller{
         return view("love_list");
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:我的爱车编辑
+     **************************************
+     * @param Request $request
+     * @return \think\response\View|void
+     */
+    public function love_edit(Request $request)
+    {
+        return view("love_edit");
+    }
+
 
 
     /**

@@ -20,9 +20,14 @@ class Index extends Controller
         if($request->isPost()) {
             $user_id = Session::get("user");
             if (!empty($user_id)) {
-                $user_car = db("user_car")->where("user_id", $user_id)->where("status", 1)->select();
+                $user_car = db("user_car")
+                    ->where("user_id", $user_id)
+                    ->where("status", 1)
+                    ->select();
                 if ($user_car) {
-
+                    foreach($user_car as $k=>$v){
+                        $user_car[$k]["car_information"] =Db::name("user_car_message")->where("user_car_id",$v["id"])->find();
+                    }
                     return ajax_success("获取成功", $user_car);
                 } else {
                     return ajax_error("获取失败");

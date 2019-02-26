@@ -7,6 +7,7 @@
  */
 
 namespace app\index\controller;
+use think\Cache;
 use think\Controller;
 use think\Request;
 use think\Db;
@@ -68,6 +69,12 @@ class Login extends Controller{
                     {
                         Session::set("user",$ress["id"]);
                         Session::set('member',$datas);
+//                        $menberId = 1;
+//                        $value = [1,2,3,4];
+//                        $menberId = 2;
+//                        $value = [5,6,7,8,9,10];
+//                        cache('a'.$menberId,$value);
+//                        cache("a");
                         return ajax_success('登录成功',$datas);
                     }else{
                         ajax_error('此用户已被管理员设置停用',$datas);

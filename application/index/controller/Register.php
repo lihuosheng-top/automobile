@@ -42,13 +42,13 @@ class Register extends Controller{
             if(preg_match($pattern,$mobile)) {
                 $res =  Db::name('user')->field('phone_num')->where('phone_num',$mobile)->select();
                 if($res){
-                    return ajax_error('此手机号已经注册',['status'=>0]);
+                    return ajax_error('此手机号已经注册',0);
                 }
                 $mobileCode = rand(100000, 999999);
                 $arr = json_decode($mobile, true);
                 $mobiles = strlen($arr);
                 if (isset($mobiles) != 11) {
-                    return ajax_error("手机号码不正确",['status'=>0]);
+                    return ajax_error("手机号码不正确",0);
                 }
                 //存入session中
                 if (strlen($mobileCode)> 0) {
@@ -68,10 +68,10 @@ class Register extends Controller{
                 if ($output) {
                     return ajax_success("发送成功", $output);
                 } else {
-                    return ajax_error("发送失败",['status'=>0]);
+                    return ajax_error("发送失败",0);
                 }
             }else{
-                return ajax_error("请填写正确的手机号",['status'=>0]);
+                return ajax_error("请填写正确的手机号",0);
             }
             }
     }
