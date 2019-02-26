@@ -168,7 +168,6 @@ class LoveCar extends Controller{
      * 陈绪
      */
     public function love_del(Request $request){
-
         if($request->isPost()){
             $user_id =Session::get("user");
             $id = $request->only(["id"])["id"];
