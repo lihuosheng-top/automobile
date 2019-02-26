@@ -126,6 +126,9 @@ class LoveCar extends Controller{
             $user_car_id = Session::get("user_car_id");
             $bool = db("user_car")->where("id",$user_car_id)->where("user_id",$user_id)->find();
             if(!empty($bool)){
+                $bool["images"] = db("car_images")
+                    ->where("brand",$bool["brand"])
+                    ->value("brand_images");
                 Session::set("user_car_id",null);
                 return ajax_success("获取信息成功",$bool);
             }else{
