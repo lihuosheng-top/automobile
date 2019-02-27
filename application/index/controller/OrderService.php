@@ -505,6 +505,7 @@ class OrderService extends Controller{
     public function  ios_api_order_service_button(Request $request)
     {
         if ($request->isPost()) {
+
             $data = $_POST;
             $user_id = Session::get('user');
             //用户信息
@@ -544,8 +545,26 @@ class OrderService extends Controller{
                 $store_name =Db::name("store")
                     ->where("store_id",$goods_data["store_id"])
                     ->value("store_name");
+                $is_do_business =Db::name("store")
+                    ->where("store_id",$goods_data["store_id"])
+                    ->value("is_do_business");
+                if($is_do_business){
+                    return ajax_error("店铺已关闭，无法下订单");
+                }
+                $store_do_bussiness_time =Db::name("store")
+                    ->where("store_id",$goods_data["store_id"])
+                    ->value("store_do_bussiness_time");
+
                 $create_time = time();
                 $time=date("Y-m-d",time());
+                $store_do_bussiness_time_f =$time." ".substr($store_do_bussiness_time,0,5); //店铺营业开始时间
+                $store_do_bussiness_time_l =$time." ".substr($store_do_bussiness_time,-5);//店铺营业结束时间
+                $go_to_shop_day =str_replace(array("年","月"),"-",substr($data["got_to_time"],0,13));
+                $go_to_shop_time =$time." ".substr($data["got_to_time"],16,6);//预约到店时间开始
+                $go_to_shop_times =$time." ".substr($data["got_to_time"],-5);//预约到店时间结束
+                if(strtotime($store_do_bussiness_time_f) > strtotime($go_to_shop_time) || strtotime($store_do_bussiness_time_l)<strtotime($go_to_shop_times)){
+                    return ajax_error("不在该店铺营业时间".$store_do_bussiness_time."范围内");
+                }
                 $v=explode('-',$time);
                 $time_second=date("H:i:s",time());
                 $vs=explode(':',$time_second);
