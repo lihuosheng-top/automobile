@@ -176,7 +176,7 @@ class OrderService extends Controller{
                 if(!empty($datas)){
                     $condition ="`status` = '2' or `status` = '3'";
                     $data =Db::name('order_service')
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay,is_face")
                         ->where('user_id',$member_id['id'])
                         ->where($condition)
                         ->order('pay_time','asc')
