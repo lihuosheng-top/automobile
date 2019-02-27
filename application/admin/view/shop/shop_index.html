@@ -50,6 +50,15 @@
         height: 40px;
         border-radius: 3px;
     }
+    .form-group .layui-form-select {
+		display: none;
+	}
+    .seach_inputs{
+        display: flex;
+    }
+    .form-input{
+        width: 445px !important;   
+    }
 </style>
 
 {/block}
@@ -76,8 +85,32 @@
 						    <input type="text" name="store_owner" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
                        
 						</div>
+                    </div>
+                    <div class="seach_list">
+						<div class="seach_laber">区域:</div>
+						<div class="seach_inputs">
+                            <div class="form-input">
+                                <div class="form-inline">
+                                    <div data-toggle="distpicker">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="province4">Province</label>
+                                            <select class="form-control" id="province4" >
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="city4">City</label>
+                                            <select class="form-control" id="city4" ></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="district4">District</label>
+                                            <select class="form-control" id="district4" ></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
 					</div>
-					
+				
 					<button class="layui-btn" type="submit" id="seach">立即搜索</button>
 				</div>
 
@@ -101,6 +134,7 @@
                         <th>是否付费上架</th>
                         <th>平台审核状态</th>
                         <th>是否设为热门店铺</th>
+                        <th>操作员</th>
                         <th style="width: 120px;">操作</th>
                     </tr>
                 </thead>
@@ -136,6 +170,7 @@
                             {/if}
 
                         </td>
+                        <td>111</td>
                         <td>
                             <a class="layui-btn layui-btn-mini edit" href="{:url('admin/Shop/add',['id'=>$vo.store_id])}"><i class="iconfont icon-edit"></i> 编辑</a>
                             <a href="{:url('admin/Shop/del',['id'=>$vo.store_id])}" onclick="if(!confirm('确定要删除吗？')) return false" class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="undefined"><i class="layui-icon"></i> 删除</a>
