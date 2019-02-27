@@ -531,7 +531,6 @@ class OrderService extends Controller{
                     $integral_discount_setting_id =NULL;
                     $integral_deductible_num =NULL;
                 }
-
                 $goods_data = Db::table('tb_serve_goods')
                     ->join("tb_service_setting","tb_serve_goods.service_setting_id =tb_service_setting.service_setting_id","left")
                     ->where('tb_serve_goods.id', $commodity_id)
@@ -579,8 +578,6 @@ class OrderService extends Controller{
                         "integral_deductible_num" =>$integral_deductible_num, //使用了多少积分
                         "is_face" =>$data["is_face"], //是否面议（面议为-1，正常流程为1）
                     ];
-
-                    
                     //判断是面议还是直接有价钱购买
                     if($goods_data["service_money"] != 0){
                         $datas['status'] =1;      //订单状态（待付款）
