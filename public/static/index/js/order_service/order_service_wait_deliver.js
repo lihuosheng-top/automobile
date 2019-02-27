@@ -40,6 +40,9 @@ $.ajax({
                                     <span></span>'+val.service_goods_name+'\
                                 </div>\
                             </div>\
+                            <div class="button-box">\
+                                <button class="cancel-order-btn">取消订单</button>\
+                            </div>\
                         </div>'
             })
             $('.reservation-tab-container').append(str);
@@ -47,6 +50,11 @@ $.ajax({
              $('.reservation-info-container').click(function(){
                 var orderNum = $(this).parents('.reservation-tab').find('.order-num span').text();
                 detailAndEva('order_service_save_record', orderNum, 'order_service_detail?page=3');
+            })
+            // 取消订单
+            $('.cancel-order-btn').click(function(){
+                var id = $(this).parents('.reservation-tab').attr('id');
+                btnEvent('确认取消订单？', 'ios_api_order_service_no_pay_cancel', id);
             })
             // 已服务 
             // $('.conf-receipt-btn').click(function(){
@@ -60,32 +68,32 @@ $.ajax({
     }
 })
 
-// function btnEvent(info, url, id){
-//     layer.open({
-//         content: info,
-//         btn: ['确定', '取消'],
-//         yes: function(index){
-//             layer.close(index);
-//             $.ajax({
-//                 url: url,
-//                 dataType: 'JSON',
-//                 type: 'POST',
-//                 data: {
-//                     'order_id': id
-//                 },
-//                 success: function(res){
-//                     console.log(res);
-//                     if(res.status == 1){
-//                         location.reload();
-//                     }
-//                 },
-//                 error: function(){
-//                     console.log('error');
-//                 }
-//             })
-//         }
-//     })
-// }
+function btnEvent(info, url, id){
+    layer.open({
+        content: info,
+        btn: ['确定', '取消'],
+        yes: function(index){
+            layer.close(index);
+            $.ajax({
+                url: url,
+                dataType: 'JSON',
+                type: 'POST',
+                data: {
+                    'order_id': id
+                },
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 1){
+                        location.reload();
+                    }
+                },
+                error: function(){
+                    console.log('error');
+                }
+            })
+        }
+    })
+}
 // 查看详情
 function detailAndEva(url, orderNum, link){
     $.ajax({
