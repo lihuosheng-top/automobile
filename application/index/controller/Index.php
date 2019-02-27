@@ -364,7 +364,9 @@ class Index extends Controller
                         $store[$k_2]["advert_text"] = db("platform")->where("store_id",$v_2["store_id"])->value("advert_text");
                         $store[$k_2]["start_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("start_time");
                         $store[$k_2]["end_time"] = db("platform")->where("store_id",$v_2["store_id"])->value("end_time");
-
+                        $store[$k_2]["phone_num"] =db("user")
+                            ->where("id",$v_2["user_id"])
+                            ->value("phone_num");
                     }
                     $service_setting = db("service_setting")->select();
                     $serve_data = [];
