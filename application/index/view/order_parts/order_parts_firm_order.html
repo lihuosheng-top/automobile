@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -532,27 +532,27 @@
                     $('.comeIndex').hide();
                     var str = '';
                     $.each(res.data, function(idx, val){
-                        str += `<div class="order-goods-info" id="`+val.store_id+`">
-                                    <div class="order-shop-box">
-                                        <i class="spr icon-shop"></i>
-                                        <span class="order-shop-namp">`+val.store_name+`</span>
-                                    </div>`
+                        str += '<div class="order-goods-info" id="'+val.store_id+'">\
+                                    <div class="order-shop-box">\
+                                        <i class="spr icon-shop"></i>\
+                                        <span class="order-shop-namp">'+val.store_name+'</span>\
+                                    </div>'
                         $.each(val.info, function(idx, val){
-                            str += `<div class="order-goods-detail" id="`+val.id+`">
-                                        <div class="order-goods-img">
-                                            <img src="uploads/`+val.goods_images+`">
-                                        </div>
-                                        <div class="order-info-box">
-                                            <p class="order-goods-p txt-hid-two">`+val.goods_name+`</p>
-                                            <p class="standard txt-hid-two" id="`+val.goods_standard_id+`">`+val.special_name+val.goods_delivery+`</p>
-                                            <div class="unit-price-quantity">
-                                                <p class="unit-price-p">￥<span>`+val.money+`</span></p>
-                                                <p class="quantity-p">×<span>`+val.goods_unit+`</span></p>
-                                            </div>
-                                        </div>
-                                    </div>`
+                            str += '<div class="order-goods-detail" id="'+val.id+'">\
+                                        <div class="order-goods-img">\
+                                            <img src="uploads/'+val.goods_images+'">\
+                                        </div>\
+                                        <div class="order-info-box">\
+                                            <p class="order-goods-p txt-hid-two">'+val.goods_name+'</p>\
+                                            <p class="standard txt-hid-two" id="'+val.goods_standard_id+'">'+val.special_name+val.goods_delivery+'</p>\
+                                            <div class="unit-price-quantity">\
+                                                <p class="unit-price-p">￥<span>'+val.money+'</span></p>\
+                                                <p class="quantity-p">×<span>'+val.goods_unit+'</span></p>\
+                                            </div>\
+                                        </div>\
+                                    </div>'
                         })
-                        str += `</div>`;
+                        str += '</div>';
                         storeIdArr.push(val.store_id);
                     })
                     $('.user-info-box').after(str);

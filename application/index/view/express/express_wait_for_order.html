@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -118,32 +118,32 @@
                     $('.info .phone').text(data.delivery_data[0].number);
                     var str = '';
                     $.each(data.delivery, function(idx, val){
-                        str += `<div class="order-item">
-                                    <div class="address-container">
-                                        <div class="get-goods" id="store-`+val.store_id+`">
-                                            <span>取：</span>
-                                            <div>
-                                                <span class="shop-name">`+val.store_name+`</span>
-                                                <span class="shop-address">`+val.store_address+`</span>
-                                            </div>
-                                            <i class="navigation-ex" data-lat="`+val.latitude+`" data-lng="`+val.longitude+`"></i>
-                                            <a href="javascript:Android.call('`+parseInt(val.store_number)+`');" class="spr shop-phone"></a>
-                                        </div>
-                                        <div class="send-goods" id="send-`+val.order_id+`">
-                                            <span>送：</span>
-                                            <span class="send-address">`+val.order_address+`</span>
-                                            <i class="navigation-ex"></i>
-                                            <a href="javascript:Android.call('`+parseInt(val.order_user_number)+`');" class="spr customer-phone"></a>
-                                        </div>
-                                    </div>
-                                    <div class="time-container">
-                                        <span class="order-time">下单时间：<span>`+timetrans(val.order_create_time)+`</span></span>
-                                        <span class="accept-time">预计送达时间：<span>宝贝正在路上，请您耐心等候</span></span>
-                                    </div>
-                                    <div class="button-container">
-                                        <button class="my-btn" name="`+val.order_status+`">接单</button>
-                                    </div>
-                                </div>`
+                        str += '<div class="order-item">\
+                                    <div class="address-container">\
+                                        <div class="get-goods" id="store-'+val.store_id+'">\
+                                            <span>取：</span>\
+                                            <div>\
+                                                <span class="shop-name">'+val.store_name+'</span>\
+                                                <span class="shop-address">'+val.store_address+'</span>\
+                                            </div>\
+                                            <i class="navigation-ex" data-lat="'+val.latitude+'" data-lng="'+val.longitude+'"></i>\
+                                            <a href="javascript:Android.call('+parseInt(val.store_number)+');" class="spr shop-phone"></a>\
+                                        </div>\
+                                        <div class="send-goods" id="send-'+val.order_id+'">\
+                                            <span>送：</span>\
+                                            <span class="send-address">'+val.order_address+'</span>\
+                                            <i class="navigation-ex"></i>\
+                                            <a href="javascript:Android.call('+parseInt(val.order_user_number)+');" class="spr customer-phone"></a>\
+                                        </div>\
+                                    </div>\
+                                    <div class="time-container">\
+                                        <span class="order-time">下单时间：<span>'+timetrans(val.order_create_time)+'</span></span>\
+                                        <span class="accept-time">预计送达时间：<span>宝贝正在路上，请您耐心等候</span></span>\
+                                    </div>\
+                                    <div class="button-container">\
+                                        <button class="my-btn" name="'+val.order_status+'">接单</button>\
+                                    </div>\
+                                </div>'
                     })
                     $('.order-container').append(str);
                     $('.order-item').on('click', '.my-btn', function(){

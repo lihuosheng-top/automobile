@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -96,23 +96,40 @@
         $('.QQ').click(function(){
             Android.qqLogin();
         })
-        function loginCallback(openid, headurl){
-            if(openid != null){
-                (function(){
-                    return $.ajax({
-                        url: 'aaa',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: {
-                            'openid': openid,
-                            'headurl': headurl
+        function loginCallback(openid, headurl, flag){
+            var fl = (flag == 'wx' ?  1 : 2);
+            if(openid != 'null'){
+                $.ajax({
+                    url: 'user_qq_wechat_log',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'id': openid,
+                        'is_wechat':fl
+                    },
+                    success: function(data){
+                        console.log(data);
+                        if(data.status == 1){
+                            location.href ='my_index';
+                        }else if(data.status == 2){
+                            location.href = 'user_bind_phone?openid=' + openid + '&flag=' + fl;
+                        }else {
+                            layer.open({
+                                skin: 'msg',
+                                content: data.info,
+                                time: 1
+                            })
                         }
-                    })
-                })().then(function(res){
-                    console.log(res);
-                    if(res.status == 1){
-                        location.href = 'user_bind_phone?openid='+openid;
+                    },
+                    error: function(res){
+                        console.log('error');
                     }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '绑定已取消',
+                    time: 1
                 })
             }
         }

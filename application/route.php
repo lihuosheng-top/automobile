@@ -23,7 +23,7 @@ Route::group("",[
     "index"=>"index/index/index",
     "saoma_callback"=>"index/index/saoma_callback",
     "weixin_notify"=>"index/index/weixin_notify",
-    "index_shop"=>"index/index/shop",                               //热门配件店铺
+    "index_shop"=>"index/index/shop",                               //周边店铺
     "index_shop_goods"=>"index/index/shop_goods",                   //热门配件店铺商品显示
 
 
@@ -32,6 +32,8 @@ Route::group("",[
     /*我的爱车*/
     "love_car"=>"index/LoveCar/love_car",
     "love_list"=>"index/LoveCar/love_list",                         //我的爱车列表
+    "love_edit"=>"index/LoveCar/love_edit",                         //我的爱车编辑
+    "love_car_go"=>"index/LoveCar/love_car_go",                         //跳到编辑页面
     "love_save"=>"index/LoveCar/love_save",                         //我的爱车入库
     "love_status"=>"index/LoveCar/love_status",                         //我的爱车状态修改
     "love_del"=>"index/LoveCar/love_del",                         //我的爱车列表删除
@@ -41,7 +43,7 @@ Route::group("",[
 
     /*服务商品*/
     "service_type"=>"index/reservation/service_type",//选择服务类型
-    "reservation"=>"index/reservation/reservation",//预约服务 首页
+    "reservation"=>"index/reservation/reservation",//预约服务首页
     "reservation_detail"=>"index/reservation/reservation_detail",//预约服务 详情
     "reservation_info"=>"index/reservation/reservation_info",//预约服务 详情
 
@@ -104,6 +106,7 @@ Route::group("",[
     'Dolog'=>"index/Login/Dolog", /*登录操作*/
     "logout"=>"index/Login/logout",/*退出登录*/
     "user_bind_phone"=>"index/Login/user_bind_phone", //第三方快捷登录绑定手机
+    "user_qq_wechat_log"=>"index/Login/user_qq_wechat_log", //qq或者微信快捷登录，如果没有则进行绑定操作
     "my_index"=>"index/My/my_index",  // 我的
     "my_information_details"=>"index/My/my_information_details",  // 订单消息提醒
     "my_message"=>"index/My/message", //我的个人信息
@@ -156,7 +159,13 @@ Route::group("",[
     "sell_parts_record"=>"index/SellMy/sell_parts_record",//卖家商品记录
     "sell_order_bill"=>"index/SellMy/sell_order_bill",//卖家账单
     "sell_wallet"=>"index/SellMy/sell_wallet",//卖家钱包
-    "sell_application"=>"index/SellMy/sell_application",//卖家提现申请
+    "sell_application"=>"index/SellMy/sell_application",//卖家提现申请（此接口已不用）
+    "sell_cash_withdrawal"=>"index/SellMy/sell_cash_withdrawal",//卖家提现申请（此接口第二次改动）
+    "sell_withdrawal_by_wechat"=>"index/SellMy/sell_withdrawal_by_wechat",//卖家微信提现申请
+    "sell_withdrawal_by_alipay"=>"index/SellMy/sell_withdrawal_by_alipay",//卖家支付宝提现申请
+    "sell_withdrawal_by_bank"=>"index/SellMy/sell_withdrawal_by_bank",//卖家银行卡提现申请
+    "check_password"=>"index/SellMy/check_password",//支付密码校验
+    "withdrawal_history"=>"index/SellMy/withdrawal_history",//提现历史记录（保存上一次提现的数据如银行卡信息）
     /*TODO:卖家我的页面结束*/
 
 

@@ -9,20 +9,20 @@ $.ajax({
         var carBrandStr = '';
         // 爱车热门品牌
         $.each(hotBrand, function(idx, val){
-            hotBrandStr += `<li class="hot-brand-li">\
-                                <img src="uploads/`+val.images+`">\
-                                <span class="txt-hid-one">`+val.brand+`</span>\
-                            </li>`;
+            hotBrandStr += '<li class="hot-brand-li">\
+                                <img src="uploads/'+val.images+'">\
+                                <span class="txt-hid-one">'+val.brand+'</span>\
+                            </li>';
         })
         $('.hot-brand-ul').append(hotBrandStr);
         // 爱车品牌
         $.each(res.data.brand, function(idx, val){
-            carBrandStr += `<div class="sort_list">\
+            carBrandStr += '<div class="sort_list">\
                                 <div class="num_logo">\
-                                    <img src="uploads/`+val.images+`">\
+                                    <img src="uploads/'+val.images+'">\
                                 </div>\
-                                <div class="num_name">`+val.brand+`</div>\
-                            </div>`;
+                                <div class="num_name">'+val.brand+'</div>\
+                            </div>';
         })
         $('.sort_box').append(carBrandStr);
         // 添加车首字母匹配 start
@@ -244,7 +244,7 @@ $.ajax({
                     var yearArr = [];
                     $.each(res.data.series, function(idx, val){
                         if(userChoseMoto == val.displacement){
-                            yearArr.push(val.year);
+                            yearArr.push(val.year.trim());
                         }
                     })
                     // 去重 年产
@@ -279,7 +279,7 @@ $.ajax({
                                         time: .8
                                     })
                                     setTimeout(function(){
-                                        location.href = 'love_list';
+                                        location.href = 'love_edit';
                                     }, 1000);
                                 }else if(data.status == 2){
                                     layer.open({
@@ -350,8 +350,9 @@ $.ajax({
         console.log('爱车', res);
         if(res.status == 1){
             var res = res.data[0];
-            $('.txt-div p').html(res.brand);
-            $('.txt-div span').html(res.series + ' ' + res.displacement + ' ' + res.production_time);
+            $('.icon_add').hide();
+            $('.txt-div p').html(res.brand + ' ' + res.series + ' ' + res.production_time);
+            $('.txt-div span').html(res.displacement + ' ' + (res.car_information==null? '' : res.car_information.plate_number));
         }else{
             $('.service-container').on('click', 'li:eq(2)', function(e){
                 e.preventDefault();

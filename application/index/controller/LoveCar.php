@@ -8,6 +8,7 @@
 namespace app\index\controller;
 use think\Controller;
 use think\Paginator;
+use think\queue\job\Redis;
 use think\Request;
 use think\Session;
 use think\Db;
@@ -67,8 +68,12 @@ class LoveCar extends Controller{
                 }
                 $bool = db("user_car")->insertGetId($love);
                 if($bool){
+                    Session::set("user_car_id",$bool);
                     if($love["status"] ==1){
-                        Db::name('user_car')->where("user_id",$user_id)->where("id","NEQ",$bool)->update(['status'=>0]);
+                        Db::name('user_car')
+                            ->where("user_id",$user_id)
+                            ->where("id","NEQ",$bool)
+                            ->update(['status'=>0]);
                  }
                     return ajax_success("添加成功");
                 }else{
@@ -81,6 +86,23 @@ class LoveCar extends Controller{
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:跳到编辑页面
+     **************************************
+     */
+    public function love_car_go(Request $request){
+        if($request->isPost()){
+            $id =$request->only(["id"])["id"];
+            Session::set("user_car_id",$id);
+            if($id>0){
+                return ajax_success("可以跳",$id);
+            }else{
+                return ajax_error("id不正确");
+            }
+        }
+    }
 
 
     /**
@@ -92,16 +114,47 @@ class LoveCar extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");
             $love = db("user_car")->where("user_id",$user_id)->select();
-            foreach ($love as $key=>$value){
-                $love[$key]["images"] = db("car_images")->where("brand",$value["brand"])->find();
-            }
             if(!empty($love)){
-
+                foreach ($love as $key=>$value){
+                    $love[$key]["images"] = db("car_images")
+                        ->where("brand",$value["brand"])
+                        ->find();
+                }
                 return ajax_success("获取成功",$love);
+            }else{
+                return ajax_error("暂无爱车信息");
             }
 
         }
         return view("love_list");
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:我的爱车编辑
+     **************************************
+     * @param Request $request
+     * @return \think\response\View|void
+     */
+    public function love_edit(Request $request)
+    {
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $user_car_id = Session::get("user_car_id");
+            $bool = db("user_car")->where("id",$user_car_id)->where("user_id",$user_id)->find();
+            if(!empty($bool)){
+                $bool["images"] = db("car_images")
+                    ->where("brand",$bool["brand"])
+                    ->value("brand_images");
+                $bool["user_car"] =db("user_car_message")->where("user_car_id",$user_car_id)->find();
+                Session::set("user_car_id",null);
+                return ajax_success("获取信息成功",$bool);
+            }else{
+                return ajax_error("没有数据",0);
+            }
+        }
+        return view("love_edit");
     }
 
 
@@ -137,7 +190,6 @@ class LoveCar extends Controller{
      * 陈绪
      */
     public function love_del(Request $request){
-
         if($request->isPost()){
             $user_id =Session::get("user");
             $id = $request->only(["id"])["id"];

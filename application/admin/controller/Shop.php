@@ -120,7 +120,6 @@ class Shop extends Controller{
     public function img_store_img_del(Request $request){
         if($request->isPost()){
             $form_data =$_POST;
-            if($request->isPost()){
                 $img_url =$request->only('title')['title'];
                 if(!empty($img_url)){
                     $data =Db::name('store')
@@ -128,27 +127,31 @@ class Shop extends Controller{
                         ->where('store_id',$form_data["id"])
                         ->find();
                     $datas =explode(',',$data['verifying_physical_storefront_two']);
-                    foreach ($datas as $k=>$v){
-                        if($v==$img_url){
-                            unlink(ROOT_PATH . 'public' . DS . 'uploads/'.$v);
+                    foreach ($datas as $k=>$v) {
+                        if ($v == $img_url) {
+                            //删除了图片
+                            unlink(ROOT_PATH . 'public' . DS . 'uploads/' . $v);
                         }else{
-                            $new_data[] =$v;
+                            //留下一些没有删除的链接
+                            $new_data[] = $v;
                         }
                     }
                     if(!empty($new_data)){
                         $new_imgs_url =implode(',',$new_data);
-                        $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>$new_imgs_url]);
+                        $res = Db::name('store')
+                            ->where('store_id',$form_data["id"])
+                            ->update(['verifying_physical_storefront_two'=>$new_imgs_url]);
                     }else{
-                        $res = Db::name('store') ->where('store_id',$form_data["id"])->update(['verifying_physical_storefront_two'=>NULL]);
+                        $res = Db::name('store')
+                            ->where('store_id',$form_data["id"])
+                            ->update(['verifying_physical_storefront_two'=>NULL]);
                     }
                     if($res){
                         return ajax_success('删除成功',['status'=>1]);
                     }else{
                         return ajax_success('删除失败',['status'=>0]);
                     }
-
                 }
-            }
         }
     }
 
@@ -185,10 +188,20 @@ class Shop extends Controller{
                 $info = $v->move(ROOT_PATH . 'public' . DS . 'uploads');
                 $verifying_physical_storefront_two[] = str_replace("\\", "/", $info->getSaveName());
             }
-            $new =implode(',',$verifying_physical_storefront_two);
-            $old =Db::name('store')->where('store_id',$id)->value("verifying_physical_storefront_two");
-            if($new){
-                $form_data['verifying_physical_storefront_two'] =$old.",".$new;
+            if(count($verifying_physical_storefront_two) > 1){
+                $new =implode(',',$verifying_physical_storefront_two);
+            }else if(count($verifying_physical_storefront_two) == 1){
+                $new =$verifying_physical_storefront_two[0];
+            }else{
+                $new =NULL;
+            }
+            if(!empty($new)){
+                $old =Db::name('store')->where('store_id',$id)->value("verifying_physical_storefront_two");
+                if(!empty($old)){
+                    $form_data['verifying_physical_storefront_two'] =$old.",".$new;
+                }else{
+                    $form_data['verifying_physical_storefront_two'] =$new;
+                }
             }
         }
         $bool =Db::name('store')->where('store_id',$id)->update($form_data);

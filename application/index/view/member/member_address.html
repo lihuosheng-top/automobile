@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -69,37 +69,37 @@
                 if(res.status == 1){
                     $.each(res.data, function(idx, val){
                         if(val.status === 1){
-                            str += `<div class="address-div">
-                                        <div class="edit-box">
-                                            <div class="set-default">
-                                                <i class="spr icon-default default-on"></i>
-                                                <button class="set-default-btn" id="def-`+val.id+`">设为默认</button>
-                                            </div>
-                                            <button class="edit-btn" id="edit-`+val.id+`">编辑</button>
-                                            <button class="del-btn" id="del-`+val.id+`">删除</button>
-                                        </div>
-                                        <div class="consignee">
-                                            <span class="name">`+val.harvester+`</span>
-                                            <span class="phone">`+val.harvester_phone_num+`</span>
-                                        </div>
-                                        <div class="consignee-addr">`+val.address_name.split(',').join('')+val.harvester_real_address+`</div>
-                                    </div>`
+                            str += '<div class="address-div">\
+                                        <div class="edit-box">\
+                                            <div class="set-default">\
+                                                <i class="spr icon-default default-on"></i>\
+                                                <button class="set-default-btn" id="def-'+val.id+'">设为默认</button>\
+                                            </div>\
+                                            <button class="edit-btn" id="edit-'+val.id+'">编辑</button>\
+                                            <button class="del-btn" id="del-'+val.id+'">删除</button>\
+                                        </div>\
+                                        <div class="consignee">\
+                                            <span class="name">'+val.harvester+'</span>\
+                                            <span class="phone">'+val.harvester_phone_num+'</span>\
+                                        </div>\
+                                        <div class="consignee-addr">'+val.address_name.split(',').join('')+val.harvester_real_address+'</div>\
+                                    </div>'
                         }else if(val.status === -1){
-                            str += `<div class="address-div">
-                                        <div class="edit-box">
-                                            <div class="set-default">
-                                                <i class="spr icon-default"></i>
-                                                <button class="set-default-btn" id="def-`+val.id+`">设为默认</button>
-                                            </div>
-                                            <button class="edit-btn" id="edit-`+val.id+`">编辑</button>
-                                            <button class="del-btn" id="del-`+val.id+`">删除</button>
-                                        </div>
-                                        <div class="consignee">
-                                            <span class="name">`+val.harvester+`</span>
-                                            <span class="phone">`+val.harvester_phone_num+`</span>
-                                        </div>
-                                        <div class="consignee-addr">`+val.address_name.split(',').join('')+val.harvester_real_address+`</div>
-                                    </div>`
+                            str += '<div class="address-div">\
+                                        <div class="edit-box">\
+                                            <div class="set-default">\
+                                                <i class="spr icon-default"></i>\
+                                                <button class="set-default-btn" id="def-'+val.id+'">设为默认</button>\
+                                            </div>\
+                                            <button class="edit-btn" id="edit-'+val.id+'">编辑</button>\
+                                            <button class="del-btn" id="del-'+val.id+'">删除</button>\
+                                        </div>\
+                                        <div class="consignee">\
+                                            <span class="name">'+val.harvester+'</span>\
+                                            <span class="phone">'+val.harvester_phone_num+'</span>\
+                                        </div>\
+                                        <div class="consignee-addr">'+val.address_name.split(',').join('')+val.harvester_real_address+'</div>\
+                                    </div>'
                         }
                     })
                     $('.addr-wrap').append(str);

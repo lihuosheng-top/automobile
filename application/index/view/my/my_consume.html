@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -148,21 +148,21 @@
         })
         function mySplicing(data, month){
             var str = '';
-            str += `<h3 class="month-tit">`+month+`月</h3>
-                    <ul class="cost-ul">`;
+            str += '<h3 class="month-tit">'+month+'月</h3>\
+                    <ul class="cost-ul">';
             data.forEach(function(val, idx){
-                str += `<li class="cost-li" id="`+val.wallet_id+`">
-                            <div class="cost-method">
-                                <img src="__STATIC__/`+val.wallet_img+`">
-                            </div>
-                            <div class="cost-info">
-                                <p class="txt-hid-one">`+val.title+`</p>
-                                <span>`+val.operation_time+`</span>
-                            </div>
-                            <div class="cost-money">`+(val.wallet_operation > 0 ? '+'+val.wallet_operation : val.wallet_operation)+`</div>
-                        </li>`
+                str += '<li class="cost-li" id="'+val.wallet_id+'">\
+                            <div class="cost-method">\
+                                <img src="__STATIC__/'+val.wallet_img+'">\
+                            </div>\
+                            <div class="cost-info">\
+                                <p class="txt-hid-one">'+val.title+'</p>\
+                                <span>'+val.operation_time+'</span>\
+                            </div>\
+                            <div class="cost-money">'+(val.wallet_operation > 0 ? '+'+val.wallet_operation : val.wallet_operation)+'</div>\
+                        </li>'
             })
-            str += `</ul>`;
+            str += '</ul>';
             return str;
         }
         function checkDetail(_this){

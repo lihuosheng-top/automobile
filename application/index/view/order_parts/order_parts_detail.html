@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -237,34 +237,34 @@
                 var val = res.data;
                 var statusTxt = '';
                 if(val.status === 1){
-                    statusTxt = `待付款`;
+                    statusTxt = '待付款';
                     $('.cancel-order-btn')
                         .add('.to-payment-btn')
                         .show();
                     $('.time-count-down').show();
                     countDown('time-count-down', val.normal_future_time, val.store_id, val.parts_order_number, '超过规定时间未付款，系统自动关闭订单');
                 }else if(val.status === 2 || val.status === 3 || val.status === 4 || val.status === 5){
-                    statusTxt = `待收货`;
+                    statusTxt = '待收货';
                     $('.conf-receipt-btn').show();
                 }else if(val.status === 6 || val.status === 7){
-                    statusTxt = `待评价`;
+                    statusTxt = '待评价';
                     $('.evaluation-btn')
                         .add('.del-order-btn')
                         .add('.return-goods')
                             .show();
                 }else if(val.status === 8){
-                    statusTxt = `已完成`;
+                    statusTxt = '已完成';
                 }else if(val.status === 9 || val.status === 10){
-                    statusTxt = `已取消`;
+                    statusTxt = '已取消';
                     $('.del-order-btn').show();
                 }else if(val.status === 11 || val.status === 13 || val.status === 15){
-                    statusTxt = `退货中`;
+                    statusTxt = '退货中';
                     // $('.del-order-btn').show();
                 }else if(val.status === 12){
-                    statusTxt = `已退货`;
+                    statusTxt = '已退货';
                     $('.del-order-btn').show();
                 }else if(val.status === 14){
-                    statusTxt = `拒绝退货`;
+                    statusTxt = '拒绝退货';
                 }
                 // 状态值
                 $('.status').text(statusTxt);
@@ -283,25 +283,25 @@
                 // 订单商品
                 var str = '';
                 $.each(val.info, function(idx, val){
-                    str += `<div class="order-goods-detail" id="`+val.id+`">
-                                <div class="order-goods-img">
-                                    <img src="uploads/`+val.goods_image+`">
-                                </div>
-                                <div class="order-info-box">
-                                    <p class="order-goods-p txt-hid-two">`+val.parts_goods_name+`</p>
-                                    <p class="order-selling-point txt-hid-two">`+val.goods_describe+`</p>
-                                    <div class="unit-price-quantity">
-                                        <p class="unit-price-p">￥`+val.goods_money+`</p>
-                                        <p class="quantity-p">×`+val.order_quantity+`</p>
-                                        <p style="display:`+(val.status==11?'block': 
+                    str += '<div class="order-goods-detail" id="'+val.id+'">\
+                                <div class="order-goods-img">\
+                                    <img src="uploads/'+val.goods_image+'">\
+                                </div>\
+                                <div class="order-info-box">\
+                                    <p class="order-goods-p txt-hid-two">'+val.parts_goods_name+'</p>\
+                                    <p class="order-selling-point txt-hid-two">'+val.goods_describe+'</p>\
+                                    <div class="unit-price-quantity">\
+                                        <p class="unit-price-p">￥'+val.goods_money+'</p>\
+                                        <p class="quantity-p">×'+val.order_quantity+'</p>\
+                                        <p style="display:'+(val.status==11?'block': 
                                                             (val.status==13?'block':
-                                                            (val.status==15?'block':'none')))+`;">退货中</p>
-                                        <p style="display:`+(val.status==12?'block':'none')+`;">已退货</p>
-                                        <button class="return-goods" style="display:`+(val.status==7?'block':'none')+`;">退货</button>
-                                        <button class="check-logis" style="display:`+(val.status==3?'block':'none')+`;">查看物流</button>
-                                    </div>
-                                </div>
-                            </div>`
+                                                            (val.status==15?'block':'none')))+';">退货中</p>\
+                                        <p style="display:'+(val.status==12?'block':'none')+';">已退货</p>\
+                                        <button class="return-goods" style="display:'+(val.status==7?'block':'none')+';">退货</button>\
+                                        <button class="check-logis" style="display:'+(val.status==3?'block':'none')+';">查看物流</button>\
+                                    </div>\
+                                </div>\
+                            </div>'
                 })
                 $('.order-shop-box').after(str);
                 // 商品总额

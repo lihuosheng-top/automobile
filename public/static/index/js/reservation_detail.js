@@ -96,7 +96,7 @@ if(urlLen > 1){
                         var id = $(this).attr('data-id');
                         var standid = $(this).attr('data-standid');
                         var storeid = $(this).attr('data-storeid');
-                        location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=1`+`&service_setting_id=`+serviceSettingId;
+                        location.href = 'goods_detail?id='+id+'&preid='+standid+'&storeid='+storeid+'&hot=1'+'&service_setting_id='+serviceSettingId;
                     })
                     // 服务项目
                     var str2 = myService(data);
@@ -106,6 +106,15 @@ if(urlLen > 1){
     
                     $('.comment_title').show();
                     evaAjax(data);
+
+                    // 电话 导航
+                    var seatNum = data.data.store[0].phone_number;
+                    var storeAjax = data.data.store[0];
+                    $('.activity-contact .phone').attr('href', "javascript:Android.call("+seatNum+");");
+                    $('.activity-contact .phone-number').text(seatNum);
+                    $('.activity-contact .navigation').click(function(){
+                        Android.openGdMap(storeAjax.latitude, storeAjax.longitude, storeAjax.store_name)
+                    })
                 }
             },
             error: function(){
@@ -118,7 +127,6 @@ if(urlLen > 1){
         })
     }else{
         // 从首页活动广告进来
-        $('.activity-contact').show();
         $('.activity-section').show();
         (function(){
             return $.ajax({
@@ -139,7 +147,7 @@ if(urlLen > 1){
                     var id = $(this).attr('data-id');
                     var standid = $(this).attr('data-standid');
                     var storeid = $(this).attr('data-storeid');
-                    location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=1`;
+                    location.href = 'goods_detail?id='+id+'&preid='+standid+'&storeid='+storeid+'&hot=1';
                 })
                 // 服务项目
                 var str2 = myService(data);
@@ -190,7 +198,7 @@ if(urlLen > 1){
                     var id = $(this).attr('data-id');
                     var standid = $(this).attr('data-standid');
                     var storeid = $(this).attr('data-storeid');
-                    location.href = `goods_detail?id=`+id+`&preid=`+standid+`&storeid=`+storeid+`&hot=1`;
+                    location.href = 'goods_detail?id='+id+'&preid='+standid+'&storeid='+storeid+'&hot=1';
                 })
                 // 服务项目
                 var str2 = myService(data);
@@ -220,21 +228,21 @@ function evaAjax(data){
             return false;
         }
         if(idx === 0){
-            filterStr += `<li class="filter-this" data-serverid="`+ele.service_setting_id+`">
-                            <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
-                        </li>`
-            allcomStr += `<li class="filter-service-li" data-serverid="`+ele.service_setting_id+`">
-                                <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
-                            </li>`
+            filterStr += '<li class="filter-this" data-serverid="'+ele.service_setting_id+'">\
+                            <p class="com-type">'+(ele.serve_name.slice(2))+'</p>\
+                        </li>'
+            allcomStr += '<li class="filter-service-li" data-serverid="'+ele.service_setting_id+'">\
+                                <p class="com-name">'+(ele.serve_name.slice(2))+'</p>\
+                            </li>'
             myEvaluate(ele.service_setting_id,storeId, '.filter-comment', false,'reservation_evaluate_return');
             evaluateNum(ele.service_setting_id, storeId);
         }else{
-            filterStr += `<li data-serverid="`+ele.service_setting_id+`">
-                            <p class="com-type">`+(ele.serve_name.slice(2))+`</p>
-                        </li>`
-            allcomStr += `<li data-serverid="`+ele.service_setting_id+`">
-                            <p class="com-name">`+(ele.serve_name.slice(2))+`</p>
-                        </li>`
+            filterStr += '<li data-serverid="'+ele.service_setting_id+'">\
+                            <p class="com-type">'+(ele.serve_name.slice(2))+'</p>\
+                        </li>'
+            allcomStr += '<li data-serverid="'+ele.service_setting_id+'">\
+                            <p class="com-name">'+(ele.serve_name.slice(2))+'</p>\
+                        </li>'
         }
     })
     $('.filter-ul').html(filterStr);
@@ -254,11 +262,11 @@ function evaluateNum(settingId, storeId){
             console.log('评论数量', res);
             if(res.status == 1){
                 var data = res.data;
-                $('.filter-com-ul').html(`<li class="filter-li-this">全部（<span>`+data[0]+`</span>）</li>
-                                        <li>好评（<span>`+data[1]+`</span>）</li>
-                                        <li>中评（<span>`+data[2]+`</span>）</li>
-                                        <li class="negative">差评（<span>`+data[3]+`</span>）</li>
-                                        <li>有图（<span>`+data[4]+`</span>）</li>`)
+                $('.filter-com-ul').html('<li class="filter-li-this">全部（<span>'+data[0]+'</span>）</li>\
+                                        <li>好评（<span>'+data[1]+'</span>）</li>\
+                                        <li>中评（<span>'+data[2]+'</span>）</li>\
+                                        <li class="negative">差评（<span>'+data[3]+'</span>）</li>\
+                                        <li>有图（<span>'+data[4]+'</span>）</li>')
                 if(!$('.comment_title').is(':hidden')){
                     $('.comment_title').find('span').text(data[0]);
                 }
@@ -285,57 +293,57 @@ function myEvaluate(settingid, storeid, content, flag, url){
             var str = '';
             var length = data.length > 3 ? 3 : data.length;
             for(var i = 0; i < (flag ? data.length : length); i++){
-                str += `<li class="comment_li" data-evalid="`+data[i].id+`">
-                            <div class="content-container">
-                                <div class="comment_user_info">
-                                    <div class="comment_user_headimg">
-                                        <img src="userimg/`+data[i].user_info.user_img+`">
-                                    </div>
-                                    <div class="comment_phone_time">
-                                        <div class="phone_time clearfix">
-                                            <span class="phone_box">`+data[i].user_info.phone_num+`</span>
-                                            <span class="time_box">`+timetrans(data[i].create_time)+`</span>
-                                        </div>
-                                        <span class="spr star `+(data[i].evaluate_stars === 5?'':
+                str += '<li class="comment_li" data-evalid="'+data[i].id+'">\
+                            <div class="content-container">\
+                                <div class="comment_user_info">\
+                                    <div class="comment_user_headimg">\
+                                        <img src="userimg/'+data[i].user_info.user_img+'">\
+                                    </div>\
+                                    <div class="comment_phone_time">\
+                                        <div class="phone_time clearfix">\
+                                            <span class="phone_box">'+data[i].user_info.phone_num+'</span>\
+                                            <span class="time_box">'+timetrans(data[i].create_time)+'</span>\
+                                        </div>\
+                                        <span class="spr star '+(data[i].evaluate_stars === 5?'':
                                                                 (data[i].evaluate_stars === 4?'four-star':
                                                                 (data[i].evaluate_stars === 3?'three-star':
-                                                                (data[i].evaluate_stars === 2?'two-star':'one-star'))))+`"></span>
-                                    </div>
-                                </div>
-                                <div class="comment_text_box">
-                                    <a href="javascript:;" class="comment_text_a">
-                                        <p class="comment_text_p">`+data[i].evaluate_content+`</p>
-                                    </a>`
+                                                                (data[i].evaluate_stars === 2?'two-star':'one-star'))))+'"></span>\
+                                    </div>\
+                                </div>\
+                                <div class="comment_text_box">\
+                                    <a href="javascript:;" class="comment_text_a">\
+                                        <p class="comment_text_p">'+data[i].evaluate_content+'</p>\
+                                    </a>'
                 // 有评论图片
                 if(data[i].images.length !== 0){
-                    str += `<ul class="comment_img_ul">`;
+                    str += '<ul class="comment_img_ul">';
                     data[i].images.forEach(function(ele, idx){
-                        str += `<li class="comment_img_li">
-                                    <img src="uploads/`+ele.images+`">
-                                </li>`
+                        str += '<li class="comment_img_li">\
+                                    <img src="uploads/'+ele.images+'">\
+                                </li>'
                     })
                     str += '</ul>';
                 }
                 // 有商家回复
                 if(data[i].business_repay !== null){
-                    str += `<div class="reply_box">
-                                <i class="triangle"></i>
-                                <p class="reply_text">`+data[i].business_repay+`</p>
-                            </div>`
+                    str += '<div class="reply_box">\
+                                <i class="triangle"></i>\
+                                <p class="reply_text">'+data[i].business_repay+'</p>\
+                            </div>'
                 }
-                str += `</div>
-                    </div>
-                    <div class="bottom_time_box">
-                    <p class="buy_time">购买时间: <span>`+timetrans(data[i].order_create_time)+`</span></p>
-                    <div>
-                        <a href="javascript:;" class="like">
-                            <i class="spr icon_like `+
+                str += '</div>\
+                    </div>\
+                    <div class="bottom_time_box">\
+                    <p class="buy_time">购买时间: <span>'+timetrans(data[i].order_create_time)+'</span></p>\
+                    <div>\
+                        <a href="javascript:;" class="like">\
+                            <i class="spr icon_like '+
                             (data[i].is_praise == 1 ? 'like-on':'')
-                            +`"></i><span class="like_num">`+data[i].praise+`</span>
-                        </a>
-                    </div>
-                </div>
-            </li>`
+                            +'"></i><span class="like_num">'+data[i].praise+'</span>\
+                        </a>\
+                    </div>\
+                </div>\
+            </li>'
             }
             $(content).html('').html(str);
             // 评论点赞
@@ -381,16 +389,16 @@ function myEvaluate(settingid, storeid, content, flag, url){
 function myGoods(data){
     var str = '';
     $.each(data.data.goods, function(idx, val){
-        str += `<div class="goods-colla-item" data-id="`+val.id+`" data-standid="`+val.goods_brand_id+`" data-storeid="`+val.store_id+`">
-                    <div class="goods-img-box">
-                        <img src="uploads/`+val.goods_show_images+`">
-                    </div>
-                    <div class="goods-info-box">
-                        <p class="goods-name txt-hid-two">`+val.goods_name+`</p>
-                        <p class="goods-selling txt-hid-two">`+val.goods_describe+`</p>
-                        <p class="goods-price">￥`+val.goods_adjusted_money+`</p>
-                    </div>
-                </div>`
+        str += '<div class="goods-colla-item" data-id="'+val.id+'" data-standid="'+val.goods_brand_id+'" data-storeid="'+val.store_id+'">\
+                    <div class="goods-img-box">\
+                        <img src="uploads/'+val.goods_show_images+'">\
+                    </div>\
+                    <div class="goods-info-box">\
+                        <p class="goods-name txt-hid-two">'+val.goods_name+'</p>\
+                        <p class="goods-selling txt-hid-two">'+val.goods_describe+'</p>\
+                        <p class="goods-price">￥'+val.goods_adjusted_money+'</p>\
+                    </div>\
+                </div>'
     })
     return str;
 }
@@ -416,9 +424,9 @@ function myService(data){
     var myStr = '';
     if(swiperImgArr.length !== 0){
         $.each(swiperImgArr, function(idx, val){
-            myStr += `<div class="swiper-slide">
-                        <img src="uploads/`+val+`">
-                    </div>`
+            myStr += '<div class="swiper-slide">\
+                        <img src="uploads/'+val+'">\
+                    </div>'
         })
         $('.swiper-wrapper').append(myStr);
         mySwiper();
@@ -427,45 +435,45 @@ function myService(data){
         if(val.serve_name === null){
             return false;
         }
-        str2 += `<div class="service-colla-item" data-goodsid="`+val.service_setting_id+`">
-                    <div class="service-colla-title">
-                        <p class="service-subtitle">`+val.serve_name+`</p>
-                        <p class="service-money"></p>
-                        <i class="spr icon-uncheck `+(settingIdName=='service_setting_id'?'icon-check':'')+`" id="setting-`+val.serve_goods[0].service_setting_id+`"></i>
-                    </div>
-                    <div class="service-colla-content" style="display:`+(settingIdName=='service_setting_id'?'block':'none')+`;">
-                        <ul>`
+        str2 += '<div class="service-colla-item" data-goodsid="'+val.service_setting_id+'">\
+                    <div class="service-colla-title">\
+                        <p class="service-subtitle">'+val.serve_name+'</p>\
+                        <p class="service-money"></p>\
+                        <i class="spr icon-uncheck '+(settingIdName=='service_setting_id'?'icon-check':'')+'" id="setting-'+val.serve_goods[0].service_setting_id+'"></i>\
+                    </div>\
+                    <div class="service-colla-content" style="display:'+(settingIdName=='service_setting_id'?'block':'none')+';">\
+                        <ul>'
         $.each(val.serve_goods, function(idx, val){
             if(val.service_money === null && val.ruling_money === null){
-                str2 += `<li>
-                            <p class="service-car-type">`+val.vehicle_model+`</p>
-                            <div class="content-money-div">
-                                <p class="sale"><span>面议</span></p>
-                            </div>
-                            <i class="spr icon-uncheck `+(settingIdName=='service_setting_id'&&idx==0?'icon-check':'')+`" id="`+val.id+`"></i>
-                        </li>`
+                str2 += '<li>\
+                            <p class="service-car-type">'+val.vehicle_model+'</p>\
+                            <div class="content-money-div">\
+                                <p class="sale"><span>面议</span></p>\
+                            </div>\
+                            <i class="spr icon-uncheck '+(settingIdName=='service_setting_id'&&idx==0?'icon-check':'')+'" id="'+val.id+'"></i>\
+                        </li>'
             }else if(val.service_money !== null && val.ruling_money === null){
-                str2 += `<li>
-                            <p class="service-car-type">`+val.vehicle_model+`</p>
-                            <div class="content-money-div">
-                                <p class="sale">￥<span>`+val.service_money+`</span></p>
-                            </div>
-                            <i class="spr icon-uncheck `+(settingIdName=='service_setting_id'&&idx==0?'icon-check':'')+`" id="`+val.id+`"></i>
-                        </li>`
+                str2 += '<li>\
+                            <p class="service-car-type">'+val.vehicle_model+'</p>\
+                            <div class="content-money-div">\
+                                <p class="sale">￥<span>'+val.service_money+'</span></p>\
+                            </div>\
+                            <i class="spr icon-uncheck '+(settingIdName=='service_setting_id'&&idx==0?'icon-check':'')+'" id="'+val.id+'"></i>\
+                        </li>'
             }else if(val.service_money !== null && val.ruling_money !== null){
-                str2 += `<li>
-                            <p class="service-car-type">`+val.vehicle_model+`</p>
-                            <div class="content-money-div">
-                                <p class="sale">￥<span>`+val.service_money+`</span></p>
-                                <p class="thro">￥<span>`+val.ruling_money+`</span></p>
-                            </div>
-                            <i class="spr icon-uncheck `+(settingIdName=='service_setting_id'&&idx==0?'icon-check':'')+`" id="`+val.id+`"></i>
-                        </li>`
+                str2 += '<li>\
+                            <p class="service-car-type">'+val.vehicle_model+'</p>\
+                            <div class="content-money-div">\
+                                <p class="sale">￥<span>'+val.service_money+'</span></p>\
+                                <p class="thro">￥<span>'+val.ruling_money+'</span></p>\
+                            </div>\
+                            <i class="spr icon-uncheck '+(settingIdName=='service_setting_id'&&idx==0?'icon-check':'')+'" id="'+val.id+'"></i>\
+                        </li>'
             }
         })
-        str2 += `</ul>
-            </div>
-        </div>`
+        str2 += '</ul>\
+            </div>\
+        </div>'
     })
     return str2;
 }

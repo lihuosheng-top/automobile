@@ -23,28 +23,28 @@ $.ajax({
         if(res.status == 1){
             var str = '';
             $.each(res.data, function(idx, val){
-                str += `<div class="reservation-tab" id="`+val.id+`">
-                            <div class="reservation-info-container">
-                                <div class="order-num-status">
-                                <div class="order-num">
-                                    <i class="spr icon-order-num"></i>订单编号：<span>`+val.service_order_number+`</span>
-                                </div>
-                                <span class="status">已完成</span>
-                                </div>
-                                <p class="order-time">
-                                    <i class="spr icon-time"></i>`+val.got_to_time+`
-                                </p>
-                                <p class="order-shop-name">
-                                    <i class="spr icon-shop"></i>`+val.store_name+`
-                                </p>
-                                <div class="order-item">
-                                    <span></span>`+val.service_goods_name+`
-                                </div>
-                            </div>
-                            <div class="button-box">
-                                <button class="del-order-btn"">删除订单</button>
-                            </div>
-                        </div>`
+                str += '<div class="reservation-tab" id="'+val.id+'">\
+                            <div class="reservation-info-container">\
+                                <div class="order-num-status">\
+                                <div class="order-num">\
+                                    <i class="spr icon-order-num"></i>订单编号：<span>'+val.service_order_number+'</span>\
+                                </div>\
+                                <span class="status">已完成</span>\
+                                </div>\
+                                <p class="order-time">\
+                                    <i class="spr icon-time"></i>'+val.got_to_time+'\
+                                </p>\
+                                <p class="order-shop-name">\
+                                    <i class="spr icon-shop"></i>'+val.store_name+'\
+                                </p>\
+                                <div class="order-item">\
+                                    <span></span>'+val.service_goods_name+'\
+                                </div>\
+                            </div>\
+                            <div class="button-box">\
+                                <button class="del-order-btn"">删除订单</button>\
+                            </div>\
+                        </div>'
             })
             $('.reservation-tab-container').append(str);
             // 删除订单

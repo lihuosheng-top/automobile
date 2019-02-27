@@ -42,18 +42,21 @@ class Register extends Controller{
             if(preg_match($pattern,$mobile)) {
                 $res =  Db::name('user')->field('phone_num')->where('phone_num',$mobile)->select();
                 if($res){
-                    return ajax_error('此手机号已经注册',['status'=>0]);
+                    return ajax_error('此手机号已经注册',0);
                 }
                 $mobileCode = rand(100000, 999999);
                 $arr = json_decode($mobile, true);
                 $mobiles = strlen($arr);
                 if (isset($mobiles) != 11) {
-                    return ajax_error("手机号码不正确",['status'=>0]);
+                    return ajax_error("手机号码不正确",0);
                 }
                 //存入session中
                 if (strlen($mobileCode)> 0) {
-                    session('mobileCode',$mobileCode);
-                    $_SESSION['mobile'] = $mobile;
+//                    session('mobileCode',$mobileCode);
+//                    session('mobile',$mobile);
+                    Session::set("mobileCode",$mobileCode);
+                    Session::set("mobile",$mobile);
+//                    $_SESSION['mobile'] = $mobile;
                 }
                 $content = "尊敬的用户，您本次验证码为{$mobileCode}，十分钟内有效";
                 $url = "http://120.26.38.54:8000/interface/smssend.aspx";
@@ -68,10 +71,10 @@ class Register extends Controller{
                 if ($output) {
                     return ajax_success("发送成功", $output);
                 } else {
-                    return ajax_error("发送失败",['status'=>0]);
+                    return ajax_error("发送失败",0);
                 }
             }else{
-                return ajax_error("请填写正确的手机号",['status'=>0]);
+                return ajax_error("请填写正确的手机号",0);
             }
             }
     }
@@ -85,24 +88,24 @@ class Register extends Controller{
     public function  doRegByPhone(Request $request){
         if($request->isPost())
         {
-            $mobile = trim($_POST['mobile']);
+            return ajax_success("233333",session('mobileCode'));
+            $mobile = $request->only(['mobile'])['mobile'];
             $is_reg =Db::name("user")->where("phone_num",$mobile)->find();
             if(!empty($is_reg)){
-                return ajax_error("此手机已注册，可以直接登录");
+                return ajax_error("此手机已注册，可以直接登录",["status"=>0]);
             }
-            $code = trim($_POST['mobile_code']);
-            $password =trim($_POST['password']);
-            $confirm_password =trim($_POST['confirm_password']);
+            $code = $request->only(['mobile_code'])['mobile_code'];
+            $password = $request->only(['password'])['password'];
+            $confirm_password = $request->only(['confirm_password'])['confirm_password'];
             $create_time =date('Y-m-d H:i:s');
-
             if($password !==$confirm_password ){
-                return ajax_error('两次密码不相同');
+                return ajax_error('两次密码不相同',["status"=>0]);
             }
             if (strlen($mobile) != 11 || substr($mobile, 0, 1) != '1' || $code == '') {
-                return ajax_error("参数不正确");
+                return ajax_error("参数不正确",["status"=>0]);
             }
-            if (session('mobileCode') != $code || $mobile != $_SESSION['mobile']) {
-                return ajax_error("验证码不正确");
+            if (session('mobileCode') != $code) {
+                return ajax_error("验证码不正确",["status"=>0]);
             } else {
                 $passwords =password_hash($password,PASSWORD_DEFAULT);
                 $invitation = $request->only(['invitation'])['invitation']; //邀请码
@@ -170,10 +173,10 @@ class Register extends Controller{
                             }
                             return ajax_success('注册成功',$datas);
                         }else{
-                            return ajax_error('请重新注册',['status'=>0]);
+                            return ajax_error('请重新注册',["status"=>0]);
                         }
                     }else{
-                        return ajax_error('邀请码不正确',['status'=>0]);
+                        return ajax_error('邀请码不正确',["status"=>0]);
                     }
                 }else{
                     //无邀请码
@@ -202,7 +205,7 @@ class Register extends Controller{
                         }
                         return ajax_success('注册成功',$datas);
                     }else{
-                        return ajax_error('请重新注册',['status'=>0]);
+                        return ajax_error('请重新注册',["status"=>0]);
                     }
                 }
 

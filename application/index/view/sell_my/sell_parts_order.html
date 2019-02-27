@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -139,49 +139,49 @@
                     var statusTxt = '';
                     $.each(res.data, function(idx, val){
                         if(val.status === 1){
-                            statusTxt = `待付款`;
+                            statusTxt = '待付款';
                         }else if(val.status === 2 || val.status === 3 || val.status === 4 || val.status === 5){
-                            statusTxt = `待收货`;
+                            statusTxt = '待收货';
                         }else if(val.status === 6 || val.status === 7){
-                            statusTxt = `待评价`;
+                            statusTxt = '待评价';
                         }else if(val.status === 8){
-                            statusTxt = `已完成`;
+                            statusTxt = '已完成';
                         }else if(val.status === 9 || val.status === 10){
-                            statusTxt = `已取消`;
+                            statusTxt = '已取消';
                         }else if(val.status === 11){
-                            statusTxt = `退货`;
+                            statusTxt = '退货';
                         }else if(val.status === 12){
                             statusTxt = '已退货';
                         }
-                        str += `<div class="single-shop-box" id="`+val.parts_order_number+`" name="`+val.store_id+`">
-                                    <div class="shop-name-box">
-                                        <div class="name-txt-div">
-                                            <i class="spr icon-shop"></i>
-                                            <span class="name-txt-span">`+val.store_name+`</span>
-                                        </div>
-                                        <p class="status-txt-p">`+statusTxt+`</p>
-                                    </div>
-                                    <div class="all-goods-box">`;
+                        str += '<div class="single-shop-box" id="'+val.parts_order_number+'" name="'+val.store_id+'">\
+                                    <div class="shop-name-box">\
+                                        <div class="name-txt-div">\
+                                            <i class="spr icon-shop"></i>\
+                                            <span class="name-txt-span">'+val.store_name+'</span>\
+                                        </div>\
+                                        <p class="status-txt-p">'+statusTxt+'</p>\
+                                    </div>\
+                                    <div class="all-goods-box">';
                         $.each(val.info, function(idx, val){
-                            str += `<div class="single-goods-box single-goods-box-border">
-                                        <div class="shop-img-box">
-                                            <img src="uploads/`+val.goods_image+`">
-                                        </div>
-                                        <div class="order-info-box">
-                                            <p class="goods-name-p txt-hid-two">`+val.parts_goods_name+`</p>
-                                            <p class="goods-selling-point txt-hid-two">`+val.goods_describe+`</p>
-                                            <div class="unit-price-quantity">
-                                                <p class="unit-price-p">￥`+val.goods_money+`</p>
-                                                <p class="quantity-p">×`+val.order_quantity+`</p>
-                                            </div>
-                                        </div>
-                                    </div>`
+                            str += '<div class="single-goods-box single-goods-box-border">\
+                                        <div class="shop-img-box">\
+                                            <img src="uploads/'+val.goods_image+'">\
+                                        </div>\
+                                        <div class="order-info-box">\
+                                            <p class="goods-name-p txt-hid-two">'+val.parts_goods_name+'</p>\
+                                            <p class="goods-selling-point txt-hid-two">'+val.goods_describe+'</p>\
+                                            <div class="unit-price-quantity">\
+                                                <p class="unit-price-p">￥'+val.goods_money+'</p>\
+                                                <p class="quantity-p">×'+val.order_quantity+'</p>\
+                                            </div>\
+                                        </div>\
+                                    </div>'
                         })
-                        str += `</div>
-                                <div class="total-button-box">
-                                    <p class="total-p">共计`+val.all_numbers+`件商品 合计：￥`+val.all_order_real_pay+`</p>
-                                </div>
-                            </div>`
+                        str += '</div>\
+                                <div class="total-button-box">\
+                                    <p class="total-p">共计'+val.all_numbers+'件商品 合计：￥'+val.all_order_real_pay+'</p>\
+                                </div>\
+                            </div>'
                     })
                     $('.shops-goods-wrap').append(str);
                     $('.single-shop-box').click(function(){

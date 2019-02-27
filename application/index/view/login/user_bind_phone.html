@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -99,9 +99,10 @@
             return this;
         }
 
-        var url = location.search;
+        var url = location.search, openid, flag;
         if(url.indexOf('?') != -1){
-            openid = url.substr(1).split('=')[1];
+            openid = url.substr(1).split('&')[0].split('=')[1];
+            flag = url.substr(1).split('&')[1].split('=')[1];
         }
         $('.reg-send-code').click(function(){
             var phone = $('.reg-phone-num').val();
@@ -144,6 +145,49 @@
                 })
             }
         })
+
+
+        $('.reg-confirm').click(function(){
+            var phone = $('.reg-phone-num').val();
+            var code = $('.reg-message-code').val();
+            var psd = $('.password').val();
+            if(psd != ''){
+                $.ajax({
+                    url: 'user_bind_phone',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        'mobile': phone,
+                        'mobile_code': code,
+                        'password': psd,
+                        'id': openid,
+                        'is_wechat': flag
+                    },
+                    success: function(res){
+                        console.log(res);
+                        if(res.status == 1){
+                            location.href = 'my_index';
+                        }else{
+                            layer.open({
+                                skin: 'msg',
+                                content: res.info,
+                                time: 1
+                            })
+                        }
+                    },
+                    error: function(){
+                        console.log('error')
+                    }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请填写密码',
+                    time: 1
+                })
+            }
+        })
+
     </script>
 </body>
 </html>

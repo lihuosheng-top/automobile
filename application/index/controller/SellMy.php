@@ -8,6 +8,7 @@
 namespace app\index\controller;
 
 
+use think\Cache;
 use think\Controller;
 use think\Request;
 use think\Session;
@@ -2177,7 +2178,7 @@ class  SellMy extends Controller{
                 $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
                 $money =Db::name("business_wallet")
                     ->where($arr_condition)
-                    ->sum("money");
+                    ->sum("able_money");
                 if(!empty($money)){
                     //这是可提现资金（客户要求只能体现上两周的资金）
 //                    $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-14,date("Y")); //时间戳
@@ -2188,17 +2189,17 @@ class  SellMy extends Controller{
 //                        ->sum("money");
 
                     //这是可提现资金（客户要求只能体现上两周的资金）
-                    $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-14,date("Y")); //时间戳
+                    $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-7,date("Y")); //时间戳
                     $two_condition ="`status` = '1' and `is_deduction` = '1'and `is_pay` = '1' and `user_id` = ".$user_id;
                     $moneys =Db::name("business_wallet")
                         ->where($two_condition)
                         ->where("create_time","<",$two_weekds_ago)
-                        ->sum("money");
+                        ->sum("able_money");
                     $pays_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
                     $business_wallet_pay =Db::name("business_wallet")
                         ->where($pays_condition)
                         ->where("create_time","<",time())
-                        ->sum("money");
+                        ->sum("able_money");
                     $tow_weeks_money =$moneys + $business_wallet_pay;
                     if($tow_weeks_money>0){
                         $tow_weeks_money =round($tow_weeks_money,2);
@@ -2219,7 +2220,7 @@ class  SellMy extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:卖家提现申请
+     * Notes:卖家提现申请（此接口已不用）
      **************************************
      * @return \think\response\View
      */
@@ -2227,8 +2228,8 @@ class  SellMy extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");//用户的id
             if(!empty($user_id)){
-                //这是可提现资金（客户要求只能体现上两周的资金）
-                $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-14,date("Y")); //时间戳
+                //这是可提现资金（客户要求只能体现上周的资金）
+                $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-7,date("Y")); //时间戳
                 $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
                 $moneys =Db::name("business_wallet")
                     ->where($two_condition)
@@ -2335,6 +2336,422 @@ class  SellMy extends Controller{
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:卖家申请提现
+     **************************************
+     * @param Request $request
+     */
+    public function sell_cash_withdrawal(){
+        return view("sell_cash_withdrawal");
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:微信提现
+     **************************************
+     */
+    public function  sell_withdrawal_by_wechat(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");//用户的id
+            $is_type =$request->only(["is_type"])["is_type"];//提现方式：1为微信，2为支付宝，3为银行卡
+            if(!empty($user_id)){
+                //这是可提现资金（客户要求只能提现上周的资金）
+                $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-7,date("Y")); //时间戳
+                $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                $moneys =Db::name("business_wallet")
+                    ->where($two_condition)
+                    ->where("create_time","<",$two_weekds_ago)
+                    ->sum("able_money");
+                $pays_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
+                $business_wallet_pay =Db::name("business_wallet")
+                    ->where($pays_condition)
+                    ->where("create_time","<",time())
+                    ->sum("able_money");
+                $money =round($moneys + $business_wallet_pay,2);
+            }else{
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+            $apply_money =$request->only("apply_money")["apply_money"];   //申请提现的金额
+            $wechat_count =$request->only("wechat_count")["wechat_count"];  //微信账号
+            if($apply_money > $money){
+                exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于可提现余额")));
+            }
+            $time=date("Y-m-d",time());
+            $v=explode('-',$time);
+            $time_second=date("H:i:s",time());
+            $vs=explode(':',$time_second);
+            $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
+            $data =[
+                "user_id"=>$user_id,
+                "operation_time"=>date("Y-m-d H:i:s"),
+                "operation_type"=>-1,
+                "operation_amount"=>$apply_money,
+                "pay_type_content"=>"微信",
+                "money_status"=>2,
+                "recharge_describe"=>"申请提现".$apply_money."元",
+                "img_url"=>"index/image/back.png",
+                "wechat_count"=>$wechat_count,//微信账号
+                "status"=>2,
+                "is_type"=>$is_type
+            ];
+            $res = Db::name("recharge_reflect")->insertGetId($data);
+            if($res){
+                //余额状态修改为-1 （状态值（1正常状态，-1申请提现但未处理，方便拒绝修改回状态，2提现已成功）
+                $business_wallet_data =Db::name("business_wallet")
+                    ->where($two_condition)
+                    ->where("create_time","<",$two_weekds_ago)
+                    ->select();
+                //把状态都改为体现待审核状态
+                if(!empty($business_wallet_data)){
+                    foreach ($business_wallet_data as $key=>$value){
+                        $business_wallet_ids_arr[] =$value["id"]; //存起来方便提现不通过的时候修改状态为正常状态1
+                        Db::name("business_wallet")
+                            ->where("id",$value["id"])
+                            ->update(["status"=>-1]);
+                    }
+                    $wallet_income_ids = implode(",",$business_wallet_ids_arr);
+                    Db::name("recharge_reflect")->where("id",$res)->update(["wallet_income_ids"=>$wallet_income_ids]);
+                    if($apply_money < $money){
+                       $result_money =$money - $apply_money; //剩下的那部分钱，需要保存到之前数据里面
+                        Db::name("business_wallet")
+                            ->where("id",$business_wallet_ids_arr[0])
+                            ->update(["is_deduction"=>1,"able_money"=>$result_money,"status"=>1]);
+                    }
+                }
+                //商家余额消费进行状态修改（支出部分，即用商家角色进行购买商品(当前时间之前的都进行修改))
+                $pay_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
+                $business_wallet_pay =Db::name("business_wallet")
+                    ->where($pay_condition)
+                    ->where("create_time","<",time())
+                    ->select();
+                if(!empty($business_wallet_pay)){
+                    foreach ($business_wallet_pay as $k=>$v){
+                        $business_wallet_id[]  =$v["id"]; //存起来方便提现不通过的时候修改状态为正常状态1
+                        Db::name("business_wallet")
+                            ->where("id",$v["id"])
+                            ->update(["is_deduction"=>-1]);
+                    }
+                    $wallet_expenditure_ids = implode(",",$business_wallet_id);
+                  $result =  Db::name("recharge_reflect")->where("id",$res)->update(["wallet_expenditure_ids"=>$wallet_expenditure_ids]);
+                }
+
+                $new_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $user_id;
+                $business_wallets = Db::name("business_wallet")
+                    ->where($new_condition)
+                    ->sum("able_money");
+                $owner_wallets = Db::name("user")->where("id", $user_id)->value("user_wallet");
+                $new_wallet = $business_wallets+$owner_wallets;
+                //进行消费记录
+                $wallet_data =[
+                    "user_id"=>$user_id,
+                    "wallet_operation"=> -$apply_money,//消费金额
+                    "wallet_type"=>-1, //消费类型（1获得，-1消费）
+                    "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                    "wallet_remarks"=>"提现申请".$apply_money."元",
+                    "wallet_img"=>"index/image/back.png",
+                    "title"=>"提现",
+                    "order_nums"=>$parts_order_number,//订单编号
+                    "pay_type"=>"余额抵扣", //支付宝微信支付
+                    "wallet_balance"=>$new_wallet, //余额
+                    "is_business"=>2,
+                ];
+                Db::name("wallet")->insert($wallet_data);
+                exit(json_encode(array("status" => 1, "info" =>"提现成功")));
+            }else{
+                exit(json_encode(array("status" => 0, "info" =>"提现失败")));
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:支付宝提现
+     **************************************
+     */
+    public function  sell_withdrawal_by_alipay(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");//用户的id
+            $is_type =$request->only(["is_type"])["is_type"];//提现方式：1为微信，2为支付宝，3为银行卡
+            if(!empty($user_id)){
+                //这是可提现资金（客户要求只能提现上周的资金）
+                $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-7,date("Y")); //时间戳
+                $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                $moneys =Db::name("business_wallet")
+                    ->where($two_condition)
+                    ->where("create_time","<",$two_weekds_ago)
+                    ->sum("money");
+                $pays_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
+                $business_wallet_pay =Db::name("business_wallet")
+                    ->where($pays_condition)
+                    ->where("create_time","<",time())
+                    ->sum("money");
+                $money =round($moneys + $business_wallet_pay,2);
+            }else{
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+            $apply_money =$request->only("apply_money")["apply_money"];   //申请提现的金额
+            $lipay_count =$request->only("alipay_count")["alipay_count"];  //开户名
+            if($apply_money > $money){
+                exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于可提现余额")));
+            }
+            $time=date("Y-m-d",time());
+            $v=explode('-',$time);
+            $time_second=date("H:i:s",time());
+            $vs=explode(':',$time_second);
+            $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
+            $data =[
+                "user_id"=>$user_id,
+                "operation_time"=>date("Y-m-d H:i:s"),
+                "operation_type"=>-1,
+                "operation_amount"=>$apply_money,
+                "pay_type_content"=>"银行卡",
+                "money_status"=>2,
+                "recharge_describe"=>"申请提现".$apply_money."元",
+                "img_url"=>"index/image/back.png",
+                "lipay_count"=>$lipay_count,//支付宝账号
+                "status"=>2,
+                "is_type"=>$is_type
+            ];
+            $res = Db::name("recharge_reflect")->insertGetId($data);
+            if($res){
+                //余额状态修改为-1 （状态值（1正常状态，-1申请提现但未处理，方便拒绝修改回状态，2提现已成功）
+                $business_wallet_data =Db::name("business_wallet")
+                    ->where($two_condition)
+                    ->where("create_time","<",$two_weekds_ago)
+                    ->select();
+                //把状态都改为体现待审核状态
+                if(!empty($business_wallet_data)){
+                    foreach ($business_wallet_data as $key=>$value){
+                        $business_wallet_ids_arr[] =$value["id"]; //存起来方便提现不通过的时候修改状态为正常状态1
+                        Db::name("business_wallet")
+                            ->where("id",$value["id"])
+                            ->update(["status"=>-1]);
+                    }
+                    $wallet_income_ids = implode(",",$business_wallet_ids_arr);
+                    Db::name("recharge_reflect")->where("id",$res)->update(["wallet_income_ids"=>$wallet_income_ids]);
+                    if($apply_money < $money){
+                        $result_money =$money - $apply_money; //剩下的那部分钱，需要保存到之前数据里面
+                        Db::name("business_wallet")
+                            ->where("id",$business_wallet_ids_arr[0])
+                            ->update(["is_deduction"=>1,"able_money"=>$result_money,"status"=>1]);
+                    }
+                }
+                //商家余额消费进行状态修改（支出部分，即用商家角色进行购买商品(当前时间之前的都进行修改))
+                $pay_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
+                $business_wallet_pay =Db::name("business_wallet")
+                    ->where($pay_condition)
+                    ->where("create_time","<",time())
+                    ->select();
+                if(!empty($business_wallet_pay)){
+                    foreach ($business_wallet_pay as $k=>$v){
+                        $business_wallet_id[]  =$v["id"]; //存起来方便提现不通过的时候修改状态为正常状态1
+                        Db::name("business_wallet")
+                            ->where("id",$v["id"])
+                            ->update(["is_deduction"=>-1]);
+                    }
+                    $wallet_expenditure_ids = implode(",",$business_wallet_id);
+                    Db::name("recharge_reflect")->where("id",$res)->update(["wallet_expenditure_ids"=>$wallet_expenditure_ids]);
+                }
+
+                $new_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $user_id;
+                $business_wallets = Db::name("business_wallet")
+                    ->where($new_condition)
+                    ->sum("able_money");
+                $owner_wallets = Db::name("user")->where("id", $user_id)->value("user_wallet");
+                $new_wallet = $business_wallets+$owner_wallets;
+                //进行消费记录
+                $wallet_data =[
+                    "user_id"=>$user_id,
+                    "wallet_operation"=> -$apply_money,//消费金额
+                    "wallet_type"=>-1, //消费类型（1获得，-1消费）
+                    "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                    "wallet_remarks"=>"提现申请".$apply_money."元",
+                    "wallet_img"=>"index/image/back.png",
+                    "title"=>"提现",
+                    "order_nums"=>$parts_order_number,//订单编号
+                    "pay_type"=>"余额抵扣", //支付宝微信支付
+                    "wallet_balance"=>$new_wallet, //余额
+                    "is_business"=>2,
+                ];
+                Db::name("wallet")->insert($wallet_data);
+                exit(json_encode(array("status" => 1, "info" =>"提现成功")));
+            }else{
+                exit(json_encode(array("status" => 0, "info" =>"提现失败")));
+            }
+
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:银行卡提现
+     **************************************
+     */
+    public function  sell_withdrawal_by_bank(Request $request){
+        if($request->isPost()){
+            $is_type =$request->only(["is_type"])["is_type"];//提现方式：1为微信，2为支付宝，3为银行卡
+            if(!empty($user_id)){
+                //这是可提现资金（客户要求只能提现上周的资金）
+                $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-7,date("Y")); //时间戳
+                $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                $moneys =Db::name("business_wallet")
+                    ->where($two_condition)
+                    ->where("create_time","<",$two_weekds_ago)
+                    ->sum("money");
+                $pays_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
+                $business_wallet_pay =Db::name("business_wallet")
+                    ->where($pays_condition)
+                    ->where("create_time","<",time())
+                    ->sum("money");
+                $money =round($moneys + $business_wallet_pay,2);
+            }else{
+                exit(json_encode(array("status" => 2, "info" => "请登录")));
+            }
+            $apply_money =$request->only("apply_money")["apply_money"];   //申请提现的金额
+            $apply_member =$request->only("apply_member")["apply_member"];  //开户名
+            $apply_bank =$request->only("apply_bank")["apply_bank"];   //开户银行
+            $apply_bank_code =$request->only("apply_bank_code")["apply_bank_code"];  //开户银行卡号
+            if($apply_money > $money){
+                exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于可提现余额")));
+            }
+            $time=date("Y-m-d",time());
+            $v=explode('-',$time);
+            $time_second=date("H:i:s",time());
+            $vs=explode(':',$time_second);
+            $parts_order_number =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
+            $data =[
+                "user_id"=>$user_id,
+                "operation_time"=>date("Y-m-d H:i:s"),
+                "operation_type"=>-1,
+                "operation_amount"=>$apply_money,
+                "pay_type_content"=>"银行卡",
+                "money_status"=>2,
+                "recharge_describe"=>"申请提现".$apply_money."元",
+                "img_url"=>"index/image/back.png",
+                "back_member"=>$apply_member,//用户名
+                "bank_card"=>$apply_bank_code,//开户银行卡
+                "back_name"=>$apply_bank,//开户银行
+                "status"=>2,
+                "is_type"=>$is_type
+            ];
+            $res = Db::name("recharge_reflect")->insertGetId($data);
+            if($res){
+                //余额状态修改为-1 （状态值（1正常状态，-1申请提现但未处理，方便拒绝修改回状态，2提现已成功）
+                $business_wallet_data =Db::name("business_wallet")
+                    ->where($two_condition)
+                    ->where("create_time","<",$two_weekds_ago)
+                    ->select();
+                //把状态都改为体现待审核状态
+                if(!empty($business_wallet_data)){
+                    foreach ($business_wallet_data as $key=>$value){
+                        $business_wallet_ids_arr[] =$value["id"]; //存起来方便提现不通过的时候修改状态为正常状态1
+                        Db::name("business_wallet")
+                            ->where("id",$value["id"])
+                            ->update(["status"=>-1]);
+                    }
+                    $wallet_income_ids = implode(",",$business_wallet_ids_arr);
+                    Db::name("recharge_reflect")->where("id",$res)->update(["wallet_income_ids"=>$wallet_income_ids]);
+                    if($apply_money < $money){
+                        $result_money =$money - $apply_money; //剩下的那部分钱，需要保存到之前数据里面
+                        Db::name("business_wallet")
+                            ->where("id",$business_wallet_ids_arr[0])
+                            ->update(["is_deduction"=>1,"able_money"=>$result_money,"status"=>1]);
+                    }
+                }
+                //商家余额消费进行状态修改（支出部分，即用商家角色进行购买商品(当前时间之前的都进行修改))
+                $pay_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
+                $business_wallet_pay =Db::name("business_wallet")
+                    ->where($pay_condition)
+                    ->where("create_time","<",time())
+                    ->select();
+                if(!empty($business_wallet_pay)){
+                    foreach ($business_wallet_pay as $k=>$v){
+                        $business_wallet_id[]  =$v["id"]; //存起来方便提现不通过的时候修改状态为正常状态1
+                        Db::name("business_wallet")
+                            ->where("id",$v["id"])
+                            ->update(["is_deduction"=>-1]);
+                    }
+                    $wallet_expenditure_ids = implode(",",$business_wallet_id);
+                    Db::name("recharge_reflect")->where("id",$res)->update(["wallet_expenditure_ids"=>$wallet_expenditure_ids]);
+                }
+
+                $new_condition = "`status` = '1' and `is_deduction` = '1'  and  `user_id` = " . $user_id;
+                $business_wallets = Db::name("business_wallet")
+                    ->where($new_condition)
+                    ->sum("able_money");
+                $owner_wallets = Db::name("user")->where("id", $user_id)->value("user_wallet");
+                $new_wallet = $business_wallets+$owner_wallets;
+                //进行消费记录
+                $wallet_data =[
+                    "user_id"=>$user_id,
+                    "wallet_operation"=> -$apply_money,//消费金额
+                    "wallet_type"=>-1, //消费类型（1获得，-1消费）
+                    "operation_time"=>date("Y-m-d H:i:s"),//操作时间
+                    "wallet_remarks"=>"提现申请".$apply_money."元",
+                    "wallet_img"=>"index/image/back.png",
+                    "title"=>"提现",
+                    "order_nums"=>$parts_order_number,//订单编号
+                    "pay_type"=>"余额抵扣", //支付宝微信支付
+                    "wallet_balance"=>$new_wallet, //余额
+                    "is_business"=>2,
+                ];
+                Db::name("wallet")->insert($wallet_data);
+                exit(json_encode(array("status" => 1, "info" =>"提现成功")));
+            }else{
+                exit(json_encode(array("status" => 0, "info" =>"提现失败")));
+            }
+
+
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:校验支付密码
+     **************************************
+     */
+    public function check_password(Request $request){
+        //验证支付密码
+        $user_id = Session::get("user");
+        $user_info = Db::name("user")->field("pay_passwd")->where("id", $user_id)->find();//用户信息
+        $password = $request->only("passwords")["passwords"]; //输入的密码
+        if (password_verify($password,$user_info["pay_passwd"])){
+            return ajax_success("支付密码正确",["status"=>1]);
+        }else{
+            return ajax_error("支付密码错误",["status"=>0]);
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:提现历史记录（保存上一次提现的数据）
+     **************************************
+     */
+    public function withdrawal_history(Request $request){
+        if($request->isPost()){
+            $user_id = Session::get("user");
+            $is_type =$request->only(["is_type"])["is_type"];//提现方式：1为微信，2为支付宝，3为银行卡
+            $data =Db::name("recharge_reflect")
+                ->field("back_member,bank_card,back_name,wechat_count,alipay_count")
+                ->where("user_id",$user_id)
+                ->where("is_type",$is_type)
+                ->order("id","desc")
+                ->limit(1)
+                ->select();
+            if(!empty($data)){
+                return ajax_success("信息数据返回成功",$data);
+            }else{
+                return ajax_error("没有数据返回",["status"=>0]);
+            }
+        }
+    }
 
 
 }

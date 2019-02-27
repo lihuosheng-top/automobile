@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -62,22 +62,22 @@
                 if (res.status == 1) {
                     var str = '';
                     $.each(res.data, function (idx, val) {
-                        str += `<div class="complain-tab">
-                                    <div class="user-container">
-                                        <img src="uploads/`+val.user_images+`" class="avator">
-                                        <div class="tag-container">
-                                            <span class="phone">`+val.phone+`</span>
-                                            <span class="tag">`+val.issue+`</span>
-                                        </div>
-                                    </div>
-                                    <div class="complain-txt">`+val.issue_details+`</div>
-                                    <div class="complain-img">`
+                        str += '<div class="complain-tab">\
+                                    <div class="user-container">\
+                                        <img src="uploads/'+val.user_images+'" class="avator">\
+                                        <div class="tag-container">\
+                                            <span class="phone">'+val.phone+'</span>\
+                                            <span class="tag">'+val.issue+'</span>\
+                                        </div>\
+                                    </div>\
+                                    <div class="complain-txt">'+val.issue_details+'</div>\
+                                    <div class="complain-img">'
                         var myImg = val.images.split(',');
                         $.each(myImg, function(idx, val){
-                            str += `<img src="uploads/`+val+`">`
+                            str += '<img src="uploads/'+val+'">'
                         })
-                        str += `</div>
-                            </div>`
+                        str += '</div>\
+                            </div>'
                     })
                     $('.complain-container').append(str);
                 }

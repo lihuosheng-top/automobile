@@ -910,7 +910,7 @@ class Apppay extends Controller
                                 ];
                                 Db::name("wallet")->insert($datas); //存入消费记录表
                             }
-                            return "success";
+                            echo exit('<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>');
                         }else{
                             return "fail";
                         }
@@ -1055,7 +1055,7 @@ class Apppay extends Controller
                     $X = new  Xgcontent;
                     $X->push_Accountp("来新订单","来新订单了",$user_count);
                 }
-                return "success";
+                echo exit('<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>');
             } else {
                 return "fail";
             }
@@ -1153,8 +1153,7 @@ class Apppay extends Controller
                 $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
                 $X = new  Xgcontent;
                 $X->push_Accountp("来新订单","来新订单了",$user_count);
-
-                return "success";
+                echo exit('<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>');
             }else {
                 return "fail";
             }

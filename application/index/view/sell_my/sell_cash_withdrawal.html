@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 屏幕适配 -->
+    <script src="__STATIC__/index/js/adaptation.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/payment.css">
+    <title>提现</title>
+    <style>
+        html, body, .wrapper{background-color: #f2f2f2;}
+        .header{position: relative;width: 100%;height: .88rem;background-color: #fff; border-bottom: 1px solid #eee;}
+        .header h3{width: 100%;height: 100%;text-align: center;line-height: .88rem;font-size: .36rem;color: #333;font-weight: normal;}
+        .header .icon-back{position: absolute;left: .2rem;top: 50%;width: .25rem;height: .43rem;margin-top: -.22rem;background-position: -.5rem -.5rem;}
+        .content{background-color: #fff; width: 95%; margin: .2rem auto 0; padding: .4rem; box-sizing: border-box;}
+        .content>div{padding: .2rem 0; font-size: .32rem; display: flex; align-items: center; border-bottom: 1px solid #eee;}
+        .content .canget span{color: #f00;}
+        .content .method{position: relative; font-weight: bold;}
+        .content .method::after{content: ''; background: url(__STATIC__/index/image/spr.png) no-repeat; background-size: 8rem 6rem; background-position: -7.25rem -1.75rem; display: block; width: .21rem; height: .33rem; position: absolute; top: .3rem; right: 0;}
+        .content .method span{margin-left: .5rem;}
+        .content .money{display: block;}
+        .content .money input{height: 100%; outline: none; padding-left: .2rem; font-size: .32rem;}
+        .content .money .currency-symbol{font-size: .48rem;}
+        .wrapper .confirm{display: block; margin: .8rem auto 0; width: 90%; height: .8rem; border: 0; background-color: #38f; outline: none; color: #fff; border-radius: 3px;}
+        .mask{position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: rgba(0, 0, 0, .5); z-index: 1;}
+        .choose-method{background-color: #fff; position: absolute; bottom: 0; left: 0; width: 100%; z-index: 2;}
+        .choose-method .method-box{margin-bottom: 1rem;}
+        .choose-method .method-box div{font-size: .32rem; text-align: center; color: #333; height: 1rem; line-height: 1rem; border-bottom: 1px solid #eee;}
+        .choose-method button{display: block; width: 100%; border: 0; outline: none; color: #fff; background-color: #38f; height: .8rem; font-size: .32rem;}
+        .choose-content{background-color: #f2f2f2; position: absolute; bottom: 0; left: 0; width: 100%; font-size: 0; z-index: 2;}
+        .choose-content h2{font-size: .36rem; color: #333; font-weight: normal; text-align: center; border-bottom: 1px solid #eee; height: 1rem; line-height: 1rem; background-color: #fff;}
+        .choose-wx .wx-content,
+        .choose-alipay .alipay-content,
+        .choose-bank .bank-content{background-color: #fff; margin-bottom: 1rem;}
+        .choose-wx .wx-content input,
+        .choose-alipay .alipay-content input{width: 100%; height: 1rem; outline: none; font-size: .32rem; padding-left: .2rem; box-sizing: border-box;}
+        .choose-wx button,
+        .choose-alipay button,
+        .choose-bank button{width: 50%; border: 0; background-color: #38f; color: #fff; height: .8rem; font-size: .32rem; outline: none;}
+        .choose-wx button.cancel,
+        .choose-alipay button.cancel,
+        .choose-bank button.cancel{border-right: 1px solid #fff;}
+        .choose-bank .bank-content span{font-size: .32rem; display: inline-block; width: 1.4rem; color: #333;}
+        .choose-bank .bank-content input{height: 1rem; outline: none; font-size: .32rem; padding-left: .2rem; box-sizing: border-box;}
+        .choose-bank .bank-content{padding: 0 .3rem;}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <a href="sell_my_index" class="spr icon-back"></a>
+            <h3>提现</h3>
+        </header>
+        <div class="content">
+            <div class="canget">
+                当前可提现金额：￥<span></span>
+            </div>
+            <div class="method">
+                选择提现方式 <span>银行卡</span>
+            </div>
+            <div class="account" style="display: none;">
+                提现账户：<span></span>
+            </div>
+            <div class="money">
+                <p class="money-title">提现金额：</p>
+                <div>
+                    <span class="currency-symbol">￥</span>
+                    <input type="number" placeholder="请输入提现金额">
+                </div>
+            </div>
+        </div>
+        <button class="confirm">下一步</button>
+    </div>
+    <div class="mask" style="display: none;"></div>
+    <!-- 选择提现方式 -->
+    <div class="choose-method" style="display: none;">
+        <div class="method-box">
+            <div class="wechat">微信</div>
+            <div class="alipay">支付宝</div>
+            <div class="bank">银行卡</div>
+        </div>
+        <button>取消</button>
+    </div>
+    <!-- wx -->
+    <div class="choose-wx choose-content" style="display: none;">
+        <h2>请输入微信账号</h2>
+        <div class="wx-content">
+            <input type="text" placeholder="请输入微信账号">
+        </div>
+        <button class="cancel">取消</button>
+        <button class="confirm">确定</button>
+    </div>
+    <!-- alipay -->
+    <div class="choose-alipay choose-content" style="display: none;">
+        <h2>请输入支付宝账号</h2>
+        <div class="alipay-content">
+            <input type="text" placeholder="请输入支付宝账号">
+        </div>
+        <button class="cancel">取消</button>
+        <button class="confirm">确定</button>
+    </div>
+    <!-- 银行卡 -->
+    <div class="choose-bank choose-content" style="display: none;">
+        <h2>请输入银行卡号</h2>
+        <div class="bank-content">
+            <div class="owner">
+                <span>开户名</span>
+                <input type="text" placeholder="请输入开户名">
+            </div>
+            <div class="bankname">
+                <span>开户银行</span>
+                <input type="text" placeholder="请输入开户银行">
+            </div>
+            <div class="banknumber">
+                <span>银行卡号</span>
+                <input type="text" placeholder="请输入银行卡号">
+            </div>
+        </div>
+        <button class="cancel">取消</button>
+        <button class="confirm">确定</button>
+    </div>
+
+    <!-- 输入余额密码弹窗 -->
+    <div class="balance-psd-pop" style="display: none;">
+        <span class="close-balance-pwd spr"></span>
+        <p class="balance-psd-title">余额支付密码</p>
+        <div class="input-container">
+            <div id="payPassword_container" class="alieditContainer clearfix" data-busy="0">
+                <div class="i-block" data-error="i_error">
+                    <div class="i-block six-password">
+                        <input class="i-text sixDigitPassword" id="payPassword_rsainput" type="password" autocomplete="off" required="required"
+                            name="payPassword_rsainput" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6"
+                            aria-required="true">
+                        <div tabindex="0" class="sixDigitPassword-box">
+                            <i style="width: .58rem; border-color: transparent;" class=""><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <i style="width: .58rem;"><b style="visibility: hidden;"></b></i>
+                            <span style="width: .58rem; left: 0px; visibility: hidden;" id="cardwrap" data-role="cardwrap"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="confirm-psd">确定</button>
+    </div>
+
+    <script src="__STATIC__/index/js/plugin/jquery.js"></script>
+    <script src="__STATIC__/index/js/plugin/layer.js"></script>
+    <script src="__STATIC__/index/js/payment.js"></script>
+    <script>
+        $('.method').click(function(){
+            $('.choose-method').add('.mask').show();
+        })
+        // 余额
+        $.ajax({
+            url: "sell_wallet",
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    $('.wrapper .canget span').text(res.data.user_wallet);
+                }
+            },
+            error: function(res){
+                console.log(res.status, res.statusText);
+            }
+        })
+        // 选择提现方式
+        $('.method-box div').click(function(){
+            var _index = $(this).index();
+            switch(_index){
+                case 0:
+                    $('.choose-method').hide();
+                    $('.choose-wx').show();
+                    $('.wrapper .method span').text($(this).text());
+                    $('.wrapper .confirm').data('methodIndex', _index);
+                    break;
+                case 1:
+                    $('.choose-method').hide();
+                    $('.choose-alipay').show();
+                    $('.wrapper .method span').text($(this).text());
+                    $('.wrapper .confirm').data('methodIndex', _index);
+                    break;
+                case 2:
+                    $('.choose-method').hide();
+                    $('.choose-bank').show();
+                    $('.wrapper .method span').text($(this).text());
+                    $('.wrapper .confirm').data('methodIndex', _index);
+                    break;
+            }
+        })
+        $('.choose-method button').click(function(){
+            $('.mask').hide();
+            $('.choose-method').hide();
+        })
+        // 微信提现
+        var wxNumber;
+        $('.choose-wx .confirm').click(function(){
+            wxNumber = $(this).siblings('.wx-content').children().val();
+            if(wxNumber){
+                $('.wrapper .account').show().find('span').text(wxNumber);
+                $('.choose-wx').add('.mask').hide();
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请填写微信号!',
+                    time: 1
+                });
+            }
+        })
+        $('.choose-wx .cancel').click(function(){
+            $('.choose-wx').hide();
+            $('.choose-method').show();
+        })
+        // 支付宝提现
+        var alipayNumber;
+        $('.choose-alipay .confirm').click(function(){
+            alipayNumber = $(this).siblings('.alipay-content').children().val();
+            if(alipayNumber){
+                $('.wrapper .account').show().find('span').text(alipayNumber);
+                $('.choose-alipay').add('.mask').hide();
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请填写支付宝账号!',
+                    time: 1
+                });
+            }
+        })
+        $('.choose-alipay .cancel').click(function(){
+            $('.choose-alipay').hide();
+            $('.choose-method').show();
+        })
+        // 银行卡提现
+        var ownerName,
+            bankName,
+            bankNumber;
+        $('.choose-bank .confirm').click(function(){
+            ownerName = $(this).parents('.choose-bank').find('.owner input').val();
+            bankName = $(this).parents('.choose-bank').find('.bankname input').val();
+            bankNumber = $(this).parents('.choose-bank').find('.banknumber input').val();
+            if(ownerName && bankName && bankNumber){
+                $('.wrapper .account').show().find('span').text(bankNumber);
+                $('.choose-bank').add('.mask').hide();
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '信息未填写完整!',
+                    time: 1
+                });
+            }
+        })
+        $('.choose-bank .cancel').click(function(){
+            $('.choose-bank').hide();
+            $('.choose-method').show();
+        })
+
+        // 下一步
+        var money;
+        $('.wrapper .confirm').click(function(){
+            var selectedMethod = $('.wrapper .account').is(':hidden');
+            money = $('.wrapper .money input').val()
+            if(!selectedMethod && money){
+                var canGetMoney = $('.canget span').text();
+                if(+money <= +canGetMoney){
+                    $('.balance-psd-pop').add('.mask').show();
+                }else{
+                    layer.open({
+                        skin: 'msg',
+                        content: '提现金额大于可提现金额!',
+                        time: 1.5
+                    });
+                }
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请选择提现方式或填写金额!',
+                    time: 1.5
+                });
+            }
+        })
+        // 支付密码
+        $('.confirm-psd').click(function(){
+            var password = $('#payPassword_rsainput').val();
+            var _index = $('.wrapper .confirm').data('methodIndex');
+            if(password){
+                (function(){
+                    return $.ajax({
+                        url: 'check_password',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            'passwords': password
+                        }
+                    })
+                })().then(function(res){
+                    if(res.status == 1){
+                        layer.open({
+                            skin: 'msg',
+                            content: '提现申请成功!',
+                            time: 1
+                        });
+                        switch(_index){
+                            case 0: 
+                                $.ajax({
+                                    url: 'sell_withdrawal_by_wechat',
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    data: {
+                                        "is_type": 1,
+                                        "apply_money": money,
+                                        "wechat_count": wxNumber
+                                    },
+                                    success: function(res){
+                                        console.log(res);
+                                    },
+                                    error: function(res){
+                                        console.log(res.status, res.statusText);
+                                    }
+                                })
+                                break;
+                            case 1: 
+                                $.ajax({
+                                    url: 'sell_withdrawal_by_alipay',
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    data: {
+                                        "is_type": 2,
+                                        "apply_money": money,
+                                        "alipay_count": alipayNumber
+                                    },
+                                    success: function(res){
+                                        console.log(res);
+                                    },
+                                    error: function(res){
+                                        console.log(res.status, res.statusText);
+                                    }
+                                })
+                                break;
+                            case 2: 
+                                $.ajax({
+                                    url: 'sell_withdrawal_by_bank',
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    data: {
+                                        "is_type": 3,
+                                        "apply_money": money,
+                                        "apply_member": ownerName,
+                                        "apply_bank": bankName,
+                                        "apply_bank_code": bankNumber
+                                    },
+                                    success: function(res){
+                                        console.log(res);
+                                    },
+                                    error: function(res){
+                                        console.log(res.status, res.statusText);
+                                    }
+                                })
+                                break;
+                        }
+                        $('.balance-psd-pop').add('.mask').hide();
+                        // setTimeout(function(){
+                        //     location.href = 'sell_my_index';
+                        // }, 1200)
+                    }else{
+                        layer.open({
+                            skin: 'msg',
+                            content: res.info,
+                            time: 1
+                        });
+                    }
+                })
+            }else{
+                layer.open({
+                    skin: 'msg',
+                    content: '请输入余额密码!',
+                    time: 1.5
+                });
+            }
+        })
+        $('.close-balance-pwd').click(function(){
+            $('.balance-psd-pop').add('.mask').hide();
+        })
+    </script>
+</body>
+</html>

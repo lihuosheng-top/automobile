@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -57,18 +57,18 @@
             if(data.status == 1){
                 var _html = "";
                 $.each(data.data,function (key,value) {
-                    _html += `<div class="system">
-                                <div class="time-box"><span>`+DataTime(value.create_time)+`</span></div>
-                                <div class="news">
-                                    <div class="top">
-                                        <p class="article-title">`+value.headline+`</p>
-                                        <!--<p class="article-subtitle">猛戳领取大礼！</p>-->
-                                    </div>
-                                    <div class="bot">
-                                        <span><a href="information_system_details?id=`+value.id+`">查看详情</a></span>
-                                    </div>
-                                </div>
-                            </div>`
+                    _html += '<div class="system">\
+                                <div class="time-box"><span>'+DataTime(value.create_time)+'</span></div>\
+                                <div class="news">\
+                                    <div class="top">\
+                                        <p class="article-title">'+value.headline+'</p>\
+                                        <!--<p class="article-subtitle">猛戳领取大礼！</p>-->\
+                                    </div>\
+                                    <div class="bot">\
+                                        <span><a href="information_system_details?id='+value.id+'">查看详情</a></span>\
+                                    </div>\
+                                </div>\
+                            </div>'
                 })
                 $(".SystemData").append(_html);
             }

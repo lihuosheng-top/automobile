@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 屏幕适配 -->
     <script src="__STATIC__/index/js/adaptation.js"></script>
@@ -64,7 +64,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="parts_index">
+                    <a href="classify_index">
                         <i class="spr parts"></i>
                         <span>配件商城</span>
                     </a>
@@ -131,48 +131,57 @@
             </a> -->
         </div>
         <!-- 活动商家 -->
+
         <div class="hot_recommend">
             <p class="subtitle">活动商家</p>
-            <div class="recommend_goods">
+            <div class="recommend-box">
+                <div class="recommend-item"></div>
+                <div class="recommend-item"></div>
+                <div class="recommend-item"></div>
+                <div class="recommend-item"></div>
+                <div class="recommend-item"></div>
+                <div class="recommend-item"></div>
+            </div>
+            <!-- <div class="recommend_goods">
                 <div class="recommend_top">
                     <div>
-                        <!-- <a href="reservation_detail?store_id=`+data.hot_one[0].store_id+`&activity=1">
+                        <a href="reservation_detail?store_id=`+data.hot_one[0].store_id+`&activity=1">
                             <img src="uploads/`+data.hot_one[0].advert_picture+`">
-                        </a>     -->
+                        </a>    
                     </div>
                     <div>
-                        <!-- <a href="`+(data.hot_two[0].url==null?'javascript:;':data.hot_two[0].url)+`">
+                        <a href="`+(data.hot_two[0].url==null?'javascript:;':data.hot_two[0].url)+`">
                             <img src="uploads/`+data.hot_two[0].advert_picture+`">
-                        </a> -->
+                        </a>
                     </div>
                 </div>
                 <div class="recommend_bottom">
                     <div class="recommend_bottom_left">
-                        <!-- <a href="`+(data.hot_three[0].url==null?'javascript:;':data.hot_three[0].url)+`">
+                        <a href="`+(data.hot_three[0].url==null?'javascript:;':data.hot_three[0].url)+`">
                             <img src="uploads/`+data.hot_three[0].advert_picture+`">
-                        </a> -->
+                        </a>
                     </div>
                     <div class="recommend_bottom_right">
                         <div class="recommend_bottom_right_one">
-                            <!-- <a href="`+(data.hot_four[0].url==null?'javascript:;':data.hot_four[0].url)+`">
+                            <a href="`+(data.hot_four[0].url==null?'javascript:;':data.hot_four[0].url)+`">
                                 <img src="uploads/`+data.hot_four[0].advert_picture+`">
-                            </a> -->
+                            </a>
                         </div>
                         <div class="recommend_bottom_right_two">
                             <div class="recommend_bottom_right_three">
-                                <!-- <a href="`+(data.hot_five[0].url==null?'javascript:;':data.hot_five[0].url)+`">
+                                <a href="`+(data.hot_five[0].url==null?'javascript:;':data.hot_five[0].url)+`">
                                     <img src="uploads/`+data.hot_five[0].advert_picture+`">
-                                </a> -->
+                                </a>
                             </div>
                             <div class="recommend_bottom_right_four">
-                                <!-- <a href="`+(data.hot_six[0].url==null?'javascript:;':data.hot_six[0].url)+`">
+                                <a href="`+(data.hot_six[0].url==null?'javascript:;':data.hot_six[0].url)+`">
                                     <img src="uploads/`+data.hot_six[0].advert_picture+`">
-                                </a> -->
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- 周边店铺 -->
         <span class="refresh-icon"></span>
@@ -334,7 +343,7 @@
                     //         console.log('周边店铺',res);
                     //         var distArr = [];
                     //         var dist = 0;
-                    //         var lngLat = [114.048065,22.541387];
+                    //         // var lngLat = [114.048065,22.541387];
                     //         var lngLat = getCookie('lngLat').split(',');
                     //         if(res.status == 1){
                     //             $.each(res.data, function(idx, val){
@@ -417,6 +426,7 @@
                             console.log('周边店铺',res);
                             var distArr = [];
                             var dist = 0;
+                            // var lngLat = [114.048065,22.541387];
                             var lngLat = getCookie('lngLat').split(',');
                             if(res.status == 1){
                                 $.each(res.data, function(idx, val){
@@ -455,23 +465,23 @@
                                         for(var i = 0; i < len; i++){
                                             $.each(res.data, function(idx, ele){
                                                 if(sortDistArr[i + curPage * 10].id == ele.id){
-                                                    str += `<li class="hot-item" id="`+ele.id+`">
-                                                                <div class="hot-headimg">
-                                                                    <img src="uploads/`+ele.shop_images+`">
-                                                                </div>
-                                                                <div class="hotshop-info">
-                                                                    <p class="hot-name">`+ele.shop_name+`</p>
-                                                                    <div class="star-time">
-                                                                        <i class="spr star1 `+
+                                                    str += '<li class="hot-item" id="'+ele.id+'">\
+                                                                <div class="hot-headimg">\
+                                                                    <img src="uploads/'+ele.shop_images+'">\
+                                                                </div>\
+                                                                <div class="hotshop-info">\
+                                                                    <p class="hot-name">'+ele.shop_name+'</p>\
+                                                                    <div class="star-time">\
+                                                                        <i class="spr star1 '+
                                                                         (ele.shop_star > 0 && ele.shop_star < 1 ? '' : 
                                                                         (ele.shop_star >= 1 && ele.shop_star < 2 ? 'star2' :
                                                                         (ele.shop_star >= 2 && ele.shop_star < 3 ? 'star3' : 
-                                                                        (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+`"></i>
-                                                                        <span>营业时间：`+ele.shop_time+`</span>
-                                                                    </div>
-                                                                    <p class="txt-hid-two hotshop-detail">约`+sortDistArr[i + curPage * 10].dist+`千米  `+ele.shop_address.split(',').join('')+`</p>
-                                                                </div>
-                                                            </li>`
+                                                                        (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+'"></i>\
+                                                                        <span>营业时间：'+ele.shop_time+'</span>\
+                                                                    </div>\
+                                                                    <p class="txt-hid-two hotshop-detail">约'+sortDistArr[i + curPage * 10].dist+'千米  '+ele.shop_address.split(',').join('')+'</p>\
+                                                                </div>\
+                                                            </li>'
                                                 }
                                             })
                                         }
@@ -555,23 +565,23 @@
                                     for(var i = 0; i < len; i++){
                                         $.each(res.data, function(idx, ele){
                                             if(sortDistArr[i + curPage * 10].id == ele.id){
-                                                str += `<li class="hot-item" id="`+ele.id+`">
-                                                            <div class="hot-headimg">
-                                                                <img src="uploads/`+ele.shop_images+`">
-                                                            </div>
-                                                            <div class="hotshop-info">
-                                                                <p class="hot-name">`+ele.shop_name+`</p>
-                                                                <div class="star-time">
-                                                                    <i class="spr star1 `+
+                                                str += '<li class="hot-item" id="'+ele.id+'">\
+                                                            <div class="hot-headimg">\
+                                                                <img src="uploads/'+ele.shop_images+'">\
+                                                            </div>\
+                                                            <div class="hotshop-info">\
+                                                                <p class="hot-name">'+ele.shop_name+'</p>\
+                                                                <div class="star-time">\
+                                                                    <i class="spr star1 '+
                                                                     (ele.shop_star > 0 && ele.shop_star < 1 ? '' : 
                                                                     (ele.shop_star >= 1 && ele.shop_star < 2 ? 'star2' :
                                                                     (ele.shop_star >= 2 && ele.shop_star < 3 ? 'star3' : 
-                                                                    (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+`"></i>
-                                                                    <span>营业时间：`+ele.shop_time+`</span>
-                                                                </div>
-                                                                <p class="txt-hid-two hotshop-detail">约`+sortDistArr[i + curPage * 10].dist+`千米  `+ele.shop_address.split(',').join('')+`</p>
-                                                            </div>
-                                                        </li>`
+                                                                    (ele.shop_star > 3 && ele.shop_star < 4 ? 'star4' : 'star5'))))+'"></i>\
+                                                                    <span>营业时间：'+ele.shop_time+'</span>\
+                                                                </div>\
+                                                                <p class="txt-hid-two hotshop-detail">约'+sortDistArr[i + curPage * 10].dist+'千米  '+ele.shop_address.split(',').join('')+'</p>\
+                                                            </div>\
+                                                        </li>'
                                             }
                                         })
                                     }
@@ -632,68 +642,29 @@
                         // 首页轮播图
                         $.each(res.data.home, function(idx, val){
                             if(idx < 5){
-                                topSwiperStr += `<div class="swiper-slide">
-                                                    <a href="`+(val.url==null?'javascript:;':val.url)+`">
-                                                        <img src="uploads/`+val.advert_picture+`">
-                                                    </a>
-                                                </div>`;
+                                topSwiperStr += '<div class="swiper-slide">\
+                                                    <a href="'+(val.url==null?'javascript:;':val.url)+'">\
+                                                        <img src="uploads/'+val.advert_picture+'">\
+                                                    </a>\
+                                                </div>';
                             }
                         })
                         $('.swiper-wrapper').html('').html(topSwiperStr);
                         mySwiper();
                         // 首页固定广告
                         var indexFixStr = '';
-                        indexFixStr += `<a href="`+(res.data.fixed[0].url==null?'javascript:;':res.data.fixed[0].url)+`">
-                                            <img src="uploads/`+res.data.fixed[0].advert_picture+`">
-                                        </a>`
+                        indexFixStr += '<a href="'+(res.data.fixed[0].url==null?'javascript:;':res.data.fixed[0].url)+'">\
+                                            <img src="uploads/'+res.data.fixed[0].advert_picture+'">\
+                                        </a>'
                         $('.banner').html('').html(indexFixStr);
                         // 活动商家
                         var data = res.data;
-                        renderActivity(data.hot_one, '.recommend_top div:eq(0)');
-                        renderActivity(data.hot_two, '.recommend_top div:eq(1)');
-                        renderActivity(data.hot_three, '.recommend_bottom_left');
-                        renderActivity(data.hot_four, '.recommend_bottom_right_one');
-                        renderActivity(data.hot_five, '.recommend_bottom_right_three');
-                        renderActivity(data.hot_six, '.recommend_bottom_right_four');
-                        // var hotStr = `<div class="recommend_top">
-                        //                 <div>
-                        //                     <a href="reservation_detail?store_id=`+data.hot_one[0].store_id+`&activity=1">
-                        //                         <img src="uploads/`+data.hot_one[0].advert_picture+`">
-                        //                     </a>    
-                        //                 </div>
-                        //                 <div>
-                        //                     <a href="`+(data.hot_two[0].url==null?'javascript:;':data.hot_two[0].url)+`">
-                        //                         <img src="uploads/`+data.hot_two[0].advert_picture+`">
-                        //                     </a>
-                        //                 </div>
-                        //             </div>
-                        //             <div class="recommend_bottom">
-                        //                 <div class="recommend_bottom_left">
-                        //                     <a href="`+(data.hot_three[0].url==null?'javascript:;':data.hot_three[0].url)+`">
-                        //                         <img src="uploads/`+data.hot_three[0].advert_picture+`">
-                        //                     </a>
-                        //                 </div>
-                        //                 <div class="recommend_bottom_right">
-                        //                     <div class="recommend_bottom_right_one">
-                        //                         <a href="`+(data.hot_four[0].url==null?'javascript:;':data.hot_four[0].url)+`">
-                        //                             <img src="uploads/`+data.hot_four[0].advert_picture+`">
-                        //                         </a>
-                        //                     </div>
-                        //                     <div class="recommend_bottom_right_two">
-                        //                         <div class="recommend_bottom_right_three">
-                        //                             <a href="`+(data.hot_five[0].url==null?'javascript:;':data.hot_five[0].url)+`">
-                        //                                 <img src="uploads/`+data.hot_five[0].advert_picture+`">
-                        //                             </a>
-                        //                         </div>
-                        //                         <div class="recommend_bottom_right_four">
-                        //                             <a href="`+(data.hot_six[0].url==null?'javascript:;':data.hot_six[0].url)+`">
-                        //                                 <img src="uploads/`+data.hot_six[0].advert_picture+`">
-                        //                             </a>
-                        //                         </div>
-                        //                     </div>
-                        //                 </div>
-                        //             </div>`;
-                        // $('.recommend_goods').html('').html(hotStr);
+                        renderActivity(data.hot_one, '.recommend-item:eq(0)');
+                        renderActivity(data.hot_two, '.recommend-item:eq(1)');
+                        renderActivity(data.hot_three, '.recommend-item:eq(2)');
+                        renderActivity(data.hot_four, '.recommend-item:eq(3)');
+                        renderActivity(data.hot_five, '.recommend-item:eq(4)');
+                        renderActivity(data.hot_six, '.recommend-item:eq(5)');
                     }
                 },
                 error: function(){
@@ -704,8 +675,8 @@
         // 活动商家
         function renderActivity(obj, cont){
             var distArr = [], hotStr = '', dist = 0;
-            var lngLat = [114.048065,22.541387];
-            // var lngLat = getCookie('lngLat').split(',');
+            // var lngLat = [114.048065,22.541387];
+            var lngLat = getCookie('lngLat').split(',');
             $.each(obj, function(idx, val){
                 var markerLngLat = [parseFloat(val.longitude), parseFloat(val.latitude)];
                 if(lngLat.length !== 0){
@@ -722,11 +693,12 @@
             var sortDistArr = distArr.sort(sortNum);
             $.each(obj, function(idx, val){
                 if(sortDistArr[0].id == val.id){
-                    hotStr+=`<a href="reservation_detail?store_id=`+val.store_id+`&activity=1">
-                                <img src="uploads/`+val.advert_picture+`">
-                            </a>`
+                    hotStr+='<a href="reservation_detail?store_id='+val.store_id+'&activity=1">\
+                                <img src="uploads/'+val.advert_picture+'">\
+                            </a>'
                 }
             })
+            // console.log($(cont))
             $(cont).html('').html(hotStr);
         }
         //设置cookie
