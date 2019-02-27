@@ -217,14 +217,13 @@ class  SellMy extends Controller{
                 $timetoday = strtotime(date("Y-m-d H:i:s",time()));//今天0点的时间点
                 $time2 = strtotime(date("Y-m-d H:i:s",strtotime('-6 hour')));
                 $time_condition  = "  create_time > $time2  and  create_time < $timetoday";
-                $condition  = "  status = 3  and  is_face = -1";
+                
 
                 $data =Db::name("order_service")
                     ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
                     ->where("store_id",$role_name_store_id["store_id"])
                     ->where($time_condition)
-                    ->where("status",2 )
-                    ->whereOr($condition)
+                    ->where("status",2)
                     ->select();
                 if(!empty($data)){
                     exit(json_encode(array("status" => 1, "info" => "订单返回成功","data"=>$data)));
