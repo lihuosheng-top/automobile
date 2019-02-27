@@ -36,12 +36,12 @@ class  SellMy extends Controller{
                 ->where("store_id",$role_name_store_id["store_id"])
                 ->find();
             //本月账单
-            $timetoday = date("Y-m",time());//今月时间戳
-            $condition = " `operation_time` like '%{$timetoday}%' ";
+//            $timetoday = date("Y-m",time());//今月时间戳
+//            $condition = " `operation_time` like '%{$timetoday}%' ";
             $now_data = Db::name("wallet")
                 ->where("is_business",2)
                 ->where("user_id",$user_id)
-                ->where($condition)
+//                ->where($condition)
                 ->sum("wallet_operation");
             if(!empty($now_data)){
                 $store_info["now_bill"] =round($now_data,2);
@@ -49,12 +49,12 @@ class  SellMy extends Controller{
                 $store_info["now_bill"] =0;
             }
             //上月账单
-            $last_time = date("Y-m",strtotime("-1 month"));//今月时间戳
-            $last_condition = " `operation_time` like '%{$last_time}%' ";
+//            $last_time = date("Y-m",strtotime("-1 month"));//今月时间戳
+//            $last_condition = " `operation_time` like '%{$last_time}%' ";
             $last_data = Db::name("wallet")
                 ->where("is_business",2)
                 ->where("user_id",$user_id)
-                ->where($last_condition)
+//                ->where($last_condition)
                 ->sum("wallet_operation");
             if(!empty($now_data)){
                 $store_info["last_bill"] =round($last_data,2);
