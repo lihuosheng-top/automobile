@@ -110,7 +110,7 @@ body,html{
     text-align: center;
 }
 .shop_box .service_type .service_price{
-    font-size: .52rem;
+    font-size: .42rem;
     color: #ff1800;
 }
 .shop_box .service_type .service_text{
@@ -145,8 +145,9 @@ body,html{
     bottom: -40px !important;
 }
 .shop-headimg{
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-right: .2rem;
     overflow: hidden;
 }
 .shop-headimg img{

@@ -579,12 +579,19 @@ class OrderService extends Controller{
                         "integral_deductible_num" =>$integral_deductible_num, //使用了多少积分
                         "is_face" =>$data["is_face"], //是否面议（面议为-1，正常流程为1）
                     ];
+
+                    
                     //判断是面议还是直接有价钱购买
                     if($goods_data["service_money"] != 0){
                         $datas['status'] =1;      //订单状态（待付款）
                     }else{
                         $datas['status'] = 7;     //订单状态(待确认)
                     }
+
+                    if($data["is_face"] == -1){  //判断预约服务是否是否为面议，是则订单直接归属到待服务订单
+                        $datas["status"] = 3;
+                    }
+
                     $res = Db::name('order_service')->insertGetId($datas);
                     if ($res) {
                         $order_datas =Db::name("order_service")

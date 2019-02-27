@@ -46,6 +46,7 @@
 								<option value="" selected="">请选择</option>
 								<option value="支付宝" >支付宝</option>
 								<option value="微信">微信</option>
+								<option value="银行卡">银行卡</option>
 							</select>
 						</div>
 					</div>
@@ -57,6 +58,20 @@
 								<option value="1" >充值</option>
 								<option value="-1">提现</option>
 							</select>
+						</div>
+					</div>
+					<div class="seach_list">
+						<div class="seach_laber">开始时间</div>
+						<div class="seach_input">
+							<span class="time"><input type="text" class="text datetimepicker layui-input" readonly="readonly" id="beginTime" value=""   name="date_min">
+							</span>
+						</div>
+					</div>
+					<div class="seach_list">
+						<div class="seach_laber">结束时间</div>
+						<div class="seach_input">
+							<span class="time"><input type="text" class=" text datetimepicker layui-input" readonly="readonly" id="endTime" value=""  name="date_max" ></span>
+
 						</div>
 					</div>
 				<button class="layui-btn" type="submit" id="seach">立即搜索</button>
@@ -115,8 +130,9 @@
 			<div id="page">
 				<div class="opation" style="width: 200px; float: left;">
 					<select name="" style="color: #C1A5A5; border-color: #E4E4E4;height: 30px;">
-						<option check="" value="0">请选择</option>
+						<option  value="0" selected>请选择</option>
 						<option value="1"> 批量删除</option>
+						<option value="2"> 导出</option>
 					</select>
 				</div>	
 				<div style="float: left; height: 52px;line-height: 52px; margin-left: 20px;">
@@ -205,7 +221,48 @@
 										
 									}
 									
-					
+						// 点击导出按钮
+						else if(opration_val==1){
+										layer.confirm('你确认要导出吗？', {
+												btn: ['确认','取消'] //按钮
+											}, function(){
+												var child = $("tbody").find('input[type="checkbox"]:not([name="show"]):checked');
+																for (var i = 0; i < child.length; i++) {
+																	data_id.push($(child[i])[0].dataset.id);
+																}
+																$.ajax({
+																	type: "POST",
+																	url: "{:url('admin/Recharge/111')}",
+																	data: {
+																		"id": data_id,
+																	},
+																	success: function(data) {
+																		console.log("成功");
+																		console.log(data);
+																		var data=$.parseJSON(data);
+																		layer.alert(data.info, {
+																			skin: 'layui-layer-molv' //样式类名
+																			,closeBtn: 0
+																			});
+																		location.reload();
+																		data_id.splice(0, data_id.length);
+																	},
+																	error: function(data) {
+																		var data=$.parseJSON(data);
+																		layer.alert(data.info, {
+																			skin: 'layui-layer-molv' //样式类名
+																			,closeBtn: 0
+																			});
+																						console.log(data);
+																		console.log("错误");
+																		data_id.splice(0, data_id.length);
+																	}
+																});
+												
+											});
+										
+									}
+									
 								});
 		
 			//全选
