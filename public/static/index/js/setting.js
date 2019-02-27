@@ -70,7 +70,7 @@ $('.exit').click(function(){
 // 清除缓存
 $('.clearing-li').click(function(){
     layer.open({
-        content: '  ',
+        content: '清除缓存并退出登录？',
         btn: ['确定', '取消'],
         yes: function (index) {
             layer.close(index);
