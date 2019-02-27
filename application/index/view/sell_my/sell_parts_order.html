@@ -35,7 +35,9 @@
         .single-goods-box .order-info-box .quantity-p{font-size: .24rem;color: #999;}
         .total-button-box .total-p{text-align: right;font-size: .28rem;color: #666;margin-bottom: .1rem;}
         .button-box{text-align: right;}
-        .receipt{background-color: #504cfb; color: #fff; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none; border: 0;}
+        .receipt,
+        .waitting{background-color: #504cfb; color: #fff; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none; border: 0;}
+        
     </style>
 </head>
 <body>
@@ -154,14 +156,15 @@
                             statusTxt = '已退货';
                         }
                         str += '<div class="single-shop-box" id="'+val.parts_order_number+'" name="'+val.store_id+'">\
-                                    <div class="shop-name-box">\
-                                        <div class="name-txt-div">\
-                                            <i class="spr icon-shop"></i>\
-                                            <span class="name-txt-span">'+val.store_name+'</span>\
+                                    <div class="sell-parts-container">\
+                                        <div class="shop-name-box">\
+                                            <div class="name-txt-div">\
+                                                <i class="spr icon-shop"></i>\
+                                                <span class="name-txt-span">'+val.store_name+'</span>\
+                                            </div>\
+                                            <p class="status-txt-p">'+statusTxt+'</p>\
                                         </div>\
-                                        <p class="status-txt-p">'+statusTxt+'</p>\
-                                    </div>\
-                                    <div class="all-goods-box">';
+                                        <div class="all-goods-box">';
                         $.each(val.info, function(idx, val){
                             str += '<div class="single-goods-box single-goods-box-border">\
                                         <div class="shop-img-box">\
@@ -181,15 +184,17 @@
                                 <div class="total-button-box">\
                                     <p class="total-p">共计'+val.all_numbers+'件商品 合计：￥'+val.all_order_real_pay+'</p>\
                                 </div>\
-                                <div class="button-box">\
-                                    <button class="waitting" style="display: '+(val.status == 2 ? '' : 'none')+';">待发货</button>\
-                                </div>\
-                            </div>'
+                            </div>\
+                            <div class="button-box">\
+                                <button class="waitting" style="display: '+(statusTxt == '待收货' ? '' : 'none')+';">待发货</button>\
+                            </div>\
+                        </div>'
                     })
                     $('.shops-goods-wrap').append(str);
-                    $('.single-shop-box').click(function(){
-                        var sell_store_id = $(this).attr('name');
-                        var sell_parts_order_number = $(this).attr('id');
+
+                    $('.sell-parts-container').click(function(){
+                        var sell_store_id = $(this).parent().attr('name');
+                        var sell_parts_order_number = $(this).parent().attr('id');
                         $.ajax({
                             url: 'sell_parts_save_record',
                             dataType: 'JSON',
