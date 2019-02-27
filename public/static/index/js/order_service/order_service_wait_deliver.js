@@ -41,7 +41,7 @@ $.ajax({
                                 </div>\
                             </div>\
                             <div class="button-box">\
-                                <button class="cancel-order-btn">取消订单</button>\
+                                <button class="cancel-order-btn" style="display: '+(val.is_face == -1 ? '': 'none')+';">取消订单</button>\
                             </div>\
                         </div>'
             })
