@@ -181,14 +181,29 @@
                     // 店铺名
                     $('.shop-name').text(val.store_name);
                     // 本月账单 上月账单
-                    $('.monthly-bill .bill-money span').text(val.now_bill);
-                    $('.last-bill .bill-money span').text(val.last_bill);
+                    
                 }else if(res.status === 2){
                     location.href = 'login';
                 }
             },
             error: function(){
                 console.log('error');
+            }
+        })
+
+        $.ajax({
+            url: "sell_wallet",
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    $('.monthly-bill .bill-money span').text(res.data.user_wallet);
+                    $('.last-bill .bill-money span').text(res.data.tow_weeks_money);
+                }
+            },
+            error: function(res){
+                console.log(res.status, res.statusText);
             }
         })
     </script>
