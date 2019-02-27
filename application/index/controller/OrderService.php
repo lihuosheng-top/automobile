@@ -585,6 +585,11 @@ class OrderService extends Controller{
                     }else{
                         $datas['status'] = 7;     //订单状态(待确认)
                     }
+
+                    if($data["is_face"] != 1){  //判断预约服务是否是否为面议，是则订单直接归属到待服务
+                        $data["status"] = 3;
+                    }
+
                     $res = Db::name('order_service')->insertGetId($datas);
                     if ($res) {
                         $order_datas =Db::name("order_service")
