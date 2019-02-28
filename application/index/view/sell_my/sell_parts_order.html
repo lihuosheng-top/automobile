@@ -214,6 +214,33 @@
                             }
                         })
                     })
+                    // 变更状态 待收货  配送员可以接收订单
+                    $('.waitting').click(function(){
+                        var order_number = $(this).parents('.single-shop-box').attr('id');
+                        layer.open({
+                            content: '是否发布订单？',
+                            btn: ['确定', '取消'],
+                            yes: function(index){
+                                layer.close(index);
+                                $.ajax({
+                                    url: 'machine_update',
+                                    dataType: 'JSON',
+                                    type: 'POST',
+                                    data: {
+                                        'id': order_number,
+                                        'status': 3
+                                    },
+                                    success: function(res){
+                                        console.log(res);
+                                        
+                                    },
+                                    error: function(){
+                                        console.log('error');
+                                    }
+                                })
+                            }
+                        })
+                    })
                 }
             },
             error: function(){
