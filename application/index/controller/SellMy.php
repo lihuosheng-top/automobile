@@ -2747,14 +2747,15 @@ class  SellMy extends Controller{
                     ->order("id","desc")
                     ->limit(1)
                     ->select();
+            }else{
+                $data =Db::name("recharge_reflect")
+                    ->field("back_member,bank_card,back_name,wechat_count,alipay_count")
+                    ->where("user_id",$user_id)
+                    ->where("is_type",$is_type)
+                    ->order("id","desc")
+                    ->limit(1)
+                    ->select();
             }
-            $data =Db::name("recharge_reflect")
-                ->field("back_member,bank_card,back_name,wechat_count,alipay_count")
-                ->where("user_id",$user_id)
-                ->where("is_type",$is_type)
-                ->order("id","desc")
-                ->limit(1)
-                ->select();
             if(!empty($data)){
                 return ajax_success("信息数据返回成功",$data);
             }else{
