@@ -2381,7 +2381,7 @@ class  SellMy extends Controller{
             if($apply_money > $money){
                 exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于可提现余额")));
             }
-            if($apply_money<0 ||$apply_money ==0 || is_numeric($apply_money)){
+            if($apply_money<0 ||$apply_money ==0 ){
                 exit(json_encode(array("status" => 0, "info" =>"提现金额不正确")));
             }
             $time=date("Y-m-d",time());
@@ -2503,7 +2503,7 @@ class  SellMy extends Controller{
             if($apply_money > $money){
                 exit(json_encode(array("status" => 0, "info" =>"提现金额不能大于可提现余额")));
             }
-            if($apply_money<0 ||$apply_money ==0 || is_numeric($apply_money)){
+            if($apply_money<0 ||$apply_money ==0 ){
                 exit(json_encode(array("status" => 0, "info" =>"提现金额不正确")));
             }
             $time=date("Y-m-d",time());
@@ -2625,7 +2625,7 @@ class  SellMy extends Controller{
             $apply_member =$request->only("apply_member")["apply_member"];  //开户名
             $apply_bank =$request->only("apply_bank")["apply_bank"];   //开户银行
             $apply_bank_code =$request->only("apply_bank_code")["apply_bank_code"];  //开户银行卡号
-            if($apply_money<0 ||$apply_money ==0 || is_numeric($apply_money)){
+            if($apply_money<0 ||$apply_money ==0){
                 exit(json_encode(array("status" => 0, "info" =>"提现金额不正确")));
             }
             if($apply_money > $money){
