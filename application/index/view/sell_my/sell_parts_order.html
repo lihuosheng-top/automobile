@@ -142,7 +142,9 @@
                     $.each(res.data, function(idx, val){
                         if(val.status === 1){
                             statusTxt = '待付款';
-                        }else if(val.status === 2 || val.status === 3 || val.status === 4 || val.status === 5){
+                        }else if(val.status === 2 || val.status === 3){
+                            statusTxt = '待发货';
+                        }else if(val.status === 4 || val.status === 5){
                             statusTxt = '待收货';
                         }else if(val.status === 6 || val.status === 7){
                             statusTxt = '待评价';
@@ -186,7 +188,7 @@
                                 </div>\
                             </div>\
                             <div class="button-box">\
-                                <button class="waitting" style="display: '+(statusTxt == '待收货' ? '' : 'none')+';">待发货</button>\
+                                <button class="waitting" style="display: '+(statusTxt == '待发货' ? '' : 'none')+';">待发货</button>\
                             </div>\
                         </div>'
                     })
@@ -228,11 +230,18 @@
                                     type: 'POST',
                                     data: {
                                         'id': order_number,
-                                        'status': 3
+                                        'status': 4
                                     },
                                     success: function(res){
                                         console.log(res);
-                                        
+                                        layer.open({
+                                            skin: 'msg',
+                                            content: res.info,
+                                            time: 1
+                                        });
+                                        setTimeout(function(){
+                                            location.reload();
+                                        },1100)
                                     },
                                     error: function(){
                                         console.log('error');
