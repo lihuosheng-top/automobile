@@ -2740,6 +2740,14 @@ class  SellMy extends Controller{
         if($request->isPost()){
             $user_id = Session::get("user");
             $is_type =$request->only(["is_type"])["is_type"];//提现方式：1为微信，2为支付宝，3为银行卡
+            if($is_type ==4){
+                $data =Db::name("recharge_reflect")
+                    ->field("back_member,bank_card,back_name,wechat_count,alipay_count")
+                    ->where("user_id",$user_id)
+                    ->order("id","desc")
+                    ->limit(1)
+                    ->select();
+            }
             $data =Db::name("recharge_reflect")
                 ->field("back_member,bank_card,back_name,wechat_count,alipay_count")
                 ->where("user_id",$user_id)
