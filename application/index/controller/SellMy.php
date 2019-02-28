@@ -2191,7 +2191,7 @@ class  SellMy extends Controller{
 //                        ->sum("money");
 
                     //这是可提现资金（客户要求只能体现上两周的资金）
-                    $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-7,date("Y")); //时间戳
+                    $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-1,date("Y")); //时间戳
                     $two_condition ="`status` = '1' and `is_deduction` = '1'and `is_pay` = '1' and `user_id` = ".$user_id;
                     $moneys =Db::name("business_wallet")
                         ->where($two_condition)
