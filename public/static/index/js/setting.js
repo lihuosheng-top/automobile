@@ -1,7 +1,8 @@
 var switchStatus = 0;
-function getIdAjax(url, arrBox, switchStatus){
+var bussinessSwitch = 0;
+function getIdAjax(){
     $.ajax({
-        url: url,
+        url: 'my_information_details',
         type: 'POST',
         dataType: 'JSON',
         success: function(res){
@@ -15,7 +16,7 @@ function getIdAjax(url, arrBox, switchStatus){
                         $('#switch_checkbox').attr('checked', false);
                     }
                     $.each(res.data, function(idx, val){
-                        arrBox.push(val.id);
+                        goodsInfo.push(val.id);
                     })
                 }
             }
@@ -26,7 +27,7 @@ function getIdAjax(url, arrBox, switchStatus){
     })
 }
 var goodsInfo = [], systemInfo = [];
-getIdAjax('my_information_details', goodsInfo, switchStatus);
+getIdAjax();
 $('#switch_checkbox').change(function(){
     console.log(this.checked);
     if(this.checked){
@@ -41,6 +42,45 @@ $('#switch_checkbox').change(function(){
         data: {
             'goodsInfo': goodsInfo,
             'showStatus': switchStatus
+        },
+        success: function(res){
+            console.log(res);
+        },
+        error: function(){
+            console.log('error');
+        }
+    })
+})
+// 是否营业
+$.ajax({
+    url: 'setting_store_turn',
+    type: 'POST',
+    dataType: 'JSON',
+    success: function(res){
+        console.log(res);
+        if(res.status == 1){
+            $('#switch_business').prop('checked', 'checked');
+        }else{
+            $('#switch_business').prop('checked', false);
+        }
+    },
+    error: function(){
+        console.log('error');
+    }
+})
+$('#switch_business').change(function(){
+    console.log(this.checked);
+    if(this.checked){
+        bussinessSwitch = 1;
+    }else{
+        bussinessSwitch = 0;
+    }
+    $.ajax({
+        url: 'setting_store_status',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            'is_do_business': bussinessSwitch,
         },
         success: function(res){
             console.log(res);
@@ -70,7 +110,7 @@ $('.exit').click(function(){
 // 清除缓存
 $('.clearing-li').click(function(){
     layer.open({
-        content: '  ',
+        content: '清除缓存并退出登录？',
         btn: ['确定', '取消'],
         yes: function (index) {
             layer.close(index);

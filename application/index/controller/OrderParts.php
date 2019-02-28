@@ -2121,4 +2121,48 @@ class OrderParts extends Controller{
 
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:配件商订单列表前端修改状态值
+     **************************************
+     */
+    public function machine_update(Request $request){
+        if($request->isPost()){
+            $id =$request->only("id")["id"]; //订单号（短的）
+            $status =$request->only("status")["status"];//状态值
+            if(!empty($id)) {
+                $bool = Db::name("order_parts")->where("parts_order_number", $id)->update(["status" => $status]);
+                if ($bool) {
+                    if ($status == 3) {
+                        //对附近的快递员进行铃声提醒
+                        $store_id = Db::name("order_parts")
+                            ->where("id", $id)
+                            ->value("store_id");
+                        $store_city_address = Db::name("store")
+                            ->where("store_id", $store_id)
+                            ->value("store_city_address");
+                        $delivery_data = Db::name("delivery")
+                            ->field("account")
+                            ->where("area", $store_city_address)
+                            ->select(); //所有的快递员信息
+                        $X = new Xgcontent;
+                        foreach ($delivery_data as $k=>$v){
+                            $account[] =$v["account"];
+                        }
+                        if(!empty($account)){
+                            $X->push_account_list("来新订单", "来新订单",$account);
+                        }
+                    }
+                    return ajax_success("修改成功", ["status" => 1]);
+                } else {
+                    return ajax_error("修改失败", ["status" => 0]);
+                }
+
+            }
+
+        }
+    }
+
+
 }

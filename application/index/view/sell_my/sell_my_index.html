@@ -140,6 +140,7 @@
         $('.function-item').click(function(e){
             e.preventDefault();
             var index  = $(this).index();
+            if(index == 0) location.href = 'classify_index';
             $.ajax({
                 url: 'store_order_save',
                 dataType: 'JSON',
@@ -151,8 +152,6 @@
                     console.log(res);
                     if(res.status === 1){
                         switch(index){
-                            case 0:
-                                location.href = 'classify_index';break;
                             case 2:
                                 location.href = 'sell_parts_order';break;
                             case 3: 
@@ -182,14 +181,29 @@
                     // 店铺名
                     $('.shop-name').text(val.store_name);
                     // 本月账单 上月账单
-                    $('.monthly-bill .bill-money span').text(val.now_bill);
-                    $('.last-bill .bill-money span').text(val.last_bill);
+                    
                 }else if(res.status === 2){
                     location.href = 'login';
                 }
             },
             error: function(){
                 console.log('error');
+            }
+        })
+
+        $.ajax({
+            url: "sell_wallet",
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                console.log(res);
+                if(res.status == 1){
+                    $('.monthly-bill .bill-money span').text(res.data.user_wallet);
+                    $('.last-bill .bill-money span').text(res.data.tow_weeks_money);
+                }
+            },
+            error: function(res){
+                console.log(res.status, res.statusText);
             }
         })
     </script>

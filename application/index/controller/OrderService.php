@@ -176,7 +176,7 @@ class OrderService extends Controller{
                 if(!empty($datas)){
                     $condition ="`status` = '2' or `status` = '3'";
                     $data =Db::name('order_service')
-                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay")
+                        ->field("service_order_number,status,service_goods_name,got_to_time,id,store_name,service_real_pay,is_face")
                         ->where('user_id',$member_id['id'])
                         ->where($condition)
                         ->order('pay_time','asc')
@@ -505,6 +505,7 @@ class OrderService extends Controller{
     public function  ios_api_order_service_button(Request $request)
     {
         if ($request->isPost()) {
+
             $data = $_POST;
             $user_id = Session::get('user');
             //用户信息
@@ -531,7 +532,6 @@ class OrderService extends Controller{
                     $integral_discount_setting_id =NULL;
                     $integral_deductible_num =NULL;
                 }
-
                 $goods_data = Db::table('tb_serve_goods')
                     ->join("tb_service_setting","tb_serve_goods.service_setting_id =tb_service_setting.service_setting_id","left")
                     ->where('tb_serve_goods.id', $commodity_id)
@@ -545,8 +545,26 @@ class OrderService extends Controller{
                 $store_name =Db::name("store")
                     ->where("store_id",$goods_data["store_id"])
                     ->value("store_name");
+                $is_do_business =Db::name("store")
+                    ->where("store_id",$goods_data["store_id"])
+                    ->value("is_do_business");
+                if($is_do_business){
+                    return ajax_error("店铺已关闭，无法下订单");
+                }
+                $store_do_bussiness_time =Db::name("store")
+                    ->where("store_id",$goods_data["store_id"])
+                    ->value("store_do_bussiness_time");
+
                 $create_time = time();
                 $time=date("Y-m-d",time());
+                $store_do_bussiness_time_f =$time." ".substr($store_do_bussiness_time,0,5); //店铺营业开始时间
+                $store_do_bussiness_time_l =$time." ".substr($store_do_bussiness_time,-5);//店铺营业结束时间
+                $go_to_shop_day =str_replace(array("年","月"),"-",substr($data["got_to_time"],0,13));
+                $go_to_shop_time =$time." ".substr($data["got_to_time"],16,6);//预约到店时间开始
+                $go_to_shop_times =$time." ".substr($data["got_to_time"],-5);//预约到店时间结束
+                if(strtotime($store_do_bussiness_time_f) > strtotime($go_to_shop_time) || strtotime($store_do_bussiness_time_l)<strtotime($go_to_shop_times)){
+                    return ajax_error("不在该店铺营业时间".$store_do_bussiness_time."范围内");
+                }
                 $v=explode('-',$time);
                 $time_second=date("H:i:s",time());
                 $vs=explode(':',$time_second);
@@ -585,6 +603,11 @@ class OrderService extends Controller{
                     }else{
                         $datas['status'] = 7;     //订单状态(待确认)
                     }
+
+                    if($data["is_face"] == -1){  //判断预约服务是否是否为面议，是则订单直接归属到待服务订单
+                        $datas["status"] = 2;
+                    }
+
                     $res = Db::name('order_service')->insertGetId($datas);
                     if ($res) {
                         $order_datas =Db::name("order_service")

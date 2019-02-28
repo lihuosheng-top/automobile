@@ -63,7 +63,6 @@ class My extends Controller
      * 陈绪
      */
     public function setting_status(Request $request){
-
         if($request->isPost()){
             $order_id = $request->only(["goodsInfo"])["goodsInfo"];
             $status = $request->only(["showStatus"])["showStatus"];
@@ -81,6 +80,53 @@ class My extends Controller
         }
 
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:店铺是否营业
+     **************************************
+     * @param Request $request
+     */
+    public function setting_store_status(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            $is_do_business = $request->only(["is_do_business"])["is_do_business"];
+            if(isset($is_do_business)) {
+                $bool = db("store")->where("user_id",$user_id)->update(["is_do_business"=>$is_do_business]);
+                if($bool){
+                    return ajax_success("修改成功");
+                }else {
+                    return ajax_error("修改失败");
+
+                }
+            }
+        }
+
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:店铺是否营业状态返回
+     **************************************
+     * @param Request $request
+     */
+    public function setting_store_turn(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");
+            if(isset($user_id)) {
+                $bool = db("store")->where("user_id",$user_id)->value("is_do_business");
+                if($bool){
+                    return ajax_success("营业状态返回成功",$bool);
+                }else {
+                    return ajax_error("没有设置营状态");
+                }
+            }
+        }
+
+    }
+
 
     /**
      **************李火生*******************

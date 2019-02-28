@@ -110,7 +110,7 @@ if(urlLen > 1){
                     // 电话 导航
                     var seatNum = data.data.store[0].phone_number;
                     var storeAjax = data.data.store[0];
-                    $('.activity-contact .phone').attr('href', "javascript:Android.call("+seatNum+");");
+                    $('.activity-contact .phone').attr('href', "javascript:Android.call('"+seatNum+"');");
                     $('.activity-contact .phone-number').text(seatNum);
                     $('.activity-contact .navigation').click(function(){
                         Android.openGdMap(storeAjax.latitude, storeAjax.longitude, storeAjax.store_name)
@@ -161,7 +161,7 @@ if(urlLen > 1){
                 // 电话 导航
                 var seatNum = data.data.store[0].phone_num;
                 var storeAjax = data.data.store[0];
-                $('.activity-contact .phone').attr('href', "javascript:Android.call("+seatNum+");");
+                $('.activity-contact .phone').attr('href', "javascript:Android.call('"+seatNum+"');");
                 $('.activity-contact .phone-number').text(seatNum);
                 $('.activity-contact .navigation').click(function(){
                     Android.openGdMap(storeAjax.latitude, storeAjax.longitude, storeAjax.store_name)
@@ -179,7 +179,7 @@ if(urlLen > 1){
         })
     }
 }else{
-    // 首页热门店铺进来
+    // 首页周边店铺进来
     $('.bespeak-btn').prop('disabled', true);
     $.ajax({
         url: 'index_shop_goods',
@@ -209,6 +209,15 @@ if(urlLen > 1){
                 $('.filter-service').show();
                 $('.pop .comment_box .comment_ul').css('height', '69vh');
                 evaAjax(data);
+
+                // 电话 导航
+                var seatNum = data.data.store[0].phone_num;
+                var storeAjax = data.data.store[0];
+                $('.activity-contact .phone').attr('href', "javascript:Android.call('"+seatNum+"');");
+                $('.activity-contact .phone-number').text(seatNum);
+                $('.activity-contact .navigation').click(function(){
+                    Android.openGdMap(storeAjax.latitude, storeAjax.longitude, storeAjax.store_name)
+                })
             }
         },
         error: function(){

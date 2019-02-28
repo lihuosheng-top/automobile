@@ -93,6 +93,7 @@ class Order extends Controller{
                     "pay_type_content" => $pay_type_content,
                     "refund_amount" => $refund_amount
                 ];
+                halt($data);
                 $bool = Db::name("order_parts")->where("id", $id)->update($data);
                 if ($bool) {
                     if ($status == 3) {
