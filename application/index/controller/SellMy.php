@@ -2394,7 +2394,7 @@ class  SellMy extends Controller{
                 "pay_type_content"=>"微信",
                 "money_status"=>2,
                 "recharge_describe"=>"申请提现".$apply_money."元",
-                "img_url"=>"index/image/back.png",
+                "img_url"=>"index/image/wechat.png",
                 "wechat_count"=>$wechat_count,//微信账号
                 "status"=>2,
                 "is_type"=>$is_type
@@ -2453,7 +2453,7 @@ class  SellMy extends Controller{
                     "wallet_type"=>-1, //消费类型（1获得，-1消费）
                     "operation_time"=>date("Y-m-d H:i:s"),//操作时间
                     "wallet_remarks"=>"提现申请".$apply_money."元",
-                    "wallet_img"=>"index/image/back.png",
+                    "wallet_img"=>"index/image/wechat.png",
                     "title"=>"提现",
                     "order_nums"=>$parts_order_number,//订单编号
                     "pay_type"=>"余额抵扣", //支付宝微信支付
@@ -2513,7 +2513,7 @@ class  SellMy extends Controller{
                 "pay_type_content"=>"支付宝",
                 "money_status"=>2,
                 "recharge_describe"=>"申请提现".$apply_money."元",
-                "img_url"=>"index/image/back.png",
+                "img_url"=>"index/image/alipay.png",
                 "alipay_count"=>$lipay_count,//支付宝账号
                 "status"=>2,
                 "is_type"=>$is_type
@@ -2572,7 +2572,7 @@ class  SellMy extends Controller{
                     "wallet_type"=>-1, //消费类型（1获得，-1消费）
                     "operation_time"=>date("Y-m-d H:i:s"),//操作时间
                     "wallet_remarks"=>"提现申请".$apply_money."元",
-                    "wallet_img"=>"index/image/back.png",
+                    "wallet_img"=>"index/image/alipay.png",
                     "title"=>"提现",
                     "order_nums"=>$parts_order_number,//订单编号
                     "pay_type"=>"余额抵扣", //支付宝微信支付
@@ -2597,6 +2597,7 @@ class  SellMy extends Controller{
     public function  sell_withdrawal_by_bank(Request $request){
         if($request->isPost()){
             $is_type =$request->only(["is_type"])["is_type"];//提现方式：1为微信，2为支付宝，3为银行卡
+            $user_id = Session::get("user");//用户的id
             if(!empty($user_id)){
                 //这是可提现资金（客户要求只能提现上周的资金）
                 $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-7,date("Y")); //时间戳
