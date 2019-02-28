@@ -97,7 +97,7 @@ class Recharge extends Controller{
         $time_max_data =strtotime(input('date_max'));
         $t=date('Y-m-d H:i:s',$time_max_data+1*24*60*60);
         $timemax  =strtotime($t);
-        halt($timemin);
+//        halt($timemin);
 
         $keywords =input('search_key');
         //支付方式

@@ -133,6 +133,9 @@
 				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$recharge_data.pay_type_content}" style="border:0;" readonly>
 			</div>
 		</div>
+
+		{if !empty($recharge_data.bank_card)}
+		<!--银行卡-->
 		<div class="layui-form-item">
 			<label class="layui-form-label">开户名：</label>
 			<div class="layui-input-block">
@@ -151,6 +154,28 @@
 				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$recharge_data.bank_card}" style="border:0;" readonly>
 			</div>
 		</div>
+		{/if}
+
+		{if !empty($recharge_data.wechat_count)}
+		<!--微信-->
+		<div class="layui-form-item">
+			<label class="layui-form-label">微信账号：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$recharge_data.wechat_count}" style="border:0;" readonly>
+			</div>
+		</div>
+		{/if}
+
+		{if !empty($recharge_data.alipay_count)}
+		<!--支付宝-->
+		<div class="layui-form-item">
+			<label class="layui-form-label">支付宝账号：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" value="{$recharge_data.alipay_count}" style="border:0;" readonly>
+			</div>
+		</div>
+		{/if}
+
 		<div class="layui-form-item">
 			<label class="layui-form-label">类型：</label>
 			<div class="layui-input-block">

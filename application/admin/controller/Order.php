@@ -145,7 +145,6 @@ class Order extends Controller{
         $t = date('Y-m-d H:i:s', $time_max_data + 1 * 24 * 60 * 60);
         $timemax = strtotime($t);                       //结束时间
         $order_parts_data=[];
-
         if (empty($keywords)) { //空
             if((!empty($goods_name)) && (empty($phone_num)) && (empty($order_status)) && (empty($timemin)) && (empty($time_max_data))) {
                 $order_parts_data = Db::table('tb_order_parts')
