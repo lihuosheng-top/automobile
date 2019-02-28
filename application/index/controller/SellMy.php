@@ -2485,12 +2485,12 @@ class  SellMy extends Controller{
                 $moneys =Db::name("business_wallet")
                     ->where($two_condition)
                     ->where("create_time","<",$two_weekds_ago)
-                    ->sum("money");
+                    ->sum("able_money");
                 $pays_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
                 $business_wallet_pay =Db::name("business_wallet")
                     ->where($pays_condition)
                     ->where("create_time","<",time())
-                    ->sum("money");
+                    ->sum("able_money");
                 $money =round($moneys + $business_wallet_pay,2);
             }else{
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
@@ -2510,7 +2510,7 @@ class  SellMy extends Controller{
                 "operation_time"=>date("Y-m-d H:i:s"),
                 "operation_type"=>-1,
                 "operation_amount"=>$apply_money,
-                "pay_type_content"=>"银行卡",
+                "pay_type_content"=>"支付宝",
                 "money_status"=>2,
                 "recharge_describe"=>"申请提现".$apply_money."元",
                 "img_url"=>"index/image/back.png",
@@ -2604,12 +2604,12 @@ class  SellMy extends Controller{
                 $moneys =Db::name("business_wallet")
                     ->where($two_condition)
                     ->where("create_time","<",$two_weekds_ago)
-                    ->sum("money");
+                    ->sum("able_money");
                 $pays_condition ="`status` = '1' and   `is_pay` = '-1' and  `is_deduction` = '1' and `user_id` = ".$user_id;
                 $business_wallet_pay =Db::name("business_wallet")
                     ->where($pays_condition)
                     ->where("create_time","<",time())
-                    ->sum("money");
+                    ->sum("able_money");
                 $money =round($moneys + $business_wallet_pay,2);
             }else{
                 exit(json_encode(array("status" => 2, "info" => "请登录")));

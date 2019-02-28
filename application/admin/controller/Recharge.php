@@ -222,8 +222,10 @@ class Recharge extends Controller{
                                 ->find();
                             if(!empty($business_wallet_data["wallet_income_ids"])){
                                 $id_arr =explode(",",$business_wallet_data["wallet_income_ids"]);
-                                foreach ($id_arr as $k =>$v){
-                                    Db::name("business_wallet")->where("id",$v)->update(["status"=>2]);
+                                if(count($id_arr)>1){
+                                    foreach ($id_arr as $k =>$v){
+                                        Db::name("business_wallet")->where("id",$v)->update(["status"=>2]);
+                                    } 
                                 }
                             }
                             $this->success("审核成功","admin/Recharge/index");
