@@ -209,6 +209,27 @@
             },
             success: function(res){
                 console.log(res);
+                if(res.status == 1){
+                    var data = res.data[0];
+                    if(data.alipay_count){
+                        //支付宝
+                        alipayNumber = data.alipay_count;
+                        $('.method span').text('支付宝');
+                        $('.account').show().find('span').text(data.alipay_count);
+                    }else if(data.wechat_count){
+                        //微信
+                        wxNumber = data.wechat_count;
+                        $('.method span').text('微信');
+                        $('.account').show().find('span').text(data.wechat_count);
+                    }else{
+                        //银行卡
+                        ownerName = data.back_member;
+                        bankName = data.back_name;
+                        bankNumber = data.bank_card;
+                        $('.method span').text('银行卡');
+                        $('.account').show().find('span').text(data.bank_card);
+                    }
+                }
             },
             error: function(res){
                 console.log(res.status, res.statusText);
