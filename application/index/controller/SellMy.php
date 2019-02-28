@@ -2202,7 +2202,7 @@ class  SellMy extends Controller{
                         ->where($pays_condition)
                         ->where("create_time","<",time())
                         ->sum("able_money");
-                    $tow_weeks_money =$moneys + $business_wallet_pay;
+                    $tow_weeks_money =$moneys + $business_wallet_pay;//可提现金额
                     if($tow_weeks_money>0){
                         $tow_weeks_money =round($tow_weeks_money,2);
                     }else{
@@ -2514,7 +2514,7 @@ class  SellMy extends Controller{
                 "money_status"=>2,
                 "recharge_describe"=>"申请提现".$apply_money."元",
                 "img_url"=>"index/image/back.png",
-                "lipay_count"=>$lipay_count,//支付宝账号
+                "alipay_count"=>$lipay_count,//支付宝账号
                 "status"=>2,
                 "is_type"=>$is_type
             ];
