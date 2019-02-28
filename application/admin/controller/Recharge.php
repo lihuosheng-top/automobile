@@ -225,7 +225,7 @@ class Recharge extends Controller{
                                 if(count($id_arr)>1){
                                     foreach ($id_arr as $k =>$v){
                                         Db::name("business_wallet")->where("id",$v)->update(["status"=>2]);
-                                    } 
+                                    }
                                 }
                             }
                             $this->success("审核成功","admin/Recharge/index");
