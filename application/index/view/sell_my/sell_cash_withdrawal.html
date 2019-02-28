@@ -199,6 +199,21 @@
             $('.mask').hide();
             $('.choose-method').hide();
         })
+        // 提现记录
+        $.ajax({
+            url: 'withdrawal_history',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                is_type: 4
+            },
+            success: function(res){
+                console.log(res);
+            },
+            error: function(res){
+                console.log(res.status, res.statusText);
+            }
+        })
         // 微信提现
         var wxNumber;
         $('.choose-wx .confirm').click(function(){
@@ -365,9 +380,9 @@
                                 break;
                         }
                         $('.balance-psd-pop').add('.mask').hide();
-                        // setTimeout(function(){
-                        //     location.href = 'sell_my_index';
-                        // }, 1200)
+                        setTimeout(function(){
+                            location.href = 'sell_my_index';
+                        }, 1200)
                     }else{
                         layer.open({
                             skin: 'msg',
