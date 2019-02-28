@@ -91,6 +91,14 @@ class Recharge extends Controller{
      * @return \think\response\View
      */
     public function search(){
+
+        $timemin  =strtotime(input("date_min"));
+        /*添加一天（23：59：59）*/
+        $time_max_data =strtotime(input('date_max'));
+        $t=date('Y-m-d H:i:s',$time_max_data+1*24*60*60);
+        $timemax  =strtotime($t);
+        halt($timemin);
+
         $keywords =input('search_key');
         //支付方式
         $pay_type_content =input('pay_type_content');
