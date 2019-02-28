@@ -29,6 +29,7 @@
         .order-item span{display: inline-block;width: .2rem;height: .2rem;border-radius: 50%;background-color: #999999;vertical-align: baseline;margin-right: .15rem;}
         .button-box{text-align: right;}
         .calcel-order{background-color: #fff; color: #504cfb; border: 1px solid #504cfb; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none;}
+        .del-order{background-color: #fff; color: #504cfb; border: 1px solid #504cfb; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none;}
         .serviced{background-color: #504cfb; color: #fff; width: 1.8rem; height: .6rem; border-radius: .3rem; outline: none; border: 0;}
     </style>
 </head>
@@ -157,6 +158,8 @@
                                         <button class="serviced" data-id="'+val.id+'" style="display: '+(val.status == 2 ? '' : 'none')+'">已服务</button>\
                                     </div>\
                                 </div>';
+                                
+                                // <button class="del-order" data-id="'+val.id+'" style="display: '+(val.status == 6 ? '' : 'none')+'">删除</button>\
                     })
                     $('.reservation-container').append(str);
                     // 查看详情
@@ -189,6 +192,11 @@
                     $('.calcel-order').click(function(){
                         var id = $(this).attr('data-id');
                         btnEvent('是否取消订单？', 'sell_order_service_no_pay_cancel', id);
+                    })
+                    // 删除订单
+                    $('.del-order').click(function(){
+                        var id = $(this).attr('data-id');
+                        btnEvent('是否删除订单？', 'service_del', id);
                     })
                 }
             },

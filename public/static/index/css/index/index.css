@@ -245,8 +245,8 @@ html{
     justify-content: space-between;
 }
 .recommend-box .recommend-item{
-    flex-basis: 48%;
-    height: 2.5rem;
+    flex-basis: 49%;
+    height: 3.5rem;
     margin-bottom: .2rem;
 }
 .recommend-box .recommend-item img{
