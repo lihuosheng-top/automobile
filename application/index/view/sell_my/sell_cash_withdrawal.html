@@ -305,7 +305,7 @@
         $('.wrapper .confirm').click(function(){
             var selectedMethod = $('.wrapper .account').is(':hidden');
             money = $('.wrapper .money input').val()
-            if(!selectedMethod && money){
+            if(!selectedMethod && money > 0){
                 var canGetMoney = $('.canget span').text();
                 if(+money <= +canGetMoney){
                     $('.balance-psd-pop').add('.mask').show();
@@ -404,9 +404,9 @@
                                 break;
                         }
                         $('.balance-psd-pop').add('.mask').hide();
-                        // setTimeout(function(){
-                        //     location.href = 'sell_my_index';
-                        // }, 1200)
+                        setTimeout(function(){
+                            location.href = 'sell_my_index';
+                        }, 1200)
                     }else{
                         layer.open({
                             skin: 'msg',
