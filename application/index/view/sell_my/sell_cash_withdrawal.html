@@ -358,9 +358,11 @@
                                             content: res.info,
                                             time: 1
                                         });
-                                        setTimeout(function(){
-                                            location.href = 'sell_my_index';
-                                        }, 900)
+                                        if(res.status == 1){
+                                            setTimeout(function(){
+                                                location.href = 'sell_my_index';
+                                            }, 900)
+                                        }
                                     },
                                     error: function(res){
                                         console.log(res.status, res.statusText);
@@ -384,9 +386,11 @@
                                             content: res.info,
                                             time: 1
                                         });
-                                        setTimeout(function(){
-                                            location.href = 'sell_my_index';
-                                        }, 900)
+                                        if(res.status == 1){
+                                            setTimeout(function(){
+                                                location.href = 'sell_my_index';
+                                            }, 900)
+                                        }
                                     },
                                     error: function(res){
                                         console.log(res.status, res.statusText);
@@ -412,9 +416,11 @@
                                             content: res.info,
                                             time: 1
                                         });
-                                        setTimeout(function(){
-                                            location.href = 'sell_my_index';
-                                        }, 900)
+                                        if(res.status == 1){
+                                            setTimeout(function(){
+                                                location.href = 'sell_my_index';
+                                            }, 900)
+                                        }
                                     },
                                     error: function(res){
                                         console.log(res.status, res.statusText);
