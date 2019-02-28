@@ -2130,20 +2130,9 @@ class OrderParts extends Controller{
     public function machine_update(Request $request){
         if($request->isPost()){
             $id =$request->only("id")["id"]; //订单号（短的）
-            $sell_message =$request->only("sell_message")["sell_message"];//卖家留言
-            $sell_message_time = time(); //回复时间
             $status =$request->only("status")["status"];//状态值
-            $pay_type_content =$request->only("pay_type_content")["pay_type_content"];//支付方式（微信,支付宝）
-            $refund_amount =$request->only("refund_amount")["refund_amount"];//退款金额
             if(!empty($id)) {
-                $data = [
-                    "sell_message" => $sell_message,
-                    "sell_message_time" => $sell_message_time,
-                    "status" => $status,
-                    "pay_type_content" => $pay_type_content,
-                    "refund_amount" => $refund_amount
-                ];
-                $bool = Db::name("order_parts")->where("id", $id)->update($data);
+                $bool = Db::name("order_parts")->where("parts_order_number", $id)->update(["status" => $status]);
                 if ($bool) {
                     if ($status == 3) {
                         //对附近的快递员进行铃声提醒
