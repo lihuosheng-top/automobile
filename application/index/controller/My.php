@@ -115,13 +115,12 @@ class My extends Controller
     public function setting_store_turn(Request $request){
         if($request->isPost()){
             $user_id =Session::get("user");
-            if(isset($is_do_business)) {
+            if(isset($user_id)) {
                 $bool = db("store")->where("user_id",$user_id)->value("is_do_business");
                 if($bool){
                     return ajax_success("营业状态返回成功",$bool);
                 }else {
                     return ajax_error("没有设置营状态");
-
                 }
             }
         }
