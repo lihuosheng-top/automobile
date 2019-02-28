@@ -2363,7 +2363,7 @@ class  SellMy extends Controller{
             if(!empty($user_id)){
                 //这是可提现资金（客户要求只能提现上周的资金）
                 $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-7,date("Y")); //时间戳
-                $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                $two_condition ="`status` = '1' and    `is_pay` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
                 $moneys =Db::name("business_wallet")
                     ->where($two_condition)
                     ->where("create_time","<",$two_weekds_ago)
@@ -2485,7 +2485,7 @@ class  SellMy extends Controller{
             if(!empty($user_id)){
                 //这是可提现资金（客户要求只能提现上周的资金）
                 $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-7,date("Y")); //时间戳
-                $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                $two_condition ="`status` = '1' and `is_pay` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
                 $moneys =Db::name("business_wallet")
                     ->where($two_condition)
                     ->where("create_time","<",$two_weekds_ago)
@@ -2608,7 +2608,7 @@ class  SellMy extends Controller{
             if(!empty($user_id)){
                 //这是可提现资金（客户要求只能提现上周的资金）
                 $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-7,date("Y")); //时间戳
-                $two_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
+                $two_condition ="`status` = '1' and `is_pay` = '1' and `is_deduction` = '1' and `user_id` = ".$user_id;
                 $moneys =Db::name("business_wallet")
                     ->where($two_condition)
                     ->where("create_time","<",$two_weekds_ago)
