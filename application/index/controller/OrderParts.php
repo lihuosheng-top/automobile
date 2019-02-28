@@ -2134,7 +2134,7 @@ class OrderParts extends Controller{
             if(!empty($id)) {
                 $bool = Db::name("order_parts")->where("parts_order_number", $id)->update(["status" => $status]);
                 if ($bool) {
-                    if ($status == 3) {
+                    if ($status == 4) {
                         //对附近的快递员进行铃声提醒
                         $store_id = Db::name("order_parts")
                             ->where("id", $id)
@@ -2154,7 +2154,7 @@ class OrderParts extends Controller{
                             $X->push_account_list("来新订单", "来新订单",$account);
                         }
                     }
-                    return ajax_success("修改成功", ["status" => 1]);
+                    return ajax_success("修改成功", ["status" => 4]);
                 } else {
                     return ajax_error("修改失败", ["status" => 0]);
                 }
