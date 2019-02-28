@@ -340,11 +340,6 @@
                     })
                 })().then(function(res){
                     if(res.status == 1){
-                        layer.open({
-                            skin: 'msg',
-                            content: '提现申请成功!',
-                            time: .8
-                        });
                         switch(_index){
                             case 0: 
                                 $.ajax({
@@ -358,6 +353,11 @@
                                     },
                                     success: function(res){
                                         console.log(res);
+                                        layer.open({
+                                            skin: 'msg',
+                                            content: res.info,
+                                            time: 1
+                                        });
                                     },
                                     error: function(res){
                                         console.log(res.status, res.statusText);
@@ -376,6 +376,11 @@
                                     },
                                     success: function(res){
                                         console.log(res);
+                                        layer.open({
+                                            skin: 'msg',
+                                            content: res.info,
+                                            time: 1
+                                        });
                                     },
                                     error: function(res){
                                         console.log(res.status, res.statusText);
@@ -396,6 +401,11 @@
                                     },
                                     success: function(res){
                                         console.log(res);
+                                        layer.open({
+                                            skin: 'msg',
+                                            content: res.info,
+                                            time: 1
+                                        });
                                     },
                                     error: function(res){
                                         console.log(res.status, res.statusText);
@@ -404,9 +414,9 @@
                                 break;
                         }
                         $('.balance-psd-pop').add('.mask').hide();
-                        setTimeout(function(){
-                            location.href = 'sell_my_index';
-                        }, 900)
+                        // setTimeout(function(){
+                        //     location.href = 'sell_my_index';
+                        // }, 900)
                     }else{
                         layer.open({
                             skin: 'msg',
