@@ -70,19 +70,27 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">会员等级：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="">
+				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_val.user_grade|show_user_grade}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">绑定QQ：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="">
+				{if !empty($user_val.qq_id)}
+				已绑定
+				{else}
+				未绑定
+				{/if}
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">绑定微信：</label>
 			<div class="layui-input-block">
-				<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input" value="{$user_val.user_grade|show_user_grade}">
+				{if !empty($user_val.qq_id)}
+				已绑定
+				{else}
+				未绑定
+				{/if}
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -113,7 +121,6 @@
 				<span>收货人：</span><span>{$vos.harvester}</span><br>
 				<span>收货人电话：</span><span>{$vos.harvester_phone_num}</span><br>
 				<span>默认：</span><span>是</span>
-
 			</div>
 
 		</div>
