@@ -59,7 +59,9 @@ $.ajax({
     success: function(res){
         console.log(res);
         if(res.status == 1){
-            
+            $('#switch_business').prop('checked', 'checked');
+        }else{
+            $('#switch_business').prop('checked', false);
         }
     },
     error: function(){
