@@ -319,6 +319,7 @@ class  SellMy extends Controller{
                         "order_num"=>$order_info["service_order_number"],//订单编号
                         "type" =>"服务商", //服务类型(配件商，服务商）
                         "money"=>$order_info["service_order_amount"], //进账的钱
+                        "able_money"=>$order_info["service_order_amount"], //进账的钱
                         "is_pay"=>1, //(判断是否1收入，还是-1支出）
                         "is_deduction"=>1,//正常的流程
                     ];
@@ -327,7 +328,7 @@ class  SellMy extends Controller{
                     $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$business_id;
                     $business_wallet =Db::name("business_wallet")
                         ->where($arr_condition)
-                        ->sum("money");
+                        ->sum("able_money");
                     //商家原本的钱包余额
                     //车主的身份
                     $owner_wallet =Db::name("user")
@@ -2191,7 +2192,7 @@ class  SellMy extends Controller{
 //                        ->sum("money");
 
                     //这是可提现资金（客户要求只能体现上两周的资金）
-                    $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-1,date("Y")); //时间戳
+                    $two_weekds_ago = mktime(0,0,0,date("m"),date("d")-7,date("Y")); //时间戳
                     $two_condition ="`status` = '1' and `is_deduction` = '1'and `is_pay` = '1' and `user_id` = ".$user_id;
                     $moneys =Db::name("business_wallet")
                         ->where($two_condition)
