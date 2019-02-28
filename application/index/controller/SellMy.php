@@ -1372,7 +1372,7 @@ class  SellMy extends Controller{
                 $month_end = strtotime("+1 month -1 seconds", $month_start);
                 $time_condition  = "pay_time>$month_start and pay_time< $month_end";
                 $data =Db::name("order_parts")
-                    ->field('parts_order_number,order_create_time,group_concat(id) order_id')
+                    ->field('parts_order_number,pay_time,group_concat(id) order_id')
                     ->where($time_condition)
                     ->where("store_id",$role_name_store_id["store_id"])
                     ->group('parts_order_number')
