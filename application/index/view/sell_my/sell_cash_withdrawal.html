@@ -214,13 +214,13 @@
                     if(data.alipay_count){
                         //支付宝
                         alipayNumber = data.alipay_count;
-                        $('.wrapper .confirm').data('methodIndex', 0);
+                        $('.wrapper .confirm').data('methodIndex', 1);
                         $('.method span').text('支付宝');
                         $('.account').show().find('span').text(data.alipay_count);
                     }else if(data.wechat_count){
                         //微信
                         wxNumber = data.wechat_count;
-                        $('.wrapper .confirm').data('methodIndex', 1);
+                        $('.wrapper .confirm').data('methodIndex', 0);
                         $('.method span').text('微信');
                         $('.account').show().find('span').text(data.wechat_count);
                     }else{
