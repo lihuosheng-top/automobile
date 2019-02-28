@@ -214,16 +214,19 @@
                     if(data.alipay_count){
                         //支付宝
                         alipayNumber = data.alipay_count;
+                        $('.wrapper .confirm').data('methodIndex', 0);
                         $('.method span').text('支付宝');
                         $('.account').show().find('span').text(data.alipay_count);
                     }else if(data.wechat_count){
                         //微信
                         wxNumber = data.wechat_count;
+                        $('.wrapper .confirm').data('methodIndex', 1);
                         $('.method span').text('微信');
                         $('.account').show().find('span').text(data.wechat_count);
                     }else{
                         //银行卡
                         ownerName = data.back_member;
+                        $('.wrapper .confirm').data('methodIndex', 2);
                         bankName = data.back_name;
                         bankNumber = data.bank_card;
                         $('.method span').text('银行卡');
@@ -401,9 +404,9 @@
                                 break;
                         }
                         $('.balance-psd-pop').add('.mask').hide();
-                        setTimeout(function(){
-                            location.href = 'sell_my_index';
-                        }, 1200)
+                        // setTimeout(function(){
+                        //     location.href = 'sell_my_index';
+                        // }, 1200)
                     }else{
                         layer.open({
                             skin: 'msg',
