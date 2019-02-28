@@ -548,7 +548,7 @@ class OrderService extends Controller{
                 $is_do_business =Db::name("store")
                     ->where("store_id",$goods_data["store_id"])
                     ->value("is_do_business");
-                if($is_do_business){
+                if($is_do_business ==-1){
                     return ajax_error("店铺已关闭，无法下订单");
                 }
                 $store_do_bussiness_time =Db::name("store")
