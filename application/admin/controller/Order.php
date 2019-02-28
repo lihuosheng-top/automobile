@@ -93,10 +93,10 @@ class Order extends Controller{
                     "pay_type_content" => $pay_type_content,
                     "refund_amount" => $refund_amount
                 ];
-                halt($data);
+ 
                 $bool = Db::name("order_parts")->where("id", $id)->update($data);
                 if ($bool) {
-                    if ($status == 3) {
+                    if ($status == 4) {
                         //对附近的快递员进行铃声提醒
                         $store_id = Db::name("order_parts")
                             ->where("id", $id)
