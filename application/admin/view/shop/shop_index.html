@@ -133,7 +133,6 @@
                         <th>店铺类型</th>
                         <th>是否付费上架</th>
                         <th>平台审核状态</th>
-                        <th>是否设为热门店铺</th>
                         <th>操作员</th>
                         <th style="width: 120px;">操作</th>
                     </tr>
@@ -159,17 +158,6 @@
                             {$vo.operation_status|operation_status}
                         </td>
 
-                        <td>
-                            {if $vo.is_hot_store == -1}
-                            <input type="checkbox" class="Status" name="show" value="-1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
-                            data-id="{$vo.store_id}">
-                            {/if}
-                            {if $vo.is_hot_store == 1}
-                            <input type="checkbox" class="Status" name="show" value="1" lay-skin="switch" lay-text="是|否" lay-filter="isShow"
-                                   checked=""    data-id="{$vo.store_id}">
-                            {/if}
-
-                        </td>
                         <td>111</td>
                         <td>
                             <a class="layui-btn layui-btn-mini edit" href="{:url('admin/Shop/add',['id'=>$vo.store_id])}"><i class="iconfont icon-edit"></i> 编辑</a>
