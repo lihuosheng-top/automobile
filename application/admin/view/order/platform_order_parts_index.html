@@ -382,15 +382,13 @@
 					<div class="seach_list">
 						<div class="seach_laber">订单状态:</div>
 						<div class="seach_input">
-							  <select name="order_status" id="admin_status">
-
+							<select name="order_status" id="admin_status">
 								<option value="" selected="">全部</option>
 								<option value="3">待发货</option>
 								<option value="1">待付款</option>
 								<option value="4">已发货</option>
 								<option value="5">待收货</option>
 								<option value="0">已关闭</option>
-
 							</select>
 						</div>
 					</div>
@@ -834,33 +832,12 @@
 		
 		});
 		// 点击弹窗确认按钮
-			$(".tanchuang").addClass("noshow");
-				var id = $(this).data("id");
-				var note_tip = $("#note_tip").val();
-				var static_select = $("#static_select  option:selected").val();
-				$.ajax({
-					type: "POST",
-					url: "{:url('admin/Order/order_update_status')}",
-					async: false,
-					data: {
-						"id": id,
-						"sell_message": note_tip,
-						"status": static_select,
-						"pay_type_content": "",
-						"refund_amount": "",
-					},
-					success: function(data) {
-						console.log(data)
-					},
-					error: function(data) {
-						console.log("失败");
-					}
-				});
 		$(".btu-sumit").on('click', function() {
 			$(".tanchuang").addClass("noshow");
 				var id = $(this).data("id");
 				var note_tip = $("#note_tip").val();
 				var static_select = $("#static_select  option:selected").val();
+				console.log(static_select);
 				$.ajax({
 					type: "POST",
 					url: "{:url('admin/Order/order_update_status')}",
@@ -873,7 +850,7 @@
 						"refund_amount": "",
 					},
 					success: function(data) {
-						console.log(data)
+						// console.log(data)
 					},
 					error: function(data) {
 						console.log("失败");

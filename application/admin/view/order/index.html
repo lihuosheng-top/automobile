@@ -862,8 +862,10 @@
 				var id = $(this).data("id");
 				var note_tip = $("#note_tip").val();
 				var static_select = $("#static_select  option:selected").val();
+				console.log(static_select);
+				console.log(orders_state);
 				if(orders_state==2){
-                     if(static_select==3){
+                     if(static_select==4){
 						$.ajax({
 						type: "POST",
 						url: "{:url('admin/Order/order_update_status')}",
@@ -871,7 +873,7 @@
 						data: {
 							"id": id,
 							"sell_message": note_tip,
-							"status": 3,
+							"status": 4,
 							"pay_type_content": "",
 							"refund_amount": "",
 						},

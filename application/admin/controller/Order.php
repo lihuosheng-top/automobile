@@ -83,6 +83,7 @@ class Order extends Controller{
             $sell_message =$request->only("sell_message")["sell_message"];//卖家留言
             $sell_message_time = time(); //回复时间
             $status =$request->only("status")["status"];//状态值
+            halt($status);
             $pay_type_content =$request->only("pay_type_content")["pay_type_content"];//支付方式（微信,支付宝）
             $refund_amount =$request->only("refund_amount")["refund_amount"];//退款金额
             if(!empty($id)) {
