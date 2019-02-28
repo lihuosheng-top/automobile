@@ -364,6 +364,8 @@ Route::group("",[
     /*TODO:配件商订单状态结束*/
     /*TODO：查看物流信息开始*/
     "logistics_index"=>"index/Logistics/logistics_index",//查看物流页面(ajax)
+    "machine_update"=>"index/OrderParts/machine_update", ////配件商订单列表前端修改状态值
+
     /*TODO：查看物流信息结束*/
 
 
