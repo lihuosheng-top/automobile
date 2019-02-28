@@ -40,7 +40,7 @@ class Capital extends Controller{
             $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
             $money =Db::name("business_wallet")
                 ->where($arr_condition)
-                ->sum("money");
+                ->sum("able_money");
             if(empty($money)){
                 $user_list[$key]['all_balance'] =$val["user_wallet"];
             }else{
@@ -90,7 +90,7 @@ class Capital extends Controller{
                         $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
                         $money =Db::name("business_wallet")
                             ->where($arr_condition)
-                            ->sum("money");
+                            ->sum("able_money");
                         if(empty($money)){
                             $user_list[$key]['all_balance'] =$val["user_wallet"];
                         }else{
@@ -122,7 +122,7 @@ class Capital extends Controller{
                         $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
                         $money =Db::name("business_wallet")
                             ->where($arr_condition)
-                            ->sum("money");
+                            ->sum("able_money");
                         if(empty($money)){
                             $user_list[$key]['all_balance'] =$val["user_wallet"];
                         }else{
@@ -155,7 +155,7 @@ class Capital extends Controller{
                         $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
                         $money =Db::name("business_wallet")
                             ->where($arr_condition)
-                            ->sum("money");
+                            ->sum("able_money");
                         if(empty($money)){
                             $user_list[$key]['all_balance'] =$val["user_wallet"];
                         }else{
@@ -187,7 +187,7 @@ class Capital extends Controller{
                         $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
                         $money =Db::name("business_wallet")
                             ->where($arr_condition)
-                            ->sum("money");
+                            ->sum("able_money");
                         if(empty($money)){
                             $user_list[$key]['all_balance'] =$val["user_wallet"];
                         }else{
@@ -225,7 +225,7 @@ class Capital extends Controller{
                     $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
                     $money =Db::name("business_wallet")
                         ->where($arr_condition)
-                        ->sum("money");
+                        ->sum("able_money");
                     if(empty($money)){
                         $user_list[$key]['all_balance'] =$val["user_wallet"];
                     }else{
@@ -256,7 +256,7 @@ class Capital extends Controller{
                     $arr_condition ="`status` = '1' and `is_deduction` = '1' and `user_id` = ".$val["id"];
                     $money =Db::name("business_wallet")
                         ->where($arr_condition)
-                        ->sum("money");
+                        ->sum("able_money");
                     if(empty($money)){
                         $user_list[$key]['all_balance'] =$val["user_wallet"];
                     }else{
