@@ -250,7 +250,14 @@ class Recharge extends Controller{
                             //修改回状态
                             if(!empty( $money["wallet_income_ids"])){
                                 $id_arr =explode(",", $money["wallet_income_ids"]);
-                             $able_money =  Db::name("business_wallet")->where("id",$id_arr[0])->value("able_money");
+                             $able_money =  Db::name("business_wallet")
+                                 ->where("id",$id_arr[0])
+                                 ->where("status",1)
+                                 ->where("is_deduction",1)
+                                 ->value("able_money");
+                             if(empty($able_money)){
+                                 $able_money =0;
+                             }
                              Db::name("business_wallet")->where("id",$id_arr[0])->update(["status"=>1,"able_money"=>$able_money+$money["operation_amount"]]);
 //                                foreach ($id_arr as $k =>$v){
 //                                    Db::name("business_wallet")->where("id",$v)->update(["status"=>1]);
