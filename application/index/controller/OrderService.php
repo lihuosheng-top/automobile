@@ -562,7 +562,7 @@ class OrderService extends Controller{
                 $go_to_shop_day =str_replace(array("年","月"),"-",substr($data["got_to_time"],0,13));
                 $go_to_shop_time =$time." ".substr($data["got_to_time"],16,5);//预约到店时间开始
                 $go_to_shop_times =$time." ".substr($data["got_to_time"],-5);//预约到店时间结束
-//              
+//
                 if(strtotime($store_do_bussiness_time_f) > strtotime($go_to_shop_time) || strtotime($store_do_bussiness_time_l)<strtotime($go_to_shop_times)){
                     return ajax_error("不在该店铺营业时间".$store_do_bussiness_time."范围内");
                 }
