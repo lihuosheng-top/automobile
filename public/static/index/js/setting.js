@@ -73,7 +73,7 @@ $('#switch_business').change(function(){
     if(this.checked){
         bussinessSwitch = 1;
     }else{
-        bussinessSwitch = 0;
+        bussinessSwitch = -1;
     }
     $.ajax({
         url: 'setting_store_status',

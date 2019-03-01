@@ -115,6 +115,8 @@ if(urlLen > 1){
                     $('.activity-contact .navigation').click(function(){
                         Android.openGdMap(storeAjax.latitude, storeAjax.longitude, storeAjax.store_name)
                     })
+                    // 营业时间
+                    $('.open-time').text('营业时间：' + data.data.store[0].store_do_bussiness_time);
                 }
             },
             error: function(){
