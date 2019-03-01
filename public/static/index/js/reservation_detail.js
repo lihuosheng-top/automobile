@@ -1,7 +1,7 @@
 
 // 全部弹窗
 function showPop(){
-    $('.pop').css('transform', 'translateX(0)');
+    $('.pop').css('left', '0');
     $('.wrapper').hide();
     var displayFlag = $('.comment_title').css('display');
     if(displayFlag == 'none'){
@@ -13,7 +13,7 @@ function showPop(){
     }
 }
 function hidePop(){
-    $('.pop').css('transform', 'translateX(100%)');
+    $('.pop').css('left', '100%');
     $('.wrapper').show();
 }
 $('.filter-service-ul').on('click', 'li', function(){
