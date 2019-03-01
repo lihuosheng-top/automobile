@@ -76,7 +76,8 @@ html,body{
     position: absolute;
     bottom: 2rem;
     left: 50%;
-    transform: translateX(-50%);
+    /* transform: translateX(-50%); */
+    margin-left: -3rem;
     width: 6rem;
     height: .85rem;
     background-color: #3169f6;
