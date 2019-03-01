@@ -39,6 +39,7 @@ AMap.plugin([
     };
     function onError(e){
         console.log(e);
+        alert(JSON.stringify(e));
     };
 })
 function showShops(addr){
