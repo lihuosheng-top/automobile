@@ -502,8 +502,14 @@
                 getAdvertisment('广东,深圳,福田区');
             }
         })()
-        // 接收安卓回调内容
+
+        // 排位距离
+        function sortNum(a, b){
+            return a.dist - b.dist;
+        }
+        
         function getAndroid(e) {
+            // 接收安卓回调内容
             // 定位成功
             var e = JSON.parse(e);
             if(e.errorCode === 0){
@@ -603,10 +609,6 @@
                     time: 1.2
                 })
             }
-        }
-        // 排位距离
-        function sortNum(a, b){
-            return a.dist - b.dist;
         }
         // 进入 周边店铺
         function intoHotShop(id){
