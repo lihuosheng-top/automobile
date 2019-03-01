@@ -1,7 +1,7 @@
 
 // 全部弹窗
 function showPop(){
-    $('.pop').css('transform', 'translateX(0)');
+    $('.pop').css('left', '0');
     $('.wrapper').hide();
     var displayFlag = $('.comment_title').css('display');
     if(displayFlag == 'none'){
@@ -13,7 +13,7 @@ function showPop(){
     }
 }
 function hidePop(){
-    $('.pop').css('transform', 'translateX(100%)');
+    $('.pop').css('left', '100%');
     $('.wrapper').show();
 }
 $('.filter-service-ul').on('click', 'li', function(){
@@ -115,6 +115,8 @@ if(urlLen > 1){
                     $('.activity-contact .navigation').click(function(){
                         Android.openGdMap(storeAjax.latitude, storeAjax.longitude, storeAjax.store_name)
                     })
+                    // 营业时间
+                    $('.open-time').text('营业时间：' + data.data.store[0].store_do_bussiness_time);
                 }
             },
             error: function(){
