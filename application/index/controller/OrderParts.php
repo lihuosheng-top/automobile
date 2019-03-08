@@ -1588,7 +1588,6 @@ class OrderParts extends Controller{
             $special_stock =Db::name("special")->where("id",$data["goods_standard_id"])->value("stock");
             $rm_surplus =$special_stock - $rm_number;
             if($rm_surplus > 0){
-
                 $user_information =Db::name("user")->where("id",$user_id)->find();
                 $store_name =Db::name("store")->where("store_id",$data["store_id"])->find();
                 if (empty($data["address_id"]) ) {

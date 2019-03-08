@@ -41,13 +41,13 @@ class My extends Controller
         if($request->isPost()) {
             $user_id = Session::get("user");
             $order_data = db("order_parts")->where("user_id", $user_id)->select();
-            $order = [];
-            foreach ($order_data as $value) {
-                if ($value["status"] == 1 || $value["status"] == 2 || $value["status"] == 4 || $value["status"] == 10 || $value["status"] == 7 || $value["status"] == 11) {
-                    $order[] = $value;
+            if($order_data){
+                $order = [];
+                foreach ($order_data as $value) {
+                    if ($value["status"] == 1 || $value["status"] == 2 || $value["status"] == 4 || $value["status"] == 10 || $value["status"] == 7 || $value["status"] == 11) {
+                        $order[] = $value;
+                    }
                 }
-            }
-            if($order){
                 return ajax_success("获取成功",$order);
             }else{
                 return ajax_error("获取失败");

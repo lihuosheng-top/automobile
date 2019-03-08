@@ -31,7 +31,10 @@ class PayPassword extends  Controller{
         if ($request->isPost()) {
             $mobile = $_POST["mobile"];
             $user_id = Session::get("user");
-            $is_set_mobile =Db::name('user')->where('id',$user_id)->where('phone_num',$mobile)->find();
+            $is_set_mobile =Db::name('user')
+                ->where('id',$user_id)
+                ->where('phone_num',$mobile)
+                ->find();
             if(empty($is_set_mobile)){
                 return ajax_error("请输入登录的手机号",['status'=>0]);
             }
