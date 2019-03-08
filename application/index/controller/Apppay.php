@@ -397,13 +397,13 @@ class Apppay extends Controller
                         $str = $Client->getSignContentUrlencode($param);//最终请求参数
                         return ajax_success('数据成功返回',$str);
                     }else{
-                        return ajax_error('数据返回不成功',['status'=>0]);
+                        return ajax_error('数据返回不成功');
                     }
                 }else{
-                    return ajax_error('没有这个订单号',['status'=>0]);
+                    return ajax_error('没有这个订单号');
                 }
             }else{
-                return ajax_error('失败',['status'=>0]);
+                return ajax_error('失败');
             }
         }
     }
@@ -461,13 +461,13 @@ class Apppay extends Controller
                         }
                         return ajax_success('数据成功返回',$str);
                     }else{
-                        return ajax_error('数据返回不成功',['status'=>0]);
+                        return ajax_error('数据返回不成功');
                     }
                 }else{
-                    return ajax_error('没有这个订单号',['status'=>0]);
+                    return ajax_error('没有这个订单号');
                 }
             }else{
-                return ajax_error('失败',['status'=>0]);
+                return ajax_error('失败');
             }
         }
     }
@@ -787,13 +787,13 @@ class Apppay extends Controller
                         }
                         return ajax_success('数据成功返回',$str);
                     }else{
-                        return ajax_error('数据返回不成功',['status'=>0]);
+                        return ajax_error('数据返回不成功');
                     }
                 }else{
-                    return ajax_error('没有这个订单号',['status'=>0]);
+                    return ajax_error('没有这个订单号');
                 }
             }else{
-                return ajax_error('失败',['status'=>0]);
+                return ajax_error('失败');
             }
         }
     }

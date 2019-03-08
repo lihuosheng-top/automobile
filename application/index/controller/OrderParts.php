@@ -1717,7 +1717,7 @@ class OrderParts extends Controller{
                     }
                 }
             }else{
-                return ajax_error('库存不足，无法购买该商品',['status'=>0]);
+                return ajax_error('库存不足，无法购买该商品');
             }
 
 
@@ -1737,11 +1737,11 @@ class OrderParts extends Controller{
             $data = $_POST;
             $user_id =Session::get("user");
             if(empty($user_id)){
-                return ajax_error("未登录",['status'=>0]);
+                return ajax_error("未登录");
             }
             $user_information =Db::name("user")->where("id",$user_id)->find(); //用户信息
             if (empty($data["address_id"]) ) {
-                return ajax_error('请填写收货地址',['status'=>0]);
+                return ajax_error('请填写收货地址');
             }else{
                 //收货地址
                 $is_address_status = Db::name('user_address')
@@ -1781,7 +1781,7 @@ class OrderParts extends Controller{
                         ->value("stock");
                     $rm_surplus =$special_stock - $rm_number;
                     if($rm_surplus <= 0){
-                        return ajax_error('商品库存不足',['status'=>0]);
+                        return ajax_error('商品库存不足');
                     }
                     $total_money[$i]["money"] =$j["money"] * $j["goods_unit"];//总额
                    $total_money[$i]["store_id"] =$j["store_id"];
@@ -1920,7 +1920,7 @@ class OrderParts extends Controller{
                     $list =  Db::name('shopping')->where($where)->delete();
                     return ajax_success('下单成功',$order_datas);
                 }else{
-                    return ajax_error('失败',['status'=>0]);
+                    return ajax_error('失败');
                 }
 
             }
@@ -1964,7 +1964,7 @@ class OrderParts extends Controller{
                 Session::set("shopping_ids",null);//清空购物车去结算过来的数据
                 return ajax_success('保存商品id成功',$data);
             }else{
-                return ajax_error('保存商品失败',['status'=>0]);
+                return ajax_error('保存商品失败');
             }
         }
     }
@@ -1996,7 +1996,7 @@ class OrderParts extends Controller{
                    $part_goods_info['goods'] =$goods;
                    exit(json_encode(array("status" => 1, "info" => "立即购买数据返回成功","data"=>$part_goods_info)));
                }else{
-                   return ajax_error("没有数据",["status"=>0]);
+                   return ajax_error("没有数据");
                }
            }
            //购物车进来

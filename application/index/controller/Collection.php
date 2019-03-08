@@ -34,10 +34,10 @@ class  Collection extends Controller{
             if(!empty($data)){
                 return ajax_success('返回成功',$data);
             }else{
-                return ajax_error('失败',["status"=>0]);
+                return ajax_error('失败');
             }
         }else{
-            return ajax_error('请登陆',["status"=>0]);
+            return ajax_error('请登陆');
         }
     }
 
@@ -80,7 +80,7 @@ class  Collection extends Controller{
                         if($res&&$see_status){
                             return ajax_success('收藏成功',$res);
                         }else{
-                            return ajax_error('收藏失败',['status'=>0]);
+                            return ajax_error('收藏失败');
                         }
                     }
                 }
@@ -111,7 +111,7 @@ class  Collection extends Controller{
             {
                 return ajax_success('删除成功!',$list);
             }else{
-                return ajax_error('删除失败',$list);
+                return ajax_error('删除失败');
             }
         }
     }
@@ -129,7 +129,7 @@ class  Collection extends Controller{
             $data = $_POST;
             $user_id =Session::get("user");
             if(empty($user_id)){
-               return ajax_error("用户未登陆",["status"=>0]);
+               return ajax_error("用户未登陆");
             }
             if(!empty($data)){
                 $goods_id = $data['id'];
@@ -141,9 +141,9 @@ class  Collection extends Controller{
                     ];
                     $see_status = Db::name('collection')->field("status")->where($data)->find();
                     if($see_status){
-                        return ajax_success('有收藏',['status'=>1]);
+                        return ajax_success('有收藏');
                     }else{
-                        return ajax_error('没有收藏',['status'=>0]);
+                        return ajax_error('没有收藏');
                     }
                 }
             }

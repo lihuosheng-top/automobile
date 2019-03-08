@@ -28,7 +28,7 @@ class  Express extends  Controller{
     public function express_logout(Request $request){
         if($request->isPost()){
             Session('delivery_id',null);
-            return ajax_success('退出成功',['status'=>1]);
+            return ajax_success('退出成功');
         }
     }
 

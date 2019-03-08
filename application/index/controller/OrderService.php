@@ -634,7 +634,7 @@ class OrderService extends Controller{
                         }
                         return ajax_success('下单成功', $order_datas);
                     }else{
-                        return ajax_error("下单失败",["status"=>0]);
+                        return ajax_error("下单失败");
                     }
                 }
             }
@@ -699,9 +699,9 @@ class OrderService extends Controller{
                         ->where("order_id",$id)
                         ->delete();
                 }
-                return ajax_success('成功删除!',['status'=>1]);
+                return ajax_success('成功删除!');
             }else{
-                return ajax_error('删除失败',['status'=>0]);
+                return ajax_error('删除失败');
             }
         }
     }

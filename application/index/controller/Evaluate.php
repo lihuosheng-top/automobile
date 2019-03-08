@@ -35,7 +35,7 @@ class Evaluate extends  Controller{
                 Session::set("parts_status",null); //店铺id
                 return ajax_success("对应的订单信息返回成功",$data);
             }else{
-                return ajax_error("没有对应的订单信息",["status"=>0]);
+                return ajax_error("没有对应的订单信息");
             }
         }
         return view("evaluate_index");
@@ -148,7 +148,7 @@ class Evaluate extends  Controller{
                 }
                 return ajax_success("评价成功",$bool);
             }else{
-                return ajax_error("评价失败",["status"=>0]);
+                return ajax_error("评价失败");
             }
         }
     }
@@ -204,7 +204,7 @@ class Evaluate extends  Controller{
                 Session::set("service_order_number",null);
                 return ajax_success("对应的订单信息返回成功",$data);
             }else{
-                return ajax_error("没有对应的订单信息",["status"=>0]);
+                return ajax_error("没有对应的订单信息");
             }
         }
         return view("service_evaluate_index");
@@ -311,7 +311,7 @@ class Evaluate extends  Controller{
                     return ajax_success("评价成功",$bool);
                     exit();
                 }else{
-                    return ajax_error("评价失败",["status"=>0]);
+                    return ajax_error("评价失败");
                     exit();
                 }
             }
