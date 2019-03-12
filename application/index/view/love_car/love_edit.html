@@ -118,7 +118,7 @@
             })
         })().then(function(res){
             console.log(res);
-            if(res.status == 1){
+            if(res.status == 1 && res.data.length !== 0){
                 $('.info-bg img').attr('src', 'uploads/'+res.data.images);
                 $('.info-p').text(res.data.brand + ' ' + res.data.series + ' ' + res.data.displacement + ' ' + res.data.production_time);
                 if(res.data.user_car){
