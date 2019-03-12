@@ -35,12 +35,12 @@ class  LgLt extends  Controller{
                 ];
              $res = Db::name("user")->where("id",$user_id)->update($data);
              if($res){
-                 return ajax_success("经纬度刷新成功",["status"=>1]);
+                 return ajax_success("经纬度刷新成功");
              }else{
-                 return ajax_success("经纬度不变",["status"=>1]);
+                 return ajax_success("经纬度不变");
              }
             }else{
-                return ajax_error("经纬度不能为空",["status"=>0]);
+                return ajax_error("经纬度不能为空");
             }
 
         }
@@ -61,10 +61,10 @@ class  LgLt extends  Controller{
                 if($res){
                     return ajax_success("经纬度获取成功",$res);
                 }else{
-                    return ajax_error("请刷新页面再次获取",["status"=>0]);
+                    return ajax_error("请刷新页面再次获取");
                 }
             }else{
-                return ajax_error("用户未登录",["status"=>0]);
+                return ajax_error("用户未登录");
             }
         }
     }

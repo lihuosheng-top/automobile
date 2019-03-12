@@ -50,7 +50,7 @@ class Store extends Controller{
             if(!empty($data)){
                 return ajax_success("成功",$data);
             }else{
-                return ajax_error("请重新进入",["status"=>0]);
+                return ajax_error("请重新进入");
             }
         }
         return view("store_index");
@@ -596,10 +596,10 @@ class Store extends Controller{
                        Db::name("admin")->insert($role_datas);
                        return ajax_success('添加成功',['store_id'=>$bool]);
                    }else{
-                       return ajax_error('添加失败',['status'=>0]);
+                       return ajax_error('添加失败');
                    }
                }else{
-                   return ajax_error('请上传店铺logo',['status'=>0]);
+                   return ajax_error('请上传店铺logo');
                }
            }
     }
@@ -682,7 +682,7 @@ class Store extends Controller{
                     }
                     return ajax_success('编辑成功',['store_id'=>$store_id['store_id']]);
                 }else{
-                    return ajax_error('编辑失败',['status'=>0]);
+                    return ajax_error('编辑失败');
                 }
             }else{
                 $ex_address =explode(',',$store_city_address);
@@ -725,7 +725,7 @@ class Store extends Controller{
                 if($bool > 0){
                     return ajax_success('编辑成功',['store_id'=>$store_id['store_id']]);
                 }else{
-                    return ajax_error('没有数据改变',['status'=>0]);
+                    return ajax_error('没有数据改变');
                 }
             }
 
@@ -846,7 +846,7 @@ class Store extends Controller{
                 }
                 return ajax_success('更新成功',['store_pay_num'=>$store_pay_num]);
             }else{
-                return ajax_error('更新失败',['status'=>0]);
+                return ajax_error('更新失败');
             }
         }
     }
@@ -879,10 +879,10 @@ class Store extends Controller{
                     }
                     return ajax_success('成功获取数据',$data);
                 }else{
-                    return ajax_error('获取数据失败',['status'=>0]);
+                    return ajax_error('获取数据失败');
                 }
             }else{
-                return ajax_error('未登录',['status'=>0]);
+                return ajax_error('未登录');
             }
         }
     }
@@ -917,9 +917,9 @@ class Store extends Controller{
                     $res = Db::name('store')->where('user_id',$user_id)->update(['verifying_physical_storefront_two'=>NULL]);
                 }
                 if($res){
-                    return ajax_success('删除成功',['status'=>1]);
+                    return ajax_success('删除成功');
                 }else{
-                    return ajax_success('删除失败',['status'=>0]);
+                    return ajax_success('删除失败');
                 }
 
             }

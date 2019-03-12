@@ -146,7 +146,7 @@ class Cart extends Controller
         if ($request->isPost()){
             $user_id = Session::get("user");
             if(empty($user_id)){
-                return ajax_error("请登录",["status"=>0]);
+                return ajax_error("请登录");
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
                 //存入购物车
@@ -155,7 +155,7 @@ class Cart extends Controller
                 //限制自己的商品自己不能购买
                 $is_myself =Db::name("store")->where("store_id",$store_id)->value("user_id");
                 if($is_myself ==$user_id){
-                    return ajax_error('商家自己不允许购买自己商品',['status'=>0]);
+                    return ajax_error('商家自己不允许购买自己商品');
                 }
                 $goods_unit = $request->only(['goods_unit'])['goods_unit'];//商品数量
                 $goods_standard_id = $request->only(['goods_standard_id'])['goods_standard_id'];//商品通用专用规格id
@@ -193,9 +193,9 @@ class Cart extends Controller
                         ->where("goods_standard_id",$goods_standard_id)
                         ->update(["goods_unit"=>$shopping_num]);
                     if($bool){
-                        return ajax_success("成功", $bool);
+                        return ajax_success("成功");
                     }else{
-                        return ajax_error("失败",["status"=>0]);
+                        return ajax_error("失败");
                     }
                 }
                 $data['goods_name'] = $goods['goods_name'];
@@ -232,7 +232,7 @@ class Cart extends Controller
         if($request->isPost()){
             $user_id = Session::get("user");
             if(empty($user_id)){
-                return ajax_error("请登录",["status"=>0]);
+                return ajax_error("请登录");
                 exit(json_encode(array("status" => 2, "info" => "请登录")));
             }
             $goods_unit = $request->only(['goods_unit'])['goods_unit'];//商品数量
@@ -367,9 +367,9 @@ class Cart extends Controller
                         ->update(["parts_order_number"=>$number_order]);
                 }
                 if($bool){
-                    return ajax_success("成功",["status"=>1]);
+                    return ajax_success("成功");
                 }else{
-                    return ajax_error("失败",["status"=>0]);
+                    return ajax_error("失败");
                 }
             }else if($mun==1){
                 $parts_order_number_end =$v[0].$v[1].$v[2].$vs[0].$vs[1].$vs[2].rand(1000,9999).$user_id; //订单编号
@@ -379,9 +379,9 @@ class Cart extends Controller
                     ->where('parts_order_number',$parts_order_number)
                     ->update(["parts_order_number"=>$parts_order_number_end]);
                 if($bool){
-                    return ajax_success("成功",["status"=>1]);
+                    return ajax_success("成功");
                 }else{
-                    return ajax_error("失败",["status"=>0]);
+                    return ajax_error("失败");
                 }
             }
         }

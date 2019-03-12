@@ -25,7 +25,7 @@ class  Member extends Controller{
             if(!empty($user_grade_data)){
                 return ajax_success("会员等级返回成功",$user_grade_data);
             }else{
-                return ajax_error("会员等级返回失败",["status"=>0]);
+                return ajax_error("会员等级返回失败");
             }
         }
         return view('member_equity');
@@ -99,7 +99,7 @@ class  Member extends Controller{
             if(!empty($data)){
                 return ajax_success('地址列表信息',$data);
             }else{
-                return ajax_error('没有填写地址记录',['status'=>0]);
+                return ajax_error('没有填写地址记录');
             }
         }
     }
@@ -134,7 +134,7 @@ class  Member extends Controller{
                 }
                 return ajax_success("添加成功",$bool_id);
             }else{
-                return ajax_error("添加失败",['status'=>0]);
+                return ajax_error("添加失败");
             }
 
 
@@ -160,12 +160,12 @@ class  Member extends Controller{
                     ->bind(["id"=>[$id,\PDO::PARAM_INT]])
                     ->delete();
                 if($bool){
-                    return ajax_success('删除成功',['status'=>1]);
+                    return ajax_success('删除成功');
                 }else{
-                    return ajax_error('删除失败',['status'=>0]);
+                    return ajax_error('删除失败');
                 }
             }else{
-                return ajax_error('这条地址信息不正确',['status']);
+                return ajax_error('这条地址信息不正确');
             }
         }
     }
@@ -185,7 +185,7 @@ class  Member extends Controller{
                 Session::delete("address_id");
                 return ajax_success('地址信息返回成功',$data);
             }else{
-                return ajax_error('地址信息返回失败',['status'=>0]);
+                return ajax_error('地址信息返回失败');
             }
         }
     }
@@ -201,9 +201,9 @@ class  Member extends Controller{
             $id =$request->only(['id'])['id'];
             if(!empty($id)){
                 Session::set('address_id',$id);
-                return ajax_success('保存地址id成功',['status'=>1]);
+                return ajax_success('保存地址id成功');
             }else{
-                return ajax_error('没有这条地址',['status'=>0]);
+                return ajax_error('没有这条地址');
             }
         }
     }
@@ -237,7 +237,7 @@ class  Member extends Controller{
                 }
                 return ajax_success("编辑成功",$bool_id);
             }else{
-                return ajax_error("编辑失败",['status'=>0]);
+                return ajax_error("编辑失败");
             }
         }
     }
@@ -266,9 +266,9 @@ class  Member extends Controller{
               $bool=  Db::name('user_address')->where("user_id",$user_id)->where("id","EQ",$id)->update(['status'=>1]);
               if($bool){
                   Db::name('user_address')->where("user_id",$user_id)->where("id","NEQ",$id)->update(['status'=>-1]);
-                  return ajax_success("设置成功",['status'=>1]);
+                  return ajax_success("设置成功");
               }else{
-                  return ajax_error('设置失败',['status'=>0]);
+                  return ajax_error('设置失败');
               }
 
             }

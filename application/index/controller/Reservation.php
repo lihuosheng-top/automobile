@@ -357,7 +357,7 @@ class Reservation extends Controller{
                 array_multisort($ords,SORT_DESC,$evaluate_info_arr);
                 return ajax_success("数据返回成功", $evaluate_info_arr);
             } else {
-                return ajax_error("没有数据", ["status" => 0]);
+                return ajax_error("没有数据");
             }
 
         }
@@ -427,7 +427,7 @@ class Reservation extends Controller{
 
                 return ajax_success("数据返回成功", $evaluate_info_arr);
             } else {
-                return ajax_error("没有数据", ["status" => 0]);
+                return ajax_error("没有数据");
             }
 
         }
@@ -495,7 +495,7 @@ class Reservation extends Controller{
                 array_multisort($ords,SORT_DESC,$evaluate_info_arr);
                 return ajax_success("数据返回成功", $evaluate_info_arr);
             } else {
-                return ajax_error("没有数据", ["status" => 0]);
+                return ajax_error("没有数据");
             }
 
         }
@@ -563,7 +563,7 @@ class Reservation extends Controller{
                 array_multisort($ords,SORT_DESC,$evaluate_info_arr);
                 return ajax_success("数据返回成功", $evaluate_info_arr);
             } else {
-                return ajax_error("没有数据", ["status" => 0]);
+                return ajax_error("没有数据");
             }
 
         }
@@ -634,7 +634,7 @@ class Reservation extends Controller{
                 array_multisort($ords,SORT_ASC,$evaluate_info_array);
                 return ajax_success("数据返回成功",$evaluate_info_array);
             } else {
-                return ajax_error("没有数据", ["status" => 0]);
+                return ajax_error("没有数据");
             }
 
         }
@@ -663,7 +663,7 @@ class Reservation extends Controller{
             if(!empty($evaluate_info)){
                 return ajax_success("成功返回",$evaluate_info);
             }else{
-                return ajax_error("请重新查看",["status"=>0]);
+                return ajax_error("请重新查看");
             }
 
         }

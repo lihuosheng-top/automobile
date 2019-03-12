@@ -106,11 +106,11 @@ class Balance extends Controller
                                     $X = new  Xgcontent;
                                     $X->push_Accountp("来新订单","来新订单了",$user_count);
                                 }
-                                return ajax_success('支付成功', ['status' => 1]);
+                                return ajax_success('支付成功');
                             }
 
                         } else {
-                            return ajax_error('验证失败了', ['status' => 0]);
+                            return ajax_error('验证失败了');
                         }
                     }
 
@@ -167,14 +167,14 @@ class Balance extends Controller
                                     $X = new  Xgcontent;
                                     $X->push_Accountp("来新订单","来新订单了",$user_count);
                                 }
-                                return ajax_success('支付成功', ['status' => 1]);
+                                return ajax_success('支付成功');
                             } else {
-                                return ajax_error('验证失败了', ['status' => 0]);
+                                return ajax_error('验证失败了');
                             }
                         }
                     }
                 } else {
-                    return ajax_error('密码错误', ['status' => 0]);
+                    return ajax_error('密码错误');
                 }
             }
         }
@@ -264,7 +264,7 @@ class Balance extends Controller
                                     $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
                                     $X = new  Xgcontent;
                                     $X->push_Accountp("来新订单","来新订单了",$user_count);
-                                    return ajax_success('支付成功', ['status' => 1]);
+                                    return ajax_success('支付成功');
                                 }
 
                             }
@@ -313,13 +313,13 @@ class Balance extends Controller
                                 $user_count =Db::name("user")->where("id",$store_user_id)->value("phone_num");
                                 $X = new  Xgcontent;
                                 $X->push_Accountp("来新订单","来新订单了",$user_count);
-                                return ajax_success('支付成功', ['status' => 1]);
+                                return ajax_success('支付成功');
                             }
                     }
 
                     }
                 } else {
-                    return ajax_error('密码错误', ['status' => 0]);
+                    return ajax_error('密码错误');
                 }
             }
         }

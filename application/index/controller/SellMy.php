@@ -356,9 +356,9 @@ class  SellMy extends Controller{
                         ];
                         Db::name("wallet")->insert($data);
                     }
-                    return ajax_success('确认服务成功',['status'=>1]);
+                    return ajax_success('确认服务成功');
                 }else{
-                    return ajax_error('确认服务失败',['status'=>0]);
+                    return ajax_error('确认服务失败');
                 }
             }
         }
@@ -380,7 +380,7 @@ class  SellMy extends Controller{
             if($bool){
                 return ajax_success("保存价格成功",$price);
             }else{
-                return ajax_error("请重新进入填写价格",["status"=>0]);
+                return ajax_error("请重新进入填写价格");
             }
         }
     }
@@ -1768,7 +1768,7 @@ class  SellMy extends Controller{
                 Session::set("sell_service_order_number", $service_order_number);
                 return ajax_success("暂存成功",['status'=>1]);
             }else{
-                return ajax_error("没有这个订单编号",["status"=>0]);
+                return ajax_error("没有这个订单编号");
             }
         }
     }
@@ -1789,7 +1789,7 @@ class  SellMy extends Controller{
             if(!empty($data)){
                 return ajax_success("订单信息返回成功",$data);
             }else{
-                return ajax_error("没有对应的订单信息",["status"=>0]);
+                return ajax_error("没有对应的订单信息");
             }
         }
         return view("sell_service_order_detail");
@@ -1812,7 +1812,7 @@ class  SellMy extends Controller{
                 Session::set("sell_parts_order_number",$parts_order_number);
                 return ajax_success("暂存成功",['status'=>1]);
             }else{
-                return ajax_error("店铺id不能为空",["status"=>0]);
+                return ajax_error("店铺id不能为空");
             }
         }
     }
@@ -1855,10 +1855,10 @@ class  SellMy extends Controller{
                 if (!empty($datas)) {
                     return ajax_success("数据返回成功", $datas);
                 } else {
-                    return ajax_error("没有数据信息", ["status" => 0]);
+                    return ajax_error("没有数据信息");
                 }
             } else {
-                return ajax_error("订单信息错误", ["status" => 0]);
+                return ajax_error("订单信息错误");
             }
         }
         return view("sell_parts_order_detail");
@@ -2124,7 +2124,7 @@ class  SellMy extends Controller{
             if(!empty($data)){
                 return ajax_success("消费细节返回成功",$res);
             }else{
-                return ajax_error("暂无消费记录",["status"=>0]);
+                return ajax_error("暂无消费记录");
             }
         }
 
@@ -2160,7 +2160,7 @@ class  SellMy extends Controller{
                     return ajax_success("消费详情返回成功",$data);
                 }
             }else{
-                return ajax_error("请重新刷新",["status"=>0]);
+                return ajax_error("请重新刷新");
             }
         }
         return view("sell_order_bill");
@@ -2735,9 +2735,9 @@ class  SellMy extends Controller{
         $user_info = Db::name("user")->field("pay_passwd")->where("id", $user_id)->find();//用户信息
         $password = $request->only("passwords")["passwords"]; //输入的密码
         if (password_verify($password,$user_info["pay_passwd"])){
-            return ajax_success("支付密码正确",["status"=>1]);
+            return ajax_success("支付密码正确");
         }else{
-            return ajax_error("支付密码错误",["status"=>0]);
+            return ajax_error("支付密码错误");
         }
     }
 
@@ -2770,7 +2770,7 @@ class  SellMy extends Controller{
             if(!empty($data)){
                 return ajax_success("信息数据返回成功",$data);
             }else{
-                return ajax_error("没有数据返回",["status"=>0]);
+                return ajax_error("没有数据返回");
             }
         }
     }

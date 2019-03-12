@@ -41,13 +41,13 @@ class My extends Controller
         if($request->isPost()) {
             $user_id = Session::get("user");
             $order_data = db("order_parts")->where("user_id", $user_id)->select();
-            $order = [];
-            foreach ($order_data as $value) {
-                if ($value["status"] == 1 || $value["status"] == 2 || $value["status"] == 4 || $value["status"] == 10 || $value["status"] == 7 || $value["status"] == 11) {
-                    $order[] = $value;
+            if($order_data){
+                $order = [];
+                foreach ($order_data as $value) {
+                    if ($value["status"] == 1 || $value["status"] == 2 || $value["status"] == 4 || $value["status"] == 10 || $value["status"] == 7 || $value["status"] == 11) {
+                        $order[] = $value;
+                    }
                 }
-            }
-            if($order){
                 return ajax_success("获取成功",$order);
             }else{
                 return ajax_error("获取失败");
@@ -149,11 +149,11 @@ class My extends Controller
                    if(!empty($return_data)){
                        return ajax_success('用户信息返回成功',$return_data);
                    }else{
-                       return ajax_error('没有该用户信息',['status'=>0]);
+                       return ajax_error('没有该用户信息');
                    }
                }
             }else{
-                return ajax_error('请前往登录',['status'=>0]);
+                return ajax_error('请前往登录');
             }
         }
     }
@@ -224,7 +224,7 @@ class My extends Controller
             if(!empty($data)){
                 return ajax_success("消费细节返回成功",$res);
             }else{
-                return ajax_error("暂无消费记录",["status"=>0]);
+                return ajax_error("暂无消费记录");
             }
         }
         return view("my_consume");
@@ -333,12 +333,12 @@ class My extends Controller
                             Db::name("admin")->where("phone",$phone_num['phone_num'])->update(['sex'=>$sex]);
                         }
                     }
-                    return ajax_success('更新成功',['status'=>1]);
+                    return ajax_success('更新成功');
                 }else {
-                    return ajax_error('更新失败', ['status' => 0]);
+                    return ajax_error('更新失败');
                 }
             }else{
-                return ajax_error('所修改值不能为空',['status'=>0]);
+                return ajax_error('所修改值不能为空');
             }
 
         }
@@ -360,10 +360,10 @@ class My extends Controller
             if(!empty(trim($code))){
                 $user_isset =Db::name('user')->where('phone_num',$phone_num)->find();
                 if(!empty($user_isset)){
-                    return ajax_error('手机已存在',['status'=>0]);
+                    return ajax_error('手机已存在');
                 }
                 if($code != $mobileCode){
-                    return ajax_error('验证码不正确',['status'=>0]);
+                    return ajax_error('验证码不正确');
                 }
                 $is_admin =Db::name('admin')->field('id')->where('phone',$phone_num)->find();
                 if(!empty($is_admin)){
@@ -371,9 +371,9 @@ class My extends Controller
                 }
                 $bool =Db::name('user')->where('user_id',$user_id)->update(['phone_num'=>$phone_num]);
                 if($bool){
-                    return ajax_success('修改成功',['status'=>1]);
+                    return ajax_success('修改成功');
                 }else{
-                    return ajax_error('修改失败',['status'=>0]);
+                    return ajax_error('修改失败');
                 }
             }
         }
@@ -465,7 +465,7 @@ class My extends Controller
             if($request->isPost()){
                 $user_id =Session::get("user");//用户id
                 if(empty($user_id)){
-                    return ajax_success('请重新登录',["status"=>2]);
+                    return ajax_error('请重新登录');
                 }
                 $data =Db::name("user")->where('id',$user_id)->find();
                 if(!empty($data)){
@@ -504,7 +504,7 @@ class My extends Controller
 //                    }
                         return ajax_success('信息返回成功',$data);
                 }else {
-                    return ajax_success('用户不存在');
+                    return ajax_error('用户不存在');
                 }
             }
     }
@@ -582,7 +582,7 @@ class My extends Controller
            if(!empty($data)){
                return ajax_success("消费细节返回成功",$res);
            }else{
-               return ajax_error("暂无消费记录",["status"=>0]);
+               return ajax_error("暂无消费记录");
            }
         }
         return view("my_integral");
@@ -619,7 +619,7 @@ class My extends Controller
                     return ajax_success("消费详情返回成功",$data);
                 }
             }else{
-                return ajax_error("请重新刷新",["status"=>0]);
+                return ajax_error("请重新刷新");
             }
         }
         return view("consume_message");

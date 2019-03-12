@@ -34,10 +34,10 @@ class  Logistics extends  Controller{
                 if (!empty($data)) {
                     return ajax_success('订单信息成功返回', $data);
                 } else {
-                    return ajax_error('该订单没有数据记录', ['status' => 0]);
+                    return ajax_error('该订单没有数据记录');
                 }
             } else {
-                return ajax_error('沒有订单Id', ['status' => 0]);
+                return ajax_error('沒有订单Id');
             }
         }
         return view("logistics_index");
