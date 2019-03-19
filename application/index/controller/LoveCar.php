@@ -51,7 +51,7 @@ class LoveCar extends Controller{
      */
     public function love_car_ios(Request $request){
         if($request->isPost()) {
-            $brand = db("car_series")->distinct(true)->field("brand")->select();
+            $brand = db("car_series")->distinct(true)->field("id,brand")->select();
             $car_images = db("car_images")->select();
             foreach ($brand as $key => $value) {
                 foreach ($car_images as $val) {
