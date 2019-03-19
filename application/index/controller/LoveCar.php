@@ -42,7 +42,54 @@ class LoveCar extends Controller{
 
     }
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:我的爱车
+     **************************************
+     * @param Request $request
+     */
+    public function love_car_ios(Request $request){
+        if($request->isPost()) {
+            $brand = db("car_series")->distinct(true)->field("brand")->select();
+            $car_images = db("car_images")->select();
+            foreach ($brand as $key => $value) {
+                foreach ($car_images as $val) {
+                    if ($value["brand"] == $val["brand"]) {
+                        $brand[$key]["images"] = $val["brand_images"];
+                    }
+                }
+            }
+            if ($brand) {
+                return ajax_success("获取成功", array("brand" => $brand));
+            } else {
+                return ajax_error("获取失败");
+            }
 
+        }
+
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:安卓对接所有爱车列表信息返回
+     **************************************
+     * @param Request $request
+     */
+    public function love_car_info(Request $request){
+        if($request->isPost()) {
+            $id =$request->only(["id"])["id"];
+            $series = db("car_series")->where("id",$id)->select();
+            if ($series) {
+                return ajax_success("获取成功", array("series" => $series));
+            } else {
+                return ajax_error("获取失败");
+            }
+
+        }
+
+    }
 
     /**
      * 我的爱车入库

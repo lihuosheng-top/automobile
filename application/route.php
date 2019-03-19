@@ -31,6 +31,9 @@ Route::group("",[
 
     /*我的爱车*/
     "love_car"=>"index/LoveCar/love_car",
+    "love_car_ios"=>"index/LoveCar/love_car_ios", //安卓对接所有爱车列表
+    "love_car_info"=>"index/LoveCar/love_car_info", //安卓对接所有爱车列表信息返回
+
     "love_list"=>"index/LoveCar/love_list",                         //我的爱车列表
     "love_edit"=>"index/LoveCar/love_edit",                         //我的爱车编辑
     "love_car_go"=>"index/LoveCar/love_car_go",                         //跳到编辑页面
