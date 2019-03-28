@@ -135,6 +135,7 @@ Route::group("",[
     "select_role_get"=>"index/My/select_role_get",//获取商家的信息，如果存在则是商家角色，不存在则为车主
     "my_nickname"=>"index/My/nickname",         //昵称
     "my_consume"=>"index/My/consume",         //我的消费(ajax)
+    "ios_consume"=>"index/My/ios_consume",         //我的消费(ajax)ios对接
     "consume_save"=>"index/My/consume_save",         //进入我的消费需要存id(ajax)
     "consume_message"=>"index/My/consume_message",       //消费详情（ajax）
     /*TODO:登录结束*/

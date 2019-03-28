@@ -231,6 +231,35 @@ class My extends Controller
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:ios接口对接我的消费
+     **************************************
+     * @param Request $request
+     */
+    public function ios_consume(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");//用户id
+            $now_time_one =date("Y");
+            $condition = " `operation_time` like '%{$now_time_one}%' ";
+            $data = Db::name("wallet")
+                ->where("user_id",$user_id)
+                ->where("is_business",1)
+                ->where($condition)
+                ->order("operation_time","desc")
+                ->select();
+            if(!empty($data)){
+                foreach ($data as $k=>$val){
+                    $data[$k]["times"] = strtotime($val["operation_time"]);
+                }
+                return ajax_success("消费细节返回成功",$data);
+            }else{
+                return ajax_error("暂无消费记录");
+            }
+        }
+        return view("my_consume");
+    }
 
 
     /**
