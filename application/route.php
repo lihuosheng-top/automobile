@@ -31,6 +31,8 @@ Route::group("",[
 
     /*我的爱车*/
     "love_car"=>"index/LoveCar/love_car",
+    "love_car_ios"=>"index/LoveCar/love_car_ios", //安卓对接所有爱车列表
+    "love_car_info"=>"index/LoveCar/love_car_info", //安卓对接所有爱车列表信息返回
     "love_list"=>"index/LoveCar/love_list",                         //我的爱车列表
     "love_edit"=>"index/LoveCar/love_edit",                         //我的爱车编辑
     "love_car_go"=>"index/LoveCar/love_car_go",                         //跳到编辑页面
@@ -133,6 +135,7 @@ Route::group("",[
     "select_role_get"=>"index/My/select_role_get",//获取商家的信息，如果存在则是商家角色，不存在则为车主
     "my_nickname"=>"index/My/nickname",         //昵称
     "my_consume"=>"index/My/consume",         //我的消费(ajax)
+    "ios_consume"=>"index/My/ios_consume",         //我的消费(ajax)ios对接
     "consume_save"=>"index/My/consume_save",         //进入我的消费需要存id(ajax)
     "consume_message"=>"index/My/consume_message",       //消费详情（ajax）
     /*TODO:登录结束*/
