@@ -67,9 +67,9 @@ class Reservation extends Controller{
                     }
                 }
                 if ($serve_goods) {
-                    foreach ($serve_goods as $vals){
-                        $serve_goods[] =$vals;
-                    }
+//                    foreach ($serve_goods as $vals){
+//                        $serve_goods[] =$vals;
+//                    }
                     return ajax_success("获取成功", $serve_goods);
                 } else {
                     return ajax_error("获取失败");
@@ -100,9 +100,9 @@ class Reservation extends Controller{
                 }
 
                 if ($serve_goods) {
-                    foreach ($serve_goods as $vals){
-                        $serve_goods[] =$vals;
-                    }
+//                    foreach ($serve_goods as $vals){
+//                        $serve_goods[] =$vals;
+//                    }
                     return ajax_success("获取成功", $serve_goods);
                 } else {
                     return ajax_error("获取失败");
