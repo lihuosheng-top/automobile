@@ -1971,7 +1971,7 @@ class OrderParts extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:提交订单页面返回购买页面传过来的数据
+     * Notes:提交订单页面返回购买页面传过来的数据(h5使用)
      **************************************
      */
     public function return_order_buy_information(Request $request){
@@ -2001,7 +2001,6 @@ class OrderParts extends Controller{
            //购物车进来
            $shopping_id =Session::get("shopping_ids");
            $total_price =Session::get("total_price");
-
            if(!empty($shopping_id)){
                $user_id = Session::get("user");
                foreach ($shopping_id as $k=>$v){
@@ -2046,7 +2045,6 @@ class OrderParts extends Controller{
                        $shopping_info["store_name"][] = $j;
                    }
                    foreach ($shopping_info["info"] as $k=>$v){
-
                        $shopping_information[$k]["info"] =$v;
                        $shopping_information[$k]["total_price"] =$total_price;
                    }
@@ -2066,6 +2064,116 @@ class OrderParts extends Controller{
            if(empty($part_goods_info)&&empty($shopping_id)){
                exit(json_encode(array("status" => 0, "info" => "没有数据")));
            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:提交订单页面返回购买页面传过来的数据(正常订单)
+     **************************************
+     */
+    public function ios_order_info_direct(Request $request){
+        if($request->isPost()){
+            //立即购买过来
+            $part_goods_info = Session::get("part_goods_info");
+            if(!empty($part_goods_info)){
+                $goods_id = $part_goods_info["goods_id"];
+                $goods = db("goods")->where("id",$goods_id)->select();
+                foreach ($goods as $key=>$value){
+                    $goods[$key]["goods_standard_name"] = explode(",",$value["goods_standard_name"]);
+                    $store_name =Db::name("store")->field("store_name")->where("store_id",$value["store_id"])->find();
+                    $goods[$key]["store_name"] =$store_name["store_name"];
+                    $goods_standard_value = explode(",",$value["goods_standard_value"]);
+                    $goods[$key]["goods_standard_value"] = array_chunk($goods_standard_value,"8");
+                    $goods[$key]["goods_brand"] = db("brand")->where("id",$value["goods_brand_id"])->find();
+                    $goods[$key]["images"] = db("goods_images")->where("goods_id",$value["id"])->select();
+                    $goods[$key]["goods_standard_id"] =db("special")->where("id",$part_goods_info["goods_standard_id"])->find();
+                }
+                if(!empty($goods)){
+                    $part_goods_info['goods'] =$goods;
+                    exit(json_encode(array("status" => 1, "info" => "立即购买数据返回成功","data"=>$part_goods_info)));
+                }else{
+                    return ajax_error("没有数据");
+                }
+            }
+        }
+    }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:提交订单页面返回购买页面传过来的数据(购物车过来)
+     **************************************
+     */
+    public function  ios_order_info_cart(Request $request){
+        if($request->isPost()){
+            //购物车进来
+            $shopping_id =Session::get("shopping_ids");
+            $total_price =Session::get("total_price");
+            if(!empty($shopping_id)){
+                $user_id = Session::get("user");
+                foreach ($shopping_id as $k=>$v){
+                    $shopping_data[] =Db::name("shopping")
+                        ->where("user_id",$user_id)
+                        ->where("id",$v)
+                        ->find();
+                }
+                //店铺id
+                foreach ($shopping_data as $key=>$val){
+                    $store_all_id[] =$val["store_id"];
+                }
+                $da_store_id = array_unique($store_all_id); //去重之后的商户
+                foreach ($shopping_data as $k=>$v){
+                    foreach ($da_store_id as $keys=>$value){
+                        if($v["store_id"]==$value){
+                            $order_undate['info'][$keys][] = Db::name('shopping')
+                                ->where('user_id',$user_id)
+                                ->where("store_id",$value)
+                                ->where("id",$v["id"])
+                                ->find();
+                            $names = Db::name('shopping')
+                                ->where('user_id',$user_id)
+                                ->where("store_id",$value)
+                                ->where("id",$v["id"])
+                                ->where("goods_standard_id",$v["goods_standard_id"])
+                                ->where("goods_delivery",$v["goods_delivery"])
+                                ->find();
+                            $order_undate['store_name'][$keys] = $names['store_name'];
+                            $order_undate['store_id'][$keys] = $names['store_id'];
+                        }
+                    }
+                }
+                if(!empty($order_undate)){
+                    foreach ($order_undate["info"] as $i=>$j){
+                        $shopping_info["info"][] = $j;
+                    }
+                    foreach ($order_undate["store_id"] as $i=>$j){
+                        $shopping_info["store_id"][] = $j;
+                    }
+                    foreach ($order_undate["store_name"] as $i=>$j){
+                        $shopping_info["store_name"][] = $j;
+                    }
+                    foreach ($shopping_info["info"] as $k=>$v){
+                        $shopping_information[$k]["info"] =$v;
+                        $shopping_information[$k]["total_price"] =$total_price;
+                    }
+                    foreach ($shopping_info["store_id"] as $k=>$v){
+                        $shopping_information[$k]["store_id"] =$v;
+                    }
+                    foreach ($shopping_info["store_name"] as $k=>$v){
+                        $shopping_information[$k]["store_name"] =$v;
+                    }
+                }
+                if(!empty($shopping_info)){
+                    exit(json_encode(array("status" => 3, "info" => "购物车数据","data"=> $shopping_information)));
+                }else{
+                    exit(json_encode(array("status" => 0, "info" => "没有数据")));
+                }
+            }
+            if(empty($part_goods_info)&&empty($shopping_id)){
+                exit(json_encode(array("status" => 0, "info" => "没有数据")));
+            }
         }
     }
 

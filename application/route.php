@@ -349,7 +349,9 @@ Route::group("",[
 
     "order_parts_detail"=>"index/OrderParts/order_parts_detail",//订单详情
     "get_goods_id_save"=>"index/OrderParts/get_goods_id_save",//立即购买存储需要传到订单提交页面信息，方便确定订单提交
-    "return_order_buy_information"=>"index/OrderParts/return_order_buy_information",//提交订单页面返回购买页面传过来的数据
+    "return_order_buy_information"=>"index/OrderParts/return_order_buy_information",//提交订单页面返回购买页面传过来的数据（h5）
+    "ios_order_info_direct"=>"index/OrderParts/ios_order_info_direct",//提交订单页面返回购买页面传过来的数据(正常订单)
+    "ios_order_info_cart"=>"index/OrderParts/ios_order_info_cart",//提交订单页面返回购买页面传过来的数据（购物车过来)
 
     "order_parts_all"=>"index/OrderParts/order_parts_all",//全部订单页面
     "ios_api_order_parts_all"=>"index/OrderParts/ios_api_order_parts_all",//全部订单接口（ajax）
