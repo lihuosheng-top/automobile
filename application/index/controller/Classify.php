@@ -55,13 +55,18 @@ class Classify extends Controller
     {
         if($request->isPost()){
             $data =Session::get("role_name_store_id");
+            $goods_type_id = $request->only(["id"])["id"];
             if(!empty($data)) {
-                $goods_type_id = $request->only(["id"])["id"];
                 $goods_data = [];
-                $goods = db("goods")
-                    ->where("goods_type_id", $goods_type_id)
-                    ->whereOr("goods_brand_id", $goods_type_id)
-                    ->select();
+                if(!empty($goods_type_id)){
+                    $goods = db("goods")
+                        ->where("goods_type_id", $goods_type_id)
+                        ->whereOr("goods_brand_id", $goods_type_id)
+                        ->select();
+                }else{
+                    $goods = db("goods")
+                        ->select();
+                }
                 foreach ($goods as $kye => $value) {
                     $where = "`store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1'";
                     $store = db("store")->where("store_id", $value["store_id"])->where($where)->find();
@@ -94,12 +99,16 @@ class Classify extends Controller
                     return ajax_error("获取失败");
                 }
             }else{
-                $goods_type_id = $request->only(["id"])["id"];
                 $goods_data = [];
-                $goods = db("goods")
-                    ->where("goods_type_id", $goods_type_id)
-                    ->whereOr("goods_brand_id", $goods_type_id)
-                    ->select();
+                if(!empty($goods_type_id)){
+                    $goods = db("goods")
+                        ->where("goods_type_id", $goods_type_id)
+                        ->whereOr("goods_brand_id", $goods_type_id)
+                        ->select();
+                }else{
+                    $goods = db("goods")
+                        ->select();
+                }
                 foreach ($goods as $kye => $value) {
                     if($value["goods_standard"] == "通用") {
                         unset($goods[$kye]);
@@ -138,6 +147,12 @@ class Classify extends Controller
         }
         return view("goods_list");
     }
+
+
+
+
+
+
 
     /**
      **************李火生*******************
