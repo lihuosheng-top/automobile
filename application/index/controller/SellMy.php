@@ -2127,9 +2127,37 @@ class  SellMy extends Controller{
                 return ajax_error("暂无消费记录");
             }
         }
-
         return view("sell_service_record");
     }
+
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:卖家服务记录
+     **************************************
+     * @param Request $request
+     * @return \think\response\View|void
+     */
+    public function ios_sell_service_record(Request $request){
+        if($request->isPost()){
+            $user_id =Session::get("user");//用户id
+            $now_time_one =date("Y");
+            $condition = " `operation_time` like '%{$now_time_one}%' ";
+            $data = Db::name("wallet")
+                ->where("user_id",$user_id)
+                ->where("is_business",2)
+                ->where($condition)
+                ->order("operation_time","desc")
+                ->select();
+            if(!empty($data)){
+                return ajax_success("消费细节返回成功",$res);
+            }else{
+                return ajax_error("暂无消费记录");
+            }
+        }
+    }
+
+
 
     /**
      **************李火生*******************

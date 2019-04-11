@@ -1014,23 +1014,17 @@ class Goods extends Controller
      */
     public function WeiAlpay(Request $request)
     {
-
             //店铺名称，必填
         $store = $_POST['WIDsubject'];
             //付款金额，必填
         $goods_money = $_POST['WIDtotal_amount'];
-
             //商品描述，可空
         $goods_id = $_POST['WIDbody'];
-
-
         header("Content-type: text/html; charset=utf-8");
         ini_set('date.timezone', 'Asia/Shanghai');
-
         include("../extend/WxpayAPI/lib/WxPay.Api.php");
         include('../extend/WxpayAPI/example/WxPay.NativePay.php');
         include('../extend/WxpayAPI/example/log.php');
-
         /**
          * 流程：
          * 1、组装包含支付信息的url，生成二维码
@@ -1041,7 +1035,6 @@ class Goods extends Controller
          * 6、在支付成功通知中需要查单确认是否真正支付成功（见：notify.php）
          */
         $notify = new \NativePay();
-
     //模式二
         /**
          * 流程：
@@ -1050,9 +1043,6 @@ class Goods extends Controller
          * 3、支付完成之后，微信服务器会通知支付成功
          * 4、在支付成功通知中需要查单确认是否真正支付成功（见：notify.php）
          */
-
-
-
         $input = new \WxPayUnifiedOrder();
         /**
          * 设置商品或支付单简要描述
@@ -1105,7 +1095,6 @@ class Goods extends Controller
          * 生成直接支付url，支付url有效期为2小时,模式二
          * @param UnifiedOrderInput $input
          */
-
         $result = $notify->GetPayUrl($input);
         $url2 = $result["code_url"];
         return view("WeiAlpay_code", ["goods_id" => $goods_id, "url2" => $url2, "goods_money" => $goods_money, "store" => $store]);
