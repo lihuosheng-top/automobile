@@ -2150,7 +2150,7 @@ class  SellMy extends Controller{
                 ->order("operation_time","desc")
                 ->select();
             if(!empty($data)){
-                return ajax_success("消费细节返回成功",$res);
+                return ajax_success("消费细节返回成功",$data);
             }else{
                 return ajax_error("暂无消费记录");
             }
