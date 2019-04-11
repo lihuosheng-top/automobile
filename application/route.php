@@ -161,6 +161,7 @@ Route::group("",[
     "sell_parts_order_detail"=>"index/SellMy/sell_parts_order_detail",//卖家商品订单详情
 
     "sell_service_record"=>"index/SellMy/sell_service_record",//卖家消费收入记录
+    "ios_sell_service_record"=>"index/SellMy/ios_sell_service_record",//卖家消费收入记录ios
     "sell_parts_record"=>"index/SellMy/sell_parts_record",//卖家商品记录
     "sell_order_bill"=>"index/SellMy/sell_order_bill",//卖家账单
     "sell_wallet"=>"index/SellMy/sell_wallet",//卖家钱包
