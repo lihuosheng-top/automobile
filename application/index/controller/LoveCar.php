@@ -45,13 +45,13 @@ class LoveCar extends Controller{
     /**
      **************李火生*******************
      * @param Request $request
-     * Notes:我的爱车
+     * Notes:我的爱车（品牌名）
      **************************************
      * @param Request $request
      */
     public function love_car_ios(Request $request){
         if($request->isPost()) {
-            $brand = db("car_series")->distinct(true)->field("id,brand")->select();
+            $brand = db("car_series")->distinct(true)->field("brand")->select();
             $car_images = db("car_images")->select();
             foreach ($brand as $key => $value) {
                 foreach ($car_images as $val) {
@@ -69,6 +69,64 @@ class LoveCar extends Controller{
         }
 
     }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:我的爱车（车系列）
+     **************************************
+     * @param Request $request
+     */
+    public function  love_car_series(Request $request){
+        if($request->isPost()) {
+            $brand =$request->only(["brand"])["brand"];
+            $brand = db("car_series")->where("brand",$brand)->distinct(true)->field("series")->select();
+            if ($brand) {
+                return ajax_success("获取成功", array("brand" => $brand));
+            } else {
+                return ajax_error("获取失败");
+            }
+
+        }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:我的爱车（车排量）
+     **************************************
+     * @param Request $request
+     */
+    public function  love_car_displacement(Request $request){
+        if($request->isPost()) {
+            $series =$request->only(["series"])["series"];
+            $brand = db("car_series")->where("series",$series)->distinct(true)->field("displacement")->select();
+            if ($brand) {
+                return ajax_success("获取成功", array("brand" => $brand));
+            } else {
+                return ajax_error("获取失败");
+            }
+        }
+    }
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:我的爱车（车年产）
+     **************************************
+     * @param Request $request
+     */
+    public function  love_car_year(Request $request){
+        if($request->isPost()) {
+            $displacement =$request->only(["displacement"])["displacement"];
+            $brand = db("car_series")->where("displacement",$displacement)->distinct(true)->field("year")->select();
+            if ($brand) {
+                return ajax_success("获取成功", array("brand" => $brand));
+            } else {
+                return ajax_error("获取失败");
+            }
+
+        }
+    }
+
+
 
     /**
      **************李火生*******************
