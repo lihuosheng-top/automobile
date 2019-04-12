@@ -57,11 +57,11 @@ class  Express extends  Controller{
         if($request->isPost()) {
             $delivery_id = Session::get("delivery_id");
             $delivery_data = db("delivery")->where("id", $delivery_id)->select();
+
             $where ="`is_hot_store` = '1' and `store_is_button` = '1' and `del_status` = '1' and `operation_status` = '1' ";
             $store = db("store")->where("store_city_address", $delivery_data[0]["area"])->where($where)->select();
             $delivery = [];
             foreach ($store as $key => $value) {
-//                dump($value);
                 $order = db("order_parts")->where("store_id", $value["store_id"])->where("status",4)->select();
                 foreach ($order as $val) {
                     $delivery[] = array(
@@ -111,7 +111,7 @@ class  Express extends  Controller{
                 }
                 return ajax_success("获取成功",array("delivery"=>$delivery,"delivery_data"=>$delivery_data));
             }else{
-                return ajax_error("你服务的区域没有匹配到相应的订单",array("delivery"=>$delivery,"delivery_data"=>$delivery_data));
+                return ajax_success("你服务的区域没有匹配到相应的订单",array("delivery"=>$delivery,"delivery_data"=>$delivery_data));
             }
         }
         return view("express_wait_for_order");
@@ -173,7 +173,7 @@ class  Express extends  Controller{
                 }
                 return ajax_success("获取成功",array("express"=>$express,"delivery_data"=>$delivery_data));
             } else {
-                return ajax_error("获取失败",$delivery_data);
+                return ajax_success("获取失败",array("express"=>[],"delivery_data"=>$delivery_data));
             }
         }
         return view("express_wait_for_take");
@@ -201,7 +201,7 @@ class  Express extends  Controller{
                 }
                 return ajax_success("获取成功",array("express"=>$express,"delivery_data"=>$delivery_data));
             } else {
-                return ajax_error("获取失败",$delivery_data);
+                return ajax_success("获取失败",array("express"=>$express,"delivery_data"=>$delivery_data));
             }
         }
     }
