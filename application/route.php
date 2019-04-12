@@ -237,6 +237,7 @@ Route::group("",[
     /*TODO:快递开始*/
     "express_wait_for_order"=>"index/Express/express_wait_for_order",//待接单
     "express_wait_for_take"=>"index/Express/express_wait_for_take",//待取货
+    "express_information_return"=>"index/Express/express_information_return",//IOS跑跑界面所有数据返回（只用这一个）
     "express_distribution"=>"index/Express/express_distribution",//配送中
     "express_completed"=>"index/Express/express_completed",//已完成
     "express_detail"=>"index/Express/express_detail",//快递详情

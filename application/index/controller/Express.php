@@ -160,7 +160,6 @@ class  Express extends  Controller{
      * @return \think\response\View
      */
     public function express_wait_for_take(Request $request){
-
         if($request->isPost()) {
             $delivery_id = Session::get("delivery_id");
             $delivery_data = db("delivery")->where("id", $delivery_id)->select();
@@ -176,11 +175,35 @@ class  Express extends  Controller{
                 return ajax_error("获取失败",$delivery_data);
             }
         }
-
         return view("express_wait_for_take");
     }
 
 
+    /**
+     **************李火生*******************
+     * @param Request $request
+     * Notes:IOS泡泡界面所有数据返回
+     **************************************
+     * @param Request $request
+     * @return \think\response\View|void
+     */
+    public function express_information_return(Request $request){
+        if($request->isPost()) {
+            $delivery_id = Session::get("delivery_id");
+            $delivery_data = db("delivery")->where("id", $delivery_id)->select();
+            $express = db("delivery_order")->where("delivery_id", $delivery_id)->select();
+            if ($express) {
+                foreach ($express as $k=>$v){
+                    $store_info=Db::name("store")->field("longitude,latitude")->where("store_id",$v["store_id"])->find();
+                    $express[$k]["longitude"] =$store_info["longitude"];
+                    $express[$k]["latitude"] =$store_info["latitude"];
+                }
+                return ajax_success("获取成功",array("express"=>$express,"delivery_data"=>$delivery_data));
+            } else {
+                return ajax_error("获取失败",$delivery_data);
+            }
+        }
+    }
 
     /**
      * 快递人员已取货
